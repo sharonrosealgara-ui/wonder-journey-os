@@ -1,0 +1,384 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────────────────────
+   WONDER JOURNEY OS — watercolor storybook design system v2
+   Reference: "Discover the Philippines" Canva presentation video.
+   Feel: watercolor paper, sky blue + cream, navy hand-lettered
+   headings with white outlines, paper-note cards, sticker icons.
+   ───────────────────────────────────────────────────────────── */
+
+@theme {
+  /* watercolor sky background */
+  --color-sky: #c9dff2;
+  --color-sky-deep: #a5c6e6;
+
+  /* paper & cream (inner notes, header bar) */
+  --color-sand: #fdf5e0;
+  --color-sand-deep: #c9d9ee;
+  --color-paper: #fffdf6;
+
+  /* sunshine brush-stroke yellow */
+  --color-mango: #ffd23f;
+  --color-mango-deep: #e5a917;
+
+  /* coral (primary action) */
+  --color-sunset: #ff7a59;
+  --color-sunset-deep: #e4573b;
+
+  /* teal (dots, secondary action) */
+  --color-ocean: #2fb8ad;
+  --color-ocean-deep: #14837c;
+
+  /* mint-leaf green */
+  --color-palm: #4dbd85;
+  --color-palm-deep: #2e9563;
+
+  /* hibiscus pink */
+  --color-hibiscus: #ec5d87;
+  --color-hibiscus-deep: #cf3e6b;
+
+  /* periwinkle (cloud-bubble cards in the reference) */
+  --color-ube: #8890d6;
+  --color-ube-deep: #656fc0;
+
+  /* navy ink — all text, like the reference headings */
+  --color-ink: #274472;
+  --color-ink-soft: #5d76a3;
+
+  --font-display: "Lilita One", "Baloo 2", "Segoe UI", sans-serif;
+  --font-body: "Quicksand", "Nunito", "Segoe UI", sans-serif;
+  --font-hand: "Patrick Hand", "Comic Sans MS", "Segoe Print", cursive;
+
+  --radius-blob: 1.75rem;
+
+  --shadow-soft: 0 4px 18px rgba(39, 68, 114, 0.14);
+  --shadow-lift: 0 10px 30px rgba(39, 68, 114, 0.22);
+}
+
+/* ── Watercolor paper background ─────────────────────────── */
+body {
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-weight: 500;
+  background-color: var(--color-sky);
+  background-image:
+    radial-gradient(ellipse 80rem 40rem at 15% -5%, rgba(255, 255, 255, 0.55) 0%, transparent 60%),
+    radial-gradient(ellipse 60rem 35rem at 110% 15%, rgba(165, 198, 230, 0.8) 0%, transparent 65%),
+    radial-gradient(ellipse 50rem 30rem at -10% 70%, rgba(178, 216, 235, 0.9) 0%, transparent 60%),
+    radial-gradient(ellipse 70rem 45rem at 90% 105%, rgba(140, 186, 226, 0.65) 0%, transparent 60%),
+    radial-gradient(ellipse 30rem 20rem at 50% 40%, rgba(255, 255, 255, 0.35) 0%, transparent 70%);
+  background-attachment: fixed;
+}
+
+/* paper grain over everything — makes flat color feel like watercolor paper */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23p)'/%3E%3C/svg%3E");
+}
+
+h1, h2, h3, .font-display {
+  font-family: var(--font-display);
+  font-weight: 400; /* Lilita One is single-weight; keep utility bolds harmless */
+  letter-spacing: 0.015em;
+}
+
+.font-hand {
+  font-family: var(--font-hand);
+}
+
+/* Big navy heading with thick white outline — the reference's signature look */
+.wj-outline {
+  color: var(--color-ink);
+  -webkit-text-stroke: 6px #ffffff;
+  paint-order: stroke fill;
+  text-shadow: 0 3px 0 rgba(39, 68, 114, 0.12);
+}
+
+/* three teal dots ● ● ● that decorate reference slides */
+.wj-dots {
+  display: inline-flex;
+  gap: 0.45rem;
+  vertical-align: middle;
+}
+.wj-dots i {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 9999px;
+  background: var(--color-ocean);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 1px 3px rgba(39, 68, 114, 0.25);
+}
+.wj-dots i:nth-child(2) { background: var(--color-palm); }
+.wj-dots i:nth-child(3) { background: var(--color-mango); }
+
+/* yellow brush-stroke highlight (the "Welcome" banner in the video) */
+.wj-brush {
+  display: inline-block;
+  padding: 0.15rem 0.9rem;
+  background: linear-gradient(100deg, transparent 1%, var(--color-mango) 4%, #ffdd66 50%, var(--color-mango) 96%, transparent 99%);
+  border-radius: 1rem 2.5rem 1.2rem 2.8rem / 2.2rem 1rem 2.6rem 1rem;
+  transform: rotate(-1.2deg);
+}
+
+/* ── Paper-note cards (hand-drawn wobble borders) ─────────── */
+.wj-card {
+  background: var(--color-paper);
+  border-radius: 1.6rem 1.9rem 1.5rem 2rem / 1.9rem 1.5rem 2rem 1.6rem;
+  box-shadow: var(--shadow-soft);
+  border: 2px solid rgba(39, 68, 114, 0.16);
+}
+
+/* periwinkle "cloud bubble" variant from the reference slides */
+.wj-card-bubble {
+  background: linear-gradient(160deg, var(--color-ube) 0%, #7a83cd 100%);
+  color: #ffffff;
+  border: 2px solid rgba(255, 255, 255, 0.45);
+  border-radius: 2.4rem 2rem 2.6rem 1.9rem / 2rem 2.7rem 1.9rem 2.5rem;
+  box-shadow: var(--shadow-soft);
+}
+
+/* paper note with a 📎 paperclip, like the reference activity cards */
+.wj-note {
+  position: relative;
+}
+.wj-note::before {
+  content: "📎";
+  position: absolute;
+  top: -0.9rem;
+  left: 1.4rem;
+  font-size: 1.5rem;
+  transform: rotate(-18deg);
+  filter: drop-shadow(0 2px 2px rgba(39, 68, 114, 0.25));
+}
+
+.wj-card-hover {
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+.wj-card-hover:hover {
+  transform: translateY(-3px) rotate(-0.4deg);
+  box-shadow: var(--shadow-lift);
+}
+
+/* sticker-style icon circle (white sticker edge + shadow) */
+.wj-sticker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  border-radius: 9999px;
+  border: 3px solid #ffffff;
+  box-shadow: 0 0 0 2px rgba(39, 68, 114, 0.15), 0 4px 10px rgba(39, 68, 114, 0.2);
+}
+
+/* ── Buttons ──────────────────────────────────────────────── */
+.wj-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 1.4rem 1.7rem 1.4rem 1.8rem / 1.7rem 1.4rem 1.8rem 1.4rem;
+  padding: 0.7rem 1.5rem;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  letter-spacing: 0.03em;
+  color: #ffffff;
+  background: linear-gradient(135deg, var(--color-sunset), var(--color-mango-deep));
+  border: 2px solid rgba(255, 255, 255, 0.65);
+  box-shadow: 0 4px 14px rgba(228, 87, 59, 0.4);
+  text-shadow: 0 1px 2px rgba(39, 68, 114, 0.25);
+  transition: transform 150ms ease, box-shadow 150ms ease, filter 150ms ease;
+  cursor: pointer;
+}
+.wj-btn:hover {
+  transform: translateY(-2px) rotate(-0.6deg) scale(1.02);
+  filter: brightness(1.05);
+}
+.wj-btn:active {
+  transform: translateY(0) scale(0.99);
+}
+
+.wj-btn-ocean {
+  background: linear-gradient(135deg, var(--color-ocean), var(--color-palm));
+  box-shadow: 0 4px 14px rgba(20, 131, 124, 0.4);
+}
+.wj-btn-hibiscus {
+  background: linear-gradient(135deg, var(--color-hibiscus), var(--color-ube));
+  box-shadow: 0 4px 14px rgba(207, 62, 107, 0.4);
+}
+.wj-btn-ghost {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  border: 2px dashed var(--color-ink-soft);
+  box-shadow: var(--shadow-soft);
+  text-shadow: none;
+}
+
+/* ── Inputs ───────────────────────────────────────────────── */
+.wj-input {
+  width: 100%;
+  border-radius: 1.1rem 1.4rem 1.1rem 1.5rem / 1.4rem 1.1rem 1.5rem 1.1rem;
+  border: 2px solid var(--color-sand-deep);
+  background: var(--color-paper);
+  padding: 0.8rem 1.1rem;
+  font-size: 1rem;
+  font-family: var(--font-body);
+  color: var(--color-ink);
+  outline: none;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+.wj-input:focus {
+  border-color: var(--color-mango);
+  box-shadow: 0 0 0 4px rgba(255, 210, 63, 0.3);
+}
+
+/* ── Chips: little white stickers ─────────────────────────── */
+.wj-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 9999px;
+  padding: 0.25rem 0.85rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  background: #ffffff;
+  color: var(--color-ink-soft);
+  border: 1.5px solid var(--color-sand-deep);
+  box-shadow: 0 1px 4px rgba(39, 68, 114, 0.12);
+}
+
+/* ── Passport stamps ──────────────────────────────────────── */
+.wj-stamp {
+  position: relative;
+  border: 3px dashed var(--color-ink-soft);
+  border-radius: 0.9rem 1.2rem 0.9rem 1.3rem;
+  transform: rotate(-3deg);
+  color: var(--color-ink-soft);
+  background: rgba(255, 255, 255, 0.55);
+}
+.wj-stamp-earned {
+  border-color: var(--color-sunset-deep);
+  color: var(--color-sunset-deep);
+  background: rgba(255, 210, 63, 0.22);
+  box-shadow: 0 3px 8px rgba(228, 87, 59, 0.2);
+}
+
+/* ── Tropical corner leaves (CSS-shaped, no images) ───────── */
+.wj-leaf {
+  position: absolute;
+  border-radius: 0 100% 0 100%;
+  background: linear-gradient(135deg, #5fae7f 0%, #8cc98f 55%, #b7dd9e 100%);
+  opacity: 0.5;
+  box-shadow: inset 0 0 12px rgba(46, 149, 99, 0.4);
+}
+.wj-leaf-dark {
+  background: linear-gradient(135deg, #3e9168 0%, #63b581 100%);
+}
+
+/* dotted plane path doodle */
+.wj-doodle-path {
+  position: absolute;
+  border-top: 3px dotted rgba(39, 68, 114, 0.35);
+  border-radius: 100%;
+}
+
+/* ── Birthday confetti + balloons ─────────────────────────── */
+@keyframes wj-fall {
+  0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(105vh) rotate(720deg); opacity: 0.7; }
+}
+.wj-confetti {
+  position: absolute;
+  top: 0;
+  width: 10px;
+  height: 14px;
+  border-radius: 3px;
+  animation: wj-fall linear infinite;
+}
+
+@keyframes wj-float {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-14px) rotate(2deg); }
+}
+.wj-balloon {
+  display: inline-block;
+  animation: wj-float 3s ease-in-out infinite;
+}
+
+/* gentle idle sway for corner leaves */
+@keyframes wj-sway {
+  0%, 100% { transform: rotate(var(--sway-base, 0deg)); }
+  50% { transform: rotate(calc(var(--sway-base, 0deg) + 3deg)); }
+}
+
+/* Adventure Theater slide transition */
+@keyframes wj-slide-in {
+  0% { transform: translateX(2.5rem); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+.wj-slide-in {
+  animation: wj-slide-in 350ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes wj-pop-in {
+  0% { transform: scale(0.7); opacity: 0; }
+  70% { transform: scale(1.04); }
+  100% { transform: scale(1); opacity: 1; }
+}
+.wj-pop-in {
+  animation: wj-pop-in 400ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* ── Flashcard flip ───────────────────────────────────────── */
+.wj-flip {
+  perspective: 1000px;
+}
+.wj-flip-inner {
+  position: relative;
+  transition: transform 500ms;
+  transform-style: preserve-3d;
+}
+.wj-flip.flipped .wj-flip-inner {
+  transform: rotateY(180deg);
+}
+.wj-flip-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.wj-flip-back {
+  transform: rotateY(180deg);
+}
+
+/* Accessibility: honor the user's reduced-motion preference (DESIGN_SYSTEM.md §29).
+   Ambient/decorative motion stops; instant state changes remain. */
+@media (prefers-reduced-motion: reduce) {
+  .wj-confetti,
+  .wj-balloon,
+  .wj-leaf {
+    animation: none;
+  }
+  .wj-pop-in,
+  .wj-slide-in {
+    animation-duration: 1ms;
+  }
+  .wj-flip-inner {
+    transition: none;
+  }
+  .wj-card-hover,
+  .wj-card-hover:hover,
+  .wj-btn,
+  .wj-btn:hover,
+  .wj-btn:active {
+    transition: none;
+    transform: none;
+  }
+}

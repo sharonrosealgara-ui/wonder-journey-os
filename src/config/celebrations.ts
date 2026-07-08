@@ -22,6 +22,7 @@ export const celebrations: Celebration[] = [
   { id: "bday-ezra", name: "Ezra", studentId: "ezra", type: "birthday", month: 6, day: 22, emoji: "🍳", note: "Ezra's special day!" },
   { id: "bday-asa", name: "Asa", studentId: "asa", type: "birthday", month: 9, day: 8, emoji: "🚜", note: "Asa's special day!" },
   { id: "bday-selah", name: "Selah", studentId: "selah", type: "birthday", month: 11, day: 30, emoji: "🧁", note: "Selah's special day!" },
+  { id: "bday-sharon", name: "Teacher Sharon", type: "birthday", month: 7, day: 21, emoji: "🌺", note: "Teacher Sharon's special day!" },
   // ── FAMILY DATES — add anniversaries & feast days here ──
   { id: "first-class", name: "First Wonder Journey Class!", type: "family", month: 7, day: 13, emoji: "🎒", note: "The day our Philippine adventure began" },
 ];

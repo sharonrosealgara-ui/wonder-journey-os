@@ -197,6 +197,57 @@ pricing games, spelling through Filipino loanwords.
 
 ---
 
+# Cross-Curricular Learning System (Decision 042)
+
+**Wonder Journey does NOT separate learning into isolated subjects.** Every Adventure
+naturally integrates multiple academic disciplines into one continuous story. Children
+learn geography through travel, math through cooking, English through storytelling,
+science through nature, and values through all of it.
+
+**Every Adventure should weave in as many as fit naturally** (never force all):
+🌍 Geography · 📖 English · ➕ Mathematics · 🇵🇭 Filipino Culture · 🗣 Tagalog ·
+🗣 Hiligaynon · 🔬 Science · 🎨 Arts · 🎵 Music · 🍳 Cooking/Baking · 🤝 Character ·
+🙏 Gratitude · 💬 Family Discussion · 📝 Writing · 🧠 Critical Thinking · 🎮 Game · 🏆 Quiz
+
+**Math always connects to the lesson:** cooking → fractions & measurement · maps →
+distance · travel → time · shopping → money (pesos!) · recipes → scaling.
+
+**Travel sequence for geography lessons** *(map zoom animation is Phase 2)*: World → Asia
+→ Philippines → Region → Province → City → Destination — children should always know
+*where* they are exploring, visually, never text-only.
+
+## Three-Tier Age Adaptation ✅ (shipped in the Adventure Theater)
+
+The family learns together on one shared screen; each child gets age-appropriate challenge:
+
+| Tier | Ages | Child | Style |
+|---|---|---|---|
+| 🐣 **Explorer** | 7–8 | Selah | Simple, pictures, matching, tracing, counting, short reading, 2-choice quizzes |
+| 🦅 **Adventure** | 9–10 | Asa, Ezra | More writing, multiplication, retelling, spelling bees, 3-choice quizzes + sentence challenges |
+| 🏔️ **Trailblazer** | 11–12 | Rylee | Critical thinking, paragraph writing, leadership ("teach the family"), problem solving, presentations |
+
+The tier auto-defaults from the selected child's age and switches with one tap in the
+theater — so Teacher Sharon can re-ask the same question at three depths.
+
+## Adventure Academy ✅ (shipped as a theater slide)
+
+At the end of every class, before Reflection: **15-minute English practice** (reading,
+spelling, vocabulary, grammar, writing — from the lesson's own words) **+ 15-minute Math
+practice** (number sense through word problems — always themed on the lesson: islands,
+jeepney fares, recipe servings, pesos). Prompts are **oral and shared-screen** (family
+answers together — no forms for children), tap-to-check, tier-adaptive.
+
+## The Adventure Design Questions
+
+Every Adventure should answer: Where are we exploring today? · What are we discovering? ·
+What English skills are we learning? · What Math skills are we practicing? · What Tagalog
+and Hiligaynon words are we learning? · What family values are we developing? · What will
+we create together? · What memory will we make today?
+
+**If an Adventure cannot answer these questions, redesign it before implementation.**
+
+---
+
 # Standard Lesson Flow
 
 Every episode follows this order (per CONTENT_GUIDELINES.md; steps 1–3 are the platform's

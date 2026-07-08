@@ -402,9 +402,31 @@ Decisions 001–028 are the founding product decisions (ratified at project ince
 
 ---
 
+## Decision 041 — Production Readiness Layer
+**Date:** 2026-07-08 · **Status:** Active
+- **Context:** Sharon directed: build as production SaaS, not a demo — GitHub, Vercel, custom domains, SEO, PWA.
+- **Decision:** Initialized the **git repository** (baseline commit of the full MVP); added **SEO** (metadataBase + Open Graph + Twitter cards + robots meta via `layout.tsx`; `robots.ts`; `sitemap.ts` generated from lesson/recipe config); **PWA manifest** (`manifest.ts` + hand-drawn hibiscus `public/icon.svg`; installable; offline caching is future); **domain-agnostic URLs** (`siteUrl` from `NEXT_PUBLIC_SITE_URL`, never hardcoded); **`.env.example`** documenting all future keys (server-side only, per API_PLAN security); **MISSION.md** (brand charter).
+- **Reasoning:** These are the production items with zero runtime risk before Monday; auth/database/Make.com remain Phase 8–9 (Decision 040).
+- **Alternatives considered:** Full Lighthouse optimization pass now (deferred — measure on the deployed URL, not localhost).
+- **Benefits:** Deploy-to-Vercel is now push-button; any custom domain works; installable on the family's tablet.
+- **Possible drawbacks:** SVG-only PWA icon (add PNG sizes at deploy time if any device complains).
+- **Future review:** Run Lighthouse against the production URL after deployment; target 95+ across categories (TESTING.md §26).
+
+## Decision 042 — Family Mode UX Revision + Cross-Curricular System
+**Date:** 2026-07-08 · **Status:** Active
+- **Context:** Sharon's UX revision: keep exactly two portals; the family attends together from one shared screen (children are young — no forms mid-class); the teacher timer must never be visible to families; Grandma joins the family; and the curriculum becomes explicitly cross-curricular with three age tiers and end-of-class academics.
+- **Decision:** (1) **Timer is teacher-only** in the theater. (2) **Grandma** added to `familyAdults` config. (3) **Family Mode opening screen**: the theater's welcome slide now greets "Welcome, The Ferrell Family!", lists Today's Explorers (all four kids + Shaun + Taylor + Grandma + Teacher Sharon), and starts with one big "Start Today's Adventure" button. (4) **Three-tier Age Adaptation** replaces the two-tier system: 🐣 Explorer (7–8) / 🦅 Adventure (9–10) / 🏔️ Trailblazer (11–12) — auto-defaults by child age, one-tap cycling, drives quiz choices and bonus challenges. (5) **Adventure Academy** slide after every quiz: 15-min English + 15-min Math practice, generated from the lesson (words → spelling/sentences; theme → pesos/islands/recipe-fraction word problems), oral and shared-screen, tier-adaptive. (6) Cross-curricular philosophy codified in CURRICULUM_FRAMEWORK.md with the eight Adventure Design Questions.
+- **Reasoning:** "Family sees the adventure. Teacher controls the experience." Children answer aloud together — the platform never asks a 7-year-old to fill a form during class.
+- **Alternatives considered:** Per-child quiz devices (rejected by product definition); written academy worksheets (rejected — oral keeps one shared screen and family energy).
+- **Benefits:** Individual tracking still works underneath (participation, badges, prayer rotation, per-child data all keyed by student id in config/storage) without any child login.
+- **Possible drawbacks / deferred:** animated map-zoom travel sequence, satellite view, music/rhythm activities, printable academy worksheets — Phase 2–3.
+- **Future review:** After week one, tune Academy prompt difficulty per real kids' reactions.
+
+---
+
 # Future Decisions
 
-IDs 041+ are reserved. Log a new entry for: new dependencies, data-model changes,
+IDs 043+ are reserved. Log a new entry for: new dependencies, data-model changes,
 schedule/curriculum shape changes, backend migration steps, and anything a future
 developer would ask "why is it like this?" about. Never delete; supersede.
 

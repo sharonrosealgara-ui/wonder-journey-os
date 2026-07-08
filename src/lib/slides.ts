@@ -10,6 +10,10 @@
 import type { Lesson, LessonSection, PhrasePair } from "@/config/lessons";
 import { mascots, type Mascot } from "@/config/mascots";
 
+// Three-tier Age Adaptation: the family learns together on one screen,
+// each child gets age-appropriate challenge (Decision 042).
+export type ExplorerLevel = "explorer" | "adventure" | "trailblazer";
+
 export type SlideKind =
   | "welcome"
   | "blessings"
@@ -22,6 +26,7 @@ export type SlideKind =
   | "game"
   | "recipe"
   | "quiz"
+  | "academy"
   | "reflection"
   | "challenge"
   | "memory"
@@ -48,6 +53,7 @@ const guideFor: Record<SlideKind, Mascot> = {
   game: mascots.lila,
   recipe: mascots.mangga,
   quiz: mascots.lila,
+  academy: mascots.tala,
   reflection: mascots.isla,
   challenge: mascots.kiko,
   memory: mascots.mangga,
@@ -92,6 +98,7 @@ export function buildSlides(lesson: Lesson): Slide[] {
     push("recipe", "Cooking Time!", "👩‍🍳");
   }
   push("quiz", "Adventure Quiz", "🧠");
+  push("academy", "Adventure Academy", "🎓");
   push("reflection", "Reflection", "💭");
   push("challenge", "Family Challenge", "🏆");
   push("memory", "Capture Today's Memory", "📷");
@@ -147,6 +154,78 @@ export function buildQuiz(phrases: PhrasePair[], seedCount = 5, distractorCount 
     });
   }
   return questions;
+}
+
+// ── Adventure Academy ────────────────────────────────────────
+// 15-min English + 15-min Math practice at the end of every class.
+// Oral, shared-screen, family-mode friendly — prompts, not forms.
+// Difficulty follows the active tier; math always themes on the lesson.
+
+export function buildAcademy(
+  lesson: Lesson,
+  level: ExplorerLevel
+): { english: string[]; math: string[] } {
+  const phrases = lesson.phrases ?? [];
+  const p1 = phrases[0];
+  const p2 = phrases[1] ?? p1;
+  const wordCount = Math.max(phrases.length, 3);
+  // Prefer a short, clean single word for spelling practice.
+  const spellable = [...phrases]
+    .map((p) => p.english.replace(/[^a-zA-Z ]/g, "").trim())
+    .filter((w) => w && !w.includes(" "))
+    .sort((a, b) => a.length - b.length)[0];
+
+  const english: string[] =
+    level === "explorer"
+      ? [
+          spellable ? `Spell "${spellable}" out loud together — one letter each!` : "Spell your name out loud, one letter at a time!",
+          p2 ? `Point and say: which picture matches "${p2.english}"? Find something like it in the room!` : "Find something in the room and name it in English!",
+          `Retell today's story in 3 short sentences — everyone adds one.`,
+          p1 ? `Say "${p1.tagalog}" and "${p1.hiligaynon}" — which sounds do they share with English?` : "Say today's new word in all three languages!",
+        ]
+      : level === "adventure"
+      ? [
+          p1 ? `Use "${p1.english}" and "${p2.english}" together in one full sentence.` : "Make one full sentence about today's adventure.",
+          `Retell today's story in your own words — beginning, middle, end.`,
+          phrases.length >= 2
+            ? `Spelling bee: take turns spelling the English words from today's vocabulary — start easy, get harder!`
+            : "Have a mini spelling bee with today's words.",
+          `Finish this sentence in writing: "The most amazing thing I discovered today was..."`,
+        ]
+      : [
+          `Write a 4–5 sentence paragraph about today's discovery — with a topic sentence and a closing sentence.`,
+          p1 ? `Teach time! Explain to a younger explorer what "${p1.english}" means in Tagalog AND Hiligaynon, with an example.` : "Teach today's topic to a younger explorer in one minute.",
+          `Debate gently: what was the MOST important idea today, and why? Defend your answer.`,
+          `Interview a parent: ask two questions about today's topic and summarize their answers aloud.`,
+        ];
+
+  const math: string[] =
+    level === "explorer"
+      ? [
+          `Count today's new words: we learned ${wordCount}! Now count backwards from ${wordCount + 5}.`,
+          `If each explorer gets 2 stickers and there are 4 explorers, how many stickers is that?`,
+          `Pattern time: 🥭🌺🥭🌺… what comes next? Make your own pattern with 3 things.`,
+          `Shape hunt: find 3 circles and 2 rectangles in the room. Which did you find first?`,
+        ]
+      : level === "adventure"
+      ? [
+          `We learned ${wordCount} words today. If we learn ${wordCount} words every class, how many after 4 classes?`,
+          `The Philippines has 7,641 islands. Round that to the nearest hundred, then the nearest thousand.`,
+          lesson.recipeId
+            ? `Our recipe serves 8. How would you split it evenly for our family of 7? What's left?`
+            : `Class started at 9:00 and lasts 90 minutes. What time does it end?`,
+          `If a jeepney ride costs 13 pesos, how much do 4 riders pay together?`,
+        ]
+      : [
+          lesson.recipeId
+            ? `Our recipe uses 2 cups of cream for 8 servings. How much cream for 12 servings? Show your thinking.`
+            : `A flight to Manila covers about 11,000 km in 14 hours. Roughly how many km per hour is that?`,
+          `Only about 2,000 of the Philippines' 7,641 islands are inhabited. Estimate that as a fraction and a percent.`,
+          `Plan it: with ₱500 and pancit ingredients costing ₱85, ₱120, ₱65, and ₱95 — what's the total and the change?`,
+          `Word problem challenge: write your OWN word problem about today's lesson and quiz the family!`,
+        ];
+
+  return { english, math };
 }
 
 export function shuffle<T>(arr: T[]): T[] {

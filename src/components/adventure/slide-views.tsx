@@ -6,7 +6,7 @@ import { AdventureQuiz } from "@/components/adventure/quiz";
 import { MatchingGame } from "@/components/matching-game";
 import { PhotoUpload } from "@/components/photo-upload";
 import { getDestination } from "@/config/destinations";
-import { getStudent, students } from "@/config/family";
+import { familyAdults, familyName, getStudent, students, teacherName } from "@/config/family";
 import type { Lesson } from "@/config/lessons";
 import { getRecipe } from "@/config/recipes";
 import {
@@ -18,7 +18,7 @@ import {
   type JournalEntry,
   type LessonCompletion,
 } from "@/lib/app-state";
-import { buildMission, getYouTubeEmbed, type Slide } from "@/lib/slides";
+import { buildAcademy, buildMission, getYouTubeEmbed, type ExplorerLevel, type Slide } from "@/lib/slides";
 import { newId, useStored } from "@/lib/storage";
 
 // A mascot introduces each slide with a speech bubble.
@@ -42,18 +42,18 @@ export function SlideView({
   onNext,
   onQuizFinish,
   quizResult,
-  level = "older",
+  level = "adventure",
 }: {
   slide: Slide;
   lesson: Lesson;
   onNext: () => void;
   onQuizFinish: (score: number, total: number) => void;
   quizResult: { score: number; total: number } | null;
-  level?: "younger" | "older";
+  level?: ExplorerLevel;
 }) {
   switch (slide.kind) {
     case "welcome":
-      return <WelcomeSlide slide={slide} lesson={lesson} />;
+      return <WelcomeSlide slide={slide} lesson={lesson} onNext={onNext} />;
     case "blessings":
       return <BlessingsSlide slide={slide} />;
     case "prayer":
@@ -78,6 +78,8 @@ export function SlideView({
           <AdventureQuiz phrases={lesson.phrases ?? []} onFinish={onQuizFinish} level={level} />
         </div>
       );
+    case "academy":
+      return <AcademySlide slide={slide} lesson={lesson} level={level} />;
     case "reflection":
       return <ReflectionSlide slide={slide} lesson={lesson} />;
     case "challenge":
@@ -91,23 +93,112 @@ export function SlideView({
 
 /* ── Individual slides ─────────────────────────────────────── */
 
-function WelcomeSlide({ slide, lesson }: { slide: Slide; lesson: Lesson }) {
-  const [activeStudentId] = useStored<string | null>(KEYS.activeStudent, null);
-  const student = getStudent(activeStudentId);
+// Family Mode opening screen — one shared screen, the whole family together.
+function WelcomeSlide({ slide, lesson, onNext }: { slide: Slide; lesson: Lesson; onNext: () => void }) {
+  const explorers = [
+    ...students.map((s) => `${s.emoji} ${s.name}`),
+    ...familyAdults.map((a) => `💛 ${a}`),
+    `🌺 ${teacherName}`,
+  ];
   return (
     <div className="text-center">
-      <div className="mb-4 text-6xl">🌴🗺️✨</div>
-      <h1 className="wj-outline font-display text-4xl sm:text-6xl">Welcome Explorers!</h1>
-      <p className="font-hand mt-3 text-2xl text-ink-soft">
-        {student ? `${student.name}, today's` : "Today's"} adventure:
-      </p>
+      <div className="mb-3 text-6xl">🌴🗺️✨</div>
+      <h1 className="wj-outline font-display text-4xl sm:text-6xl">
+        Welcome, {familyName}!
+      </h1>
       <p className="mt-4">
         <span className="wj-brush font-display text-2xl sm:text-3xl">
           {lesson.emoji} {lesson.title}
         </span>
       </p>
-      <p className="font-hand mt-4 text-lg text-ink-soft">{lesson.subtitle}</p>
+      <p className="font-hand mt-3 text-lg text-ink-soft">{lesson.subtitle}</p>
+
+      <p className="font-hand mt-5 text-xl text-ink-soft">Today&apos;s Explorers:</p>
+      <div className="mx-auto mt-2 flex max-w-xl flex-wrap justify-center gap-2">
+        {explorers.map((e) => (
+          <span key={e} className="wj-chip !text-sm">{e}</span>
+        ))}
+      </div>
+
+      <button className="wj-btn mt-6 text-xl" onClick={onNext}>
+        🌅 Start Today&apos;s Adventure
+      </button>
       <MascotBubble slide={slide} line={slide.mascot.catchphrase} />
+    </div>
+  );
+}
+
+// Adventure Academy — 15-min English + 15-min Math at the end of every class.
+// Oral and shared-screen: prompts the family answers together, not forms.
+function AcademySlide({
+  slide,
+  lesson,
+  level,
+}: {
+  slide: Slide;
+  lesson: Lesson;
+  level: ExplorerLevel;
+}) {
+  const { english, math } = buildAcademy(lesson, level);
+  const [done, setDone] = useState<string[]>([]);
+  const toggle = (id: string) =>
+    setDone((d) => (d.includes(id) ? d.filter((x) => x !== id) : [...d, id]));
+
+  const tierLabel =
+    level === "explorer" ? "🐣 Explorer (7–8)" : level === "adventure" ? "🦅 Adventure (9–10)" : "🏔️ Trailblazer (11–12)";
+
+  const renderList = (items: string[], prefix: string) => (
+    <ul className="mt-3 space-y-2">
+      {items.map((item, i) => {
+        const id = `${prefix}-${i}`;
+        const checked = done.includes(id);
+        return (
+          <li key={id}>
+            <button
+              onClick={() => toggle(id)}
+              className={`flex w-full items-start gap-2.5 rounded-2xl border-2 p-2.5 text-left text-sm transition-colors ${
+                checked
+                  ? "border-palm/50 bg-palm/10 text-ink-soft line-through"
+                  : "border-sand-deep bg-white hover:border-mango"
+              }`}
+            >
+              <span
+                className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-xs ${
+                  checked ? "bg-palm text-white" : "bg-sand-deep"
+                }`}
+              >
+                {checked ? "✓" : ""}
+              </span>
+              {item}
+            </button>
+          </li>
+        );
+      })}
+    </ul>
+  );
+
+  return (
+    <div className="mx-auto max-w-2xl">
+      <h1 className="wj-outline text-center font-display text-3xl sm:text-4xl">
+        🎓 Adventure Academy
+      </h1>
+      <p className="font-hand mt-2 text-center text-lg text-ink-soft">
+        A quick brain workout before we finish — answer out loud, together!
+      </p>
+      <p className="mt-2 text-center">
+        <span className="wj-chip">{tierLabel} — switch tiers with the level button up top</span>
+      </p>
+      <div className="mt-5 grid gap-4 sm:grid-cols-2">
+        <section className="wj-card p-5">
+          <h2 className="font-display text-lg">📖 English · 15 min</h2>
+          {renderList(english, "en")}
+        </section>
+        <section className="wj-card p-5">
+          <h2 className="font-display text-lg">➕ Math · 15 min</h2>
+          {renderList(math, "ma")}
+        </section>
+      </div>
+      <MascotBubble slide={slide} line="Every subject is part of the same adventure!" />
     </div>
   );
 }
@@ -260,7 +351,7 @@ function VocabSlide({
 }: {
   slide: Slide;
   lesson: Lesson;
-  level: "younger" | "older";
+  level: ExplorerLevel;
 }) {
   const [revealed, setRevealed] = useState<number[]>([]);
   const phrases = lesson.phrases ?? [];
@@ -272,9 +363,14 @@ function VocabSlide({
       <p className="font-hand mt-2 text-center text-lg text-ink-soft">
         Tap a card to reveal — then everyone says it out loud, three times, big smile!
       </p>
-      {level === "older" && (
+      {level === "adventure" && (
         <p className="mt-2 text-center">
-          <span className="wj-chip">🦅 Older Explorer Challenge: use each word in a full sentence!</span>
+          <span className="wj-chip">🦅 Adventure Challenge: use each word in a full sentence!</span>
+        </p>
+      )}
+      {level === "trailblazer" && (
+        <p className="mt-2 text-center">
+          <span className="wj-chip">🏔️ Trailblazer Challenge: build a mini dialogue using three of these words!</span>
         </p>
       )}
       <div className="mt-5 grid gap-3 sm:grid-cols-2">

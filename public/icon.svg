@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Wonder Journey — hibiscus on watercolor sky -->
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#c9dff2"/>
+      <stop offset="1" stop-color="#a5c6e6"/>
+    </linearGradient>
+    <linearGradient id="petal" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ec5d87"/>
+      <stop offset="1" stop-color="#cf3e6b"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#sky)"/>
+  <g transform="translate(256 256)">
+    <g fill="url(#petal)" stroke="#fffdf6" stroke-width="10">
+      <ellipse rx="62" ry="118" transform="rotate(0) translate(0 -78)"/>
+      <ellipse rx="62" ry="118" transform="rotate(72) translate(0 -78)"/>
+      <ellipse rx="62" ry="118" transform="rotate(144) translate(0 -78)"/>
+      <ellipse rx="62" ry="118" transform="rotate(216) translate(0 -78)"/>
+      <ellipse rx="62" ry="118" transform="rotate(288) translate(0 -78)"/>
+    </g>
+    <circle r="52" fill="#ffd23f" stroke="#fffdf6" stroke-width="10"/>
+    <circle r="18" fill="#e5a917"/>
+  </g>
+</svg>

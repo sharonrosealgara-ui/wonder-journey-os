@@ -22,6 +22,9 @@ export const teacherName = "Teacher Sharon";
 
 export const parentNames = ["Shaun", "Taylor"];
 
+// Everyone who joins class from the family's shared screen (Decision 042).
+export const familyAdults = ["Shaun", "Taylor", "Grandma"];
+
 export const students: Student[] = [
   {
     id: "rylee",

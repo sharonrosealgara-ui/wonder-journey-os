@@ -12,7 +12,19 @@ import { getTodaysPrayerLeader, KEYS, todayISO } from "@/lib/app-state";
 import { buildMission, buildSlides } from "@/lib/slides";
 import { useStored } from "@/lib/storage";
 
-type ExplorerLevel = "younger" | "older";
+// Three-tier Age Adaptation (Decision 042): the family learns together,
+// each child gets age-appropriate challenge.
+type ExplorerLevel = "explorer" | "adventure" | "trailblazer";
+
+const levelMeta: Record<ExplorerLevel, { emoji: string; label: string; ages: string }> = {
+  explorer: { emoji: "🐣", label: "Explorer", ages: "7–8" },
+  adventure: { emoji: "🦅", label: "Adventure", ages: "9–10" },
+  trailblazer: { emoji: "🏔️", label: "Trailblazer", ages: "11–12" },
+};
+
+function levelForAge(age: number): ExplorerLevel {
+  return age <= 8 ? "explorer" : age <= 10 ? "adventure" : "trailblazer";
+}
 
 // 🌴 ADVENTURE THEATER — the Family Adventure Classroom.
 // A full-screen presentation mode (like Canva presentation mode)
@@ -27,7 +39,7 @@ export function AdventureTheater({ lesson }: { lesson: Lesson }) {
   const [elapsed, setElapsed] = useState(0);
   const [mounted, setMounted] = useState(false);
   const [started, setStarted] = useState(false); // teacher sees the prep checklist first
-  const [level, setLevel] = useState<ExplorerLevel>("older");
+  const [level, setLevel] = useState<ExplorerLevel>("adventure");
   const stageRef = useRef<HTMLDivElement>(null);
 
   const [mode] = useStored<Mode>(KEYS.mode, "family");
@@ -36,7 +48,7 @@ export function AdventureTheater({ lesson }: { lesson: Lesson }) {
   // Age Level Adaptation: default from the selected explorer's age.
   useEffect(() => {
     const s = getStudent(activeStudentId);
-    if (s) setLevel(s.age <= 9 ? "younger" : "older");
+    if (s) setLevel(levelForAge(s.age));
   }, [activeStudentId]);
 
   // Portal to <body> so the theater escapes the app shell's stacking
@@ -117,14 +129,21 @@ export function AdventureTheater({ lesson }: { lesson: Lesson }) {
             Today&apos;s Episode {lesson.order} · Adventure Theater
           </p>
         </div>
-        <span className="wj-chip hidden sm:inline-flex">⏱️ {mins}:{secs}</span>
+        {/* Timer is a teacher tool — never shown to the family (Decision 042) */}
+        {mode === "teacher" && (
+          <span className="wj-chip hidden sm:inline-flex">⏱️ {mins}:{secs}</span>
+        )}
         <button
           className="wj-chip hover:bg-mango/20"
-          onClick={() => setLevel((l) => (l === "younger" ? "older" : "younger"))}
-          title="Age Level Adaptation — switches quiz difficulty and bonus challenges"
+          onClick={() =>
+            setLevel((l) =>
+              l === "explorer" ? "adventure" : l === "adventure" ? "trailblazer" : "explorer"
+            )
+          }
+          title={`Age Adaptation (ages ${levelMeta[level].ages}) — tap to switch tier`}
         >
-          {level === "younger" ? "🐣" : "🦅"}{" "}
-          <span className="hidden sm:inline">{level === "younger" ? "Younger" : "Older"}</span>
+          {levelMeta[level].emoji}{" "}
+          <span className="hidden sm:inline">{levelMeta[level].label}</span>
         </button>
         <button
           className="wj-chip hover:bg-mango/20"

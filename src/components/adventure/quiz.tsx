@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import type { PhrasePair } from "@/config/lessons";
-import { buildQuiz } from "@/lib/slides";
+import { buildQuiz, type ExplorerLevel } from "@/lib/slides";
 
 // Gentle adventure quiz: multiple choice from the lesson's phrases.
 // Wrong answers pulse softly and allow another try — never a red X.
@@ -10,15 +10,15 @@ import { buildQuiz } from "@/lib/slides";
 export function AdventureQuiz({
   phrases,
   onFinish,
-  level = "older",
+  level = "adventure",
 }: {
   phrases: PhrasePair[];
   onFinish: (score: number, total: number) => void;
-  level?: "younger" | "older";
+  level?: ExplorerLevel;
 }) {
-  // Younger Explorer Mode: 2 choices. Older Explorer Challenge: 3 choices.
+  // Explorer (7–8): 2 choices · Adventure (9–10): 3 choices · Trailblazer (11–12): 3 + bonus.
   const questions = useMemo(
-    () => buildQuiz(phrases, 5, level === "younger" ? 1 : 2),
+    () => buildQuiz(phrases, 5, level === "explorer" ? 1 : 2),
     [phrases, level]
   );
   const [index, setIndex] = useState(0);
@@ -77,11 +77,18 @@ export function AdventureQuiz({
         <div className="mt-4 flex flex-wrap justify-center gap-2">
           <span className="wj-chip">🧠 Quiz complete</span>
           <span className="wj-chip">💬 {phrases.length} words practiced</span>
-          <span className="wj-chip">{level === "younger" ? "🐣 Younger Explorer" : "🦅 Older Explorer"}</span>
+          <span className="wj-chip">
+            {level === "explorer" ? "🐣 Explorer" : level === "adventure" ? "🦅 Adventure" : "🏔️ Trailblazer"}
+          </span>
         </div>
-        {level === "older" && (
+        {level === "adventure" && (
           <p className="font-hand mt-3 text-lg text-ink-soft">
             🦅 Bonus challenge: teach your favorite new word to a younger explorer!
+          </p>
+        )}
+        {level === "trailblazer" && (
+          <p className="font-hand mt-3 text-lg text-ink-soft">
+            🏔️ Bonus challenge: lead the family — quiz everyone on today&apos;s words from memory!
           </p>
         )}
         <button className="wj-btn mt-6" onClick={() => onFinish(firstTryScore, total)}>

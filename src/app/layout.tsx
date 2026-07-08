@@ -1,11 +1,38 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { AppShell } from "@/components/app-shell";
-import { brand } from "@/config/brand";
+import { brand, siteUrl } from "@/config/brand";
+
+const title = `${brand.productName} — ${brand.worldName}`;
+const description = `${brand.tagline} ${brand.worldSubtitle}.`;
 
 export const metadata: Metadata = {
-  title: `${brand.productName} — ${brand.worldName}`,
-  description: `${brand.tagline} ${brand.worldSubtitle}.`,
+  metadataBase: new URL(siteUrl),
+  title,
+  description,
+  applicationName: brand.productName,
+  openGraph: {
+    title,
+    description,
+    siteName: brand.productName,
+    type: "website",
+    url: siteUrl,
+    images: [{ url: "/icon.svg", width: 512, height: 512, alt: brand.productName }],
+  },
+  twitter: {
+    card: "summary",
+    title,
+    description,
+    images: ["/icon.svg"],
+  },
+  robots: { index: true, follow: true },
+  icons: { icon: "/icon.svg" },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#c9dff2",
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({

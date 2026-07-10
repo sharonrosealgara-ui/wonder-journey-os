@@ -139,11 +139,27 @@ export default function HomeBase() {
 }
 
 function HeroScene() {
-  // Layered watercolor-style scene in pure CSS. Replace with a real
-  // illustration by dropping an <img> here (e.g. /hero-philippines.jpg).
+  const [imgOk, setImgOk] = useState(true);
+
+  if (imgOk) {
+    return (
+      <div className="relative min-h-[220px] overflow-hidden md:min-h-full">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/hero-philippines.jpg"
+          alt="A watercolor scene of the Philippines — volcanoes, rice terraces, a bangka boat, a colorful jeepney, a soaring eagle, and tropical flowers"
+          className="absolute inset-0 h-full w-full object-cover"
+          onError={() => setImgOk(false)}
+        />
+        {/* soft edge blend into the card */}
+        <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-paper to-transparent" />
+      </div>
+    );
+  }
+
+  // CSS fallback if the image file is ever missing.
   return (
     <div className="relative min-h-[220px] overflow-hidden bg-gradient-to-b from-[#bfe3f5] via-[#dff0d8] to-[#f3e6c8] md:min-h-full">
-      {/* passport stamp watermark */}
       <div className="absolute right-5 top-4 h-20 w-20 rotate-[-8deg] rounded-full border-2 border-ink-soft/25 text-center text-[8px] font-bold uppercase leading-[80px] tracking-widest text-ink-soft/30">
         Philippines
       </div>
@@ -156,7 +172,6 @@ function HeroScene() {
       <span className="absolute bottom-4 left-1/2 -translate-x-1/2 text-4xl">🏝️</span>
       <span className="absolute bottom-8 right-1/3 text-2xl">🌴</span>
       <span className="absolute bottom-3 left-6 text-2xl">🌺</span>
-      {/* sea */}
       <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#8fd0e8]/70 to-transparent" />
     </div>
   );

@@ -2,132 +2,200 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { brand } from "@/config/brand";
-import { navItems, normalizeMode, type Mode } from "@/config/navigation";
-import { getStudent } from "@/config/family";
+import { familyNav, normalizeMode, teacherNav, type Mode } from "@/config/navigation";
 import { KEYS } from "@/lib/app-state";
+import { useProgress } from "@/lib/progress";
 import { useStored } from "@/lib/storage";
 import { BirthdayPopup } from "@/components/birthday-popup";
 import { TropicalDecor } from "@/components/tropical-decor";
 
-// Wonder Journey has exactly two portals (Decision 040):
-//   👨‍👩‍👧‍👦 Family Portal — the warm adventure world, zero admin controls
-//   🍎 Teacher Portal — Sharon's organized studio, tools first
-// They must feel like completely different experiences.
+// 🌴 Home Base layout — left sidebar + XP top bar, like a family
+// learning clubhouse. The Adventure Theater portals over all of this.
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
   const [rawMode, setMode] = useStored<string>(KEYS.mode, "family");
   const mode: Mode = normalizeMode(rawMode);
-  const [activeStudentId] = useStored<string | null>(KEYS.activeStudent, null);
-  const student = getStudent(activeStudentId);
-  const isHome = pathname === "/";
-  const isTeacher = mode === "teacher";
+  const [open, setOpen] = useState(false); // mobile drawer
+  const [theme, setTheme] = useStored<string>("theme", "light");
 
-  const visibleNav = navItems.filter((item) => item.modes.includes(mode));
+  // apply dark mode to <html>
+  useEffect(() => {
+    document.documentElement.classList.toggle("wj-dark", theme === "dark");
+  }, [theme]);
 
-  function switchMode(target: Mode) {
-    setMode(target);
-    router.push(target === "teacher" ? "/teacher" : "/today");
+  // close the mobile drawer on route change
+  useEffect(() => setOpen(false), [pathname]);
+
+  function isActive(href: string) {
+    return href === "/" ? pathname === "/" : pathname.startsWith(href);
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen lg:flex">
       <TropicalDecor />
-      <header
-        className={`sticky top-0 z-40 border-b-2 bg-paper/85 backdrop-blur ${
-          isTeacher ? "border-hibiscus/40" : "border-sand-deep"
+
+      {/* mobile overlay */}
+      {open && (
+        <div
+          className="fixed inset-0 z-40 bg-ink/40 lg:hidden"
+          onClick={() => setOpen(false)}
+          aria-hidden
+        />
+      )}
+
+      {/* ── Sidebar ─────────────────────────────────────────── */}
+      <aside
+        className={`fixed inset-y-0 left-0 z-50 flex w-64 flex-col bg-ocean-deep text-white transition-transform lg:sticky lg:top-0 lg:z-10 lg:h-screen lg:translate-x-0 ${
+          open ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        {/* teacher mode gets a distinct studio stripe */}
-        {isTeacher && (
-          <div className="bg-gradient-to-r from-hibiscus/15 via-ube/15 to-hibiscus/15 px-4 py-0.5 text-center text-[11px] font-bold text-hibiscus-deep">
-            🍎 Teacher Studio — {brand.productName}
-          </div>
-        )}
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3">
-          <Link href={isTeacher ? "/teacher" : "/"} className="flex items-center gap-2">
-            <span className="text-3xl">{isTeacher ? "🍎" : brand.logoEmoji}</span>
-            <div className="leading-tight">
-              <div
-                className={`font-display text-lg font-bold ${
-                  isTeacher ? "text-hibiscus-deep" : "text-sunset-deep"
-                }`}
-              >
-                {brand.productName}
-              </div>
-              <div className="hidden text-xs text-ink-soft sm:block">
-                {isTeacher ? "Teacher Studio" : brand.worldName}
-              </div>
-            </div>
-          </Link>
-
-          <div className="flex items-center gap-2">
-            {!isTeacher && student && (
-              <span
-                className="wj-chip"
-                style={{ background: `${student.color}22`, color: student.color }}
-              >
-                {student.emoji} {student.name}
-              </span>
-            )}
-            <div className="flex rounded-full border-2 border-sand-deep bg-white p-1">
-              <button
-                onClick={() => switchMode("family")}
-                className={`rounded-full px-3 py-1 text-xs font-bold transition-colors ${
-                  !isTeacher ? "bg-ocean text-white" : "text-ink-soft hover:bg-sand-deep"
-                }`}
-                title="Family Portal"
-              >
-                <span className="sm:hidden">👨‍👩‍👧‍👦</span>
-                <span className="hidden sm:inline">👨‍👩‍👧‍👦 Family</span>
-              </button>
-              <button
-                onClick={() => switchMode("teacher")}
-                className={`rounded-full px-3 py-1 text-xs font-bold transition-colors ${
-                  isTeacher ? "bg-hibiscus text-white" : "text-ink-soft hover:bg-sand-deep"
-                }`}
-                title="Teacher Portal"
-              >
-                <span className="sm:hidden">🍎</span>
-                <span className="hidden sm:inline">🍎 Teacher</span>
-              </button>
+        <Link href="/" className="flex items-center gap-3 px-5 py-5">
+          <span className="flex h-11 w-11 items-center justify-center rounded-full bg-mango text-2xl shadow-lg">
+            🧭
+          </span>
+          <div className="leading-tight">
+            <div className="font-display text-xl">{brand.productName.replace(" OS", "")}</div>
+            <div className="text-[10px] font-bold uppercase tracking-widest text-white/60">
+              Family Learning OS
             </div>
           </div>
-        </div>
+        </Link>
 
-        {!isHome && (
-          <nav className="mx-auto max-w-6xl overflow-x-auto px-4 pb-2">
-            <div className="flex gap-2">
-              {visibleNav.map((item) => {
-                const active = pathname.startsWith(item.href);
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={`whitespace-nowrap rounded-full px-3.5 py-1.5 text-sm font-bold transition-colors ${
-                      active
-                        ? `${isTeacher ? "bg-hibiscus" : "bg-sunset"} text-white shadow`
-                        : "bg-white text-ink-soft hover:bg-sand-deep"
-                    }`}
-                  >
-                    {item.emoji} {item.label}
-                  </Link>
-                );
-              })}
-            </div>
-          </nav>
-        )}
-      </header>
+        <nav className="flex-1 overflow-y-auto px-3 pb-6">
+          {familyNav.map((item) => (
+            <SidebarLink key={item.href} item={item} active={isActive(item.href)} onClick={() => setMode("family")} />
+          ))}
 
-      <main className="relative z-10 mx-auto max-w-6xl px-4 py-6 pb-16">{children}</main>
+          <div className="mt-5 px-3 pb-1 text-[10px] font-bold uppercase tracking-widest text-white/50">
+            Teacher Portal
+          </div>
+          {teacherNav.map((item) => (
+            <SidebarLink key={item.href} item={item} active={isActive(item.href)} onClick={() => setMode("teacher")} />
+          ))}
+        </nav>
+      </aside>
 
-      <BirthdayPopup />
+      {/* ── Main column ─────────────────────────────────────── */}
+      <div className="relative z-10 flex min-w-0 flex-1 flex-col">
+        <TopBar
+          onMenu={() => setOpen(true)}
+          theme={theme}
+          onToggleTheme={() => setTheme(theme === "dark" ? "light" : "dark")}
+          teacherMode={mode === "teacher"}
+          onExitTeacher={() => {
+            setMode("family");
+            router.push("/");
+          }}
+        />
 
-      <footer className="font-hand relative z-10 pb-8 text-center text-base text-ink-soft">
-        {brand.footer}
-      </footer>
+        <main className="flex-1 px-4 py-6 pb-16 sm:px-6">{children}</main>
+
+        <BirthdayPopup />
+
+        <footer className="font-hand pb-8 text-center text-base text-ink-soft">
+          {brand.footer}
+        </footer>
+      </div>
     </div>
+  );
+}
+
+function SidebarLink({
+  item,
+  active,
+  onClick,
+}: {
+  item: { href: string; label: string; emoji: string };
+  active: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <Link
+      href={item.href}
+      onClick={onClick}
+      className={`mt-1 flex items-center gap-3 rounded-2xl px-3.5 py-2.5 font-display text-[15px] transition-colors ${
+        active ? "bg-white text-ocean-deep shadow" : "text-white/85 hover:bg-white/10"
+      }`}
+    >
+      <span className="text-lg">{item.emoji}</span>
+      {item.label}
+    </Link>
+  );
+}
+
+function TopBar({
+  onMenu,
+  theme,
+  onToggleTheme,
+  teacherMode,
+  onExitTeacher,
+}: {
+  onMenu: () => void;
+  theme: string;
+  onToggleTheme: () => void;
+  teacherMode: boolean;
+  onExitTeacher: () => void;
+}) {
+  const p = useProgress();
+  const pct = Math.round((p.xpInLevel / p.xpForLevel) * 100);
+
+  function fullscreen() {
+    if (document.fullscreenElement) void document.exitFullscreen();
+    else void document.documentElement.requestFullscreen().catch(() => {});
+  }
+
+  return (
+    <header className="sticky top-0 z-20 flex items-center gap-3 border-b-2 border-sand-deep bg-paper/85 px-4 py-2.5 backdrop-blur sm:px-6">
+      <button className="wj-chip lg:hidden" onClick={onMenu} aria-label="Open menu">
+        ☰
+      </button>
+
+      {/* Explorer level + XP */}
+      <div className="hidden min-w-0 items-center gap-3 sm:flex">
+        <span className="font-display text-sm text-ink">Explorer Level {p.level}</span>
+        <div className="h-2.5 w-28 overflow-hidden rounded-full bg-sand-deep md:w-40">
+          <div className="h-full rounded-full bg-gradient-to-r from-mango to-sunset" style={{ width: `${pct}%` }} />
+        </div>
+        <span className="text-xs font-bold text-ink-soft">
+          {p.xpInLevel} / {p.xpForLevel} XP
+        </span>
+      </div>
+
+      <div className="flex flex-1 items-center justify-end gap-2">
+        <Counter emoji="⭐" value={p.points} label="Points" />
+        <Counter emoji="🛂" value={p.stamps} label="Stamps" />
+        <Counter emoji="🏅" value={p.badgesEarned} label="Badges" />
+
+        {teacherMode && (
+          <button className="wj-chip !bg-hibiscus/15 !text-hibiscus-deep" onClick={onExitTeacher}>
+            🍎 <span className="hidden sm:inline">Exit Teacher</span>
+          </button>
+        )}
+        <button className="wj-chip hover:bg-mango/20" onClick={fullscreen} title="Fullscreen" aria-label="Fullscreen">
+          ⛶
+        </button>
+        <button
+          className="wj-chip hover:bg-mango/20"
+          onClick={onToggleTheme}
+          title={theme === "dark" ? "Light mode" : "Dark mode"}
+          aria-label="Toggle dark mode"
+        >
+          {theme === "dark" ? "☀️" : "🌙"}
+        </button>
+      </div>
+    </header>
+  );
+}
+
+function Counter({ emoji, value, label }: { emoji: string; value: number; label: string }) {
+  return (
+    <span className="wj-chip" title={label}>
+      {emoji} <b className="text-ink">{value}</b>
+      <span className="hidden text-ink-soft md:inline"> {label}</span>
+    </span>
   );
 }

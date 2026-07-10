@@ -55,6 +55,26 @@
   --shadow-lift: 0 10px 30px rgba(39, 68, 114, 0.22);
 }
 
+/* ── Dark mode (Home Base 🌙 toggle) — override core tokens ── */
+:root.wj-dark {
+  --color-sky: #16233b;
+  --color-sky-deep: #0f1a2e;
+  --color-sand: #22314e;
+  --color-sand-deep: #33456a;
+  --color-paper: #1e2c46;
+  --color-ink: #eaf1fb;
+  --color-ink-soft: #a9bcd8;
+}
+:root.wj-dark body {
+  background-image: none;
+}
+:root.wj-dark body::after {
+  opacity: 0.2;
+}
+:root.wj-dark .wj-card {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
 /* ── Watercolor paper background ─────────────────────────── */
 body {
   color: var(--color-ink);

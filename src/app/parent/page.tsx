@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { DataBackup } from "@/components/data-backup";
 import { PageHeader } from "@/components/page-header";
 import { familyName, students } from "@/config/family";
 import { getTodaysLesson, lessons, type Lesson } from "@/config/lessons";
@@ -144,6 +145,8 @@ export default function ParentPage() {
           <div className="mt-1 font-display font-extrabold">Birthday calendar</div>
         </Link>
       </section>
+
+      <DataBackup />
     </div>
   );
 }

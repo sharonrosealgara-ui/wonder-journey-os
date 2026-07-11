@@ -1,6 +1,8 @@
 import type { MetadataRoute } from "next";
 import { brand } from "@/config/brand";
 
+export const dynamic = "force-static";
+
 // Progressive Web App manifest — lets families install Wonder Journey
 // on desktop, tablet, and mobile. Offline caching is a future phase
 // (service worker); install + standalone display work today.

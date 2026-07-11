@@ -3,6 +3,8 @@ import { siteUrl } from "@/config/brand";
 import { lessons } from "@/config/lessons";
 import { recipes } from "@/config/recipes";
 
+export const dynamic = "force-static";
+
 const staticRoutes = [
   "",
   "/today",

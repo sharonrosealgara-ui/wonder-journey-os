@@ -7,7 +7,7 @@
 // Canonical site URL for SEO/sitemap/OG tags. Works under ANY domain:
 // set NEXT_PUBLIC_SITE_URL per deployment (Vercel env var) — never hardcoded.
 export const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://wonderjourneyacademy.com";
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://wonderjourneyos.netlify.app";
 
 export const brand = {
   productName: "Wonder Journey OS",

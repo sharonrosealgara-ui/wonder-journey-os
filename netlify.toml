@@ -1,0 +1,13 @@
+# Netlify deployment config for Wonder Journey OS.
+# The app is a static Next.js export → publish the "out" folder.
+
+[build]
+  command = "npm run build"
+  publish = "out"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Every route (lessons, recipes, adventures) is pre-rendered as a static
+# file via generateStaticParams, so no SPA fallback is needed — Netlify
+# serves each page directly and 404.html for unknown paths.

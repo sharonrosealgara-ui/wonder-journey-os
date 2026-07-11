@@ -20,6 +20,7 @@ export type NavItem = {
 // The Family Portal — the warm adventure world.
 export const familyNav: NavItem[] = [
   { href: "/", label: "Home Base", emoji: "🏠" },
+  { href: "/classroom", label: "Live Classroom", emoji: "🎥" },
   { href: "/blessings", label: "Morning Blessings", emoji: "☀️" },
   { href: "/lessons", label: "Adventure Map", emoji: "🗺️" },
   { href: "/passport", label: "Passport", emoji: "🛂" },

@@ -6,3 +6,6 @@ build
 *.tsbuildinfo
 next-env.d.ts
 .env*
+
+# deploy artifact
+wonder-journey-site.zip

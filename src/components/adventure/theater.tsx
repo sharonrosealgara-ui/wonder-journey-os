@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { AnnotationLayer } from "@/components/adventure/annotation-layer";
 import { SlideScene } from "@/components/adventure/slide-scene";
 import { SlideView } from "@/components/adventure/slide-views";
 import { CopyButton } from "@/components/copy-button";
@@ -43,6 +44,7 @@ export function AdventureTheater({ lesson }: { lesson: Lesson }) {
   const [started, setStarted] = useState(false); // teacher sees the prep checklist first
   const [level, setLevel] = useState<ExplorerLevel>("adventure");
   const [muted, setMutedState] = useState(false);
+  const [drawing, setDrawing] = useState(false);
   const stageRef = useRef<HTMLDivElement>(null);
 
   // load the saved sound preference
@@ -147,6 +149,13 @@ export function AdventureTheater({ lesson }: { lesson: Lesson }) {
           <span className="wj-chip hidden sm:inline-flex">⏱️ {mins}:{secs}</span>
         )}
         <button
+          className={`wj-chip hover:bg-mango/20 ${drawing ? "!bg-sunset !text-white" : ""}`}
+          onClick={() => setDrawing((d) => !d)}
+          title="Whiteboard — draw on the lesson"
+        >
+          ✏️ <span className="hidden sm:inline">Draw</span>
+        </button>
+        <button
           className="wj-chip hover:bg-mango/20"
           onClick={toggleMute}
           title={muted ? "Turn sound on" : "Turn sound off"}
@@ -247,6 +256,9 @@ export function AdventureTheater({ lesson }: { lesson: Lesson }) {
 
         {/* ── Teacher panel (presenter mode only) ─────────────── */}
         {mode === "teacher" && showPanel && <TeacherPanel lesson={lesson} quizResult={quizResult} />}
+
+        {/* ── Live whiteboard over the lesson (only when turned on) ── */}
+        {drawing && <AnnotationLayer onClose={() => setDrawing(false)} />}
       </div>
 
       {/* ── Class Prep Checklist — teacher sees this before class ── */}

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { SlideScene } from "@/components/adventure/slide-scene";
 import { SlideView } from "@/components/adventure/slide-views";
 import { CopyButton } from "@/components/copy-button";
 import { getStudent, students } from "@/config/family";
@@ -10,6 +11,7 @@ import { lessons, type Lesson } from "@/config/lessons";
 import type { Mode } from "@/config/navigation";
 import { getTodaysPrayerLeader, KEYS, todayISO } from "@/lib/app-state";
 import { buildMission, buildSlides } from "@/lib/slides";
+import { initMute, setMuted, sfx } from "@/lib/sound";
 import { useStored } from "@/lib/storage";
 
 // Three-tier Age Adaptation (Decision 042): the family learns together,
@@ -40,7 +42,11 @@ export function AdventureTheater({ lesson }: { lesson: Lesson }) {
   const [mounted, setMounted] = useState(false);
   const [started, setStarted] = useState(false); // teacher sees the prep checklist first
   const [level, setLevel] = useState<ExplorerLevel>("adventure");
+  const [muted, setMutedState] = useState(false);
   const stageRef = useRef<HTMLDivElement>(null);
+
+  // load the saved sound preference
+  useEffect(() => setMutedState(initMute()), []);
 
   const [mode] = useStored<Mode>(KEYS.mode, "family");
   const [activeStudentId] = useStored<string | null>(KEYS.activeStudent, null);
@@ -57,11 +63,27 @@ export function AdventureTheater({ lesson }: { lesson: Lesson }) {
 
   const slide = slides[index];
 
-  const next = useCallback(
-    () => setIndex((i) => Math.min(i + 1, slides.length - 1)),
-    [slides.length]
-  );
-  const prev = useCallback(() => setIndex((i) => Math.max(i - 1, 0)), []);
+  const next = useCallback(() => {
+    setIndex((i) => {
+      if (i < slides.length - 1) sfx.next();
+      return Math.min(i + 1, slides.length - 1);
+    });
+  }, [slides.length]);
+  const prev = useCallback(() => {
+    setIndex((i) => {
+      if (i > 0) sfx.back();
+      return Math.max(i - 1, 0);
+    });
+  }, []);
+
+  function toggleMute() {
+    setMutedState((m) => {
+      const next = !m;
+      setMuted(next);
+      if (!next) sfx.tap();
+      return next;
+    });
+  }
 
   // class timer
   useEffect(() => {
@@ -106,17 +128,8 @@ export function AdventureTheater({ lesson }: { lesson: Lesson }) {
 
   return createPortal(
     <div className="fixed inset-0 z-50 flex flex-col bg-sky">
-      {/* watercolor wash behind everything */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0"
-        style={{
-          backgroundImage:
-            "radial-gradient(ellipse 70rem 35rem at 10% -5%, rgba(255,255,255,0.55) 0%, transparent 60%)," +
-            "radial-gradient(ellipse 55rem 30rem at 105% 20%, rgba(165,198,230,0.8) 0%, transparent 65%)," +
-            "radial-gradient(ellipse 60rem 40rem at 90% 110%, rgba(140,186,226,0.6) 0%, transparent 60%)",
-        }}
-      />
+      {/* animated storybook scene — edges only, never over the text */}
+      <SlideScene />
 
       {/* ── Top bar ─────────────────────────────────────────── */}
       <header className="relative z-20 flex items-center gap-2 border-b-2 border-sand-deep bg-paper/90 px-3 py-2 backdrop-blur">
@@ -133,6 +146,13 @@ export function AdventureTheater({ lesson }: { lesson: Lesson }) {
         {mode === "teacher" && (
           <span className="wj-chip hidden sm:inline-flex">⏱️ {mins}:{secs}</span>
         )}
+        <button
+          className="wj-chip hover:bg-mango/20"
+          onClick={toggleMute}
+          title={muted ? "Turn sound on" : "Turn sound off"}
+        >
+          {muted ? "🔇" : "🔊"}
+        </button>
         <button
           className="wj-chip hover:bg-mango/20"
           onClick={() =>

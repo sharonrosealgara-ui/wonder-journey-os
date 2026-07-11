@@ -19,14 +19,15 @@ import {
   type LessonCompletion,
 } from "@/lib/app-state";
 import { buildAcademy, buildMission, getYouTubeEmbed, type ExplorerLevel, type Slide } from "@/lib/slides";
+import { sfx } from "@/lib/sound";
 import { newId, useStored } from "@/lib/storage";
 
 // A mascot introduces each slide with a speech bubble.
 export function MascotBubble({ slide, line }: { slide: Slide; line: string }) {
   return (
     <div className="mx-auto mb-4 flex max-w-lg items-center justify-center gap-3">
-      <span className="wj-sticker h-12 w-12 shrink-0 text-2xl">{slide.mascot.emoji}</span>
-      <div className="wj-card px-4 py-2 text-left">
+      <span className="wj-sticker wj-bob h-12 w-12 shrink-0 text-2xl">{slide.mascot.emoji}</span>
+      <div className="wj-card px-4 py-2 text-left shadow-lg">
         <p className="text-xs font-bold text-ink-soft">
           {slide.mascot.name} · {slide.mascot.role}
         </p>
@@ -648,6 +649,7 @@ function CompleteSlide({
 
   function finish() {
     if (!alreadyDone) {
+      sfx.stamp();
       setCompletions((prev) => [...prev, { lessonId: lesson.id, studentId, date: todayISO() }]);
     }
   }

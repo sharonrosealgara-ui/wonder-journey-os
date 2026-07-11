@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import type { PhrasePair } from "@/config/lessons";
 import { buildQuiz, type ExplorerLevel } from "@/lib/slides";
+import { sfx } from "@/lib/sound";
 
 // Gentle adventure quiz: multiple choice from the lesson's phrases.
 // Wrong answers pulse softly and allow another try — never a red X.
@@ -49,8 +50,10 @@ export function AdventureQuiz({
       if (!attempted) setFirstTryScore((s) => s + 1);
       setTimeout(() => {
         if (isLast) {
+          sfx.celebrate();
           setDone(true);
         } else {
+          sfx.correct();
           setIndex((x) => x + 1);
           setAttempted(false);
           setCorrectPick(null);
@@ -58,6 +61,7 @@ export function AdventureQuiz({
         }
       }, 900);
     } else {
+      sfx.tryAgain();
       setAttempted(true);
       setWrongPick(i);
       setTimeout(() => setWrongPick(null), 700);

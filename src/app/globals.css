@@ -335,6 +335,49 @@ h1, h2, h3, .font-display {
   50% { transform: rotate(calc(var(--sway-base, 0deg) + 3deg)); }
 }
 
+/* ── Adventure Theater animated scene ─────────────────────── */
+@keyframes wj-drift {
+  from { transform: translateX(-12vw); }
+  to { transform: translateX(114vw); }
+}
+.wj-cloud {
+  position: absolute;
+  animation: wj-drift linear infinite;
+  will-change: transform;
+}
+
+@keyframes wj-twinkle {
+  0%, 100% { opacity: 0.15; transform: scale(0.7); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+.wj-twinkle { animation: wj-twinkle ease-in-out infinite; }
+
+@keyframes wj-bob {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-10px) rotate(2deg); }
+}
+.wj-bob { animation: wj-bob 3s ease-in-out infinite; }
+
+@keyframes wj-sway-soft {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+.wj-sway-soft { animation: wj-sway-soft 5s ease-in-out infinite; transform-origin: bottom center; }
+
+@keyframes wj-sun-rays {
+  to { transform: rotate(360deg); }
+}
+.wj-sun-rays { animation: wj-sun-rays 40s linear infinite; }
+
+/* dashed travel path dashes marching along the bottom */
+@keyframes wj-march {
+  to { background-position: 40px 0; }
+}
+.wj-path {
+  background-image: repeating-linear-gradient(90deg, rgba(255,255,255,0.9) 0 18px, transparent 18px 40px);
+  animation: wj-march 2.2s linear infinite;
+}
+
 /* Adventure Theater slide transition */
 @keyframes wj-slide-in {
   0% { transform: translateX(2.5rem); opacity: 0; }
@@ -383,7 +426,13 @@ h1, h2, h3, .font-display {
 @media (prefers-reduced-motion: reduce) {
   .wj-confetti,
   .wj-balloon,
-  .wj-leaf {
+  .wj-leaf,
+  .wj-cloud,
+  .wj-twinkle,
+  .wj-bob,
+  .wj-sway-soft,
+  .wj-sun-rays,
+  .wj-path {
     animation: none;
   }
   .wj-pop-in,

@@ -1,6 +1,7 @@
 "use client";
 
 import { PageHeader } from "@/components/page-header";
+import { SmartPhoto, destinationPhoto } from "@/components/smart-photo";
 import { destinations } from "@/config/destinations";
 import { getStudent } from "@/config/family";
 import { lessons } from "@/config/lessons";
@@ -45,8 +46,17 @@ export default function PassportPage() {
                 return (
                   <div
                     key={d.id}
-                    className={`wj-card p-4 text-center ${earned ? "" : "opacity-80"}`}
+                    className={`wj-card overflow-hidden text-center ${earned ? "" : "opacity-80"}`}
                   >
+                    {/* real photo of the place (falls back to emoji art) */}
+                    <SmartPhoto
+                      src={destinationPhoto(d.id)}
+                      alt={d.name}
+                      emoji={d.emoji}
+                      className={`h-24 w-full ${earned ? "" : "grayscale"}`}
+                      emojiClass="text-4xl"
+                    />
+                    <div className="p-4">
                     <div className={`wj-stamp mx-auto w-fit px-4 py-3 ${earned ? "wj-stamp-earned" : ""}`}>
                       <div className="text-3xl">{earned ? d.emoji : "❔"}</div>
                       <div className="font-display text-xs font-extrabold uppercase tracking-wide">
@@ -60,6 +70,7 @@ export default function PassportPage() {
                         💡 {d.funFact}
                       </p>
                     )}
+                    </div>
                   </div>
                 );
               })}

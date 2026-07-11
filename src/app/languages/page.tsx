@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 import { MatchingGame } from "@/components/matching-game";
@@ -18,9 +18,9 @@ export default function LanguagesPage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        emoji="ðŸ’¬"
+        emoji="💬"
         title="Languages"
-        subtitle="Tagalog & Hiligaynon â€” learn, flip flashcards, and play the matching game!"
+        subtitle="Tagalog & Hiligaynon — learn, flip flashcards, and play the matching game!"
       />
 
       {/* Category picker */}
@@ -43,9 +43,9 @@ export default function LanguagesPage() {
         <div className="flex rounded-full border-2 border-sand-deep bg-white p-1">
           {(
             [
-              ["table", "ðŸ“– Word List"],
-              ["flashcards", "ðŸƒ Flashcards"],
-              ["game", "ðŸŽ® Matching Game"],
+              ["table", "📖 Word List"],
+              ["flashcards", "🃏 Flashcards"],
+              ["game", "🎮 Matching Game"],
             ] as [View, string][]
           ).map(([v, label]) => (
             <button
@@ -139,16 +139,16 @@ function Flashcards({ phrases, lang }: { phrases: Phrase[]; lang: Lang }) {
               {phrase[lang]}
             </span>
             <span className="mt-2 text-ink-soft">{phrase.pronunciation}</span>
-            <span className="mt-3 text-sm text-ink-soft">Say it out loud 3 times! ðŸŽ¤</span>
+            <span className="mt-3 text-sm text-ink-soft">Say it out loud 3 times! 🎤</span>
           </div>
         </div>
       </div>
       <div className="mt-5 flex items-center justify-center gap-4">
-        <button className="wj-btn wj-btn-ghost" onClick={() => move(-1)}>â† Back</button>
+        <button className="wj-btn wj-btn-ghost" onClick={() => move(-1)}>← Back</button>
         <span className="font-display font-bold text-ink-soft">
           {index + 1} / {phrases.length}
         </span>
-        <button className="wj-btn" onClick={() => move(1)}>Next â†’</button>
+        <button className="wj-btn" onClick={() => move(1)}>Next →</button>
       </div>
     </div>
   );

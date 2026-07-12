@@ -1,51 +1,148 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { getStudent, familyName } from "@/config/family";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  ConnectionState,
+  Participant,
+  RemoteParticipant,
+  Room,
+  RoomEvent,
+  Track,
+} from "livekit-client";
+import { familyName, getStudent } from "@/config/family";
 import { getTodaysLesson, type Lesson } from "@/config/lessons";
-import { KEYS } from "@/lib/app-state";
+import type { Mode } from "@/config/navigation";
+import { normalizeMode } from "@/config/navigation";
+import { KEYS, todayISO } from "@/lib/app-state";
 import { useStored } from "@/lib/storage";
 
-// 🎥 LIVE ADVENTURE CLASSROOM — Stage 1.
-// The full Wonder-Journey-styled classroom with the teacher/family's own
-// live camera, mic and screen-share (browser getUserMedia — no server).
-// Stage 2 (seeing EACH OTHER live) activates when LiveKit keys are added
-// — see docs/LIVEKIT_SETUP.md.
+// 🎥 LIVE ADVENTURE CLASSROOM
+// Stage 1 (always works): your own camera/mic/screen-share — no server.
+// Stage 2 (when LiveKit keys are set in Netlify): the whole family sees
+// and hears each other live, with chat, raise-hand and screen share —
+// tokens are minted server-side; the API secret never reaches the browser.
 
-type Phase = "lobby" | "live";
+type Phase = "lobby" | "connecting" | "live";
 type Device = { id: string; label: string };
+type ChatMsg = { who: string; text: string };
 
 export default function ClassroomPage() {
   const [phase, setPhase] = useState<Phase>("lobby");
   const [activeStudentId] = useStored<string | null>(KEYS.activeStudent, null);
+  const [rawMode] = useStored<string>(KEYS.mode, "family");
+  const mode: Mode = normalizeMode(rawMode);
   const student = getStudent(activeStudentId);
   const [name, setName] = useState("");
+  const [classCode, setClassCode] = useStored<string>("classCode", "");
   const [lesson, setLesson] = useState<Lesson | null>(null);
+  const [joinError, setJoinError] = useState<string | null>(null);
+  const [connected, setConnected] = useState(false); // LiveKit vs solo
+  const roomRef = useRef<Room | null>(null);
+  const [lobbyDevices, setLobbyDevices] = useState<{ camId: string; micId: string; camOn: boolean; micOn: boolean }>({
+    camId: "",
+    micId: "",
+    camOn: true,
+    micOn: true,
+  });
 
   useEffect(() => {
     setLesson(getTodaysLesson());
-    setName(student ? student.name : familyName);
-  }, [student]);
+  }, []);
+  useEffect(() => {
+    setName(mode === "teacher" ? "Teacher Sharon" : student ? student.name : familyName);
+  }, [student, mode]);
 
-  if (phase === "lobby") {
-    return <Lobby name={name} setName={setName} lesson={lesson} onJoin={() => setPhase("live")} />;
+  const roomName = useMemo(
+    () => `wj-${lesson?.id ?? "class"}-${todayISO()}`,
+    [lesson]
+  );
+
+  async function join(devices: { camId: string; micId: string; camOn: boolean; micOn: boolean }) {
+    setJoinError(null);
+    setLobbyDevices(devices);
+    setPhase("connecting");
+    // Ask our secure Netlify function for a join token.
+    try {
+      const res = await fetch("/api/livekit-token", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          room: roomName,
+          role: mode === "teacher" ? "teacher" : "family",
+          code: classCode,
+        }),
+      });
+      if (res.status === 401) {
+        setJoinError("That class code doesn't match — please check it with Teacher Sharon. 💛");
+        setPhase("lobby");
+        return;
+      }
+      if (!res.ok) throw new Error("not configured");
+      const { token, url } = (await res.json()) as { token: string; url: string };
+
+      const room = new Room({
+        adaptiveStream: true,
+        dynacast: true,
+        videoCaptureDefaults: devices.camId ? { deviceId: devices.camId } : undefined,
+        audioCaptureDefaults: devices.micId ? { deviceId: devices.micId } : undefined,
+      });
+      await room.connect(url, token);
+      await room.localParticipant.setCameraEnabled(devices.camOn);
+      await room.localParticipant.setMicrophoneEnabled(devices.micOn);
+      void room.startAudio();
+      roomRef.current = room;
+      setConnected(true);
+      setPhase("live");
+    } catch {
+      // LiveKit not configured (or offline) → Stage 1 solo classroom.
+      roomRef.current = null;
+      setConnected(false);
+      setPhase("live");
+    }
   }
-  return <LiveRoom name={name} lesson={lesson} onLeave={() => setPhase("lobby")} />;
+
+  function leave() {
+    roomRef.current?.disconnect();
+    roomRef.current = null;
+    setConnected(false);
+    setPhase("lobby");
+  }
+
+  if (phase === "lobby" || phase === "connecting") {
+    return (
+      <Lobby
+        name={name}
+        setName={setName}
+        classCode={classCode}
+        setClassCode={setClassCode}
+        lesson={lesson}
+        joining={phase === "connecting"}
+        joinError={joinError}
+        onJoin={join}
+      />
+    );
+  }
+  return connected && roomRef.current ? (
+    <ConnectedRoom room={roomRef.current} name={name} lesson={lesson} isTeacher={mode === "teacher"} onLeave={leave} />
+  ) : (
+    <SoloRoom name={name} lesson={lesson} devices={lobbyDevices} onLeave={leave} />
+  );
 }
 
-// ── Shared camera hook ───────────────────────────────────────
-function useCamera() {
+/* ── Local camera (lobby preview + solo mode) ───────────────── */
+function useLocalCamera(initial?: { camId?: string; micId?: string; camOn?: boolean; micOn?: boolean }) {
   const streamRef = useRef<MediaStream | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [cams, setCams] = useState<Device[]>([]);
   const [mics, setMics] = useState<Device[]>([]);
-  const [camId, setCamId] = useState<string>("");
-  const [micId, setMicId] = useState<string>("");
-  const [camOn, setCamOn] = useState(true);
-  const [micOn, setMicOn] = useState(true);
+  const [camId, setCamId] = useState(initial?.camId ?? "");
+  const [micId, setMicId] = useState(initial?.micId ?? "");
+  const [camOn, setCamOn] = useState(initial?.camOn ?? true);
+  const [micOn, setMicOn] = useState(initial?.micOn ?? true);
   const [ready, setReady] = useState(false);
-  const [tick, setTick] = useState(0); // forces consumers to re-grab stream
+  const [tick, setTick] = useState(0);
 
   const start = useCallback(async () => {
     try {
@@ -58,20 +155,17 @@ function useCamera() {
       stream.getVideoTracks().forEach((t) => (t.enabled = camOn));
       stream.getAudioTracks().forEach((t) => (t.enabled = micOn));
       const devices = await navigator.mediaDevices.enumerateDevices();
-      setCams(
-        devices.filter((d) => d.kind === "videoinput").map((d, i) => ({ id: d.deviceId, label: d.label || `Camera ${i + 1}` }))
-      );
-      setMics(
-        devices.filter((d) => d.kind === "audioinput").map((d, i) => ({ id: d.deviceId, label: d.label || `Microphone ${i + 1}` }))
-      );
+      setCams(devices.filter((d) => d.kind === "videoinput").map((d, i) => ({ id: d.deviceId, label: d.label || `Camera ${i + 1}` })));
+      setMics(devices.filter((d) => d.kind === "audioinput").map((d, i) => ({ id: d.deviceId, label: d.label || `Microphone ${i + 1}` })));
       setError(null);
       setReady(true);
       setTick((t) => t + 1);
     } catch {
-      setError("We couldn't reach your camera. Please allow camera & microphone access in your browser, then tap Retry.");
+      setError("We couldn't reach your camera. Please allow camera & microphone access, then tap Retry.");
       setReady(false);
     }
-  }, [camId, micId, camOn, micOn]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [camId, micId]);
 
   useEffect(() => {
     void start();
@@ -101,7 +195,7 @@ function useCamera() {
   return { streamRef, error, cams, mics, camId, setCamId, micId, setMicId, camOn, micOn, toggleCam, toggleMic, ready, start, stop, tick };
 }
 
-function CameraView({ streamRef, camOn, tick, label, className = "" }: {
+function LocalCameraView({ streamRef, camOn, tick, label, className = "" }: {
   streamRef: React.MutableRefObject<MediaStream | null>;
   camOn: boolean;
   tick: number;
@@ -119,30 +213,29 @@ function CameraView({ streamRef, camOn, tick, label, className = "" }: {
     <div className={`relative overflow-hidden rounded-2xl bg-ink ${className}`}>
       <video ref={videoRef} autoPlay muted playsInline className={`h-full w-full object-cover ${camOn ? "" : "hidden"}`} />
       {!camOn && (
-        <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-ocean-deep to-ube-deep text-5xl">
-          📷
-        </div>
+        <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-ocean-deep to-ube-deep text-5xl">📷</div>
       )}
       {label && (
-        <span className="absolute bottom-2 left-2 rounded-full bg-ink/70 px-2.5 py-0.5 text-xs font-bold text-white">
-          {label}
-        </span>
+        <span className="absolute bottom-2 left-2 rounded-full bg-ink/70 px-2.5 py-0.5 text-xs font-bold text-white">{label}</span>
       )}
     </div>
   );
 }
 
-// ── Pre-join lobby ───────────────────────────────────────────
-function Lobby({ name, setName, lesson, onJoin }: {
+/* ── Pre-join lobby ─────────────────────────────────────────── */
+function Lobby({ name, setName, classCode, setClassCode, lesson, joining, joinError, onJoin }: {
   name: string;
   setName: (s: string) => void;
+  classCode: string;
+  setClassCode: (s: string) => void;
   lesson: Lesson | null;
-  onJoin: () => void;
+  joining: boolean;
+  joinError: string | null;
+  onJoin: (d: { camId: string; micId: string; camOn: boolean; micOn: boolean }) => void;
 }) {
-  const cam = useCamera();
+  const cam = useLocalCamera();
   const [level, setLevel] = useState(0);
 
-  // mic level meter
   useEffect(() => {
     if (!cam.ready || !cam.streamRef.current) return;
     let raf = 0;
@@ -157,34 +250,31 @@ function Lobby({ name, setName, lesson, onJoin }: {
       const data = new Uint8Array(analyser.frequencyBinCount);
       const loop = () => {
         analyser.getByteFrequencyData(data);
-        const avg = data.reduce((a, b) => a + b, 0) / data.length;
-        setLevel(Math.min(100, Math.round((avg / 128) * 100)));
+        setLevel(Math.min(100, Math.round((data.reduce((a, b) => a + b, 0) / data.length / 128) * 100)));
         raf = requestAnimationFrame(loop);
       };
       loop();
-    } catch {
-      /* ignore */
-    }
-    return () => {
-      cancelAnimationFrame(raf);
-      void ctx?.close();
-    };
+    } catch { /* ignore */ }
+    return () => { cancelAnimationFrame(raf); void ctx?.close(); };
   }, [cam.ready, cam.tick, cam.streamRef]);
+
+  function handleJoin() {
+    const d = { camId: cam.camId, micId: cam.micId, camOn: cam.camOn, micOn: cam.micOn };
+    cam.stop(); // release devices so LiveKit (or solo room) can take them
+    onJoin(d);
+  }
 
   return (
     <div className="mx-auto max-w-4xl space-y-6">
       <div className="text-center">
         <div className="mb-2 text-4xl">🎥🌴</div>
         <h1 className="wj-outline font-display text-3xl sm:text-4xl">Live Adventure Classroom</h1>
-        <p className="font-hand mt-1 text-lg text-ink-soft">
-          Mabuhay, {familyName}! Let&apos;s get you ready before we begin. 💛
-        </p>
+        <p className="font-hand mt-1 text-lg text-ink-soft">Mabuhay, {familyName}! Let&apos;s get you ready. 💛</p>
       </div>
 
       <div className="grid gap-6 md:grid-cols-[1.3fr_1fr]">
-        {/* camera preview */}
         <div className="wj-card overflow-hidden p-3">
-          <CameraView streamRef={cam.streamRef} camOn={cam.camOn} tick={cam.tick} className="aspect-video w-full" label={name} />
+          <LocalCameraView streamRef={cam.streamRef} camOn={cam.camOn} tick={cam.tick} className="aspect-video w-full" label={name} />
           {cam.error && (
             <div className="mt-3 rounded-2xl bg-hibiscus/10 p-3 text-sm text-hibiscus-deep">
               {cam.error}
@@ -199,7 +289,6 @@ function Lobby({ name, setName, lesson, onJoin }: {
               {cam.micOn ? "🎤 Mic On" : "🔇 Mic Off"}
             </button>
           </div>
-          {/* mic level */}
           <div className="mt-3">
             <p className="text-xs font-bold text-ink-soft">Microphone</p>
             <div className="mt-1 h-2.5 overflow-hidden rounded-full bg-sand-deep">
@@ -208,11 +297,19 @@ function Lobby({ name, setName, lesson, onJoin }: {
           </div>
         </div>
 
-        {/* settings */}
         <div className="wj-card space-y-4 p-5">
           <div>
             <label className="text-sm font-bold text-ink-soft">Your name in class</label>
             <input className="wj-input mt-1" value={name} onChange={(e) => setName(e.target.value)} />
+          </div>
+          <div>
+            <label className="text-sm font-bold text-ink-soft">🔑 Class code</label>
+            <input
+              className="wj-input mt-1"
+              value={classCode}
+              onChange={(e) => setClassCode(e.target.value)}
+              placeholder="from Teacher Sharon"
+            />
           </div>
           <div>
             <label className="text-sm font-bold text-ink-soft">📷 Camera</label>
@@ -232,29 +329,254 @@ function Lobby({ name, setName, lesson, onJoin }: {
             <p className="font-bold">Today&apos;s Adventure</p>
             <p className="font-hand text-base">{lesson ? `${lesson.emoji} ${lesson.title}` : "Loading..."}</p>
           </div>
-          <button className="wj-btn w-full text-lg" onClick={onJoin} disabled={!cam.ready}>
-            🚀 Join the Adventure
+          {joinError && <p className="rounded-2xl bg-hibiscus/10 p-3 text-sm font-bold text-hibiscus-deep">{joinError}</p>}
+          <button className="wj-btn w-full text-lg" onClick={handleJoin} disabled={joining}>
+            {joining ? "Connecting… 🌐" : "🚀 Join the Adventure"}
           </button>
         </div>
-      </div>
-
-      {/* Stage-2 note */}
-      <div className="wj-card-bubble wj-note p-4 text-center">
-        <p className="font-display text-white">👨‍👩‍👧‍👦 Seeing the whole family live together turns on once LiveKit is connected.</p>
-        <p className="font-hand mt-1 text-white/90">Ask Teacher Sharon&apos;s helper to follow docs/LIVEKIT_SETUP.md — it&apos;s free and quick!</p>
       </div>
     </div>
   );
 }
 
-// ── Live classroom ───────────────────────────────────────────
-function LiveRoom({ name, lesson, onLeave }: { name: string; lesson: Lesson | null; onLeave: () => void }) {
-  const cam = useCamera();
-  const [sharing, setSharing] = useState(false);
-  const [hand, setHand] = useState(false);
+/* ── LiveKit connected classroom ────────────────────────────── */
+function ConnectedRoom({ room, name, lesson, isTeacher, onLeave }: {
+  room: Room;
+  name: string;
+  lesson: Lesson | null;
+  isTeacher: boolean;
+  onLeave: () => void;
+}) {
+  const [version, setVersion] = useState(0);
   const [chatOpen, setChatOpen] = useState(false);
-  const [chat, setChat] = useState<{ who: string; text: string }[]>([]);
+  const [chat, setChat] = useState<ChatMsg[]>([]);
   const [msg, setMsg] = useState("");
+  const [hands, setHands] = useState<Record<string, boolean>>({});
+  const [state, setState] = useState<ConnectionState>(room.state);
+
+  const bump = useCallback(() => setVersion((v) => v + 1), []);
+
+  useEffect(() => {
+    const events = [
+      RoomEvent.ParticipantConnected,
+      RoomEvent.ParticipantDisconnected,
+      RoomEvent.TrackSubscribed,
+      RoomEvent.TrackUnsubscribed,
+      RoomEvent.LocalTrackPublished,
+      RoomEvent.LocalTrackUnpublished,
+      RoomEvent.TrackMuted,
+      RoomEvent.TrackUnmuted,
+      RoomEvent.ActiveSpeakersChanged,
+    ] as const;
+    events.forEach((e) => room.on(e, bump));
+
+    const onData = (payload: Uint8Array, p?: RemoteParticipant) => {
+      try {
+        const d = JSON.parse(new TextDecoder().decode(payload)) as { type: string; who?: string; text?: string; up?: boolean };
+        if (d.type === "chat" && d.who && d.text) setChat((c) => [...c, { who: d.who!, text: d.text! }]);
+        if (d.type === "hand" && p) setHands((h) => ({ ...h, [p.identity]: !!d.up }));
+      } catch { /* ignore */ }
+    };
+    const onState = (s: ConnectionState) => setState(s);
+    const onDisconnect = () => onLeave();
+    room.on(RoomEvent.DataReceived, onData);
+    room.on(RoomEvent.ConnectionStateChanged, onState);
+    room.on(RoomEvent.Disconnected, onDisconnect);
+
+    // attendance log (teacher's device keeps the register)
+    if (isTeacher) {
+      const log = (who: string, action: "joined" | "left") => {
+        try {
+          const key = `wjos:attendance-${room.name}`;
+          const rows = JSON.parse(localStorage.getItem(key) ?? "[]") as unknown[];
+          rows.push({ who, action, time: new Date().toISOString() });
+          localStorage.setItem(key, JSON.stringify(rows));
+        } catch { /* ignore */ }
+      };
+      log(name, "joined");
+      const onJoin = (p: RemoteParticipant) => log(p.name ?? p.identity, "joined");
+      const onLeft = (p: RemoteParticipant) => log(p.name ?? p.identity, "left");
+      room.on(RoomEvent.ParticipantConnected, onJoin);
+      room.on(RoomEvent.ParticipantDisconnected, onLeft);
+    }
+
+    return () => {
+      events.forEach((e) => room.off(e, bump));
+      room.off(RoomEvent.DataReceived, onData);
+      room.off(RoomEvent.ConnectionStateChanged, onState);
+      room.off(RoomEvent.Disconnected, onDisconnect);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [room]);
+
+  const everyone: Participant[] = useMemo(
+    () => [room.localParticipant, ...Array.from(room.remoteParticipants.values())],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [room, version]
+  );
+
+  // find any active screen share (local or remote)
+  const screenShare = useMemo(() => {
+    for (const p of everyone) {
+      const pub = p.getTrackPublication(Track.Source.ScreenShare);
+      if (pub?.track) return { participant: p, track: pub.track };
+    }
+    return null;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [everyone, version]);
+
+  const camOn = room.localParticipant.isCameraEnabled;
+  const micOn = room.localParticipant.isMicrophoneEnabled;
+  const myHand = hands[room.localParticipant.identity] ?? false;
+
+  async function toggleCam() { await room.localParticipant.setCameraEnabled(!camOn); bump(); }
+  async function toggleMic() { await room.localParticipant.setMicrophoneEnabled(!micOn); bump(); }
+  async function toggleShare() {
+    try { await room.localParticipant.setScreenShareEnabled(!screenShare || screenShare.participant !== room.localParticipant); bump(); }
+    catch { /* user cancelled */ }
+  }
+  function sendData(obj: object) {
+    void room.localParticipant.publishData(new TextEncoder().encode(JSON.stringify(obj)), { reliable: true });
+  }
+  function toggleHand() {
+    const up = !myHand;
+    setHands((h) => ({ ...h, [room.localParticipant.identity]: up }));
+    sendData({ type: "hand", up });
+  }
+  function send() {
+    if (!msg.trim()) return;
+    const m = { type: "chat", who: name, text: msg.trim() };
+    sendData(m);
+    setChat((c) => [...c, { who: name, text: m.text }]);
+    setMsg("");
+  }
+  function leave() { room.disconnect(); onLeave(); }
+
+  const stateChip =
+    state === ConnectionState.Connected ? "🟢 Live" :
+    state === ConnectionState.Reconnecting ? "🟡 Reconnecting…" : "🔴 Connecting…";
+
+  return (
+    <div className="space-y-3">
+      <div className="flex items-center justify-between">
+        <span className="wj-chip">{stateChip} · {everyone.length} in class</span>
+        <span className="wj-chip">🎥 {lesson ? `${lesson.emoji} ${lesson.title}` : "Adventure"}</span>
+      </div>
+
+      <div className="grid gap-3 lg:grid-cols-[1fr_16rem]">
+        {/* stage */}
+        <div className="wj-card relative flex min-h-[46vh] items-center justify-center overflow-hidden p-0">
+          {screenShare ? (
+            <ShareView track={screenShare.track.mediaStreamTrack} />
+          ) : (
+            <div className="flex flex-col items-center gap-4 p-8 text-center">
+              <div className="text-6xl">{lesson?.emoji ?? "🌴"}</div>
+              <h2 className="wj-outline font-display text-2xl sm:text-3xl">{lesson?.title ?? "Today's Adventure"}</h2>
+              <p className="font-hand text-lg text-ink-soft">{lesson?.subtitle}</p>
+              {lesson && <Link href={`/adventure/${lesson.id}`} className="wj-btn text-lg">🎬 Open the Adventure</Link>}
+              {isTeacher && <p className="text-xs text-ink-soft">Share your screen to teach the slides right here 👇</p>}
+            </div>
+          )}
+        </div>
+
+        {/* camera tiles */}
+        <div className="max-h-[70vh] space-y-3 overflow-y-auto">
+          {everyone.map((p) => (
+            <ParticipantTile key={p.identity} participant={p} isLocal={p === room.localParticipant} hand={hands[p.identity] ?? false} version={version} />
+          ))}
+        </div>
+      </div>
+
+      {chatOpen && (
+        <div className="wj-card p-4">
+          <p className="font-display">💬 Class Chat</p>
+          <div className="mt-2 max-h-32 space-y-1 overflow-y-auto text-sm">
+            {chat.length === 0 && <p className="font-hand text-ink-soft">Say hello to the family! 👋</p>}
+            {chat.map((c, i) => (<p key={i}><b>{c.who}:</b> {c.text}</p>))}
+          </div>
+          <div className="mt-2 flex gap-2">
+            <input className="wj-input" value={msg} onChange={(e) => setMsg(e.target.value)} onKeyDown={(e) => e.key === "Enter" && send()} placeholder="Type a message…" />
+            <button className="wj-btn" onClick={send}>Send</button>
+          </div>
+        </div>
+      )}
+
+      <div className="wj-card sticky bottom-2 z-10 flex flex-wrap items-center justify-center gap-2 p-3">
+        <ToolBtn onClick={() => void toggleMic()} active={micOn} label={micOn ? "🎤 Mic" : "🔇 Muted"} />
+        <ToolBtn onClick={() => void toggleCam()} active={camOn} label={camOn ? "📷 Cam" : "📷 Off"} />
+        <ToolBtn onClick={() => void toggleShare()} active={!!screenShare && screenShare.participant === room.localParticipant} label="🖥️ Share" />
+        <ToolBtn onClick={toggleHand} active={myHand} label="✋ Hand" />
+        <ToolBtn onClick={() => setChatOpen((c) => !c)} active={chatOpen} label="💬 Chat" />
+        <span className="mx-1 hidden h-6 w-px bg-sand-deep sm:block" />
+        <Link href="/passport" target="_blank" className="wj-chip hover:bg-mango/20">🛂 Passport</Link>
+        <Link href="/journal" target="_blank" className="wj-chip hover:bg-mango/20">📔 Notebook</Link>
+        <Link href="/cooking" target="_blank" className="wj-chip hover:bg-mango/20">🍳 Cooking</Link>
+        <button className="wj-btn wj-btn-hibiscus !px-4 !py-1.5 text-sm" onClick={leave}>Leave</button>
+      </div>
+    </div>
+  );
+}
+
+function ParticipantTile({ participant, isLocal, hand, version }: {
+  participant: Participant;
+  isLocal: boolean;
+  hand: boolean;
+  version: number;
+}) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  useEffect(() => {
+    const camPub = participant.getTrackPublication(Track.Source.Camera);
+    if (camPub?.track && videoRef.current) camPub.track.attach(videoRef.current);
+    if (!isLocal) {
+      const micPub = participant.getTrackPublication(Track.Source.Microphone);
+      if (micPub?.track && audioRef.current) micPub.track.attach(audioRef.current);
+    }
+    return () => {
+      camPub?.track?.detach();
+    };
+  }, [participant, isLocal, version]);
+
+  const camPub = participant.getTrackPublication(Track.Source.Camera);
+  const camLive = !!camPub?.track && !camPub.isMuted;
+  const micPub = participant.getTrackPublication(Track.Source.Microphone);
+  const muted = !micPub?.track || micPub.isMuted;
+
+  return (
+    <div className={`relative aspect-video w-full overflow-hidden rounded-2xl bg-ink ${participant.isSpeaking ? "ring-4 ring-mango" : ""}`}>
+      <video ref={videoRef} autoPlay muted={isLocal} playsInline className={`h-full w-full object-cover ${camLive ? "" : "hidden"}`} />
+      {!isLocal && <audio ref={audioRef} autoPlay />}
+      {!camLive && (
+        <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-ocean-deep to-ube-deep text-4xl">📷</div>
+      )}
+      <span className="absolute bottom-2 left-2 rounded-full bg-ink/70 px-2.5 py-0.5 text-xs font-bold text-white">
+        {participant.name || participant.identity}{isLocal ? " (you)" : ""}{hand ? " ✋" : ""}{muted ? " 🔇" : ""}
+      </span>
+    </div>
+  );
+}
+
+function ShareView({ track }: { track: MediaStreamTrack }) {
+  const ref = useRef<HTMLVideoElement>(null);
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.srcObject = new MediaStream([track]);
+      void ref.current.play().catch(() => {});
+    }
+  }, [track]);
+  return <video ref={ref} autoPlay playsInline className="h-full w-full bg-ink object-contain" />;
+}
+
+/* ── Solo classroom (Stage 1 fallback) ──────────────────────── */
+function SoloRoom({ name, lesson, devices, onLeave }: {
+  name: string;
+  lesson: Lesson | null;
+  devices: { camId: string; micId: string; camOn: boolean; micOn: boolean };
+  onLeave: () => void;
+}) {
+  const cam = useLocalCamera(devices);
+  const [sharing, setSharing] = useState(false);
   const shareRef = useRef<MediaStream | null>(null);
   const shareVideoRef = useRef<HTMLVideoElement>(null);
 
@@ -276,9 +598,7 @@ function LiveRoom({ name, lesson, onLeave }: { name: string; lesson: Lesson | nu
           void shareVideoRef.current.play().catch(() => {});
         }
       }, 50);
-    } catch {
-      /* user cancelled */
-    }
+    } catch { /* cancelled */ }
   }
 
   function leave() {
@@ -287,15 +607,14 @@ function LiveRoom({ name, lesson, onLeave }: { name: string; lesson: Lesson | nu
     onLeave();
   }
 
-  function send() {
-    if (!msg.trim()) return;
-    setChat((c) => [...c, { who: name, text: msg.trim() }]);
-    setMsg("");
-  }
-
   return (
     <div className="space-y-3">
-      {/* stage: lesson gets the most space */}
+      <div className="wj-card-bubble wj-note p-3 text-center">
+        <p className="font-display text-sm text-white">
+          Solo mode — live family video turns on once the LiveKit keys are set in Netlify (docs/LIVEKIT_SETUP.md). 💛
+        </p>
+      </div>
+
       <div className="grid gap-3 lg:grid-cols-[1fr_16rem]">
         <div className="wj-card relative flex min-h-[46vh] items-center justify-center overflow-hidden p-0">
           {sharing ? (
@@ -305,17 +624,13 @@ function LiveRoom({ name, lesson, onLeave }: { name: string; lesson: Lesson | nu
               <div className="text-6xl">{lesson?.emoji ?? "🌴"}</div>
               <h2 className="wj-outline font-display text-2xl sm:text-3xl">{lesson?.title ?? "Today's Adventure"}</h2>
               <p className="font-hand text-lg text-ink-soft">{lesson?.subtitle}</p>
-              {lesson && (
-                <Link href={`/adventure/${lesson.id}`} className="wj-btn text-lg">🎬 Open the Adventure</Link>
-              )}
-              <p className="text-xs text-ink-soft">Or share your screen to show slides, maps, or a cooking demo 👇</p>
+              {lesson && <Link href={`/adventure/${lesson.id}`} className="wj-btn text-lg">🎬 Open the Adventure</Link>}
             </div>
           )}
         </div>
 
-        {/* camera filmstrip */}
         <div className="space-y-3">
-          <CameraView streamRef={cam.streamRef} camOn={cam.camOn} tick={cam.tick} className="aspect-video w-full" label={`${name}${hand ? " ✋" : ""}`} />
+          <LocalCameraView streamRef={cam.streamRef} camOn={cam.camOn} tick={cam.tick} className="aspect-video w-full" label={name} />
           {[1, 2, 3].map((i) => (
             <div key={i} className="flex aspect-video w-full flex-col items-center justify-center rounded-2xl border-2 border-dashed border-sand-deep bg-sand text-center text-ink-soft">
               <span className="text-2xl">👦</span>
@@ -331,28 +646,10 @@ function LiveRoom({ name, lesson, onLeave }: { name: string; lesson: Lesson | nu
         </div>
       )}
 
-      {/* chat */}
-      {chatOpen && (
-        <div className="wj-card p-4">
-          <p className="font-display">💬 Class Chat</p>
-          <div className="mt-2 max-h-32 space-y-1 overflow-y-auto text-sm">
-            {chat.length === 0 && <p className="font-hand text-ink-soft">Say hello to the family! (chat syncs live once LiveKit is on)</p>}
-            {chat.map((c, i) => (<p key={i}><b>{c.who}:</b> {c.text}</p>))}
-          </div>
-          <div className="mt-2 flex gap-2">
-            <input className="wj-input" value={msg} onChange={(e) => setMsg(e.target.value)} onKeyDown={(e) => e.key === "Enter" && send()} placeholder="Type a message..." />
-            <button className="wj-btn" onClick={send}>Send</button>
-          </div>
-        </div>
-      )}
-
-      {/* bottom adventure toolbar */}
       <div className="wj-card sticky bottom-2 z-10 flex flex-wrap items-center justify-center gap-2 p-3">
         <ToolBtn onClick={cam.toggleMic} active={cam.micOn} label={cam.micOn ? "🎤 Mic" : "🔇 Muted"} />
         <ToolBtn onClick={cam.toggleCam} active={cam.camOn} label={cam.camOn ? "📷 Cam" : "📷 Off"} />
-        <ToolBtn onClick={toggleShare} active={sharing} label="🖥️ Share" />
-        <ToolBtn onClick={() => setHand((h) => !h)} active={hand} label="✋ Hand" />
-        <ToolBtn onClick={() => setChatOpen((c) => !c)} active={chatOpen} label="💬 Chat" />
+        <ToolBtn onClick={() => void toggleShare()} active={sharing} label="🖥️ Share" />
         <span className="mx-1 hidden h-6 w-px bg-sand-deep sm:block" />
         <Link href="/passport" target="_blank" className="wj-chip hover:bg-mango/20">🛂 Passport</Link>
         <Link href="/journal" target="_blank" className="wj-chip hover:bg-mango/20">📔 Notebook</Link>

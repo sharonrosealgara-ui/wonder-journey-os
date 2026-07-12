@@ -8,6 +8,11 @@
 [build.environment]
   NODE_VERSION = "20"
 
+# Serverless functions (LiveKit token minting) live alongside the static site.
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
 # Every route (lessons, recipes, adventures) is pre-rendered as a static
 # file via generateStaticParams, so no SPA fallback is needed — Netlify
 # serves each page directly and 404.html for unknown paths.

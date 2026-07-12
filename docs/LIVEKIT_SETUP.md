@@ -1,84 +1,75 @@
-# 🎥 Live Classroom — LiveKit Setup (Stage 2)
+# 🎥 Live Classroom — LiveKit Setup
 
-The Live Adventure Classroom is built in two stages.
+The Live Adventure Classroom has two stages:
 
-- **Stage 1 — DONE ✅** Your own camera, microphone, and screen-share work live in
-  the classroom right now (no account needed). Open **🎥 Live Classroom** in the sidebar.
-- **Stage 2 — this guide.** Turn on **multi-person live video** so the whole family
-  sees and hears each other inside Wonder Journey.
-
-Stage 2 needs two things: a free **LiveKit Cloud** account, and one small **serverless
-token function** (so the secret key never touches the browser). Here's the plan.
-
----
-
-## Why a server piece is needed
-
-Wonder Journey is a static site (great for speed + cost). Live video needs a tiny
-server endpoint that hands each person a short-lived "join token," signed with your
-**secret key**. That secret must **never** be in the app code or the browser. Netlify
-Functions give us exactly this — a small server endpoint alongside the static site.
+- **Stage 1 — always works.** Your own camera, mic, and screen-share in the
+  classroom (no account needed). If LiveKit isn't configured, the app falls back
+  to this automatically ("Solo mode" banner).
+- **Stage 2 — BUILT ✅, waiting only for keys.** Multi-person live video: the whole
+  family sees and hears each other inside Wonder Journey, with live chat,
+  raise-hand, and screen share. Turns on the moment the four environment
+  variables below are set in Netlify.
 
 ---
 
-## Step 1 — Create a free LiveKit Cloud account
+## How it works (Document 32 security model)
 
-1. Go to **https://cloud.livekit.io** and sign up (free tier is generous).
-2. Create a **Project** (name it "Wonder Journey").
-3. Open the project's **Settings → Keys**. You'll see three values:
-   - **WebSocket URL** — looks like `wss://your-project.livekit.cloud`
-   - **API Key** — looks like `APIxxxxxxxx`
-   - **API Secret** — a long secret string
-4. **Keep the API Secret private.** Never paste it into the app or send it in chat.
+```
+Family opens /classroom → enters name + CLASS CODE → Join
+        ↓
+POST /api/livekit-token   (Netlify Function — server-side only)
+        ↓ checks the class code, mints a signed 3-hour token
+LiveKit Cloud room  wj-<lesson>-<date>   (unique per class day)
+        ↓
+Everyone's cameras/mics connect · chat + raise-hand via data channel
+```
 
-## Step 2 — Add the keys to Netlify (securely)
-
-1. In Netlify, open your **wonder-journey-os** site → **Site configuration →
-   Environment variables**.
-2. Add three variables:
-   - `LIVEKIT_URL` = your WebSocket URL (`wss://…livekit.cloud`)
-   - `LIVEKIT_API_KEY` = your API Key
-   - `LIVEKIT_API_SECRET` = your API Secret
-3. Also add a public one the app can read for the socket URL:
-   - `NEXT_PUBLIC_LIVEKIT_URL` = the same `wss://…livekit.cloud`
-4. Save.
-
-> The `LIVEKIT_API_SECRET` stays server-only (used by the token function). The app
-> only ever sees the public URL and a short-lived token.
-
-## Step 3 — Tell your helper (me) it's ready
-
-Once the keys are in Netlify, tell me **"LiveKit keys are set."** I will then:
-
-1. Add the packages: `livekit-server-sdk` (for the token function) and
-   `livekit-client` + `@livekit/components-react` (for the classroom).
-2. Add a **Netlify Function** at `netlify/functions/livekit-token.mts` that:
-   - accepts a family/teacher name + today's room id,
-   - verifies it's an allowed member (family passphrase for now → full accounts later),
-   - returns a signed join token. The secret never leaves the server.
-3. Wire the classroom's camera tiles to LiveKit so everyone appears live, with:
-   mute/unmute, camera on/off, screen-share, participant list, auto-reconnect,
-   raise-hand, and live chat.
-4. Save **attendance** (join/leave time) to the lesson archive.
+- The **API Secret** lives only in Netlify's environment — never in code, git,
+  or the browser.
+- **No anonymous access:** joining requires the class code Sharon chooses.
+- Tokens expire after 3 hours; each class day gets its own room.
+- Teacher joins from the Teacher Portal → gets `roomAdmin`; family gets
+  publish/subscribe only.
+- Attendance (join/leave times) is recorded on the teacher's device.
 
 ---
 
-## Security checklist (Document 32)
+## ✅ Setup — the four Netlify environment variables
 
-- ✅ Token minted **server-side only** (Netlify Function) — never on the client
-- ✅ `LIVEKIT_API_SECRET` in an environment variable, never in code or git
-- ✅ One room per class with a unique room id (lesson + date)
-- ✅ HTTPS everywhere (Netlify default)
-- ⬜ Full per-user auth (Stage 3) — Stage 2 uses a shared family passphrase so it is
-  never anonymous/public, and upgrades to real accounts with the Supabase backend.
+Project: **LiveKit Cloud → "Wonder Journey"** (already created).
+
+In Netlify: **wonder-journey-os site → Site configuration → Environment
+variables → Add a variable**, then add these four:
+
+| Variable | Value |
+|---|---|
+| `LIVEKIT_URL` | `wss://wonder-journey-l114jmdv.livekit.cloud` |
+| `LIVEKIT_API_KEY` | `API8Tepxned7uJo` |
+| `LIVEKIT_API_SECRET` | *(copy from LiveKit → Settings → Keys — **paste directly into Netlify, never into chat/code**)* |
+| `CLASSROOM_CODE` | *(invent a fun family password, e.g. `mangofloat` — share it with Shaun's family)* |
+
+Then trigger a redeploy: **Deploys → Trigger deploy → Deploy site**
+(env vars apply to functions immediately, but a redeploy is the sure way).
+
+## Test it
+
+1. Open `https://<your-site>/classroom/` on two devices (or two browsers).
+2. Enter the class code on both, allow camera/mic, Join on both.
+3. You should see and hear each other. 🎉
+   - Teacher device: switch to Teacher Portal first to join as teacher.
+
+If the code is wrong → friendly error. If variables are missing → Solo mode
+banner (nothing breaks).
 
 ---
 
-## Rough cost
+## Files involved
 
-LiveKit Cloud's free tier covers thousands of participant-minutes per month — far more
-than one family's weekly classes. You will very likely never pay anything.
+- `netlify/functions/livekit-token.mts` — secure token minting (`/api/livekit-token`)
+- `src/app/classroom/page.tsx` — lobby, connected room, solo fallback
+- `netlify.toml` — `[functions]` directory config
 
----
+## Future (Stage 3)
 
-*When the keys are set, say the word and Stage 2 goes live the same day.*
+Per-user accounts (Supabase) replace the shared class code · session recording ·
+captions · breakout rooms — the room/token architecture already supports these.

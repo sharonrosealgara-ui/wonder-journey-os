@@ -34,6 +34,17 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     return href === "/" ? pathname === "/" : pathname.startsWith(href);
   }
 
+  // 🎥 Fullscreen Classroom Mode: /classroom is a dedicated teaching room —
+  // no sidebar, no dashboard nav, no footer. Only the lesson, the cameras,
+  // and the teaching tools (Decision 044).
+  if (pathname.startsWith("/classroom")) {
+    return (
+      <div className="min-h-screen px-3 py-3 sm:px-4">
+        {children}
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen lg:flex">
       <TropicalDecor />

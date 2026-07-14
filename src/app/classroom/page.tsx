@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   ConnectionState,
   Participant,
@@ -13,7 +13,7 @@ import {
 import { AnnotationLayer } from "@/components/adventure/annotation-layer";
 import { AdventureTheater } from "@/components/adventure/theater";
 import { familyName, getStudent } from "@/config/family";
-import { getTodaysLesson, type Lesson } from "@/config/lessons";
+import { getTodaysLesson, lessons as allLessons, type Lesson } from "@/config/lessons";
 import type { Mode } from "@/config/navigation";
 import { normalizeMode } from "@/config/navigation";
 import { KEYS, todayISO } from "@/lib/app-state";
@@ -30,6 +30,7 @@ type Device = { id: string; label: string };
 type ChatMsg = { who: string; text: string };
 
 export default function ClassroomPage() {
+  const router = useRouter();
   const [phase, setPhase] = useState<Phase>("lobby");
   const [activeStudentId] = useStored<string | null>(KEYS.activeStudent, null);
   const [rawMode] = useStored<string>(KEYS.mode, "family");
@@ -105,11 +106,14 @@ export default function ClassroomPage() {
     }
   }
 
-  function leave() {
+  // END CALL — the only action that disconnects LiveKit. Stops all
+  // tracks, closes the room, and returns everyone to Home Base.
+  function endCall() {
     roomRef.current?.disconnect();
     roomRef.current = null;
     setConnected(false);
     setPhase("lobby");
+    router.push("/");
   }
 
   if (phase === "lobby" || phase === "connecting") {
@@ -127,9 +131,9 @@ export default function ClassroomPage() {
     );
   }
   return connected && roomRef.current ? (
-    <ConnectedRoom room={roomRef.current} name={name} lesson={lesson} isTeacher={mode === "teacher"} onLeave={leave} />
+    <ConnectedRoom room={roomRef.current} name={name} lesson={lesson} isTeacher={mode === "teacher"} onLeave={endCall} />
   ) : (
-    <SoloRoom name={name} lesson={lesson} devices={lobbyDevices} onLeave={leave} />
+    <SoloRoom name={name} lesson={lesson} devices={lobbyDevices} onLeave={endCall} />
   );
 }
 
@@ -358,9 +362,17 @@ function ConnectedRoom({ room, name, lesson, isTeacher, onLeave }: {
   // The lesson opens INSIDE the stage — the route never changes, so the
   // LiveKit room, cameras, and toolbar are never unmounted.
   const [stageLesson, setStageLesson] = useState<Lesson | null>(null);
+  const [wrapUp, setWrapUp] = useState(false); // Adventure Wrap-Up: lesson done, call stays alive
   const [camsVisible, setCamsVisible] = useState(true); // explicit "Hide video" only
   const [enlarged, setEnlarged] = useState<string | null>(null); // participant identity, pinned big
   const [drawing, setDrawing] = useState(false); // whiteboard over the stage
+
+  // FINISH LESSON — closes the presentation only. The LiveKit room,
+  // cameras, and microphones stay connected for the wrap-up chat.
+  function finishLesson() {
+    setStageLesson(null);
+    setWrapUp(true);
+  }
 
   const bump = useCallback(() => setVersion((v) => v + 1), []);
 
@@ -485,13 +497,14 @@ function ConnectedRoom({ room, name, lesson, isTeacher, onLeave }: {
         </div>
       </div>
 
-      {/* Meet-style: teacher pinned left · lesson center · family pinned right.
-          On smaller screens the lesson leads and both cameras sit beneath it. */}
-      <div className={`grid grid-cols-2 gap-3 ${camsVisible ? "lg:grid-cols-[13rem_minmax(0,1fr)_13rem]" : "lg:grid-cols-1"} lg:items-start`}>
+      {/* Focused teaching room: LESSON STAGE (~78%) left · CAMERA RAIL right.
+          Family camera ABOVE teacher camera (Decision 044). On small screens
+          the lesson leads and the rail stacks beneath it — family still first. */}
+      <div className={`grid grid-cols-1 gap-3 ${camsVisible ? "lg:grid-cols-[minmax(0,1fr)_minmax(14rem,23%)]" : ""} lg:items-start`}>
         {/* stage — lessons open here; the shell around it never unmounts */}
         <div
-          className={`wj-card relative col-span-2 overflow-hidden p-0 lg:order-2 ${camsVisible ? "lg:col-span-1" : ""} ${
-            stageLesson ? "h-[74vh]" : "flex min-h-[46vh] items-center justify-center"
+          className={`wj-card relative overflow-hidden p-0 ${
+            stageLesson ? "h-[74vh] lg:h-[78vh]" : "flex min-h-[46vh] items-center justify-center lg:h-[78vh]"
           }`}
         >
           {/* screen share overlays the stage; the lesson stays mounted */}
@@ -501,9 +514,23 @@ function ConnectedRoom({ room, name, lesson, isTeacher, onLeave }: {
             </div>
           )}
           {stageLesson ? (
-            <AdventureTheater lesson={stageLesson} embedded onExit={() => setStageLesson(null)} />
+            <LessonBoundary onReturnToWrapUp={finishLesson}>
+              <AdventureTheater lesson={stageLesson} embedded onExit={finishLesson} />
+            </LessonBoundary>
+          ) : wrapUp ? (
+            <WrapUpPanel
+              lesson={lesson}
+              quizResult={null}
+              onReopen={() => {
+                if (lesson) {
+                  setWrapUp(false);
+                  setStageLesson(lesson);
+                }
+              }}
+              onEndCall={leave}
+            />
           ) : (
-            <div className="flex flex-col items-center gap-4 p-8 text-center">
+            <div className="flex flex-col items-center gap-4 overflow-y-auto p-8 text-center">
               <div className="text-6xl">{lesson?.emoji ?? "🌴"}</div>
               <h2 className="wj-outline font-display text-2xl sm:text-3xl">{lesson?.title ?? "Today's Adventure"}</h2>
               <p className="font-hand text-lg text-ink-soft">{lesson?.subtitle}</p>
@@ -534,44 +561,47 @@ function ConnectedRoom({ room, name, lesson, isTeacher, onLeave }: {
           )}
         </div>
 
-        {/* 👩‍🏫 Teacher camera — pinned, always visible */}
+        {/* ── CAMERA RAIL: 👨‍👩‍👧‍👦 Family ABOVE 👩‍🏫 Teacher ─────────── */}
         {camsVisible && (
-          <div className="lg:order-1 lg:sticky lg:top-20">
-            <p className="mb-1 text-center text-[11px] font-bold uppercase tracking-wide text-ink-soft">👩‍🏫 Teacher</p>
-            <ParticipantTile
-              participant={room.localParticipant}
-              isLocal
-              hand={hands[room.localParticipant.identity] ?? false}
-              version={version}
-              onClick={() => setEnlarged(room.localParticipant.identity)}
-            />
-          </div>
-        )}
+          <div className="flex flex-col gap-3 lg:sticky lg:top-3">
+            {/* Family first — slightly more prominent so the teacher can
+                watch all four children clearly */}
+            <div>
+              <p className="mb-1 text-center text-[11px] font-bold uppercase tracking-wide text-ink-soft">👨‍👩‍👧‍👦 {familyName}</p>
+              {familyFeed ? (
+                <ParticipantTile
+                  participant={familyFeed}
+                  isLocal={false}
+                  hand={hands[familyFeed.identity] ?? false}
+                  version={version}
+                  tall
+                  onClick={() => setEnlarged(familyFeed.identity)}
+                />
+              ) : (
+                <div className="flex aspect-[4/3] w-full flex-col items-center justify-center rounded-2xl border-2 border-dashed border-sand-deep bg-sand text-center text-ink-soft">
+                  <span className="text-3xl">💛</span>
+                  <span className="font-hand px-2 text-sm">Waiting for the family to join…</span>
+                </div>
+              )}
+              {/* future participants stack here automatically */}
+              {extraFeeds.map((p) => (
+                <div key={p.identity} className="mt-2">
+                  <ParticipantTile participant={p} isLocal={false} hand={hands[p.identity] ?? false} version={version} onClick={() => setEnlarged(p.identity)} />
+                </div>
+              ))}
+            </div>
 
-        {/* 👨‍👩‍👧‍👦 Family camera — pinned, always visible */}
-        {camsVisible && (
-          <div className="lg:order-3 lg:sticky lg:top-20">
-            <p className="mb-1 text-center text-[11px] font-bold uppercase tracking-wide text-ink-soft">👨‍👩‍👧‍👦 {familyName}</p>
-            {familyFeed ? (
+            {/* Teacher below */}
+            <div>
+              <p className="mb-1 text-center text-[11px] font-bold uppercase tracking-wide text-ink-soft">👩‍🏫 Teacher Sharon</p>
               <ParticipantTile
-                participant={familyFeed}
-                isLocal={false}
-                hand={hands[familyFeed.identity] ?? false}
+                participant={room.localParticipant}
+                isLocal
+                hand={hands[room.localParticipant.identity] ?? false}
                 version={version}
-                onClick={() => setEnlarged(familyFeed.identity)}
+                onClick={() => setEnlarged(room.localParticipant.identity)}
               />
-            ) : (
-              <div className="flex aspect-video w-full flex-col items-center justify-center rounded-2xl border-2 border-dashed border-sand-deep bg-sand text-center text-ink-soft">
-                <span className="text-3xl">💛</span>
-                <span className="font-hand px-2 text-sm">Waiting for the family to join…</span>
-              </div>
-            )}
-            {/* future participants stack here automatically */}
-            {extraFeeds.map((p) => (
-              <div key={p.identity} className="mt-2">
-                <ParticipantTile participant={p} isLocal={false} hand={hands[p.identity] ?? false} version={version} onClick={() => setEnlarged(p.identity)} />
-              </div>
-            ))}
+            </div>
           </div>
         )}
       </div>
@@ -590,6 +620,7 @@ function ConnectedRoom({ room, name, lesson, isTeacher, onLeave }: {
         </div>
       )}
 
+      {/* TEACHING TOOLBAR — only class tools, no dashboard navigation */}
       <div className="wj-card sticky bottom-2 z-10 flex flex-wrap items-center justify-center gap-2 p-3">
         <ToolBtn onClick={() => void toggleMic()} active={micOn} label={micOn ? "🎤 Mic" : "🔇 Muted"} />
         <ToolBtn onClick={() => void toggleCam()} active={camOn} label={camOn ? "📷 Cam" : "📷 Off"} />
@@ -598,21 +629,87 @@ function ConnectedRoom({ room, name, lesson, isTeacher, onLeave }: {
         <ToolBtn onClick={toggleHand} active={myHand} label="✋ Hand" />
         <ToolBtn onClick={() => setChatOpen((c) => !c)} active={chatOpen} label="💬 Chat" />
         <span className="mx-1 hidden h-6 w-px bg-sand-deep sm:block" />
-        <Link href="/passport" target="_blank" className="wj-chip hover:bg-mango/20">🛂 Passport</Link>
-        <Link href="/journal" target="_blank" className="wj-chip hover:bg-mango/20">📔 Notebook</Link>
-        <Link href="/cooking" target="_blank" className="wj-chip hover:bg-mango/20">🍳 Cooking</Link>
-        <button className="wj-btn wj-btn-hibiscus !px-4 !py-1.5 text-sm" onClick={leave}>Leave</button>
+        {isTeacher && stageLesson && (
+          <button className="wj-btn wj-btn-ocean !px-4 !py-1.5 text-sm" onClick={finishLesson}>
+            🏁 Finish Lesson
+          </button>
+        )}
+        <button className="wj-btn wj-btn-hibiscus !px-4 !py-1.5 text-sm" onClick={leave} title="Disconnects the call and returns to Home Base">
+          📞 End Call
+        </button>
       </div>
     </div>
   );
 }
 
-function ParticipantTile({ participant, isLocal, hand, version, onClick }: {
+/* ── Adventure Wrap-Up: lesson finished, cameras stay on ────── */
+function WrapUpPanel({ lesson, quizResult, onReopen, onEndCall }: {
+  lesson: Lesson | null;
+  quizResult: { score: number; total: number } | null;
+  onReopen: () => void;
+  onEndCall: () => void;
+}) {
+  const next = lesson ? allLessons.find((l) => l.order === lesson.order + 1) : null;
+  return (
+    <div className="flex h-full w-full flex-col items-center justify-center gap-3 overflow-y-auto p-6 text-center">
+      <div className="text-5xl">🌅</div>
+      <h2 className="wj-outline font-display text-2xl sm:text-3xl">Wonderful work today!</h2>
+      <p className="font-hand text-lg text-ink-soft">
+        {lesson ? `${lesson.emoji} ${lesson.title} — adventure complete!` : "Adventure complete!"}
+      </p>
+      <div className="flex flex-wrap justify-center gap-2">
+        {quizResult && <span className="wj-chip">🧠 Quiz: {quizResult.score}/{quizResult.total}</span>}
+        {lesson?.destinationId && <span className="wj-chip">🛂 Passport stamp earned</span>}
+        <span className="wj-chip">📔 Journal saved</span>
+      </div>
+      {next && (
+        <p className="font-hand rounded-2xl bg-sand px-4 py-2 text-base text-ink-soft">
+          Next adventure: <b>{next.emoji} {next.title}</b> · {next.date}
+        </p>
+      )}
+      <p className="font-hand text-base text-ink-soft">
+        Stay and chat as long as you like — the call is still on. 💛
+      </p>
+      <div className="mt-1 flex flex-wrap justify-center gap-3">
+        <button className="wj-btn wj-btn-ghost text-sm" onClick={onReopen}>↩️ Reopen the lesson</button>
+        <button className="wj-btn wj-btn-hibiscus" onClick={onEndCall}>📞 End Call</button>
+      </div>
+    </div>
+  );
+}
+
+/* ── Failsafe: a lesson crash must never end the call ───────── */
+class LessonBoundary extends React.Component<
+  { children: React.ReactNode; onReturnToWrapUp: () => void },
+  { failed: boolean }
+> {
+  state = { failed: false };
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+  render() {
+    if (!this.state.failed) return this.props.children;
+    return (
+      <div className="flex h-full w-full flex-col items-center justify-center gap-3 p-6 text-center">
+        <div className="text-4xl">🛶</div>
+        <h2 className="font-display text-xl">That lesson page hit a wave — but the call is still on!</h2>
+        <p className="font-hand text-ink-soft">Cameras and microphones are untouched. You can keep talking.</p>
+        <div className="flex gap-3">
+          <button className="wj-btn wj-btn-ghost text-sm" onClick={() => this.setState({ failed: false })}>🔄 Retry Lesson</button>
+          <button className="wj-btn text-sm" onClick={this.props.onReturnToWrapUp}>Return to Wrap-Up</button>
+        </div>
+      </div>
+    );
+  }
+}
+
+function ParticipantTile({ participant, isLocal, hand, version, onClick, tall = false }: {
   participant: Participant;
   isLocal: boolean;
   hand: boolean;
   version: number;
   onClick?: () => void;
+  tall?: boolean; // family tile gets slightly more visual prominence
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -638,7 +735,7 @@ function ParticipantTile({ participant, isLocal, hand, version, onClick }: {
     <div
       onClick={onClick}
       title={onClick ? "Tap to pin / enlarge" : undefined}
-      className={`relative aspect-video w-full overflow-hidden rounded-2xl bg-ink ${participant.isSpeaking ? "ring-4 ring-mango" : ""} ${onClick ? "cursor-pointer" : ""}`}
+      className={`relative ${tall ? "aspect-[4/3]" : "aspect-video"} w-full overflow-hidden rounded-2xl bg-ink ${participant.isSpeaking ? "ring-4 ring-mango" : ""} ${onClick ? "cursor-pointer" : ""}`}
     >
       <video ref={videoRef} autoPlay muted={isLocal} playsInline className={`h-full w-full object-cover ${camLive ? "" : "hidden"}`} />
       {!isLocal && <audio ref={audioRef} autoPlay />}
@@ -712,9 +809,9 @@ function SoloRoom({ name, lesson, devices, onLeave }: {
         </p>
       </div>
 
-      {/* Same Meet-style V1 layout: teacher left · lesson center · family right */}
-      <div className="grid grid-cols-2 gap-3 lg:grid-cols-[13rem_minmax(0,1fr)_13rem] lg:items-start">
-        <div className={`wj-card relative col-span-2 overflow-hidden p-0 lg:order-2 lg:col-span-1 ${stageLesson ? "h-[74vh]" : "flex min-h-[46vh] items-center justify-center"}`}>
+      {/* Focused room: lesson stage left · camera rail right, family ABOVE teacher */}
+      <div className="grid grid-cols-1 gap-3 lg:grid-cols-[minmax(0,1fr)_minmax(14rem,23%)] lg:items-start">
+        <div className={`wj-card relative overflow-hidden p-0 ${stageLesson ? "h-[74vh] lg:h-[78vh]" : "flex min-h-[46vh] items-center justify-center lg:h-[78vh]"}`}>
           {sharing && (
             <div className="absolute inset-0 z-20 bg-ink">
               <video ref={shareVideoRef} autoPlay playsInline className="h-full w-full object-contain" />
@@ -723,7 +820,7 @@ function SoloRoom({ name, lesson, devices, onLeave }: {
           {stageLesson ? (
             <AdventureTheater lesson={stageLesson} embedded onExit={() => setStageLesson(null)} />
           ) : (
-            <div className="flex flex-col items-center gap-4 p-8 text-center">
+            <div className="flex flex-col items-center gap-4 overflow-y-auto p-8 text-center">
               <div className="text-6xl">{lesson?.emoji ?? "🌴"}</div>
               <h2 className="wj-outline font-display text-2xl sm:text-3xl">{lesson?.title ?? "Today's Adventure"}</h2>
               <p className="font-hand text-lg text-ink-soft">{lesson?.subtitle}</p>
@@ -737,18 +834,18 @@ function SoloRoom({ name, lesson, devices, onLeave }: {
           {drawing && <AnnotationLayer onClose={() => setDrawing(false)} />}
         </div>
 
-        {/* 👩‍🏫 Teacher camera — pinned */}
-        <div className="lg:order-1 lg:sticky lg:top-20">
-          <p className="mb-1 text-center text-[11px] font-bold uppercase tracking-wide text-ink-soft">👩‍🏫 Teacher</p>
-          <LocalCameraView streamRef={cam.streamRef} camOn={cam.camOn} tick={cam.tick} className="aspect-video w-full" label={name} />
-        </div>
-
-        {/* 👨‍👩‍👧‍👦 Family camera — appears when LiveKit is connected */}
-        <div className="lg:order-3 lg:sticky lg:top-20">
-          <p className="mb-1 text-center text-[11px] font-bold uppercase tracking-wide text-ink-soft">👨‍👩‍👧‍👦 {familyName}</p>
-          <div className="flex aspect-video w-full flex-col items-center justify-center rounded-2xl border-2 border-dashed border-sand-deep bg-sand text-center text-ink-soft">
-            <span className="text-3xl">💛</span>
-            <span className="font-hand px-2 text-sm">Family video appears here once LiveKit is connected</span>
+        {/* Camera rail: 👨‍👩‍👧‍👦 Family ABOVE 👩‍🏫 Teacher */}
+        <div className="flex flex-col gap-3 lg:sticky lg:top-3">
+          <div>
+            <p className="mb-1 text-center text-[11px] font-bold uppercase tracking-wide text-ink-soft">👨‍👩‍👧‍👦 {familyName}</p>
+            <div className="flex aspect-[4/3] w-full flex-col items-center justify-center rounded-2xl border-2 border-dashed border-sand-deep bg-sand text-center text-ink-soft">
+              <span className="text-3xl">💛</span>
+              <span className="font-hand px-2 text-sm">Family video appears here once LiveKit is connected</span>
+            </div>
+          </div>
+          <div>
+            <p className="mb-1 text-center text-[11px] font-bold uppercase tracking-wide text-ink-soft">👩‍🏫 Teacher Sharon</p>
+            <LocalCameraView streamRef={cam.streamRef} camOn={cam.camOn} tick={cam.tick} className="aspect-video w-full" label={name} />
           </div>
         </div>
       </div>
@@ -765,10 +862,9 @@ function SoloRoom({ name, lesson, devices, onLeave }: {
         <ToolBtn onClick={() => void toggleShare()} active={sharing} label="🖥️ Share" />
         <ToolBtn onClick={() => setDrawing((d) => !d)} active={drawing} label="✏️ Draw" />
         <span className="mx-1 hidden h-6 w-px bg-sand-deep sm:block" />
-        <Link href="/passport" target="_blank" className="wj-chip hover:bg-mango/20">🛂 Passport</Link>
-        <Link href="/journal" target="_blank" className="wj-chip hover:bg-mango/20">📔 Notebook</Link>
-        <Link href="/cooking" target="_blank" className="wj-chip hover:bg-mango/20">🍳 Cooking</Link>
-        <button className="wj-btn wj-btn-hibiscus !px-4 !py-1.5 text-sm" onClick={leave}>Leave</button>
+        <button className="wj-btn wj-btn-hibiscus !px-4 !py-1.5 text-sm" onClick={leave} title="Disconnects and returns to Home Base">
+          📞 End Call
+        </button>
       </div>
     </div>
   );

@@ -7,12 +7,12 @@ import { useCallback, useEffect, useRef, useState } from "react";
 // teacher's screen-share (no realtime backend needed). Only mounts when
 // the teacher turns it on, so it can never interfere with the theater.
 
-type Tool = "pen" | "highlighter" | "line" | "arrow" | "circle" | "text" | "eraser" | "laser";
+type Tool = "pen" | "highlighter" | "line" | "arrow" | "circle" | "rect" | "text" | "eraser" | "laser";
 type Pt = { x: number; y: number };
 
 type Stroke =
   | { kind: "path"; tool: "pen" | "highlighter"; color: string; width: number; points: Pt[] }
-  | { kind: "shape"; tool: "line" | "arrow" | "circle"; color: string; width: number; a: Pt; b: Pt }
+  | { kind: "shape"; tool: "line" | "arrow" | "circle" | "rect"; color: string; width: number; a: Pt; b: Pt }
   | { kind: "text"; color: string; size: number; x: number; y: number; text: string };
 
 const COLORS = ["#e4573b", "#e5a917", "#2e9563", "#14837c", "#cf3e6b", "#274472", "#ffffff"];
@@ -24,6 +24,7 @@ const TOOLS: { id: Tool; emoji: string; label: string; key: string }[] = [
   { id: "line", emoji: "📏", label: "Line", key: "L" },
   { id: "arrow", emoji: "➡️", label: "Arrow", key: "A" },
   { id: "circle", emoji: "⭕", label: "Circle", key: "C" },
+  { id: "rect", emoji: "⬜", label: "Rectangle", key: "R" },
   { id: "text", emoji: "🔤", label: "Text", key: "T" },
   { id: "eraser", emoji: "🧽", label: "Eraser", key: "E" },
   { id: "laser", emoji: "🔦", label: "Laser", key: "K" },
@@ -33,6 +34,7 @@ export function AnnotationLayer({ onClose }: { onClose: () => void }) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const strokesRef = useRef<Stroke[]>([]);
+  const redoRef = useRef<Stroke[]>([]);
   const draftRef = useRef<Stroke | null>(null);
   const laserRef = useRef<Pt | null>(null);
   const [tool, setTool] = useState<Tool>("pen");
@@ -80,7 +82,13 @@ export function AnnotationLayer({ onClose }: { onClose: () => void }) {
       if (textBox) return; // typing text
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "z") {
         e.preventDefault();
-        undo();
+        if (e.shiftKey) redo();
+        else undo();
+        return;
+      }
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "y") {
+        e.preventDefault();
+        redo();
         return;
       }
       if (e.key === "Escape") {
@@ -145,6 +153,7 @@ export function AnnotationLayer({ onClose }: { onClose: () => void }) {
     if (draftRef.current) {
       strokesRef.current.push(draftRef.current);
       draftRef.current = null;
+      redoRef.current = []; // a new stroke clears the redo history
       setCount((c) => c + 1);
     }
     if (tool === "laser") {
@@ -163,12 +172,20 @@ export function AnnotationLayer({ onClose }: { onClose: () => void }) {
   }
 
   function undo() {
-    strokesRef.current.pop();
+    const s = strokesRef.current.pop();
+    if (s) redoRef.current.push(s);
+    setCount((c) => c + 1);
+    redraw();
+  }
+  function redo() {
+    const s = redoRef.current.pop();
+    if (s) strokesRef.current.push(s);
     setCount((c) => c + 1);
     redraw();
   }
   function clearAll() {
     strokesRef.current = [];
+    redoRef.current = [];
     draftRef.current = null;
     setCount((c) => c + 1);
     redraw();
@@ -278,6 +295,14 @@ export function AnnotationLayer({ onClose }: { onClose: () => void }) {
           ↩️
         </button>
         <button
+          onClick={redo}
+          disabled={redoRef.current.length === 0}
+          title="Redo (Ctrl+Shift+Z)"
+          className="flex h-9 w-9 items-center justify-center rounded-full text-lg hover:bg-sand-deep disabled:opacity-40"
+        >
+          ↪️
+        </button>
+        <button
           onClick={clearAll}
           title="Clear page"
           className="flex h-9 w-9 items-center justify-center rounded-full text-lg hover:bg-hibiscus/20"
@@ -341,6 +366,13 @@ function drawStroke(ctx: CanvasRenderingContext2D, s: Stroke) {
     const ry = Math.abs(s.b.y - s.a.y) / 2;
     ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
     ctx.stroke();
+  } else if (s.tool === "rect") {
+    ctx.strokeRect(
+      Math.min(s.a.x, s.b.x),
+      Math.min(s.a.y, s.b.y),
+      Math.abs(s.b.x - s.a.x),
+      Math.abs(s.b.y - s.a.y)
+    );
   }
   ctx.restore();
 }

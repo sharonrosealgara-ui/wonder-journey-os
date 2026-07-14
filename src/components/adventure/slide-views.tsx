@@ -44,6 +44,7 @@ export function SlideView({
   onQuizFinish,
   quizResult,
   level = "adventure",
+  onExitTheater,
 }: {
   slide: Slide;
   lesson: Lesson;
@@ -51,6 +52,7 @@ export function SlideView({
   onQuizFinish: (score: number, total: number) => void;
   quizResult: { score: number; total: number } | null;
   level?: ExplorerLevel;
+  onExitTheater?: () => void;
 }) {
   switch (slide.kind) {
     case "welcome":
@@ -88,7 +90,7 @@ export function SlideView({
     case "memory":
       return <MemorySlide slide={slide} lesson={lesson} />;
     case "complete":
-      return <CompleteSlide slide={slide} lesson={lesson} quizResult={quizResult} onNext={onNext} />;
+      return <CompleteSlide slide={slide} lesson={lesson} quizResult={quizResult} onNext={onNext} onExitTheater={onExitTheater} />;
   }
 }
 
@@ -633,11 +635,13 @@ function CompleteSlide({
   lesson,
   quizResult,
   onNext,
+  onExitTheater,
 }: {
   slide: Slide;
   lesson: Lesson;
   quizResult: { score: number; total: number } | null;
   onNext: () => void;
+  onExitTheater?: () => void;
 }) {
   const [activeStudentId] = useStored<string | null>(KEYS.activeStudent, null);
   const [completions, setCompletions] = useStored<LessonCompletion[]>(KEYS.completions, []);
@@ -696,9 +700,23 @@ function CompleteSlide({
           <button className="wj-btn w-full" onClick={finish} disabled={alreadyDone}>
             {alreadyDone ? "Adventure recorded! ✅" : "Stamp my passport & finish 🛂"}
           </button>
-          <Link href="/today" className="wj-btn wj-btn-ocean w-full" onClick={finish}>
-            See you next adventure! 🌴
-          </Link>
+          {onExitTheater ? (
+            // Live class: return to the classroom — never navigate away
+            // (the LiveKit room and cameras stay connected).
+            <button
+              className="wj-btn wj-btn-ocean w-full"
+              onClick={() => {
+                finish();
+                onExitTheater();
+              }}
+            >
+              Back to the Classroom 🎥
+            </button>
+          ) : (
+            <Link href="/today" className="wj-btn wj-btn-ocean w-full" onClick={finish}>
+              See you next adventure! 🌴
+            </Link>
+          )}
         </div>
       </div>
       <MascotBubble slide={slide} line="Every adventure becomes a memory. Salamat, explorers!" />

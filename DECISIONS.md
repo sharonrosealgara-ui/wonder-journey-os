@@ -426,7 +426,18 @@ Decisions 001–028 are the founding product decisions (ratified at project ince
 
 # Future Decisions
 
-IDs 043+ are reserved. Log a new entry for: new dependencies, data-model changes,
+## Decision 043 — Live Classroom V1: Persistent Shell + Two-Camera Layout
+**Date:** 2026-07-12 · **Status:** Active
+- **Context:** Two problems: (1) "Open the Adventure" navigated to /adventure/[id], unmounting the LiveKit room — cameras died mid-class. (2) The rail showed three fake child placeholders, but the Ferrell family joins from ONE shared laptop.
+- **Decision:** The classroom (/classroom) is now the **permanent shell** for a live session. The Adventure Theater gained an `embedded` mode (renders inside the LessonStage, no portal, `onExit` returns to the welcome panel — including the finale slide's button). Lessons, screen shares, and the whiteboard all swap **inside the center stage only**; the LiveKit room, mic/cam state, chat, hands, timer, and attendance are never unmounted. Layout is Meet-style V1: **👩‍🏫 Teacher camera pinned left · lesson center · 👨‍👩‍👧‍👦 one Family camera pinned right** (sticky while scrolling; stacks under the lesson on small screens). Tap a tile to pin/enlarge it over the lesson; explicit "Hide video" is the only way cameras disappear. The whiteboard (AnnotationLayer) is now available directly in the classroom toolbar (✏️ Draw) over slides/shares. Extra future participants auto-stack under the family tile — the code iterates all remotes, so multi-family needs no redesign.
+- **Reasoning:** Continuous eye contact is the product ("families should see each other the whole class"); one shared family camera matches reality and simplifies V1.
+- **Alternatives considered:** Nested routes with a persistent layout (Option B) — heavier for zero benefit at V1 scale; floating always-on-top PiP via browser API (poor cross-browser support).
+- **Deferred:** 📸 screenshot + 🎥 recording (need html-to-image / LiveKit Egress), remote annotation sync, waiting room, emoji reactions.
+- **Future review:** After the first live class, ask Sharon whether the pinned-tile size and mobile strip feel right.
+
+---
+
+IDs 044+ are reserved. Log a new entry for: new dependencies, data-model changes,
 schedule/curriculum shape changes, backend migration steps, and anything a future
 developer would ask "why is it like this?" about. Never delete; supersede.
 

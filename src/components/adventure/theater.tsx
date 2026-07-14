@@ -33,7 +33,19 @@ function levelForAge(age: number): ExplorerLevel {
 // A full-screen presentation mode (like Canva presentation mode)
 // generated automatically from any Lesson config object.
 
-export function AdventureTheater({ lesson }: { lesson: Lesson }) {
+// embedded: renders INSIDE a parent shell (the Live Classroom's lesson
+// stage) instead of portaling full-screen — so the LiveKit room, camera
+// tiles, and classroom toolbar around it are NEVER unmounted.
+// onExit: return to the classroom welcome panel without navigating.
+export function AdventureTheater({
+  lesson,
+  embedded = false,
+  onExit,
+}: {
+  lesson: Lesson;
+  embedded?: boolean;
+  onExit?: () => void;
+}) {
   const slides = useMemo(() => buildSlides(lesson), [lesson]);
   const [index, setIndex] = useState(0);
   const [showChapters, setShowChapters] = useState(false);
@@ -126,10 +138,16 @@ export function AdventureTheater({ lesson }: { lesson: Lesson }) {
   const mins = String(Math.floor(elapsed / 60)).padStart(2, "0");
   const secs = String(elapsed % 60).padStart(2, "0");
 
-  if (!mounted) return null;
+  if (!embedded && !mounted) return null;
 
-  return createPortal(
-    <div className="fixed inset-0 z-50 flex flex-col bg-sky">
+  const shell = (
+    <div
+      className={
+        embedded
+          ? "relative flex h-full min-h-0 w-full flex-col overflow-hidden bg-sky"
+          : "fixed inset-0 z-50 flex flex-col bg-sky"
+      }
+    >
       {/* animated storybook scene — edges only, never over the text */}
       <SlideScene />
 
@@ -194,9 +212,15 @@ export function AdventureTheater({ lesson }: { lesson: Lesson }) {
         <button className="wj-chip hover:bg-mango/20" onClick={toggleFullscreen} title="Fullscreen">
           ⛶ <span className="hidden sm:inline">Full</span>
         </button>
+        {onExit ? (
+          <button className="wj-chip hover:bg-hibiscus/15" onClick={onExit} title="Back to the Classroom">
+            🎥 <span className="hidden sm:inline">Classroom</span>
+          </button>
+        ) : (
         <Link href={`/lessons/${lesson.id}`} className="wj-chip hover:bg-hibiscus/15" title="Exit Adventure">
           ✖ <span className="hidden sm:inline">Exit</span>
         </Link>
+        )}
       </header>
 
       <div className="relative z-10 flex min-h-0 flex-1">
@@ -249,6 +273,7 @@ export function AdventureTheater({ lesson }: { lesson: Lesson }) {
                 }}
                 quizResult={quizResult}
                 level={level}
+                onExitTheater={onExit}
               />
             </div>
           </div>
@@ -294,9 +319,12 @@ export function AdventureTheater({ lesson }: { lesson: Lesson }) {
           Next →
         </button>
       </footer>
-    </div>,
-    document.body
+    </div>
   );
+
+  // Embedded: render inline inside the classroom's lesson stage — the
+  // LiveKit room around us stays mounted. Full-screen: portal to <body>.
+  return embedded ? shell : createPortal(shell, document.body);
 }
 
 // participation tally per student per class day: { [studentId]: { [action]: count } }

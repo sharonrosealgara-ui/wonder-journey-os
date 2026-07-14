@@ -77,3 +77,40 @@ export const prayerLeaders = [
 export function getStudent(id: string | null | undefined): Student | undefined {
   return students.find((s) => s.id === id);
 }
+
+// ─────────────────────────────────────────────────────────────
+// THE WHOLE FAMILY — everyone who takes part in Morning Blessings
+// and family devotions. Children + parents + grandma. The teacher
+// joins only in teacher mode (added by the page, not listed here).
+// ─────────────────────────────────────────────────────────────
+
+export type FamilyMember = {
+  id: string;
+  name: string;
+  emoji: string; // devotional-journal avatar
+  color: string;
+  role: "child" | "parent" | "grandparent";
+};
+
+export const familyMembers: FamilyMember[] = [
+  { id: "rylee", name: "Rylee", emoji: "🌿", color: "#e5739e", role: "child" },
+  { id: "ezra", name: "Ezra", emoji: "🎨", color: "#e89a3c", role: "child" },
+  { id: "asa", name: "Asa", emoji: "🚜", color: "#4da66a", role: "child" },
+  { id: "selah", name: "Selah", emoji: "🧁", color: "#7f7ad1", role: "child" },
+  { id: "shaun", name: "Shaun", emoji: "❤️", color: "#e4573b", role: "parent" },
+  { id: "taylor", name: "Taylor", emoji: "🌸", color: "#ec5d87", role: "parent" },
+  { id: "grandma", name: "Grandma Jeannie", emoji: "👵", color: "#14837c", role: "grandparent" },
+];
+
+export const teacherMember: FamilyMember = {
+  id: "teacher-sharon",
+  name: "Teacher Sharon",
+  emoji: "👩‍🏫",
+  color: "#cf3e6b",
+  role: "parent",
+};
+
+export function getFamilyMember(id: string | null | undefined): FamilyMember | undefined {
+  if (id === teacherMember.id) return teacherMember;
+  return familyMembers.find((m) => m.id === id);
+}

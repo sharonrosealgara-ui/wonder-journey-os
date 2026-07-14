@@ -6,10 +6,15 @@ import { prayerLeaders } from "@/config/family";
 
 export type GratitudeEntry = {
   id: string;
-  studentId: string;
+  studentId: string; // any family member id (children, parents, grandma)
   date: string; // ISO date
   prompt: string;
   text: string;
+  // Morning Blessings V2 (all optional — older entries still valid)
+  prayer?: string; // today's prayer request
+  kindness?: string; // kindness goal for the day
+  hearts?: number; // ❤️ encouragements from Teacher Sharon
+  teacherNote?: string; // a short written encouragement
 };
 
 export type JournalEntry = {

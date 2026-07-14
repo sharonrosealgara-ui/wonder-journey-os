@@ -91,6 +91,17 @@ placeholder ✅ · Email generator ✅ · Fullscreen ✅ · Google Earth links �
 Quiz controls (edit) ⬜ · Laser pointer / drawing tools ⬜ · Lesson editor UI ⬜ (config
 files today). **Rule verified: a full class runs without opening another application.**
 
+## 6b. Live Classroom (Decision 043) ✅ verified 2026-07-12
+
+Persistent shell: opening a lesson never changes the route ✅ · camera columns
+(👩‍🏫 Teacher left · 👨‍👩‍👧‍👦 Family right) stay mounted through slides ✅ · classroom
+toolbar visible throughout ✅ · 🎥 Classroom returns to the welcome panel without
+reconnect ✅ · classroom-level ✏️ Draw layer mounts/dismisses over the stage ✅ ·
+solo-mode fallback banner when LiveKit unconfigured ✅ · old triple placeholders
+removed ✅ · zero console errors ✅. **Pending (needs two real devices + LiveKit
+keys in Netlify):** two-party video/audio, chat sync, raise-hand sync, pin/enlarge
+with live video, attendance capture — Sharon's live acceptance test.
+
 ## 7–8. Adventure Classroom & Presentation Mode
 
 Theater covers the full app (portal to body — regression test after the stacking-context

@@ -30,6 +30,7 @@ const SYNC_KEYS = [
   "points",
   "stamps",
   "voiceGifts",
+  "photos",
 ] as const;
 
 const EVENT = "wjos-storage"; // fired by lib/storage on every write

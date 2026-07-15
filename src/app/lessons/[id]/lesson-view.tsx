@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { SmartPhoto, lessonPhoto } from "@/components/smart-photo";
+import { SmartPhoto } from "@/components/smart-photo";
+import { useSmartSrc } from "@/lib/photos";
 import { getDestination } from "@/config/destinations";
 import { getStudent } from "@/config/family";
 import { getLesson } from "@/config/lessons";
@@ -14,6 +15,8 @@ export function LessonView({ id }: { id: string }) {
   const [activeStudentId] = useStored<string | null>(KEYS.activeStudent, null);
   const [completions, setCompletions] = useStored<LessonCompletion[]>(KEYS.completions, []);
   const student = getStudent(activeStudentId);
+  // real photo from the Photo Studio (falls back to /public, then emoji art)
+  const photoSrc = useSmartSrc("lesson", id);
 
   if (!lesson) {
     return (
@@ -45,7 +48,7 @@ export function LessonView({ id }: { id: string }) {
       <section className="wj-card overflow-hidden">
         {/* real lesson photo (falls back to emoji art) */}
         <SmartPhoto
-          src={lessonPhoto(lesson.id)}
+          src={photoSrc}
           alt={lesson.title}
           emoji={lesson.emoji}
           className="h-44 w-full sm:h-52"

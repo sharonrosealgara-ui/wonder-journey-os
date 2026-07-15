@@ -2,6 +2,7 @@
 
 import { PageHeader } from "@/components/page-header";
 import { SmartPhoto, destinationPhoto } from "@/components/smart-photo";
+import { usePhotos } from "@/lib/photos";
 import { destinations } from "@/config/destinations";
 import { getStudent } from "@/config/family";
 import { lessons } from "@/config/lessons";
@@ -12,6 +13,8 @@ export default function PassportPage() {
   const [completions] = useStored<LessonCompletion[]>(KEYS.completions, []);
   const [activeStudentId] = useStored<string | null>(KEYS.activeStudent, null);
   const student = getStudent(activeStudentId);
+  // real photos from the Photo Studio (fall back to /public, then emoji art)
+  const [photos] = usePhotos();
 
   // A destination is stamped when a lesson that awards it is completed
   // (by the active student, or by anyone when no student is selected).
@@ -50,7 +53,7 @@ export default function PassportPage() {
                   >
                     {/* real photo of the place (falls back to emoji art) */}
                     <SmartPhoto
-                      src={destinationPhoto(d.id)}
+                      src={photos.destination[d.id] || destinationPhoto(d.id)}
                       alt={d.name}
                       emoji={d.emoji}
                       className={`h-24 w-full ${earned ? "" : "grayscale"}`}

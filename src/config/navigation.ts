@@ -38,4 +38,5 @@ export const familyNav: NavItem[] = [
 export const teacherNav: NavItem[] = [
   { href: "/teacher", label: "Lesson Plans", emoji: "📋" },
   { href: "/prep-email", label: "Class Prep Email", emoji: "✉️" },
+  { href: "/photos", label: "Photo Studio", emoji: "🖼️" },
 ];

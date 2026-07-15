@@ -1,6 +1,7 @@
 "use client";
 
 import { PageHeader } from "@/components/page-header";
+import { VoiceGifts } from "@/components/voice-gifts";
 import { celebrations, daysUntil } from "@/config/celebrations";
 import { getStudent } from "@/config/family";
 import { KEYS } from "@/lib/app-state";
@@ -48,6 +49,9 @@ export default function CelebrationsPage() {
           </div>
         </section>
       )}
+
+      {/* 🎙️ Voice messages for the celebrant */}
+      <VoiceGifts />
 
       {/* Calendar list */}
       <section className="wj-card p-6">

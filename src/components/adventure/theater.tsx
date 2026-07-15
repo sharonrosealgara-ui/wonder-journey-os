@@ -148,8 +148,9 @@ export function AdventureTheater({
           : "fixed inset-0 z-50 flex flex-col bg-sky"
       }
     >
-      {/* animated storybook scene — edges only, never over the text */}
-      <SlideScene />
+      {/* animated storybook scene — edges only, never over the text.
+          It re-themes itself to match each slide (story, quiz, recipe…) */}
+      <SlideScene kind={slide?.kind} />
 
       {/* ── Top bar ─────────────────────────────────────────── */}
       <header className="relative z-20 flex items-center gap-2 border-b-2 border-sand-deep bg-paper/90 px-3 py-2 backdrop-blur">

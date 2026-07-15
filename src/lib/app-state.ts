@@ -49,6 +49,19 @@ export type AdventureMemory = {
   caption: string;
 };
 
+// 🎙️ Birthday voice gifts — short recorded messages for a celebrant.
+export type VoiceGift = {
+  id: string;
+  fromId: string;
+  fromName: string;
+  fromEmoji: string;
+  celebrationId: string;
+  celebrantName: string;
+  date: string; // ISO date recorded
+  duration: number; // seconds
+  audio: string; // data URL (audio/webm opus)
+};
+
 export type CookbookMemory = {
   id: string;
   recipeId: string;
@@ -70,6 +83,7 @@ export const KEYS = {
   cookbook: "cookbook",
   birthdayDismissed: "birthdayDismissed",
   memories: "memories",
+  voiceGifts: "voiceGifts",
 } as const;
 
 export function todayISO(): string {

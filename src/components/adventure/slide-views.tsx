@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { AdventureQuiz } from "@/components/adventure/quiz";
+import { MemoryFlip, WordScramble } from "@/components/adventure/mini-games";
 import { MatchingGame } from "@/components/matching-game";
 import { PhotoUpload } from "@/components/photo-upload";
 import { getDestination } from "@/config/destinations";
@@ -456,11 +457,29 @@ function VideoSlide({ slide, lesson }: { slide: Slide; lesson: Lesson }) {
   );
 }
 
+// 🎮 GAME ARCADE — the family picks a game, so the same lesson words
+// feel fresh every class. Variety is the cure for boredom.
+type GameId = "match" | "memory" | "scramble";
+
+const arcadeGames: { id: GameId; emoji: string; label: string; blurb: string }[] = [
+  { id: "match", emoji: "🃏", label: "Word Match", blurb: "Pair each English word with its Filipino partner" },
+  { id: "memory", emoji: "🧠", label: "Memory Flip", blurb: "Flip cards and remember where the pairs hide" },
+  { id: "scramble", emoji: "🔤", label: "Word Scramble", blurb: "Unscramble the jumbled Filipino word" },
+];
+
 function GameSlide({ slide, lesson }: { slide: Slide; lesson: Lesson }) {
   const [lang, setLang] = useState<"tagalog" | "hiligaynon">("tagalog");
+  const [game, setGame] = useState<GameId | null>(null);
+  const phrases = lesson.phrases ?? [];
+  const active = arcadeGames.find((g) => g.id === game);
+
   return (
     <div className="mx-auto w-full max-w-2xl">
-      <h1 className="wj-outline text-center font-display text-3xl sm:text-4xl">🎮 Matching Game</h1>
+      <h1 className="wj-outline text-center font-display text-3xl sm:text-4xl">
+        🎮 {active ? active.label : "Game Arcade"}
+      </h1>
+
+      {/* language toggle — applies to every game */}
       <div className="mt-3 flex justify-center">
         <div className="flex rounded-full border-2 border-sand-deep bg-white p-1">
           {(["tagalog", "hiligaynon"] as const).map((l) => (
@@ -476,9 +495,41 @@ function GameSlide({ slide, lesson }: { slide: Slide; lesson: Lesson }) {
           ))}
         </div>
       </div>
-      <div className="mt-4">
-        <MatchingGame key={lang} phrases={lesson.phrases ?? []} lang={lang} />
-      </div>
+
+      {!game ? (
+        <>
+          <p className="font-hand mt-3 text-center text-lg text-ink-soft">
+            Pick a game — every one uses today&apos;s words! 🌴
+          </p>
+          <div className="mt-4 grid gap-3 sm:grid-cols-3">
+            {arcadeGames.map((g) => (
+              <button
+                key={g.id}
+                onClick={() => {
+                  sfx.reveal();
+                  setGame(g.id);
+                }}
+                className="wj-card flex flex-col items-center gap-1 p-5 text-center transition-transform hover:-translate-y-1 hover:shadow-xl"
+              >
+                <span className="text-4xl">{g.emoji}</span>
+                <span className="font-display text-lg">{g.label}</span>
+                <span className="font-hand text-sm text-ink-soft">{g.blurb}</span>
+              </button>
+            ))}
+          </div>
+        </>
+      ) : (
+        <div className="mt-4">
+          <div className="mb-3 flex justify-center">
+            <button className="wj-chip hover:bg-mango/20" onClick={() => setGame(null)}>
+              ← Choose another game
+            </button>
+          </div>
+          {game === "match" && <MatchingGame key={lang} phrases={phrases} lang={lang} />}
+          {game === "memory" && <MemoryFlip key={lang} phrases={phrases} lang={lang} />}
+          {game === "scramble" && <WordScramble key={lang} phrases={phrases} lang={lang} />}
+        </div>
+      )}
     </div>
   );
 }

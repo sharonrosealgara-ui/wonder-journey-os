@@ -29,16 +29,28 @@ export function CameraDock() {
   const [codeInput, setCodeInput] = useState("");
   const [codeDismissed, setCodeDismissed] = useStored<boolean>("codePromptDismissed", false);
 
-  // ✨ Magic invite link: opening the app with ?code=XXXX saves the
-  // class code forever on this device — the family never types it.
-  // (Share: https://wonder-journey-os.netlify.app/?code=YOURCODE)
+  // ✨ Magic links:
+  //   ?code=XXXX — family invite: saves the class code forever on this
+  //     device, cameras auto-connect live on every open, zero typing.
+  //   ?guest=1  — client/demo invite: explore everything freely — no
+  //     code prompt, no auto camera (they can still tap 🎥 Cameras).
+  // (Share: https://wonder-journey-os.netlify.app/?code=YOURCODE
+  //     or   https://wonder-journey-os.netlify.app/?guest=1)
   useEffect(() => {
     try {
       const url = new URL(window.location.href);
       const c = url.searchParams.get("code");
+      const guest = url.searchParams.get("guest");
       if (c && c.trim()) {
         writeStored("classCode", c.trim());
         url.searchParams.delete("code");
+      }
+      if (guest) {
+        writeStored("codePromptDismissed", true);
+        writeStored("dock", "off" satisfies DockPref);
+        url.searchParams.delete("guest");
+      }
+      if ((c && c.trim()) || guest) {
         const clean = url.pathname + url.search + url.hash;
         // strip after hydration so Next's router doesn't restore it
         setTimeout(() => window.history.replaceState(null, "", clean), 400);

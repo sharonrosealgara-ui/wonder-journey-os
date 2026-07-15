@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { AdventureQuiz } from "@/components/adventure/quiz";
-import { MemoryFlip, WordScramble } from "@/components/adventure/mini-games";
+import { FactHunt, MemoryFlip, WordScramble } from "@/components/adventure/mini-games";
 import { MatchingGame } from "@/components/matching-game";
 import { PhotoUpload } from "@/components/photo-upload";
 import { getDestination } from "@/config/destinations";
@@ -72,7 +72,7 @@ export function SlideView({
     case "video":
       return <VideoSlide slide={slide} lesson={lesson} />;
     case "game":
-      return <GameSlide slide={slide} lesson={lesson} />;
+      return <GameSlide slide={slide} lesson={lesson} level={level} />;
     case "recipe":
       return <RecipeSlide slide={slide} lesson={lesson} />;
     case "quiz":
@@ -457,21 +457,58 @@ function VideoSlide({ slide, lesson }: { slide: Slide; lesson: Lesson }) {
   );
 }
 
-// 🎮 GAME ARCADE — the family picks a game, so the same lesson words
-// feel fresh every class. Variety is the cure for boredom.
-type GameId = "match" | "memory" | "scramble";
+// 🎮 GAME ARCADE — the family picks a game, so the same lesson feels
+// fresh every class. Variety + a score to beat + sibling turns = the
+// cure for boredom. Difficulty follows each explorer's age tier.
+type GameId = "facthunt" | "match" | "memory" | "scramble";
 
-const arcadeGames: { id: GameId; emoji: string; label: string; blurb: string }[] = [
-  { id: "match", emoji: "🃏", label: "Word Match", blurb: "Pair each English word with its Filipino partner" },
-  { id: "memory", emoji: "🧠", label: "Memory Flip", blurb: "Flip cards and remember where the pairs hide" },
-  { id: "scramble", emoji: "🔤", label: "Word Scramble", blurb: "Unscramble the jumbled Filipino word" },
+const arcadeGames: { id: GameId; emoji: string; label: string; blurb: string; needsVocab: boolean }[] = [
+  { id: "facthunt", emoji: "🔍", label: "Fact Hunt", blurb: "Spot the true fact from today's lesson", needsVocab: false },
+  { id: "match", emoji: "🃏", label: "Word Match", blurb: "Pair each English word with its Filipino partner", needsVocab: true },
+  { id: "memory", emoji: "🧠", label: "Memory Flip", blurb: "Flip cards and remember where the pairs hide", needsVocab: true },
+  { id: "scramble", emoji: "🔤", label: "Word Scramble", blurb: "Unscramble the jumbled Filipino word", needsVocab: true },
 ];
 
-function GameSlide({ slide, lesson }: { slide: Slide; lesson: Lesson }) {
+const pairsForLevel: Record<ExplorerLevel, number> = { explorer: 4, adventure: 5, trailblazer: 6 };
+
+function stars(n: number): string {
+  return "⭐".repeat(n) + "☆".repeat(3 - n);
+}
+
+function GameSlide({ slide, lesson, level }: { slide: Slide; lesson: Lesson; level: ExplorerLevel }) {
   const [lang, setLang] = useState<"tagalog" | "hiligaynon">("tagalog");
   const [game, setGame] = useState<GameId | null>(null);
   const phrases = lesson.phrases ?? [];
+  const hasVocab = phrases.length > 0;
   const active = arcadeGames.find((g) => g.id === game);
+
+  // 🏅 "beat your best" — best star rating per game, per lesson.
+  const [best, setBest] = useStored<Record<string, number>>(`gamebest-${lesson.id}`, {});
+  const [newBest, setNewBest] = useState(false);
+
+  // 👨‍👩‍👧‍👦 Pass & Play — optional sibling turns on the shared screen.
+  const [players, setPlayers] = useState<string[]>([]);
+  const [turn, setTurn] = useState(0);
+  const [tally, setTally] = useStored<Record<string, number>>(`gamestars-${lesson.id}-${todayISO()}`, {});
+  const teamOn = players.length > 0;
+  const current = teamOn ? getStudent(players[turn % players.length]) : null;
+
+  function handleResult(gameId: GameId, s: number) {
+    // best score
+    setBest((prev) => {
+      if (s > (prev[gameId] ?? 0)) {
+        setNewBest(true);
+        setTimeout(() => setNewBest(false), 2600);
+        return { ...prev, [gameId]: s };
+      }
+      return prev;
+    });
+    // team stars + advance turn
+    if (teamOn && current) {
+      setTally((prev) => ({ ...prev, [current.id]: (prev[current.id] ?? 0) + s }));
+      setTimeout(() => setTurn((t) => t + 1), 300);
+    }
+  }
 
   return (
     <div className="mx-auto w-full max-w-2xl">
@@ -479,55 +516,126 @@ function GameSlide({ slide, lesson }: { slide: Slide; lesson: Lesson }) {
         🎮 {active ? active.label : "Game Arcade"}
       </h1>
 
-      {/* language toggle — applies to every game */}
-      <div className="mt-3 flex justify-center">
-        <div className="flex rounded-full border-2 border-sand-deep bg-white p-1">
-          {(["tagalog", "hiligaynon"] as const).map((l) => (
-            <button
-              key={l}
-              onClick={() => setLang(l)}
-              className={`rounded-full px-4 py-1.5 text-sm font-bold capitalize ${
-                lang === l ? "bg-hibiscus text-white" : "text-ink-soft"
-              }`}
-            >
-              {l}
-            </button>
-          ))}
+      {/* language toggle (vocab games) */}
+      {(!game || active?.needsVocab) && hasVocab && (
+        <div className="mt-3 flex justify-center">
+          <div className="flex rounded-full border-2 border-sand-deep bg-white p-1">
+            {(["tagalog", "hiligaynon"] as const).map((l) => (
+              <button
+                key={l}
+                onClick={() => setLang(l)}
+                className={`rounded-full px-4 py-1.5 text-sm font-bold capitalize ${
+                  lang === l ? "bg-hibiscus text-white" : "text-ink-soft"
+                }`}
+              >
+                {l}
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
+
+      {/* whose turn (team mode) */}
+      {teamOn && current && (
+        <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
+          <span className="wj-chip !bg-sunset !text-white">{current.emoji} {current.name}&apos;s turn!</span>
+          {players.map((id) => {
+            const s = getStudent(id);
+            return s ? (
+              <span key={id} className="wj-chip !text-xs">{s.emoji} {tally[id] ?? 0}⭐</span>
+            ) : null;
+          })}
+          <button className="wj-chip !text-xs hover:bg-hibiscus/15" onClick={() => setPlayers([])}>✖ end turns</button>
+        </div>
+      )}
+
+      {newBest && (
+        <p className="wj-pop-in mt-3 text-center font-display text-lg text-sunset-deep">🏅 New best score!</p>
+      )}
 
       {!game ? (
         <>
           <p className="font-hand mt-3 text-center text-lg text-ink-soft">
-            Pick a game — every one uses today&apos;s words! 🌴
+            Pick a game — every one uses today&apos;s lesson! 🌴
           </p>
-          <div className="mt-4 grid gap-3 sm:grid-cols-3">
-            {arcadeGames.map((g) => (
-              <button
-                key={g.id}
-                onClick={() => {
-                  sfx.reveal();
-                  setGame(g.id);
-                }}
-                className="wj-card flex flex-col items-center gap-1 p-5 text-center transition-transform hover:-translate-y-1 hover:shadow-xl"
-              >
-                <span className="text-4xl">{g.emoji}</span>
-                <span className="font-display text-lg">{g.label}</span>
-                <span className="font-hand text-sm text-ink-soft">{g.blurb}</span>
-              </button>
-            ))}
+          <div className="mt-4 grid gap-3 sm:grid-cols-2">
+            {arcadeGames.map((g) => {
+              const locked = g.needsVocab && !hasVocab;
+              return (
+                <button
+                  key={g.id}
+                  disabled={locked}
+                  onClick={() => {
+                    sfx.reveal();
+                    setGame(g.id);
+                  }}
+                  className={`wj-card flex items-center gap-3 p-4 text-left transition-transform ${
+                    locked ? "opacity-50" : "hover:-translate-y-1 hover:shadow-xl"
+                  }`}
+                >
+                  <span className="text-4xl">{g.emoji}</span>
+                  <span className="min-w-0 flex-1">
+                    <span className="flex items-center gap-2 font-display text-lg">
+                      {g.label}
+                      {best[g.id] ? <span className="text-xs text-mango-deep">{stars(best[g.id])}</span> : null}
+                    </span>
+                    <span className="font-hand block text-sm text-ink-soft">
+                      {locked ? "This lesson has no vocabulary words" : g.blurb}
+                    </span>
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Pass & Play setup */}
+          <div className="mt-5 rounded-2xl border-2 border-dashed border-sand-deep p-4 text-center">
+            <p className="font-display text-sm">👨‍👩‍👧‍👦 Pass &amp; Play — take turns!</p>
+            <p className="font-hand text-sm text-ink-soft">Tap the players, then pick a game. Stars are shared on the family screen.</p>
+            <div className="mt-2 flex flex-wrap justify-center gap-1.5">
+              {students.map((s) => {
+                const on = players.includes(s.id);
+                return (
+                  <button
+                    key={s.id}
+                    onClick={() =>
+                      setPlayers((p) => (on ? p.filter((x) => x !== s.id) : [...p, s.id]))
+                    }
+                    className={`wj-chip !text-sm ${on ? "!bg-ocean !text-white" : "hover:bg-mango/20"}`}
+                  >
+                    {s.emoji} {s.name}{on ? " ✓" : ""}
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </>
       ) : (
         <div className="mt-4">
-          <div className="mb-3 flex justify-center">
+          <div className="mb-3 flex items-center justify-center gap-2">
             <button className="wj-chip hover:bg-mango/20" onClick={() => setGame(null)}>
               ← Choose another game
             </button>
+            {best[game] ? <span className="wj-chip">🏅 Best {stars(best[game])}</span> : null}
           </div>
-          {game === "match" && <MatchingGame key={lang} phrases={phrases} lang={lang} />}
-          {game === "memory" && <MemoryFlip key={lang} phrases={phrases} lang={lang} />}
-          {game === "scramble" && <WordScramble key={lang} phrases={phrases} lang={lang} />}
+          {game === "facthunt" && (
+            <FactHunt key={`fh-${turn}`} lesson={lesson} level={level} onResult={(s) => handleResult("facthunt", s)} />
+          )}
+          {game === "match" && (
+            <MatchingGame
+              key={`m-${lang}-${turn}`}
+              phrases={phrases}
+              lang={lang}
+              maxPairs={pairsForLevel[level]}
+              onResult={(s) => handleResult("match", s)}
+            />
+          )}
+          {game === "memory" && (
+            <MemoryFlip key={`mf-${lang}-${turn}`} phrases={phrases} lang={lang} level={level} onResult={(s) => handleResult("memory", s)} />
+          )}
+          {game === "scramble" && (
+            <WordScramble key={`ws-${lang}-${turn}`} phrases={phrases} lang={lang} level={level} onResult={(s) => handleResult("scramble", s)} />
+          )}
         </div>
       )}
     </div>

@@ -26,15 +26,20 @@ export function MatchingGame({
   phrases,
   lang,
   onWin,
+  maxPairs = 6,
+  onResult,
 }: {
   phrases: MatchPhrase[];
   lang: Lang;
   onWin?: () => void;
+  maxPairs?: number; // age-scaled difficulty (fewer pairs for little ones)
+  onResult?: (stars: number) => void; // 1–3 ⭐ for the Game Arcade scoreboard
 }) {
   const [round, setRound] = useState(0);
+  const [reported, setReported] = useState(false);
 
   const cards = useMemo(() => {
-    const pool = shuffle(phrases).slice(0, 6);
+    const pool = shuffle(phrases).slice(0, maxPairs);
     const all: GameCard[] = pool.flatMap((p) => [
       {
         key: p.english + "-en",
@@ -46,14 +51,21 @@ export function MatchingGame({
     ]);
     return shuffle(all);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [phrases, lang, round]);
+  }, [phrases, lang, round, maxPairs]);
 
   const [selected, setSelected] = useState<GameCard | null>(null);
   const [matched, setMatched] = useState<string[]>([]);
   const [wrong, setWrong] = useState<string | null>(null);
   const [tries, setTries] = useState(0);
 
-  const won = matched.length > 0 && matched.length * 2 === cards.length;
+  const totalPairs = cards.length / 2;
+  const won = matched.length > 0 && matched.length === totalPairs;
+
+  if (won && !reported) {
+    setReported(true);
+    const stars = tries <= totalPairs + 1 ? 3 : tries <= totalPairs * 2 ? 2 : 1;
+    onResult?.(stars);
+  }
 
   function pick(card: GameCard) {
     if (matched.includes(card.pairId) || wrong) return;
@@ -85,6 +97,7 @@ export function MatchingGame({
     setSelected(null);
     setWrong(null);
     setTries(0);
+    setReported(false);
     setRound((r) => r + 1);
   }
 

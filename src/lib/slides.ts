@@ -14,6 +14,18 @@ import { mascots, type Mascot } from "@/config/mascots";
 // each child gets age-appropriate challenge (Decision 042).
 export type ExplorerLevel = "explorer" | "adventure" | "trailblazer";
 
+// Adventure roles, never "grade levels" — the tier is a costume the
+// explorer wears, not a ranking (CURRICULUM_FRAMEWORK: no sibling rankings).
+export const levelMeta: Record<ExplorerLevel, { emoji: string; label: string; ages: string }> = {
+  explorer: { emoji: "🐣", label: "Explorer", ages: "7–8" },
+  adventure: { emoji: "🦅", label: "Adventure", ages: "9–10" },
+  trailblazer: { emoji: "🏔️", label: "Trailblazer", ages: "11–12" },
+};
+
+export function levelForAge(age: number): ExplorerLevel {
+  return age <= 8 ? "explorer" : age <= 10 ? "adventure" : "trailblazer";
+}
+
 export type SlideKind =
   | "welcome"
   | "blessings"

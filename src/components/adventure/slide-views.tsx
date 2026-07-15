@@ -19,7 +19,7 @@ import {
   type JournalEntry,
   type LessonCompletion,
 } from "@/lib/app-state";
-import { buildAcademy, buildMission, getYouTubeEmbed, type ExplorerLevel, type Slide } from "@/lib/slides";
+import { buildAcademy, buildMission, getYouTubeEmbed, levelForAge, levelMeta, type ExplorerLevel, type Slide } from "@/lib/slides";
 import { sfx } from "@/lib/sound";
 import { newId, useStored } from "@/lib/storage";
 
@@ -134,6 +134,12 @@ function WelcomeSlide({ slide, lesson, onNext }: { slide: Slide; lesson: Lesson;
 
 // Adventure Academy — 15-min English + 15-min Math at the end of every class.
 // Oral and shared-screen: prompts the family answers together, not forms.
+// 🎓 ADVENTURE ACADEMY
+// One shared screen, four explorers, four ages (7–12). "Everyone" mode
+// shows each child their OWN mission at the same time, so nobody waits
+// and nobody is stretched too far. Each card is that explorer's
+// adventure role — never a grade, never a ranking
+// (CURRICULUM_FRAMEWORK: no sibling rankings).
 function AcademySlide({
   slide,
   lesson,
@@ -143,16 +149,19 @@ function AcademySlide({
   lesson: Lesson;
   level: ExplorerLevel;
 }) {
-  const { english, math } = buildAcademy(lesson, level);
+  const [everyone, setEveryone] = useState(true); // the real teaching context
   const [done, setDone] = useState<string[]>([]);
   const toggle = (id: string) =>
     setDone((d) => (d.includes(id) ? d.filter((x) => x !== id) : [...d, id]));
 
-  const tierLabel =
-    level === "explorer" ? "🐣 Explorer (7–8)" : level === "adventure" ? "🦅 Adventure (9–10)" : "🏔️ Trailblazer (11–12)";
+  // Which explorers wear which role today — read from config, so a new
+  // family just edits config/family.ts and this follows automatically.
+  const tiersInFamily = (["explorer", "adventure", "trailblazer"] as ExplorerLevel[])
+    .map((tier) => ({ tier, kids: students.filter((s) => levelForAge(s.age) === tier) }))
+    .filter((g) => g.kids.length > 0);
 
   const renderList = (items: string[], prefix: string) => (
-    <ul className="mt-3 space-y-2">
+    <ul className="mt-2 space-y-2">
       {items.map((item, i) => {
         const id = `${prefix}-${i}`;
         const checked = done.includes(id);
@@ -181,27 +190,83 @@ function AcademySlide({
     </ul>
   );
 
+  const renderMissions = (tier: ExplorerLevel, keyPrefix: string) => {
+    const { english, math } = buildAcademy(lesson, tier);
+    return (
+      <div className="grid gap-3 sm:grid-cols-2">
+        <div>
+          <h3 className="font-display text-base">📖 English</h3>
+          {renderList(english, `${keyPrefix}-en`)}
+        </div>
+        <div>
+          <h3 className="font-display text-base">➕ Math</h3>
+          {renderList(math, `${keyPrefix}-ma`)}
+        </div>
+      </div>
+    );
+  };
+
   return (
-    <div className="mx-auto max-w-2xl">
+    <div className={`mx-auto ${everyone ? "max-w-4xl" : "max-w-2xl"}`}>
       <h1 className="wj-outline text-center font-display text-3xl sm:text-4xl">
         🎓 Adventure Academy
       </h1>
       <p className="font-hand mt-2 text-center text-lg text-ink-soft">
         A quick brain workout before we finish — answer out loud, together!
       </p>
-      <p className="mt-2 text-center">
-        <span className="wj-chip">{tierLabel} — switch tiers with the level button up top</span>
-      </p>
-      <div className="mt-5 grid gap-4 sm:grid-cols-2">
-        <section className="wj-card p-5">
-          <h2 className="font-display text-lg">📖 English · 15 min</h2>
-          {renderList(english, "en")}
-        </section>
-        <section className="wj-card p-5">
-          <h2 className="font-display text-lg">➕ Math · 15 min</h2>
-          {renderList(math, "ma")}
-        </section>
+
+      {/* Everyone at once (the real family screen) vs one role at a time */}
+      <div className="mt-3 flex justify-center">
+        <div className="flex rounded-full border-2 border-sand-deep bg-white p-1">
+          <button
+            onClick={() => setEveryone(true)}
+            className={`rounded-full px-4 py-1.5 text-sm font-bold ${everyone ? "bg-ocean text-white" : "text-ink-soft"}`}
+          >
+            👨‍👩‍👧‍👦 Everyone
+          </button>
+          <button
+            onClick={() => setEveryone(false)}
+            className={`rounded-full px-4 py-1.5 text-sm font-bold ${!everyone ? "bg-ocean text-white" : "text-ink-soft"}`}
+          >
+            {levelMeta[level].emoji} {levelMeta[level].label} only
+          </button>
+        </div>
       </div>
+
+      {everyone ? (
+        <>
+          <p className="font-hand mt-3 text-center text-base text-ink-soft">
+            Everyone has their own mission today — big explorers can help the little ones! 💛
+          </p>
+          <div className="mt-4 space-y-4">
+            {tiersInFamily.map(({ tier, kids }) => (
+              <section key={tier} className="wj-card p-5">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="text-2xl">{levelMeta[tier].emoji}</span>
+                  <span className="font-display text-lg">
+                    {kids.map((k) => k.name).join(" & ")}
+                    <span className="text-ink-soft"> · {levelMeta[tier].label} mission</span>
+                  </span>
+                  {kids.map((k) => (
+                    <span key={k.id} className="wj-chip !text-xs">{k.emoji} {k.name}</span>
+                  ))}
+                </div>
+                <div className="mt-3">{renderMissions(tier, tier)}</div>
+              </section>
+            ))}
+          </div>
+        </>
+      ) : (
+        <>
+          <p className="mt-2 text-center">
+            <span className="wj-chip">
+              {levelMeta[level].emoji} {levelMeta[level].label} ({levelMeta[level].ages}) — switch roles with the button up top
+            </span>
+          </p>
+          <div className="mt-5">{renderMissions(level, "solo")}</div>
+        </>
+      )}
+
       <MascotBubble slide={slide} line="Every subject is part of the same adventure!" />
     </div>
   );

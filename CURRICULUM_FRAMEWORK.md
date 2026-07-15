@@ -41,6 +41,55 @@ families (interests live in `config/family.ts`, never in lesson logic):
 
 ---
 
+# The Client's Request (source of truth)
+
+Shaun's own words when commissioning these classes. **Every curriculum decision must
+trace back to this section.** When in doubt, re-read it — it outranks assumption.
+
+> "Initially, we think that lessons involving your knowledge and love for the Philippines
+> would make for a great start. I know that our children would love to experience your
+> language, culture of strong family values, and the beauty of your region. We are also
+> excited about cooking together with you! We understand that these classes may run longer
+> than an hour if necessary. My mom has always enjoyed travelling and cooking and may join
+> these sessions, which could be practically helpful for the children. I am happy to support
+> you in gathering any crafts or supplies that the children will need for your lessons.
+> What do you think about starting out with culture and language and then moving on to more
+> academic topics such as spelling, math (times tables), etc?
+>
+> Lastly, please feel free to share anything that is important to you and your culture,
+> including festivals and traditional religious observations. However, we please ask that
+> the children only be involved in crafts or activities involving Christian themes. Please
+> also know that we remember Jesus' birth, life, teachings, and resurrection through the
+> lens of the Feast Days found in the Bible (Passover, Unleavened Bread, Firstfruits,
+> Pentecost, Feast of Trumpets, Day of Atonement, and the Feast of Tabernacles) and not
+> through Christmas or Easter."
+
+## What this means in practice
+
+| Shaun asked for | How the product honors it |
+|---|---|
+| Philippines: **language, family values, the beauty of her region** | Season 1 units; Bago City / Negros / Visayas featured personally |
+| **Cooking together** | Cooking Academy + recipes woven through the season, not a side feature |
+| Classes **may run over an hour** | Never rush a lesson for time; no countdown pressure on the family |
+| **Grandma Jeannie may join** | She is a first-class family member in `config/family.ts`, in Blessings & class |
+| He'll **gather crafts/supplies** | Every lesson ships a materials list, sent ahead via the Class Prep Email |
+| **Culture & language first, then academics** (spelling, **times tables**) | Season 1 leads with culture/language; the Adventure Academy (English + Math, incl. times tables) grows as the season progresses |
+
+## Faith boundaries — non-negotiable
+
+- ✅ **Sharon may share** anything from her culture, **including festivals and traditional
+  religious observations** — telling and teaching about them is explicitly welcomed.
+- ⚠️ **The children's crafts and activities must involve Christian themes only.** The line is
+  between *learning about* a cultural/religious observance and *taking part in* a craft or
+  activity. Teach the fiesta; keep the child's hands-on activity Christian-themed.
+- 🚫 **No Christmas and no Easter content — ever, including December.** This family remembers
+  Jesus' birth, life, teachings, and resurrection through the **biblical Feast Days**:
+  Passover · Unleavened Bread · Firstfruits · Pentecost · Feast of Trumpets ·
+  Day of Atonement · Feast of Tabernacles.
+- 🙏 Prayer stays optional and is never tracked, scored, or gamified (DESIGN_SYSTEM.md).
+
+---
+
 # Educational Goals
 
 By completing the curriculum, children should:

@@ -11,23 +11,12 @@ import { getStudent, students } from "@/config/family";
 import { lessons, type Lesson } from "@/config/lessons";
 import type { Mode } from "@/config/navigation";
 import { getTodaysPrayerLeader, KEYS, todayISO } from "@/lib/app-state";
-import { buildMission, buildSlides } from "@/lib/slides";
+import { buildMission, buildSlides, levelForAge, levelMeta, type ExplorerLevel } from "@/lib/slides";
 import { initMute, setMuted, sfx } from "@/lib/sound";
 import { useStored } from "@/lib/storage";
 
 // Three-tier Age Adaptation (Decision 042): the family learns together,
-// each child gets age-appropriate challenge.
-type ExplorerLevel = "explorer" | "adventure" | "trailblazer";
-
-const levelMeta: Record<ExplorerLevel, { emoji: string; label: string; ages: string }> = {
-  explorer: { emoji: "🐣", label: "Explorer", ages: "7–8" },
-  adventure: { emoji: "🦅", label: "Adventure", ages: "9–10" },
-  trailblazer: { emoji: "🏔️", label: "Trailblazer", ages: "11–12" },
-};
-
-function levelForAge(age: number): ExplorerLevel {
-  return age <= 8 ? "explorer" : age <= 10 ? "adventure" : "trailblazer";
-}
+// each child gets age-appropriate challenge. Tiers live in lib/slides.
 
 // 🌴 ADVENTURE THEATER — the Family Adventure Classroom.
 // A full-screen presentation mode (like Canva presentation mode)

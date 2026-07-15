@@ -9,7 +9,7 @@ import { normalizeMode } from "@/config/navigation";
 import { todayISO } from "@/lib/app-state";
 import { useCall } from "@/lib/call-context";
 import { initCloudSync } from "@/lib/cloud-sync";
-import { readStored, useStored } from "@/lib/storage";
+import { readStored, useStored, writeStored } from "@/lib/storage";
 
 // 🎥 FLOATING CAMERA DOCK — the call follows the family everywhere.
 // Cameras auto-start when the app opens (family camera ABOVE teacher),
@@ -25,6 +25,26 @@ export function CameraDock() {
   const [pref, setPref] = useStored<DockPref>("dock", "on");
   const [prefReady, setPrefReady] = useState(false);
   const triedRef = useRef(false);
+  const [codeCard, setCodeCard] = useState(false); // one-time class-code setup
+  const [codeInput, setCodeInput] = useState("");
+  const [codeDismissed, setCodeDismissed] = useStored<boolean>("codePromptDismissed", false);
+
+  // ✨ Magic invite link: opening the app with ?code=XXXX saves the
+  // class code forever on this device — the family never types it.
+  // (Share: https://wonder-journey-os.netlify.app/?code=YOURCODE)
+  useEffect(() => {
+    try {
+      const url = new URL(window.location.href);
+      const c = url.searchParams.get("code");
+      if (c && c.trim()) {
+        writeStored("classCode", c.trim());
+        url.searchParams.delete("code");
+        const clean = url.pathname + url.search + url.hash;
+        // strip after hydration so Next's router doesn't restore it
+        setTimeout(() => window.history.replaceState(null, "", clean), 400);
+      }
+    } catch { /* ignore */ }
+  }, []);
 
   useEffect(() => setPrefReady(true), []);
 
@@ -52,13 +72,64 @@ export function CameraDock() {
   useEffect(() => {
     if (!prefReady || triedRef.current) return;
     if (pref === "off" || call.status !== "idle") return;
+    const code = readStored<string>("classCode", "");
+    if (!code && !codeDismissed) {
+      // first open on this device: ask for the class code ONE time
+      setCodeCard(true);
+      return;
+    }
     triedRef.current = true;
     startCall();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [prefReady, pref, call.status]);
+  }, [prefReady, pref, call.status, codeDismissed]);
 
   if (!prefReady) return null;
   if (pathname.startsWith("/classroom")) return null; // full room lives there
+
+  // 🔑 ONE-TIME SETUP — shown only until a class code is saved on this
+  // device. After this, opening the app connects everything by itself.
+  if (codeCard) {
+    const save = () => {
+      const c = codeInput.trim();
+      if (!c) return;
+      writeStored("classCode", c);
+      setCodeCard(false);
+      triedRef.current = true;
+      startCall();
+    };
+    return (
+      <div className="wj-card fixed bottom-3 right-3 z-[70] w-72 space-y-2.5 p-4 shadow-2xl sm:w-80">
+        <p className="font-display text-base">🔑 One-time setup</p>
+        <p className="font-hand text-sm text-ink-soft">
+          Enter the class code from {teacherName} — you&apos;ll only ever do this once on this device. After that, Wonder Journey connects all by itself. 💛
+        </p>
+        <input
+          className="wj-input"
+          value={codeInput}
+          onChange={(e) => setCodeInput(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && save()}
+          placeholder="class code"
+          autoFocus
+        />
+        <div className="flex items-center justify-between gap-2">
+          <button
+            className="wj-btn wj-btn-ghost !px-3 !py-1.5 text-xs"
+            onClick={() => {
+              setCodeDismissed(true);
+              setCodeCard(false);
+              triedRef.current = true;
+              startCall(); // camera still works, just not live together
+            }}
+          >
+            Not now
+          </button>
+          <button className="wj-btn !px-4 !py-1.5 text-sm" onClick={save}>
+            💛 Save &amp; Go Live
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   // turned off → tiny start pill
   if (pref === "off" || call.status === "idle" || call.status === "connecting") {
@@ -103,6 +174,18 @@ export function CameraDock() {
             {live ? "🟢 Live together" : "🎥 Camera on"}
           </span>
           <div className="flex gap-1">
+            {!live && (
+              <button
+                className="rounded-full px-1.5 text-sm hover:bg-mango/20"
+                title="Enter class code to go live together"
+                onClick={() => {
+                  setCodeInput(readStored<string>("classCode", ""));
+                  setCodeCard(true);
+                }}
+              >
+                🔑
+              </button>
+            )}
             <button className="rounded-full px-1.5 text-sm hover:bg-sand-deep" title="Minimize" onClick={() => setPref("min")}>▁</button>
             <button
               className="rounded-full px-1.5 text-sm hover:bg-hibiscus/20"

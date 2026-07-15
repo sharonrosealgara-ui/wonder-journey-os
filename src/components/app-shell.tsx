@@ -9,7 +9,9 @@ import { KEYS } from "@/lib/app-state";
 import { useProgress } from "@/lib/progress";
 import { useStored } from "@/lib/storage";
 import { BirthdayPopup } from "@/components/birthday-popup";
+import { CameraDock } from "@/components/camera-dock";
 import { TropicalDecor } from "@/components/tropical-decor";
+import { CallProvider } from "@/lib/call-context";
 
 // 🌴 Home Base layout — left sidebar + XP top bar, like a family
 // learning clubhouse. The Adventure Theater portals over all of this.
@@ -36,16 +38,22 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   // 🎥 Fullscreen Classroom Mode: /classroom is a dedicated teaching room —
   // no sidebar, no dashboard nav, no footer. Only the lesson, the cameras,
-  // and the teaching tools (Decision 044).
+  // and the teaching tools (Decision 044). The CallProvider wraps BOTH
+  // layouts so the live call survives every route change, and the
+  // CameraDock keeps both cameras on screen everywhere else.
   if (pathname.startsWith("/classroom")) {
     return (
-      <div className="min-h-screen px-3 py-3 sm:px-4">
-        {children}
-      </div>
+      <CallProvider>
+        <div className="min-h-screen px-3 py-3 sm:px-4">
+          {children}
+        </div>
+        <CameraDock />
+      </CallProvider>
     );
   }
 
   return (
+    <CallProvider>
     <div className="min-h-screen lg:flex">
       <TropicalDecor />
 
@@ -112,6 +120,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </footer>
       </div>
     </div>
+      <CameraDock />
+    </CallProvider>
   );
 }
 

@@ -15,7 +15,8 @@ export type Student = {
 };
 
 // The family workspace identity (Family Portal greeting & branding).
-export const familyName = "The Ferrell Family";
+// Also the family's shared display name on camera ("user name").
+export const familyName = "Ferrell Family";
 export const familySlug = "ferrell"; // future: workspace id in the multi-family database
 
 export const teacherName = "Teacher Sharon";

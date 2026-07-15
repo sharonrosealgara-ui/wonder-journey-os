@@ -2,36 +2,29 @@
 
 import { useRouter } from "next/navigation";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import {
-  ConnectionState,
-  Participant,
-  RemoteParticipant,
-  Room,
-  RoomEvent,
-  Track,
-} from "livekit-client";
+import { ConnectionState, Participant, Track } from "livekit-client";
 import { AnnotationLayer } from "@/components/adventure/annotation-layer";
 import { AdventureTheater } from "@/components/adventure/theater";
-import { familyName, getStudent } from "@/config/family";
+import { familyName, getStudent, teacherName } from "@/config/family";
 import { getTodaysLesson, lessons as allLessons, type Lesson } from "@/config/lessons";
 import type { Mode } from "@/config/navigation";
 import { normalizeMode } from "@/config/navigation";
 import { KEYS, todayISO } from "@/lib/app-state";
+import { getScreenShare, useCall } from "@/lib/call-context";
+import { initCloudSync, sendEvent } from "@/lib/cloud-sync";
 import { useStored } from "@/lib/storage";
 
 // 🎥 LIVE ADVENTURE CLASSROOM
-// Stage 1 (always works): your own camera/mic/screen-share — no server.
-// Stage 2 (when LiveKit keys are set in Netlify): the whole family sees
-// and hears each other live, with chat, raise-hand and screen share —
-// tokens are minted server-side; the API secret never reaches the browser.
+// The call itself lives in the global CallProvider (app-shell), so it
+// follows the family across every page. This page is the full-size
+// room: lesson stage + camera rail + teaching toolbar.
+// Solo mode (no/wrong class code) still gives a working local camera.
 
-type Phase = "lobby" | "connecting" | "live";
 type Device = { id: string; label: string };
-type ChatMsg = { who: string; text: string };
 
 export default function ClassroomPage() {
+  const call = useCall();
   const router = useRouter();
-  const [phase, setPhase] = useState<Phase>("lobby");
   const [activeStudentId] = useStored<string | null>(KEYS.activeStudent, null);
   const [rawMode] = useStored<string>(KEYS.mode, "family");
   const mode: Mode = normalizeMode(rawMode);
@@ -40,104 +33,78 @@ export default function ClassroomPage() {
   const [classCode, setClassCode] = useStored<string>("classCode", "");
   const [lesson, setLesson] = useState<Lesson | null>(null);
   const [joinError, setJoinError] = useState<string | null>(null);
-  const [connected, setConnected] = useState(false); // LiveKit vs solo
-  const roomRef = useRef<Room | null>(null);
-  const [lobbyDevices, setLobbyDevices] = useState<{ camId: string; micId: string; camOn: boolean; micOn: boolean }>({
-    camId: "",
-    micId: "",
-    camOn: true,
-    micOn: true,
-  });
+  const [joining, setJoining] = useState(false);
 
   useEffect(() => {
     setLesson(getTodaysLesson());
   }, []);
   useEffect(() => {
-    setName(mode === "teacher" ? "Teacher Sharon" : student ? student.name : familyName);
+    setName(mode === "teacher" ? teacherName : student ? student.name : familyName);
   }, [student, mode]);
 
-  const roomName = useMemo(
-    () => `wj-${lesson?.id ?? "class"}-${todayISO()}`,
-    [lesson]
-  );
+  const roomName = useMemo(() => `wj-${lesson?.id ?? "class"}-${todayISO()}`, [lesson]);
 
   async function join(devices: { camId: string; micId: string; camOn: boolean; micOn: boolean }) {
     setJoinError(null);
-    setLobbyDevices(devices);
-    setPhase("connecting");
-    // Ask our secure Netlify function for a join token.
-    try {
-      const res = await fetch("/api/livekit-token", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name,
-          room: roomName,
-          role: mode === "teacher" ? "teacher" : "family",
-          code: classCode,
-        }),
-      });
-      if (res.status === 401) {
-        setJoinError("That class code doesn't match — please check it with Teacher Sharon. 💛");
-        setPhase("lobby");
-        return;
-      }
-      if (!res.ok) throw new Error("not configured");
-      const { token, url } = (await res.json()) as { token: string; url: string };
-
-      const room = new Room({
-        adaptiveStream: true,
-        dynacast: true,
-        videoCaptureDefaults: devices.camId ? { deviceId: devices.camId } : undefined,
-        audioCaptureDefaults: devices.micId ? { deviceId: devices.micId } : undefined,
-      });
-      await room.connect(url, token);
-      await room.localParticipant.setCameraEnabled(devices.camOn);
-      await room.localParticipant.setMicrophoneEnabled(devices.micOn);
-      void room.startAudio();
-      roomRef.current = room;
-      setConnected(true);
-      setPhase("live");
-    } catch {
-      // LiveKit not configured (or offline) → Stage 1 solo classroom.
-      roomRef.current = null;
-      setConnected(false);
-      setPhase("live");
+    setJoining(true);
+    const result = await call.join({
+      name,
+      code: classCode,
+      role: mode === "teacher" ? "teacher" : "family",
+      roomName,
+      ...devices,
+    });
+    setJoining(false);
+    if (result === "wrong_code") {
+      setJoinError("That class code doesn't match — please check it with Teacher Sharon. 💛");
+      return;
     }
+    if (result === "error") {
+      setJoinError("We couldn't reach your camera. Please allow camera & microphone access and try again.");
+      return;
+    }
+    initCloudSync();
+    if (result === "connected") sendEvent("class.joined", { who: name, room: roomName });
   }
 
-  // END CALL — the only action that disconnects LiveKit. Stops all
-  // tracks, closes the room, and returns everyone to Home Base.
+  // END CALL — the only action that disconnects. Back to Home Base.
   function endCall() {
-    roomRef.current?.disconnect();
-    roomRef.current = null;
-    setConnected(false);
-    setPhase("lobby");
+    if (call.status === "connected") sendEvent("class.ended", { who: name, room: roomName });
+    call.endCall();
     router.push("/");
   }
 
-  if (phase === "lobby" || phase === "connecting") {
+  if (call.status === "connected" && call.room) {
+    return <ConnectedRoom lesson={lesson} onLeave={endCall} />;
+  }
+  if (call.status === "solo") {
     return (
-      <Lobby
-        name={name}
-        setName={setName}
+      <SoloRoom
+        lesson={lesson}
         classCode={classCode}
         setClassCode={setClassCode}
-        lesson={lesson}
-        joining={phase === "connecting"}
-        joinError={joinError}
-        onJoin={join}
+        onGoLive={() =>
+          join({ camId: "", micId: "", camOn: call.camOn, micOn: call.micOn })
+        }
+        onLeave={endCall}
       />
     );
   }
-  return connected && roomRef.current ? (
-    <ConnectedRoom room={roomRef.current} name={name} lesson={lesson} isTeacher={mode === "teacher"} onLeave={endCall} />
-  ) : (
-    <SoloRoom name={name} lesson={lesson} devices={lobbyDevices} onLeave={endCall} />
+  return (
+    <Lobby
+      name={name}
+      setName={setName}
+      classCode={classCode}
+      setClassCode={setClassCode}
+      lesson={lesson}
+      joining={joining || call.status === "connecting"}
+      joinError={joinError}
+      onJoin={join}
+    />
   );
 }
 
-/* ── Local camera (lobby preview + solo mode) ───────────────── */
+/* ── Local camera (lobby preview) ───────────────────────────── */
 function useLocalCamera(initial?: { camId?: string; micId?: string; camOn?: boolean; micOn?: boolean }) {
   const streamRef = useRef<MediaStream | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -345,20 +312,16 @@ function Lobby({ name, setName, classCode, setClassCode, lesson, joining, joinEr
   );
 }
 
-/* ── LiveKit connected classroom ────────────────────────────── */
-function ConnectedRoom({ room, name, lesson, isTeacher, onLeave }: {
-  room: Room;
-  name: string;
+/* ── LiveKit connected classroom (shared call context) ──────── */
+function ConnectedRoom({ lesson, onLeave }: {
   lesson: Lesson | null;
-  isTeacher: boolean;
   onLeave: () => void;
 }) {
-  const [version, setVersion] = useState(0);
+  const call = useCall();
+  const room = call.room!;
+  const isTeacher = call.isTeacher;
   const [chatOpen, setChatOpen] = useState(false);
-  const [chat, setChat] = useState<ChatMsg[]>([]);
   const [msg, setMsg] = useState("");
-  const [hands, setHands] = useState<Record<string, boolean>>({});
-  const [state, setState] = useState<ConnectionState>(room.state);
   // The lesson opens INSIDE the stage — the route never changes, so the
   // LiveKit room, cameras, and toolbar are never unmounted.
   const [stageLesson, setStageLesson] = useState<Lesson | null>(null);
@@ -372,109 +335,21 @@ function ConnectedRoom({ room, name, lesson, isTeacher, onLeave }: {
   function finishLesson() {
     setStageLesson(null);
     setWrapUp(true);
+    if (lesson) sendEvent("lesson.finished", { lessonId: lesson.id, title: lesson.title });
   }
 
-  const bump = useCallback(() => setVersion((v) => v + 1), []);
+  const everyone = call.participants;
+  const screenShare = getScreenShare(everyone);
 
-  useEffect(() => {
-    const events = [
-      RoomEvent.ParticipantConnected,
-      RoomEvent.ParticipantDisconnected,
-      RoomEvent.TrackSubscribed,
-      RoomEvent.TrackUnsubscribed,
-      RoomEvent.LocalTrackPublished,
-      RoomEvent.LocalTrackUnpublished,
-      RoomEvent.TrackMuted,
-      RoomEvent.TrackUnmuted,
-      RoomEvent.ActiveSpeakersChanged,
-    ] as const;
-    events.forEach((e) => room.on(e, bump));
-
-    const onData = (payload: Uint8Array, p?: RemoteParticipant) => {
-      try {
-        const d = JSON.parse(new TextDecoder().decode(payload)) as { type: string; who?: string; text?: string; up?: boolean };
-        if (d.type === "chat" && d.who && d.text) setChat((c) => [...c, { who: d.who!, text: d.text! }]);
-        if (d.type === "hand" && p) setHands((h) => ({ ...h, [p.identity]: !!d.up }));
-      } catch { /* ignore */ }
-    };
-    const onState = (s: ConnectionState) => setState(s);
-    const onDisconnect = () => onLeave();
-    room.on(RoomEvent.DataReceived, onData);
-    room.on(RoomEvent.ConnectionStateChanged, onState);
-    room.on(RoomEvent.Disconnected, onDisconnect);
-
-    // attendance log (teacher's device keeps the register)
-    if (isTeacher) {
-      const log = (who: string, action: "joined" | "left") => {
-        try {
-          const key = `wjos:attendance-${room.name}`;
-          const rows = JSON.parse(localStorage.getItem(key) ?? "[]") as unknown[];
-          rows.push({ who, action, time: new Date().toISOString() });
-          localStorage.setItem(key, JSON.stringify(rows));
-        } catch { /* ignore */ }
-      };
-      log(name, "joined");
-      const onJoin = (p: RemoteParticipant) => log(p.name ?? p.identity, "joined");
-      const onLeft = (p: RemoteParticipant) => log(p.name ?? p.identity, "left");
-      room.on(RoomEvent.ParticipantConnected, onJoin);
-      room.on(RoomEvent.ParticipantDisconnected, onLeft);
-    }
-
-    return () => {
-      events.forEach((e) => room.off(e, bump));
-      room.off(RoomEvent.DataReceived, onData);
-      room.off(RoomEvent.ConnectionStateChanged, onState);
-      room.off(RoomEvent.Disconnected, onDisconnect);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [room]);
-
-  const everyone: Participant[] = useMemo(
-    () => [room.localParticipant, ...Array.from(room.remoteParticipants.values())],
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [room, version]
-  );
-
-  // find any active screen share (local or remote)
-  const screenShare = useMemo(() => {
-    for (const p of everyone) {
-      const pub = p.getTrackPublication(Track.Source.ScreenShare);
-      if (pub?.track) return { participant: p, track: pub.track };
-    }
-    return null;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [everyone, version]);
-
-  const camOn = room.localParticipant.isCameraEnabled;
-  const micOn = room.localParticipant.isMicrophoneEnabled;
-  const myHand = hands[room.localParticipant.identity] ?? false;
-
-  async function toggleCam() { await room.localParticipant.setCameraEnabled(!camOn); bump(); }
-  async function toggleMic() { await room.localParticipant.setMicrophoneEnabled(!micOn); bump(); }
-  async function toggleShare() {
-    try { await room.localParticipant.setScreenShareEnabled(!screenShare || screenShare.participant !== room.localParticipant); bump(); }
-    catch { /* user cancelled */ }
-  }
-  function sendData(obj: object) {
-    void room.localParticipant.publishData(new TextEncoder().encode(JSON.stringify(obj)), { reliable: true });
-  }
-  function toggleHand() {
-    const up = !myHand;
-    setHands((h) => ({ ...h, [room.localParticipant.identity]: up }));
-    sendData({ type: "hand", up });
-  }
   function send() {
     if (!msg.trim()) return;
-    const m = { type: "chat", who: name, text: msg.trim() };
-    sendData(m);
-    setChat((c) => [...c, { who: name, text: m.text }]);
+    call.sendChat(msg);
     setMsg("");
   }
-  function leave() { room.disconnect(); onLeave(); }
 
   const stateChip =
-    state === ConnectionState.Connected ? "🟢 Live" :
-    state === ConnectionState.Reconnecting ? "🟡 Reconnecting…" : "🔴 Connecting…";
+    call.connState === ConnectionState.Reconnecting ? "🟡 Reconnecting…" :
+    call.connState === ConnectionState.Connected ? "🟢 Live" : "🔴 Connecting…";
 
   // ── V1 layout: exactly two featured feeds (Decision: one shared
   // family camera). Local participant on one side, the first remote on
@@ -527,7 +402,7 @@ function ConnectedRoom({ room, name, lesson, isTeacher, onLeave }: {
                   setStageLesson(lesson);
                 }
               }}
-              onEndCall={leave}
+              onEndCall={onLeave}
             />
           ) : (
             <div className="flex flex-col items-center gap-4 overflow-y-auto p-8 text-center">
@@ -552,8 +427,8 @@ function ConnectedRoom({ room, name, lesson, isTeacher, onLeave }: {
               <ParticipantTile
                 participant={enlargedP}
                 isLocal={enlargedP === room.localParticipant}
-                hand={hands[enlargedP.identity] ?? false}
-                version={version}
+                hand={call.hands[enlargedP.identity] ?? false}
+                version={call.version}
                 onClick={() => setEnlarged(null)}
               />
               <p className="mt-1 text-center text-[10px] font-bold text-white drop-shadow">tap to unpin</p>
@@ -572,8 +447,8 @@ function ConnectedRoom({ room, name, lesson, isTeacher, onLeave }: {
                 <ParticipantTile
                   participant={familyFeed}
                   isLocal={false}
-                  hand={hands[familyFeed.identity] ?? false}
-                  version={version}
+                  hand={call.hands[familyFeed.identity] ?? false}
+                  version={call.version}
                   tall
                   onClick={() => setEnlarged(familyFeed.identity)}
                 />
@@ -586,19 +461,19 @@ function ConnectedRoom({ room, name, lesson, isTeacher, onLeave }: {
               {/* future participants stack here automatically */}
               {extraFeeds.map((p) => (
                 <div key={p.identity} className="mt-2">
-                  <ParticipantTile participant={p} isLocal={false} hand={hands[p.identity] ?? false} version={version} onClick={() => setEnlarged(p.identity)} />
+                  <ParticipantTile participant={p} isLocal={false} hand={call.hands[p.identity] ?? false} version={call.version} onClick={() => setEnlarged(p.identity)} />
                 </div>
               ))}
             </div>
 
             {/* Teacher below */}
             <div>
-              <p className="mb-1 text-center text-[11px] font-bold uppercase tracking-wide text-ink-soft">👩‍🏫 Teacher Sharon</p>
+              <p className="mb-1 text-center text-[11px] font-bold uppercase tracking-wide text-ink-soft">👩‍🏫 {teacherName}</p>
               <ParticipantTile
                 participant={room.localParticipant}
                 isLocal
-                hand={hands[room.localParticipant.identity] ?? false}
-                version={version}
+                hand={call.hands[room.localParticipant.identity] ?? false}
+                version={call.version}
                 onClick={() => setEnlarged(room.localParticipant.identity)}
               />
             </div>
@@ -610,8 +485,8 @@ function ConnectedRoom({ room, name, lesson, isTeacher, onLeave }: {
         <div className="wj-card p-4">
           <p className="font-display">💬 Class Chat</p>
           <div className="mt-2 max-h-32 space-y-1 overflow-y-auto text-sm">
-            {chat.length === 0 && <p className="font-hand text-ink-soft">Say hello to the family! 👋</p>}
-            {chat.map((c, i) => (<p key={i}><b>{c.who}:</b> {c.text}</p>))}
+            {call.chat.length === 0 && <p className="font-hand text-ink-soft">Say hello to the family! 👋</p>}
+            {call.chat.map((c, i) => (<p key={i}><b>{c.who}:</b> {c.text}</p>))}
           </div>
           <div className="mt-2 flex gap-2">
             <input className="wj-input" value={msg} onChange={(e) => setMsg(e.target.value)} onKeyDown={(e) => e.key === "Enter" && send()} placeholder="Type a message…" />
@@ -622,11 +497,11 @@ function ConnectedRoom({ room, name, lesson, isTeacher, onLeave }: {
 
       {/* TEACHING TOOLBAR — only class tools, no dashboard navigation */}
       <div className="wj-card sticky bottom-2 z-10 flex flex-wrap items-center justify-center gap-2 p-3">
-        <ToolBtn onClick={() => void toggleMic()} active={micOn} label={micOn ? "🎤 Mic" : "🔇 Muted"} />
-        <ToolBtn onClick={() => void toggleCam()} active={camOn} label={camOn ? "📷 Cam" : "📷 Off"} />
-        <ToolBtn onClick={() => void toggleShare()} active={!!screenShare && screenShare.participant === room.localParticipant} label="🖥️ Share" />
+        <ToolBtn onClick={call.toggleMic} active={call.micOn} label={call.micOn ? "🎤 Mic" : "🔇 Muted"} />
+        <ToolBtn onClick={call.toggleCam} active={call.camOn} label={call.camOn ? "📷 Cam" : "📷 Off"} />
+        <ToolBtn onClick={call.toggleShare} active={call.sharing} label="🖥️ Share" />
         <ToolBtn onClick={() => setDrawing((d) => !d)} active={drawing} label="✏️ Draw" />
-        <ToolBtn onClick={toggleHand} active={myHand} label="✋ Hand" />
+        <ToolBtn onClick={call.toggleHand} active={call.myHand} label="✋ Hand" />
         <ToolBtn onClick={() => setChatOpen((c) => !c)} active={chatOpen} label="💬 Chat" />
         <span className="mx-1 hidden h-6 w-px bg-sand-deep sm:block" />
         {isTeacher && stageLesson && (
@@ -634,7 +509,7 @@ function ConnectedRoom({ room, name, lesson, isTeacher, onLeave }: {
             🏁 Finish Lesson
           </button>
         )}
-        <button className="wj-btn wj-btn-hibiscus !px-4 !py-1.5 text-sm" onClick={leave} title="Disconnects the call and returns to Home Base">
+        <button className="wj-btn wj-btn-hibiscus !px-4 !py-1.5 text-sm" onClick={onLeave} title="Disconnects the call and returns to Home Base">
           📞 End Call
         </button>
       </div>
@@ -760,19 +635,28 @@ function ShareView({ track }: { track: MediaStreamTrack }) {
   return <video ref={ref} autoPlay playsInline className="h-full w-full bg-ink object-contain" />;
 }
 
-/* ── Solo classroom (Stage 1 fallback) ──────────────────────── */
-function SoloRoom({ name, lesson, devices, onLeave }: {
-  name: string;
+/* ── Solo classroom (no/wrong class code — local camera only) ── */
+function SoloRoom({ lesson, classCode, setClassCode, onGoLive, onLeave }: {
   lesson: Lesson | null;
-  devices: { camId: string; micId: string; camOn: boolean; micOn: boolean };
+  classCode: string;
+  setClassCode: (s: string) => void;
+  onGoLive: () => void;
   onLeave: () => void;
 }) {
-  const cam = useLocalCamera(devices);
+  const call = useCall();
   const [sharing, setSharing] = useState(false);
   const [stageLesson, setStageLesson] = useState<Lesson | null>(null);
   const [drawing, setDrawing] = useState(false);
   const shareRef = useRef<MediaStream | null>(null);
   const shareVideoRef = useRef<HTMLVideoElement>(null);
+  const soloVideoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (soloVideoRef.current && call.soloStream) {
+      soloVideoRef.current.srcObject = call.soloStream;
+      void soloVideoRef.current.play().catch(() => {});
+    }
+  }, [call.soloStream]);
 
   async function toggleShare() {
     if (sharing) {
@@ -796,17 +680,23 @@ function SoloRoom({ name, lesson, devices, onLeave }: {
   }
 
   function leave() {
-    cam.stop();
     shareRef.current?.getTracks().forEach((t) => t.stop());
     onLeave();
   }
 
   return (
     <div className="space-y-3">
-      <div className="wj-card-bubble wj-note p-3 text-center">
+      <div className="wj-card-bubble wj-note flex flex-wrap items-center justify-center gap-2 p-3 text-center">
         <p className="font-display text-sm text-white">
-          Solo mode — live family video turns on once the LiveKit keys are set in Netlify (docs/LIVEKIT_SETUP.md). 💛
+          Your camera is on! Enter the class code to go live with everyone: 💛
         </p>
+        <input
+          className="wj-input !w-40 !py-1 text-sm"
+          value={classCode}
+          onChange={(e) => setClassCode(e.target.value)}
+          placeholder="class code"
+        />
+        <button className="wj-btn !px-4 !py-1.5 text-sm" onClick={onGoLive}>🚀 Go Live</button>
       </div>
 
       {/* Focused room: lesson stage left · camera rail right, family ABOVE teacher */}
@@ -838,27 +728,44 @@ function SoloRoom({ name, lesson, devices, onLeave }: {
         <div className="flex flex-col gap-3 lg:sticky lg:top-3">
           <div>
             <p className="mb-1 text-center text-[11px] font-bold uppercase tracking-wide text-ink-soft">👨‍👩‍👧‍👦 {familyName}</p>
-            <div className="flex aspect-[4/3] w-full flex-col items-center justify-center rounded-2xl border-2 border-dashed border-sand-deep bg-sand text-center text-ink-soft">
-              <span className="text-3xl">💛</span>
-              <span className="font-hand px-2 text-sm">Family video appears here once LiveKit is connected</span>
-            </div>
+            {call.isTeacher ? (
+              <div className="flex aspect-[4/3] w-full flex-col items-center justify-center rounded-2xl border-2 border-dashed border-sand-deep bg-sand text-center text-ink-soft">
+                <span className="text-3xl">💛</span>
+                <span className="font-hand px-2 text-sm">Family video appears once you go live together</span>
+              </div>
+            ) : (
+              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-ink">
+                <video ref={soloVideoRef} autoPlay muted playsInline className={`h-full w-full object-cover ${call.camOn ? "" : "hidden"}`} />
+                {!call.camOn && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-ocean-deep to-ube-deep text-5xl">📷</div>
+                )}
+                <span className="absolute bottom-2 left-2 rounded-full bg-ink/70 px-2.5 py-0.5 text-xs font-bold text-white">{call.name || familyName}</span>
+              </div>
+            )}
           </div>
           <div>
-            <p className="mb-1 text-center text-[11px] font-bold uppercase tracking-wide text-ink-soft">👩‍🏫 Teacher Sharon</p>
-            <LocalCameraView streamRef={cam.streamRef} camOn={cam.camOn} tick={cam.tick} className="aspect-video w-full" label={name} />
+            <p className="mb-1 text-center text-[11px] font-bold uppercase tracking-wide text-ink-soft">👩‍🏫 {teacherName}</p>
+            {call.isTeacher ? (
+              <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-ink">
+                <video ref={call.isTeacher ? soloVideoRef : undefined} autoPlay muted playsInline className={`h-full w-full object-cover ${call.camOn ? "" : "hidden"}`} />
+                {!call.camOn && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-ocean-deep to-ube-deep text-5xl">📷</div>
+                )}
+                <span className="absolute bottom-2 left-2 rounded-full bg-ink/70 px-2.5 py-0.5 text-xs font-bold text-white">{call.name || teacherName}</span>
+              </div>
+            ) : (
+              <div className="flex aspect-video w-full flex-col items-center justify-center rounded-2xl border-2 border-dashed border-sand-deep bg-sand text-center text-ink-soft">
+                <span className="text-3xl">💛</span>
+                <span className="font-hand px-2 text-sm">Teacher Sharon appears once you go live together</span>
+              </div>
+            )}
           </div>
         </div>
       </div>
 
-      {cam.error && (
-        <div className="wj-card p-3 text-center text-sm text-hibiscus-deep">
-          {cam.error} <button className="wj-btn wj-btn-ghost ml-2 text-sm" onClick={() => void cam.start()}>Retry</button>
-        </div>
-      )}
-
       <div className="wj-card sticky bottom-2 z-10 flex flex-wrap items-center justify-center gap-2 p-3">
-        <ToolBtn onClick={cam.toggleMic} active={cam.micOn} label={cam.micOn ? "🎤 Mic" : "🔇 Muted"} />
-        <ToolBtn onClick={cam.toggleCam} active={cam.camOn} label={cam.camOn ? "📷 Cam" : "📷 Off"} />
+        <ToolBtn onClick={call.toggleMic} active={call.micOn} label={call.micOn ? "🎤 Mic" : "🔇 Muted"} />
+        <ToolBtn onClick={call.toggleCam} active={call.camOn} label={call.camOn ? "📷 Cam" : "📷 Off"} />
         <ToolBtn onClick={() => void toggleShare()} active={sharing} label="🖥️ Share" />
         <ToolBtn onClick={() => setDrawing((d) => !d)} active={drawing} label="✏️ Draw" />
         <span className="mx-1 hidden h-6 w-px bg-sand-deep sm:block" />

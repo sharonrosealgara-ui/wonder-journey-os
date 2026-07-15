@@ -30,6 +30,9 @@ export type JoinOptions = {
   micId: string;
   camOn: boolean;
   micOn: boolean;
+  /** auto-start mode: on a wrong/missing code, quietly fall back to a
+      local-only camera instead of reporting an error */
+  silent?: boolean;
 };
 
 export type JoinResult = "connected" | "solo" | "wrong_code" | "error";
@@ -84,11 +87,36 @@ export function CallProvider({ children }: { children: React.ReactNode }) {
 
   const join = useCallback(
     async (opts: JoinOptions): Promise<JoinResult> => {
+      // clean up any previous session first (re-join safe)
+      roomRef.current?.disconnect();
+      roomRef.current = null;
+      setSoloStream((prev) => {
+        prev?.getTracks().forEach((t) => t.stop());
+        return null;
+      });
+
       setStatus("connecting");
       setName(opts.name);
       setIsTeacher(opts.role === "teacher");
       setMicOn(opts.micOn);
       setCamOn(opts.camOn);
+
+      const soloFallback = async (): Promise<JoinResult> => {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({
+            video: opts.camId ? { deviceId: { exact: opts.camId } } : true,
+            audio: opts.micId ? { deviceId: { exact: opts.micId } } : true,
+          });
+          stream.getVideoTracks().forEach((t) => (t.enabled = opts.camOn));
+          stream.getAudioTracks().forEach((t) => (t.enabled = opts.micOn));
+          setSoloStream(stream);
+          setStatus("solo");
+          return "solo";
+        } catch {
+          setStatus("idle");
+          return "error";
+        }
+      };
 
       // Try the secure LiveKit token function first.
       try {
@@ -98,6 +126,7 @@ export function CallProvider({ children }: { children: React.ReactNode }) {
           body: JSON.stringify({ name: opts.name, room: opts.roomName, role: opts.role, code: opts.code }),
         });
         if (res.status === 401) {
+          if (opts.silent) return soloFallback();
           setStatus("idle");
           return "wrong_code";
         }
@@ -125,6 +154,14 @@ export function CallProvider({ children }: { children: React.ReactNode }) {
         ] as const;
         evs.forEach((e) => room.on(e, bump));
         room.on(RoomEvent.ConnectionStateChanged, (s) => setConnState(s));
+        // server closed the room / network gone for good → back to idle
+        room.on(RoomEvent.Disconnected, () => {
+          if (roomRef.current === room) {
+            roomRef.current = null;
+            setStatus("idle");
+            bump();
+          }
+        });
         room.on(RoomEvent.DataReceived, (payload: Uint8Array, p?: RemoteParticipant) => {
           try {
             const d = JSON.parse(new TextDecoder().decode(payload)) as { type: string; who?: string; text?: string; up?: boolean };
@@ -155,21 +192,8 @@ export function CallProvider({ children }: { children: React.ReactNode }) {
         bump();
         return "connected";
       } catch {
-        // Solo fallback — the classroom still works with the local camera.
-        try {
-          const stream = await navigator.mediaDevices.getUserMedia({
-            video: opts.camId ? { deviceId: { exact: opts.camId } } : true,
-            audio: opts.micId ? { deviceId: { exact: opts.micId } } : true,
-          });
-          stream.getVideoTracks().forEach((t) => (t.enabled = opts.camOn));
-          stream.getAudioTracks().forEach((t) => (t.enabled = opts.micOn));
-          setSoloStream(stream);
-          setStatus("solo");
-          return "solo";
-        } catch {
-          setStatus("solo"); // even without a camera, stay in the room UI
-          return "error";
-        }
+        // LiveKit unavailable — the local camera still works.
+        return soloFallback();
       }
     },
     [bump]

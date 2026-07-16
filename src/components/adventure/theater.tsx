@@ -251,7 +251,7 @@ export function AdventureTheater({
 
         {/* ── Presentation stage ──────────────────────────────── */}
         <div ref={stageRef} className="min-w-0 flex-1 overflow-y-auto">
-          <div className="mx-auto flex min-h-full max-w-4xl items-center justify-center px-4 py-8">
+          <div className="mx-auto flex min-h-full max-w-5xl items-center justify-center px-4 py-8">
             <div key={slide.id} className="wj-slide-in w-full">
               <SlideView
                 slide={slide}

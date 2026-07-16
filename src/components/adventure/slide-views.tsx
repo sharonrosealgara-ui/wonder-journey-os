@@ -6,6 +6,9 @@ import { AdventureQuiz } from "@/components/adventure/quiz";
 import { FactHunt, MemoryFlip, WordScramble } from "@/components/adventure/mini-games";
 import { MatchingGame } from "@/components/matching-game";
 import { PhotoUpload } from "@/components/photo-upload";
+import { Polaroid } from "@/components/smart-photo";
+import { Highlight } from "@/lib/highlight";
+import { useSmartSrc } from "@/lib/photos";
 import { getDestination } from "@/config/destinations";
 import { familyAdults, familyName, getStudent, students, teacherName } from "@/config/family";
 import type { Lesson } from "@/config/lessons";
@@ -23,16 +26,17 @@ import { buildAcademy, buildMission, getYouTubeEmbed, levelForAge, levelMeta, ty
 import { sfx } from "@/lib/sound";
 import { newId, useStored } from "@/lib/storage";
 
-// A mascot introduces each slide with a speech bubble.
+// A mascot introduces each slide with a speech bubble — scaled up so the
+// call-to-action is unmissable for young readers (Sharon's guidelines).
 export function MascotBubble({ slide, line }: { slide: Slide; line: string }) {
   return (
-    <div className="mx-auto mb-4 flex max-w-lg items-center justify-center gap-3">
-      <span className="wj-sticker wj-bob h-12 w-12 shrink-0 text-2xl">{slide.mascot.emoji}</span>
-      <div className="wj-card px-4 py-2 text-left shadow-lg">
+    <div className="mx-auto mb-4 mt-5 flex max-w-xl items-center justify-center gap-3">
+      <span className="wj-sticker wj-bob h-16 w-16 shrink-0 text-3xl">{slide.mascot.emoji}</span>
+      <div className="wj-card -ml-1 px-5 py-3 text-left shadow-lg">
         <p className="text-xs font-bold text-ink-soft">
           {slide.mascot.name} · {slide.mascot.role}
         </p>
-        <p className="font-hand text-lg leading-snug">{line}</p>
+        <p className="font-hand text-xl leading-snug">{line}</p>
       </div>
     </div>
   );
@@ -66,7 +70,7 @@ export function SlideView({
       return <MissionSlide slide={slide} lesson={lesson} />;
     case "story":
     case "learning":
-      return <SectionSlide slide={slide} />;
+      return <SectionSlide slide={slide} lesson={lesson} />;
     case "vocab":
       return <VocabSlide slide={slide} lesson={lesson} level={level} />;
     case "video":
@@ -385,27 +389,88 @@ function MissionSlide({ slide, lesson }: { slide: Slide; lesson: Lesson }) {
   );
 }
 
-function SectionSlide({ slide }: { slide: Slide }) {
+// 🎨 CONTEXTUAL THEMES — each subject wears its own world (Sharon's
+// premium art direction): Geography = explorer's field journal ·
+// Cooking = family recipe card · Language = giant speech bubble ·
+// Values = watercolor canvas. Same content model, different clothes.
+const lessonThemes: Record<
+  Lesson["category"],
+  { card: string; bullet: string; accent: string; panel: string; tilt: string }
+> = {
+  Philippines: {
+    card: "border-2 border-dashed border-amber-700/30 bg-[#fffaf0]",
+    bullet: "🧭",
+    accent: "text-sunset-deep",
+    panel: "bg-amber-100/50",
+    tilt: "-rotate-2",
+  },
+  Cooking: {
+    card: "border-2 border-stone-200 bg-orange-50/70",
+    bullet: "🥄",
+    accent: "text-mango-deep",
+    panel: "bg-orange-100/40",
+    tilt: "rotate-2",
+  },
+  Language: {
+    card: "border-4 border-sky-200 bg-sky-50/80",
+    bullet: "💬",
+    accent: "text-ocean-deep",
+    panel: "bg-sky-100/50",
+    tilt: "-rotate-1",
+  },
+  Values: {
+    card: "border-2 border-teal-200/80 bg-teal-50/60",
+    bullet: "⭐",
+    accent: "text-hibiscus-deep",
+    panel: "bg-teal-100/40",
+    tilt: "rotate-1",
+  },
+};
+
+function SectionSlide({ slide, lesson }: { slide: Slide; lesson: Lesson }) {
   const section = slide.section!;
+  const t = lessonThemes[lesson.category];
+  // real photo from the Photo Studio (falls back to warm emoji art)
+  const photoSrc = useSmartSrc("lesson", lesson.id);
   return (
-    <div className="mx-auto max-w-2xl">
+    <div className="mx-auto w-full max-w-5xl">
       <div className="text-center">
-        <div className="mb-3 text-6xl">{section.emoji}</div>
+        <div className="mb-2 text-6xl">{section.emoji}</div>
         <h1 className="wj-outline font-display text-3xl sm:text-5xl">{section.heading}</h1>
       </div>
-      <div className="wj-card mt-6 p-6 sm:p-8">
-        <p className="text-lg leading-relaxed sm:text-xl">{section.body}</p>
-        {section.bullets && (
-          <ul className="mt-5 space-y-2.5">
-            {section.bullets.map((b) => (
-              <li key={b} className="flex gap-3 text-base sm:text-lg">
-                <span className="text-mango-deep">★</span>
-                <span>{b}</span>
-              </li>
-            ))}
-          </ul>
-        )}
+
+      {/* 60/40 split on wide screens — reading card left, visual right */}
+      <div className="mt-6 grid items-start gap-6 lg:grid-cols-5">
+        <div className={`rounded-3xl p-6 shadow-lg sm:p-8 lg:col-span-3 ${t.card}`}>
+          <p className="wj-read">
+            <Highlight text={section.body} accent={t.accent} />
+          </p>
+          {section.bullets && (
+            <ul className="mt-5 space-y-3">
+              {section.bullets.map((b) => (
+                <li key={b} className="wj-read flex items-start gap-3 !text-lg">
+                  <span className="wj-sticker h-8 w-8 shrink-0 text-base">{t.bullet}</span>
+                  <span>
+                    <Highlight text={b} accent={t.accent} />
+                  </span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+
+        <div className={`hidden items-center justify-center rounded-3xl p-6 lg:col-span-2 lg:flex ${t.panel}`}>
+          <Polaroid
+            src={photoSrc}
+            alt={section.heading}
+            emoji={section.emoji}
+            tilt={t.tilt}
+            caption={lesson.title}
+            className="w-full max-w-xs"
+          />
+        </div>
       </div>
+
       {slide.kind === "story" && (
         <MascotBubble slide={slide} line="Close your eyes for a second... can you picture it?" />
       )}

@@ -274,6 +274,35 @@ h1, h2, h3, .font-display {
   color: var(--color-ink-soft);
   border: 1.5px solid var(--color-sand-deep);
   box-shadow: 0 1px 4px rgba(39, 68, 114, 0.12);
+  transition: transform 150ms ease, background-color 150ms ease;
+}
+/* juicy micro-interactions — only when the chip is pressable */
+button.wj-chip:hover,
+a.wj-chip:hover {
+  transform: scale(1.06);
+}
+button.wj-chip:active,
+a.wj-chip:active {
+  transform: scale(0.94);
+}
+
+/* ── Reading type for lessons — young eyes first ──────────── */
+.wj-read {
+  font-family: "Lexend", "Quicksand", ui-rounded, system-ui, sans-serif;
+  font-size: 1.25rem; /* ≥20px */
+  line-height: 1.7;
+}
+
+/* ── Washi tape strip — makes Polaroid photos feel taped on ── */
+.wj-tape {
+  position: absolute;
+  height: 1.6rem;
+  width: 6.5rem;
+  background: rgba(255, 253, 246, 0.45);
+  box-shadow: 0 1px 3px rgba(39, 68, 114, 0.18);
+  backdrop-filter: blur(1px);
+  border-left: 2px dashed rgba(255, 255, 255, 0.55);
+  border-right: 2px dashed rgba(255, 255, 255, 0.55);
 }
 
 /* ── Passport stamps ──────────────────────────────────────── */

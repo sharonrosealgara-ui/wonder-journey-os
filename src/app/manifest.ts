@@ -15,13 +15,14 @@ export default function manifest(): MetadataRoute.Manifest {
     display: "standalone",
     background_color: "#c9dff2",
     theme_color: "#c9dff2",
+    orientation: "any",
     icons: [
-      {
-        src: "/icon.svg",
-        sizes: "any",
-        type: "image/svg+xml",
-        purpose: "any",
-      },
+      // PNG sizes phones require for the real "install app" experience
+      { src: "/icons/icon-192.png", sizes: "192x192", type: "image/png", purpose: "any" },
+      { src: "/icons/icon-512.png", sizes: "512x512", type: "image/png", purpose: "any" },
+      // maskable = Android adaptive icons (circle/squircle) never clip the flower
+      { src: "/icons/icon-maskable-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
+      { src: "/icon.svg", sizes: "any", type: "image/svg+xml", purpose: "any" },
     ],
   };
 }

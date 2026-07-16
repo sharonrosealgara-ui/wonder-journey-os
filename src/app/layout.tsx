@@ -26,7 +26,18 @@ export const metadata: Metadata = {
     images: ["/icon.svg"],
   },
   robots: { index: true, follow: true },
-  icons: { icon: "/icon.svg" },
+  icons: {
+    icon: "/icon.svg",
+    // iPhone/iPad "Add to Home Screen" icon — a real PNG, full-bleed
+    apple: "/apple-touch-icon.png",
+  },
+  // Installed on a phone, Wonder Journey opens fullscreen like a native
+  // app — no browser bar, just the adventure.
+  appleWebApp: {
+    capable: true,
+    title: brand.productName,
+    statusBarStyle: "default",
+  },
 };
 
 export const viewport: Viewport = {

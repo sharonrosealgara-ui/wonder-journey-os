@@ -1,4 +1,4 @@
-import { codeOk, familySlug, json, type Ctx } from "../_shared";
+import { codeCheck, familySlug, json, type Ctx } from "../_shared";
 
 // ─────────────────────────────────────────────────────────────
 // EVENTS API — Make.com integration hub (Cloudflare KV).
@@ -40,9 +40,9 @@ export const onRequest = async ({ request, env }: Ctx): Promise<Response> => {
 
   // ── App writes ─────────────────────────────────────────────
   if (request.method === "POST") {
-    if (!codeOk(request, env)) {
-      return json({ error: "wrong or missing family code" }, 401);
-    }
+    const check = codeCheck(request, env);
+    if (check === "not_configured") return json({ error: "not_configured" }, 503);
+    if (check === "wrong") return json({ error: "wrong or missing family code" }, 401);
     let evt: Evt;
     try {
       evt = await request.json();

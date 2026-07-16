@@ -31,12 +31,20 @@ export function json(body: unknown, status = 200, headers: Record<string, string
   });
 }
 
-/** The class code is the door key for every app→server call. */
-export function codeOk(request: Request, env: Env): boolean {
+/**
+ * The class code is the door key for every app→server call.
+ *
+ * "not_configured" is deliberately distinct from "wrong": if the server
+ * has no CLASSROOM_CODE, that is OUR problem, not the family's — saying
+ * "wrong code" would lock everyone out of their own platform while the
+ * correct code is being typed. The app treats not_configured as "can't
+ * check right now" and lets the family in.
+ */
+export function codeCheck(request: Request, env: Env): "ok" | "wrong" | "not_configured" {
   const expected = env.CLASSROOM_CODE ?? "";
-  if (!expected) return false;
+  if (!expected) return "not_configured";
   const got = request.headers.get("x-family-code") ?? "";
-  return got.trim().toLowerCase() === expected.trim().toLowerCase();
+  return got.trim().toLowerCase() === expected.trim().toLowerCase() ? "ok" : "wrong";
 }
 
 /** One record per family workspace (multi-family ready). */

@@ -1,4 +1,4 @@
-import { codeOk, familySlug, json, mergeById, type Ctx } from "../_shared";
+import { codeCheck, familySlug, json, mergeById, type Ctx } from "../_shared";
 
 // ─────────────────────────────────────────────────────────────
 // FAMILY DATA API — the real backend (Cloudflare KV).
@@ -18,7 +18,12 @@ import { codeOk, familySlug, json, mergeById, type Ctx } from "../_shared";
 type Rec = Record<string, unknown>;
 
 export const onRequest = async ({ request, env }: Ctx): Promise<Response> => {
-  if (!codeOk(request, env)) {
+  const check = codeCheck(request, env);
+  if (check === "not_configured") {
+    // our misconfiguration — never blame the family's code for it
+    return json({ error: "not_configured" }, 503);
+  }
+  if (check === "wrong") {
     return json({ error: "wrong or missing family code" }, 401);
   }
 

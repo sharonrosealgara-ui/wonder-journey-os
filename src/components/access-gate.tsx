@@ -60,7 +60,12 @@ export function AccessGate({ children }: { children: React.ReactNode }) {
     setBusy(true);
     setError(null);
     try {
-      // Check with the server when it's reachable; a wrong code is a 401.
+      // Check with the server when it's reachable. ONLY a 401 means the
+      // code is genuinely wrong. Anything else (503 not_configured, a
+      // hosting hiccup, no server at all in local preview) is our problem,
+      // not the family's — we let them in and the classroom verifies later.
+      // A misconfigured server must never say "wrong code" and lock the
+      // family out of their own platform.
       const res = await fetch("/api/family-data", { headers: { "x-family-code": c } });
       if (res.status === 401) {
         setError("That code doesn't match — please check it with Teacher Sharon. 💛");
@@ -68,8 +73,7 @@ export function AccessGate({ children }: { children: React.ReactNode }) {
         return;
       }
     } catch {
-      // Offline or no server (local preview) — trust the code and let
-      // the classroom verify it later. Never lock the family out.
+      // Offline or no server (local preview) — trust the code.
     }
     writeStored("classCode", c);
     setPhase("open");

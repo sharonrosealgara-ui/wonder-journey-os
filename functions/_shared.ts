@@ -13,8 +13,12 @@ export type Env = {
   LIVEKIT_URL?: string;
   LIVEKIT_API_KEY?: string;
   LIVEKIT_API_SECRET?: string;
-  // the family's shared door key
+  // the family's shared door key. WJ_CLASS_CODE is an alias — added
+  // because a dashboard entry named CLASSROOM_CODE got stuck in
+  // Cloudflare's store (visible in the UI, never reached runtime);
+  // a fresh name can't collide with a corrupted entry.
   CLASSROOM_CODE?: string;
+  WJ_CLASS_CODE?: string;
   // Make.com automation (optional)
   MAKE_WEBHOOK_URL?: string;
   MAKE_API_KEY?: string;
@@ -41,7 +45,7 @@ export function json(body: unknown, status = 200, headers: Record<string, string
  * check right now" and lets the family in.
  */
 export function codeCheck(request: Request, env: Env): "ok" | "wrong" | "not_configured" {
-  const expected = env.CLASSROOM_CODE ?? "";
+  const expected = env.WJ_CLASS_CODE || env.CLASSROOM_CODE || "";
   if (!expected) return "not_configured";
   const got = request.headers.get("x-family-code") ?? "";
   return got.trim().toLowerCase() === expected.trim().toLowerCase() ? "ok" : "wrong";

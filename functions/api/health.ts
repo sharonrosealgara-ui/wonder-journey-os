@@ -7,12 +7,12 @@ import { json, type Ctx } from "../_shared";
 export const onRequest = async ({ env }: Ctx): Promise<Response> => {
   return json({
     ok: true,
-    builtAt: "2026-07-16-rev3",
+    builtAt: "2026-07-16-rev4",
     config: {
       livekitUrl: !!env.LIVEKIT_URL,
       livekitKey: !!env.LIVEKIT_API_KEY,
       livekitSecret: !!env.LIVEKIT_API_SECRET,
-      classroomCode: !!env.CLASSROOM_CODE,
+      classroomCode: !!(env.WJ_CLASS_CODE || env.CLASSROOM_CODE),
       kvStorage: !!env.WONDER_JOURNEY,
     },
   });

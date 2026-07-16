@@ -39,7 +39,7 @@ export const onRequest = async ({ request, env }: Ctx): Promise<Response> => {
   const url = env.LIVEKIT_URL;
   const apiKey = env.LIVEKIT_API_KEY;
   const apiSecret = env.LIVEKIT_API_SECRET;
-  const classCode = env.CLASSROOM_CODE;
+  const classCode = env.WJ_CLASS_CODE || env.CLASSROOM_CODE;
 
   if (!url || !apiKey || !apiSecret || !classCode) {
     // Not configured yet → the app falls back to solo (local camera) mode.

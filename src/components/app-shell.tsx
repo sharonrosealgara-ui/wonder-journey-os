@@ -210,13 +210,15 @@ function TopBar({
           progress edge, so growth feels physical */}
       <div className="hidden min-w-0 items-center gap-3 sm:flex">
         <span className="font-display text-sm text-ink">Explorer Level {p.level}</span>
-        <div className="relative h-3.5 w-28 rounded-full bg-sand-deep shadow-[inset_0_2px_4px_rgba(44,27,24,0.28)] md:w-40">
+        {/* Zero-lag rule: the fill animates with transform (scaleX), never
+            width/left — GPU-cheap even on an old iPad */}
+        <div className="relative h-3.5 w-28 overflow-hidden rounded-full bg-sand-deep shadow-[inset_0_2px_4px_rgba(44,27,24,0.28)] md:w-40">
           <div
-            className="h-full rounded-full bg-gradient-to-r from-mango to-sunset shadow-[inset_0_-2px_3px_rgba(44,27,24,0.18)] transition-[width] duration-700 ease-out"
-            style={{ width: `${pct}%` }}
+            className="absolute inset-0 origin-left rounded-full bg-gradient-to-r from-mango to-sunset shadow-[inset_0_-2px_3px_rgba(44,27,24,0.18)] transition-transform duration-700 ease-out"
+            style={{ transform: `scaleX(${pct / 100})` }}
           />
           <span
-            className="wj-sticker absolute top-1/2 h-6 w-6 -translate-y-1/2 text-xs transition-[left] duration-700 ease-out"
+            className="wj-sticker absolute top-1/2 h-6 w-6 -translate-y-1/2 text-xs"
             style={{ left: `calc(${Math.min(Math.max(pct, 5), 95)}% - 12px)` }}
             aria-hidden
           >

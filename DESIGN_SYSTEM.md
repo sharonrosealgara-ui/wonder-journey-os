@@ -16,6 +16,13 @@
 - **Accessibility:** never light-gray text on off-white. To show a locked/upcoming state,
   soften the whole container (`opacity-70`) or add a watermark — the text itself stays
   fully legible.
+- **Zero-lag animation rule:** all animation is CSS-only (`@keyframes` / transitions) on
+  compositor-cheap properties — `transform` and `opacity` only, never `width`/`left`/
+  `top`/`margin`. No JS animation loops, no Framer Motion, no physics libraries. Must hold
+  60fps on an old iPad. `prefers-reduced-motion` is always honored.
+- **Tablet-first responsiveness:** no hardcoded pixel layouts. Tailwind responsive
+  utilities (`sm:`/`md:`/`lg:` grids, `aspect-*`, `max-w-*`, rem, `dvh` clamps) so nothing
+  clips or falls below the fold at 1024×768 and down.
 
 > **Status note:** This document defines the visual identity that is **already implemented**
 > in the MVP (tokens in `src/app/globals.css`, component classes prefixed `wj-`) and the

@@ -246,6 +246,120 @@ pricing games, spelling through Filipino loanwords.
 
 ---
 
+# Season Calendar — August–December 2026
+
+**The structure Sharon requested (July → end of December), mapped onto the real
+schedule: Mon/Wed/Fri, 9:00 AM** (the rhythm July established — Fridays are hands-on:
+cooking, baking, crafts). July (Lessons 1–9, Units 1–4 foundation) is ✅ shipped.
+Every episode below comes from the unit lists above — nothing invented.
+
+**The arc, exactly as Shaun asked:** August–October stay culture-and-language-rich;
+the **Academic Adventure (Unit 12: spelling, times tables)** ramps in **November**,
+after the foundation — taught adventure-style (market-day math, loanword spelling),
+never worksheet-style. December closes with character, mastery, and a Season Finale.
+
+> ⚠️ **Feast Days (to confirm with Shaun & Taylor):** the family observes the biblical
+> Feast Days. In this window that means approximately **Feast of Trumpets ~Sept 12**,
+> **Day of Atonement ~Sept 21 (a Monday)**, and **Feast of Tabernacles ~Sept 26–Oct 3**.
+> Dates follow the Hebrew calendar (sundown-to-sundown) and reckonings vary — **please
+> confirm the family's dates before finalizing September.** Marked ⭐ below; classes
+> pause or become light family episodes those days. No Christmas content anywhere,
+> including December (Dec 25 is simply a rest day).
+
+## 🏝️ August — "Islands & Words" (Units 5 · 2 · 3 · 7)
+
+| Date | Day | Episode (Unit) |
+|---|---|---|
+| Aug 3 | Mon | Luzon — Land of the Rising Capital (U5 · 🛂 stamp) |
+| Aug 5 | Wed | Tagalog Family Words (U2) |
+| Aug 7 | Fri | 🍧 Halo-Halo Cooking Adventure (U7) |
+| Aug 10 | Mon | Banaue & the Rice Terraces (U5 · 🛂) |
+| Aug 12 | Wed | Numbers in Tagalog — counting to market (U2, seeds times tables) |
+| Aug 14 | Fri | 🥗 Fruit Salad + kitchen measuring (U7) |
+| Aug 17 | Mon | Visayas — Our Home Islands (U5 · Iloilo/Negros pride · 🛂) |
+| Aug 19 | Wed | Hiligaynon Simple Sentences (U3) |
+| Aug 21 | Fri | 🍌 Banana Cue (U7) |
+| Aug 24 | Mon | Mayon & the Volcano Lands (U5 · 🛂) |
+| Aug 26 | Wed | Colors in Two Languages (U2+U3) |
+| Aug 28 | Fri | 🍗 Chicken Adobo — family feast (U7) |
+| Aug 31 | Mon | Palawan — the Last Frontier (U5 · 🛂) |
+
+## 🦅 September — "Creatures & Character" (Units 6 · 4 · 8) — ⭐ Feast season
+
+| Date | Day | Episode (Unit) |
+|---|---|---|
+| Sep 2 | Wed | Tagalog Food Words (U2) |
+| Sep 4 | Fri | 🍪 Cookies — Baking Academy opens (U8 · Selah's unit) |
+| Sep 7 | Mon | The Tarsier — world's tiniest big eyes (U6) |
+| Sep 9 | Wed | Helping Others (U4) |
+| Sep 11 | Fri | 🧁 Cupcakes (U8) · ⭐ Trumpets ~Sep 12 (weekend) |
+| Sep 14 | Mon | The Philippine Eagle (U6 · Rylee: animals) |
+| Sep 16 | Wed | Gratitude (U4) |
+| Sep 18 | Fri | 🍫 Brownies (U8) |
+| Sep 21 | Mon | ⭐ **Day of Atonement (approx.) — no class** |
+| Sep 23 | Wed | The Carabao — the farmer's best friend (U6) |
+| Sep 25 | Fri | 🍞 Banana Bread (U8) |
+| Sep 28–Oct 2 | — | ⭐ **Feast of Tabernacles week (approx.) — pause / light family episodes** |
+
+## 🎭 October — "Fiesta & Trails" (Units 9 · 10 · 7 · 8)
+
+| Date | Day | Episode (Unit) |
+|---|---|---|
+| Oct 5 | Mon | Whale Sharks & Sea Turtles (U6) |
+| Oct 7 | Wed | Rainforests (U10 · Asa's unit) |
+| Oct 9 | Fri | 🍜 Pancit — long-life noodles (U7) |
+| Oct 12 | Mon | MassKara — Bacolod's Festival of Smiles (U9 — it really happens this month, near home!) |
+| Oct 14 | Wed | Mountains & Mt. Apo (U10) |
+| Oct 16 | Fri | 🌯 Lumpia rolling party (U7) |
+| Oct 19 | Mon | Dinagyang & Ati-Atihan — history & culture (U9, respectful lens per unit note) |
+| Oct 21 | Wed | Beaches & Coral Reefs (U10) |
+| Oct 23 | Fri | 🍚 Puto steamed cakes (U7) |
+| Oct 26 | Mon | Panagbenga — Festival of Flowers (U9) |
+| Oct 28 | Wed | Volcanoes! (U10) |
+| Oct 30 | Fri | 🎂 Decorating Day — frosting & creativity (U8) |
+
+## ✏️ November — "The Academic Adventure Begins" (Unit 12 ramps · 9 · 11 · 7)
+
+| Date | Day | Episode (Unit) |
+|---|---|---|
+| Nov 2 | Mon | Spelling Adventure I — Filipino loanwords in English (U12) |
+| Nov 4 | Wed | Times Tables at the Market I (U12 — pricing games with pesos) |
+| Nov 6 | Fri | 🥥 Bibingka rice cakes (U7) |
+| Nov 9 | Mon | Reading Trail — legends & stories (U12) |
+| Nov 11 | Wed | Times Tables at the Market II (U12) |
+| Nov 13 | Fri | 🧵 Weaving & Embroidery — festival costume craft (U9 · Rylee) |
+| Nov 16 | Mon | Spelling Adventure II (U12) |
+| Nov 18 | Wed | Kadayawan — the harvest thanksgiving festival (U9) |
+| Nov 20 | Fri | 👨‍🍳 Family Recipe Day — the family picks! (U7 flex) |
+| Nov 23 | Mon | Times Tables III — mastery games (U12 + Game Arcade) |
+| Nov 25 | Wed | A Feast of Gratitude (U11 — universal, family may travel; flexible) |
+| Nov 27 | Fri | *(optional break — Thanksgiving weekend; confirm)* |
+| Nov 30 | Mon | Critical Thinking — explorer puzzles (U12) |
+
+## 🎓 December — "Character, Mastery & the Grand Finale" (Units 11 · 12 · Finale)
+
+| Date | Day | Episode (Unit) |
+|---|---|---|
+| Dec 2 | Wed | Kindness (U11) |
+| Dec 4 | Fri | Study Skills — how explorers learn (U12) |
+| Dec 7 | Mon | Rivers & National Parks (U10) |
+| Dec 9 | Wed | Forgiveness (U11) |
+| Dec 11 | Fri | 🎂 The Grand Bake — Baking Academy finale (U8) |
+| Dec 14 | Mon | The Great Spelling Championship (U12) |
+| Dec 16 | Wed | Patience & Courage (U11) |
+| Dec 18 | Fri | 🏆 Times Tables Tournament (U12 + Game Arcade) |
+| Dec 21 | Mon | Siargao & the last island stamps (U5 · 🛂) |
+| Dec 23 | Wed | Honesty & Respect (U11) |
+| Dec 25 | Fri | *(no class — family rest day)* |
+| Dec 28 | Mon | 🎉 Season Finale I — The Great Passport Review |
+| Dec 30 | Wed | 🎓 Season Finale II — Family Showcase & Explorer Graduation |
+
+**How this becomes lessons:** episodes get authored unit-by-unit into `config/lessons.ts`
+(each inherits the full Adventure Theater automatically). Author order: August first.
+Sharon reorders/stretches freely — this calendar is a plan, not a cage.
+
+---
+
 # Cross-Curricular Learning System (Decision 042)
 
 **Wonder Journey does NOT separate learning into isolated subjects.** Every Adventure

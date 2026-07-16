@@ -8,6 +8,7 @@ import { familyNav, normalizeMode, teacherNav, type Mode } from "@/config/naviga
 import { KEYS } from "@/lib/app-state";
 import { useProgress } from "@/lib/progress";
 import { useStored } from "@/lib/storage";
+import { AccessGate } from "@/components/access-gate";
 import { BirthdayPopup } from "@/components/birthday-popup";
 import { CameraDock } from "@/components/camera-dock";
 import { TropicalDecor } from "@/components/tropical-decor";
@@ -43,16 +44,19 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   // CameraDock keeps both cameras on screen everywhere else.
   if (pathname.startsWith("/classroom")) {
     return (
-      <CallProvider>
-        <div className="min-h-screen px-3 py-3 sm:px-4">
-          {children}
-        </div>
-        <CameraDock />
-      </CallProvider>
+      <AccessGate>
+        <CallProvider>
+          <div className="min-h-screen px-3 py-3 sm:px-4">
+            {children}
+          </div>
+          <CameraDock />
+        </CallProvider>
+      </AccessGate>
     );
   }
 
   return (
+    <AccessGate>
     <CallProvider>
     <div className="min-h-screen lg:flex">
       <TropicalDecor />
@@ -122,6 +126,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     </div>
       <CameraDock />
     </CallProvider>
+    </AccessGate>
   );
 }
 

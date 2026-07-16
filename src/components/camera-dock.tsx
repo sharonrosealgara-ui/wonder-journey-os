@@ -9,56 +9,40 @@ import { normalizeMode } from "@/config/navigation";
 import { todayISO } from "@/lib/app-state";
 import { useCall } from "@/lib/call-context";
 import { initCloudSync } from "@/lib/cloud-sync";
-import { readStored, useStored, writeStored } from "@/lib/storage";
+import { readStored, useStored } from "@/lib/storage";
 
 // 🎥 FLOATING CAMERA DOCK — the call follows the family everywhere.
 // Cameras auto-start when the app opens (family camera ABOVE teacher),
 // float over every page including full-screen lessons (Theater Mode),
 // and only "End" turns them off. Hidden on /classroom, which shows the
 // full-size room instead.
+//
+// The class code is handled once at the front door (AccessGate), so
+// there is never a code prompt here.
 
 type DockPref = "on" | "min" | "off";
+
+// 📏 The family can make the cameras as big as they like — faces should
+// be easy to read from across the room, on either side of the call.
+type DockSize = "s" | "m" | "l" | "xl";
+const SIZE_ORDER: DockSize[] = ["s", "m", "l", "xl"];
+const SIZE_CLASS: Record<DockSize, string> = {
+  s: "w-56",
+  m: "w-72",
+  l: "w-[22rem]",
+  xl: "w-[28rem]",
+};
+const SIZE_LABEL: Record<DockSize, string> = { s: "Small", m: "Medium", l: "Large", xl: "Extra large" };
 
 export function CameraDock() {
   const call = useCall();
   const pathname = usePathname();
   const [pref, setPref] = useStored<DockPref>("dock", "on");
-  const [prefReady, setPrefReady] = useState(false);
+  const [size, setSize] = useStored<DockSize>("dockSize", "l"); // big by default
+  const [ready, setReady] = useState(false);
   const triedRef = useRef(false);
-  const [codeCard, setCodeCard] = useState(false); // one-time class-code setup
-  const [codeInput, setCodeInput] = useState("");
-  const [codeDismissed, setCodeDismissed] = useStored<boolean>("codePromptDismissed", false);
 
-  // ✨ Magic links:
-  //   ?code=XXXX — family invite: saves the class code forever on this
-  //     device, cameras auto-connect live on every open, zero typing.
-  //   ?guest=1  — client/demo invite: explore everything freely — no
-  //     code prompt, no auto camera (they can still tap 🎥 Cameras).
-  // (Share: https://wonder-journey-os.netlify.app/?code=YOURCODE
-  //     or   https://wonder-journey-os.netlify.app/?guest=1)
-  useEffect(() => {
-    try {
-      const url = new URL(window.location.href);
-      const c = url.searchParams.get("code");
-      const guest = url.searchParams.get("guest");
-      if (c && c.trim()) {
-        writeStored("classCode", c.trim());
-        url.searchParams.delete("code");
-      }
-      if (guest) {
-        writeStored("codePromptDismissed", true);
-        writeStored("dock", "off" satisfies DockPref);
-        url.searchParams.delete("guest");
-      }
-      if ((c && c.trim()) || guest) {
-        const clean = url.pathname + url.search + url.hash;
-        // strip after hydration so Next's router doesn't restore it
-        setTimeout(() => window.history.replaceState(null, "", clean), 400);
-      }
-    } catch { /* ignore */ }
-  }, []);
-
-  useEffect(() => setPrefReady(true), []);
+  useEffect(() => setReady(true), []);
 
   const startCall = useCallback(() => {
     const mode = normalizeMode(readStored<string>("mode", "family"));
@@ -74,74 +58,23 @@ export function CameraDock() {
         micId: "",
         camOn: true,
         micOn: true,
-        silent: true, // no code / wrong code → quiet local camera
+        silent: true, // wrong/missing code → quiet local camera, never an error
       })
       .then(() => initCloudSync());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // auto-start once when the app opens (unless the user turned it off)
+  // auto-start once when the app opens (the code is already in hand)
   useEffect(() => {
-    if (!prefReady || triedRef.current) return;
+    if (!ready || triedRef.current) return;
     if (pref === "off" || call.status !== "idle") return;
-    const code = readStored<string>("classCode", "");
-    if (!code && !codeDismissed) {
-      // first open on this device: ask for the class code ONE time
-      setCodeCard(true);
-      return;
-    }
     triedRef.current = true;
     startCall();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [prefReady, pref, call.status, codeDismissed]);
+  }, [ready, pref, call.status]);
 
-  if (!prefReady) return null;
+  if (!ready) return null;
   if (pathname.startsWith("/classroom")) return null; // full room lives there
-
-  // 🔑 ONE-TIME SETUP — shown only until a class code is saved on this
-  // device. After this, opening the app connects everything by itself.
-  if (codeCard) {
-    const save = () => {
-      const c = codeInput.trim();
-      if (!c) return;
-      writeStored("classCode", c);
-      setCodeCard(false);
-      triedRef.current = true;
-      startCall();
-    };
-    return (
-      <div className="wj-card fixed bottom-3 right-3 z-[70] w-72 space-y-2.5 p-4 shadow-2xl sm:w-80">
-        <p className="font-display text-base">🔑 One-time setup</p>
-        <p className="font-hand text-sm text-ink-soft">
-          Enter the class code from {teacherName} — you&apos;ll only ever do this once on this device. After that, Wonder Journey connects all by itself. 💛
-        </p>
-        <input
-          className="wj-input"
-          value={codeInput}
-          onChange={(e) => setCodeInput(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && save()}
-          placeholder="class code"
-          autoFocus
-        />
-        <div className="flex items-center justify-between gap-2">
-          <button
-            className="wj-btn wj-btn-ghost !px-3 !py-1.5 text-xs"
-            onClick={() => {
-              setCodeDismissed(true);
-              setCodeCard(false);
-              triedRef.current = true;
-              startCall(); // camera still works, just not live together
-            }}
-          >
-            Not now
-          </button>
-          <button className="wj-btn !px-4 !py-1.5 text-sm" onClick={save}>
-            💛 Save &amp; Go Live
-          </button>
-        </div>
-      </div>
-    );
-  }
 
   // turned off → tiny start pill
   if (pref === "off" || call.status === "idle" || call.status === "connecting") {
@@ -177,28 +110,39 @@ export function CameraDock() {
     );
   }
 
+  const i = SIZE_ORDER.indexOf(size);
+  const grow = () => setSize(SIZE_ORDER[Math.min(i + 1, SIZE_ORDER.length - 1)]);
+  const shrink = () => setSize(SIZE_ORDER[Math.max(i - 1, 0)]);
+
   return (
-    <div className="fixed bottom-3 right-3 z-[70] w-56 select-none sm:w-64">
+    <div className={`fixed bottom-3 right-3 z-[70] select-none ${SIZE_CLASS[size]} max-w-[calc(100vw-1.5rem)]`}>
       <div className="wj-card space-y-2 p-2 shadow-2xl">
         {/* header */}
         <div className="flex items-center justify-between px-1">
           <span className="text-[11px] font-bold text-ink-soft">
             {live ? "🟢 Live together" : "🎥 Camera on"}
           </span>
-          <div className="flex gap-1">
-            {!live && (
-              <button
-                className="rounded-full px-1.5 text-sm hover:bg-mango/20"
-                title="Enter class code to go live together"
-                onClick={() => {
-                  setCodeInput(readStored<string>("classCode", ""));
-                  setCodeCard(true);
-                }}
-              >
-                🔑
-              </button>
-            )}
-            <button className="rounded-full px-1.5 text-sm hover:bg-sand-deep" title="Minimize" onClick={() => setPref("min")}>▁</button>
+          <div className="flex items-center gap-0.5">
+            <button
+              className="rounded-full px-1.5 text-sm hover:bg-sand-deep disabled:opacity-30"
+              title="Smaller cameras"
+              onClick={shrink}
+              disabled={i === 0}
+            >
+              ➖
+            </button>
+            <span className="px-0.5 text-[10px] font-bold text-ink-soft" title={`${SIZE_LABEL[size]} cameras`}>
+              {SIZE_LABEL[size]}
+            </span>
+            <button
+              className="rounded-full px-1.5 text-sm hover:bg-sand-deep disabled:opacity-30"
+              title="Bigger cameras"
+              onClick={grow}
+              disabled={i === SIZE_ORDER.length - 1}
+            >
+              ➕
+            </button>
+            <button className="ml-1 rounded-full px-1.5 text-sm hover:bg-sand-deep" title="Minimize" onClick={() => setPref("min")}>▁</button>
             <button
               className="rounded-full px-1.5 text-sm hover:bg-hibiscus/20"
               title="End cameras"

@@ -30,7 +30,8 @@ export default function ClassroomPage() {
   const mode: Mode = normalizeMode(rawMode);
   const student = getStudent(activeStudentId);
   const [name, setName] = useState("");
-  const [classCode, setClassCode] = useStored<string>("classCode", "");
+  // the code is entered once at the front door (AccessGate) — never here
+  const [classCode] = useStored<string>("classCode", "");
   const [lesson, setLesson] = useState<Lesson | null>(null);
   const [joinError, setJoinError] = useState<string | null>(null);
   const [joining, setJoining] = useState(false);
@@ -81,8 +82,6 @@ export default function ClassroomPage() {
     return (
       <SoloRoom
         lesson={lesson}
-        classCode={classCode}
-        setClassCode={setClassCode}
         onGoLive={() =>
           join({ camId: "", micId: "", camOn: call.camOn, micOn: call.micOn })
         }
@@ -94,8 +93,6 @@ export default function ClassroomPage() {
     <Lobby
       name={name}
       setName={setName}
-      classCode={classCode}
-      setClassCode={setClassCode}
       lesson={lesson}
       joining={joining || call.status === "connecting"}
       joinError={joinError}
@@ -196,11 +193,9 @@ function LocalCameraView({ streamRef, camOn, tick, label, className = "" }: {
 }
 
 /* ── Pre-join lobby ─────────────────────────────────────────── */
-function Lobby({ name, setName, classCode, setClassCode, lesson, joining, joinError, onJoin }: {
+function Lobby({ name, setName, lesson, joining, joinError, onJoin }: {
   name: string;
   setName: (s: string) => void;
-  classCode: string;
-  setClassCode: (s: string) => void;
   lesson: Lesson | null;
   joining: boolean;
   joinError: string | null;
@@ -274,15 +269,6 @@ function Lobby({ name, setName, classCode, setClassCode, lesson, joining, joinEr
           <div>
             <label className="text-sm font-bold text-ink-soft">Your name in class</label>
             <input className="wj-input mt-1" value={name} onChange={(e) => setName(e.target.value)} />
-          </div>
-          <div>
-            <label className="text-sm font-bold text-ink-soft">🔑 Class code</label>
-            <input
-              className="wj-input mt-1"
-              value={classCode}
-              onChange={(e) => setClassCode(e.target.value)}
-              placeholder="from Teacher Sharon"
-            />
           </div>
           <div>
             <label className="text-sm font-bold text-ink-soft">📷 Camera</label>
@@ -636,10 +622,8 @@ function ShareView({ track }: { track: MediaStreamTrack }) {
 }
 
 /* ── Solo classroom (no/wrong class code — local camera only) ── */
-function SoloRoom({ lesson, classCode, setClassCode, onGoLive, onLeave }: {
+function SoloRoom({ lesson, onGoLive, onLeave }: {
   lesson: Lesson | null;
-  classCode: string;
-  setClassCode: (s: string) => void;
   onGoLive: () => void;
   onLeave: () => void;
 }) {
@@ -688,15 +672,9 @@ function SoloRoom({ lesson, classCode, setClassCode, onGoLive, onLeave }: {
     <div className="space-y-3">
       <div className="wj-card-bubble wj-note flex flex-wrap items-center justify-center gap-2 p-3 text-center">
         <p className="font-display text-sm text-white">
-          Your camera is on! Enter the class code to go live with everyone: 💛
+          Your camera is on! We couldn&apos;t reach the live room just now. 💛
         </p>
-        <input
-          className="wj-input !w-40 !py-1 text-sm"
-          value={classCode}
-          onChange={(e) => setClassCode(e.target.value)}
-          placeholder="class code"
-        />
-        <button className="wj-btn !px-4 !py-1.5 text-sm" onClick={onGoLive}>🚀 Go Live</button>
+        <button className="wj-btn !px-4 !py-1.5 text-sm" onClick={onGoLive}>🚀 Try again</button>
       </div>
 
       {/* Focused room: lesson stage left · camera rail right, family ABOVE teacher */}

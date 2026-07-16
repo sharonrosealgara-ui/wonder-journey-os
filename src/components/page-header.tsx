@@ -8,7 +8,8 @@ export function PageHeader({
   subtitle?: string;
 }) {
   return (
-    <div className="mb-6">
+    // pt-1 keeps the outlined title clear of the sticky top bar on mobile
+    <div className="mb-6 pt-1">
       <div className="mb-1 flex items-center gap-3">
         <span className="wj-dots"><i /><i /><i /></span>
       </div>

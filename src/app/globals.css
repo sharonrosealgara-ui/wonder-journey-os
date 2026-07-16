@@ -111,12 +111,17 @@ h1, h2, h3, .font-display {
   font-family: var(--font-hand);
 }
 
-/* Big navy heading with thick white outline — the reference's signature look */
+/* Big navy heading with thick white outline — the reference's signature look.
+   The stroke paints OUTSIDE the glyphs, so give headings breathing room:
+   without the padding + relaxed line-height, ascenders clip against tight
+   containers and sticky bars (seen on mobile /celebrations). */
 .wj-outline {
   color: var(--color-ink);
   -webkit-text-stroke: 6px #ffffff;
   paint-order: stroke fill;
   text-shadow: 0 3px 0 rgba(39, 68, 114, 0.12);
+  line-height: 1.25;
+  padding-top: 0.15em;
 }
 
 /* three teal dots ● ● ● that decorate reference slides */

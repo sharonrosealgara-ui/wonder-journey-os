@@ -4,6 +4,19 @@
 **First learning world:** Discover the Philippines: A Family Learning Adventure
 **Tagline:** *Every lesson is an adventure. Every adventure becomes a memory.*
 
+## Sharon's Standing UI Rules (July 2026 — apply to every screen)
+
+- **Aesthetic:** soft, rounded, warm, pastel-hued, sticker-like — consistent with the mascots.
+- **Outlines:** never harsh black strokes (`#000000`) on icons/illustrations; prefer warm
+  dark-browns, deep-blues (`#274472`), or soft grays. Off-camera tiles use the
+  `FriendlyAvatar` silhouette, never clipart emoji.
+- **Buttons:** one pill geometry per toolbar (same radius, padding, type size). Colour
+  fills mark only active/toggled states and the destructive action (End Call). Heavy
+  drop shadows are reserved strictly for primary CTA buttons (`.wj-btn`).
+- **Accessibility:** never light-gray text on off-white. To show a locked/upcoming state,
+  soften the whole container (`opacity-70`) or add a watermark — the text itself stays
+  fully legible.
+
 > **Status note:** This document defines the visual identity that is **already implemented**
 > in the MVP (tokens in `src/app/globals.css`, component classes prefixed `wj-`) and the
 > guidelines for everything built after it. Items tagged **[Future]** are design direction

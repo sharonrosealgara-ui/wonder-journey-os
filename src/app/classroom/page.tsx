@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ConnectionState, Participant, Track } from "livekit-client";
 import { AnnotationLayer } from "@/components/adventure/annotation-layer";
+import { CameraOffTile } from "@/components/friendly-avatar";
 import { AdventureTheater } from "@/components/adventure/theater";
 import { familyName, getStudent, teacherName } from "@/config/family";
 import { getTodaysLesson, lessons as allLessons, type Lesson } from "@/config/lessons";
@@ -186,7 +187,7 @@ function LocalCameraView({ streamRef, camOn, tick, label, className = "" }: {
     <div className={`relative overflow-hidden rounded-2xl bg-ink ${className}`}>
       <video ref={videoRef} autoPlay muted playsInline className={`h-full w-full object-cover ${camOn ? "" : "hidden"}`} />
       {!camOn && (
-        <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-ocean-deep to-ube-deep text-5xl">📷</div>
+        <CameraOffTile />
       )}
       {label && (
         <span className="absolute bottom-2 left-2 rounded-full bg-ink/70 px-2.5 py-0.5 text-xs font-bold text-white">{label}</span>
@@ -493,12 +494,20 @@ function ConnectedRoom({ lesson, onLeave }: {
         <ToolBtn onClick={call.toggleHand} active={call.myHand} label="✋ Hand" />
         <ToolBtn onClick={() => setChatOpen((c) => !c)} active={chatOpen} label="💬 Chat" />
         <span className="mx-1 hidden h-6 w-px bg-sand-deep sm:block" />
+        {/* same pill geometry as every tool — colour fill marks the special ones */}
         {isTeacher && stageLesson && (
-          <button className="wj-btn wj-btn-ocean !px-4 !py-1.5 text-sm" onClick={finishLesson}>
+          <button
+            className="rounded-full bg-ocean px-4 py-2 font-display text-sm text-white transition-colors hover:bg-ocean-deep"
+            onClick={finishLesson}
+          >
             🏁 Finish Lesson
           </button>
         )}
-        <button className="wj-btn wj-btn-hibiscus !px-4 !py-1.5 text-sm" onClick={onLeave} title="Disconnects the call and returns to Home Base">
+        <button
+          className="rounded-full bg-hibiscus px-4 py-2 font-display text-sm text-white transition-[filter] hover:brightness-95"
+          onClick={onLeave}
+          title="Disconnects the call and returns to Home Base"
+        >
           📞 End Call
         </button>
       </div>
@@ -604,7 +613,7 @@ function ParticipantTile({ participant, isLocal, hand, version, onClick, tall = 
       <video ref={videoRef} autoPlay muted={isLocal} playsInline className={`h-full w-full object-cover ${camLive ? "" : "hidden"}`} />
       {!isLocal && <audio ref={audioRef} autoPlay />}
       {!camLive && (
-        <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-ocean-deep to-ube-deep text-4xl">📷</div>
+        <CameraOffTile />
       )}
       <span className="absolute bottom-2 left-2 rounded-full bg-ink/70 px-2.5 py-0.5 text-xs font-bold text-white">
         {participant.name || participant.identity}{isLocal ? " (you)" : ""}{hand ? " ✋" : ""}{muted ? " 🔇" : ""}
@@ -734,7 +743,7 @@ function SoloRoom({ lesson, isGuest = false, onGoLive, onLeave }: {
               <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-ink">
                 <video ref={soloVideoRef} autoPlay muted playsInline className={`h-full w-full object-cover ${call.camOn ? "" : "hidden"}`} />
                 {!call.camOn && (
-                  <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-ocean-deep to-ube-deep text-5xl">📷</div>
+                  <CameraOffTile />
                 )}
                 <span className="absolute bottom-2 left-2 rounded-full bg-ink/70 px-2.5 py-0.5 text-xs font-bold text-white">{call.name || familyName}</span>
               </div>
@@ -746,7 +755,7 @@ function SoloRoom({ lesson, isGuest = false, onGoLive, onLeave }: {
               <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-ink">
                 <video ref={call.isTeacher ? soloVideoRef : undefined} autoPlay muted playsInline className={`h-full w-full object-cover ${call.camOn ? "" : "hidden"}`} />
                 {!call.camOn && (
-                  <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-ocean-deep to-ube-deep text-5xl">📷</div>
+                  <CameraOffTile />
                 )}
                 <span className="absolute bottom-2 left-2 rounded-full bg-ink/70 px-2.5 py-0.5 text-xs font-bold text-white">{call.name || teacherName}</span>
               </div>
@@ -766,7 +775,11 @@ function SoloRoom({ lesson, isGuest = false, onGoLive, onLeave }: {
         <ToolBtn onClick={() => void toggleShare()} active={sharing} label="🖥️ Share" />
         <ToolBtn onClick={() => setDrawing((d) => !d)} active={drawing} label="✏️ Draw" />
         <span className="mx-1 hidden h-6 w-px bg-sand-deep sm:block" />
-        <button className="wj-btn wj-btn-hibiscus !px-4 !py-1.5 text-sm" onClick={leave} title="Disconnects and returns to Home Base">
+        <button
+          className="rounded-full bg-hibiscus px-4 py-2 font-display text-sm text-white transition-[filter] hover:brightness-95"
+          onClick={leave}
+          title="Disconnects and returns to Home Base"
+        >
           📞 End Call
         </button>
       </div>

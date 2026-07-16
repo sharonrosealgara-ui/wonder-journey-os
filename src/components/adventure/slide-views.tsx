@@ -125,7 +125,7 @@ function WelcomeSlide({ slide, lesson, onNext }: { slide: Slide; lesson: Lesson;
       </div>
 
       <button className="wj-btn mt-6 text-xl" onClick={onNext}>
-        🌅 Start Today&apos;s Adventure
+        🎒 Start Today&apos;s Adventure
       </button>
       <MascotBubble slide={slide} line={slide.mascot.catchphrase} />
     </div>

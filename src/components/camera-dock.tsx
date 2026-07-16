@@ -7,6 +7,7 @@ import { familyName, teacherName } from "@/config/family";
 import { getTodaysLesson } from "@/config/lessons";
 import { normalizeMode } from "@/config/navigation";
 import { todayISO } from "@/lib/app-state";
+import { CameraOffTile } from "@/components/friendly-avatar";
 import { participantRole, useCall } from "@/lib/call-context";
 import { initCloudSync } from "@/lib/cloud-sync";
 import { readStored, useStored } from "@/lib/storage";
@@ -258,7 +259,7 @@ function LKVideo({ participant, muted = false, version, tall = false }: {
       <video ref={videoRef} autoPlay muted={muted} playsInline className={`h-full w-full object-cover ${showVideo ? "" : "hidden"}`} />
       {!muted && <audio ref={audioRef} autoPlay />}
       {!showVideo && (
-        <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-ocean-deep to-ube-deep text-2xl">📷</div>
+        <CameraOffTile />
       )}
     </div>
   );
@@ -276,7 +277,7 @@ function SoloVideo({ stream, camOn, tall = false }: { stream: MediaStream | null
     <div className={`relative w-full overflow-hidden rounded-xl bg-ink ${tall ? "aspect-[4/3]" : "aspect-video"}`}>
       <video ref={ref} autoPlay muted playsInline className={`h-full w-full object-cover ${camOn && stream ? "" : "hidden"}`} />
       {(!camOn || !stream) && (
-        <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-ocean-deep to-ube-deep text-2xl">📷</div>
+        <CameraOffTile />
       )}
     </div>
   );

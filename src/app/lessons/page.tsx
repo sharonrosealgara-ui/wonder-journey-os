@@ -4,7 +4,7 @@ import Link from "next/link";
 import { PageHeader } from "@/components/page-header";
 import { lessons } from "@/config/lessons";
 import { familyValues } from "@/config/values";
-import { formatDate, KEYS, type LessonCompletion } from "@/lib/app-state";
+import { formatDate, KEYS, todayISO, type LessonCompletion } from "@/lib/app-state";
 import { useStored } from "@/lib/storage";
 
 export default function LessonsPage() {
@@ -26,15 +26,19 @@ export default function LessonsPage() {
             const done = completions.some(
               (c) => c.lessonId === lesson.id && (!activeStudentId || c.studentId === activeStudentId)
             );
+            // Future adventures stay fully legible (never gray-on-cream);
+            // the whole card softens instead, per the brand guidelines.
+            const upcoming = !done && lesson.date > todayISO();
             return (
               <Link
                 key={lesson.id}
                 href={`/lessons/${lesson.id}`}
-                className="wj-card wj-card-hover block p-6"
+                className={`wj-card wj-card-hover block p-6 ${upcoming ? "opacity-70 saturate-[.9] hover:opacity-100" : ""}`}
               >
                 <div className="flex items-start justify-between">
                   <span className="text-4xl">{lesson.emoji}</span>
                   {done && <span className="wj-chip !bg-palm/15 !text-palm-deep">✅ Completed</span>}
+                  {upcoming && <span className="wj-chip !bg-ube/15 !text-ube">🔜 Coming soon</span>}
                 </div>
                 <div className="mt-3 flex flex-wrap gap-2">
                   <span className="wj-chip">Lesson {lesson.order}</span>

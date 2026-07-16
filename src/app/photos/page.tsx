@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { PageHeader } from "@/components/page-header";
+import { TeacherOnly } from "@/components/teacher-only";
 import { SmartPhoto } from "@/components/smart-photo";
 import { destinations } from "@/config/destinations";
 import { lessons } from "@/config/lessons";
@@ -40,6 +41,14 @@ const tabs: { kind: PhotoKind; label: string; emoji: string; items: () => Item[]
 ];
 
 export default function PhotoStudioPage() {
+  return (
+    <TeacherOnly>
+      <PhotoStudioContent />
+    </TeacherOnly>
+  );
+}
+
+function PhotoStudioContent() {
   const [kind, setKind] = useState<PhotoKind>("lesson");
   const [photos, setPhotos] = usePhotos();
   const tab = tabs.find((t) => t.kind === kind)!;

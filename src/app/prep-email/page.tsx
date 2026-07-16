@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { CopyButton } from "@/components/copy-button";
 import { PageHeader } from "@/components/page-header";
+import { TeacherOnly } from "@/components/teacher-only";
 import { brand } from "@/config/brand";
 import { parentNames, teacherName } from "@/config/family";
 import { lessons, type Lesson } from "@/config/lessons";
@@ -51,6 +52,14 @@ ${brand.productName} — ${brand.worldName}
 }
 
 export default function PrepEmailPage() {
+  return (
+    <TeacherOnly>
+      <PrepEmailContent />
+    </TeacherOnly>
+  );
+}
+
+function PrepEmailContent() {
   const sorted = lessons.slice().sort((a, b) => a.order - b.order);
   const [lessonId, setLessonId] = useState(sorted[0]?.id ?? "");
   const lesson = sorted.find((l) => l.id === lessonId) ?? sorted[0];

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { PageHeader } from "@/components/page-header";
+import { TeacherOnly } from "@/components/teacher-only";
 import { badges } from "@/config/badges";
 import { students } from "@/config/family";
 import { lessons } from "@/config/lessons";
@@ -19,6 +20,14 @@ import {
 import { newId, useStored } from "@/lib/storage";
 
 export default function TeacherPage() {
+  return (
+    <TeacherOnly>
+      <TeacherContent />
+    </TeacherOnly>
+  );
+}
+
+function TeacherContent() {
   const [completions] = useStored<LessonCompletion[]>(KEYS.completions, []);
   const [gratitude] = useStored<GratitudeEntry[]>(KEYS.gratitude, []);
   const [journal] = useStored<JournalEntry[]>(KEYS.journal, []);

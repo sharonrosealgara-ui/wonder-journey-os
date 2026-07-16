@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { brand } from "@/config/brand";
 import { familyNav, normalizeMode, teacherNav, type Mode } from "@/config/navigation";
@@ -19,8 +19,8 @@ import { CallProvider } from "@/lib/call-context";
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const router = useRouter();
-  const [rawMode, setMode] = useStored<string>(KEYS.mode, "family");
+  // mode is decided by the code entered at the door (two-code system)
+  const [rawMode] = useStored<string>(KEYS.mode, "family");
   const mode: Mode = normalizeMode(rawMode);
   const [open, setOpen] = useState(false); // mobile drawer
   const [theme, setTheme] = useStored<string>("theme", "light");
@@ -90,15 +90,22 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
         <nav className="flex-1 overflow-y-auto px-3 pb-6">
           {familyNav.map((item) => (
-            <SidebarLink key={item.href} item={item} active={isActive(item.href)} onClick={() => setMode("family")} />
+            <SidebarLink key={item.href} item={item} active={isActive(item.href)} />
           ))}
 
-          <div className="mt-5 px-3 pb-1 text-[10px] font-bold uppercase tracking-widest text-white/50">
-            Teacher Portal
-          </div>
-          {teacherNav.map((item) => (
-            <SidebarLink key={item.href} item={item} active={isActive(item.href)} onClick={() => setMode("teacher")} />
-          ))}
+          {/* 🍎 Teacher Portal — exists ONLY on the teacher's device.
+              The role comes from the code entered at the door (two-code
+              system), so the family never sees teacher tools at all. */}
+          {mode === "teacher" && (
+            <>
+              <div className="mt-5 px-3 pb-1 text-[10px] font-bold uppercase tracking-widest text-white/50">
+                Teacher Portal
+              </div>
+              {teacherNav.map((item) => (
+                <SidebarLink key={item.href} item={item} active={isActive(item.href)} />
+              ))}
+            </>
+          )}
         </nav>
       </aside>
 
@@ -109,10 +116,6 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           theme={theme}
           onToggleTheme={() => setTheme(theme === "dark" ? "light" : "dark")}
           teacherMode={mode === "teacher"}
-          onExitTeacher={() => {
-            setMode("family");
-            router.push("/");
-          }}
         />
 
         <main className="flex-1 px-4 py-6 pb-16 sm:px-6">{children}</main>
@@ -133,16 +136,13 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 function SidebarLink({
   item,
   active,
-  onClick,
 }: {
   item: { href: string; label: string; emoji: string };
   active: boolean;
-  onClick: () => void;
 }) {
   return (
     <Link
       href={item.href}
-      onClick={onClick}
       className={`mt-1 flex items-center gap-3 rounded-2xl px-3.5 py-2.5 font-display text-[15px] transition-colors ${
         active ? "bg-white text-ocean-deep shadow" : "text-white/85 hover:bg-white/10"
       }`}
@@ -158,13 +158,11 @@ function TopBar({
   theme,
   onToggleTheme,
   teacherMode,
-  onExitTeacher,
 }: {
   onMenu: () => void;
   theme: string;
   onToggleTheme: () => void;
   teacherMode: boolean;
-  onExitTeacher: () => void;
 }) {
   const p = useProgress();
   const pct = Math.round((p.xpInLevel / p.xpForLevel) * 100);
@@ -196,10 +194,12 @@ function TopBar({
         <Counter emoji="🛂" value={p.stamps} label="Stamps" />
         <Counter emoji="🏅" value={p.badgesEarned} label="Badges" />
 
+        {/* the teacher's device wears a quiet badge — the role comes from
+            her code, so there is nothing to "exit" anymore */}
         {teacherMode && (
-          <button className="wj-chip !bg-hibiscus/15 !text-hibiscus-deep" onClick={onExitTeacher}>
-            🍎 <span className="hidden sm:inline">Exit Teacher</span>
-          </button>
+          <span className="wj-chip !bg-hibiscus/15 !text-hibiscus-deep" title="This device holds the teacher code">
+            🍎 <span className="hidden sm:inline">Teacher</span>
+          </span>
         )}
         <button className="wj-chip hover:bg-mango/20" onClick={fullscreen} title="Fullscreen" aria-label="Fullscreen">
           ⛶

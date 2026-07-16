@@ -97,11 +97,15 @@ export function AccessGate({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
+  // ONE sign-in: code + name together, once per device. The code proves
+  // who you are (two-code system); the name goes on your camera. The
+  // classroom never asks for a code again — this door already did.
   async function unlock() {
     const c = code.trim();
     if (!c) return;
     setBusy(true);
     setError(null);
+    let role = "";
     try {
       // The server says whose code this is — teacher or family — and the
       // device sets itself up accordingly (two-code system). ONLY a 401
@@ -120,13 +124,20 @@ export function AccessGate({ children }: { children: React.ReactNode }) {
       }
       if (res.ok) {
         const d = (await res.json()) as { role?: string };
-        if (d.role) writeStored("mode", d.role === "teacher" ? "teacher" : "family");
+        if (d.role) {
+          role = d.role;
+          writeStored("mode", d.role === "teacher" ? "teacher" : "family");
+        }
       }
     } catch {
       // Offline or no server (local preview) — trust the code.
     }
     writeStored("classCode", c);
-    toNameStep();
+    writeStored(
+      "displayName",
+      name.trim() || (role === "teacher" ? teacherName : familyName)
+    );
+    setPhase("open");
   }
 
   if (phase === "checking") return null; // avoid a flash of the door
@@ -198,6 +209,18 @@ export function AccessGate({ children }: { children: React.ReactNode }) {
           inputMode="numeric"
           autoComplete="one-time-code"
         />
+        <label className="mt-4 block text-left text-sm font-bold text-ink-soft" htmlFor="signin-name">
+          ✏️ Your name <span className="font-normal text-ink-soft/70">(shown on your camera)</span>
+        </label>
+        <input
+          id="signin-name"
+          className="wj-input mt-1 text-center font-display text-xl"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && void unlock()}
+          placeholder="e.g. Ferrell Family"
+        />
+
         <p className="font-hand mt-2 text-sm text-ink-soft">
           Your code knows who you are — the family code opens the {familyName}&apos;s
           adventure, {teacherName}&apos;s own code opens her studio. Once per device. 💛

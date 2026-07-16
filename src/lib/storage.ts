@@ -109,6 +109,17 @@ export function importAllData(json: string): { ok: boolean; keys: number; error?
   }
 }
 
+/** Remove one stored key (sign-out etc.) — precious records stay put. */
+export function removeStored(key: string): void {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.removeItem(PREFIX + key);
+    window.dispatchEvent(new CustomEvent(EVENT, { detail: { key } }));
+  } catch {
+    /* ignore */
+  }
+}
+
 export function newId(): string {
   return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
 }

@@ -7,7 +7,7 @@ import { brand } from "@/config/brand";
 import { familyNav, normalizeMode, teacherNav, type Mode } from "@/config/navigation";
 import { KEYS } from "@/lib/app-state";
 import { useProgress } from "@/lib/progress";
-import { useStored } from "@/lib/storage";
+import { removeStored, useStored } from "@/lib/storage";
 import { AccessGate } from "@/components/access-gate";
 import { BirthdayPopup } from "@/components/birthday-popup";
 import { CameraDock } from "@/components/camera-dock";
@@ -107,6 +107,19 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             </>
           )}
         </nav>
+
+        {/* 🔒 Sign out — hands the device back to the front door. Clears
+            WHO is signed in (code, name, role, guest) but never touches
+            the family's treasures (journals, blessings, photos, stamps). */}
+        <button
+          onClick={() => {
+            ["classCode", "displayName", "mode", "guest", "codePromptDismissed"].forEach(removeStored);
+            window.location.assign("/");
+          }}
+          className="mx-3 mb-5 flex items-center gap-3 rounded-2xl px-3.5 py-2.5 text-left font-display text-[13px] text-white/60 transition-colors hover:bg-white/10 hover:text-white"
+        >
+          <span className="text-base">🔒</span> Sign out
+        </button>
       </aside>
 
       {/* ── Main column ─────────────────────────────────────── */}

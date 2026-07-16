@@ -13,6 +13,7 @@ export const onRequest = async ({ env }: Ctx): Promise<Response> => {
       livekitKey: !!env.LIVEKIT_API_KEY,
       livekitSecret: !!env.LIVEKIT_API_SECRET,
       classroomCode: !!(env.WJ_CLASS_CODE || env.CLASSROOM_CODE),
+      teacherCode: !!env.WJ_TEACHER_CODE,
       kvStorage: !!env.WONDER_JOURNEY,
     },
   });

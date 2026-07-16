@@ -7,7 +7,7 @@ import { familyName, teacherName } from "@/config/family";
 import { getTodaysLesson } from "@/config/lessons";
 import { normalizeMode } from "@/config/navigation";
 import { todayISO } from "@/lib/app-state";
-import { useCall } from "@/lib/call-context";
+import { participantRole, useCall } from "@/lib/call-context";
 import { initCloudSync } from "@/lib/cloud-sync";
 import { readStored, useStored } from "@/lib/storage";
 
@@ -93,8 +93,11 @@ export function CameraDock() {
     );
   }
 
-  const remotes = call.participants.filter((p) => p !== call.room?.localParticipant);
-  const familyFeed = remotes[0] ?? null;
+  // EXACTLY TWO CAMERAS: one Family, one Teacher — each picked by the
+  // role the SERVER assigned from the code. Never a doubled tile.
+  const familyP = call.participants.find((p) => participantRole(p) === "family") ?? null;
+  const teacherP = call.participants.find((p) => participantRole(p) === "teacher") ?? null;
+  const localP = call.room?.localParticipant ?? null;
   const live = call.status === "connected";
 
   // minimized → status pill
@@ -156,33 +159,25 @@ export function CameraDock() {
           </div>
         </div>
 
-        {/* 👨‍👩‍👧‍👦 Family — always on top */}
+        {/* 👨‍👩‍👧‍👦 Family — always on top, exactly one tile */}
         <div>
           <p className="mb-0.5 text-center text-[10px] font-bold uppercase tracking-wide text-ink-soft">👨‍👩‍👧‍👦 {familyName}</p>
-          {call.isTeacher ? (
-            familyFeed ? (
-              <LKVideo participant={familyFeed} version={call.version} tall />
-            ) : (
-              <DockPlaceholder text="Waiting for the family…" tall />
-            )
-          ) : call.room ? (
-            <LKVideo participant={call.room.localParticipant} muted version={call.version} tall />
-          ) : (
+          {familyP ? (
+            <LKVideo participant={familyP} muted={familyP === localP} version={call.version} tall />
+          ) : !call.room && !call.isTeacher ? (
             <SoloVideo stream={call.soloStream} camOn={call.camOn} tall />
+          ) : (
+            <DockPlaceholder text="Waiting for the family…" tall />
           )}
         </div>
 
-        {/* 👩‍🏫 Teacher — below */}
+        {/* 👩‍🏫 Teacher — below, exactly one tile */}
         <div>
           <p className="mb-0.5 text-center text-[10px] font-bold uppercase tracking-wide text-ink-soft">👩‍🏫 {teacherName}</p>
-          {call.isTeacher ? (
-            call.room ? (
-              <LKVideo participant={call.room.localParticipant} muted version={call.version} />
-            ) : (
-              <SoloVideo stream={call.soloStream} camOn={call.camOn} />
-            )
-          ) : familyFeed ? (
-            <LKVideo participant={familyFeed} version={call.version} />
+          {teacherP ? (
+            <LKVideo participant={teacherP} muted={teacherP === localP} version={call.version} />
+          ) : !call.room && call.isTeacher ? (
+            <SoloVideo stream={call.soloStream} camOn={call.camOn} />
           ) : (
             <DockPlaceholder text={live ? "Waiting for Teacher…" : "Teacher joins in class"} />
           )}

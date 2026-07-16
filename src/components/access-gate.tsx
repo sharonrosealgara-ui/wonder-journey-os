@@ -33,7 +33,20 @@ export function AccessGate({ children }: { children: React.ReactNode }) {
       const guest = url.searchParams.get("guest");
 
       if (linkCode && linkCode.trim()) {
-        writeStored("classCode", linkCode.trim());
+        const c = linkCode.trim();
+        writeStored("classCode", c);
+        // the server tells us whose code this is (teacher vs family) —
+        // fire-and-forget so the door never waits on the network
+        void fetch("/api/access", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ code: c }),
+        })
+          .then((r) => (r.ok ? r.json() : null))
+          .then((d: { role?: string } | null) => {
+            if (d?.role) writeStored("mode", d.role === "teacher" ? "teacher" : "family");
+          })
+          .catch(() => {});
         url.searchParams.delete("code");
         unlocked = true;
       }
@@ -60,17 +73,24 @@ export function AccessGate({ children }: { children: React.ReactNode }) {
     setBusy(true);
     setError(null);
     try {
-      // Check with the server when it's reachable. ONLY a 401 means the
-      // code is genuinely wrong. Anything else (503 not_configured, a
-      // hosting hiccup, no server at all in local preview) is our problem,
-      // not the family's — we let them in and the classroom verifies later.
-      // A misconfigured server must never say "wrong code" and lock the
-      // family out of their own platform.
-      const res = await fetch("/api/family-data", { headers: { "x-family-code": c } });
+      // The server says whose code this is — teacher or family — and the
+      // device sets itself up accordingly (two-code system). ONLY a 401
+      // means the code is genuinely wrong. Anything else (503, a hosting
+      // hiccup, no server in local preview) is our problem, not the
+      // family's — we let them in and the classroom verifies later.
+      const res = await fetch("/api/access", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code: c }),
+      });
       if (res.status === 401) {
         setError("That code doesn't match — please check it with Teacher Sharon. 💛");
         setBusy(false);
         return;
+      }
+      if (res.ok) {
+        const d = (await res.json()) as { role?: string };
+        if (d.role) writeStored("mode", d.role === "teacher" ? "teacher" : "family");
       }
     } catch {
       // Offline or no server (local preview) — trust the code.
@@ -121,7 +141,8 @@ export function AccessGate({ children }: { children: React.ReactNode }) {
           autoComplete="one-time-code"
         />
         <p className="font-hand mt-2 text-sm text-ink-soft">
-          The same code for {teacherName} and the {familyName} — you only do this once on this device.
+          Your code knows who you are — the family code opens the {familyName}&apos;s
+          adventure, {teacherName}&apos;s own code opens her studio. Once per device. 💛
         </p>
 
         {error && (

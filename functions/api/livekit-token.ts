@@ -1,4 +1,4 @@
-import { type Ctx, json } from "../_shared";
+import { resolveCode, type Ctx, json } from "../_shared";
 
 // 🔐 Secure LiveKit token minting — runs ONLY on Cloudflare's edge.
 // The LIVEKIT_API_SECRET never reaches the browser (Document 32).
@@ -53,20 +53,34 @@ export const onRequest = async ({ request, env }: Ctx): Promise<Response> => {
     return json({ error: "bad_request" }, 400);
   }
 
-  // Never anonymous, never public: the class code is the door key.
-  if ((body.code ?? "").trim().toLowerCase() !== classCode.trim().toLowerCase()) {
+  // Never anonymous, never public: the code is the door key — and it
+  // DECIDES the role (two-code system). The teacher's private code makes
+  // you the teacher; the family code makes you the family. The browser's
+  // claimed role is only honoured while no teacher code is configured
+  // (legacy single-code mode), so this deploy can never lock Sharon out.
+  const codeRole = resolveCode(body.code, env);
+  if (codeRole === "wrong") {
     return json({ error: "wrong_code" }, 401);
   }
+  const role =
+    env.WJ_TEACHER_CODE && (codeRole === "teacher" || codeRole === "family")
+      ? codeRole
+      : body.role === "teacher"
+      ? "teacher"
+      : "family";
 
   const name = String(body.name ?? "Explorer").slice(0, 40).replace(/[<>]/g, "");
   const room = String(body.room ?? "wonder-journey").slice(0, 80).replace(/[^a-zA-Z0-9_-]/g, "-");
-  const role = body.role === "teacher" ? "teacher" : "family";
 
+  // STABLE identity per side — "teacher" or "family", no random suffix.
+  // LiveKit replaces an existing participant with the same identity, so a
+  // stray old tab or double-join can never appear as a third camera:
+  // the room always holds at most ONE teacher + ONE family feed.
   const now = Math.floor(Date.now() / 1000);
   const token = await signJwt(
     {
       iss: apiKey,
-      sub: `${role}-${name}-${Math.random().toString(36).slice(2, 7)}`,
+      sub: role === "teacher" ? "teacher" : "family",
       name,
       nbf: now - 10, // small clock-skew grace
       exp: now + 3 * 60 * 60, // room access expires after class

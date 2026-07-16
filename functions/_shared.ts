@@ -19,6 +19,11 @@ export type Env = {
   // a fresh name can't collide with a corrupted entry.
   CLASSROOM_CODE?: string;
   WJ_CLASS_CODE?: string;
+  // the teacher's PRIVATE code — only Sharon holds it. Whoever presents
+  // it is the teacher (roomAdmin etc.); the server decides, never the
+  // browser. Optional: until it's set, the legacy single-code behaviour
+  // stays, so deploying this never locks the teacher out.
+  WJ_TEACHER_CODE?: string;
   // Make.com automation (optional)
   MAKE_WEBHOOK_URL?: string;
   MAKE_API_KEY?: string;
@@ -44,11 +49,24 @@ export function json(body: unknown, status = 200, headers: Record<string, string
  * correct code is being typed. The app treats not_configured as "can't
  * check right now" and lets the family in.
  */
+export type CodeRole = "teacher" | "family" | "wrong" | "not_configured";
+
+/** Which door key is this? The CODE determines the ROLE (two-code system):
+ *  teacher code → teacher · family code → family · anything else → wrong. */
+export function resolveCode(raw: string | null | undefined, env: Env): CodeRole {
+  const familyCode = (env.WJ_CLASS_CODE || env.CLASSROOM_CODE || "").trim().toLowerCase();
+  const teacherCode = (env.WJ_TEACHER_CODE || "").trim().toLowerCase();
+  if (!familyCode && !teacherCode) return "not_configured";
+  const got = (raw ?? "").trim().toLowerCase();
+  if (teacherCode && got === teacherCode) return "teacher";
+  if (familyCode && got === familyCode) return "family";
+  return "wrong";
+}
+
 export function codeCheck(request: Request, env: Env): "ok" | "wrong" | "not_configured" {
-  const expected = env.WJ_CLASS_CODE || env.CLASSROOM_CODE || "";
-  if (!expected) return "not_configured";
-  const got = request.headers.get("x-family-code") ?? "";
-  return got.trim().toLowerCase() === expected.trim().toLowerCase() ? "ok" : "wrong";
+  const r = resolveCode(request.headers.get("x-family-code"), env);
+  if (r === "not_configured") return "not_configured";
+  return r === "wrong" ? "wrong" : "ok";
 }
 
 /** One record per family workspace (multi-family ready). */

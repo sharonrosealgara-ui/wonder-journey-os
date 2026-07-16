@@ -10,7 +10,7 @@ import { getTodaysLesson, lessons as allLessons, type Lesson } from "@/config/le
 import type { Mode } from "@/config/navigation";
 import { normalizeMode } from "@/config/navigation";
 import { KEYS, todayISO } from "@/lib/app-state";
-import { getScreenShare, useCall } from "@/lib/call-context";
+import { getScreenShare, participantRole, useCall } from "@/lib/call-context";
 import { initCloudSync, sendEvent } from "@/lib/cloud-sync";
 import { useStored } from "@/lib/storage";
 
@@ -337,13 +337,12 @@ function ConnectedRoom({ lesson, onLeave }: {
     call.connState === ConnectionState.Reconnecting ? "🟡 Reconnecting…" :
     call.connState === ConnectionState.Connected ? "🟢 Live" : "🔴 Connecting…";
 
-  // ── V1 layout: exactly two featured feeds (Decision: one shared
-  // family camera). Local participant on one side, the first remote on
-  // the other. Extra remotes (future families/grandparents) stack small
-  // under the family tile — the architecture already scales.
-  const remotes = everyone.filter((p) => p !== room.localParticipant);
-  const familyFeed = remotes[0] ?? null;
-  const extraFeeds = remotes.slice(1);
+  // ── EXACTLY TWO CAMERAS (Sharon's rule): one Teacher, one Family.
+  // Each tile is picked by ROLE — the server decided it from the code
+  // (two-code system) — so it never matters which device this is, and a
+  // stray extra connection can never appear as a third camera.
+  const familyFeed = everyone.find((p) => participantRole(p) === "family") ?? null;
+  const teacherFeed = everyone.find((p) => participantRole(p) === "teacher") ?? null;
   const enlargedP = enlarged ? everyone.find((p) => p.identity === enlarged) ?? null : null;
 
   return (
@@ -432,7 +431,7 @@ function ConnectedRoom({ lesson, onLeave }: {
               {familyFeed ? (
                 <ParticipantTile
                   participant={familyFeed}
-                  isLocal={false}
+                  isLocal={familyFeed === room.localParticipant}
                   hand={call.hands[familyFeed.identity] ?? false}
                   version={call.version}
                   tall
@@ -444,24 +443,25 @@ function ConnectedRoom({ lesson, onLeave }: {
                   <span className="font-hand px-2 text-sm">Waiting for the family to join…</span>
                 </div>
               )}
-              {/* future participants stack here automatically */}
-              {extraFeeds.map((p) => (
-                <div key={p.identity} className="mt-2">
-                  <ParticipantTile participant={p} isLocal={false} hand={call.hands[p.identity] ?? false} version={call.version} onClick={() => setEnlarged(p.identity)} />
-                </div>
-              ))}
             </div>
 
-            {/* Teacher below */}
+            {/* Teacher below — exactly one tile, never a third camera */}
             <div>
               <p className="mb-1 text-center text-[11px] font-bold uppercase tracking-wide text-ink-soft">👩‍🏫 {teacherName}</p>
-              <ParticipantTile
-                participant={room.localParticipant}
-                isLocal
-                hand={call.hands[room.localParticipant.identity] ?? false}
-                version={call.version}
-                onClick={() => setEnlarged(room.localParticipant.identity)}
-              />
+              {teacherFeed ? (
+                <ParticipantTile
+                  participant={teacherFeed}
+                  isLocal={teacherFeed === room.localParticipant}
+                  hand={call.hands[teacherFeed.identity] ?? false}
+                  version={call.version}
+                  onClick={() => setEnlarged(teacherFeed.identity)}
+                />
+              ) : (
+                <div className="flex aspect-video w-full flex-col items-center justify-center rounded-2xl border-2 border-dashed border-sand-deep bg-sand text-center text-ink-soft">
+                  <span className="text-3xl">💛</span>
+                  <span className="font-hand px-2 text-sm">{teacherName} joins soon…</span>
+                </div>
+              )}
             </div>
           </div>
         )}

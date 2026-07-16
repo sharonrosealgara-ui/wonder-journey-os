@@ -9,6 +9,18 @@ import {
   RoomEvent,
   Track,
 } from "livekit-client";
+import { writeStored } from "@/lib/storage";
+
+// A participant's side of the call, decided by the SERVER from which
+// code they presented (identity "teacher" / "family"; legacy identities
+// kept a role prefix, so startsWith covers both).
+export function participantRole(p: Participant): "teacher" | "family" {
+  try {
+    const meta = JSON.parse(p.metadata || "{}") as { role?: string };
+    if (meta.role === "teacher" || meta.role === "family") return meta.role;
+  } catch { /* fall through */ }
+  return p.identity.startsWith("teacher") ? "teacher" : "family";
+}
 
 // ─────────────────────────────────────────────────────────────
 // GLOBAL CALL CONTEXT (Decision 044)
@@ -131,7 +143,15 @@ export function CallProvider({ children }: { children: React.ReactNode }) {
           return "wrong_code";
         }
         if (!res.ok) throw new Error("not configured");
-        const { token, url } = (await res.json()) as { token: string; url: string };
+        const { token, url, role } = (await res.json()) as { token: string; url: string; role?: string };
+
+        // The SERVER decided the role from the code (two-code system) —
+        // adopt its verdict so the device labels itself correctly from
+        // now on, no matter what the browser guessed.
+        if (role === "teacher" || role === "family") {
+          setIsTeacher(role === "teacher");
+          writeStored("mode", role);
+        }
 
         const room = new Room({
           adaptiveStream: true,

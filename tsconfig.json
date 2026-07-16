@@ -19,5 +19,7 @@
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  // `functions/` holds Cloudflare Pages Functions — they run on the Workers
+  // runtime, not in the Next app, and Cloudflare compiles them itself.
+  "exclude": ["node_modules", "functions"]
 }

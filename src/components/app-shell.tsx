@@ -7,6 +7,7 @@ import { brand } from "@/config/brand";
 import { familyNav, normalizeMode, teacherNav, type Mode } from "@/config/navigation";
 import { KEYS } from "@/lib/app-state";
 import { useProgress } from "@/lib/progress";
+import { initMute, setMuted, sfx } from "@/lib/sound";
 import { removeStored, useStored } from "@/lib/storage";
 import { AccessGate } from "@/components/access-gate";
 import { BirthdayPopup } from "@/components/birthday-popup";
@@ -156,7 +157,8 @@ function SidebarLink({
   return (
     <Link
       href={item.href}
-      className={`mt-1 flex items-center gap-3 rounded-2xl px-3.5 py-2.5 font-display text-[15px] transition-colors ${
+      onClick={() => sfx.tap()}
+      className={`mt-1 flex items-center gap-3 rounded-2xl px-3.5 py-2.5 font-display text-[15px] transition-all duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.02] active:scale-95 ${
         active ? "bg-white text-ocean-deep shadow" : "text-white/85 hover:bg-white/10"
       }`}
     >
@@ -180,6 +182,19 @@ function TopBar({
   const p = useProgress();
   const pct = Math.round((p.xpInLevel / p.xpForLevel) * 100);
 
+  // 🔊 the app's gentle sound layer (synthesized, no files) — one master
+  // mute in the header controls every pop, thud, and chime
+  const [soundMuted, setSoundMuted] = useState(false);
+  useEffect(() => setSoundMuted(initMute()), []);
+  function toggleSound() {
+    setSoundMuted((m) => {
+      const next = !m;
+      setMuted(next);
+      if (!next) sfx.correct();
+      return next;
+    });
+  }
+
   function fullscreen() {
     if (document.fullscreenElement) void document.exitFullscreen();
     else void document.documentElement.requestFullscreen().catch(() => {});
@@ -191,11 +206,22 @@ function TopBar({
         ☰
       </button>
 
-      {/* Explorer level + XP */}
+      {/* Explorer level + XP — a 3D-inset track with a star riding the
+          progress edge, so growth feels physical */}
       <div className="hidden min-w-0 items-center gap-3 sm:flex">
         <span className="font-display text-sm text-ink">Explorer Level {p.level}</span>
-        <div className="h-2.5 w-28 overflow-hidden rounded-full bg-sand-deep md:w-40">
-          <div className="h-full rounded-full bg-gradient-to-r from-mango to-sunset" style={{ width: `${pct}%` }} />
+        <div className="relative h-3.5 w-28 rounded-full bg-sand-deep shadow-[inset_0_2px_4px_rgba(44,27,24,0.28)] md:w-40">
+          <div
+            className="h-full rounded-full bg-gradient-to-r from-mango to-sunset shadow-[inset_0_-2px_3px_rgba(44,27,24,0.18)] transition-[width] duration-700 ease-out"
+            style={{ width: `${pct}%` }}
+          />
+          <span
+            className="wj-sticker absolute top-1/2 h-6 w-6 -translate-y-1/2 text-xs transition-[left] duration-700 ease-out"
+            style={{ left: `calc(${Math.min(Math.max(pct, 5), 95)}% - 12px)` }}
+            aria-hidden
+          >
+            ⭐
+          </span>
         </div>
         <span className="text-xs font-bold text-ink-soft">
           {p.xpInLevel} / {p.xpForLevel} XP
@@ -214,6 +240,14 @@ function TopBar({
             🍎 <span className="hidden sm:inline">Teacher</span>
           </span>
         )}
+        <button
+          className="wj-chip hover:bg-mango/20"
+          onClick={toggleSound}
+          title={soundMuted ? "Turn sounds on" : "Turn sounds off"}
+          aria-label="Toggle sounds"
+        >
+          {soundMuted ? "🔇" : "🔊"}
+        </button>
         <button className="wj-chip hover:bg-mango/20" onClick={fullscreen} title="Fullscreen" aria-label="Fullscreen">
           ⛶
         </button>

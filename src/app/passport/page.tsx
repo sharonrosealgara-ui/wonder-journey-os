@@ -3,6 +3,7 @@
 import { PageHeader } from "@/components/page-header";
 import { SmartPhoto, destinationPhoto } from "@/components/smart-photo";
 import { usePhotos } from "@/lib/photos";
+import { sfx } from "@/lib/sound";
 import { destinations } from "@/config/destinations";
 import { getStudent } from "@/config/family";
 import { lessons } from "@/config/lessons";
@@ -60,12 +61,22 @@ export default function PassportPage() {
                       emojiClass="text-4xl"
                     />
                     <div className="p-4">
-                    <div className={`wj-stamp mx-auto w-fit px-4 py-3 ${earned ? "wj-stamp-earned" : ""}`}>
-                      <div className="text-3xl">{earned ? d.emoji : "❔"}</div>
+                    <div
+                      className={`wj-stamp relative mx-auto w-fit cursor-pointer px-4 py-3 transition-transform duration-200 ease-out hover:scale-105 active:scale-95 ${earned ? "wj-stamp-earned" : ""}`}
+                      onClick={() => (earned ? sfx.stamp() : sfx.reveal())}
+                      title={earned ? "Stamped! 🛂" : "Adventure awaits!"}
+                    >
+                      {/* Hidden Treasure: unearned stamps show a ghost of the
+                          real place — a promise, not a blank — with a golden
+                          key waiting to unlock it */}
+                      <div className={`text-3xl ${earned ? "" : "opacity-30 grayscale"}`}>{d.emoji}</div>
+                      {!earned && (
+                        <span className="wj-sticker-art absolute -right-2 -top-2 text-xl" aria-hidden>🗝️</span>
+                      )}
                       <div className="font-display text-xs font-extrabold uppercase tracking-wide">
                         {d.name}
                       </div>
-                      <div className="text-[10px]">{earned ? "★ STAMPED ★" : "not yet visited"}</div>
+                      <div className="text-[10px]">{earned ? "★ STAMPED ★" : "Adventure awaits! ✨"}</div>
                     </div>
                     <p className="mt-3 text-xs text-ink-soft">{d.knownFor}</p>
                     {earned && (

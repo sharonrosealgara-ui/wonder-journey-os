@@ -44,8 +44,9 @@ export default function AwardsPage() {
               </div>
             </div>
             {theirAwards.length === 0 ? (
-              <p className="mt-4 rounded-2xl bg-sand p-4 text-sm text-ink-soft">
-                No badges yet — adventures are waiting! 🌟
+              <p className="font-hand mt-4 rounded-2xl bg-sand p-4 text-base text-ink-soft">
+                ✨ Your badge shelf is polished and waiting — finish today&apos;s adventure and
+                the first one is yours!
               </p>
             ) : (
               <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
@@ -53,8 +54,8 @@ export default function AwardsPage() {
                   const b = getBadge(a.badgeId);
                   if (!b) return null;
                   return (
-                    <div key={a.id} className="rounded-2xl border-2 border-mango/40 bg-mango/10 p-4 text-center">
-                      <div className="text-3xl">{b.emoji}</div>
+                    <div key={a.id} className="rounded-2xl border-2 border-mango/40 bg-mango/10 p-4 text-center transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-[1.02] active:scale-95">
+                      <div className="wj-sticker-art text-3xl">{b.emoji}</div>
                       <div className="mt-1 font-display text-sm font-extrabold">{b.name}</div>
                       <div className="mt-1 text-xs text-ink-soft">{formatDate(a.date)}</div>
                       {a.note && <div className="mt-1 text-xs italic text-ink-soft">&ldquo;{a.note}&rdquo;</div>}
@@ -71,8 +72,8 @@ export default function AwardsPage() {
         <h2 className="font-display text-xl font-extrabold">All badges to collect 🎯</h2>
         <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
           {badges.map((b) => (
-            <div key={b.id} className="rounded-2xl border-2 border-sand-deep p-4 text-center">
-              <div className="text-3xl">{b.emoji}</div>
+            <div key={b.id} className="rounded-2xl border-2 border-sand-deep p-4 text-center transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-[1.02]">
+              <div className="wj-sticker-art text-3xl opacity-80">{b.emoji}</div>
               <div className="mt-1 font-display text-sm font-extrabold">{b.name}</div>
               <div className="mt-1 text-xs text-ink-soft">{b.description}</div>
             </div>

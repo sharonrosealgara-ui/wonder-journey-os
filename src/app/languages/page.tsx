@@ -83,31 +83,35 @@ export default function LanguagesPage() {
   );
 }
 
+// Goodbye spreadsheet — every phrase is a chunky, floating word block a
+// child can love. The pronunciation lives in a warm yellow speech bubble
+// that begs to be read aloud (Sharon's Family OS direction).
 function WordTable({ phrases }: { phrases: Phrase[] }) {
   return (
-    <div className="wj-card overflow-x-auto p-6">
-      <table className="w-full text-sm">
-        <thead>
-          <tr className="text-left font-display text-ink-soft">
-            <th className="pb-3 pr-3"></th>
-            <th className="pb-3 pr-4">English</th>
-            <th className="pb-3 pr-4">Tagalog</th>
-            <th className="pb-3 pr-4">Hiligaynon</th>
-            <th className="pb-3">Say it like...</th>
-          </tr>
-        </thead>
-        <tbody>
-          {phrases.map((p) => (
-            <tr key={p.english} className="border-t border-sand-deep">
-              <td className="py-2.5 pr-3 text-xl">{p.emoji}</td>
-              <td className="py-2.5 pr-4 font-bold">{p.english}</td>
-              <td className="py-2.5 pr-4 font-bold text-sunset-deep">{p.tagalog}</td>
-              <td className="py-2.5 pr-4 font-bold text-ocean-deep">{p.hiligaynon}</td>
-              <td className="py-2.5 text-ink-soft">{p.pronunciation}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className="grid gap-3 sm:grid-cols-2">
+      {phrases.map((p) => (
+        <div
+          key={p.english}
+          className="rounded-3xl border-2 border-sand-deep bg-[--color-cream-card] p-4 [box-shadow:var(--shadow-tactile)] transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-[1.02]"
+        >
+          <div className="flex items-center gap-3">
+            <span className="wj-sticker h-11 w-11 shrink-0 text-xl">{p.emoji}</span>
+            <div className="min-w-0">
+              <div className="font-display text-lg leading-tight">{p.english}</div>
+              <div className="mt-0.5 text-sm">
+                <b className="text-sunset-deep">{p.tagalog}</b>
+                <span className="mx-1.5 text-ink-soft">·</span>
+                <b className="text-ocean-deep">{p.hiligaynon}</b>
+              </div>
+            </div>
+          </div>
+          {p.pronunciation && (
+            <div className="mt-3 inline-flex items-center gap-2 rounded-2xl rounded-bl-sm bg-mango/35 px-3 py-1.5 font-hand text-base text-ink">
+              📣 Say it: <b>{p.pronunciation}</b>
+            </div>
+          )}
+        </div>
+      ))}
     </div>
   );
 }

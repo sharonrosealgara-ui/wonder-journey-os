@@ -179,10 +179,15 @@ export default function BackpackPage() {
   );
 }
 
+// 🎒 A backpack PATCH — each stat is a sewn-on badge patch that wiggles
+// playfully under little fingers (Family OS tactility, not a spreadsheet).
 function Pocket({ emoji, label, value, href }: { emoji: string; label: string; value: number; href: string }) {
   return (
-    <Link href={href} className="wj-card wj-card-hover p-4 text-center">
-      <div className="text-2xl">{emoji}</div>
+    <Link
+      href={href}
+      className="group rounded-3xl border-[3px] border-dashed border-mango/60 bg-[--color-cream-card] p-4 text-center [box-shadow:var(--shadow-tactile)] transition-all duration-300 ease-out hover:-translate-y-1 hover:rotate-2 hover:scale-110 active:rotate-0 active:scale-95"
+    >
+      <div className="wj-sticker-art text-3xl transition-transform duration-300 group-hover:-rotate-6">{emoji}</div>
       <div className="font-display text-2xl text-ocean-deep">{value}</div>
       <div className="text-xs font-bold text-ink-soft">{label}</div>
     </Link>

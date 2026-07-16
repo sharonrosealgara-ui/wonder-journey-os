@@ -15,14 +15,34 @@ import { readStored, useStored, writeStored } from "@/lib/storage";
 //   ?code=12345 — invited family: saved instantly, straight in
 //   ?guest=1    — future clients: explore freely, no code needed
 
-type Phase = "checking" | "locked" | "open";
+type Phase = "checking" | "locked" | "name" | "open";
 
 export function AccessGate({ children }: { children: React.ReactNode }) {
   const [phase, setPhase] = useState<Phase>("checking");
   const [code, setCode] = useState("");
+  const [name, setName] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [, setGuest] = useStored<boolean>("guest", false);
+
+  // Everyone introduces themselves once — the name goes on their camera.
+  function toNameStep() {
+    const mode = readStored<string>("mode", "family");
+    const isGuest = readStored<boolean>("guest", false);
+    setName(
+      readStored<string>("displayName", "") ||
+        (isGuest ? "" : mode === "teacher" ? teacherName : familyName)
+    );
+    setPhase("name");
+  }
+
+  function finish(finalName: string) {
+    const isGuest = readStored<boolean>("guest", false);
+    const mode = readStored<string>("mode", "family");
+    const fallback = isGuest ? "Explorer" : mode === "teacher" ? teacherName : familyName;
+    writeStored("displayName", finalName.trim() || fallback);
+    setPhase("open");
+  }
 
   // Read magic links + any saved code before painting the door.
   useEffect(() => {
@@ -64,7 +84,17 @@ export function AccessGate({ children }: { children: React.ReactNode }) {
 
     const saved = readStored<string>("classCode", "");
     const isGuest = readStored<boolean>("guest", false);
-    setPhase(unlocked || saved || isGuest ? "open" : "locked");
+    if (unlocked || saved || isGuest) {
+      // in — but introduce yourself once so your camera wears your name
+      if (readStored<string>("displayName", "")) setPhase("open");
+      else {
+        const mode = readStored<string>("mode", "family");
+        setName(isGuest ? "" : mode === "teacher" ? teacherName : familyName);
+        setPhase("name");
+      }
+    } else {
+      setPhase("locked");
+    }
   }, []);
 
   async function unlock() {
@@ -96,7 +126,7 @@ export function AccessGate({ children }: { children: React.ReactNode }) {
       // Offline or no server (local preview) — trust the code.
     }
     writeStored("classCode", c);
-    setPhase("open");
+    toNameStep();
   }
 
   if (phase === "checking") return null; // avoid a flash of the door
@@ -119,6 +149,34 @@ export function AccessGate({ children }: { children: React.ReactNode }) {
         <h1 className="wj-outline mt-2 font-display text-3xl sm:text-4xl">
           {brand.productName.replace(" OS", "")}
         </h1>
+
+        {phase === "name" ? (
+          /* ── Step 2: introduce yourself — this name goes on your camera ── */
+          <>
+            <p className="font-hand mt-1 text-lg text-ink-soft">
+              Wonderful! And who are you? 💛
+            </p>
+            <label className="mt-6 block text-left text-sm font-bold text-ink-soft" htmlFor="display-name">
+              ✏️ Your name (shown on your camera)
+            </label>
+            <input
+              id="display-name"
+              className="wj-input mt-1 text-center font-display text-xl"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && finish(name)}
+              placeholder="e.g. The Cruz Family"
+              autoFocus
+            />
+            <p className="font-hand mt-2 text-sm text-ink-soft">
+              Families often use their family name — teachers, the name your students call you.
+            </p>
+            <button className="wj-btn mt-5 w-full text-lg" onClick={() => finish(name)}>
+              🌴 Let&apos;s go!
+            </button>
+          </>
+        ) : (
+          <>
         <p className="font-hand mt-1 text-lg text-ink-soft">
           Mabuhay! Let&apos;s open your family&apos;s adventure. 💛
         </p>
@@ -158,11 +216,13 @@ export function AccessGate({ children }: { children: React.ReactNode }) {
           onClick={() => {
             setGuest(true);
             writeStored("dock", "off");
-            setPhase("open");
+            toNameStep();
           }}
         >
           Just looking around? Explore as a guest →
         </button>
+          </>
+        )}
       </div>
     </div>
   );

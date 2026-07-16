@@ -39,6 +39,8 @@ export function CameraDock() {
   const pathname = usePathname();
   const [pref, setPref] = useStored<DockPref>("dock", "on");
   const [size, setSize] = useStored<DockSize>("dockSize", "l"); // big by default
+  const [isGuest] = useStored<boolean>("guest", false);
+  const [displayName] = useStored<string>("displayName", "");
   const [ready, setReady] = useState(false);
   const triedRef = useRef(false);
 
@@ -50,7 +52,10 @@ export function CameraDock() {
     const lesson = getTodaysLesson();
     void call
       .join({
-        name: mode === "teacher" ? teacherName : familyName,
+        // the name given at the front door rides on the camera
+        name:
+          readStored<string>("displayName", "") ||
+          (mode === "teacher" ? teacherName : familyName),
         code,
         role: mode === "teacher" ? "teacher" : "family",
         roomName: `wj-${lesson?.id ?? "class"}-${todayISO()}`,
@@ -86,9 +91,9 @@ export function CameraDock() {
           if (call.status === "idle") startCall();
         }}
         className="wj-chip fixed bottom-3 right-3 z-[70] !bg-paper shadow-xl hover:!bg-mango/20"
-        title="Start family cameras"
+        title={isGuest ? "Try the classroom cameras — a safe demo, connected to nobody" : "Start family cameras"}
       >
-        🎥 {call.status === "connecting" ? "Starting…" : "Cameras"}
+        🎥 {call.status === "connecting" ? "Starting…" : isGuest ? "Try the cameras" : "Cameras"}
       </button>
     );
   }
@@ -159,9 +164,12 @@ export function CameraDock() {
           </div>
         </div>
 
-        {/* 👨‍👩‍👧‍👦 Family — always on top, exactly one tile */}
+        {/* 👨‍👩‍👧‍👦 Family — always on top, exactly one tile.
+            Guests see THEIR name here: a safe demo of their future classroom. */}
         <div>
-          <p className="mb-0.5 text-center text-[10px] font-bold uppercase tracking-wide text-ink-soft">👨‍👩‍👧‍👦 {familyName}</p>
+          <p className="mb-0.5 text-center text-[10px] font-bold uppercase tracking-wide text-ink-soft">
+            👨‍👩‍👧‍👦 {isGuest ? displayName || "Your Family" : familyName}
+          </p>
           {familyP ? (
             <LKVideo participant={familyP} muted={familyP === localP} version={call.version} tall />
           ) : !call.room && !call.isTeacher ? (
@@ -179,7 +187,15 @@ export function CameraDock() {
           ) : !call.room && call.isTeacher ? (
             <SoloVideo stream={call.soloStream} camOn={call.camOn} />
           ) : (
-            <DockPlaceholder text={live ? "Waiting for Teacher…" : "Teacher joins in class"} />
+            <DockPlaceholder
+              text={
+                isGuest
+                  ? "Your teacher appears here 💛"
+                  : live
+                  ? "Waiting for Teacher…"
+                  : "Teacher joins in class"
+              }
+            />
           )}
         </div>
 

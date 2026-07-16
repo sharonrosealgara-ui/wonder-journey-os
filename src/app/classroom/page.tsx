@@ -12,7 +12,7 @@ import { normalizeMode } from "@/config/navigation";
 import { KEYS, todayISO } from "@/lib/app-state";
 import { getScreenShare, participantRole, useCall } from "@/lib/call-context";
 import { initCloudSync, sendEvent } from "@/lib/cloud-sync";
-import { useStored } from "@/lib/storage";
+import { readStored, useStored } from "@/lib/storage";
 
 // 🎥 LIVE ADVENTURE CLASSROOM
 // The call itself lives in the global CallProvider (app-shell), so it
@@ -40,7 +40,9 @@ export default function ClassroomPage() {
     setLesson(getTodaysLesson());
   }, []);
   useEffect(() => {
-    setName(mode === "teacher" ? teacherName : student ? student.name : familyName);
+    // the name given at the front door wins — it's theirs
+    const doorName = readStored<string>("displayName", "");
+    setName(doorName || (mode === "teacher" ? teacherName : student ? student.name : familyName));
   }, [student, mode]);
 
   const roomName = useMemo(() => `wj-${lesson?.id ?? "class"}-${todayISO()}`, [lesson]);
@@ -82,6 +84,7 @@ export default function ClassroomPage() {
     return (
       <SoloRoom
         lesson={lesson}
+        isGuest={readStored<boolean>("guest", false)}
         onGoLive={() =>
           join({ camId: "", micId: "", camOn: call.camOn, micOn: call.micOn })
         }
@@ -622,8 +625,9 @@ function ShareView({ track }: { track: MediaStreamTrack }) {
 }
 
 /* ── Solo classroom (no/wrong class code — local camera only) ── */
-function SoloRoom({ lesson, onGoLive, onLeave }: {
+function SoloRoom({ lesson, isGuest = false, onGoLive, onLeave }: {
   lesson: Lesson | null;
+  isGuest?: boolean;
   onGoLive: () => void;
   onLeave: () => void;
 }) {
@@ -671,10 +675,23 @@ function SoloRoom({ lesson, onGoLive, onLeave }: {
   return (
     <div className="space-y-3">
       <div className="wj-card-bubble wj-note flex flex-wrap items-center justify-center gap-2 p-3 text-center">
-        <p className="font-display text-sm text-white">
-          Your camera is on! We couldn&apos;t reach the live room just now. 💛
-        </p>
-        <button className="wj-btn !px-4 !py-1.5 text-sm" onClick={onGoLive}>🚀 Try again</button>
+        {isGuest ? (
+          // 🛡️ GUEST DEMO — the full classroom experience, connected to
+          // NOBODY. A guest camera can never enter a family's real room
+          // (the server refuses codeless connections), so families stay
+          // private and guests still feel the magic.
+          <p className="font-display text-sm text-white">
+            ✨ Demo classroom — this is how your family&apos;s class will look and feel.
+            Love it? Ask Teacher Sharon for your family&apos;s own code! 💛
+          </p>
+        ) : (
+          <>
+            <p className="font-display text-sm text-white">
+              Your camera is on! We couldn&apos;t reach the live room just now. 💛
+            </p>
+            <button className="wj-btn !px-4 !py-1.5 text-sm" onClick={onGoLive}>🚀 Try again</button>
+          </>
+        )}
       </div>
 
       {/* Focused room: lesson stage left · camera rail right, family ABOVE teacher */}
@@ -705,7 +722,9 @@ function SoloRoom({ lesson, onGoLive, onLeave }: {
         {/* Camera rail: 👨‍👩‍👧‍👦 Family ABOVE 👩‍🏫 Teacher */}
         <div className="flex flex-col gap-3 lg:sticky lg:top-3">
           <div>
-            <p className="mb-1 text-center text-[11px] font-bold uppercase tracking-wide text-ink-soft">👨‍👩‍👧‍👦 {familyName}</p>
+            <p className="mb-1 text-center text-[11px] font-bold uppercase tracking-wide text-ink-soft">
+              👨‍👩‍👧‍👦 {isGuest ? call.name || "Your Family" : familyName}
+            </p>
             {call.isTeacher ? (
               <div className="flex aspect-[4/3] w-full flex-col items-center justify-center rounded-2xl border-2 border-dashed border-sand-deep bg-sand text-center text-ink-soft">
                 <span className="text-3xl">💛</span>

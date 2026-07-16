@@ -124,9 +124,12 @@ export function CameraDock() {
 
   return (
     <div className={`fixed bottom-3 right-3 z-[70] select-none ${SIZE_CLASS[size]} max-w-[calc(100vw-1.5rem)]`}>
-      <div className="wj-card space-y-2 p-2 shadow-2xl">
-        {/* header */}
-        <div className="flex items-center justify-between px-1">
+      {/* Never taller than the phone's screen: if the cameras outgrow it,
+          the dock scrolls INSIDE itself and the header (with ✖) stays
+          pinned on top — the exit can never slide off-screen. */}
+      <div className="wj-card max-h-[calc(100dvh-4.5rem)] space-y-2 overflow-y-auto p-2 shadow-2xl">
+        {/* header — sticky so minimize/close are always reachable */}
+        <div className="sticky top-0 z-10 -mx-2 -mt-2 flex items-center justify-between rounded-t-2xl bg-paper/95 px-3 pb-1 pt-2 backdrop-blur">
           <span className="text-[11px] font-bold text-ink-soft">
             {live ? "🟢 Live together" : "🎥 Camera on"}
           </span>

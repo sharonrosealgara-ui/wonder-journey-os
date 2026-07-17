@@ -1270,6 +1270,244 @@ export const lessons: Lesson[] = [
     reflection: "Palawan stays beautiful because people choose to protect it. What's one beautiful thing — a place, a habit, a friendship — your family wants to protect together?",
     gratitudePrompt: "Today I am grateful to the Lord because...",
   },
+
+  // ═══════════════════════════════════════════════════════════
+  // SEPTEMBER — "Creatures & Character" (Units 2 · 8 · 6 · 4)
+  // ⭐ Feast season: Sep 21 (Day of Atonement) is marked no-class in
+  // the Season Calendar; Tabernacles week (~Sep 28–Oct 2) pauses.
+  // Dates STILL pending confirmation from Shaun & Taylor.
+  // ═══════════════════════════════════════════════════════════
+  {
+    id: "food-words-around-the-table",
+    order: 23,
+    title: "Busog na Ako! Food Words",
+    subtitle: "The words that fill a Filipino table — say them and you'll never go hungry",
+    emoji: "🍚",
+    category: "Language",
+    date: "2026-09-02",
+    time: "9:00 AM",
+    materials: ["Real or toy food items", "Paper plates", "A basket or bayong (market bag)"],
+    canvaLink: "https://www.canva.com/",
+    videoLinks: [
+      { label: "Filipino food words for kids (search on YouTube)", url: "https://www.youtube.com/results?search_query=filipino+food+words+for+kids" },
+    ],
+    familyChallenge:
+      "Play 'Merienda Market'! Set out real or toy food, put paper-peso prices on each, and take turns buying snacks — but you can only ask for food using its Tagalog or Hiligaynon name. No name, no snack!",
+    notes: "Unit 2/3 vocabulary. Teacher: verify Hiligaynon food terms below.",
+    sections: [
+      {
+        heading: "The Table That Always Has Room",
+        emoji: "🍽️",
+        body: "Walk past any Filipino home around noon and you'll hear the same beautiful sentence float out the window: 'Kain tayo!' — Let's eat! It isn't just an invitation to family. It's for the neighbor, the delivery driver, the friend who 'just dropped by.' In the Philippines, there is always one more plate, always more rice in the pot. Food isn't only for filling tummies — it's how love is served. Today you learn the words for the fullest table in the world.",
+      },
+      {
+        heading: "The Words on Every Plate",
+        emoji: "🍛",
+        body: "Rice is the center of every Filipino meal — so important it has its own words. Around it goes everything else!",
+        bullets: [
+          "Kanin (rice) is the star — a meal without rice barely counts as a meal!",
+          "Ulam is the word for 'the thing you eat WITH rice' — chicken, fish, vegetables, anything",
+          "Manok (chicken), isda (fish), gulay (vegetables), itlog (egg) — the everyday ulam",
+          "Tubig (water) and, for merienda, something sweet — your halo-halo and banana cue!",
+        ],
+      },
+      {
+        heading: "From Hungry to Happy-Full",
+        emoji: "😋",
+        body: "Filipinos have a wonderful word most languages don't: 'busog' — that warm, sleepy, perfectly-full feeling after a good meal. You go from 'gutom' (hungry) to 'busog' (full), and the whole journey is delicious. When someone feeds you well, the kindest thank-you is: 'Salamat, busog na ako!' — Thank you, I'm full!",
+      },
+      {
+        heading: "Say It Before You Eat It",
+        emoji: "💬",
+        body: "Point at each food and say its name before your next meal — your tummy will learn the words with you!",
+      },
+    ],
+    phrases: [
+      { english: "Let's eat!", tagalog: "Kain na!", hiligaynon: "Kaon na!", pronunciation: "KAH-in nah / KAH-on nah" },
+      { english: "Chicken", tagalog: "Manok", hiligaynon: "Manok", pronunciation: "mah-NOK" },
+      { english: "Vegetables", tagalog: "Gulay", hiligaynon: "Utan", pronunciation: "GOO-lai / OO-tahn" },
+      { english: "Egg", tagalog: "Itlog", hiligaynon: "Itlog", pronunciation: "eet-LOG" },
+      { english: "Bread", tagalog: "Tinapay", hiligaynon: "Tinapay", pronunciation: "tee-nah-PAI" },
+      { english: "I'm hungry", tagalog: "Gutom na ako", hiligaynon: "Gutom na ako", pronunciation: "goo-TOM nah ah-KOH" },
+      { english: "I'm full!", tagalog: "Busog na ako!", hiligaynon: "Busog na ako!", pronunciation: "boo-SOG nah ah-KOH" },
+    ],
+    reflection: "'Kain tayo' means everyone is welcome at the table. Who could YOUR family invite to share a meal this week?",
+    gratitudePrompt: "Today I am grateful to the Lord because...",
+  },
+  {
+    id: "baking-academy-sweet-cookies",
+    order: 24,
+    title: "Baking Academy: Sweet Cookies",
+    subtitle: "The Baking Academy opens — measuring, mixing, and the magic of the oven",
+    emoji: "🍪",
+    category: "Cooking",
+    date: "2026-09-04",
+    time: "9:00 AM",
+    materials: ["1½ cups flour", "½ cup butter (softened)", "½ cup sugar", "1 egg", "1 tsp vanilla", "½ tsp baking soda, pinch of salt", "Mixing bowls, spoons, measuring cups", "Baking tray + oven (grown-up's job!)"],
+    canvaLink: "https://www.canva.com/",
+    videoLinks: [
+      { label: "Easy cookies with kids (search on YouTube)", url: "https://www.youtube.com/results?search_query=easy+cookies+baking+with+kids" },
+    ],
+    familyChallenge:
+      "Head Baker Selah leads! After baking, decorate your cookies and give each one a name. Deliver a plate to someone outside your family — a neighbor, a friend — because the best part of baking is sharing it.",
+    notes: "Baking Academy opens (Selah's unit). No linked recipe card — the simple recipe lives in the sections below. Teaches measuring (real math!), mixing, patience, sharing.",
+    sections: [
+      {
+        heading: "Selah's Big Day",
+        emoji: "👩‍🍳",
+        body: "Today the kitchen belongs to Selah. She ties on the apron, stands on the little stool, and looks at the flour, the butter, the sugar — and something wonderful happens. These plain, boring ingredients are about to become warm, golden cookies that make the whole house smell like a hug. That's the secret of baking: it's a little bit science, a little bit patience, and a whole lot of love. Welcome to the Baking Academy, explorers!",
+      },
+      {
+        heading: "What You'll Bake",
+        emoji: "🧺",
+        body: "Gather your ingredients like a real baker — line them up before you start (bakers call this 'mise en place,' which just means 'everything in its place').",
+        bullets: [
+          "1½ cups flour · ½ cup soft butter · ½ cup sugar",
+          "1 egg · 1 teaspoon vanilla",
+          "½ teaspoon baking soda · a pinch of salt",
+          "Makes about 12 cookies — enough to share!",
+        ],
+      },
+      {
+        heading: "Let's Bake! (Measuring Is Math)",
+        emoji: "🥄",
+        body: "Here's the explorer's secret — baking is MATH you can eat. Every 'half cup' and 'one teaspoon' is a fraction; doubling the recipe is multiplication. Measure carefully and you're doing math without a worksheet!",
+        bullets: [
+          "1. Cream the soft butter and sugar until fluffy — count 100 stirs together!",
+          "2. Mix in the egg and vanilla",
+          "3. Add flour, baking soda, and salt — stir until it's dough",
+          "4. Roll little balls, place on the tray, and let a grown-up bake at 180°C (350°F) for about 10 minutes",
+          "5. Wait for them to cool (the hardest part!) — patience is a baking ingredient too",
+        ],
+      },
+      {
+        heading: "Baker's Words",
+        emoji: "💬",
+        body: "Every kitchen has its own language — learn the baker's words!",
+      },
+    ],
+    phrases: [
+      { english: "Flour", tagalog: "Harina", hiligaynon: "Harina", pronunciation: "hah-REE-nah" },
+      { english: "Sugar", tagalog: "Asukal", hiligaynon: "Kalamay", pronunciation: "ah-SOO-kahl / kah-lah-MAI" },
+      { english: "To mix", tagalog: "Haluin", hiligaynon: "Lakton", pronunciation: "hah-loo-EEN / lahk-TON" },
+      { english: "To bake", tagalog: "Maghurno", hiligaynon: "Maghurno", pronunciation: "mahg-HOOR-noh" },
+      { english: "Sweet", tagalog: "Matamis", hiligaynon: "Matam-is", pronunciation: "mah-tah-MEES / mah-TAHM-ees" },
+      { english: "Share", tagalog: "Magbahagi", hiligaynon: "Magpartihanay", pronunciation: "mahg-bah-HAH-gee / mahg-pahr-tee-HAH-nai" },
+    ],
+    reflection: "Baking takes patience and careful measuring. What's something you're learning to do slowly and carefully, one step at a time?",
+    gratitudePrompt: "Today I am grateful to the Lord because...",
+  },
+  {
+    id: "tarsier-big-eyes-in-the-forest",
+    order: 25,
+    title: "The Tarsier — Big Eyes in the Forest",
+    subtitle: "Meet the tiny wide-eyed creature that fits in your hand and only lives here",
+    emoji: "🐒",
+    category: "Philippines",
+    date: "2026-09-07",
+    time: "9:00 AM",
+    materials: ["Paper plates or cardboard (mask-making!)", "Big googly eyes or paper circles", "Crayons, markers", "Selah's drawing supplies"],
+    canvaLink: "https://www.canva.com/",
+    videoLinks: [
+      { label: "Philippine tarsier (search on YouTube)", url: "https://www.youtube.com/results?search_query=philippine+tarsier+bohol" },
+    ],
+    familyChallenge:
+      "Two-part animal adventure! Selah draws the tarsier's giant eyes up close; Rylee leads a tarsier mask craft from paper plates. Then everyone tries the tarsier challenge: sit perfectly STILL and QUIET for two whole minutes, like a tarsier hiding — hardest game ever!",
+    notes: "Unit 6 Animals opens. Conservation = stewardship of God's creation. Rylee (animals) + Selah (drawing) both lead. Animal words also in config/languages.ts.",
+    sections: [
+      {
+        heading: "The Eyes in the Dark",
+        emoji: "🌙",
+        body: "It's midnight in the forest of Bohol, and something is watching. Two enormous round eyes — each one bigger than its own brain — blink from a tree branch. It's a tarsier: a creature so small it could sit in your palm, so shy it hides all day, and so special it lives almost nowhere else on Earth but here. It turns its head almost all the way around, like a tiny owl, fixes those huge eyes on a moth… and leaps. Meet one of the Philippines' most precious little treasures.",
+      },
+      {
+        heading: "The Smallest Big-Eyed Wonder",
+        emoji: "👀",
+        body: "The Philippine tarsier is packed with 'world's most' surprises for something so tiny!",
+        bullets: [
+          "One of the smallest primates on Earth — about the size of your fist",
+          "Its eyes are so big it CAN'T move them — so it turns its head almost 180°, like an owl",
+          "It can leap many times its own length between trees in the dark",
+          "It talks in sounds too high for humans to hear — a secret song only tarsiers know",
+        ],
+      },
+      {
+        heading: "Tiny, and in Trouble",
+        emoji: "🌳",
+        body: "Here's the serious part, explorers. Tarsiers are endangered — there aren't many left, because their forest homes are being cut down. They're so gentle and shy that being kept as pets makes them sad and sick. But the good news: Filipinos have built safe sanctuaries in Bohol where tarsiers live protected, and where visitors must be quiet and kind. Caring for the smallest creatures is part of caring for God's creation — every wide-eyed one matters.",
+      },
+      {
+        heading: "Forest Words",
+        emoji: "💬",
+        body: "The vocabulary of the night forest — say the small words softly, like you might scare a tarsier!",
+      },
+    ],
+    phrases: [
+      { english: "Animal", tagalog: "Hayop", hiligaynon: "Sapat", pronunciation: "HAH-yop / sah-PAHT" },
+      { english: "Eyes", tagalog: "Mata", hiligaynon: "Mata", pronunciation: "mah-TAH" },
+      { english: "Small", tagalog: "Maliit", hiligaynon: "Gamay", pronunciation: "mah-lee-EET / gah-MAI" },
+      { english: "Tree", tagalog: "Puno", hiligaynon: "Kahoy", pronunciation: "POO-noh / KAH-hoy" },
+      { english: "Night", tagalog: "Gabi", hiligaynon: "Gab-i", pronunciation: "gah-BEE / GAHB-ee" },
+      { english: "Forest", tagalog: "Gubat", hiligaynon: "Kagulangan", pronunciation: "GOO-baht / kah-goo-LAH-ngahn" },
+    ],
+    reflection: "The tiny, shy tarsier is protected because people decided it was worth caring for. Who or what is small and gentle that YOUR family can help take care of?",
+    gratitudePrompt: "Today I am grateful to the Lord because...",
+  },
+  {
+    id: "helping-others-bayanihan-hearts",
+    order: 26,
+    title: "Helping Others — Tulong",
+    subtitle: "Serving one another humbly in love — the Filipino way of the helping hand",
+    emoji: "🤲",
+    category: "Values",
+    date: "2026-09-09",
+    time: "9:00 AM",
+    materials: ["A jar or box (the 'Helper's Jar')", "Small paper slips", "A pen"],
+    canvaLink: "https://www.canva.com/",
+    videoLinks: [
+      { label: "Kindness & helping stories for kids (search on YouTube)", url: "https://www.youtube.com/results?search_query=helping+others+kindness+story+for+kids" },
+    ],
+    familyChallenge:
+      "Start a Helper's Jar this week. Every time someone in the family helps another person — without being asked — write it on a slip and drop it in. On Friday, read them all aloud together and thank each helper. Watch the jar fill up with love!",
+    notes: "Unit 4/11 Values. Verse: Galatians 5:13. Includes Story · Discussion · Reflection · Challenge · Real example (per CONTENT_GUIDELINES values structure). Deepens the bayanihan lesson.",
+    sections: [
+      {
+        heading: "The Boy Who Carried the Basket",
+        emoji: "🧺",
+        body: "Old Aling Rosa was walking home from the market, her basket heavy with rice and vegetables, stopping every few steps to rest her tired arms. A boy named Miguel was playing basketball with his friends nearby. He could have kept playing — nobody would have blamed him. But he saw her, jogged over, and simply said, 'Ako na po' — let me carry it. He walked the whole way to her door, chatting about her grandchildren, then ran back to his game. He didn't do it for a reward. He did it because a heavy basket and a helping hand belong together.",
+      },
+      {
+        heading: "Let's Talk About It",
+        emoji: "💬",
+        body: "Gather close — this is family table talk, not a test. There are no wrong answers.",
+        bullets: [
+          "Why do you think Miguel helped, even though no one asked him to?",
+          "When was a time someone helped YOU when you really needed it? How did it feel?",
+          "Is it still helping if you only do it hoping to be thanked or paid?",
+          "Who around us — at home, next door, at church — might need a helping hand this week?",
+        ],
+      },
+      {
+        heading: "What God Says About Helping",
+        emoji: "📖",
+        body: "The Bible gives us the heart behind the helping hand: 'Serve one another humbly in love.' (Galatians 5:13) 'Humbly' is the key word — real helping doesn't show off or keep score. It just quietly makes someone's load lighter, the way Miguel did. This is bayanihan grown small enough to fit in one kind child's hands.",
+      },
+      {
+        heading: "Words of the Helping Hand",
+        emoji: "🤝",
+        body: "Say these — then go find someone to say 'Ako na' to!",
+      },
+    ],
+    phrases: [
+      { english: "Help", tagalog: "Tulong", hiligaynon: "Bulig", pronunciation: "TOO-long / BOO-lig" },
+      { english: "Let me (do it)", tagalog: "Ako na", hiligaynon: "Ako na lang", pronunciation: "ah-KOH nah" },
+      { english: "Can I help you?", tagalog: "Tutulong ako?", hiligaynon: "Mabulig ako?", pronunciation: "too-TOO-long ah-KOH / mah-BOO-lig ah-KOH" },
+      { english: "Thank you", tagalog: "Salamat", hiligaynon: "Salamat", pronunciation: "sah-LAH-maht" },
+      { english: "You're welcome", tagalog: "Walang anuman", hiligaynon: "Wala sing ano man", pronunciation: "wah-LAHNG ah-noo-MAHN / wah-LAH sing AH-noh mahn" },
+    ],
+    reflection: "Miguel helped without being asked. What is one thing you could do this week to make someone's 'basket' a little lighter?",
+    gratitudePrompt: "Today I am grateful to the Lord because...",
+  },
 ];
 
 export function getLesson(id: string): Lesson | undefined {

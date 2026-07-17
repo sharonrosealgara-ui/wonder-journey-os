@@ -3,10 +3,8 @@
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Participant, Track } from "livekit-client";
-import { familyName, teacherName } from "@/config/family";
-import { getTodaysLesson } from "@/config/lessons";
+import { familyName, familySlug, teacherName } from "@/config/family";
 import { normalizeMode } from "@/config/navigation";
-import { todayISO } from "@/lib/app-state";
 import { CameraOffTile } from "@/components/friendly-avatar";
 import { participantRole, useCall } from "@/lib/call-context";
 import { initCloudSync } from "@/lib/cloud-sync";
@@ -50,7 +48,6 @@ export function CameraDock() {
   const startCall = useCallback(() => {
     const mode = normalizeMode(readStored<string>("mode", "family"));
     const code = readStored<string>("classCode", "");
-    const lesson = getTodaysLesson();
     void call
       .join({
         // the name given at the front door rides on the camera
@@ -59,7 +56,7 @@ export function CameraDock() {
           (mode === "teacher" ? teacherName : familyName),
         code,
         role: mode === "teacher" ? "teacher" : "family",
-        roomName: `wj-${lesson?.id ?? "class"}-${todayISO()}`,
+        roomName: `wj-room-${familySlug}`, // one stable room per family (timezone-proof)
         camId: "",
         micId: "",
         camOn: true,

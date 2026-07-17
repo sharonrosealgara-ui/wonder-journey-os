@@ -6,7 +6,7 @@ import { ConnectionState, Participant, Track } from "livekit-client";
 import { AnnotationLayer } from "@/components/adventure/annotation-layer";
 import { CameraOffTile } from "@/components/friendly-avatar";
 import { AdventureTheater } from "@/components/adventure/theater";
-import { familyName, getStudent, teacherName } from "@/config/family";
+import { familyName, familySlug, getStudent, teacherName } from "@/config/family";
 import { getTodaysLesson, lessons as allLessons, type Lesson } from "@/config/lessons";
 import type { Mode } from "@/config/navigation";
 import { normalizeMode } from "@/config/navigation";
@@ -46,7 +46,11 @@ export default function ClassroomPage() {
     setName(doorName || (mode === "teacher" ? teacherName : student ? student.name : familyName));
   }, [student, mode]);
 
-  const roomName = useMemo(() => `wj-${lesson?.id ?? "class"}-${todayISO()}`, [lesson]);
+  // ONE stable classroom per family — never date- or lesson-derived, so
+  // the teacher (in the Philippines) and the family (in the US) always
+  // land in the SAME room even when it's a different calendar day on
+  // each side. A family's classroom is like a personal meeting room.
+  const roomName = `wj-room-${familySlug}`;
 
   async function join(devices: { camId: string; micId: string; camOn: boolean; micOn: boolean }) {
     setJoinError(null);

@@ -533,6 +533,179 @@ export const lessons: Lesson[] = [
     reflection: "Which part of a Filipino kid's day would you most like to try — and which part of YOUR day do you think they would enjoy?",
     gratitudePrompt: "Today I am grateful to the Lord because...",
   },
+
+  // ═══════════════════════════════════════════════════════════
+  // AUGUST — "Islands & Words" (Season Calendar, Units 5 · 2 · 7)
+  // ═══════════════════════════════════════════════════════════
+  {
+    id: "luzon-land-of-the-rising-capital",
+    order: 10,
+    title: "Luzon — Land of the Rising Capital",
+    subtitle: "Ride a jeepney through the biggest island of them all",
+    emoji: "🚍",
+    category: "Philippines",
+    date: "2026-08-03",
+    time: "9:00 AM",
+    materials: ["A shoebox or building blocks (jeepney build!)", "Crayons or markers", "Paper for a route map"],
+    canvaLink: "https://www.canva.com/",
+    videoLinks: [
+      { label: "Manila & Luzon from above (search on YouTube)", url: "https://www.youtube.com/results?search_query=luzon+manila+from+above+4k" },
+    ],
+    familyChallenge:
+      "Build your own jeepney from a shoebox or blocks — paint it bright, give it a name like real drivers do, and draw the route map of YOUR town for its first trip!",
+    notes: "Regional intro — the Banaue, Mayon, and Palawan episodes award this month's stamps.",
+    sections: [
+      {
+        heading: "The City That Wakes Before the Sun",
+        emoji: "🌅",
+        body: "It is 4:30 in the morning in Manila, and Mang Ben is already polishing his jeepney — a long, shiny silver bus-car covered in painted horses, family names, and little flags. Before the sun is even up, his jeepney rumbles to life and joins thousands of others, carrying students, lolas with market baskets, and workers across the biggest island in the Philippines. Climb in — today, Luzon is our route!",
+      },
+      {
+        heading: "One Giant Island, a Thousand Faces",
+        emoji: "🗺️",
+        body: "Luzon is the largest of the three island groups — so big it holds almost every kind of place you can imagine.",
+        bullets: [
+          "Home of Manila, the capital city, and Quezon City, the biggest city",
+          "The cool Cordillera mountains in the north — where the rice terraces climb the sky (next Monday's adventure!)",
+          "Fiery volcanoes like Mayon and Taal — and black-sand beaches beneath them",
+          "More than half of all Filipinos live on Luzon",
+        ],
+      },
+      {
+        heading: "Manila — the Capital by the Bay",
+        emoji: "🏙️",
+        body: "Manila sits beside a bay famous for the most beautiful sunsets in Asia. Inside the city hides Intramuros — 'the walled city' — with stone walls over 400 years old that you can walk on top of! Nearby is Rizal Park, named for the national hero the kids will meet again and again on this journey.",
+        bullets: [
+          "Intramuros — a Spanish-era walled city you can explore by bamboo bike",
+          "Manila Bay — famous worldwide for its orange-pink sunsets",
+          "Jeepneys everywhere — the 'kings of the road,' each one decorated like a rolling artwork",
+        ],
+      },
+      {
+        heading: "Words for the Road",
+        emoji: "🧭",
+        body: "Every traveler needs road words! Practice these out loud, then use them on your jeepney build.",
+      },
+    ],
+    phrases: [
+      { english: "Trip / journey", tagalog: "Byahe", hiligaynon: "Byahe", pronunciation: "BYAH-heh" },
+      { english: "City", tagalog: "Lungsod", hiligaynon: "Siyudad", pronunciation: "loong-SOD / see-yoo-DAHD" },
+      { english: "Mountain", tagalog: "Bundok", hiligaynon: "Bukid", pronunciation: "boon-DOK / boo-KID" },
+      { english: "Sea", tagalog: "Dagat", hiligaynon: "Dagat", pronunciation: "DAH-gaht" },
+      { english: "Street", tagalog: "Kalye", hiligaynon: "Kalye", pronunciation: "KAHL-yeh" },
+      { english: "Let's ride!", tagalog: "Sakay na!", hiligaynon: "Sakay na!", pronunciation: "sah-KAI nah" },
+    ],
+    reflection: "If your family had its own jeepney, what would you paint on it — and where would its very first route go?",
+    gratitudePrompt: "Today I am grateful to the Lord because...",
+  },
+  {
+    id: "tagalog-family-words",
+    order: 11,
+    title: "Pamilya! Family Words",
+    subtitle: "Ate, Kuya, Lola, Lolo — every person in a Filipino family has a special name",
+    emoji: "👨‍👩‍👧‍👦",
+    category: "Language",
+    date: "2026-08-05",
+    time: "9:00 AM",
+    materials: ["Large paper or poster board (family tree)", "Family photos or drawing supplies", "Glue or tape"],
+    canvaLink: "https://www.canva.com/",
+    videoLinks: [
+      { label: "Filipino family words song (search on YouTube)", url: "https://www.youtube.com/results?search_query=tagalog+family+words+for+kids" },
+    ],
+    familyChallenge:
+      "Make a family tree poster with photos or drawings — label every person with their Filipino title. Then use Ate, Kuya, Manang, and Manong for each other ALL WEEK. (Rylee and Ezra just became Ate and Kuya!)",
+    notes: "Teacher: please double-check the Hiligaynon terms below — your ear is final. Word set also lives in config/languages.ts (Family Words).",
+    sections: [
+      {
+        heading: "Sunday at Lola's House",
+        emoji: "🏡",
+        body: "The tricycle stops in front of a blue house and the door bursts open before you even knock. 'Apo!' cries Lola, pulling you in. Inside, Ate Liza is setting the table, Kuya Miko is carrying a giant pot of rice, and Tatay is laughing at something Nanay said. In a Filipino home, nobody is just a name — everyone has a TITLE that says 'you belong to me, and I belong to you.'",
+      },
+      {
+        heading: "Who's Who sa Pamilya",
+        emoji: "💛",
+        body: "These titles are little gifts of respect — using them tells someone their place in your heart.",
+        bullets: [
+          "Ate (AH-teh) — older sister · Kuya (KOO-yah) — older brother (Tagalog)",
+          "Manang — older sister · Manong — older brother (Hiligaynon, Teacher Sharon's home words!)",
+          "Lola — grandmother · Lolo — grandfather — the most beloved words in any Filipino house",
+          "Even friends and neighbors get titles — a kind older lady is 'Tita,' a family friend is 'Tito'",
+        ],
+      },
+      {
+        heading: "Po and Opo Live at Home",
+        emoji: "🙏",
+        body: "Remember 'po' and 'opo,' the respect words? Their favorite place is inside the family. 'Opo, Lola' — yes, grandmother. 'Salamat po, Tatay' — thank you, father. Respect isn't a rule in a Filipino family; it's the way love talks.",
+      },
+      {
+        heading: "Your Words for the People You Love",
+        emoji: "💬",
+        body: "Say each one out loud — then look at the person in YOUR family it belongs to and say it to them!",
+      },
+    ],
+    phrases: [
+      { english: "Mother", tagalog: "Nanay", hiligaynon: "Nanay / Iloy", pronunciation: "NAH-nai / EE-loy" },
+      { english: "Father", tagalog: "Tatay", hiligaynon: "Tatay / Amay", pronunciation: "TAH-tai / AH-mai" },
+      { english: "Older sister", tagalog: "Ate", hiligaynon: "Manang", pronunciation: "AH-teh / mah-NAHNG" },
+      { english: "Older brother", tagalog: "Kuya", hiligaynon: "Manong", pronunciation: "KOO-yah / mah-NOHNG" },
+      { english: "Grandmother", tagalog: "Lola", hiligaynon: "Lola", pronunciation: "LOH-lah" },
+      { english: "Grandfather", tagalog: "Lolo", hiligaynon: "Lolo", pronunciation: "LOH-loh" },
+      { english: "Sibling", tagalog: "Kapatid", hiligaynon: "Utod", pronunciation: "kah-pah-TEED / oo-TOD" },
+      { english: "Family", tagalog: "Pamilya", hiligaynon: "Pamilya", pronunciation: "pah-MEEL-yah" },
+    ],
+    reflection: "Which family title feels the most special to you — and who in your family will you call by their Filipino title first?",
+    gratitudePrompt: "Today I am grateful to the Lord because...",
+  },
+  {
+    id: "halo-halo-adventure",
+    order: 12,
+    title: "Halo-Halo Cooking Adventure",
+    subtitle: "The dessert whose name means 'mix-mix' — everything wonderful in one glass",
+    emoji: "🍧",
+    category: "Cooking",
+    recipeId: "halo-halo",
+    date: "2026-08-07",
+    time: "9:00 AM",
+    materials: ["See the recipe's shopping list (Cooking Academy)", "Tall clear glasses", "Long spoons", "Crushed ice"],
+    canvaLink: "https://www.canva.com/",
+    videoLinks: [
+      { label: "How halo-halo is made (search on YouTube)", url: "https://www.youtube.com/results?search_query=halo+halo+filipino+dessert+how+to" },
+    ],
+    familyChallenge:
+      "Invent your family's OWN halo-halo layer! Each explorer adds one ingredient nobody expects — name your creation and draw its 'menu card' for the Family Cookbook.",
+    notes: "Teacher: verify Hiligaynon kitchen words below. Grandma Jeannie will love this one — layering is a perfect job for many hands.",
+    sections: [
+      {
+        heading: "The Bell on the Hottest Day",
+        emoji: "🔔",
+        body: "It is the hottest afternoon of April in Bacolod, the kind where even the dogs nap in the shade. Then — kiling-kiling! — a little bell rings down the street, and every kid on the block sits straight up. The halo-halo cart is coming! Crushed ice, purple ube, sweet bananas, jellies like little jewels, and milk poured over everything. One glass, a hundred colors, and the whole street lines up smiling.",
+      },
+      {
+        heading: "What Does Halo-Halo Mean?",
+        emoji: "🥄",
+        body: "'Halo' means MIX — so halo-halo means 'mix-mix!' The magic rule: everything goes in together, and somehow it all belongs. Sweet beans next to jelly, ice next to flan, purple yam on top. A little like a family, isn't it? Different colors and flavors — one wonderful glass.",
+        bullets: [
+          "Layered, never stirred — until YOU mix it at the table (that's the fun part)",
+          "Ube (purple yam) makes it purple, leche flan makes it golden",
+          "Every region — and every family — builds theirs differently",
+        ],
+      },
+      {
+        heading: "Kitchen Words for Today",
+        emoji: "💬",
+        body: "Cooks in the Philippines call across the kitchen in these words — now your kitchen can too!",
+      },
+    ],
+    phrases: [
+      { english: "Mix", tagalog: "Halo", hiligaynon: "Lakot", pronunciation: "HAH-loh / LAH-kot" },
+      { english: "Ice", tagalog: "Yelo", hiligaynon: "Yelo", pronunciation: "YEH-loh" },
+      { english: "Sweet", tagalog: "Matamis", hiligaynon: "Matam-is", pronunciation: "mah-tah-MEES / mah-TAHM-ees" },
+      { english: "Delicious!", tagalog: "Masarap!", hiligaynon: "Manamit!", pronunciation: "mah-sah-RAHP / mah-NAH-meet" },
+      { english: "Milk", tagalog: "Gatas", hiligaynon: "Gatas", pronunciation: "GAH-tahs" },
+    ],
+    reflection: "Halo-halo means many different things making one delicious whole. How is your family like a halo-halo?",
+    gratitudePrompt: "Today I am grateful to the Lord because...",
+  },
 ];
 
 export function getLesson(id: string): Lesson | undefined {

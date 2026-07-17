@@ -8,6 +8,7 @@ import { MatchingGame } from "@/components/matching-game";
 import { PhotoUpload } from "@/components/photo-upload";
 import { Polaroid } from "@/components/smart-photo";
 import { Highlight } from "@/lib/highlight";
+import { speak } from "@/lib/speak";
 import { useSmartSrc } from "@/lib/photos";
 import { getDestination } from "@/config/destinations";
 import { familyAdults, familyName, getStudent, students, teacherName } from "@/config/family";
@@ -525,6 +526,23 @@ function VocabSlide({
                   {p.pronunciation && (
                     <p className="font-hand text-ink-soft">🗣️ {p.pronunciation}</p>
                   )}
+                  <span
+                    role="button"
+                    tabIndex={0}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      speak(p.tagalog);
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.stopPropagation();
+                        speak(p.tagalog);
+                      }
+                    }}
+                    className="mt-1 inline-flex items-center gap-1.5 rounded-full bg-mango/30 px-3 py-1 font-display text-sm text-mango-deep transition-transform hover:scale-105 active:scale-95"
+                  >
+                    🔊 Hear it
+                  </span>
                 </div>
               ) : (
                 <p className="font-hand mt-1 text-ink-soft">Tap to reveal! ✨</p>

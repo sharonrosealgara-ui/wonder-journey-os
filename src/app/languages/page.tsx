@@ -4,6 +4,7 @@ import { useState } from "react";
 import { MatchingGame } from "@/components/matching-game";
 import { PageHeader } from "@/components/page-header";
 import { phraseCategories, type Phrase } from "@/config/languages";
+import { speak } from "@/lib/speak";
 
 type View = "table" | "flashcards" | "game";
 type Lang = "tagalog";
@@ -89,11 +90,14 @@ function WordTable({ phrases }: { phrases: Phrase[] }) {
               </div>
             </div>
           </div>
-          {p.pronunciation && (
-            <div className="mt-3 inline-flex items-center gap-2 rounded-2xl rounded-bl-sm bg-mango/35 px-3 py-1.5 font-hand text-base text-ink">
-              📣 Say it: <b>{p.pronunciation}</b>
-            </div>
-          )}
+          {/* Tap to HEAR the word spoken aloud (device voice) */}
+          <button
+            onClick={() => speak(p.tagalog)}
+            className="mt-3 inline-flex items-center gap-2 rounded-2xl rounded-bl-sm bg-mango/35 px-3 py-1.5 font-hand text-base text-ink transition-transform hover:scale-105 active:scale-95"
+            title={`Hear "${p.tagalog}"`}
+          >
+            🔊 Tap to hear{p.pronunciation ? <span className="text-ink-soft">· {p.pronunciation}</span> : null}
+          </button>
         </div>
       ))}
     </div>
@@ -127,7 +131,15 @@ function Flashcards({ phrases, lang }: { phrases: Phrase[]; lang: Lang }) {
               {phrase[lang]}
             </span>
             <span className="mt-2 text-ink-soft">{phrase.pronunciation}</span>
-            <span className="mt-3 text-sm text-ink-soft">Say it out loud 3 times! 🎤</span>
+            <button
+              onClick={(e) => {
+                e.stopPropagation(); // don't flip the card
+                speak(phrase.tagalog);
+              }}
+              className="mt-3 inline-flex items-center gap-2 rounded-full bg-sunset px-4 py-1.5 font-display text-sm text-white shadow transition-transform hover:scale-105 active:scale-95"
+            >
+              🔊 Hear it
+            </button>
           </div>
         </div>
       </div>

@@ -521,8 +521,7 @@ function VocabSlide({
               <p className="font-display text-xl">{p.english}</p>
               {open ? (
                 <div className="wj-pop-in mt-2 space-y-1">
-                  <p className="font-display text-lg text-sunset-deep">🇵🇭 {p.tagalog}</p>
-                  <p className="font-display text-lg text-ocean-deep">🌺 {p.hiligaynon}</p>
+                  <p className="font-display text-xl text-sunset-deep">🇵🇭 {p.tagalog}</p>
                   {p.pronunciation && (
                     <p className="font-hand text-ink-soft">🗣️ {p.pronunciation}</p>
                   )}
@@ -606,7 +605,8 @@ function stars(n: number): string {
 }
 
 function GameSlide({ slide, lesson, level }: { slide: Slide; lesson: Lesson; level: ExplorerLevel }) {
-  const [lang, setLang] = useState<"tagalog" | "hiligaynon">("tagalog");
+  // Tagalog-only (Sharon's decision) — the games always use the Tagalog word.
+  const lang = "tagalog" as const;
   const [game, setGame] = useState<GameId | null>(null);
   const phrases = lesson.phrases ?? [];
   const hasVocab = phrases.length > 0;
@@ -646,24 +646,6 @@ function GameSlide({ slide, lesson, level }: { slide: Slide; lesson: Lesson; lev
         🎮 {active ? active.label : "Game Arcade"}
       </h1>
 
-      {/* language toggle (vocab games) */}
-      {(!game || active?.needsVocab) && hasVocab && (
-        <div className="mt-3 flex justify-center">
-          <div className="flex rounded-full border-2 border-sand-deep bg-white p-1">
-            {(["tagalog", "hiligaynon"] as const).map((l) => (
-              <button
-                key={l}
-                onClick={() => setLang(l)}
-                className={`rounded-full px-4 py-1.5 text-sm font-bold capitalize ${
-                  lang === l ? "bg-hibiscus text-white" : "text-ink-soft"
-                }`}
-              >
-                {l}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
 
       {/* whose turn (team mode) */}
       {teamOn && current && (

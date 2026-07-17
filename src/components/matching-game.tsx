@@ -9,11 +9,11 @@ import { shuffle } from "@/lib/slides";
 export type MatchPhrase = {
   english: string;
   tagalog: string;
-  hiligaynon: string;
+  hiligaynon?: string; // legacy — Tagalog only now
   emoji?: string;
 };
 
-type Lang = "tagalog" | "hiligaynon";
+type Lang = "tagalog";
 
 type GameCard = {
   key: string;

@@ -14,7 +14,7 @@ import { sfx } from "@/lib/sound";
 // can track "beat your best" and tally sibling turns. Difficulty scales
 // with the explorer's age tier (Decision 042).
 
-type Lang = "tagalog" | "hiligaynon";
+type Lang = "tagalog"; // Tagalog only (Sharon's decision)
 
 // how many pairs / questions per age tier
 const DIFFICULTY: Record<ExplorerLevel, { pairs: number; questions: number }> = {

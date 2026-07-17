@@ -137,28 +137,15 @@ export function RecipeView({ id }: { id: string }) {
 
       {/* Language corner */}
       <section className="wj-card p-6">
-        <h2 className="font-display text-lg font-extrabold">💬 Kitchen words</h2>
-        <div className="mt-3 grid gap-4 sm:grid-cols-2">
-          <div>
-            <h3 className="text-sm font-bold text-sunset-deep">Tagalog</h3>
-            <ul className="mt-2 space-y-1 text-sm">
-              {recipe.tagalogWords.map((w) => (
-                <li key={w.word}>
-                  <b>{w.word}</b> — {w.meaning}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <h3 className="text-sm font-bold text-ocean-deep">Hiligaynon</h3>
-            <ul className="mt-2 space-y-1 text-sm">
-              {recipe.hiligaynonWords.map((w) => (
-                <li key={w.word}>
-                  <b>{w.word}</b> — {w.meaning}
-                </li>
-              ))}
-            </ul>
-          </div>
+        <h2 className="font-display text-lg font-extrabold">💬 Kitchen words (Tagalog)</h2>
+        <div className="mt-3">
+          <ul className="grid gap-1 text-sm sm:grid-cols-2">
+            {recipe.tagalogWords.map((w) => (
+              <li key={w.word}>
+                <b className="text-sunset-deep">{w.word}</b> — {w.meaning}
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 

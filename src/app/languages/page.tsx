@@ -6,12 +6,13 @@ import { PageHeader } from "@/components/page-header";
 import { phraseCategories, type Phrase } from "@/config/languages";
 
 type View = "table" | "flashcards" | "game";
-type Lang = "tagalog" | "hiligaynon";
+type Lang = "tagalog";
 
 export default function LanguagesPage() {
   const [categoryId, setCategoryId] = useState(phraseCategories[0].id);
   const [view, setView] = useState<View>("table");
-  const [lang, setLang] = useState<Lang>("tagalog");
+  // Tagalog-only (Sharon's decision) — one language, learned well.
+  const lang: Lang = "tagalog";
 
   const category = phraseCategories.find((c) => c.id === categoryId) ?? phraseCategories[0];
 
@@ -20,7 +21,7 @@ export default function LanguagesPage() {
       <PageHeader
         emoji="💬"
         title="Languages"
-        subtitle="Tagalog & Hiligaynon — learn, flip flashcards, and play the matching game!"
+        subtitle="Let's learn Tagalog — a word list, flip flashcards, and a matching game!"
       />
 
       {/* Category picker */}
@@ -59,21 +60,6 @@ export default function LanguagesPage() {
             </button>
           ))}
         </div>
-        {view !== "table" && (
-          <div className="flex rounded-full border-2 border-sand-deep bg-white p-1">
-            {(["tagalog", "hiligaynon"] as Lang[]).map((l) => (
-              <button
-                key={l}
-                onClick={() => setLang(l)}
-                className={`rounded-full px-3.5 py-1.5 text-sm font-bold capitalize ${
-                  lang === l ? "bg-hibiscus text-white" : "text-ink-soft"
-                }`}
-              >
-                {l}
-              </button>
-            ))}
-          </div>
-        )}
       </div>
 
       {view === "table" && <WordTable phrases={category.phrases} />}
@@ -98,10 +84,8 @@ function WordTable({ phrases }: { phrases: Phrase[] }) {
             <span className="wj-sticker h-11 w-11 shrink-0 text-xl">{p.emoji}</span>
             <div className="min-w-0">
               <div className="font-display text-lg leading-tight">{p.english}</div>
-              <div className="mt-0.5 text-sm">
+              <div className="mt-0.5 text-base">
                 <b className="text-sunset-deep">{p.tagalog}</b>
-                <span className="mx-1.5 text-ink-soft">·</span>
-                <b className="text-ocean-deep">{p.hiligaynon}</b>
               </div>
             </div>
           </div>

@@ -337,7 +337,6 @@ function buildParentSummary(
 ): string {
   const nextLesson = lessons.find((l) => l.order === lesson.order + 1);
   const tl = (lesson.phrases ?? []).map((p) => `${p.tagalog} (${p.english})`).join(", ");
-  const hil = (lesson.phrases ?? []).map((p) => `${p.hiligaynon} (${p.english})`).join(", ");
   const activities = [
     "Morning Blessings & gratitude journal",
     "Story & discovery slides",
@@ -367,9 +366,6 @@ ${lesson.subtitle}
 
 💬 NEW TAGALOG WORDS
 ${tl || "—"}
-
-🌺 NEW HILIGAYNON WORDS
-${hil || "—"}
 
 🎯 ACTIVITIES COMPLETED
 ${activities.map((a) => `  • ${a}`).join("\n")}

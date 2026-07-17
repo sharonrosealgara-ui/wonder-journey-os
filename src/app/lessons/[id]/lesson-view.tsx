@@ -102,7 +102,6 @@ export function LessonView({ id }: { id: string }) {
                 <tr className="text-left font-display text-ink-soft">
                   <th className="pb-2 pr-4">English</th>
                   <th className="pb-2 pr-4">Tagalog</th>
-                  <th className="pb-2 pr-4">Hiligaynon</th>
                   <th className="pb-2">Say it like...</th>
                 </tr>
               </thead>
@@ -110,8 +109,7 @@ export function LessonView({ id }: { id: string }) {
                 {lesson.phrases.map((p) => (
                   <tr key={p.english} className="border-t border-sand-deep">
                     <td className="py-2.5 pr-4 font-bold">{p.english}</td>
-                    <td className="py-2.5 pr-4 text-sunset-deep">{p.tagalog}</td>
-                    <td className="py-2.5 pr-4 text-ocean-deep">{p.hiligaynon}</td>
+                    <td className="py-2.5 pr-4 font-bold text-sunset-deep">{p.tagalog}</td>
                     <td className="py-2.5 text-ink-soft">{p.pronunciation}</td>
                   </tr>
                 ))}

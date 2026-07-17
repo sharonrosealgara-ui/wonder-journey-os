@@ -12,7 +12,7 @@ export type LessonSection = {
 export type PhrasePair = {
   english: string;
   tagalog: string;
-  hiligaynon: string;
+  hiligaynon?: string; // legacy — kept optional; the app teaches Tagalog only now
   pronunciation?: string;
 };
 
@@ -1743,6 +1743,125 @@ export const lessons: Lesson[] = [
       { english: "Delicious!", tagalog: "Ang sarap!", hiligaynon: "Kanamit!", pronunciation: "ahng sah-RAHP / kah-NAH-meet" },
     ],
     reflection: "Sharing one pan fairly takes both math AND kindness. Was it easy or hard to share equally — and who did you choose to give brownies to?",
+    gratitudePrompt: "Today I am grateful to the Lord because...",
+  },
+  {
+    id: "carabao-the-farmers-best-friend",
+    order: 31,
+    title: "The Carabao — The Farmer's Best Friend",
+    subtitle: "The strong, gentle water buffalo who helped build the whole countryside",
+    emoji: "🐃",
+    category: "Philippines",
+    date: "2026-09-23",
+    time: "9:00 AM",
+    materials: ["Brown clay or playdough (sculpt a carabao!)", "Craft sticks (for a little plow/cart)", "Asa's building supplies"],
+    canvaLink: "https://www.canva.com/",
+    videoLinks: [
+      { label: "Carabao — the Filipino water buffalo (search on YouTube)", url: "https://www.youtube.com/results?search_query=carabao+philippines+farm" },
+    ],
+    familyChallenge:
+      "Asa leads a Carabao Build! Sculpt a carabao from clay and build it a little cart or plow from craft sticks. Then try the 'carabao's job': everyone slowly, patiently pulls a loaded laundry basket across the room — feel how hard the carabao works every single day!",
+    notes: "Unit 6 Animals. The beloved national animal / hardest worker in the barrio — pairs with the National Symbols lesson. Asa (building/animals/vehicles) leads. Tagalog-only vocabulary.",
+    sections: [
+      {
+        heading: "Before the Sun, the Carabao",
+        emoji: "🌅",
+        body: "Long before the rooster finishes crowing, Mang Tino is already in the rice field — and beside him, calm and enormous, is Toto the carabao. Together they walk the muddy rows, the carabao pulling the heavy plow through the earth without complaint, its great curved horns swinging slowly, its wide feet made perfectly for the mud. When the sun gets hot, Toto sinks into a cool puddle with a happy sigh. Farmer and carabao have worked side by side like this in the Philippines for hundreds of years — the truest of friends.",
+      },
+      {
+        heading: "The Gentle Giant of the Barrio",
+        emoji: "🐃",
+        body: "The carabao — a kind of water buffalo — is the beloved national animal of the Philippines, and the hardest worker in the countryside.",
+        bullets: [
+          "Incredibly strong — it pulls plows and carts loaded with rice, coconuts, and firewood",
+          "Loves water and mud — a cool wallow keeps its skin protected from the hot sun",
+          "Gives creamy milk that makes a special cheese called kesong puti and the sweet treat pastillas",
+          "Famous for being patient and gentle — Filipinos even call a calm, hardworking person 'parang carabao' (like a carabao)",
+        ],
+      },
+      {
+        heading: "Slow, Steady, and Strong",
+        emoji: "💪",
+        body: "The carabao teaches something the fast world forgets: you don't have to be quick to be mighty. Step by patient step, the carabao helped grow the rice that fed the nation and helped carve those Banaue terraces we visited. It never rushes and it never quits. When your family has a big, hard, slow job ahead — remember Toto. Steady wins.",
+      },
+      {
+        heading: "Farm Words (Tagalog)",
+        emoji: "💬",
+        body: "The vocabulary of the rice field — say each one, then use it while you build!",
+      },
+    ],
+    phrases: [
+      { english: "Water buffalo (carabao)", tagalog: "Kalabaw", pronunciation: "kah-lah-BAO" },
+      { english: "Farmer", tagalog: "Magsasaka", pronunciation: "mahg-sah-SAH-kah" },
+      { english: "Field / farm", tagalog: "Bukid", pronunciation: "boo-KID" },
+      { english: "Strong", tagalog: "Malakas", pronunciation: "mah-lah-KAHS" },
+      { english: "To work", tagalog: "Magtrabaho", pronunciation: "mahg-trah-BAH-hoh" },
+      { english: "Patient", tagalog: "Matiyaga", pronunciation: "mah-tee-YAH-gah" },
+    ],
+    reflection: "The carabao is strong because it's patient and never quits. What's a slow, hard job your family can tackle 'like a carabao' — one steady step at a time?",
+    gratitudePrompt: "Today I am grateful to the Lord because...",
+  },
+  {
+    id: "baking-academy-banana-bread",
+    order: 32,
+    title: "Baking Academy: Banana Bread",
+    subtitle: "Turning too-ripe bananas into the coziest loaf — nothing wasted, everything loved",
+    emoji: "🍞",
+    category: "Cooking",
+    date: "2026-09-25",
+    time: "9:00 AM",
+    materials: ["3 very ripe bananas", "⅓ cup melted butter", "½ cup sugar, 1 egg, 1 tsp vanilla", "1½ cups flour, 1 tsp baking soda, pinch of salt", "A loaf pan + oven (grown-up!)"],
+    canvaLink: "https://www.canva.com/",
+    videoLinks: [
+      { label: "Easy banana bread with kids (search on YouTube)", url: "https://www.youtube.com/results?search_query=easy+banana+bread+with+kids" },
+    ],
+    familyChallenge:
+      "Banana Bread Kindness Delivery: your loaf makes the house smell amazing — so bake it, slice it, wrap two pieces, and bring them warm to a neighbor or friend 'just because.' Baking is best when it leaves your own kitchen.",
+    notes: "Baking Academy finale-ish for September. Recipe in sections. Themes: no-waste resourcefulness (rescuing ripe bananas), mashing/mixing, generosity. Tagalog-only vocabulary.",
+    sections: [
+      {
+        heading: "The Bananas Nobody Wanted",
+        emoji: "🍌",
+        body: "On the kitchen counter sit three sad bananas — brown, spotty, too soft to peel and eat. Most people would throw them away. But a Filipino lola knows a secret: those are not spoiled bananas. Those are banana bread WAITING to happen! The riper and browner the banana, the sweeter and cozier the loaf. Today the Baking Academy performs a little kitchen magic — turning something nobody wanted into something everybody loves. Nothing wasted, everything loved.",
+      },
+      {
+        heading: "What You'll Bake",
+        emoji: "🧺",
+        body: "The riper the bananas, the better — this is the recipe that saves them!",
+        bullets: [
+          "3 very ripe (brown-spotted) bananas · ⅓ cup melted butter",
+          "½ cup sugar · 1 egg · 1 teaspoon vanilla",
+          "1½ cups flour · 1 teaspoon baking soda · a pinch of salt",
+          "Makes one loaf — about 8 cozy slices to share",
+        ],
+      },
+      {
+        heading: "Let's Bake! (Mash and Mix)",
+        emoji: "🥄",
+        body: "This is the most fun mixing job in the whole Academy — the mashing! Little hands are perfect for it.",
+        bullets: [
+          "1. Mash the ripe bananas with a fork until smooth (squish away — get the wiggles out!)",
+          "2. Stir in the melted butter, then the sugar, egg, and vanilla",
+          "3. Sprinkle in flour, baking soda, and salt — fold gently until just combined",
+          "4. Pour into the loaf pan",
+          "5. Grown-up bakes at 175°C (350°F) about 50 minutes — the whole house will smell like a hug",
+        ],
+      },
+      {
+        heading: "Cozy Kitchen Words (Tagalog)",
+        emoji: "💬",
+        body: "The warm vocabulary of the banana-bread kitchen:",
+      },
+    ],
+    phrases: [
+      { english: "Banana", tagalog: "Saging", pronunciation: "SAH-ging" },
+      { english: "Ripe", tagalog: "Hinog", pronunciation: "hee-NOG" },
+      { english: "To mash", tagalog: "Pisain", pronunciation: "pee-sah-EEN" },
+      { english: "Bread", tagalog: "Tinapay", pronunciation: "tee-nah-PAI" },
+      { english: "Warm", tagalog: "Mainit-init", pronunciation: "mah-ee-nit-EE-nit" },
+      { english: "Nothing wasted", tagalog: "Walang sayang", pronunciation: "WAH-lahng SAH-yahng" },
+    ],
+    reflection: "Banana bread turns 'too ripe to want' into 'too good to waste.' What's something your family could rescue, reuse, or give a second life instead of throwing away?",
     gratitudePrompt: "Today I am grateful to the Lord because...",
   },
 ];

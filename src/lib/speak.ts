@@ -1,53 +1,94 @@
 "use client";
 
-// 🗣️ TAP-TO-HEAR — the device reads a Tagalog word aloud with the
-// browser's built-in speech (Web Speech API). No audio files, no
-// recordings, works offline on phones, tablets, and laptops.
+// 🗣️ TAP-TO-HEAR — speaks a Tagalog word with a REAL Filipino accent.
 //
-// It's a friendly robot voice, not Teacher Sharon — but it gives kids
-// instant pronunciation practice today. (A real recorded-voice version
-// can replace this later without changing any of the call sites.)
+// Three layers, best available wins:
+//   1. A genuine Filipino (fil/tl) voice installed on the device
+//      (many Android phones have one; works offline)
+//   2. Google's public Tagalog voice (the Google-Translate voice) —
+//      authentic Filipino accent, streamed as audio; needs internet.
+//      Note: this is an unofficial endpoint — if Google ever closes it,
+//      the app falls back gracefully to layer 1/3, nothing breaks.
+//   3. The device's default voice (robot accent) — last resort only
+//
+// The forever-plan stays: Teacher Sharon's own recorded voice can
+// replace all of this later without changing any call site.
 
 let filipinoVoice: SpeechSynthesisVoice | null = null;
 let picked = false;
+let audioEl: HTMLAudioElement | null = null;
 
-// Prefer a Filipino/Tagalog voice when the device has one; otherwise
-// fall back gracefully to the default voice.
-function pickVoice(): SpeechSynthesisVoice | null {
-  if (picked) return filipinoVoice;
+function findFilipinoVoice(): SpeechSynthesisVoice | null {
   try {
-    const voices = window.speechSynthesis.getVoices();
-    filipinoVoice =
-      voices.find((v) => /fil|tl[-_]|tagalog|filipino/i.test(v.lang + " " + v.name)) ??
-      null;
-    if (voices.length > 0) picked = true; // voices are loaded
+    const voices = window.speechSynthesis?.getVoices() ?? [];
+    if (voices.length > 0) picked = true;
+    return (
+      voices.find((v) => /^(fil|tl)([-_]|$)|tagalog|filipino/i.test(v.lang + " " + v.name)) ?? null
+    );
   } catch {
-    /* ignore */
+    return null;
   }
-  return filipinoVoice;
 }
 
-/** Speak a Tagalog word/phrase aloud. Safe to call anywhere; a no-op
- *  on browsers without speech support. */
+// voices load asynchronously — keep trying until the list arrives
+if (typeof window !== "undefined" && "speechSynthesis" in window) {
+  window.speechSynthesis.addEventListener?.("voiceschanged", () => {
+    filipinoVoice = findFilipinoVoice();
+  });
+}
+
+function speakWithDeviceVoice(text: string, voice: SpeechSynthesisVoice | null): void {
+  const synth = window.speechSynthesis;
+  synth.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  if (voice) u.voice = voice;
+  u.lang = voice?.lang || "fil-PH";
+  u.rate = 0.85; // a touch slow — clearer for young ears
+  u.pitch = 1.05;
+  synth.speak(u);
+}
+
+/** Speak a Tagalog word/phrase with the most Filipino voice available. */
 export function speak(text: string): void {
   if (typeof window === "undefined") return;
-  const synth = window.speechSynthesis;
-  if (!synth) return;
+
+  // 1) a real Filipino voice on the device itself
+  if (!picked) filipinoVoice = findFilipinoVoice();
+  if (filipinoVoice) {
+    try {
+      speakWithDeviceVoice(text, filipinoVoice);
+      return;
+    } catch {
+      /* fall through */
+    }
+  }
+
+  // 2) Google's Tagalog voice — the authentic accent, via audio stream
   try {
-    synth.cancel(); // stop any word already playing
-    const u = new SpeechSynthesisUtterance(text);
-    const v = pickVoice();
-    if (v) u.voice = v;
-    u.lang = v?.lang || "fil-PH";
-    u.rate = 0.85; // a touch slow — clearer for young ears
-    u.pitch = 1.05;
-    synth.speak(u);
+    if (!audioEl) audioEl = new Audio();
+    audioEl.pause();
+    window.speechSynthesis?.cancel();
+    audioEl.src =
+      "https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=tl&q=" +
+      encodeURIComponent(text.slice(0, 180));
+    void audioEl.play().catch(() => {
+      // 3) offline / blocked → default device voice, better than silence
+      try {
+        speakWithDeviceVoice(text, null);
+      } catch {
+        /* silent */
+      }
+    });
   } catch {
-    /* speech unavailable — silently do nothing */
+    try {
+      speakWithDeviceVoice(text, null);
+    } catch {
+      /* silent */
+    }
   }
 }
 
 /** True when the browser can speak at all (used to show/hide the 🔊). */
 export function canSpeak(): boolean {
-  return typeof window !== "undefined" && "speechSynthesis" in window;
+  return typeof window !== "undefined" && ("speechSynthesis" in window || "Audio" in window);
 }

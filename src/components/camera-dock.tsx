@@ -236,20 +236,28 @@ function LKVideo({ participant, muted = false, version, tall = false }: {
   const videoRef = useRef<HTMLVideoElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
 
-  useEffect(() => {
-    const camPub = participant.getTrackPublication(Track.Source.Camera);
-    if (camPub?.track && videoRef.current) camPub.track.attach(videoRef.current);
-    if (!muted) {
-      const micPub = participant.getTrackPublication(Track.Source.Microphone);
-      if (micPub?.track && audioRef.current) micPub.track.attach(audioRef.current);
-    }
-    return () => {
-      camPub?.track?.detach();
-    };
-  }, [participant, muted, version]);
-
   const camPub = participant.getTrackPublication(Track.Source.Camera);
+  const micPub = participant.getTrackPublication(Track.Source.Microphone);
+  const camTrack = camPub?.track;
+  const micTrack = micPub?.track;
+
+  // ⚠️ Anti-glitch fix: attach/detach only when the TRACK ITSELF changes
+  // (join/leave, camera toggle) — never on `version`, which also bumps
+  // on ActiveSpeakersChanged (fires ~every second for the whole room).
+  // Re-running attach() that often was tearing down and rebuilding the
+  // live video every second, which is what caused the flicker/freeze
+  // on both sides.
+  useEffect(() => {
+    if (camTrack && videoRef.current) camTrack.attach(videoRef.current);
+    if (!muted && micTrack && audioRef.current) micTrack.attach(audioRef.current);
+    return () => {
+      camTrack?.detach();
+      micTrack?.detach();
+    };
+  }, [camTrack, micTrack, muted]);
+
   const showVideo = !!camPub?.track && !camPub.isMuted;
+  void version; // still forces the re-render that keeps isSpeaking/mute UI fresh
 
   return (
     <div className={`relative w-full overflow-hidden rounded-xl bg-ink ${tall ? "aspect-[4/3]" : "aspect-video"} ${participant.isSpeaking ? "ring-2 ring-mango" : ""}`}>

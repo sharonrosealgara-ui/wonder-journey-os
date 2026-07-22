@@ -591,21 +591,27 @@ function ParticipantTile({ participant, isLocal, hand, version, onClick, tall = 
   const videoRef = useRef<HTMLVideoElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
 
-  useEffect(() => {
-    const camPub = participant.getTrackPublication(Track.Source.Camera);
-    if (camPub?.track && videoRef.current) camPub.track.attach(videoRef.current);
-    if (!isLocal) {
-      const micPub = participant.getTrackPublication(Track.Source.Microphone);
-      if (micPub?.track && audioRef.current) micPub.track.attach(audioRef.current);
-    }
-    return () => {
-      camPub?.track?.detach();
-    };
-  }, [participant, isLocal, version]);
-
   const camPub = participant.getTrackPublication(Track.Source.Camera);
-  const camLive = !!camPub?.track && !camPub.isMuted;
   const micPub = participant.getTrackPublication(Track.Source.Microphone);
+  const camTrack = camPub?.track;
+  const micTrack = micPub?.track;
+
+  // ⚠️ Anti-glitch fix: attach/detach only when the TRACK ITSELF changes,
+  // never on `version` (which also bumps on ActiveSpeakersChanged, firing
+  // ~every second for the whole room). Re-attaching that often tore down
+  // and rebuilt the live video every second — the flicker/freeze both
+  // sides were seeing during class.
+  useEffect(() => {
+    if (camTrack && videoRef.current) camTrack.attach(videoRef.current);
+    if (!isLocal && micTrack && audioRef.current) micTrack.attach(audioRef.current);
+    return () => {
+      camTrack?.detach();
+      micTrack?.detach();
+    };
+  }, [camTrack, micTrack, isLocal]);
+
+  const camLive = !!camPub?.track && !camPub.isMuted;
+  void version; // still forces the re-render that keeps isSpeaking/mute UI fresh
   const muted = !micPub?.track || micPub.isMuted;
 
   return (

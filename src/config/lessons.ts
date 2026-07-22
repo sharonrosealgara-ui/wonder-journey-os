@@ -1864,6 +1864,180 @@ export const lessons: Lesson[] = [
     reflection: "Banana bread turns 'too ripe to want' into 'too good to waste.' What's something your family could rescue, reuse, or give a second life instead of throwing away?",
     gratitudePrompt: "Today I am grateful to the Lord because...",
   },
+
+  // ═══════════════════════════════════════════════════════════
+  // OCTOBER — "Fiesta & Trails" (Units 6 · 10 · 7 · 9 · 8)
+  // Resumes after the Feast of Tabernacles pause (~Sep 28–Oct 2).
+  // ═══════════════════════════════════════════════════════════
+  {
+    id: "gentle-giants-of-the-sea",
+    order: 33,
+    title: "Gentle Giants of the Sea",
+    subtitle: "Swim beside the whale shark and the wise old sea turtle",
+    emoji: "🐋",
+    category: "Philippines",
+    date: "2026-10-05",
+    time: "9:00 AM",
+    materials: ["Large paper or cardboard (life-size fin drawing!)", "Measuring tape", "Blue crayons, markers, or paint"],
+    canvaLink: "https://www.canva.com/",
+    videoLinks: [
+      { label: "Whale sharks in the Philippines (search on YouTube)", url: "https://www.youtube.com/results?search_query=whale+shark+philippines+gentle+giant" },
+    ],
+    familyChallenge:
+      "Measure a whale shark in your own home! A butanding can reach 10 meters — use a measuring tape to mark 10 meters down your hallway or yard (that's the whole fish!). Then draw its spotted back on paper: every whale shark's spots are unique, like a fingerprint — invent your family's own spot pattern.",
+    notes: "Unit 6 Animals — the sea giants. Conservation/stewardship thread continues. Tagalog-only vocabulary.",
+    sections: [
+      {
+        heading: "The Shadow Bigger Than the Boat",
+        emoji: "🌊",
+        body: "The fishermen of Donsol were mending nets when the water beside their little boat went dark. Something enormous was rising — bigger than the boat itself — and the youngest fisherman gripped the side. Then it surfaced: a mouth as wide as a doorway, a back covered in white polka dots, moving slow as a cloud. 'Butanding,' the old fisherman smiled, not afraid at all. 'The gentle one.' The biggest fish in the entire ocean — and it eats only tiny, tiny plankton, and has never hurt anyone.",
+      },
+      {
+        heading: "Meet the Giants",
+        emoji: "🐋",
+        body: "Philippine waters are home to some of the most magnificent sea creatures on Earth.",
+        bullets: [
+          "The whale shark (butanding) — the world's BIGGEST fish, up to 10 meters, with spots unique as fingerprints",
+          "It's not a whale! It's a shark — but a filter-feeder that swims with its giant mouth open for plankton",
+          "The pawikan (sea turtle) — can live for decades and swims thousands of kilometers, yet returns to the very beach where it hatched to lay its own eggs",
+          "Baby turtles hatch at night and race to the sea by moonlight — one of nature's bravest journeys",
+        ],
+      },
+      {
+        heading: "Guardians of the Giants",
+        emoji: "🛡️",
+        body: "Filipinos protect both giants fiercely. In Donsol, whale-shark tourism follows strict kind rules — no touching, no chasing, keep your distance. On beaches all over the country, volunteers guard pawikan nests at night and escort the hatchlings safely to the waves. When people choose gentleness toward the biggest fish and the smallest hatchling alike, that's stewardship of God's ocean — and kids can be guardians too.",
+      },
+      {
+        heading: "Ocean Words (Tagalog)",
+        emoji: "💬",
+        body: "The vocabulary of the deep blue — say them in a slow, giant voice!",
+      },
+    ],
+    phrases: [
+      { english: "Whale shark", tagalog: "Butanding", pronunciation: "boo-tahn-DING" },
+      { english: "Sea turtle", tagalog: "Pawikan", pronunciation: "pah-WEE-kahn" },
+      { english: "Ocean / sea", tagalog: "Karagatan", pronunciation: "kah-rah-GAH-tahn" },
+      { english: "Gentle", tagalog: "Maamo", pronunciation: "mah-AH-moh" },
+      { english: "Giant / huge", tagalog: "Higante", pronunciation: "hee-GAHN-teh" },
+      { english: "To swim", tagalog: "Lumangoy", pronunciation: "loo-mah-NGOY" },
+    ],
+    reflection: "The biggest fish in the ocean is also one of the gentlest. What does the butanding teach us about what real strength looks like?",
+    gratitudePrompt: "Today I am grateful to the Lord because...",
+  },
+  {
+    id: "rainforest-the-green-cathedral",
+    order: 34,
+    title: "The Rainforest — A Green Cathedral",
+    subtitle: "Step under the giant trees where half the country's creatures make their home",
+    emoji: "🌳",
+    category: "Philippines",
+    date: "2026-10-07",
+    time: "9:00 AM",
+    materials: ["Paper + green/brown art supplies", "A shoebox (rainforest diorama!)", "Leaves and twigs from outside (with permission)", "Asa's outdoor kit"],
+    canvaLink: "https://www.canva.com/",
+    videoLinks: [
+      { label: "Philippine rainforest (search on YouTube)", url: "https://www.youtube.com/results?search_query=philippine+rainforest+wildlife" },
+    ],
+    familyChallenge:
+      "Asa leads a Rainforest Expedition! Build a shoebox rainforest with its four layers — forest floor, understory, canopy, emergent giants — using real leaves and twigs you gather outside. Hide a paper tarsier and an eagle inside for the family to find (they're hiding in the real one too!).",
+    notes: "Unit 10 Nature Explorer opens (Asa's unit). Layers of the forest + creation care. Connects the tarsier and eagle lessons to their HOME. Tagalog-only vocabulary.",
+    sections: [
+      {
+        heading: "Where the Trees Touch the Clouds",
+        emoji: "🌫️",
+        body: "Step off the sunny trail and into the forest, and the world changes in three steps. The air goes cool and green. Somewhere above, water drips leaf to leaf from last night's rain, and the canopy is so thick you can barely find the sky. A hornbill calls far away. Something rustles — gone before you see it. Old Filipinos called the great forest a place to walk quietly and respectfully, and standing here, you understand: it feels like a giant green cathedral that God planted long before anyone arrived.",
+      },
+      {
+        heading: "A Forest Built in Layers",
+        emoji: "🍃",
+        body: "A rainforest isn't just trees — it's a four-story home, and every floor has its own residents!",
+        bullets: [
+          "Emergent giants — the tallest trees poke above everything; the Philippine Eagle nests up here",
+          "The canopy — the thick green roof where most creatures live: hornbills, monkeys, flying lizards",
+          "The understory — shady middle floor of vines and young trees; our friend the tarsier's bedroom",
+          "The forest floor — dark and busy with wild pigs, insects, and the roots of everything above",
+        ],
+      },
+      {
+        heading: "The Forest Gives, So We Guard",
+        emoji: "💚",
+        body: "Rainforests are the islands' quiet heroes: their roots hold the mountainsides in place during typhoons, they clean the air, they cradle the rivers, and they house most of the country's rarest creatures — many living NOWHERE else on Earth. That's why Filipino kids join tree-planting days and why new forest parks keep being protected. Every tree planted is a future eagle's nest, a tarsier's bedroom, a cleaner river. Caring for the forest is caring for everything that calls it home.",
+      },
+      {
+        heading: "Forest Words (Tagalog)",
+        emoji: "💬",
+        body: "Whisper the forest vocabulary — the rainforest likes quiet visitors!",
+      },
+    ],
+    phrases: [
+      { english: "Forest", tagalog: "Gubat", pronunciation: "GOO-baht" },
+      { english: "Tree", tagalog: "Puno", pronunciation: "POO-noh" },
+      { english: "Leaf", tagalog: "Dahon", pronunciation: "DAH-hon" },
+      { english: "Green", tagalog: "Berde", pronunciation: "BEHR-deh" },
+      { english: "To plant", tagalog: "Magtanim", pronunciation: "mahg-tah-NEEM" },
+      { english: "Alive / living", tagalog: "Buhay", pronunciation: "BOO-hai" },
+    ],
+    reflection: "The forest quietly takes care of the islands — holding the soil, cleaning the air, sheltering the animals. Who quietly takes care of things in YOUR family, and how can you thank them today?",
+    gratitudePrompt: "Today I am grateful to the Lord because...",
+  },
+  {
+    id: "pancit-long-life-noodles",
+    order: 35,
+    title: "Pancit — The Long-Life Noodles",
+    subtitle: "The birthday dish of the Philippines — long noodles for a long, happy life",
+    emoji: "🍜",
+    category: "Cooking",
+    recipeId: "pancit",
+    date: "2026-10-09",
+    time: "9:00 AM",
+    materials: ["See the recipe's shopping list (Cooking Academy)", "A big pan or wok", "Tongs (noodle-lifting practice!)"],
+    canvaLink: "https://www.canva.com/",
+    videoLinks: [
+      { label: "How to cook pancit (search on YouTube)", url: "https://www.youtube.com/results?search_query=pancit+bihon+recipe+filipino" },
+    ],
+    familyChallenge:
+      "The Longest Noodle Ceremony! At the table, everyone lifts their noodles high with their fork before the first bite — the higher the lift, the longer the life, say the lolas. Measure who found the longest unbroken noodle. Then each person shares one hope for their long, happy life.",
+    notes: "Unit 7 Cooking — linked to the existing pancit recipe. Birthday-tradition framing (and a wink: Sharon's birthday was in July, but pancit is for EVERY celebration). Tagalog-only vocabulary.",
+    sections: [
+      {
+        heading: "The Dish That Comes to Every Birthday",
+        emoji: "🎂",
+        body: "At every Filipino birthday party — every single one — somewhere on the table sits a great glorious platter of pancit: golden noodles tangled with vegetables, chicken, and little shrimp, glistening and fragrant. Why always pancit? Lean close, because every lola will tell you the same secret: the noodles are LONG, and long noodles mean LONG LIFE. Cutting them short is bad luck — you lift them high and slurp them whole. It's a wish you can eat.",
+      },
+      {
+        heading: "A Noodle's Journey",
+        emoji: "🍜",
+        body: "Pancit has been part of Filipino tables for hundreds of years, with a story woven right through it.",
+        bullets: [
+          "Noodles came to the islands with Chinese traders long ago — 'pancit' comes from a Hokkien word for something conveniently cooked",
+          "Every region made it its own: pancit bihon (thin rice noodles), pancit canton (thick egg noodles), and dozens more",
+          "It's stir-fried fast in a hot pan with vegetables, meat, and soy-calamansi sauce",
+          "Served at birthdays, fiestas, graduations — any day that deserves a long-life wish",
+        ],
+      },
+      {
+        heading: "Fast Pan, Many Hands",
+        emoji: "🔥",
+        body: "Pancit cooking is quick and busy — which makes it PERFECT for a family kitchen brigade! Little hands snap the beans and soak the noodles, middle hands measure the sauce, grown-up hands command the hot pan. Everything must be chopped and ready BEFORE the fire starts (your mise en place from Baking Academy!), because once the pan is hot, pancit waits for no one.",
+      },
+      {
+        heading: "Noodle Words (Tagalog)",
+        emoji: "💬",
+        body: "The vocabulary of the birthday table — slurp the words up!",
+      },
+    ],
+    phrases: [
+      { english: "Noodles", tagalog: "Pancit", pronunciation: "pahn-SEET" },
+      { english: "Long", tagalog: "Mahaba", pronunciation: "mah-HAH-bah" },
+      { english: "Life", tagalog: "Buhay", pronunciation: "BOO-hai" },
+      { english: "Happy Birthday!", tagalog: "Maligayang kaarawan!", pronunciation: "mah-lee-GAH-yahng kah-ah-RAH-wahn" },
+      { english: "Long live!", tagalog: "Mabuhay!", pronunciation: "mah-BOO-hai" },
+      { english: "Shrimp", tagalog: "Hipon", pronunciation: "HEE-pon" },
+    ],
+    reflection: "Pancit carries a wish for long life. If you could cook one wish into a dish for someone you love, what would the wish be — and who gets the first plate?",
+    gratitudePrompt: "Today I am grateful to the Lord because...",
+  },
 ];
 
 export function getLesson(id: string): Lesson | undefined {

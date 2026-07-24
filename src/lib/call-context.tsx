@@ -11,6 +11,21 @@ import {
 } from "livekit-client";
 import { writeStored } from "@/lib/storage";
 
+// Races a promise against a timer so a stalled camera/network step can
+// never hang the app forever (see the join() hang-proofing below).
+function withTimeout<T>(p: Promise<T>, ms: number): Promise<T> {
+  return new Promise((resolve, reject) => {
+    const t = setTimeout(() => reject(new Error("timeout")), ms);
+    p.then((v) => {
+      clearTimeout(t);
+      resolve(v);
+    }).catch((e) => {
+      clearTimeout(t);
+      reject(e);
+    });
+  });
+}
+
 // A participant's side of the call, decided by the SERVER from which
 // code they presented (identity "teacher" / "family"; legacy identities
 // kept a role prefix, so startsWith covers both).
@@ -115,10 +130,13 @@ export function CallProvider({ children }: { children: React.ReactNode }) {
 
       const soloFallback = async (): Promise<JoinResult> => {
         try {
-          const stream = await navigator.mediaDevices.getUserMedia({
-            video: opts.camId ? { deviceId: { exact: opts.camId } } : true,
-            audio: opts.micId ? { deviceId: { exact: opts.micId } } : true,
-          });
+          const stream = await withTimeout(
+            navigator.mediaDevices.getUserMedia({
+              video: opts.camId ? { deviceId: { exact: opts.camId } } : true,
+              audio: opts.micId ? { deviceId: { exact: opts.micId } } : true,
+            }),
+            12000
+          );
           stream.getVideoTracks().forEach((t) => (t.enabled = opts.camOn));
           stream.getAudioTracks().forEach((t) => (t.enabled = opts.micOn));
           setSoloStream(stream);
@@ -203,16 +221,30 @@ export function CallProvider({ children }: { children: React.ReactNode }) {
           room.on(RoomEvent.ParticipantDisconnected, (p) => log(p.name ?? p.identity, "left"));
         }
 
-        await room.connect(url, token);
-        await room.localParticipant.setCameraEnabled(opts.camOn);
-        await room.localParticipant.setMicrophoneEnabled(opts.micOn);
+        // ⚠️ Hang-proofing: connecting + asking for camera/mic permission
+        // can stall forever — another app already holding the camera, a
+        // permission popup nobody answers, a stuck ICE negotiation. With
+        // no timeout, the UI was stuck on "Starting…" with no way out and
+        // no error. A 12s cap guarantees join() always settles one way or
+        // another, so the button can never hang indefinitely again.
+        await withTimeout(
+          (async () => {
+            await room.connect(url, token);
+            await room.localParticipant.setCameraEnabled(opts.camOn);
+            await room.localParticipant.setMicrophoneEnabled(opts.micOn);
+          })(),
+          12000
+        );
         void room.startAudio();
         roomRef.current = room;
         setStatus("connected");
         bump();
         return "connected";
       } catch {
-        // LiveKit unavailable — the local camera still works.
+        // Timed out, LiveKit unavailable, or camera/mic denied — the
+        // local camera still works, so fall back instead of hanging.
+        roomRef.current?.disconnect();
+        roomRef.current = null;
         return soloFallback();
       }
     },

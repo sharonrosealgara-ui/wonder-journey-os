@@ -7,7 +7,7 @@ import { json, type Ctx } from "../_shared";
 export const onRequest = async ({ env }: Ctx): Promise<Response> => {
   return json({
     ok: true,
-    builtAt: "2026-07-18-antiglitch",
+    builtAt: "2026-07-18-hangproof",
     config: {
       livekitUrl: !!env.LIVEKIT_URL,
       livekitKey: !!env.LIVEKIT_API_KEY,

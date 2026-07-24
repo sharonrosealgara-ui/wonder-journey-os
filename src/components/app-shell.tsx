@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { brand } from "@/config/brand";
 import { familyNav, normalizeMode, teacherNav, type Mode } from "@/config/navigation";
 import { KEYS } from "@/lib/app-state";
+import { familyName, teacherName } from "@/config/family";
 import { useProgress } from "@/lib/progress";
 import { initMute, setMuted, sfx } from "@/lib/sound";
 import { removeStored, useStored } from "@/lib/storage";
@@ -25,6 +26,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const mode: Mode = normalizeMode(rawMode);
   const [open, setOpen] = useState(false); // mobile drawer
   const [theme, setTheme] = useStored<string>("theme", "light");
+  const [displayName, setDisplayName] = useStored<string>("displayName", "");
+  const [editingName, setEditingName] = useState(false);
+  const [nameDraft, setNameDraft] = useState("");
 
   // apply dark mode to <html>
   useEffect(() => {
@@ -108,6 +112,54 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             </>
           )}
         </nav>
+
+        {/* ✏️ This device's camera name — shown right in the sidebar so a
+            wrong name (typed by mistake at sign-in, e.g. "Winny" instead
+            of "Ferrell Family") is spotted immediately, and fixable in
+            one tap without a full sign-out. */}
+        <div className="mx-3 mb-2 rounded-2xl bg-white/10 px-3.5 py-2.5">
+          {editingName ? (
+            <div className="flex items-center gap-1.5">
+              <input
+                autoFocus
+                value={nameDraft}
+                onChange={(e) => setNameDraft(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    setDisplayName(nameDraft.trim() || (mode === "teacher" ? teacherName : familyName));
+                    setEditingName(false);
+                  }
+                  if (e.key === "Escape") setEditingName(false);
+                }}
+                placeholder={mode === "teacher" ? teacherName : familyName}
+                className="min-w-0 flex-1 rounded-lg bg-white/90 px-2 py-1 text-sm text-ink outline-none"
+              />
+              <button
+                onClick={() => {
+                  setDisplayName(nameDraft.trim() || (mode === "teacher" ? teacherName : familyName));
+                  setEditingName(false);
+                }}
+                className="rounded-full bg-mango px-2 py-1 text-xs font-bold text-ink-soft"
+              >
+                ✓
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={() => {
+                setNameDraft(displayName);
+                setEditingName(true);
+              }}
+              className="flex w-full items-center justify-between gap-2 text-left"
+              title="Tap to fix this device's camera name"
+            >
+              <span className="min-w-0 truncate text-[13px] text-white/85">
+                📷 {displayName || (mode === "teacher" ? teacherName : familyName)}
+              </span>
+              <span className="shrink-0 text-[11px] text-white/50">✏️ edit</span>
+            </button>
+          )}
+        </div>
 
         {/* 🔒 Sign out — hands the device back to the front door. Clears
             WHO is signed in (code, name, role, guest) but never touches

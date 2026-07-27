@@ -1,4 +1,4 @@
-@import "tailwindcss";
+﻿@import "tailwindcss";
 
 /* ─────────────────────────────────────────────────────────────
    WONDER JOURNEY OS — watercolor storybook design system v2
@@ -504,5 +504,22 @@ a.wj-chip:active {
     transform: none;
   }
 }
-. t v - m o d e   {   f i l t e r :   c o n t r a s t ( 1 . 2 )   s a t u r a t e ( 1 . 1 ) ;   }   . t v - m o d e   . t e x t - s m   {   f o n t - s i z e :   1 r e m   ! i m p o r t a n t ;   }   . t v - m o d e   . t e x t - b a s e   {   f o n t - s i z e :   1 . 1 2 5 r e m   ! i m p o r t a n t ;   }   . t v - m o d e   . t e x t - l g   {   f o n t - s i z e :   1 . 2 5 r e m   ! i m p o r t a n t ;   }   . t v - m o d e   p   {   f o n t - s i z e :   1 1 0 % ;   }  
- 
+.tv-mode {
+  filter: contrast(1.2) saturate(1.1);
+}
+
+.tv-mode .text-sm {
+  font-size: 1rem !important;
+}
+
+.tv-mode .text-base {
+  font-size: 1.125rem !important;
+}
+
+.tv-mode .text-lg {
+  font-size: 1.25rem !important;
+}
+
+.tv-mode p {
+  font-size: 110%;
+}

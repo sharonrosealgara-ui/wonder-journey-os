@@ -12,6 +12,10 @@ export type Recipe = {
   difficulty: "Easy" | "Medium";
   time: string;
   photoNote: string; // description for the real-photo placeholder
+  mediaId?: string; // Main dish photograph
+  ingredientMedia?: Record<string, string>; // map ingredient name to mediaId
+  toolMedia?: Record<string, string>; // map tool name to mediaId
+  stepMedia?: Record<number, string>; // map step index to mediaId
   ingredients: string[];
   tools: string[];
   steps: string[];

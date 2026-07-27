@@ -9,6 +9,7 @@ export type Destination = {
   emoji: string;
   knownFor: string;
   funFact: string;
+  mediaId?: string;
 };
 
 export const destinations: Destination[] = [

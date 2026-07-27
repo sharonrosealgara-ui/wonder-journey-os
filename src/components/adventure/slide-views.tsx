@@ -633,6 +633,8 @@ function GameSlide({ slide, lesson, level }: { slide: Slide; lesson: Lesson; lev
   // 🏅 "beat your best" — best star rating per game, per lesson.
   const [best, setBest] = useStored<Record<string, number>>(`gamebest-${lesson.id}`, {});
   const [newBest, setNewBest] = useState(false);
+  const [xp, setXp] = useStored<Record<string, number>>(KEYS.xp, {});
+  const [activeStudentId] = useStored<string | null>(KEYS.activeStudent, null);
 
   // 👨‍👩‍👧‍👦 Pass & Play — optional sibling turns on the shared screen.
   const [players, setPlayers] = useState<string[]>([]);
@@ -651,10 +653,14 @@ function GameSlide({ slide, lesson, level }: { slide: Slide; lesson: Lesson; lev
       }
       return prev;
     });
-    // team stars + advance turn
+    // team stars + advance turn + award XP
     if (teamOn && current) {
       setTally((prev) => ({ ...prev, [current.id]: (prev[current.id] ?? 0) + s }));
+      setXp((prev) => ({ ...prev, [current.id]: (prev[current.id] ?? 0) + s * 10 }));
       setTimeout(() => setTurn((t) => t + 1), 300);
+    } else if (activeStudentId) {
+      // If solo mode, award to active student
+      setXp((prev) => ({ ...prev, [activeStudentId]: (prev[activeStudentId] ?? 0) + s * 10 }));
     }
   }
 

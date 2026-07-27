@@ -19,7 +19,7 @@ export type NavItem = {
 
 // The Family Portal — the warm adventure world.
 export const familyNav: NavItem[] = [
-  { href: "/", label: "Home Base", emoji: "🏠" },
+  { href: "/family", label: "Home Base", emoji: "🏠" },
   { href: "/classroom", label: "Live Classroom", emoji: "🎥" },
   { href: "/blessings", label: "Morning Blessings", emoji: "☀️" },
   { href: "/lessons", label: "Adventure Map", emoji: "🗺️" },
@@ -37,6 +37,6 @@ export const familyNav: NavItem[] = [
 // Teacher Portal — Sharon's studio (shown as its own section).
 export const teacherNav: NavItem[] = [
   { href: "/teacher", label: "Lesson Plans", emoji: "📋" },
-  { href: "/prep-email", label: "Class Prep Email", emoji: "✉️" },
+  { href: "/teacher/whatsapp", label: "WhatsApp Helper", emoji: "📱" },
   { href: "/photos", label: "Photo Studio", emoji: "🖼️" },
 ];

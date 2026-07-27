@@ -84,6 +84,7 @@ export const KEYS = {
   birthdayDismissed: "birthdayDismissed",
   memories: "memories",
   voiceGifts: "voiceGifts",
+  xp: "xp", // Record<string, number> where string is studentId
 } as const;
 
 export function todayISO(): string {

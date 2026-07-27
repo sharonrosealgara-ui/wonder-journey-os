@@ -85,3 +85,32 @@ export function fileToResizedDataUrl(file: File, maxW = 900, quality = 0.72): Pr
     reader.readAsDataURL(file);
   });
 }
+
+// Convert an uploaded picture into a Blob for Supabase Storage
+export function fileToResizedBlob(file: File | Blob, maxW = 900, quality = 0.72): Promise<Blob> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = () => reject(new Error("read failed"));
+    reader.onload = () => {
+      const img = new Image();
+      img.onerror = () => reject(new Error("image failed"));
+      img.onload = () => {
+        const scale = Math.min(1, maxW / img.width);
+        const w = Math.round(img.width * scale);
+        const h = Math.round(img.height * scale);
+        const canvas = document.createElement("canvas");
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return reject(new Error("no canvas"));
+        ctx.drawImage(img, 0, 0, w, h);
+        canvas.toBlob((blob) => {
+          if (blob) resolve(blob);
+          else reject(new Error("blob conversion failed"));
+        }, "image/jpeg", quality);
+      };
+      img.src = reader.result as string;
+    };
+    reader.readAsDataURL(file);
+  });
+}

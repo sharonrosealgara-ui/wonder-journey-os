@@ -39,11 +39,17 @@ export async function resetPassword(formData: FormData) {
     }
   )
 
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) {
+    cookieStore.delete('recovery_marker')
+    return { error: "Invalid or expired recovery session. Please request a new reset link." }
+  }
+
   const { error } = await supabase.auth.updateUser({ password })
 
   if (error) {
-    // Treat Supabase password policy errors safely
-    console.error("Password update failed:", error)
+    cookieStore.delete('recovery_marker')
+    await supabase.auth.signOut()
     return { error: "Password update failed. It may be too weak or the session expired." }
   }
 
@@ -51,5 +57,5 @@ export async function resetPassword(formData: FormData) {
   cookieStore.delete('recovery_marker')
   await supabase.auth.signOut()
 
-  return redirect('/login?error=Password updated successfully! Please log in.')
+  return redirect('/login?message=password_updated')
 }

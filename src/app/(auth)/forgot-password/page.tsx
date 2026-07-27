@@ -26,15 +26,8 @@ export default function ForgotPassword() {
       redirectTo: callbackUrl.toString(),
     });
 
-    if (error) {
-      // Do not expose whether the account exists
-      // Rate limits or system errors can be caught here, but we default to a safe message
-      console.error(error); // log internally if needed, but not exposing exact message to user
-      setStatus('error');
-      setErrorMsg('Something went wrong. Please try again later.');
-    } else {
-      setStatus('success');
-    }
+    // Always return neutral success response to avoid exposing account status or raw errors
+    setStatus('success');
   }
 
   return (

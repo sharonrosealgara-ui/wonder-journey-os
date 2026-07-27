@@ -12,7 +12,7 @@ export async function GET(request: Request) {
   const rawNext = searchParams.get('next') || '/';
   
   // Allowlist of approved redirect destinations
-  const allowedNextPaths = ['/reset-password', '/teacher', '/family'];
+  const allowedNextPaths = ['/reset-password'];
   
   // Reject absolute URLs, protocol-relative, javascript, etc.
   const isSafePath = rawNext.startsWith('/') && !rawNext.startsWith('//') && allowedNextPaths.includes(rawNext);
@@ -62,9 +62,9 @@ export async function GET(request: Request) {
     }
     
     // If the exchange failed (e.g., code expired or already used)
-    return NextResponse.redirect(new URL('/login?error=Invalid or expired recovery link. Please request a new one.', getAppUrl()));
+    return NextResponse.redirect(new URL('/login?error=recovery_link_invalid', getAppUrl()));
   }
 
   // Missing code
-  return NextResponse.redirect(new URL('/login?error=No recovery code provided.', getAppUrl()));
+  return NextResponse.redirect(new URL('/login?error=recovery_code_missing', getAppUrl()));
 }

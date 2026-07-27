@@ -444,7 +444,7 @@ function ConnectedRoom({ lesson, onLeave }: {
               <p className="font-bold text-mango mb-1">LiveKit Connection Diagnostics</p>
               <p>Room: {room.name}</p>
               <p>State: {call.connState}</p>
-              <p>Ping: {room.isReady ? "OK" : "Waiting"}</p>
+              <p>Connection: {room.state === ConnectionState.Connected ? "Connected" : room.state}</p>
               <div className="mt-2 border-t border-white/20 pt-2">
                 <p className="font-bold">Participants ({everyone.length}):</p>
                 {everyone.map(p => (

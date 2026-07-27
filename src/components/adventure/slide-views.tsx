@@ -6,7 +6,7 @@ import { AdventureQuiz } from "@/components/adventure/quiz";
 import { FactHunt, MemoryFlip, WordScramble } from "@/components/adventure/mini-games";
 import { MatchingGame } from "@/components/matching-game";
 import { PhotoUpload } from "@/components/photo-upload";
-import { Polaroid } from "@/components/smart-photo";
+import { Polaroid, SmartPhoto } from "@/components/smart-photo";
 import { Highlight } from "@/lib/highlight";
 import { speak } from "@/lib/speak";
 import { useSmartSrc } from "@/lib/photos";
@@ -783,7 +783,14 @@ function RecipeSlide({ slide, lesson }: { slide: Slide; lesson: Lesson }) {
   if (!recipe) return null;
   return (
     <div className="mx-auto max-w-2xl text-center">
-      <div className="mb-3 text-6xl">{recipe.emoji}</div>
+      <div className="mx-auto mb-4 h-32 w-32 overflow-hidden rounded-full border-4 border-white shadow-lg">
+        <SmartPhoto 
+          mediaId={recipe.mediaId} 
+          alt={recipe.name} 
+          emoji={recipe.emoji}
+          className="h-full w-full object-cover" 
+        />
+      </div>
       <h1 className="wj-outline font-display text-3xl sm:text-5xl">Cooking Time!</h1>
       <p className="font-hand mt-2 text-2xl text-ink-soft">
         {recipe.name} · <span className="italic">{recipe.filipinoName}</span>

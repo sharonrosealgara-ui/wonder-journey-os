@@ -5,6 +5,7 @@ import { useState } from "react";
 import { CopyButton } from "@/components/copy-button";
 import { PhotoUpload } from "@/components/photo-upload";
 import { getRecipe } from "@/config/recipes";
+import { SmartPhoto } from "@/components/smart-photo";
 import { KEYS, todayISO, type CookbookMemory } from "@/lib/app-state";
 import { newId, useStored } from "@/lib/storage";
 
@@ -51,9 +52,13 @@ export function RecipeView({ id }: { id: string }) {
     <div className="mx-auto max-w-3xl space-y-6">
       {/* Header + photo placeholder */}
       <section className="wj-card overflow-hidden">
-        <div className="flex h-44 flex-col items-center justify-center gap-1 bg-gradient-to-br from-mango/30 to-hibiscus/15">
-          <span className="text-7xl">{recipe.emoji}</span>
-          <span className="text-xs font-bold text-ink-soft">📷 {recipe.photoNote}</span>
+        <div className="relative h-44 w-full bg-gradient-to-br from-mango/30 to-hibiscus/15">
+          <SmartPhoto 
+            mediaId={recipe.mediaId} 
+            alt={recipe.name} 
+            emoji={recipe.emoji}
+            className="absolute inset-0 h-full w-full object-cover" 
+          />
         </div>
         <div className="p-6">
           <div className="flex flex-wrap gap-2">

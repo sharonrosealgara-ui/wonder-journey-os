@@ -14,6 +14,7 @@ export type PhrasePair = {
   tagalog: string;
   hiligaynon?: string; // legacy — kept optional; the app teaches Tagalog only now
   pronunciation?: string;
+  mediaId?: string;
 };
 
 export type Lesson = {

@@ -29,26 +29,48 @@ export type FactualMedia = {
 // The centralized registry of factual educational media.
 // When an image is "pending", the UI must fall back to the neutral placeholder.
 export const mediaRegistry: Record<string, FactualMedia> = {
-  // Examples to be filled in during bulk processing:
-  /*
   "philippines-hero": {
     id: "philippines-hero",
     title: "Philippine Islands Aerial",
     subject: "The Philippines",
-    storedAssetPath: "/media/philippines-hero.webp",
-    originalSourceUrl: "https://unsplash.com/...",
-    photographerOrInstitution: "John Doe",
+    originalSourceUrl: "https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?q=80&w=1000&auto=format&fit=crop",
+    photographerOrInstitution: "Eibner Saliba",
     license: "Unsplash License",
-    attributionText: "Photo by John Doe on Unsplash",
+    attributionText: "Photo by Eibner Saliba on Unsplash",
     altText: "Aerial view of lush green islands and clear blue water in the Philippines",
     category: "geography",
     region: "Nationwide",
-    dateAccessed: "2026-07-27",
+    dateAccessed: "2026-07-28",
     verificationStatus: "verified",
-    dateVerified: "2026-07-27",
+    dateVerified: "2026-07-28",
     verifiedByRole: "system",
+  },
+  "recipe-mango-float": {
+    id: "recipe-mango-float",
+    title: "Mango Float",
+    subject: "Filipino Desserts",
+    originalSourceUrl: "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?q=80&w=1000&auto=format&fit=crop", // placeholder pineapple/mango dessert
+    photographerOrInstitution: "Unsplash",
+    license: "Unsplash License",
+    attributionText: "Temporary placeholder photo",
+    altText: "Creamy layered fruit dessert",
+    category: "food",
+    dateAccessed: "2026-07-28",
+    verificationStatus: "pending",
+  },
+  "recipe-turon": {
+    id: "recipe-turon",
+    title: "Turon",
+    subject: "Filipino Snacks",
+    originalSourceUrl: "https://images.unsplash.com/photo-1601622359487-b956a2bb91f9?q=80&w=1000&auto=format&fit=crop", // placeholder lumpia/turon
+    photographerOrInstitution: "Unsplash",
+    license: "Unsplash License",
+    attributionText: "Temporary placeholder photo",
+    altText: "Crispy fried spring rolls",
+    category: "food",
+    dateAccessed: "2026-07-28",
+    verificationStatus: "pending",
   }
-  */
 };
 
 export function getMedia(id?: string): FactualMedia | null {

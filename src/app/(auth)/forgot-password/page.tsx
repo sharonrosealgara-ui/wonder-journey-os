@@ -5,13 +5,11 @@ import { createClient } from '@/lib/supabase/client';
 import { getAppUrl } from '@/lib/url';
 
 export default function ForgotPassword() {
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
-  const [errorMsg, setErrorMsg] = useState('');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success'>('idle');
 
   async function handleReset(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setStatus('loading');
-    setErrorMsg('');
 
     const formData = new FormData(e.currentTarget);
     const email = formData.get('email') as string;
@@ -22,12 +20,14 @@ export default function ForgotPassword() {
     const callbackUrl = new URL('/auth/callback', getAppUrl());
     callbackUrl.searchParams.set('next', '/reset-password');
 
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: callbackUrl.toString(),
-    });
-
-    // Always return neutral success response to avoid exposing account status or raw errors
-    setStatus('success');
+    try {
+      await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: callbackUrl.toString(),
+      });
+    } finally {
+      // Always return neutral success response to avoid exposing account status or raw errors
+      setStatus('success');
+    }
   }
 
   return (
@@ -49,8 +49,6 @@ export default function ForgotPassword() {
             <label className="text-sm font-bold text-ink-soft">Email</label>
             <input name="email" type="email" required className="wj-input mt-1 w-full" placeholder="you@example.com" />
           </div>
-
-          {status === 'error' && <p className="text-sm font-bold text-red-500">{errorMsg}</p>}
 
           <button disabled={status === 'loading'} className="wj-btn w-full">
             {status === 'loading' ? 'Sending...' : 'Send Reset Link'}

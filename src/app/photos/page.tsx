@@ -148,7 +148,6 @@ function PhotoCard({
       <SmartPhoto
         src={current ?? null}
         alt={item.name}
-        emoji={item.emoji}
         className="h-36 w-full"
         emojiClass="text-5xl"
       />

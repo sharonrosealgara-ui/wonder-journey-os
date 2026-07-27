@@ -56,7 +56,6 @@ export default function PassportPage() {
                     <SmartPhoto
                       src={photos.destination[d.id] || destinationPhoto(d.id)}
                       alt={d.name}
-                      emoji={d.emoji}
                       className={`h-24 w-full ${earned ? "" : "grayscale"}`}
                       emojiClass="text-4xl"
                     />

@@ -464,7 +464,6 @@ function SectionSlide({ slide, lesson }: { slide: Slide; lesson: Lesson }) {
           <Polaroid
             src={photoSrc}
             alt={section.heading}
-            emoji={section.emoji}
             tilt={t.tilt}
             caption={lesson.title}
             className="w-full max-w-xs"
@@ -787,7 +786,6 @@ function RecipeSlide({ slide, lesson }: { slide: Slide; lesson: Lesson }) {
         <SmartPhoto 
           mediaId={recipe.mediaId} 
           alt={recipe.name} 
-          emoji={recipe.emoji}
           className="h-full w-full object-cover" 
         />
       </div>

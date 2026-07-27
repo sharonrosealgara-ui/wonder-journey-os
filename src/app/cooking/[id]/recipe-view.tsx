@@ -56,7 +56,6 @@ export function RecipeView({ id }: { id: string }) {
           <SmartPhoto 
             mediaId={recipe.mediaId} 
             alt={recipe.name} 
-            emoji={recipe.emoji}
             className="absolute inset-0 h-full w-full object-cover" 
           />
         </div>

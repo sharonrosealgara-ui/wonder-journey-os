@@ -50,9 +50,7 @@ export function LessonView({ id }: { id: string }) {
         <SmartPhoto
           src={photoSrc}
           alt={lesson.title}
-          emoji={lesson.emoji}
           className="h-44 w-full sm:h-52"
-          emojiClass="text-7xl"
         />
         <div className="bg-gradient-to-br from-ocean/10 to-mango/15 p-6 sm:p-8">
         <div className="flex flex-wrap gap-2">

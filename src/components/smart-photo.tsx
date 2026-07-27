@@ -20,7 +20,7 @@ export function SmartPhoto({
   mediaId?: string;
   src?: string | null;
   alt: string;
-  emoji: string;
+  emoji?: string;
   className?: string;
   gradient?: string;
   emojiClass?: string;
@@ -28,13 +28,13 @@ export function SmartPhoto({
   const [failed, setFailed] = useState(false);
   const media = mediaId ? getMedia(mediaId) : null;
 
-  // Strict Fallback Policy: If marked as pending, explicitly show the pending verification UI
-  if (media?.verificationStatus === "pending") {
+  // Strict Fallback Policy: If marked as pending OR unknown mediaId, explicitly show the pending verification UI
+  if (mediaId && (!media || media.verificationStatus === "pending")) {
     return (
       <div
         className={`${className} flex flex-col items-center justify-center bg-[#e5e5e5] text-ink-soft p-4`}
         role="img"
-        aria-label="Image pending verification"
+        aria-label={alt || "Image pending verification"}
       >
         <span className="text-3xl mb-2">⏳</span>
         <span className="text-[10px] font-bold uppercase tracking-widest text-center">
@@ -113,7 +113,7 @@ export function Polaroid({
   mediaId?: string;
   src?: string | null;
   alt: string;
-  emoji: string;
+  emoji?: string;
   caption?: string;
   tilt?: string; // e.g. "rotate-2" | "-rotate-2" — alternate for variety
   className?: string;

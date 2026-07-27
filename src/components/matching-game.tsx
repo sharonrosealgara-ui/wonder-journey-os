@@ -163,7 +163,6 @@ export function MatchingGame({
                     <SmartPhoto 
                       mediaId={card.mediaId} 
                       alt={card.label} 
-                      emoji={card.emoji || "❓"}
                       className="w-full h-full object-cover opacity-30" 
                     />
                   </div>

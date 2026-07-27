@@ -1,5 +1,5 @@
 import { login } from './actions'
-
+import Link from 'next/link'
 export default async function LoginPage({
   searchParams,
 }: {
@@ -33,6 +33,11 @@ export default async function LoginPage({
             placeholder="Password"
             className="w-full rounded-2xl border-2 border-sand-deep bg-paper p-4 text-lg text-ink shadow-sm outline-none transition-all placeholder:text-ink-soft/60 focus:border-mango focus:ring-4 focus:ring-mango/20"
           />
+          <div className="text-right">
+            <Link href="/forgot-password" className="text-sm font-bold text-ocean hover:underline">
+              Forgot password?
+            </Link>
+          </div>
         </div>
         
         <button formAction={login} className="wj-btn w-full text-lg">

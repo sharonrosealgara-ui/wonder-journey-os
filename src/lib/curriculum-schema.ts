@@ -11,11 +11,19 @@ export type QuizQuestion = {
   correctAnswer: string;
 };
 
+export type FactualSource = {
+  source: string;
+  url?: string;
+  note?: string;
+};
+
 export type CurriculumLesson = {
   id: string; // stable lesson id
   date: string; // ISO YYYY-MM-DD
   weekday: string;
   title: string;
+  topic: string;
+  ageRange: string;
   unit: string;
   learningObjectives: string[];
   essentialQuestion: string;
@@ -35,16 +43,22 @@ export type CurriculumLesson = {
   };
   materials: string[];
   factualMediaRequirements: string[]; // array of mediaRegistry IDs
+  mediaReferences?: string[];
+  factualSources?: FactualSource[];
   activities: LevelSupport;
   interactiveGame: string;
   handsOnActivity: string;
   knowledgeCheck: QuizQuestion[];
   learnerReflection: string;
+  gratitudePrompt?: string;
+  prayerPrompt?: string;
   familyChallenge: string;
   progressBadge: string;
   sourceNotes: string;
   mediaAttributionNotes: string;
   accessibilityNotes: string;
+  privacyClassification: "family-safe" | "teacher-only" | "private" | "public";
+  publicationStatus: "draft" | "pilot" | "published";
   
   // Teacher-only fields (MUST NOT be exposed to Family routes)
   teacherPreparation: string;
@@ -82,6 +96,8 @@ export function validateCurriculumLesson(value: any): { ok: boolean; errors: str
   mustBeString('id');
   mustBeString('date');
   mustBeString('title');
+  mustBeString('topic');
+  mustBeString('ageRange');
   mustBeString('unit');
 
   if (!Array.isArray(value.learningObjectives) || value.learningObjectives.some((v: any) => typeof v !== 'string')) {
@@ -98,6 +114,18 @@ export function validateCurriculumLesson(value: any): { ok: boolean; errors: str
 
   if (!Array.isArray(value.materials)) errors.push('materials must be an array');
   if (!Array.isArray(value.factualMediaRequirements)) errors.push('factualMediaRequirements must be an array');
+  if (value.mediaReferences && (!Array.isArray(value.mediaReferences) || value.mediaReferences.some((m: any) => typeof m !== 'string'))) {
+    errors.push('mediaReferences must be an array of strings when present');
+  }
+  if (value.factualSources && !Array.isArray(value.factualSources)) {
+    errors.push('factualSources must be an array when present');
+  } else if (Array.isArray(value.factualSources)) {
+    value.factualSources.forEach((src: any, i: number) => {
+      if (!src || typeof src.source !== 'string') errors.push(`factualSources[${i}].source must be a string`);
+      if (src.url && typeof src.url !== 'string') errors.push(`factualSources[${i}].url must be a string`);
+      if (src.note && typeof src.note !== 'string') errors.push(`factualSources[${i}].note must be a string`);
+    });
+  }
 
   if (!value.activities || typeof value.activities !== 'object') errors.push('activities must be present and an object');
   else {
@@ -118,6 +146,22 @@ export function validateCurriculumLesson(value: any): { ok: boolean; errors: str
 
   // Date format basic check YYYY-MM-DD
   if (value.date && !/^\d{4}-\d{2}-\d{2}$/.test(value.date)) errors.push('date must be ISO YYYY-MM-DD');
+
+  mustBeString('privacyClassification');
+  if (value.privacyClassification && !["family-safe", "teacher-only", "private", "public"].includes(value.privacyClassification)) {
+    errors.push('privacyClassification must be one of family-safe, teacher-only, private, public');
+  }
+
+  mustBeString('publicationStatus');
+  if (value.publicationStatus && !["draft", "pilot", "published"].includes(value.publicationStatus)) {
+    errors.push('publicationStatus must be one of draft, pilot, published');
+  }
+
+  if (value.gratitudePrompt && typeof value.gratitudePrompt !== 'string') errors.push('gratitudePrompt must be a string when present');
+  if (value.prayerPrompt && typeof value.prayerPrompt !== 'string') errors.push('prayerPrompt must be a string when present');
+  if (value.sourceNotes && typeof value.sourceNotes !== 'string') errors.push('sourceNotes must be a string');
+  if (value.mediaAttributionNotes && typeof value.mediaAttributionNotes !== 'string') errors.push('mediaAttributionNotes must be a string');
+  if (value.accessibilityNotes && typeof value.accessibilityNotes !== 'string') errors.push('accessibilityNotes must be a string');
 
   // Ensure teacher-only fields presence and types
   if (!('teacherPreparation' in value) || typeof value.teacherPreparation !== 'string') errors.push('teacherPreparation must be present as a string');

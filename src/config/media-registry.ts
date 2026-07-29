@@ -1,75 +1,71 @@
-// ─────────────────────────────────────────────────────────────
-// EDUCATIONAL MEDIA REGISTRY
-// Stores compliance metadata for factual media used across the app.
-// Future migration: This can be migrated to a database-backed Library.
-// ─────────────────────────────────────────────────────────────
-
 export type VerificationStatus = "pending" | "verified" | "rejected";
+export type MediaClassification = "factual photograph" | "factual map" | "diagram" | "decorative illustration" | "icon" | "verified video" | "pending verification";
 
 export type FactualMedia = {
-  id: string; // Stable media ID
+  id: string;
   title: string;
   subject: string;
-  storedAssetPath?: string; // Path in Wonder Journey OS managed media storage (or public/)
-  originalSourceUrl?: string; // Where the image was sourced from
-  photographerOrInstitution?: string;
+  classification: MediaClassification;
+  creatorOrOrganization?: string;
   license?: string;
-  attributionText?: string;
-  altText: string;
-  category: "geography" | "culture" | "food" | "vocabulary" | "science" | "history" | "other";
-  region?: "Luzon" | "Visayas" | "Mindanao" | "Nationwide" | string;
-  dateAccessed?: string;
+  originalSourceUrl?: string;
+  storedAssetPath?: string;
+  descriptiveAltText: string;
+  factualCaption: string;
+  aspectRatio?: string;
+  objectPosition?: string;
+  loadingBehavior?: string;
+  failureBehavior?: string;
   verificationStatus: VerificationStatus;
-  dateVerified?: string;
-  verifiedByRole?: "admin" | "teacher" | "system";
+  dateReviewed?: string;
   associatedLessonIds?: string[];
-  associatedActivityIds?: string[];
+  category: "geography" | "culture" | "food" | "vocabulary" | "science" | "history" | "other";
 };
 
-// The centralized registry of factual educational media.
-// When an image is "pending", the UI must fall back to the neutral placeholder.
 export const mediaRegistry: Record<string, FactualMedia> = {
   "philippines-hero": {
     id: "philippines-hero",
     title: "Philippine Islands Aerial",
     subject: "The Philippines",
+    classification: "factual photograph",
     originalSourceUrl: "https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?q=80&w=1000&auto=format&fit=crop",
-    photographerOrInstitution: "Eibner Saliba",
+    creatorOrOrganization: "Eibner Saliba",
     license: "Unsplash License",
-    attributionText: "Photo by Eibner Saliba on Unsplash",
-    altText: "Aerial view of lush green islands and clear blue water in the Philippines",
+    descriptiveAltText: "Aerial view of lush green islands and clear blue water in the Philippines",
+    factualCaption: "The Philippines is an archipelago made up of over 7,000 islands.",
     category: "geography",
-    region: "Nationwide",
-    dateAccessed: "2026-07-28",
     verificationStatus: "verified",
-    dateVerified: "2026-07-28",
-    verifiedByRole: "system",
+    dateReviewed: "2026-07-28"
   },
-  "recipe-mango-float": {
-    id: "recipe-mango-float",
-    title: "Mango Float",
-    subject: "Filipino Desserts",
-    originalSourceUrl: "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?q=80&w=1000&auto=format&fit=crop", // placeholder pineapple/mango dessert
-    photographerOrInstitution: "Unsplash",
-    license: "Unsplash License",
-    attributionText: "Temporary placeholder photo",
-    altText: "Creamy layered fruit dessert",
-    category: "food",
-    dateAccessed: "2026-07-28",
-    verificationStatus: "pending",
+  "world-map-asia": {
+    id: "world-map-asia",
+    title: "World Map focusing on Asia",
+    subject: "World Geography",
+    classification: "factual map",
+    descriptiveAltText: "A world map showing the location of the Philippines in Southeast Asia.",
+    factualCaption: "The Philippines is located in Southeast Asia, surrounded by the Pacific Ocean and the South China Sea.",
+    category: "geography",
+    verificationStatus: "pending"
   },
-  "recipe-turon": {
-    id: "recipe-turon",
-    title: "Turon",
-    subject: "Filipino Snacks",
-    originalSourceUrl: "https://images.unsplash.com/photo-1601622359487-b956a2bb91f9?q=80&w=1000&auto=format&fit=crop", // placeholder lumpia/turon
-    photographerOrInstitution: "Unsplash",
-    license: "Unsplash License",
-    attributionText: "Temporary placeholder photo",
-    altText: "Crispy fried spring rolls",
-    category: "food",
-    dateAccessed: "2026-07-28",
-    verificationStatus: "pending",
+  "philippines-archipelago-map": {
+    id: "philippines-archipelago-map",
+    title: "Philippine Archipelago",
+    subject: "Philippine Geography",
+    classification: "factual map",
+    descriptiveAltText: "A map showing the many islands that make up the Philippine archipelago.",
+    factualCaption: "An archipelago is a group of islands. The Philippines has 7,641 islands!",
+    category: "geography",
+    verificationStatus: "pending"
+  },
+  "philippines-regions-map": {
+    id: "philippines-regions-map",
+    title: "Luzon, Visayas, Mindanao Map",
+    subject: "Philippine Regions",
+    classification: "factual map",
+    descriptiveAltText: "A map highlighting the three main island groups of the Philippines: Luzon in the north, Visayas in the center, and Mindanao in the south.",
+    factualCaption: "The three major island groups of the Philippines are Luzon, Visayas, and Mindanao.",
+    category: "geography",
+    verificationStatus: "pending"
   }
 };
 

@@ -1,3 +1,41 @@
+
+import { stage2Lessons } from './lessons-stage2';
+import { CurriculumLesson } from '../lib/curriculum-schema';
+
+function mapToLegacy(c: CurriculumLesson, order: number, emoji: string): any {
+  return {
+    id: c.id,
+    order,
+    title: c.title,
+    subtitle: c.unit,
+    emoji,
+    category: "Philippines",
+    date: c.date,
+    time: "9:00 AM",
+    materials: c.materials,
+    canvaLink: "",
+    videoLinks: [],
+    familyChallenge: c.familyChallenge,
+    notes: "",
+    sections: [
+      { heading: "Objective", emoji: "🎯", body: c.learningObjectives.join(", ") },
+      { heading: "Fact", emoji: "💡", body: c.factualBackground },
+      { heading: "Beginner", emoji: "🌱", body: c.activities.beginnerSupport },
+      { heading: "Core", emoji: "⭐", body: c.activities.coreActivity },
+      { heading: "Advanced", emoji: "🚀", body: c.activities.advancedChallenge }
+    ],
+    phrases: c.vocabulary.map(v => ({ english: v.translation, tagalog: v.word })),
+    reflection: c.learnerReflection,
+    gratitudePrompt: "Today I am grateful to the Lord for..."
+  };
+}
+
+const pilotLessons = [
+  mapToLegacy(stage2Lessons[0], 1, "🗺️"),
+  mapToLegacy(stage2Lessons[1], 2, "🏝️"),
+  mapToLegacy(stage2Lessons[2], 3, "⭐")
+];
+
 // ─────────────────────────────────────────────────────────────
 // LESSON LIBRARY — add new lessons here; pages render them automatically.
 // ─────────────────────────────────────────────────────────────
@@ -40,6 +78,7 @@ export type Lesson = {
 };
 
 export const lessons: Lesson[] = [
+  ...pilotLessons,
   {
     id: "welcome-to-the-philippines",
     order: 1,

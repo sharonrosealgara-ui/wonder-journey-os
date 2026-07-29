@@ -67,7 +67,7 @@ export function SmartPhoto({
               </button>
               <div className="absolute bottom-full right-0 mb-2 w-64 bg-paper/95 p-3 rounded-xl shadow-xl border border-sand-deep text-ink hidden group-hover/tooltip:block backdrop-blur-md text-xs text-left">
                 <p className="font-bold mb-1">{media.title}</p>
-                {media.photographerOrInstitution && <p className="mb-1 text-ink-soft">📷 {media.photographerOrInstitution}</p>}
+                {media.creatorOrOrganization || media.photographerOrInstitution && <p className="mb-1 text-ink-soft">📷 {media.photographerOrInstitution}</p>}
                 {media.license && <p className="mb-1 text-ink-soft">📄 {media.license}</p>}
                 {media.originalSourceUrl && (
                   <a href={media.originalSourceUrl} target="_blank" rel="noopener noreferrer" className="text-ocean-deep hover:underline mt-1 block">

@@ -1,3 +1,4 @@
+import { stage4Lessons } from "./lessons-stage4";
 
 import { stage2Lessons } from './lessons-stage2';
 import { CurriculumLesson } from '../lib/curriculum-schema';
@@ -75,6 +76,7 @@ export type Lesson = {
 
 export const lessons: Lesson[] = [
   ...pilotLessons,
+  ...stage4Lessons.map((l, i) => mapToLegacy(l, i + 14, "📚")),
   {
     id: "welcome-to-the-philippines",
     order: 1,

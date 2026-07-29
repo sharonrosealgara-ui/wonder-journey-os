@@ -16,6 +16,14 @@ export const stage2Lessons: CurriculumLesson[] = [
     subjectConnections: { geography: "World Maps" },
     materials: ["Globe or World Map"],
     factualMediaRequirements: ["world-map-asia", "philippines-hero"],
+    mediaReferences: ["world-map-asia", "philippines-hero"],
+    factualSources: [
+      {
+        source: "CIA World Factbook",
+        url: "https://www.cia.gov/the-world-factbook/countries/philippines/",
+        note: "Verified country location and continental region."
+      }
+    ],
     activities: {
       beginnerSupport: "Point to the Philippines on the map.",
       coreActivity: "Find the Philippines and trace the route from our home country.",
@@ -52,6 +60,14 @@ export const stage2Lessons: CurriculumLesson[] = [
     subjectConnections: { geography: "Islands" },
     materials: ["Map of the Philippines"],
     factualMediaRequirements: ["philippines-archipelago-map", "philippines-archipelago-photo"],
+    mediaReferences: ["philippines-archipelago-map", "philippines-archipelago-photo"],
+    factualSources: [
+      {
+        source: "NAMRIA",
+        url: "https://www.namria.gov.ph/",
+        note: "Philippine mapping authority for geographic and island count data."
+      }
+    ],
     activities: {
       beginnerSupport: "Count islands on the map.",
       coreActivity: "Define archipelago and identify the Philippines as one.",
@@ -88,6 +104,14 @@ export const stage2Lessons: CurriculumLesson[] = [
     subjectConnections: { geography: "Philippine Regions" },
     materials: ["Philippine Regions Map"],
     factualMediaRequirements: ["philippines-regions-map", "philippines-regions-photo"],
+    mediaReferences: ["philippines-regions-map", "philippines-regions-photo"],
+    factualSources: [
+      {
+        source: "Philippine Statistics Authority",
+        url: "https://psa.gov.ph/",
+        note: "Official statistics and regional information for the Philippines."
+      }
+    ],
     activities: {
       beginnerSupport: "Color the three regions.",
       coreActivity: "Learn the names of the three major island groups.",

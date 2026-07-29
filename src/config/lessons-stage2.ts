@@ -13,7 +13,7 @@ export const stage2Lessons: CurriculumLesson[] = [
     vocabulary: [{ word: "Pilipinas", translation: "Philippines" }],
     subjectConnections: { geography: "World Maps" },
     materials: ["Globe or World Map"],
-    factualMediaRequirements: ["world-map-asia"],
+    factualMediaRequirements: ["world-map-asia", "philippines-hero"],
     activities: {
       beginnerSupport: "Point to the Philippines on the map.",
       coreActivity: "Find the Philippines and trace the route from our home country.",
@@ -45,7 +45,7 @@ export const stage2Lessons: CurriculumLesson[] = [
     vocabulary: [{ word: "Isla", translation: "Island" }],
     subjectConnections: { geography: "Islands" },
     materials: ["Map of the Philippines"],
-    factualMediaRequirements: ["philippines-archipelago-map"],
+    factualMediaRequirements: ["philippines-archipelago-map", "philippines-archipelago-photo"],
     activities: {
       beginnerSupport: "Count islands on the map.",
       coreActivity: "Define archipelago and identify the Philippines as one.",
@@ -77,7 +77,7 @@ export const stage2Lessons: CurriculumLesson[] = [
     vocabulary: [{ word: "Luzon", translation: "Luzon" }, { word: "Visayas", translation: "Visayas" }, { word: "Mindanao", translation: "Mindanao" }],
     subjectConnections: { geography: "Philippine Regions" },
     materials: ["Philippine Regions Map"],
-    factualMediaRequirements: ["philippines-regions-map"],
+    factualMediaRequirements: ["philippines-regions-map", "philippines-regions-photo"],
     activities: {
       beginnerSupport: "Color the three regions.",
       coreActivity: "Learn the names of the three major island groups.",

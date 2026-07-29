@@ -52,7 +52,7 @@ export function SmartPhoto({
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={actualSrc}
-          alt={media?.altText || alt}
+        alt={media?.descriptiveAltText || alt}
           loading="lazy"
           className="h-full w-full object-cover"
           onError={() => setFailed(true)}
@@ -67,7 +67,7 @@ export function SmartPhoto({
               </button>
               <div className="absolute bottom-full right-0 mb-2 w-64 bg-paper/95 p-3 rounded-xl shadow-xl border border-sand-deep text-ink hidden group-hover/tooltip:block backdrop-blur-md text-xs text-left">
                 <p className="font-bold mb-1">{media.title}</p>
-                {media.creatorOrOrganization || media.photographerOrInstitution && <p className="mb-1 text-ink-soft">📷 {media.photographerOrInstitution}</p>}
+                {media.creatorOrOrganization && <p className="mb-1 text-ink-soft">📷 {media.creatorOrOrganization}</p>}
                 {media.license && <p className="mb-1 text-ink-soft">📄 {media.license}</p>}
                 {media.originalSourceUrl && (
                   <a href={media.originalSourceUrl} target="_blank" rel="noopener noreferrer" className="text-ocean-deep hover:underline mt-1 block">
@@ -75,7 +75,7 @@ export function SmartPhoto({
                   </a>
                 )}
                 <div className="mt-2 pt-2 border-t border-sand-deep/50 text-[10px] text-ink-soft">
-                  Verified: {media.dateVerified}
+                  Reviewed: {media.dateReviewed}
                 </div>
               </div>
             </div>

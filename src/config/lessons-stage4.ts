@@ -11,8 +11,8 @@ export const stage4Lessons: CurriculumLesson[] = [
     essentialQuestion: "How do we greet our friends?",
     factualBackground: "Kumusta is derived from the Spanish 'como esta' and is the standard greeting.",
     vocabulary: [
-      { word: "Kumusta", translation: "How are you?" },
-      { word: "Magandang umaga", translation: "Good morning" }
+      { word: "Kumusta", translation: "How are you?", language: "Tagalog", hiligaynon: "Kamusta" },
+      { word: "Magandang umaga", translation: "Good morning", language: "Tagalog", hiligaynon: "Maayong aga" }
     ],
     subjectConnections: { language: "Greetings" },
     materials: ["Greeting cards"],
@@ -46,7 +46,7 @@ export const stage4Lessons: CurriculumLesson[] = [
     essentialQuestion: "How do we show respect to elders?",
     factualBackground: "Po and opo are used to show respect, and Mano po is a traditional gesture.",
     vocabulary: [
-      { word: "Opo", translation: "Yes (respectful)" }
+      { word: "Opo", translation: "Yes (respectful)", language: "Tagalog", hiligaynon: "Huo (respect via tone)" }
     ],
     subjectConnections: { culture: "Respect" },
     materials: ["None"],
@@ -80,8 +80,8 @@ export const stage4Lessons: CurriculumLesson[] = [
     essentialQuestion: "Who makes up our family?",
     factualBackground: "Family (Pamilya) is central to Filipino culture.",
     vocabulary: [
-      { word: "Tatay", translation: "Father" },
-      { word: "Nanay", translation: "Mother" }
+      { word: "Tatay", translation: "Father", language: "Tagalog", hiligaynon: "Tatay" },
+      { word: "Nanay", translation: "Mother", language: "Tagalog", hiligaynon: "Nanay" }
     ],
     subjectConnections: { language: "Family" },
     materials: ["Family photos"],
@@ -115,8 +115,8 @@ export const stage4Lessons: CurriculumLesson[] = [
     essentialQuestion: "What are the parts of our body?",
     factualBackground: "Ulo (head), balikat (shoulders), tuhod (knees), and paa (toes).",
     vocabulary: [
-      { word: "Ulo", translation: "Head" },
-      { word: "Paa", translation: "Foot" }
+      { word: "Ulo", translation: "Head", language: "Tagalog", hiligaynon: "Ulo" },
+      { word: "Paa", translation: "Foot", language: "Tagalog", hiligaynon: "Tiil" }
     ],
     subjectConnections: { language: "Body Parts" },
     materials: ["Body chart"],
@@ -150,8 +150,8 @@ export const stage4Lessons: CurriculumLesson[] = [
     essentialQuestion: "What do we say when it's time to eat?",
     factualBackground: "Kain tayo means 'Let's eat', a common invitation.",
     vocabulary: [
-      { word: "Kain tayo", translation: "Let's eat" },
-      { word: "Pagkain", translation: "Food" }
+      { word: "Kain tayo", translation: "Let's eat", language: "Tagalog", hiligaynon: "Kaon ta" },
+      { word: "Pagkain", translation: "Food", language: "Tagalog", hiligaynon: "Pagkaon" }
     ],
     subjectConnections: { language: "Food" },
     materials: ["Food photos"],
@@ -185,8 +185,8 @@ export const stage4Lessons: CurriculumLesson[] = [
     essentialQuestion: "How do we say how we feel?",
     factualBackground: "Masaya (happy) and Malungkot (sad) are basic emotion words.",
     vocabulary: [
-      { word: "Masaya", translation: "Happy" },
-      { word: "Malungkot", translation: "Sad" }
+      { word: "Masaya", translation: "Happy", language: "Tagalog", hiligaynon: "Malipayon" },
+      { word: "Malungkot", translation: "Sad", language: "Tagalog", hiligaynon: "Masubo" }
     ],
     subjectConnections: { language: "Emotions" },
     materials: ["Emotion cards"],
@@ -220,7 +220,7 @@ export const stage4Lessons: CurriculumLesson[] = [
     essentialQuestion: "Where do Filipino families live?",
     factualBackground: "Homes range from traditional bahay kubo to modern city apartments.",
     vocabulary: [
-      { word: "Bahay", translation: "House" }
+      { word: "Bahay", translation: "House", language: "Tagalog", hiligaynon: "Balay" }
     ],
     subjectConnections: { culture: "Homes" },
     materials: ["Photos of homes"],
@@ -254,8 +254,8 @@ export const stage4Lessons: CurriculumLesson[] = [
     essentialQuestion: "What is school like in the Philippines?",
     factualBackground: "Paaralan is the word for school.",
     vocabulary: [
-      { word: "Paaralan", translation: "School" },
-      { word: "Guro", translation: "Teacher" }
+      { word: "Paaralan", translation: "School", language: "Tagalog", hiligaynon: "Eskwelahan" },
+      { word: "Guro", translation: "Teacher", language: "Tagalog", hiligaynon: "Maestra/Maestro" }
     ],
     subjectConnections: { culture: "School" },
     materials: ["Classroom photos"],
@@ -289,7 +289,7 @@ export const stage4Lessons: CurriculumLesson[] = [
     essentialQuestion: "What do we find in a palengke?",
     factualBackground: "A palengke is a traditional public market.",
     vocabulary: [
-      { word: "Palengke", translation: "Market" }
+      { word: "Palengke", translation: "Market", language: "Tagalog", hiligaynon: "Tienda / Merkado" }
     ],
     subjectConnections: { culture: "Markets" },
     materials: ["Market items (fruit, veg)"],
@@ -323,8 +323,8 @@ export const stage4Lessons: CurriculumLesson[] = [
     essentialQuestion: "How do people travel in the Philippines?",
     factualBackground: "Jeepneys are a popular and iconic form of public transport.",
     vocabulary: [
-      { word: "Jeepney", translation: "Jeepney" },
-      { word: "Tricycle", translation: "Tricycle" }
+      { word: "Jeepney", translation: "Jeepney", language: "Tagalog", hiligaynon: "Jeep" },
+      { word: "Tricycle", translation: "Tricycle", language: "Tagalog", hiligaynon: "Traysikel" }
     ],
     subjectConnections: { culture: "Transportation" },
     materials: ["Transport photos"],
@@ -358,7 +358,7 @@ export const stage4Lessons: CurriculumLesson[] = [
     essentialQuestion: "Why is the carabao important?",
     factualBackground: "The carabao is the national working animal, vital for farming.",
     vocabulary: [
-      { word: "Kalabaw", translation: "Carabao" }
+      { word: "Kalabaw", translation: "Carabao", language: "Tagalog", hiligaynon: "Karabaw" }
     ],
     subjectConnections: { science: "Animals" },
     materials: ["Carabao photo"],
@@ -392,8 +392,8 @@ export const stage4Lessons: CurriculumLesson[] = [
     essentialQuestion: "Who helps us in our community?",
     factualBackground: "Pulis (police), Bumbero (firefighter), Doktor (doctor) help the community.",
     vocabulary: [
-      { word: "Doktor", translation: "Doctor" },
-      { word: "Pulis", translation: "Police" }
+      { word: "Doktor", translation: "Doctor", language: "Tagalog", hiligaynon: "Doktor" },
+      { word: "Pulis", translation: "Police", language: "Tagalog", hiligaynon: "Pulis" }
     ],
     subjectConnections: { culture: "Community" },
     materials: ["Helper hats"],
@@ -427,7 +427,7 @@ export const stage4Lessons: CurriculumLesson[] = [
     essentialQuestion: "What was your favorite new word?",
     factualBackground: "Review of family, school, market, and transportation terms.",
     vocabulary: [
-      { word: "Salamat", translation: "Thank you" }
+      { word: "Salamat", translation: "Thank you", language: "Tagalog", hiligaynon: "Salamat" }
     ],
     subjectConnections: { language: "Review" },
     materials: ["All September projects"],

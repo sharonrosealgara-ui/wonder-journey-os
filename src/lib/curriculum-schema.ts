@@ -21,7 +21,18 @@ export type CurriculumLesson = {
   essentialQuestion: string;
   factualBackground: string;
   vocabulary: { word: string; translation?: string; pronunciation?: string; mediaId?: string }[];
-  subjectConnections: { geography?: string; christianCharacter?: string; english?: string };
+  subjectConnections: {
+    geography?: string;
+    science?: string;
+    history?: string;
+    culture?: string;
+    cooking?: string;
+    art?: string;
+    music?: string;
+    language?: string;
+    christianCharacter?: string;
+    english?: string;
+  };
   materials: string[];
   factualMediaRequirements: string[]; // array of mediaRegistry IDs
   activities: LevelSupport;

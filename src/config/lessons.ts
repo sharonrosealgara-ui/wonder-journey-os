@@ -30,11 +30,7 @@ function mapToLegacy(c: CurriculumLesson, order: number, emoji: string): any {
   };
 }
 
-const pilotLessons = [
-  mapToLegacy(stage2Lessons[0], 1, "🗺️"),
-  mapToLegacy(stage2Lessons[1], 2, "🏝️"),
-  mapToLegacy(stage2Lessons[2], 3, "⭐")
-];
+const pilotLessons = stage2Lessons.map((l, i) => mapToLegacy(l, i + 1, "🌟"));
 
 // ─────────────────────────────────────────────────────────────
 // LESSON LIBRARY — add new lessons here; pages render them automatically.

@@ -108,3 +108,9 @@ export const mediaRegistry: Record<string, FactualMedia> = {
     dateReviewed: "2026-07-29"
   }
 };
+
+export function getMedia(id?: string): FactualMedia | null {
+  if (!id) return null;
+  return mediaRegistry[id] ?? null;
+}
+

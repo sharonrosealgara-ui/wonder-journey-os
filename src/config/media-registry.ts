@@ -1,4 +1,4 @@
-export type VerificationStatus = "pending" | "verified" | "rejected";
+﻿export type VerificationStatus = "pending" | "verified" | "rejected";
 export type MediaClassification = "factual photograph" | "factual map" | "diagram" | "decorative illustration" | "icon" | "verified video" | "pending verification";
 
 export type FactualMedia = {
@@ -113,4 +113,5 @@ export function getMedia(id?: string): FactualMedia | null {
   if (!id) return null;
   return mediaRegistry[id] ?? null;
 }
+
 

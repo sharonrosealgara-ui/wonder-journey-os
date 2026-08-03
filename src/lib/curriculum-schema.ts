@@ -28,7 +28,7 @@ export type CurriculumLesson = {
   learningObjectives: string[];
   essentialQuestion: string;
   factualBackground: string;
-  vocabulary: { word: string; translation?: string; pronunciation?: string; mediaId?: string }[];
+  vocabulary: { word: string; translation?: string; language?: string; hiligaynon?: string; pronunciation?: string; mediaId?: string }[];
   subjectConnections: {
     geography?: string;
     science?: string;

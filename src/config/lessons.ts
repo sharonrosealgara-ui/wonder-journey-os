@@ -77,7 +77,8 @@ export type Lesson = {
 
 export const lessons: Lesson[] = [
   ...pilotLessons,
-  ...stage4Lessons.map((l, i) => mapToLegacy(l, i + 14, "ðŸ“š")),
+  ...stage4Lessons.map((l, i) => mapToLegacy(l, i + 14, '📚')),
+  ...stage5Lessons.map((l, i) => mapToLegacy(l, i + 27, '📚')),
   {
     id: "welcome-to-the-philippines",
     order: 1,

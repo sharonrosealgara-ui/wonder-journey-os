@@ -1909,6 +1909,9 @@ export const lessons: Lesson[] = [
   // OCTOBER â€” "Fiesta & Trails" (Units 6 Â· 10 Â· 7 Â· 9 Â· 8)
   // Resumes after the Feast of Tabernacles pause (~Sep 28â€“Oct 2).
   // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+];
+
+export const unscheduledLessons: Lesson[] = [
   {
     id: "gentle-giants-of-the-sea",
     order: 33,

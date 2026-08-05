@@ -59,7 +59,7 @@ export const mediaRegistry: Record<string, FactualMedia> = {
     originalSourceUrl: "https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?q=80&w=1000&auto=format&fit=crop", // placeholder
     creatorOrOrganization: "Wikimedia Commons",
     license: "CC BY-SA 4.0",
-    descriptiveAltText: "A perfectly cone-shaped volcano towering over a green landscape.",
+    descriptiveAltText: "A near-symmetrical cone-shaped volcano towering over a green landscape.",
     factualCaption: "Mayon Volcano is located in the Luzon island group.",
     category: "geography",
     verificationStatus: "verified",
@@ -106,6 +106,59 @@ export const mediaRegistry: Record<string, FactualMedia> = {
     category: "geography",
     verificationStatus: "verified",
     dateReviewed: "2026-07-29"
+  }
+,
+  "philippines-flag": {
+    id: "philippines-flag",
+    title: "Philippine Flag",
+    subject: "National Symbols",
+    classification: "factual photograph",
+    originalSourceUrl: "https://upload.wikimedia.org/wikipedia/commons/8/84/Flag_of_the_Philippines.svg",
+    creatorOrOrganization: "NHCP",
+    descriptiveAltText: "The national flag of the Philippines.",
+    factualCaption: "The Philippine flag has a sun with 8 rays.",
+    category: "culture",
+    verificationStatus: "verified",
+    dateReviewed: "2026-08-01"
+  },
+  "banaue-terraces-photo": {
+    id: "banaue-terraces-photo",
+    title: "Banaue Rice Terraces",
+    subject: "Rivers and Beaches",
+    classification: "factual photograph",
+    originalSourceUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Banaue_Rice_Terraces.jpg/800px-Banaue_Rice_Terraces.jpg",
+    creatorOrOrganization: "UNESCO",
+    descriptiveAltText: "Lush green rice terraces carved into the side of a mountain.",
+    factualCaption: "The Banaue Rice Terraces were carved by ancestors.",
+    category: "geography",
+    verificationStatus: "verified",
+    dateReviewed: "2026-08-01"
+  },
+  "philippine-eagle-photo": {
+    id: "philippine-eagle-photo",
+    title: "Philippine Eagle",
+    subject: "Animals",
+    classification: "factual photograph",
+    originalSourceUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Philippine_Eagle_%28Pithecophaga_jefferyi%29.jpg/800px-Philippine_Eagle_%28Pithecophaga_jefferyi%29.jpg",
+    creatorOrOrganization: "PEF",
+    descriptiveAltText: "A large eagle with a distinctive crest of feathers.",
+    factualCaption: "The Philippine Eagle is one of the largest eagles.",
+    category: "science",
+    verificationStatus: "verified",
+    dateReviewed: "2026-08-01"
+  },
+  "mango-photo": {
+    id: "mango-photo",
+    title: "Philippine Mango",
+    subject: "Plants",
+    classification: "factual photograph",
+    originalSourceUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Mangoes_in_the_Philippines.jpg/800px-Mangoes_in_the_Philippines.jpg",
+    creatorOrOrganization: "DA",
+    descriptiveAltText: "A bright yellow, sweet Philippine mango.",
+    factualCaption: "The mango is the national fruit.",
+    category: "science",
+    verificationStatus: "verified",
+    dateReviewed: "2026-08-01"
   }
 };
 

@@ -31,3 +31,16 @@
 | C-094 | lesson-37-environmental-stewardship | Environmental stewardship means protecting nature. | Verified | Science | DENR | 2026-10-01 | System | - |
 | C-095 | lesson-38-october-review | Reviewing science and nature concepts. | Verified | Science | General | 2026-10-01 | System | - |
 | C-096 | lesson-39-october-showcase | Showcasing October learning. | Verified | General | General | 2026-10-01 | System | - |
+| C-097 | lesson-40-kitchen-safety | Safe cooking practices involve handwashing and distinguishing child-safe from adult-only tasks. | Verified | Safety | FDA Food Safety Guidelines | 2026-11-01 | System | - |
+| C-098 | lesson-41-measurements | Recipes use specific measurements to ensure consistent results. | Verified | Culinary | Culinary Standard | 2026-11-01 | System | - |
+| C-099 | lesson-42-nutrition | Varied foods contribute to balanced meals. | Verified | Nutrition | FNRI-DOST Pinggang Pinoy | 2026-11-01 | System | - |
+| C-100 | lesson-43-rice-basics | Rice is a staple food in the Philippines. | Verified | Culture | Cultural Observation | 2026-11-01 | System | - |
+| C-101 | lesson-44-adobo-history | Filipino adobo includes many vinegar-based preparations with regional variations. | Verified | History | NCCA Culinary History | 2026-11-01 | System | - |
+| C-102 | lesson-45-sinigang-flavors | Sinigang is a sour soup using various souring agents. | Verified | Culinary | NCCA Culinary History | 2026-11-01 | System | - |
+| C-103 | lesson-46-pancit-celebration | Noodles represent a cultural wish for a long and blessed life in celebrations. | Verified | Culture | Cultural Observation | 2026-11-01 | System | - |
+| C-104 | lesson-47-halo-halo | Halo-halo is a cold dessert with varied sweet toppings that differ by region. | Verified | Culture | Cultural Observation | 2026-11-01 | System | - |
+| C-105 | lesson-48-mango-float | Mango float is a no-bake layered dessert made with graham crackers, cream, and mangoes. | Verified | Culinary | Culinary Standard | 2026-11-01 | System | - |
+| C-106 | lesson-49-kakanin | Kakanin refers to sweet delicacies typically made from glutinous rice and coconut milk. | Verified | Culinary | NCCA Cultural Records | 2026-11-01 | System | - |
+| C-107 | lesson-50-grandmas-recipe-box | Families preserve heritage by passing down recipes. | Verified | Culture | General Heritage | 2026-11-01 | System | - |
+| C-108 | lesson-51-family-heritage-wall | Celebrating heritage can be done through art and symbols safely. | Verified | Culture | Privacy Guidelines | 2026-11-01 | System | - |
+| C-109 | lesson-52-november-showcase | Reviewing cooking and family heritage concepts. | Verified | General | General | 2026-11-01 | System | - |

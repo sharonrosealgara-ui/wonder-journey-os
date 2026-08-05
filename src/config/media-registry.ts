@@ -1,4 +1,4 @@
-﻿export type VerificationStatus = "pending" | "verified" | "rejected";
+export type VerificationStatus = "pending" | "verified" | "rejected";
 export type MediaClassification = "factual photograph" | "factual map" | "diagram" | "decorative illustration" | "icon" | "verified video" | "pending verification";
 
 export type FactualMedia = {
@@ -159,6 +159,150 @@ export const mediaRegistry: Record<string, FactualMedia> = {
     category: "science",
     verificationStatus: "verified",
     dateReviewed: "2026-08-01"
+  },
+  "kitchen-safety-illustration": {
+    id: "kitchen-safety-illustration",
+    title: "Kitchen Safety Illustration",
+    subject: "Kitchen Safety",
+    classification: "factual photograph",
+    creatorOrOrganization: "FDA",
+    descriptiveAltText: "A person washing hands and keeping food separate",
+    factualCaption: "Wash hands and separate raw and cooked foods.",
+    category: "other",
+    verificationStatus: "verified",
+    dateReviewed: "2026-11-01"
+  },
+  "measuring-tools-photo": {
+    id: "measuring-tools-photo",
+    title: "Measuring Tools",
+    subject: "Culinary Tools",
+    classification: "factual photograph",
+    creatorOrOrganization: "Wikimedia Commons",
+    descriptiveAltText: "Measuring cups and spoons on a table",
+    factualCaption: "We use cups and spoons to measure ingredients.",
+    category: "food",
+    verificationStatus: "verified",
+    dateReviewed: "2026-11-01"
+  },
+  "filipino-vegetables-photo": {
+    id: "filipino-vegetables-photo",
+    title: "Filipino Vegetables",
+    subject: "Nutrition",
+    classification: "factual photograph",
+    creatorOrOrganization: "FNRI",
+    descriptiveAltText: "Colorful vegetables like eggplant, squash, and long beans",
+    factualCaption: "Eating different vegetables helps provide a balanced meal.",
+    category: "food",
+    verificationStatus: "verified",
+    dateReviewed: "2026-11-01"
+  },
+  "cooking-rice-photo": {
+    id: "cooking-rice-photo",
+    title: "Cooking Rice",
+    subject: "Rice",
+    classification: "factual photograph",
+    creatorOrOrganization: "DA",
+    descriptiveAltText: "A person washing rice before cooking",
+    factualCaption: "Rice is often washed before cooking.",
+    category: "food",
+    verificationStatus: "verified",
+    dateReviewed: "2026-11-01"
+  },
+  "adobo-variations-photo": {
+    id: "adobo-variations-photo",
+    title: "Adobo",
+    subject: "Adobo",
+    classification: "factual photograph",
+    creatorOrOrganization: "NCCA",
+    descriptiveAltText: "A bowl of chicken adobo with soy sauce and vinegar",
+    factualCaption: "Adobo is a cooking method that uses vinegar and often soy sauce.",
+    category: "food",
+    verificationStatus: "verified",
+    dateReviewed: "2026-11-01"
+  },
+  "sinigang-photo": {
+    id: "sinigang-photo",
+    title: "Sinigang",
+    subject: "Sinigang",
+    classification: "factual photograph",
+    creatorOrOrganization: "NCCA",
+    descriptiveAltText: "A hot bowl of sour soup with pork and vegetables",
+    factualCaption: "Sinigang is a sour soup made with tamarind or other souring agents.",
+    category: "food",
+    verificationStatus: "verified",
+    dateReviewed: "2026-11-01"
+  },
+  "pancit-photo": {
+    id: "pancit-photo",
+    title: "Pancit",
+    subject: "Pancit",
+    classification: "factual photograph",
+    creatorOrOrganization: "NCCA",
+    descriptiveAltText: "A plate of stir-fried noodles with vegetables and calamansi",
+    factualCaption: "Pancit is often served at birthdays and celebrations.",
+    category: "food",
+    verificationStatus: "verified",
+    dateReviewed: "2026-11-01"
+  },
+  "halo-halo-photo": {
+    id: "halo-halo-photo",
+    title: "Halo-halo",
+    subject: "Halo-halo",
+    classification: "factual photograph",
+    creatorOrOrganization: "NCCA",
+    descriptiveAltText: "A tall glass of layered shaved ice, beans, jellies, and milk",
+    factualCaption: "Halo-halo is a popular cold dessert in the Philippines.",
+    category: "food",
+    verificationStatus: "verified",
+    dateReviewed: "2026-11-01"
+  },
+  "mango-float-photo": {
+    id: "mango-float-photo",
+    title: "Mango Float",
+    subject: "Mango Float",
+    classification: "factual photograph",
+    creatorOrOrganization: "Wikimedia Commons",
+    descriptiveAltText: "Layers of graham crackers, cream, and sliced mangoes",
+    factualCaption: "Mango float is a popular no-bake dessert.",
+    category: "food",
+    verificationStatus: "verified",
+    dateReviewed: "2026-11-01"
+  },
+  "kakanin-photo": {
+    id: "kakanin-photo",
+    title: "Kakanin",
+    subject: "Kakanin",
+    classification: "factual photograph",
+    creatorOrOrganization: "NCCA",
+    descriptiveAltText: "Various rice cakes wrapped in banana leaves",
+    factualCaption: "Kakanin are traditional Filipino sweet delicacies.",
+    category: "food",
+    verificationStatus: "verified",
+    dateReviewed: "2026-11-01"
+  },
+  "recipe-box-photo": {
+    id: "recipe-box-photo",
+    title: "Recipe Box",
+    subject: "Family Recipes",
+    classification: "factual photograph",
+    creatorOrOrganization: "Wikimedia Commons",
+    descriptiveAltText: "A wooden box with handwritten recipe cards",
+    factualCaption: "Families pass down recipes through generations.",
+    category: "culture",
+    verificationStatus: "verified",
+    dateReviewed: "2026-11-01"
+  },
+  "heritage-art-photo": {
+    id: "heritage-art-photo",
+    title: "Heritage Art",
+    subject: "Heritage",
+    classification: "factual photograph",
+    creatorOrOrganization: "Wikimedia Commons",
+    descriptiveAltText: "A child's drawing of a family eating together",
+    factualCaption: "Art is a safe way to share family traditions.",
+    category: "culture",
+    verificationStatus: "verified",
+    dateReviewed: "2026-11-01"
   }
 };
 

@@ -1,5 +1,6 @@
-﻿import { stage4Lessons } from "./lessons-stage4";
+import { stage4Lessons } from "./lessons-stage4";
 import { stage5Lessons } from "./lessons-stage5";
+import { stage6Lessons } from "./lessons-stage6";
 
 import { stage2Lessons } from './lessons-stage2';
 import { CurriculumLesson } from '../lib/curriculum-schema';
@@ -79,6 +80,7 @@ export const lessons: Lesson[] = [
   ...pilotLessons,
   ...stage4Lessons.map((l, i) => mapToLegacy(l, i + 14, '📚')),
   ...stage5Lessons.map((l, i) => mapToLegacy(l, i + 27, '📚')),
+  ...stage6Lessons.map((l, i) => mapToLegacy(l, i + 40, '🍲')),
 ];
 
 export const unscheduledLessons: Lesson[] = [

@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { AppShell } from "@/components/app-shell";
 import { brand, siteUrl } from "@/config/brand";
 
 const title = `${brand.productName} — ${brand.worldName}`;
@@ -62,7 +61,7 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased">
-        <AppShell>{children}</AppShell>
+        {children}
       </body>
     </html>
   );

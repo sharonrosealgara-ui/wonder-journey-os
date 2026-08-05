@@ -3,12 +3,10 @@
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Participant, Track } from "livekit-client";
-import { familyName, familySlug, teacherName } from "@/config/family";
-import { normalizeMode } from "@/config/navigation";
+import { useAuth } from "@/lib/auth-context";
 import { CameraOffTile } from "@/components/friendly-avatar";
 import { participantRole, useCall } from "@/lib/call-context";
-import { initCloudSync } from "@/lib/cloud-sync";
-import { readStored, useStored } from "@/lib/storage";
+import { useStored } from "@/lib/storage";
 
 // 🎥 FLOATING CAMERA DOCK — the call follows the family everywhere.
 // Cameras auto-start when the app opens (family camera ABOVE teacher),
@@ -34,47 +32,36 @@ const SIZE_CLASS: Record<DockSize, string> = {
 const SIZE_LABEL: Record<DockSize, string> = { s: "Small", m: "Medium", l: "Large", xl: "Extra large" };
 
 export function CameraDock() {
+  const auth = useAuth();
   const call = useCall();
   const pathname = usePathname();
   const [pref, setPref] = useStored<DockPref>("dock", "on");
   const [size, setSize] = useStored<DockSize>("dockSize", "l"); // big by default
-  const [isGuest] = useStored<boolean>("guest", false);
-  const [displayName] = useStored<string>("displayName", "");
   const [ready, setReady] = useState(false);
   const triedRef = useRef(false);
 
   useEffect(() => setReady(true), []);
 
   const startCall = useCallback(() => {
-    const mode = normalizeMode(readStored<string>("mode", "family"));
-    const code = readStored<string>("classCode", "");
+    const role = auth.role ?? "family";
+    const name = auth.profile?.display_name ?? (role === "teacher" ? "Teacher" : "Family");
+    
     void call
       .join({
-        // the name given at the front door rides on the camera
-        name:
-          readStored<string>("displayName", "") ||
-          (mode === "teacher" ? teacherName : familyName),
-        code,
-        role: mode === "teacher" ? "teacher" : "family",
-        roomName: `wj-room-${familySlug}`, // one stable room per family (timezone-proof)
+        name,
+        code: "", // handled server-side now
+        role,
+        roomName: `wj-room`, // stable room name, managed securely via token
         camId: "",
         micId: "",
         camOn: true,
         micOn: true,
-        silent: true, // wrong/missing code → quiet local camera, never an error
-      })
-      .then(() => initCloudSync());
+        silent: true,
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [auth.role, auth.profile?.display_name]);
 
-  // auto-start once when the app opens (the code is already in hand)
-  useEffect(() => {
-    if (!ready || triedRef.current) return;
-    if (pref === "off" || call.status !== "idle") return;
-    triedRef.current = true;
-    startCall();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ready, pref, call.status]);
+  // auto-start removed (camera privacy requirement)
 
   if (!ready) return null;
   if (pathname.startsWith("/classroom")) return null; // full room lives there
@@ -89,9 +76,9 @@ export function CameraDock() {
           if (call.status === "idle") startCall();
         }}
         className="wj-chip fixed bottom-3 right-3 z-[70] !bg-paper shadow-xl hover:!bg-mango/20"
-        title={isGuest ? "Try the classroom cameras — a safe demo, connected to nobody" : "Start family cameras"}
+        title="Start cameras"
       >
-        🎥 {call.status === "connecting" ? "Starting…" : isGuest ? "Try the cameras" : "Cameras"}
+        🎥 {call.status === "connecting" ? "Starting…" : "Cameras"}
       </button>
     );
   }
@@ -165,11 +152,9 @@ export function CameraDock() {
           </div>
         </div>
 
-        {/* 👨‍👩‍👧‍👦 Family — always on top, exactly one tile.
-            Guests see THEIR name here: a safe demo of their future classroom. */}
         <div>
           <p className="mb-0.5 text-center text-[10px] font-bold uppercase tracking-wide text-ink-soft">
-            👨‍👩‍👧‍👦 {isGuest ? displayName || "Your Family" : familyName}
+            👨‍👩‍👧‍👦 {familyP === localP ? auth.profile?.display_name || "Family" : familyP?.name || "Family"}
           </p>
           {familyP ? (
             <LKVideo participant={familyP} muted={familyP === localP} version={call.version} tall />
@@ -182,7 +167,9 @@ export function CameraDock() {
 
         {/* 👩‍🏫 Teacher — below, exactly one tile */}
         <div>
-          <p className="mb-0.5 text-center text-[10px] font-bold uppercase tracking-wide text-ink-soft">👩‍🏫 {teacherName}</p>
+          <p className="mb-0.5 text-center text-[10px] font-bold uppercase tracking-wide text-ink-soft">
+            👩‍🏫 {teacherP === localP ? auth.profile?.display_name || "Teacher" : teacherP?.name || "Teacher"}
+          </p>
           {teacherP ? (
             <LKVideo participant={teacherP} muted={teacherP === localP} version={call.version} />
           ) : !call.room && call.isTeacher ? (
@@ -190,9 +177,7 @@ export function CameraDock() {
           ) : (
             <DockPlaceholder
               text={
-                isGuest
-                  ? "Your teacher appears here 💛"
-                  : live
+                live
                   ? "Waiting for Teacher…"
                   : "Teacher joins in class"
               }

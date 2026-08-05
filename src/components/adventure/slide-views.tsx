@@ -6,7 +6,7 @@ import { AdventureQuiz } from "@/components/adventure/quiz";
 import { FactHunt, MemoryFlip, WordScramble } from "@/components/adventure/mini-games";
 import { MatchingGame } from "@/components/matching-game";
 import { PhotoUpload } from "@/components/photo-upload";
-import { Polaroid } from "@/components/smart-photo";
+import { Polaroid, SmartPhoto } from "@/components/smart-photo";
 import { Highlight } from "@/lib/highlight";
 import { speak } from "@/lib/speak";
 import { useSmartSrc } from "@/lib/photos";
@@ -464,7 +464,6 @@ function SectionSlide({ slide, lesson }: { slide: Slide; lesson: Lesson }) {
           <Polaroid
             src={photoSrc}
             alt={section.heading}
-            emoji={section.emoji}
             tilt={t.tilt}
             caption={lesson.title}
             className="w-full max-w-xs"
@@ -633,6 +632,8 @@ function GameSlide({ slide, lesson, level }: { slide: Slide; lesson: Lesson; lev
   // 🏅 "beat your best" — best star rating per game, per lesson.
   const [best, setBest] = useStored<Record<string, number>>(`gamebest-${lesson.id}`, {});
   const [newBest, setNewBest] = useState(false);
+  const [xp, setXp] = useStored<Record<string, number>>(KEYS.xp, {});
+  const [activeStudentId] = useStored<string | null>(KEYS.activeStudent, null);
 
   // 👨‍👩‍👧‍👦 Pass & Play — optional sibling turns on the shared screen.
   const [players, setPlayers] = useState<string[]>([]);
@@ -651,10 +652,14 @@ function GameSlide({ slide, lesson, level }: { slide: Slide; lesson: Lesson; lev
       }
       return prev;
     });
-    // team stars + advance turn
+    // team stars + advance turn + award XP
     if (teamOn && current) {
       setTally((prev) => ({ ...prev, [current.id]: (prev[current.id] ?? 0) + s }));
+      setXp((prev) => ({ ...prev, [current.id]: (prev[current.id] ?? 0) + s * 10 }));
       setTimeout(() => setTurn((t) => t + 1), 300);
+    } else if (activeStudentId) {
+      // If solo mode, award to active student
+      setXp((prev) => ({ ...prev, [activeStudentId]: (prev[activeStudentId] ?? 0) + s * 10 }));
     }
   }
 
@@ -777,7 +782,13 @@ function RecipeSlide({ slide, lesson }: { slide: Slide; lesson: Lesson }) {
   if (!recipe) return null;
   return (
     <div className="mx-auto max-w-2xl text-center">
-      <div className="mb-3 text-6xl">{recipe.emoji}</div>
+      <div className="mx-auto mb-4 h-32 w-32 overflow-hidden rounded-full border-4 border-white shadow-lg">
+        <SmartPhoto 
+          mediaId={recipe.mediaId} 
+          alt={recipe.name} 
+          className="h-full w-full object-cover" 
+        />
+      </div>
       <h1 className="wj-outline font-display text-3xl sm:text-5xl">Cooking Time!</h1>
       <p className="font-hand mt-2 text-2xl text-ink-soft">
         {recipe.name} · <span className="italic">{recipe.filipinoName}</span>

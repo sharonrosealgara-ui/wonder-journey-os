@@ -1,4 +1,4 @@
-@import "tailwindcss";
+﻿@import "tailwindcss";
 
 /* ─────────────────────────────────────────────────────────────
    WONDER JOURNEY OS — watercolor storybook design system v2
@@ -503,4 +503,23 @@ a.wj-chip:active {
     transition: none;
     transform: none;
   }
+}
+.tv-mode {
+  filter: contrast(1.2) saturate(1.1);
+}
+
+.tv-mode .text-sm {
+  font-size: 1rem !important;
+}
+
+.tv-mode .text-base {
+  font-size: 1.125rem !important;
+}
+
+.tv-mode .text-lg {
+  font-size: 1.25rem !important;
+}
+
+.tv-mode p {
+  font-size: 110%;
 }

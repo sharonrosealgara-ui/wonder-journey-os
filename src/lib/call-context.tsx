@@ -9,7 +9,6 @@ import {
   RoomEvent,
   Track,
 } from "livekit-client";
-import { writeStored } from "@/lib/storage";
 
 // Races a promise against a timer so a stalled camera/network step can
 // never hang the app forever (see the join() hang-proofing below).
@@ -168,7 +167,6 @@ export function CallProvider({ children }: { children: React.ReactNode }) {
         // now on, no matter what the browser guessed.
         if (role === "teacher" || role === "family") {
           setIsTeacher(role === "teacher");
-          writeStored("mode", role);
         }
 
         const room = new Room({
@@ -192,11 +190,11 @@ export function CallProvider({ children }: { children: React.ReactNode }) {
         ] as const;
         evs.forEach((e) => room.on(e, bump));
         room.on(RoomEvent.ConnectionStateChanged, (s) => setConnState(s));
-        // server closed the room / network gone for good → back to idle
+        // server closed the room / network gone for good → fallback to solo mode so local camera stays on
         room.on(RoomEvent.Disconnected, () => {
           if (roomRef.current === room) {
             roomRef.current = null;
-            setStatus("idle");
+            void soloFallback();
             bump();
           }
         });

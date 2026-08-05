@@ -17,6 +17,7 @@
 
 import { readStored, writeStored } from "@/lib/storage";
 import { familySlug } from "@/config/family";
+import { pullFromSupabaseAction, pushToSupabaseAction } from "./supabase-actions";
 
 // Records that matter across devices. (Photos/memories can be large;
 // they sync too but oversized payloads are skipped gracefully.)
@@ -67,18 +68,17 @@ function mergeById(local: unknown, remote: unknown): unknown {
 
 /** Pull the family's cloud copy and merge it into localStorage. */
 export async function pullCloud(): Promise<boolean> {
-  const c = code();
-  if (!c) return false;
   try {
-    const res = await fetch("/api/family-data", {
-      headers: { "x-family-code": c, "x-family": familySlug },
-    });
-    if (!res.ok) return false;
-    const remote = (await res.json()) as Record<string, unknown>;
+    const { success, data } = await pullFromSupabaseAction();
+    if (!success || !data) return false;
+
     for (const key of SYNC_KEYS) {
-      if (!(key in remote)) continue;
+      if (!(key in data)) continue;
+      const remoteKey = data[key as keyof typeof data];
+      if (!remoteKey) continue;
+      
       const local = readStored<unknown>(key, null);
-      const merged = local === null ? remote[key] : mergeById(local, remote[key]);
+      const merged = local === null ? remoteKey : mergeById(local, remoteKey);
       writeStored(key, merged);
     }
     return true;
@@ -89,32 +89,19 @@ export async function pullCloud(): Promise<boolean> {
 
 /** Push the dirty keys (or everything) up to the cloud. */
 export async function pushCloud(keys?: string[]): Promise<boolean> {
-  const c = code();
-  if (!c) return false;
   const list = keys ?? [...SYNC_KEYS];
   const data: Record<string, unknown> = {};
+  
   for (const key of list) {
     const v = readStored<unknown>(key, null);
     if (v !== null) data[key] = v;
   }
+  
   if (Object.keys(data).length === 0) return true;
-  const body = JSON.stringify({ data });
-  if (body.length > MAX_PAYLOAD) {
-    // drop the heaviest keys (photos) and try the rest
-    delete data.memories;
-    delete data.cookbook;
-  }
+  
   try {
-    const res = await fetch("/api/family-data", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        "x-family-code": c,
-        "x-family": familySlug,
-      },
-      body: JSON.stringify({ data }),
-    });
-    return res.ok;
+    const { success } = await pushToSupabaseAction(data);
+    return success;
   } catch {
     return false;
   }

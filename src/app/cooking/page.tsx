@@ -5,6 +5,7 @@ import { PageHeader } from "@/components/page-header";
 import { recipes } from "@/config/recipes";
 import { KEYS, type CookbookMemory } from "@/lib/app-state";
 import { useStored } from "@/lib/storage";
+import { SmartPhoto } from "@/components/smart-photo";
 
 export default function CookingPage() {
   const [cookbook] = useStored<CookbookMemory[]>(KEYS.cookbook, []);
@@ -21,9 +22,12 @@ export default function CookingPage() {
           const made = cookbook.some((m) => m.recipeId === r.id);
           return (
             <Link key={r.id} href={`/cooking/${r.id}`} className="wj-card wj-card-hover block overflow-hidden">
-              {/* photo placeholder */}
-              <div className="flex h-32 items-center justify-center bg-gradient-to-br from-mango/25 to-hibiscus/15 text-6xl">
-                {r.emoji}
+              <div className="relative h-32 w-full bg-gradient-to-br from-mango/25 to-hibiscus/15">
+                <SmartPhoto 
+                  mediaId={r.mediaId} 
+                  alt={r.name} 
+                  className="absolute inset-0 h-full w-full object-cover" 
+                />
               </div>
               <div className="p-5">
                 <div className="flex flex-wrap gap-2">

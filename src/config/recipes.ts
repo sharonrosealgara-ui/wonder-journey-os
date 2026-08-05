@@ -12,6 +12,10 @@ export type Recipe = {
   difficulty: "Easy" | "Medium";
   time: string;
   photoNote: string; // description for the real-photo placeholder
+  mediaId?: string; // Main dish photograph
+  ingredientMedia?: Record<string, string>; // map ingredient name to mediaId
+  toolMedia?: Record<string, string>; // map tool name to mediaId
+  stepMedia?: Record<number, string>; // map step index to mediaId
   ingredients: string[];
   tools: string[];
   steps: string[];
@@ -31,6 +35,7 @@ export const recipes: Recipe[] = [
     type: "No-Bake",
     difficulty: "Easy",
     time: "20 min + chill overnight",
+    mediaId: "recipe-mango-float",
     photoNote: "Golden mango slices on creamy white layers in a glass dish",
     ingredients: [
       "3–4 ripe mangoes, sliced thin",
@@ -81,6 +86,7 @@ export const recipes: Recipe[] = [
     type: "Cooking",
     difficulty: "Medium",
     time: "30 min",
+    mediaId: "recipe-turon",
     photoNote: "Golden crispy banana rolls with caramelized sugar shine",
     ingredients: [
       "6 saba bananas (or regular bananas), sliced lengthwise",

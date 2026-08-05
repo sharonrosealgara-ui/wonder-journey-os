@@ -9,6 +9,7 @@ export type Phrase = {
   hiligaynon: string;
   pronunciation: string;
   emoji: string;
+  mediaId?: string;
 };
 
 export type PhraseCategory = {
@@ -16,6 +17,7 @@ export type PhraseCategory = {
   title: string;
   emoji: string;
   phrases: Phrase[];
+  mediaId?: string;
 };
 
 export const phraseCategories: PhraseCategory[] = [

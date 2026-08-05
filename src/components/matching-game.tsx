@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { shuffle } from "@/lib/slides";
+import { SmartPhoto } from "@/components/smart-photo";
 
 // Match English cards to their Filipino partners.
 // Used on the Languages page and inside the Adventure Theater.
@@ -11,6 +12,7 @@ export type MatchPhrase = {
   tagalog: string;
   hiligaynon?: string; // legacy — Tagalog only now
   emoji?: string;
+  mediaId?: string;
 };
 
 type Lang = "tagalog";
@@ -20,6 +22,8 @@ type GameCard = {
   pairId: string;
   label: string;
   side: "english" | "filipino";
+  mediaId?: string;
+  emoji?: string;
 };
 
 export function MatchingGame({
@@ -44,10 +48,19 @@ export function MatchingGame({
       {
         key: p.english + "-en",
         pairId: p.english,
-        label: `${p.emoji ? p.emoji + " " : ""}${p.english}`,
+        label: p.english,
         side: "english" as const,
+        mediaId: p.mediaId,
+        emoji: p.emoji,
       },
-      { key: p.english + "-fil", pairId: p.english, label: p[lang], side: "filipino" as const },
+      { 
+        key: p.english + "-fil", 
+        pairId: p.english, 
+        label: p[lang], 
+        side: "filipino" as const,
+        mediaId: p.mediaId,
+        emoji: p.emoji,
+      },
     ]);
     return shuffle(all);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -132,7 +145,7 @@ export function MatchingGame({
                 key={card.key}
                 onClick={() => pick(card)}
                 disabled={isMatched}
-                className={`min-h-20 rounded-2xl border-2 p-3 font-display text-sm transition-all ${
+                className={`overflow-hidden relative min-h-20 rounded-2xl border-2 p-0 flex items-center justify-center font-display text-sm transition-all ${
                   isMatched
                     ? "border-palm bg-palm/15 text-palm-deep opacity-60"
                     : isWrong
@@ -144,8 +157,23 @@ export function MatchingGame({
                     : "border-sand-deep bg-ocean/5 text-ocean-deep hover:border-ocean"
                 }`}
               >
-                {isMatched ? "✅ " : ""}
-                {card.label}
+                {/* Real Photo Background for English Side if available */}
+                {card.mediaId && card.side === "english" && !isMatched ? (
+                  <div className="absolute inset-0">
+                    <SmartPhoto 
+                      mediaId={card.mediaId} 
+                      alt={card.label} 
+                      className="w-full h-full object-cover opacity-30" 
+                    />
+                  </div>
+                ) : null}
+
+                <div className="relative z-10 flex flex-col items-center justify-center p-3">
+                  {isMatched ? "✅ " : card.emoji && !card.mediaId ? card.emoji + " " : ""}
+                  <span className={card.mediaId && card.side === "english" && !isMatched ? "bg-white/80 px-2 py-1 rounded shadow-sm" : ""}>
+                    {card.label}
+                  </span>
+                </div>
               </button>
             );
           })}

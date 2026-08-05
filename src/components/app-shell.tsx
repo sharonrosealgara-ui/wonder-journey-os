@@ -4,13 +4,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { brand } from "@/config/brand";
-import { familyNav, normalizeMode, teacherNav, type Mode } from "@/config/navigation";
-import { KEYS } from "@/lib/app-state";
+import { familyNav, teacherNav } from "@/config/navigation";
 import { familyName, teacherName } from "@/config/family";
 import { useProgress } from "@/lib/progress";
 import { initMute, setMuted, sfx } from "@/lib/sound";
-import { removeStored, useStored } from "@/lib/storage";
-import { AccessGate } from "@/components/access-gate";
+import { useStored } from "@/lib/storage";
+import { useAuth } from "@/lib/auth-context";
 import { BirthdayPopup } from "@/components/birthday-popup";
 import { CameraDock } from "@/components/camera-dock";
 import { TropicalDecor } from "@/components/tropical-decor";
@@ -21,9 +20,7 @@ import { CallProvider } from "@/lib/call-context";
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  // mode is decided by the code entered at the door (two-code system)
-  const [rawMode] = useStored<string>(KEYS.mode, "family");
-  const mode: Mode = normalizeMode(rawMode);
+  const auth = useAuth();
   const [open, setOpen] = useState(false); // mobile drawer
   const [theme, setTheme] = useStored<string>("theme", "light");
   const [displayName, setDisplayName] = useStored<string>("displayName", "");
@@ -39,7 +36,28 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   useEffect(() => setOpen(false), [pathname]);
 
   function isActive(href: string) {
-    return href === "/" ? pathname === "/" : pathname.startsWith(href);
+    return href === "/family" ? pathname === "/family" : pathname.startsWith(href);
+  }
+
+  if (auth.error) {
+    return (
+      <div className="flex min-h-screen items-center justify-center p-6 bg-paper">
+        <div className="wj-card max-w-md p-8 text-center space-y-6">
+          <h1 className="text-4xl font-display text-hibiscus-deep">Error</h1>
+          <p className="text-lg font-hand text-ink-soft">{auth.error}</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (auth.loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center p-6 bg-paper">
+        <div className="text-center">
+          <span className="text-4xl animate-pulse">🧭</span>
+        </div>
+      </div>
+    );
   }
 
   // 🎥 Fullscreen Classroom Mode: /classroom is a dedicated teaching room —
@@ -49,19 +67,16 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   // CameraDock keeps both cameras on screen everywhere else.
   if (pathname.startsWith("/classroom")) {
     return (
-      <AccessGate>
         <CallProvider>
           <div className="min-h-screen px-3 py-3 sm:px-4">
             {children}
           </div>
           <CameraDock />
         </CallProvider>
-      </AccessGate>
     );
   }
 
   return (
-    <AccessGate>
     <CallProvider>
     <div className="min-h-screen lg:flex">
       <TropicalDecor />
@@ -81,7 +96,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           open ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <Link href="/" className="flex items-center gap-3 px-5 py-5">
+        <Link href="/family" className="flex items-center gap-3 px-5 py-5">
           <span className="flex h-11 w-11 items-center justify-center rounded-full bg-mango text-2xl shadow-lg">
             🧭
           </span>
@@ -101,7 +116,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           {/* 🍎 Teacher Portal — exists ONLY on the teacher's device.
               The role comes from the code entered at the door (two-code
               system), so the family never sees teacher tools at all. */}
-          {mode === "teacher" && (
+          {auth.role === "teacher" && (
             <>
               <div className="mt-5 px-3 pb-1 text-[10px] font-bold uppercase tracking-widest text-white/50">
                 Teacher Portal
@@ -126,17 +141,17 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 onChange={(e) => setNameDraft(e.target.value)}
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
-                    setDisplayName(nameDraft.trim() || (mode === "teacher" ? teacherName : familyName));
+                    setDisplayName(nameDraft.trim() || (auth.role === "teacher" ? teacherName : familyName));
                     setEditingName(false);
                   }
                   if (e.key === "Escape") setEditingName(false);
                 }}
-                placeholder={mode === "teacher" ? teacherName : familyName}
+                placeholder={auth.role === "teacher" ? teacherName : familyName}
                 className="min-w-0 flex-1 rounded-lg bg-white/90 px-2 py-1 text-sm text-ink outline-none"
               />
               <button
                 onClick={() => {
-                  setDisplayName(nameDraft.trim() || (mode === "teacher" ? teacherName : familyName));
+                  setDisplayName(nameDraft.trim() || (auth.role === "teacher" ? teacherName : familyName));
                   setEditingName(false);
                 }}
                 className="rounded-full bg-mango px-2 py-1 text-xs font-bold text-ink-soft"
@@ -154,7 +169,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               title="Tap to fix this device's camera name"
             >
               <span className="min-w-0 truncate text-[13px] text-white/85">
-                📷 {displayName || (mode === "teacher" ? teacherName : familyName)}
+                📷 {displayName || (auth.role === "teacher" ? teacherName : familyName)}
               </span>
               <span className="shrink-0 text-[11px] text-white/50">✏️ edit</span>
             </button>
@@ -166,8 +181,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             the family's treasures (journals, blessings, photos, stamps). */}
         <button
           onClick={() => {
-            ["classCode", "displayName", "mode", "guest", "codePromptDismissed"].forEach(removeStored);
-            window.location.assign("/");
+            auth.signOut();
           }}
           className="mx-3 mb-5 flex items-center gap-3 rounded-2xl px-3.5 py-2.5 text-left font-display text-[13px] text-white/60 transition-colors hover:bg-white/10 hover:text-white"
         >
@@ -181,7 +195,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           onMenu={() => setOpen(true)}
           theme={theme}
           onToggleTheme={() => setTheme(theme === "dark" ? "light" : "dark")}
-          teacherMode={mode === "teacher"}
+          teacherMode={auth.role === "teacher"}
         />
 
         <main className="flex-1 px-4 py-6 pb-16 sm:px-6">{children}</main>
@@ -195,7 +209,6 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     </div>
       <CameraDock />
     </CallProvider>
-    </AccessGate>
   );
 }
 

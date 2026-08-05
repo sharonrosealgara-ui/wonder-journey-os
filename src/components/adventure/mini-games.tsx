@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { lessons, type Lesson, type PhrasePair } from "@/config/lessons";
 import { shuffle, type ExplorerLevel } from "@/lib/slides";
 import { sfx } from "@/lib/sound";
+import { SmartPhoto } from "@/components/smart-photo";
 
 // 🎮 MINI-GAMES — quick, joyful games built from the lesson's OWN words
 // and facts, so play and learning are the same thing. All are keyboard-
@@ -35,7 +36,7 @@ type GameProps = {
    English word and its Filipino partner.
    ══════════════════════════════════════════════════════════════ */
 
-type FlipCard = { key: string; pairId: string; label: string; side: "english" | "filipino" };
+type FlipCard = { key: string; pairId: string; label: string; side: "english" | "filipino"; mediaId?: string };
 
 export function MemoryFlip({ phrases, lang, level, onResult }: GameProps) {
   const [round, setRound] = useState(0);
@@ -43,8 +44,8 @@ export function MemoryFlip({ phrases, lang, level, onResult }: GameProps) {
   const cards = useMemo(() => {
     const pool = shuffle(phrases.filter((p) => p[lang])).slice(0, nPairs);
     const all: FlipCard[] = pool.flatMap((p) => [
-      { key: p.english + "-en", pairId: p.english, label: p.english, side: "english" as const },
-      { key: p.english + "-fil", pairId: p.english, label: p[lang], side: "filipino" as const },
+      { key: p.english + "-en", pairId: p.english, label: p.english, side: "english" as const, mediaId: p.mediaId },
+      { key: p.english + "-fil", pairId: p.english, label: p[lang], side: "filipino" as const, mediaId: p.mediaId },
     ]);
     return shuffle(all);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -123,7 +124,7 @@ export function MemoryFlip({ phrases, lang, level, onResult }: GameProps) {
                 key={card.key}
                 onClick={() => flip(card)}
                 disabled={isUp}
-                className={`flex min-h-20 items-center justify-center rounded-2xl border-2 p-2 text-center font-display text-sm transition-all duration-200 ${
+                className={`relative overflow-hidden flex min-h-20 items-center justify-center rounded-2xl border-2 p-0 text-center font-display text-sm transition-all duration-200 ${
                   isDone
                     ? "border-palm bg-palm/15 text-palm-deep opacity-70"
                     : isUp
@@ -133,7 +134,24 @@ export function MemoryFlip({ phrases, lang, level, onResult }: GameProps) {
                     : "border-sand-deep bg-gradient-to-br from-sunset to-hibiscus text-2xl text-white hover:scale-105"
                 }`}
               >
-                {isUp ? (isDone ? `✅ ${card.label}` : card.label) : "🌺"}
+                {isUp && card.mediaId && card.side === "english" && !isDone && (
+                  <div className="absolute inset-0">
+                    <SmartPhoto 
+                      mediaId={card.mediaId} 
+                      alt={card.label} 
+                      className="w-full h-full object-cover opacity-30" 
+                    />
+                  </div>
+                )}
+                <div className="relative z-10 flex flex-col items-center justify-center p-2">
+                  {isUp ? (
+                    isDone ? `✅ ${card.label}` : (
+                      <span className={card.mediaId && card.side === "english" ? "bg-white/80 px-2 py-1 rounded shadow-sm" : ""}>
+                        {card.label}
+                      </span>
+                    )
+                  ) : "🌺"}
+                </div>
               </button>
             );
           })}

@@ -18,8 +18,33 @@ export function PhotoUpload({
   async function handleFile(file: File) {
     setBusy(true);
     try {
-      const dataUrl = await shrinkImage(file, 900, 0.8);
-      onPhoto(dataUrl);
+      const { uploadFamilyMedia } = await import("@/lib/api/media");
+      const { fileToResizedBlob } = await import("@/lib/photos");
+      
+      const blob = await fileToResizedBlob(file, 900, 0.8);
+      
+      // Default workspace for now - in reality this would be passed in from context
+      const { createClient } = await import("@/lib/supabase/client");
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error("Not logged in");
+      const { data: workspaces } = await supabase.from("workspace_members").select("workspace_id").eq("user_id", user.id).limit(1);
+      const workspaceId = workspaces?.[0]?.workspace_id;
+      
+      if (!workspaceId) throw new Error("No workspace");
+      
+      const { url, error } = await uploadFamilyMedia({
+        workspaceId,
+        relatedEntityType: "general",
+        file: blob,
+        filename: file.name
+      });
+      
+      if (error || !url) throw new Error(error || "Failed to upload");
+      onPhoto(url);
+    } catch (e) {
+      console.error(e);
+      alert("Failed to upload photo. Please try again.");
     } finally {
       setBusy(false);
     }

@@ -27,6 +27,50 @@ at home in an adventure book.
 
 ---
 
+# Visual Content Policy (Highest Priority)
+
+Wonder Journey OS is an educational platform committed to providing authentic learning experiences. From this point forward, every lesson must use **REAL photographs** whenever possible.
+
+### Do NOT Use
+❌ AI-generated people, cities, food, landscapes, historical scenes, or animals.
+❌ Cartoon illustrations (unless intentionally used for young-child activities).
+❌ Fantasy artwork presented as factual content.
+
+### Always Use
+✅ High-quality real photographs, licensed educational images, Wikimedia Commons (properly licensed), Unsplash, Pexels, Pixabay, NASA, NOAA, National Park Service, official tourism boards, museums, UNESCO, government educational resources, and public-domain historical archives.
+
+Whenever available, prefer official or educational sources over stock photos.
+
+### Educational Integrity Rules
+Every factual lesson should accurately represent the real world:
+- **Philippine lessons:** Use actual photographs of Chocolate Hills, Banaue Rice Terraces, Mayon Volcano, Intramuros, Vigan, Boracay, El Nido, Jeepneys, Filipino classrooms, festivals, traditional houses, and appropriately licensed real families.
+- **Cooking Academy:** Every recipe must include real ingredients, real utensils, real preparation photos, real cooking process, real finished dish, and real serving presentation. Never substitute AI-generated food photography.
+- **Bible Lessons:** Use museum artifacts, historical locations, maps, ancient manuscripts, biblical geography, archaeological discoveries, and historical paintings (only when clearly identified as artistic interpretations). Avoid AI-generated depictions of biblical events presented as historical fact.
+- **Animal Lessons:** Always use real wildlife photography, natural habitats, multiple angles, behavior photos, and baby/adult comparisons. Never use AI-generated animals.
+- **Science & History Lessons:** Use real laboratory photos, experiments, astronomical images, microscope images, NASA imagery, historical photographs, museum collections, artifacts, primary documents, and historical maps.
+
+### Video Policy
+All educational videos should be real documentaries, museum footage, nature footage, educational videos, historical documentaries, official tourism videos, cooking demonstrations, and science experiments. Avoid AI-generated videos when teaching factual information.
+
+### Image Quality & Accessibility
+Every image must be:
+- Minimum 1920 pixels wide, high resolution, sharp, well lit, professional, color accurate, optimized for web delivery, and responsive.
+- Accessible: Every image must include meaningful alt text, a caption, source attribution (internally), responsive loading, lazy loading, and proper aspect ratio.
+
+### Image Layout Rules
+Images should never appear as tiny thumbnails. Children should feel like they are exploring a real place, not looking at small pictures on a webpage. Instead use:
+- Full-width hero images and large edge-to-edge lesson banners
+- Interactive image galleries and side-by-side comparisons
+- Full-screen exploration mode
+- Zoom capability for maps, historical images, artwork, and science diagrams
+
+### Exception for AI-Generated Imagery
+AI-generated imagery is allowed ONLY for decorative elements that are clearly not educational content, such as: background patterns, decorative clouds and stars, adventure-themed icons, UI illustrations, mascots, achievement animations, and loading screens.
+
+It must never replace factual educational content. Wonder Journey OS should teach children the real world, not an imagined one. Every lesson should inspire curiosity by showing authentic places, cultures, people, food, wildlife, science, and history through real photographs and verified educational resources.
+
+---
+
 # Target Age
 
 Primary design target: **7–12 years old** (Selah is 7; Rylee is 12).

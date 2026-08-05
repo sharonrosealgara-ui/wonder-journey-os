@@ -44,3 +44,11 @@
 | C-107 | lesson-50-grandmas-recipe-box | Families preserve heritage by passing down recipes. | Verified | Culture | General Heritage | 2026-11-01 | System | - |
 | C-108 | lesson-51-family-heritage-wall | Celebrating heritage can be done through art and symbols safely. | Verified | Culture | Privacy Guidelines | 2026-11-01 | System | - |
 | C-109 | lesson-52-november-showcase | Reviewing cooking and family heritage concepts. | Verified | General | General | 2026-11-01 | System | - |
+| C-110 | lesson-59-faith-and-heroes | Jose Rizal wrote a final poem expressing deep love for his country and readiness to sacrifice. | Verified | History | "Mi Ultimo Adios" Manuscript | 2026-12-15 | System | - |
+| C-111 | lesson-59-faith-and-heroes | Apolinario Mabini urged Filipinos to love their country after God and their honor. | Verified | History | "El Verdadero Decálogo" Pamphlet | 2026-12-15 | System | - |
+| C-112 | lesson-61-simbang-gabi | Simbang Gabi is a Filipino Catholic nine-day observance in preparation for Christmas. | Verified | Culture | Vatican Homily 2019-12-15 | 2026-12-21 | System | - |
+| C-113 | lesson-61-simbang-gabi | It is traditionally celebrated at dawn, while anticipated evening celebrations are also permitted. | Verified | Culture | RCAM Circular 2023-91 | 2026-12-21 | System | - |
+| C-114 | lesson-61-simbang-gabi | The Catechism refers to Simbang Gabi using associated names Misa de Gallo or Misa de Aguinaldo. | Verified | Culture | CFC Par. 46 | 2026-12-21 | System | - |
+| C-115 | lesson-63-the-nativity | The Gospel of Luke records Mary and Joseph's journey, the manger, and angels. | Verified | Biblical Studies | The Holy Bible (Luke) NIV | 2026-12-25 | System | - |
+| C-116 | lesson-63-the-nativity | The Gospel of Matthew records the visit of the Magi and the star. | Verified | Biblical Studies | The Holy Bible (Matthew) NIV | 2026-12-25 | System | - |
+| C-117 | lesson-63-the-nativity | The Bible does not specify exactly three Magi, their presence on birth night, or title them kings. | Verified | Biblical Studies | The Holy Bible (Matthew) NIV | 2026-12-25 | System | - |

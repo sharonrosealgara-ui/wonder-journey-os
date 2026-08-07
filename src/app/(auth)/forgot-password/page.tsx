@@ -2,10 +2,9 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
-import { getAppUrl } from '@/lib/url';
 
 export default function ForgotPassword() {
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success'>('idle');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
   async function handleReset(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -17,15 +16,17 @@ export default function ForgotPassword() {
     const supabase = createClient();
     
     // Build the secure PKCE callback URL
-    const callbackUrl = new URL('/auth/callback', getAppUrl());
+    const callbackUrl = new URL('/auth/callback', window.location.origin);
     callbackUrl.searchParams.set('next', '/reset-password');
 
-    try {
-      await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: callbackUrl.toString(),
-      });
-    } finally {
-      // Always return neutral success response to avoid exposing account status or raw errors
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: callbackUrl.toString(),
+    });
+
+    if (error) {
+      console.error('Password reset request failed', { status: error.status, code: error.code });
+      setStatus('error');
+    } else {
       setStatus('success');
     }
   }
@@ -39,12 +40,16 @@ export default function ForgotPassword() {
 
       {status === 'success' ? (
         <div className="rounded-xl bg-sand p-4 text-center">
-          <p className="text-sm font-bold text-ocean-deep">Check your email</p>
-          <p className="mt-1 text-xs text-ink-soft">If an account exists for that email, a password-reset link has been sent.</p>
+          <p className="mt-1 text-sm text-ink-soft">If an account exists for that email, a password-reset link has been sent.</p>
           <Link href="/login" className="wj-btn wj-btn-ghost mt-4 w-full text-sm">Return to Login</Link>
         </div>
       ) : (
         <form className="space-y-4" onSubmit={handleReset}>
+          {status === 'error' && (
+            <div className="rounded-md bg-red-50 p-3 text-sm text-red-600 text-center font-medium">
+              We could not send the password reset email. Please try again shortly.
+            </div>
+          )}
           <div>
             <label className="text-sm font-bold text-ink-soft">Email</label>
             <input name="email" type="email" required className="wj-input mt-1 w-full" placeholder="you@example.com" />

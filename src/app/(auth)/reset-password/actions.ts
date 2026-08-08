@@ -48,9 +48,8 @@ export async function resetPassword(formData: FormData) {
   const { error } = await supabase.auth.updateUser({ password })
 
   if (error) {
-    cookieStore.delete('recovery_marker')
-    await supabase.auth.signOut()
-    return { error: "Password update failed. It may be too weak or the session expired." }
+    console.error('Password update failed', { status: error.status, code: error.code })
+    return { error: "Your password could not be updated. Please check the password requirements and try again." }
   }
 
   // Clear recovery marker and temporary session

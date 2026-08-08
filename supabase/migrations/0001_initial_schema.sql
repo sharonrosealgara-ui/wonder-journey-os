@@ -113,20 +113,49 @@ ALTER TABLE public.cookbook_memories ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.adventure_memories ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.whatsapp_messages ENABLE ROW LEVEL SECURITY;
 
+CREATE SCHEMA IF NOT EXISTS private;
+
 -- Utility function to get current user's family_id
-CREATE OR REPLACE FUNCTION auth.family_id() RETURNS uuid AS $$
-  SELECT family_id FROM public.profiles WHERE id = auth.uid() LIMIT 1;
-$$ LANGUAGE sql SECURITY DEFINER;
+CREATE OR REPLACE FUNCTION private.current_family_id()
+RETURNS uuid
+LANGUAGE sql
+STABLE
+SECURITY DEFINER
+SET search_path = ''
+AS $$
+  SELECT family_id
+  FROM public.profiles
+  WHERE id = (SELECT auth.uid())
+  LIMIT 1;
+$$;
 
 -- Utility function to check if current user is teacher
-CREATE OR REPLACE FUNCTION auth.is_teacher() RETURNS boolean AS $$
-  SELECT role = 'teacher' FROM public.profiles WHERE id = auth.uid() LIMIT 1;
-$$ LANGUAGE sql SECURITY DEFINER;
+CREATE OR REPLACE FUNCTION private.is_teacher()
+RETURNS boolean
+LANGUAGE sql
+STABLE
+SECURITY DEFINER
+SET search_path = ''
+AS $$
+  SELECT COALESCE(
+    (
+      SELECT role = 'teacher'
+      FROM public.profiles
+      WHERE id = (SELECT auth.uid())
+      LIMIT 1
+    ),
+    false
+  );
+$$;
+
+GRANT USAGE ON SCHEMA private TO authenticated;
+GRANT EXECUTE ON FUNCTION private.current_family_id TO authenticated;
+GRANT EXECUTE ON FUNCTION private.is_teacher TO authenticated;
 
 -- Policies for families
 CREATE POLICY "Families can read their own data or teachers can read assigned" ON public.families
-    FOR SELECT USING (
-        id = auth.family_id() OR auth.is_teacher()
+    FOR SELECT TO authenticated USING (
+        id = private.current_family_id() OR private.is_teacher()
     );
 
 -- (To simplify MVP, we allow authenticated users with a matching family_id OR teacher role to read/write)
@@ -135,15 +164,38 @@ CREATE POLICY "Families can read their own data or teachers can read assigned" O
 CREATE OR REPLACE FUNCTION public.create_standard_policies(table_name text) RETURNS void AS $$
 BEGIN
     EXECUTE format('
-        CREATE POLICY "%1$s_read" ON public.%1$s FOR SELECT USING (family_id = auth.family_id() OR auth.is_teacher());
-        CREATE POLICY "%1$s_insert" ON public.%1$s FOR INSERT WITH CHECK (family_id = auth.family_id() OR auth.is_teacher());
-        CREATE POLICY "%1$s_update" ON public.%1$s FOR UPDATE USING (family_id = auth.family_id() OR auth.is_teacher());
-        CREATE POLICY "%1$s_delete" ON public.%1$s FOR DELETE USING (family_id = auth.family_id() OR auth.is_teacher());
+        CREATE POLICY "%1$s_read" ON public.%1$s FOR SELECT TO authenticated USING (family_id = private.current_family_id() OR private.is_teacher());
+        CREATE POLICY "%1$s_insert" ON public.%1$s FOR INSERT TO authenticated WITH CHECK (family_id = private.current_family_id() OR private.is_teacher());
+        CREATE POLICY "%1$s_update" ON public.%1$s FOR UPDATE TO authenticated USING (family_id = private.current_family_id() OR private.is_teacher());
+        CREATE POLICY "%1$s_delete" ON public.%1$s FOR DELETE TO authenticated USING (family_id = private.current_family_id() OR private.is_teacher());
     ', table_name);
 END;
 $$ LANGUAGE plpgsql;
 
-SELECT public.create_standard_policies('profiles');
+-- Profiles specific policies
+CREATE POLICY "profiles_read" ON public.profiles
+    FOR SELECT TO authenticated USING (
+        id = auth.uid() OR private.is_teacher()
+    );
+
+CREATE POLICY "profiles_insert" ON public.profiles
+    FOR INSERT TO authenticated WITH CHECK (
+        private.is_teacher()
+    );
+
+CREATE POLICY "profiles_update" ON public.profiles
+    FOR UPDATE TO authenticated USING (
+        id = auth.uid() OR private.is_teacher()
+    ) WITH CHECK (
+        (id = auth.uid() AND role = 'family' AND family_id = private.current_family_id())
+        OR private.is_teacher()
+    );
+
+CREATE POLICY "profiles_delete" ON public.profiles
+    FOR DELETE TO authenticated USING (
+        private.is_teacher()
+    );
+
 SELECT public.create_standard_policies('family_members');
 SELECT public.create_standard_policies('completions');
 SELECT public.create_standard_policies('awards');

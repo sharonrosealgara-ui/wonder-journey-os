@@ -97,9 +97,9 @@ CREATE POLICY "Users can read members of their workspace" ON public.workspace_me
 CREATE POLICY "Public can submit inquiries" ON public.inquiries
     FOR INSERT WITH CHECK (true);
 
--- (Requires `auth.is_teacher()` which we defined in 0001)
+-- (Requires `private.is_teacher()` which we defined in 0001)
 CREATE POLICY "Teachers can view inquiries" ON public.inquiries
-    FOR SELECT USING (auth.is_teacher());
+    FOR SELECT USING (private.is_teacher());
 
 CREATE POLICY "Teachers can update inquiries" ON public.inquiries
-    FOR UPDATE USING (auth.is_teacher());
+    FOR UPDATE USING (private.is_teacher());

@@ -2,19 +2,16 @@
 
 import Link from "next/link";
 import { teacherName } from "@/config/family";
-import { normalizeMode } from "@/config/navigation";
-import { KEYS } from "@/lib/app-state";
-import { useStored } from "@/lib/storage";
+import { useAuth } from "@/lib/auth-context";
 
 // 🍎 TEACHER-ONLY GUARD — wraps the Teacher Portal pages.
-// The role comes from the code entered at the door (two-code system):
-// only the device holding the teacher code sees these pages. A family
-// member who types the URL gets a warm nudge home, not lesson plans.
 export function TeacherOnly({ children }: { children: React.ReactNode }) {
-  const [rawMode, , ready] = useStored<string>(KEYS.mode, "family");
-  if (!ready) return null; // no flash while the device introduces itself
+  const auth = useAuth();
 
-  if (normalizeMode(rawMode) !== "teacher") {
+  if (auth.loading) return null;
+  if (auth.error) return null;
+
+  if (auth.role !== "teacher") {
     return (
       <div className="mx-auto max-w-md">
         <div className="wj-card wj-pop-in p-8 text-center">

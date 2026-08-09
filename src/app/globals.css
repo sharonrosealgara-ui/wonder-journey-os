@@ -1,4 +1,4 @@
-﻿@import "tailwindcss";
+@import "tailwindcss";
 
 /* ─────────────────────────────────────────────────────────────
    WONDER JOURNEY OS — watercolor storybook design system v2
@@ -8,62 +8,56 @@
    ───────────────────────────────────────────────────────────── */
 
 @theme {
-  /* watercolor sky background */
-  --color-sky: #c9dff2;
-  --color-sky-deep: #a5c6e6;
+  /* premium warm neutral / cream / very light stone */
+  --color-sky: #f7f6f2;
+  --color-sky-deep: #e8e4db;
 
-  /* paper & cream (inner notes, header bar) */
-  --color-sand: #fdf5e0;
-  --color-sand-deep: #c9d9ee;
-  --color-paper: #fffdf6;
+  /* clean white / ivory surface */
+  --color-sand: #ffffff;
+  --color-sand-deep: #f0f0f0;
+  --color-paper: #ffffff;
 
-  /* sunshine brush-stroke yellow */
-  --color-mango: #ffd23f;
-  --color-mango-deep: #e5a917;
+  /* Philippine-inspired warm gold (secondary) */
+  --color-mango: #d4a017;
+  --color-mango-deep: #b38510;
 
-  /* coral (primary action) */
-  --color-sunset: #ff7a59;
-  --color-sunset-deep: #e4573b;
+  /* controlled coral (accent) */
+  --color-sunset: #d15c4a;
+  --color-sunset-deep: #b04938;
 
-  /* teal (dots, secondary action) */
-  --color-ocean: #2fb8ad;
-  --color-ocean-deep: #14837c;
+  /* deep ocean teal (primary) */
+  --color-ocean: #1a5b6e;
+  --color-ocean-deep: #0f3d4a;
 
-  /* mint-leaf green */
-  --color-palm: #4dbd85;
-  --color-palm-deep: #2e9563;
+  /* muted accents */
+  --color-palm: #39825b;
+  --color-palm-deep: #255c3f;
+  --color-hibiscus: #c75673;
+  --color-hibiscus-deep: #a13d56;
+  --color-ube: #727ca1;
+  --color-ube-deep: #545e7d;
 
-  /* hibiscus pink */
-  --color-hibiscus: #ec5d87;
-  --color-hibiscus-deep: #cf3e6b;
+  /* deep navy / charcoal */
+  --color-ink: #1a2530;
+  --color-ink-soft: #4a5568;
 
-  /* periwinkle (cloud-bubble cards in the reference) */
-  --color-ube: #8890d6;
-  --color-ube-deep: #656fc0;
+  /* High legibility typography */
+  --font-display: "Inter", "Outfit", system-ui, sans-serif;
+  --font-body: "Inter", "Quicksand", system-ui, sans-serif;
+  --font-hand: "Inter", system-ui, sans-serif;
 
-  /* navy ink — all text, like the reference headings */
-  --color-ink: #274472;
-  --color-ink-soft: #5d76a3;
-
-  --font-display: "Lilita One", "Baloo 2", "Segoe UI", sans-serif;
-  --font-body: "Quicksand", "Nunito", "Segoe UI", sans-serif;
-  --font-hand: "Patrick Hand", "Comic Sans MS", "Segoe Print", cursive;
-
-  /* tactile "Family OS" additions — premium warm layer (kept alongside
-     the navy-ink identity, never replacing it) */
-  --color-cream-card: #fffdf9;
+  --color-cream-card: #ffffff;
   --color-cocoa: #3c2a21;
 
-  --radius-blob: 1.75rem;
-  --radius-4xl: 2rem;
+  --radius-blob: 1rem;
+  --radius-4xl: 1.5rem;
 
-  --shadow-soft: 0 4px 18px rgba(39, 68, 114, 0.14);
-  --shadow-lift: 0 10px 30px rgba(39, 68, 114, 0.22);
-  /* layered warm-brown tactile shadow — cards feel liftable */
+  --shadow-soft: 0 2px 10px rgba(26, 37, 48, 0.08);
+  --shadow-lift: 0 8px 24px rgba(26, 37, 48, 0.12);
   --shadow-tactile:
-    0 1px 2px rgba(44, 27, 24, 0.08),
-    0 4px 10px rgba(44, 27, 24, 0.1),
-    0 12px 28px rgba(44, 27, 24, 0.12);
+    0 1px 2px rgba(26, 37, 48, 0.04),
+    0 4px 8px rgba(26, 37, 48, 0.06),
+    0 8px 16px rgba(26, 37, 48, 0.08);
 }
 
 /* ── Dark mode (Home Base 🌙 toggle) — override core tokens ── */
@@ -86,30 +80,11 @@
   border-color: rgba(255, 255, 255, 0.12);
 }
 
-/* ── Watercolor paper background ─────────────────────────── */
 body {
   color: var(--color-ink);
   font-family: var(--font-body);
-  font-weight: 500;
+  font-weight: 400;
   background-color: var(--color-sky);
-  background-image:
-    radial-gradient(ellipse 80rem 40rem at 15% -5%, rgba(255, 255, 255, 0.55) 0%, transparent 60%),
-    radial-gradient(ellipse 60rem 35rem at 110% 15%, rgba(165, 198, 230, 0.8) 0%, transparent 65%),
-    radial-gradient(ellipse 50rem 30rem at -10% 70%, rgba(178, 216, 235, 0.9) 0%, transparent 60%),
-    radial-gradient(ellipse 70rem 45rem at 90% 105%, rgba(140, 186, 226, 0.65) 0%, transparent 60%),
-    radial-gradient(ellipse 30rem 20rem at 50% 40%, rgba(255, 255, 255, 0.35) 0%, transparent 70%);
-  background-attachment: fixed;
-}
-
-/* paper grain over everything — makes flat color feel like watercolor paper */
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 90;
-  pointer-events: none;
-  opacity: 0.5;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23p)'/%3E%3C/svg%3E");
 }
 
 h1, h2, h3, .font-display {
@@ -122,17 +97,11 @@ h1, h2, h3, .font-display {
   font-family: var(--font-hand);
 }
 
-/* Big navy heading with thick white outline — the reference's signature look.
-   The stroke paints OUTSIDE the glyphs, so give headings breathing room:
-   without the padding + relaxed line-height, ascenders clip against tight
-   containers and sticky bars (seen on mobile /celebrations). */
+/* Professional headings */
 .wj-outline {
   color: var(--color-ink);
-  -webkit-text-stroke: 6px #ffffff;
-  paint-order: stroke fill;
-  text-shadow: 0 3px 0 rgba(39, 68, 114, 0.12);
+  font-weight: 600;
   line-height: 1.25;
-  padding-top: 0.15em;
 }
 
 /* three teal dots ● ● ● that decorate reference slides */
@@ -161,12 +130,12 @@ h1, h2, h3, .font-display {
   transform: rotate(-1.2deg);
 }
 
-/* ── Paper-note cards (hand-drawn wobble borders) ─────────── */
+/* ── Premium Cards ─────────── */
 .wj-card {
   background: var(--color-paper);
-  border-radius: 1.6rem 1.9rem 1.5rem 2rem / 1.9rem 1.5rem 2rem 1.6rem;
+  border-radius: 1.2rem;
   box-shadow: var(--shadow-soft);
-  border: 2px solid rgba(39, 68, 114, 0.16);
+  border: 1px solid var(--color-sand-deep);
 }
 
 /* periwinkle "cloud bubble" variant from the reference slides */
@@ -193,10 +162,10 @@ h1, h2, h3, .font-display {
 }
 
 .wj-card-hover {
-  transition: transform 180ms ease, box-shadow 180ms ease;
+  transition: transform 150ms ease, box-shadow 150ms ease;
 }
 .wj-card-hover:hover {
-  transform: translateY(-3px) rotate(-0.4deg);
+  transform: translateY(-2px);
   box-shadow: var(--shadow-lift);
 }
 
@@ -217,25 +186,23 @@ h1, h2, h3, .font-display {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  border-radius: 1.4rem 1.7rem 1.4rem 1.8rem / 1.7rem 1.4rem 1.8rem 1.4rem;
+  border-radius: 0.8rem;
   padding: 0.7rem 1.5rem;
   font-family: var(--font-display);
+  font-weight: 500;
   font-size: 1rem;
-  letter-spacing: 0.03em;
   color: #ffffff;
-  background: linear-gradient(135deg, var(--color-sunset), var(--color-mango-deep));
-  border: 2px solid rgba(255, 255, 255, 0.65);
-  box-shadow: 0 4px 14px rgba(228, 87, 59, 0.4);
-  text-shadow: 0 1px 2px rgba(39, 68, 114, 0.25);
+  background: linear-gradient(135deg, var(--color-sunset), var(--color-sunset-deep));
+  box-shadow: 0 4px 14px rgba(176, 73, 56, 0.2);
   transition: transform 150ms ease, box-shadow 150ms ease, filter 150ms ease;
   cursor: pointer;
 }
 .wj-btn:hover {
-  transform: translateY(-2px) rotate(-0.6deg) scale(1.02);
+  transform: translateY(-1px);
   filter: brightness(1.05);
 }
 .wj-btn:active {
-  transform: translateY(0) scale(0.99);
+  transform: translateY(0);
 }
 
 .wj-btn-ocean {
@@ -257,8 +224,8 @@ h1, h2, h3, .font-display {
 /* ── Inputs ───────────────────────────────────────────────── */
 .wj-input {
   width: 100%;
-  border-radius: 1.1rem 1.4rem 1.1rem 1.5rem / 1.4rem 1.1rem 1.5rem 1.1rem;
-  border: 2px solid var(--color-sand-deep);
+  border-radius: 0.8rem;
+  border: 1px solid var(--color-sand-deep);
   background: var(--color-paper);
   padding: 0.8rem 1.1rem;
   font-size: 1rem;
@@ -327,17 +294,16 @@ a.wj-chip:active {
 /* ── Passport stamps ──────────────────────────────────────── */
 .wj-stamp {
   position: relative;
-  border: 3px dashed var(--color-ink-soft);
-  border-radius: 0.9rem 1.2rem 0.9rem 1.3rem;
-  transform: rotate(-3deg);
+  border: 2px solid var(--color-ink-soft);
+  border-radius: 1rem;
   color: var(--color-ink-soft);
-  background: rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.8);
 }
 .wj-stamp-earned {
   border-color: var(--color-sunset-deep);
   color: var(--color-sunset-deep);
-  background: rgba(255, 210, 63, 0.22);
-  box-shadow: 0 3px 8px rgba(228, 87, 59, 0.2);
+  background: rgba(255, 255, 255, 1);
+  box-shadow: var(--shadow-soft);
 }
 
 /* ── Tropical corner leaves (CSS-shaped, no images) ───────── */
@@ -359,68 +325,10 @@ a.wj-chip:active {
   border-radius: 100%;
 }
 
-/* ── Birthday confetti + balloons ─────────────────────────── */
-@keyframes wj-fall {
-  0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
-  100% { transform: translateY(105vh) rotate(720deg); opacity: 0.7; }
+/* Disabled excessive bobbing and swaying for a calm environment */
+.wj-confetti, .wj-balloon, .wj-sway, .wj-cloud, .wj-twinkle, .wj-bob, .wj-sway-soft, .wj-sun-rays, .wj-path {
+  animation: none;
 }
-.wj-confetti {
-  position: absolute;
-  top: 0;
-  width: 10px;
-  height: 14px;
-  border-radius: 3px;
-  animation: wj-fall linear infinite;
-}
-
-@keyframes wj-float {
-  0%, 100% { transform: translateY(0) rotate(-2deg); }
-  50% { transform: translateY(-14px) rotate(2deg); }
-}
-.wj-balloon {
-  display: inline-block;
-  animation: wj-float 3s ease-in-out infinite;
-}
-
-/* gentle idle sway for corner leaves */
-@keyframes wj-sway {
-  0%, 100% { transform: rotate(var(--sway-base, 0deg)); }
-  50% { transform: rotate(calc(var(--sway-base, 0deg) + 3deg)); }
-}
-
-/* ── Adventure Theater animated scene ─────────────────────── */
-@keyframes wj-drift {
-  from { transform: translateX(-12vw); }
-  to { transform: translateX(114vw); }
-}
-.wj-cloud {
-  position: absolute;
-  animation: wj-drift linear infinite;
-  will-change: transform;
-}
-
-@keyframes wj-twinkle {
-  0%, 100% { opacity: 0.15; transform: scale(0.7); }
-  50% { opacity: 1; transform: scale(1.15); }
-}
-.wj-twinkle { animation: wj-twinkle ease-in-out infinite; }
-
-@keyframes wj-bob {
-  0%, 100% { transform: translateY(0) rotate(-2deg); }
-  50% { transform: translateY(-10px) rotate(2deg); }
-}
-.wj-bob { animation: wj-bob 3s ease-in-out infinite; }
-
-@keyframes wj-sway-soft {
-  0%, 100% { transform: rotate(-3deg); }
-  50% { transform: rotate(3deg); }
-}
-.wj-sway-soft { animation: wj-sway-soft 5s ease-in-out infinite; transform-origin: bottom center; }
-
-@keyframes wj-sun-rays {
-  to { transform: rotate(360deg); }
-}
-.wj-sun-rays { animation: wj-sun-rays 40s linear infinite; }
 
 /* dashed travel path dashes marching along the bottom */
 @keyframes wj-march {

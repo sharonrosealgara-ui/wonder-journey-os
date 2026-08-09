@@ -2,6 +2,11 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import {
+  Users, BookOpen, MessageCircle, Play, Palette, Video, PenLine,
+  Medal, Mail, HeartHandshake, Book, Camera, LayoutDashboard,
+  ChevronRight, PartyPopper
+} from "lucide-react";
 import { getInquiries, updateInquiryStatus } from "./actions";
 import { PageHeader } from "@/components/page-header";
 import { TeacherOnly } from "@/components/teacher-only";
@@ -66,14 +71,16 @@ function TeacherContent() {
   return (
     <div className="space-y-6">
       <PageHeader
-        emoji="🍎"
+        icon={<LayoutDashboard className="w-8 h-8 text-sunset" />}
         title="Teacher Dashboard"
         subtitle="Welcome back, Teacher Sharon! Here's your classroom at a glance."
       />
 
       {/* Students overview */}
       <section className="wj-card p-6">
-        <h2 className="font-display text-xl font-extrabold">🎒 Students</h2>
+        <h2 className="font-display text-xl font-extrabold flex items-center gap-2">
+          <Users className="w-6 h-6 text-ocean" /> Students
+        </h2>
         <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {students.map((s) => {
             const done = completions.filter((c) => c.studentId === s.id).length;
@@ -101,9 +108,11 @@ function TeacherContent() {
       {/* Lesson plan */}
       <section className="wj-card p-6">
         <div className="flex items-center justify-between">
-          <h2 className="font-display text-xl font-extrabold">📚 Lesson plan</h2>
+          <h2 className="font-display text-xl font-extrabold flex items-center gap-2">
+            <BookOpen className="w-6 h-6 text-ocean" /> Lesson plan
+          </h2>
           <Link href="/teacher/whatsapp" className="wj-btn wj-btn-ocean text-sm">
-            WhatsApp Helper 📱
+            <MessageCircle className="w-4 h-4" /> WhatsApp Helper
           </Link>
         </div>
         <div className="mt-4 space-y-2">
@@ -125,18 +134,18 @@ function TeacherContent() {
                   </div>
                   <div className="flex gap-2">
                     <Link href={`/adventure/${l.id}`} className="wj-chip !bg-sunset !text-white hover:!bg-sunset-deep">
-                      🎬 Start
+                      <Play className="w-3.5 h-3.5" /> Start
                     </Link>
                     <a href={l.canvaLink} target="_blank" rel="noopener noreferrer" className="wj-chip hover:bg-mango/20">
-                      🎨 Canva
+                      <Palette className="w-3.5 h-3.5" /> Canva
                     </a>
                     {l.videoLinks[0] && (
                       <a href={l.videoLinks[0].url} target="_blank" rel="noopener noreferrer" className="wj-chip hover:bg-mango/20">
-                        🎬 Video
+                        <Video className="w-3.5 h-3.5" /> Video
                       </a>
                     )}
                     <Link href={`/lessons/${l.id}`} className="wj-chip hover:bg-mango/20">
-                      Open →
+                      Open <ChevronRight className="w-3.5 h-3.5" />
                     </Link>
                   </div>
                 </div>
@@ -144,14 +153,16 @@ function TeacherContent() {
             })}
         </div>
         <p className="mt-4 rounded-2xl bg-sand p-3 text-xs text-ink-soft">
-          ✏️ To add a lesson or update a Canva/video link, edit <b>src/config/lessons.ts</b> —
+          <PenLine className="w-3.5 h-3.5 inline-block -mt-0.5 mr-1 text-ocean" /> To add a lesson or update a Canva/video link, edit <b>src/config/lessons.ts</b> —
           the lesson page, schedule, prep email, and passport stamps update automatically.
         </p>
       </section>
 
       {/* Award a badge */}
       <section className="wj-card p-6">
-        <h2 className="font-display text-xl font-extrabold">🏅 Award a badge</h2>
+        <h2 className="font-display text-xl font-extrabold flex items-center gap-2">
+          <Medal className="w-6 h-6 text-mango" /> Award a badge
+        </h2>
         <div className="mt-4 grid gap-3 sm:grid-cols-2">
           <div>
             <label className="text-sm font-bold text-ink-soft">Student</label>
@@ -181,13 +192,19 @@ function TeacherContent() {
           onChange={(e) => setBadgeNote(e.target.value)}
         />
         <button className="wj-btn mt-3" onClick={awardBadge}>
-          {justAwarded ? "Badge awarded! 🎉" : "Award badge 🏅"}
+          {justAwarded ? (
+            <><PartyPopper className="w-4 h-4" /> Badge awarded!</>
+          ) : (
+            <><Medal className="w-4 h-4" /> Award badge</>
+          )}
         </button>
       </section>
 
       {/* Inquiries */}
       <section className="wj-card p-6">
-        <h2 className="font-display text-xl font-extrabold mb-4">📬 Client Inquiries</h2>
+        <h2 className="font-display text-xl font-extrabold mb-4 flex items-center gap-2">
+          <Mail className="w-6 h-6 text-ocean" /> Client Inquiries
+        </h2>
         <div className="space-y-4">
           {inquiries.length === 0 ? (
             <p className="text-ink-soft text-sm">No inquiries yet.</p>
@@ -210,9 +227,9 @@ function TeacherContent() {
                   </div>
                 </div>
                 <div className="flex flex-col gap-2 min-w-[140px]">
-                  <select 
-                    className="wj-input text-sm" 
-                    value={iq.status} 
+                  <select
+                    className="wj-input text-sm"
+                    value={iq.status}
                     onChange={(e) => handleStatusChange(iq.id, e.target.value)}
                   >
                     <option value="new">New</option>
@@ -221,9 +238,9 @@ function TeacherContent() {
                     <option value="archived">Archived</option>
                   </select>
                   {iq.whatsapp_number && (
-                    <a 
-                      href={`https://wa.me/${iq.whatsapp_number.replace(/\D/g, '')}`} 
-                      target="_blank" 
+                    <a
+                      href={`https://wa.me/${iq.whatsapp_number.replace(/\D/g, '')}`}
+                      target="_blank"
                       rel="noopener noreferrer"
                       className="wj-btn wj-btn-ghost text-xs text-center border border-sand-deep"
                     >
@@ -240,7 +257,9 @@ function TeacherContent() {
       {/* Recent activity */}
       <div className="grid gap-4 sm:grid-cols-2">
         <section className="wj-card p-6">
-          <h2 className="font-display text-lg font-extrabold">🙏 Recent blessings & journals</h2>
+          <h2 className="font-display text-lg font-extrabold flex items-center gap-2">
+            <HeartHandshake className="w-5 h-5 text-hibiscus" /> Recent blessings & journals
+          </h2>
           <div className="mt-3 space-y-2 text-sm">
             {[...gratitude.slice(0, 3)].map((g) => (
               <p key={g.id} className="rounded-xl bg-sand p-2">
@@ -261,11 +280,13 @@ function TeacherContent() {
           </Link>
         </section>
         <section className="wj-card p-6">
-          <h2 className="font-display text-lg font-extrabold">📖 Cookbook uploads</h2>
+          <h2 className="font-display text-lg font-extrabold flex items-center gap-2">
+            <Book className="w-5 h-5 text-mango" /> Cookbook uploads
+          </h2>
           <div className="mt-3 space-y-2 text-sm">
             {cookbook.slice(0, 4).map((m) => (
               <p key={m.id} className="rounded-xl bg-sand p-2">
-                <b>{m.cookNames}</b> — {formatDate(m.date)} {m.photo ? "📸" : ""}
+                <b>{m.cookNames}</b> — {formatDate(m.date)} {m.photo ? <Camera className="w-4 h-4 inline ml-1 text-ink-soft" /> : ""}
               </p>
             ))}
             {cookbook.length === 0 && (

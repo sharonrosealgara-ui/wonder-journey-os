@@ -12,6 +12,7 @@ import { useStored } from "@/lib/storage";
 import { useAuth } from "@/lib/auth-context";
 import { BirthdayPopup } from "@/components/birthday-popup";
 import { CameraDock } from "@/components/camera-dock";
+import { FamilyDecor } from "@/components/family-decor";
 import { CallProvider } from "@/lib/call-context";
 import {
   Home, Presentation, Map, BookHeart, BookOpen, Medal,
@@ -111,6 +112,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   return (
     <CallProvider>
     <div className="min-h-screen lg:flex">
+      {auth.role !== "teacher" && <FamilyDecor />}
       {/* mobile overlay */}
       {open && (
         <div

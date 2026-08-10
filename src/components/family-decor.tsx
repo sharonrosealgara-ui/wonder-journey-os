@@ -15,7 +15,7 @@ const cornerLeaves = [
   { bottom: "-2.5rem", right: "0.5rem", w: 140, h: 42, rot: 200, dark: true },
 ] as const;
 
-export function TropicalDecor() {
+export function FamilyDecor() {
   return (
     <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
       {cornerLeaves.map((leaf, i) => (

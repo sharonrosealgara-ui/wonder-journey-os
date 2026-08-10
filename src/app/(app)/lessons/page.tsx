@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { CheckCircle2, CalendarDays } from "lucide-react";
 import { PageHeader } from "@/components/page-header";
 import { lessons } from "@/config/lessons";
 import { familyValues } from "@/config/values";
@@ -32,9 +33,7 @@ export default function LessonsPage() {
               <Link
                 key={lesson.id}
                 href={`/lessons/${lesson.id}`}
-                className={`wj-card wj-card-hover group flex flex-col overflow-hidden ${
-                  isUpcoming ? "opacity-75 saturate-90 hover:opacity-100" : ""
-                }`}
+                className="wj-card wj-card-hover group flex flex-col overflow-hidden"
               >
                 {/* Premium Visual Anchor using FactualImage (pending state fallback) */}
                 <div className="relative aspect-[4/3] w-full bg-sand-deep border-b border-sand">
@@ -43,13 +42,13 @@ export default function LessonsPage() {
                   {/* Status Overlay */}
                   <div className="absolute top-3 right-3 z-10 flex gap-2">
                     {isCompleted && (
-                      <span className="wj-chip !bg-palm/90 !text-white !py-1 backdrop-blur-sm shadow-sm font-semibold">
-                        ✅ Completed
+                      <span className="wj-chip !bg-palm/90 !text-white !py-1 backdrop-blur-sm shadow-sm font-semibold flex items-center">
+                        <CheckCircle2 className="w-4 h-4 mr-1" /> Completed
                       </span>
                     )}
                     {isUpcoming && (
-                      <span className="wj-chip !bg-ube/90 !text-white !py-1 backdrop-blur-sm shadow-sm font-semibold">
-                        🔜 Coming soon
+                      <span className="wj-chip !bg-ube/90 !text-white !py-1 backdrop-blur-sm shadow-sm font-semibold flex items-center">
+                        <CalendarDays className="w-4 h-4 mr-1" /> Scheduled
                       </span>
                     )}
                   </div>
@@ -69,7 +68,7 @@ export default function LessonsPage() {
                   <p className="mt-1.5 text-sm text-ink-soft line-clamp-2">{lesson.subtitle}</p>
                   
                   <div className="mt-auto pt-4 flex items-center justify-between text-xs font-semibold text-ink-soft/70">
-                    <span>🗓️ {formatDate(lesson.date)}</span>
+                    <span className="flex items-center"><CalendarDays className="w-3.5 h-3.5 mr-1" /> {formatDate(lesson.date)}</span>
                     <span>{lesson.time}</span>
                   </div>
                 </div>

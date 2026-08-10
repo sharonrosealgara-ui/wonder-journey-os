@@ -12,37 +12,39 @@ import { useStored } from "@/lib/storage";
 import { useAuth } from "@/lib/auth-context";
 import { BirthdayPopup } from "@/components/birthday-popup";
 import { CameraDock } from "@/components/camera-dock";
-import { TropicalDecor } from "@/components/tropical-decor";
 import { CallProvider } from "@/lib/call-context";
 import {
   Home, Presentation, Map, BookHeart, BookOpen, Medal,
   PartyPopper, Trees, ChefHat, BookA, Languages, Film,
-  LayoutDashboard, MessageCircle, Image as ImageIcon
+  LayoutDashboard, MessageCircle, Image as ImageIcon,
+  LoaderCircle, Camera, Pencil, LogOut, Volume2, VolumeX, Maximize, Sun, Moon, Menu, Compass
 } from "lucide-react";
 
 function renderNavIcon(icon?: NavIcon, emoji?: string) {
-  if (emoji) return <span className="text-lg w-5 text-center leading-none">{emoji}</span>;
-  if (!icon) return <span className="text-lg w-5 text-center leading-none">·</span>;
-
-  const props = { className: "w-5 h-5 opacity-90" };
-  switch (icon) {
-    case "home": return <Home {...props} />;
-    case "classroom": return <Presentation {...props} />;
-    case "map": return <Map {...props} />;
-    case "passport": return <BookHeart {...props} />;
-    case "award": return <Medal {...props} />;
-    case "celebrations": return <PartyPopper {...props} />;
-    case "backpack": return <Trees {...props} />;
-    case "cooking": return <ChefHat {...props} />;
-    case "journal": return <BookA {...props} />;
-    case "language": return <Languages {...props} />;
-    case "resources": return <Film {...props} />;
-    case "lesson-plan": return <LayoutDashboard {...props} />;
-    case "message": return <MessageCircle {...props} />;
-    case "photos": return <ImageIcon {...props} />;
-    case "blessings": return <span className="text-lg w-5 text-center leading-none">☀️</span>;
-    default: return null;
+  if (icon) {
+    const props = { className: "w-5 h-5 opacity-90" };
+    switch (icon) {
+      case "home": return <Home {...props} />;
+      case "classroom": return <Presentation {...props} />;
+      case "map": return <Map {...props} />;
+      case "passport": return <BookHeart {...props} />;
+      case "award": return <Medal {...props} />;
+      case "celebrations": return <PartyPopper {...props} />;
+      case "backpack": return <Trees {...props} />;
+      case "cooking": return <ChefHat {...props} />;
+      case "journal": return <BookA {...props} />;
+      case "language": return <Languages {...props} />;
+      case "resources": return <Film {...props} />;
+      case "lesson-plan": return <LayoutDashboard {...props} />;
+      case "message": return <MessageCircle {...props} />;
+      case "photos": return <ImageIcon {...props} />;
+      case "blessings": return <Sun {...props} />;
+    }
   }
+
+  if (emoji) return <span className="text-lg w-5 text-center leading-none">{emoji}</span>;
+
+  return <span className="text-lg w-5 text-center leading-none">·</span>;
 }
 
 // 🌴 Home Base layout — left sidebar + XP top bar, like a family
@@ -84,7 +86,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     return (
       <div className="flex min-h-screen items-center justify-center p-6 bg-paper">
         <div className="text-center">
-          <span className="text-4xl animate-pulse">🧭</span>
+          <LoaderCircle className="w-10 h-10 animate-spin text-ink-soft mx-auto" />
         </div>
       </div>
     );
@@ -109,8 +111,6 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   return (
     <CallProvider>
     <div className="min-h-screen lg:flex">
-      <TropicalDecor />
-
       {/* mobile overlay */}
       {open && (
         <div
@@ -127,8 +127,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         }`}
       >
         <Link href="/family" className="flex items-center gap-3 px-5 py-5">
-          <span className="flex h-11 w-11 items-center justify-center rounded-full bg-mango text-2xl shadow-lg">
-            🧭
+          <span className="flex h-11 w-11 items-center justify-center rounded-full bg-mango text-ocean-deep shadow-lg">
+            <Compass className="w-6 h-6" />
           </span>
           <div className="leading-tight">
             <div className="font-display text-xl">{brand.productName.replace(" OS", "")}</div>
@@ -144,8 +144,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           ))}
 
           {/* 🍎 Teacher Portal — exists ONLY on the teacher's device.
-              The role comes from the code entered at the door (two-code
-              system), so the family never sees teacher tools at all. */}
+              The role comes from Supabase Auth -> public.profiles -> auth.role,
+              so the family never sees teacher tools at all. */}
           {auth.role === "teacher" && (
             <>
               <div className="mt-5 px-3 pb-1 text-[10px] font-bold uppercase tracking-widest text-white/50">
@@ -158,9 +158,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           )}
         </nav>
 
-        {/* ✏️ This device's camera name — shown right in the sidebar so a
-            wrong name (typed by mistake at sign-in, e.g. "Winny" instead
-            of "Ferrell Family") is spotted immediately, and fixable in
+        {/* This device's camera name — shown right in the sidebar so a
+            wrong name is spotted immediately, and fixable in
             one tap without a full sign-out. */}
         <div className="mx-3 mb-2 rounded-2xl bg-white/10 px-3.5 py-2.5">
           {editingName ? (
@@ -198,16 +197,16 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               className="flex w-full items-center justify-between gap-2 text-left"
               title="Tap to fix this device's camera name"
             >
-              <span className="min-w-0 truncate text-[13px] text-white/85">
-                📷 {displayName || (auth.role === "teacher" ? teacherName : familyName)}
+              <span className="min-w-0 truncate text-[13px] text-white/85 flex items-center gap-2">
+                <Camera className="w-3.5 h-3.5" /> {displayName || (auth.role === "teacher" ? teacherName : familyName)}
               </span>
-              <span className="shrink-0 text-[11px] text-white/50">✏️ edit</span>
+              <span className="shrink-0 text-white/50"><Pencil className="w-3 h-3" /></span>
             </button>
           )}
         </div>
 
-        {/* 🔒 Sign out — hands the device back to the front door. Clears
-            WHO is signed in (code, name, role, guest) but never touches
+        {/* 🔒 Sign out — clears Auth session. Clears
+            WHO is signed in (name, role) but never touches
             the family's treasures (journals, blessings, photos, stamps). */}
         <button
           onClick={() => {
@@ -215,7 +214,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           }}
           className="mx-3 mb-5 flex items-center gap-3 rounded-2xl px-3.5 py-2.5 text-left font-display text-[13px] text-white/60 transition-colors hover:bg-white/10 hover:text-white"
         >
-          <span className="text-base">🔒</span> Sign out
+          <LogOut className="w-4 h-4" /> Sign out
         </button>
       </aside>
 
@@ -299,8 +298,8 @@ function TopBar({
 
   return (
     <header className="sticky top-0 z-20 flex items-center gap-3 border-b border-sand-deep bg-paper/90 px-4 py-2.5 backdrop-blur-md sm:px-6">
-      <button className="wj-chip lg:hidden" onClick={onMenu} aria-label="Open menu">
-        ☰
+      <button className="wj-chip lg:hidden !px-2" onClick={onMenu} aria-label="Open menu">
+        <Menu className="w-4 h-4" />
       </button>
 
       {/* Explorer level + XP — A professional, solid progress bar without arcade artifacts */}
@@ -308,7 +307,7 @@ function TopBar({
         <span className="font-display text-sm font-semibold text-ink">Level {p.level}</span>
         <div className="relative h-2 w-28 overflow-hidden rounded-full bg-sand-deep/60 md:w-40">
           <div
-            className="absolute inset-0 origin-left rounded-full bg-ocean transition-transform duration-700 ease-out"
+            className="absolute inset-0 origin-left rounded-full bg-ocean transition-transform duration-200 ease-out"
             style={{ transform: `scaleX(${pct / 100})` }}
           />
         </div>
@@ -321,32 +320,31 @@ function TopBar({
         <Counter icon={<Map className="w-3.5 h-3.5 text-mango-deep" />} value={p.stamps} label="Stamps" />
         <Counter icon={<Medal className="w-3.5 h-3.5 text-ube" />} value={p.badgesEarned} label="Badges" />
 
-        {/* the teacher's device wears a quiet badge — the role comes from
-            her code, so there is nothing to "exit" anymore */}
+        {/* the teacher's device wears a quiet badge */}
         {teacherMode && (
-          <span className="wj-chip !bg-hibiscus/10 !text-hibiscus-deep !font-semibold !text-xs border border-hibiscus/20" title="This device holds the teacher code">
+          <span className="wj-chip !bg-hibiscus/10 !text-hibiscus-deep !font-semibold !text-xs border border-hibiscus/20" title="This device holds the teacher role">
             <span className="hidden sm:inline">Teacher Mode</span>
             <span className="sm:hidden">Teacher</span>
           </span>
         )}
         <button
-          className="wj-chip hover:bg-mango/20"
+          className="wj-chip hover:bg-mango/20 !px-2"
           onClick={toggleSound}
           title={soundMuted ? "Turn sounds on" : "Turn sounds off"}
           aria-label="Toggle sounds"
         >
-          {soundMuted ? "🔇" : "🔊"}
+          {soundMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
         </button>
-        <button className="wj-chip hover:bg-mango/20" onClick={fullscreen} title="Fullscreen" aria-label="Fullscreen">
-          ⛶
+        <button className="wj-chip hover:bg-mango/20 !px-2" onClick={fullscreen} title="Fullscreen" aria-label="Fullscreen">
+          <Maximize className="w-4 h-4" />
         </button>
         <button
-          className="wj-chip hover:bg-mango/20"
+          className="wj-chip hover:bg-mango/20 !px-2"
           onClick={onToggleTheme}
           title={theme === "dark" ? "Light mode" : "Dark mode"}
           aria-label="Toggle dark mode"
         >
-          {theme === "dark" ? "☀️" : "🌙"}
+          {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
         </button>
       </div>
     </header>

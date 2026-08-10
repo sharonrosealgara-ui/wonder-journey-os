@@ -93,7 +93,7 @@ export default function HomeBase() {
           <div className="wj-card overflow-hidden flex flex-col border border-sand">
             <div className="flex items-center justify-between bg-sand-deep/50 px-6 py-4 border-b border-sand/50">
               <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-ocean animate-pulse" />
+                <span className="w-2 h-2 rounded-full bg-ocean" />
                 <h2 className="font-display font-semibold text-lg text-ink tracking-wide">Today&apos;s Adventure</h2>
               </div>
               <span className="text-xs font-semibold uppercase tracking-wider text-ink-soft">World 1 · {lesson.category}</span>

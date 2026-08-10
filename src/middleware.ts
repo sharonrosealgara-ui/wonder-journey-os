@@ -75,18 +75,15 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url)
   }
 
-  // Route protection: teacher cannot access /family, family cannot access /teacher
+  // Route protection: family cannot access /teacher
   if (pathname.startsWith('/teacher') && profile.role !== 'teacher') {
     const url = request.nextUrl.clone()
     url.pathname = '/family'
     return NextResponse.redirect(url)
   }
 
-  if (pathname.startsWith('/family') && profile.role === 'teacher') {
-    const url = request.nextUrl.clone()
-    url.pathname = '/teacher'
-    return NextResponse.redirect(url)
-  }
+  // Teacher IS allowed to access /family (to preview the learner experience)
+
 
   return supabaseResponse
 }

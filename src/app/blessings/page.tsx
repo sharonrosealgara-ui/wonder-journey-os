@@ -5,8 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { familyMembers, familyName, teacherMember, type FamilyMember } from "@/config/family";
 import { promptForMember, verseOfTheDay, type Verse } from "@/config/devotional";
 import { getTodaysLesson, type Lesson } from "@/config/lessons";
-import type { Mode } from "@/config/navigation";
-import { normalizeMode } from "@/config/navigation";
+import { useAuth } from "@/lib/auth-context";
 import { formatDate, getTodaysPrayerLeader, KEYS, todayISO, type GratitudeEntry } from "@/lib/app-state";
 import { sfx } from "@/lib/sound";
 import { newId, useStored } from "@/lib/storage";
@@ -19,8 +18,8 @@ import { newId, useStored } from "@/lib/storage";
 const confettiColors = ["#ffd23f", "#ff7a59", "#2fb8ad", "#4dbd85", "#ec5d87", "#8890d6"];
 
 export default function BlessingsPage() {
-  const [rawMode] = useStored<string>(KEYS.mode, "family");
-  const mode: Mode = normalizeMode(rawMode);
+  const { role } = useAuth();
+  const isTeacherMode = role === "teacher";
   const [entries, setEntries] = useStored<GratitudeEntry[]>(KEYS.gratitude, []);
   const [verse, setVerse] = useState<Verse | null>(null);
   const [leader, setLeader] = useState("");
@@ -37,8 +36,8 @@ export default function BlessingsPage() {
 
   const today = todayISO();
   const members: FamilyMember[] = useMemo(
-    () => (mode === "teacher" ? [...familyMembers, teacherMember] : familyMembers),
-    [mode]
+    () => (isTeacherMode ? [...familyMembers, teacherMember] : familyMembers),
+    [isTeacherMode]
   );
 
   const todayEntryFor = (id: string) =>
@@ -198,7 +197,7 @@ export default function BlessingsPage() {
               member={m}
               promptText={promptForMember(i)}
               entry={todayEntryFor(m.id)}
-              isTeacherMode={mode === "teacher"}
+              isTeacherMode={isTeacherMode}
               onSave={saveEntry}
               onEncourage={encourage}
             />

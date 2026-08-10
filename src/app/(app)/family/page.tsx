@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState, ReactNode } from "react";
+import { useEffect, useState } from "react";
 import { parentNames, students } from "@/config/family";
 import { celebrations, daysUntil, type Celebration } from "@/config/celebrations";
 import { getTodaysLesson, type Lesson } from "@/config/lessons";
@@ -21,129 +21,114 @@ export default function HomeBase() {
   const familyGreeting = `${parentNames.join(" & ")} Family`;
 
   return (
-    <div className="space-y-10 relative z-10">
-      {/* ── Hero ─────────────────────────────────────────────── */}
-      <section className="wj-card relative overflow-hidden bg-gradient-to-br from-ocean/10 via-sand to-mango/10 border-2 border-white shadow-sm">
-        <div className="grid gap-0 md:grid-cols-[1.2fr_1fr]">
+    <div className="space-y-6">
+      {/* ── Hero ────────────────────────────────────────────────────────────────────────── */}
+      <section className="wj-card relative overflow-hidden">
+        <div className="grid gap-0 md:grid-cols-[1.15fr_1fr]">
           {/* left: greeting */}
-          <div className="relative z-10 p-8 sm:p-10 flex flex-col justify-center">
-            <h1 className="font-display text-4xl sm:text-5xl tracking-tight text-ink drop-shadow-sm">
+          <div className="p-6 sm:p-8">
+            <h1 className="wj-outline font-display text-4xl leading-none sm:text-5xl">
+              <span className="mr-1 text-2xl text-mango-deep" style={{ WebkitTextStroke: "0" }}>✨</span>
               Kumusta,
             </h1>
-            <h1 className="font-display text-4xl sm:text-5xl text-ocean-deep font-extrabold mt-1 drop-shadow-sm">
-              {familyGreeting}!
+            <h1 className="wj-outline mt-1 font-display text-3xl leading-tight text-ocean-deep sm:text-4xl">
+              {familyGreeting}! 👋
             </h1>
-
-            <div className="my-6 h-1 w-24 bg-mango rounded-full opacity-80" />
-
-            <p className="text-lg text-ink leading-relaxed max-w-lg font-medium">
-              Your backpacks are packed and passports ready.{" "}
-              <b className="text-ocean-deep font-bold">World 1: The Philippines</b> awaits!
+            <div className="my-4 h-0.5 w-40 bg-gradient-to-r from-mango to-transparent" />
+            <p className="text-lg text-ink">
+              Your backpacks are packed and your passports are ready —{" "}
+              <b className="text-ocean-deep">World 1: the Philippines</b> 🇵🇭 is calling!
             </p>
-            <p className="mt-3 text-base text-ink-soft leading-relaxed max-w-lg">
-              Discover breathtaking islands, cook traditional dishes, learn beautiful words, and write another chapter in our family story.
+            <p className="font-hand mt-2 text-lg text-ink-soft">
+              Together we&apos;ll wander breathtaking islands, cook delicious dishes, learn
+              beautiful new words, and write another page in our family&apos;s story — one
+              adventure at a time.
             </p>
-
-            <div className="mt-4 flex flex-wrap items-center gap-2">
-              {students.map((s) => (
-                <span key={s.id} className="wj-chip !bg-white/60 !py-1 !px-3 font-semibold text-ocean-deep border border-ocean/10 shadow-sm backdrop-blur-sm">
-                  {s.emoji} {s.name}
-                </span>
-              ))}
-            </div>
-
-            <div className="mt-8 flex flex-wrap gap-4">
+            <div className="mt-5 flex flex-wrap gap-3">
               {lesson && (
-                <Link href={`/adventure/${lesson.id}`} className="wj-btn wj-btn-ocean shadow-md hover:-translate-y-0.5 transition-transform">
-                  Begin Today&apos;s Adventure 🚀
+                <Link href={`/adventure/${lesson.id}`} className="wj-btn text-lg">
+                  🌴 Begin Today&apos;s Adventure
                 </Link>
               )}
-              <Link href="/lessons" className="wj-btn wj-btn-ghost shadow-sm bg-white/60 hover:bg-white border border-sand">
-                Explore the Map 🗺️
+              <Link href="/lessons" className="wj-btn wj-btn-ghost text-lg">
+                🧭 Explore the Adventure Map
               </Link>
             </div>
           </div>
 
-          {/* right: Adventure Map Scene */}
+          {/* right: CSS tropical scene placeholder for FactualImage */}
           <HeroScene />
         </div>
       </section>
 
-      {/* ── Stat cards ───────────────────────────────────────── */}
+      {/* ── Stat cards ─────────────────────────────────────────────────────────────────── */}
       <section className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         <StatCard
-          icon="🗺️"
-          color="bg-palm/10"
-          textColor="text-palm-deep"
+          emoji="🗺️"
           label="Places Explored"
           value={`${p.placesExplored} / ${p.placesTotal}`}
-          note="Discover more places"
+          note="Let's discover more amazing places!"
+          color="var(--color-palm-deep)"
         />
         <StatCard
-          icon="⭐"
-          color="bg-mango/10"
-          textColor="text-mango-deep"
+          emoji="⭐"
           label="Explorer Points"
           value={`${p.points}`}
-          note="Keep growing"
+          note="Keep learning, keep growing!"
+          color="var(--color-mango-deep)"
         />
         <StatCard
-          icon="🛂"
-          color="bg-ocean/10"
-          textColor="text-ocean-deep"
+          emoji="🛂"
           label="Passport Stamps"
           value={`${p.stamps}`}
-          note="Collect stamps"
+          note="Collect stamps from every journey!"
+          color="var(--color-ocean-deep)"
         />
         <StatCard
-          icon="🏅"
-          color="bg-ube/10"
-          textColor="text-ube-deep"
-          label="Achievements"
+          emoji="🏅"
+          label="Adventure Achievements"
           value={`${p.badgesEarned} / ${p.badgesTotal}`}
-          note="Earn badges together"
+          note="Earn badges and celebrate together!"
+          color="var(--color-ube-deep)"
         />
       </section>
 
-      {/* ── Today's Adventure + Upcoming Celebration ─────────── */}
-      <section className="grid gap-6 lg:grid-cols-[1.6fr_1fr]">
+      {/* ── Today's Adventure + Upcoming Celebration ─────────────────────────────────── */}
+      <section className="grid gap-4 lg:grid-cols-[1.6fr_1fr]">
         {lesson && (
-          <div className="wj-card overflow-hidden flex flex-col border-2 border-white bg-sand/30 shadow-sm group">
-            <div className="flex items-center justify-between bg-ocean-deep px-6 py-3">
-              <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-mango shadow-[0_0_8px_rgba(255,200,50,0.8)]" />
-                <h2 className="font-display font-bold text-lg text-white tracking-wide">Today&apos;s Adventure</h2>
-              </div>
-              <span className="text-xs font-bold uppercase tracking-widest text-ocean-light bg-white/10 px-2 py-0.5 rounded-full">World 1 · {lesson.category}</span>
+          <div className="wj-card overflow-hidden">
+            <div className="flex items-center gap-2 bg-gradient-to-r from-ocean/15 to-mango/15 px-6 py-3">
+              <span className="text-2xl">🌴</span>
+              <h2 className="font-display text-xl">Today&apos;s Adventure</h2>
+              <span className="font-hand text-ink-soft">Your journey continues here...</span>
             </div>
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 p-6 flex-1 bg-gradient-to-b from-white to-sand/20">
+            <div className="flex flex-wrap items-center justify-between gap-4 p-6">
               <div>
-                <h3 className="font-display text-2xl text-ink font-extrabold flex items-center gap-3">
-                  <span aria-hidden className="text-4xl drop-shadow-sm group-hover:scale-110 transition-transform">{lesson.emoji}</span>
-                  {lesson.title}
+                <span className="wj-chip">World 1 · {lesson.category}</span>
+                <h3 className="mt-2 font-display text-2xl text-ocean-deep">
+                  {lesson.emoji} {lesson.title}
                 </h3>
-                <p className="mt-2 text-ink-soft leading-relaxed max-w-md font-medium">{lesson.subtitle}</p>
+                <p className="font-hand text-lg text-ink-soft">{lesson.subtitle}</p>
               </div>
-              <Link href={`/adventure/${lesson.id}`} className="wj-btn wj-btn-ocean shrink-0 w-full sm:w-auto shadow-md hover:-translate-y-0.5 transition-transform">
-                Continue ✈️
+              <Link href={`/adventure/${lesson.id}`} className="wj-btn">
+                Continue Adventure ❯
               </Link>
             </div>
           </div>
         )}
 
         {nextCeleb && (
-          <Link href="/celebrations" className="wj-card wj-card-hover flex flex-col justify-center p-6 text-center border-2 border-white bg-gradient-to-br from-hibiscus/10 to-mango/10 shadow-sm relative overflow-hidden group">
-            <div className="absolute top-0 right-0 p-4 opacity-20 text-6xl rotate-12 group-hover:rotate-45 transition-transform duration-700 pointer-events-none">✨</div>
-            <div className="text-xs font-bold uppercase tracking-widest text-hibiscus-deep mb-4 z-10">
-              Upcoming Celebration
+          <Link href="/celebrations" className="wj-card wj-card-hover flex flex-col justify-center p-6 text-center">
+            <div className="text-sm font-bold uppercase tracking-wide text-ink-soft">
+              🎉 Upcoming Celebration
             </div>
-            <div className="text-5xl mb-3 drop-shadow-sm z-10 group-hover:scale-110 transition-transform">{nextCeleb.emoji}</div>
-            <div className="font-display text-2xl text-ink font-extrabold z-10">
+            <div className="mt-2 text-4xl">{nextCeleb.emoji}</div>
+            <div className="mt-1 font-display text-xl text-hibiscus-deep">
               {nextCeleb.type === "birthday" ? `${nextCeleb.name}'s Birthday` : nextCeleb.name}
             </div>
-            <div className="mt-2 text-sm font-semibold text-hibiscus-deep z-10 bg-white/60 inline-block px-3 py-1 rounded-full mx-auto backdrop-blur-sm">
+            <div className="font-hand text-lg text-ink-soft">
               {daysUntil(nextCeleb) === 0
-                ? "Today! 🎉"
+                ? "Today! 🎊"
                 : `in ${daysUntil(nextCeleb)} day${daysUntil(nextCeleb) === 1 ? "" : "s"}`}
             </div>
           </Link>
@@ -180,38 +165,34 @@ function HeroScene() {
       </div>
 
       {/* soft edge blend into the card text area */}
-      <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-sand to-transparent" />
+      <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-paper to-transparent" />
     </div>
   );
 }
 
 function StatCard({
-  icon,
+  emoji,
   label,
   value,
   note,
   color,
-  textColor,
 }: {
-  icon: string;
+  emoji: string;
   label: string;
   value: string;
   note: string;
   color: string;
-  textColor: string;
 }) {
   return (
-    <div className={`wj-card p-5 border-2 border-white shadow-sm bg-gradient-to-b from-white to-sand/20 hover:-translate-y-0.5 transition-transform`}>
-      <div className="flex items-center gap-2">
-        <div className={`w-8 h-8 rounded-full ${color} flex items-center justify-center text-lg drop-shadow-sm`}>
-          {icon}
+    <div className="wj-card p-5">
+      <div className="text-xs font-bold uppercase tracking-wide text-ink-soft">{label}</div>
+      <div className="mt-1 flex items-center justify-between gap-2">
+        <div className="font-display text-3xl" style={{ color }}>
+          {value}
         </div>
-        <div className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-ink-soft">{label}</div>
+        <span className="text-3xl">{emoji}</span>
       </div>
-      <div className={`mt-3 font-display text-3xl font-extrabold ${textColor} drop-shadow-sm`}>
-        {value}
-      </div>
-      <p className="mt-1 text-xs text-ink-soft font-semibold">{note}</p>
+      <p className="font-hand mt-1 text-sm text-ink-soft">{note}</p>
     </div>
   );
 }

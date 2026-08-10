@@ -93,11 +93,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     );
   }
 
-  // 🎥 Fullscreen Classroom Mode: /classroom is a dedicated teaching room —
-  // no sidebar, no dashboard nav, no footer. Only the lesson, the cameras,
-  // and the teaching tools (Decision 044). The CallProvider wraps BOTH
-  // layouts so the live call survives every route change, and the
-  // CameraDock keeps both cameras on screen everywhere else.
+  // 🎥 Fullscreen Classroom Mode
   if (pathname.startsWith("/classroom")) {
     return (
         <CallProvider>
@@ -109,10 +105,14 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     );
   }
 
+  const isTeacherWorkspace = pathname.startsWith('/teacher') || pathname.startsWith('/prep-email') || pathname.startsWith('/photos');
+  const showFamilyDecor = !isTeacherWorkspace;
+  const effectiveDisplayName = auth.role === "teacher" ? teacherName : (displayName || familyName);
+
   return (
     <CallProvider>
     <div className="min-h-screen lg:flex">
-      {auth.role !== "teacher" && <FamilyDecor />}
+      {showFamilyDecor && <FamilyDecor />}
       {/* mobile overlay */}
       {open && (
         <div
@@ -172,17 +172,17 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 onChange={(e) => setNameDraft(e.target.value)}
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
-                    setDisplayName(nameDraft.trim() || (auth.role === "teacher" ? teacherName : familyName));
+                    setDisplayName(nameDraft.trim() || familyName);
                     setEditingName(false);
                   }
                   if (e.key === "Escape") setEditingName(false);
                 }}
-                placeholder={auth.role === "teacher" ? teacherName : familyName}
+                placeholder={effectiveDisplayName}
                 className="min-w-0 flex-1 rounded-lg bg-white/90 px-2 py-1 text-sm text-ink outline-none"
               />
               <button
                 onClick={() => {
-                  setDisplayName(nameDraft.trim() || (auth.role === "teacher" ? teacherName : familyName));
+                  setDisplayName(nameDraft.trim() || familyName);
                   setEditingName(false);
                 }}
                 className="rounded-full bg-mango px-2 py-1 text-xs font-bold text-ink-soft"
@@ -193,16 +193,18 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           ) : (
             <button
               onClick={() => {
-                setNameDraft(displayName);
-                setEditingName(true);
+                if (auth.role !== "teacher") {
+                  setNameDraft(effectiveDisplayName);
+                  setEditingName(true);
+                }
               }}
               className="flex w-full items-center justify-between gap-2 text-left"
-              title="Tap to fix this device's camera name"
+              title={auth.role === "teacher" ? "" : "Tap to fix this device's camera name"}
             >
               <span className="min-w-0 truncate text-[13px] text-white/85 flex items-center gap-2">
-                <Camera className="w-3.5 h-3.5" /> {displayName || (auth.role === "teacher" ? teacherName : familyName)}
+                <Camera className="w-3.5 h-3.5" /> {effectiveDisplayName}
               </span>
-              <span className="shrink-0 text-white/50"><Pencil className="w-3 h-3" /></span>
+              {auth.role !== "teacher" && <span className="shrink-0 text-white/50"><Pencil className="w-3 h-3" /></span>}
             </button>
           )}
         </div>
@@ -299,65 +301,76 @@ function TopBar({
   }
 
   return (
-    <header className="sticky top-0 z-20 flex items-center gap-3 border-b border-sand-deep bg-paper/90 px-4 py-2.5 backdrop-blur-md sm:px-6">
-      <button className="wj-chip lg:hidden !px-2" onClick={onMenu} aria-label="Open menu">
-        <Menu className="w-4 h-4" />
+    <header className="sticky top-0 z-20 flex items-center gap-3 border-b-2 border-sand-deep bg-paper/85 px-4 py-2.5 backdrop-blur sm:px-6">
+      <button className="wj-chip lg:hidden" onClick={onMenu} aria-label="Open menu">
+        ☰
       </button>
 
-      {/* Explorer level + XP — A professional, solid progress bar without arcade artifacts */}
+      {/* Explorer level + XP — a 3D-inset track with a star riding the
+          progress edge, so growth feels physical */}
       <div className="hidden min-w-0 items-center gap-3 sm:flex">
-        <span className="font-display text-sm font-semibold text-ink">Level {p.level}</span>
-        <div className="relative h-2 w-28 overflow-hidden rounded-full bg-sand-deep/60 md:w-40">
+        <span className="font-display text-sm text-ink">Explorer Level {p.level}</span>
+        {/* Zero-lag rule: the fill animates with transform (scaleX), never
+            width/left — GPU-cheap even on an old iPad */}
+        <div className="relative h-3.5 w-28 overflow-hidden rounded-full bg-sand-deep shadow-[inset_0_2px_4px_rgba(44,27,24,0.28)] md:w-40">
           <div
-            className="absolute inset-0 origin-left rounded-full bg-ocean transition-transform duration-200 ease-out"
+            className="absolute inset-0 origin-left rounded-full bg-gradient-to-r from-mango to-sunset shadow-[inset_0_-2px_3px_rgba(44,27,24,0.18)] transition-transform duration-700 ease-out"
             style={{ transform: `scaleX(${pct / 100})` }}
           />
+          <span
+            className="wj-sticker absolute top-1/2 h-6 w-6 -translate-y-1/2 text-xs"
+            style={{ left: `calc(${Math.min(Math.max(pct, 5), 95)}% - 12px)` }}
+            aria-hidden
+          >
+            ⭐
+          </span>
         </div>
-        <span className="text-xs font-semibold text-ink-soft">
+        <span className="text-xs font-bold text-ink-soft">
           {p.xpInLevel} / {p.xpForLevel} XP
         </span>
       </div>
 
       <div className="flex flex-1 items-center justify-end gap-2">
-        <Counter icon={<Map className="w-3.5 h-3.5 text-mango-deep" />} value={p.stamps} label="Stamps" />
-        <Counter icon={<Medal className="w-3.5 h-3.5 text-ube" />} value={p.badgesEarned} label="Badges" />
+        <Counter emoji="⭐" value={p.points} label="Points" />
+        <Counter emoji="🛂" value={p.stamps} label="Stamps" />
+        <Counter emoji="🏅" value={p.badgesEarned} label="Badges" />
 
-        {/* the teacher's device wears a quiet badge */}
+        {/* the teacher's device wears a quiet badge — the role comes from
+            her code, so there is nothing to "exit" anymore */}
         {teacherMode && (
-          <span className="wj-chip !bg-hibiscus/10 !text-hibiscus-deep !font-semibold !text-xs border border-hibiscus/20" title="This device holds the teacher role">
-            <span className="hidden sm:inline">Teacher Mode</span>
-            <span className="sm:hidden">Teacher</span>
+          <span className="wj-chip !bg-hibiscus/15 !text-hibiscus-deep" title="This device holds the teacher code">
+            🍎 <span className="hidden sm:inline">Teacher</span>
           </span>
         )}
         <button
-          className="wj-chip hover:bg-mango/20 !px-2"
+          className="wj-chip hover:bg-mango/20"
           onClick={toggleSound}
           title={soundMuted ? "Turn sounds on" : "Turn sounds off"}
           aria-label="Toggle sounds"
         >
-          {soundMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+          {soundMuted ? "🔇" : "🔊"}
         </button>
-        <button className="wj-chip hover:bg-mango/20 !px-2" onClick={fullscreen} title="Fullscreen" aria-label="Fullscreen">
-          <Maximize className="w-4 h-4" />
+        <button className="wj-chip hover:bg-mango/20" onClick={fullscreen} title="Fullscreen" aria-label="Fullscreen">
+          ⛶
         </button>
         <button
-          className="wj-chip hover:bg-mango/20 !px-2"
+          className="wj-chip hover:bg-mango/20"
           onClick={onToggleTheme}
           title={theme === "dark" ? "Light mode" : "Dark mode"}
           aria-label="Toggle dark mode"
         >
-          {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+          {theme === "dark" ? "☀" : "🌙"}
         </button>
       </div>
     </header>
   );
 }
 
-function Counter({ icon, value, label }: { icon: ReactNode; value: number; label: string }) {
+function Counter({ emoji, value, label }: { emoji: string; value: number; label: string }) {
   return (
-    <span className="wj-chip flex items-center gap-1.5" title={label}>
-      {icon} <b className="text-ink font-semibold">{value}</b>
-      <span className="hidden text-ink-soft text-xs md:inline"> {label}</span>
+    <span className="wj-chip" title={label}>
+      {emoji} <b className="text-ink">{value}</b>
+      <span className="hidden text-ink-soft md:inline"> {label}</span>
     </span>
   );
 }

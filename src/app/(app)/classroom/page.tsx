@@ -16,7 +16,7 @@ import { initCloudSync, sendEvent } from "@/lib/cloud-sync";
 import { readStored, useStored } from "@/lib/storage";
 import { useAuth } from "@/lib/auth-context";
 
-// ≡ƒÄÑ LIVE ADVENTURE CLASSROOM
+// 🎥 LIVE ADVENTURE CLASSROOM
 // The call itself lives in the global CallProvider (app-shell), so it
 // follows the family across every page. This page is the full-size
 // room: lesson stage + camera rail + teaching toolbar.
@@ -31,7 +31,7 @@ export default function ClassroomPage() {
   const [activeStudentId] = useStored<string | null>(KEYS.activeStudent, null);
   const student = getStudent(activeStudentId);
   const [name, setName] = useState("");
-  // the code is entered once at the front door (AccessGate) ΓÇö never here
+  // the code is entered once at the front door (AccessGate) — never here
   const [classCode] = useStored<string>("classCode", "");
   const [lesson, setLesson] = useState<Lesson | null>(null);
   const [joinError, setJoinError] = useState<string | null>(null);
@@ -50,7 +50,7 @@ export default function ClassroomPage() {
     }
   }, [student, role]);
 
-  // ONE stable classroom per family ΓÇö never date- or lesson-derived, so
+  // ONE stable classroom per family — never date- or lesson-derived, so
   // the teacher (in the Philippines) and the family (in the US) always
   // land in the SAME room even when it's a different calendar day on
   // each side. A family's classroom is like a personal meeting room.
@@ -68,7 +68,7 @@ export default function ClassroomPage() {
     });
     setJoining(false);
     if (result === "wrong_code") {
-      setJoinError("That class code doesn't match ΓÇö please check it with Teacher Sharon. ≡ƒÆ¢");
+      setJoinError("That class code doesn't match — please check it with Teacher Sharon. 💙");
       return;
     }
     if (result === "error") {
@@ -79,7 +79,7 @@ export default function ClassroomPage() {
     if (result === "connected") sendEvent("class.joined", { who: name, room: roomName });
   }
 
-  // END CALL ΓÇö the only action that disconnects. Back to Home Base.
+  // END CALL — the only action that disconnects. Back to Home Base.
   function endCall() {
     if (call.status === "connected") sendEvent("class.ended", { who: name, room: roomName });
     call.endCall();
@@ -113,7 +113,7 @@ export default function ClassroomPage() {
   );
 }
 
-/* ΓöÇΓöÇ Local camera (lobby preview) ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ */
+/* ── Local camera (lobby preview) ───────────────────────────── */
 function useLocalCamera(initial?: { camId?: string; micId?: string; camOn?: boolean; micOn?: boolean }) {
   const streamRef = useRef<MediaStream | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -204,7 +204,7 @@ function LocalCameraView({ streamRef, camOn, tick, label, className = "" }: {
   );
 }
 
-/* ΓöÇΓöÇ Pre-join lobby ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ */
+/* ── Pre-join lobby ─────────────────────────────────────────── */
 function Lobby({ name, setName, lesson, joining, joinError, onJoin }: {
   name: string;
   setName: (s: string) => void;
@@ -247,9 +247,9 @@ function Lobby({ name, setName, lesson, joining, joinError, onJoin }: {
   return (
     <div className="mx-auto max-w-4xl space-y-6">
       <div className="text-center">
-        <div className="mb-2 text-4xl">≡ƒÄÑ≡ƒî┤</div>
+        <div className="mb-2 text-4xl">🎥🌴</div>
         <h1 className="wj-outline font-display text-3xl sm:text-4xl">Live Adventure Classroom</h1>
-        <p className="font-hand mt-1 text-lg text-ink-soft">Mabuhay, {familyName}! Let&apos;s get you ready. ≡ƒÆ¢</p>
+        <p className="font-hand mt-1 text-lg text-ink-soft">Mabuhay, {familyName}! Let's get you ready. 💙</p>
       </div>
 
       <div className="grid gap-6 md:grid-cols-[1.3fr_1fr]">
@@ -263,10 +263,10 @@ function Lobby({ name, setName, lesson, joining, joinError, onJoin }: {
           )}
           <div className="mt-3 flex items-center justify-center gap-3">
             <button className={`wj-btn ${cam.camOn ? "wj-btn-ocean" : "wj-btn-ghost"} !px-4`} onClick={cam.toggleCam}>
-              {cam.camOn ? "≡ƒô╖ Camera On" : "≡ƒô╖ Camera Off"}
+              {cam.camOn ? "📷 Camera On" : "📷 Camera Off"}
             </button>
             <button className={`wj-btn ${cam.micOn ? "wj-btn-ocean" : "wj-btn-ghost"} !px-4`} onClick={cam.toggleMic}>
-              {cam.micOn ? "≡ƒÄñ Mic On" : "≡ƒöç Mic Off"}
+              {cam.micOn ? "🎤 Mic On" : "🔇 Mic Off"}
             </button>
           </div>
           <div className="mt-3">
@@ -283,26 +283,26 @@ function Lobby({ name, setName, lesson, joining, joinError, onJoin }: {
             <input className="wj-input mt-1" value={name} onChange={(e) => setName(e.target.value)} />
           </div>
           <div>
-            <label className="text-sm font-bold text-ink-soft">≡ƒô╖ Camera</label>
+            <label className="text-sm font-bold text-ink-soft">📷 Camera</label>
             <select className="wj-input mt-1" value={cam.camId} onChange={(e) => cam.setCamId(e.target.value)}>
               {cam.cams.length === 0 && <option>Default camera</option>}
               {cam.cams.map((c) => (<option key={c.id} value={c.id}>{c.label}</option>))}
             </select>
           </div>
           <div>
-            <label className="text-sm font-bold text-ink-soft">≡ƒÄñ Microphone</label>
+            <label className="text-sm font-bold text-ink-soft">🎤 Microphone</label>
             <select className="wj-input mt-1" value={cam.micId} onChange={(e) => cam.setMicId(e.target.value)}>
               {cam.mics.length === 0 && <option>Default microphone</option>}
               {cam.mics.map((m) => (<option key={m.id} value={m.id}>{m.label}</option>))}
             </select>
           </div>
           <div className="rounded-2xl bg-sand p-3 text-sm text-ink-soft">
-            <p className="font-bold">Today&apos;s Adventure</p>
+            <p className="font-bold">Today's Adventure</p>
             <p className="font-hand text-base">{lesson ? `${lesson.emoji} ${lesson.title}` : "Loading..."}</p>
           </div>
           {joinError && <p className="rounded-2xl bg-hibiscus/10 p-3 text-sm font-bold text-hibiscus-deep">{joinError}</p>}
           <button className="wj-btn w-full text-lg" onClick={handleJoin} disabled={joining}>
-            {joining ? "ConnectingΓÇª ≡ƒîÉ" : "≡ƒÜÇ Join the Adventure"}
+            {joining ? "Connecting… 🌐" : "🚀 Join the Adventure"}
           </button>
         </div>
       </div>
@@ -310,7 +310,7 @@ function Lobby({ name, setName, lesson, joining, joinError, onJoin }: {
   );
 }
 
-/* ΓöÇΓöÇ LiveKit connected classroom (shared call context) ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ */
+/* ── LiveKit connected classroom (shared call context) ──────── */
 function ConnectedRoom({ lesson, onLeave }: {
   lesson: Lesson | null;
   onLeave: () => void;
@@ -320,7 +320,7 @@ function ConnectedRoom({ lesson, onLeave }: {
   const isTeacher = call.isTeacher;
   const [chatOpen, setChatOpen] = useState(false);
   const [msg, setMsg] = useState("");
-  // The lesson opens INSIDE the stage ΓÇö the route never changes, so the
+  // The lesson opens INSIDE the stage — the route never changes, so the
   // LiveKit room, cameras, and toolbar are never unmounted.
   const [stageLesson, setStageLesson] = useState<Lesson | null>(null);
   const [wrapUp, setWrapUp] = useState(false); // Adventure Wrap-Up: lesson done, call stays alive
@@ -330,7 +330,7 @@ function ConnectedRoom({ lesson, onLeave }: {
   const [tvMode, setTvMode] = useStored<boolean>("wj-tv-mode", false); // TV Mode scales typography and contrast
   const [showDiagnostics, setShowDiagnostics] = useState(false);
 
-  // FINISH LESSON ΓÇö closes the presentation only. The LiveKit room,
+  // FINISH LESSON — closes the presentation only. The LiveKit room,
   // cameras, and microphones stay connected for the wrap-up chat.
   function finishLesson() {
     setStageLesson(null);
@@ -348,12 +348,12 @@ function ConnectedRoom({ lesson, onLeave }: {
   }
 
   const stateChip =
-    call.connState === ConnectionState.Reconnecting ? "≡ƒƒí ReconnectingΓÇª" :
-    call.connState === ConnectionState.Connected ? "≡ƒƒó Live" : "≡ƒö┤ ConnectingΓÇª";
+    call.connState === ConnectionState.Reconnecting ? "🟡 Reconnecting…" :
+    call.connState === ConnectionState.Connected ? "🟢 Live" : "🔴 Connecting…";
 
-  // ΓöÇΓöÇ EXACTLY TWO CAMERAS (Sharon's rule): one Teacher, one Family.
-  // Each tile is picked by ROLE ΓÇö the server decided it from the code
-  // (two-code system) ΓÇö so it never matters which device this is, and a
+  // ── EXACTLY TWO CAMERAS (Sharon's rule): one Teacher, one Family.
+  // Each tile is picked by ROLE — the server decided it from the code
+  // (two-code system) — so it never matters which device this is, and a
   // stray extra connection can never appear as a third camera.
   const familyFeed = everyone.find((p) => participantRole(p) === "family") ?? null;
   const teacherFeed = everyone.find((p) => participantRole(p) === "teacher") ?? null;
@@ -366,24 +366,24 @@ function ConnectedRoom({ lesson, onLeave }: {
         <div className="flex items-center gap-2">
           {isTeacher && (
             <button className={`wj-chip hover:bg-mango/20 ${showDiagnostics ? "!bg-mango" : ""}`} onClick={() => setShowDiagnostics((d) => !d)} title="View connection diagnostics">
-              ≡ƒôí Diagnostics
+              📡 Diagnostics
             </button>
           )}
-          <span className="wj-chip">≡ƒÄÑ {lesson ? `${lesson.emoji} ${lesson.title}` : "Adventure"}</span>
+          <span className="wj-chip">🎥 {lesson ? `${lesson.emoji} ${lesson.title}` : "Adventure"}</span>
           <button className="wj-chip hover:bg-mango/20" onClick={() => setTvMode((v) => !v)} title="Toggle TV Mode (bigger text, high contrast)">
-            {tvMode ? "≡ƒô║ TV Mode: On" : "≡ƒô║ TV Mode"}
+            {tvMode ? "📺 TV Mode: On" : "📺 TV Mode"}
           </button>
           <button className="wj-chip hover:bg-mango/20" onClick={() => setCamsVisible((v) => !v)} title={camsVisible ? "Hide video" : "Show video"}>
-            {camsVisible ? "≡ƒæÑ Hide video" : "≡ƒæÑ Show video"}
+            {camsVisible ? "👥 Hide video" : "👥 Show video"}
           </button>
         </div>
       </div>
 
       {/* Focused teaching room: LESSON STAGE (75%) left ┬╖ CAMERA RAIL (25%) right.
           Family camera ABOVE teacher camera (Decision 044). On small screens
-          the lesson leads and the rail stacks beneath it ΓÇö family still first. */}
+          the lesson leads and the rail stacks beneath it — family still first. */}
       <div className={`grid grid-cols-1 gap-3 ${camsVisible ? "lg:grid-cols-[3fr_1fr]" : ""} lg:items-start`}>
-        {/* stage ΓÇö lessons open here; the shell around it never unmounts */}
+        {/* stage — lessons open here; the shell around it never unmounts */}
         <div
           className={`wj-card relative overflow-hidden p-0 ${
             stageLesson ? "h-[74vh] lg:h-[78vh]" : "flex min-h-[46vh] items-center justify-center lg:h-[78vh]"
@@ -413,22 +413,22 @@ function ConnectedRoom({ lesson, onLeave }: {
             />
           ) : (
             <div className="flex flex-col items-center gap-4 overflow-y-auto p-8 text-center">
-              <div className="text-6xl">{lesson?.emoji ?? "≡ƒî┤"}</div>
+              <div className="text-6xl">{lesson?.emoji ?? "🌴"}</div>
               <h2 className="wj-outline font-display text-2xl sm:text-3xl">{lesson?.title ?? "Today's Adventure"}</h2>
               <p className="font-hand text-lg text-ink-soft">{lesson?.subtitle}</p>
               {lesson && (
                 <button className="wj-btn text-lg" onClick={() => setStageLesson(lesson)}>
-                  ≡ƒÄ¼ Open the Adventure
+                  🎬 Open the Adventure
                 </button>
               )}
-              {isTeacher && <p className="text-xs text-ink-soft">The lesson opens right here ΓÇö cameras stay on. Or share your screen ≡ƒæç</p>}
+              {isTeacher && <p className="text-xs text-ink-soft">The lesson opens right here — cameras stay on. Or share your screen 👇</p>}
             </div>
           )}
 
           {/* whiteboard over the whole stage (slides, maps, shares) */}
           {drawing && <AnnotationLayer onClose={() => setDrawing(false)} />}
 
-          {/* pinned/enlarged camera overlay ΓÇö cameras over the lesson on demand */}
+          {/* pinned/enlarged camera overlay — cameras over the lesson on demand */}
           {enlargedP && (
             <div className="absolute bottom-3 right-3 z-40 w-72 max-w-[70%] sm:w-96">
               <ParticipantTile
@@ -461,13 +461,13 @@ function ConnectedRoom({ lesson, onLeave }: {
           )}
         </div>
 
-        {/* ΓöÇΓöÇ CAMERA RAIL: ≡ƒæ¿ΓÇì≡ƒæ⌐ΓÇì≡ƒæºΓÇì≡ƒæª Family ABOVE ≡ƒæ⌐ΓÇì≡ƒÅ½ Teacher ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ */}
+        {/* ── CAMERA RAIL: 👨‍👩‍👧‍👦 Family ABOVE 👩‍🏫 Teacher ─────────── */}
         {camsVisible && (
           <div className="flex flex-col gap-3 lg:sticky lg:top-3">
-            {/* Family first ΓÇö slightly more prominent so the teacher can
+            {/* Family first — slightly more prominent so the teacher can
                 watch all four children clearly */}
             <div>
-              <p className="mb-1 text-center text-[11px] font-bold uppercase tracking-wide text-ink-soft">≡ƒæ¿ΓÇì≡ƒæ⌐ΓÇì≡ƒæºΓÇì≡ƒæª {familyName}</p>
+              <p className="mb-1 text-center text-[11px] font-bold uppercase tracking-wide text-ink-soft">👨‍👩‍👧‍👦 {familyName}</p>
               {familyFeed ? (
                 <ParticipantTile
                   participant={familyFeed}
@@ -479,15 +479,15 @@ function ConnectedRoom({ lesson, onLeave }: {
                 />
               ) : (
                 <div className="flex aspect-[4/3] w-full flex-col items-center justify-center rounded-2xl border-2 border-dashed border-sand-deep bg-sand text-center text-ink-soft">
-                  <span className="text-3xl">≡ƒÆ¢</span>
-                  <span className="font-hand px-2 text-sm">Waiting for the family to joinΓÇª</span>
+                  <span className="text-3xl">💙</span>
+                  <span className="font-hand px-2 text-sm">Waiting for the family to join…</span>
                 </div>
               )}
             </div>
 
-            {/* Teacher below ΓÇö exactly one tile, never a third camera */}
+            {/* Teacher below — exactly one tile, never a third camera */}
             <div>
-              <p className="mb-1 text-center text-[11px] font-bold uppercase tracking-wide text-ink-soft">≡ƒæ⌐ΓÇì≡ƒÅ½ {teacherName}</p>
+              <p className="mb-1 text-center text-[11px] font-bold uppercase tracking-wide text-ink-soft">👩‍🏫 {teacherName}</p>
               {teacherFeed ? (
                 <ParticipantTile
                   participant={teacherFeed}
@@ -498,8 +498,8 @@ function ConnectedRoom({ lesson, onLeave }: {
                 />
               ) : (
                 <div className="flex aspect-video w-full flex-col items-center justify-center rounded-2xl border-2 border-dashed border-sand-deep bg-sand text-center text-ink-soft">
-                  <span className="text-3xl">≡ƒÆ¢</span>
-                  <span className="font-hand px-2 text-sm">{teacherName} joins soonΓÇª</span>
+                  <span className="text-3xl">💙</span>
+                  <span className="font-hand px-2 text-sm">{teacherName} joins soon…</span>
                 </div>
               )}
             </div>
@@ -509,34 +509,34 @@ function ConnectedRoom({ lesson, onLeave }: {
 
       {chatOpen && (
         <div className="wj-card p-4">
-          <p className="font-display">≡ƒÆ¼ Class Chat</p>
+          <p className="font-display">💬 Class Chat</p>
           <div className="mt-2 max-h-32 space-y-1 overflow-y-auto text-sm">
-            {call.chat.length === 0 && <p className="font-hand text-ink-soft">Say hello to the family! ≡ƒæï</p>}
+            {call.chat.length === 0 && <p className="font-hand text-ink-soft">Say hello to the family! 👋</p>}
             {call.chat.map((c, i) => (<p key={i}><b>{c.who}:</b> {c.text}</p>))}
           </div>
           <div className="mt-2 flex gap-2">
-            <input className="wj-input" value={msg} onChange={(e) => setMsg(e.target.value)} onKeyDown={(e) => e.key === "Enter" && send()} placeholder="Type a messageΓÇª" />
+            <input className="wj-input" value={msg} onChange={(e) => setMsg(e.target.value)} onKeyDown={(e) => e.key === "Enter" && send()} placeholder="Type a message…" />
             <button className="wj-btn" onClick={send}>Send</button>
           </div>
         </div>
       )}
 
-      {/* TEACHING TOOLBAR ΓÇö only class tools, no dashboard navigation */}
+      {/* TEACHING TOOLBAR — only class tools, no dashboard navigation */}
       <div className="wj-card sticky bottom-2 z-10 flex flex-wrap items-center justify-center gap-2 p-3">
-        <ToolBtn onClick={call.toggleMic} active={call.micOn} label={call.micOn ? "≡ƒÄñ Mic" : "≡ƒöç Muted"} />
-        <ToolBtn onClick={call.toggleCam} active={call.camOn} label={call.camOn ? "≡ƒô╖ Cam" : "≡ƒô╖ Off"} />
-        <ToolBtn onClick={call.toggleShare} active={call.sharing} label="≡ƒûÑ∩╕Å Share" />
-        <ToolBtn onClick={() => setDrawing((d) => !d)} active={drawing} label="Γ£Å∩╕Å Draw" />
-        <ToolBtn onClick={call.toggleHand} active={call.myHand} label="Γ£ï Hand" />
-        <ToolBtn onClick={() => setChatOpen((c) => !c)} active={chatOpen} label="≡ƒÆ¼ Chat" />
+        <ToolBtn onClick={call.toggleMic} active={call.micOn} label={call.micOn ? "🎤 Mic" : "🔇 Muted"} />
+        <ToolBtn onClick={call.toggleCam} active={call.camOn} label={call.camOn ? "📷 Cam" : "📷 Off"} />
+        <ToolBtn onClick={call.toggleShare} active={call.sharing} label="🖥️ Share" />
+        <ToolBtn onClick={() => setDrawing((d) => !d)} active={drawing} label="✏️ Draw" />
+        <ToolBtn onClick={call.toggleHand} active={call.myHand} label="✋ Hand" />
+        <ToolBtn onClick={() => setChatOpen((c) => !c)} active={chatOpen} label="💬 Chat" />
         <span className="mx-1 hidden h-6 w-px bg-sand-deep sm:block" />
-        {/* same pill geometry as every tool ΓÇö colour fill marks the special ones */}
+        {/* same pill geometry as every tool — colour fill marks the special ones */}
         {isTeacher && stageLesson && (
           <button
             className="rounded-full bg-ocean px-4 py-2 font-display text-sm text-white transition-colors hover:bg-ocean-deep"
             onClick={finishLesson}
           >
-            ≡ƒÅü Finish Lesson
+            🏁 Finish Lesson
           </button>
         )}
         <button
@@ -544,14 +544,14 @@ function ConnectedRoom({ lesson, onLeave }: {
           onClick={onLeave}
           title="Disconnects the call and returns to Home Base"
         >
-          ≡ƒô₧ End Call
+          📞 End Call
         </button>
       </div>
     </div>
   );
 }
 
-/* ΓöÇΓöÇ Adventure Wrap-Up: lesson finished, cameras stay on ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ */
+/* ── Adventure Wrap-Up: lesson finished, cameras stay on ────── */
 function WrapUpPanel({ lesson, quizResult, onReopen, onEndCall }: {
   lesson: Lesson | null;
   quizResult: { score: number; total: number } | null;
@@ -561,15 +561,15 @@ function WrapUpPanel({ lesson, quizResult, onReopen, onEndCall }: {
   const next = lesson ? allLessons.find((l) => l.order === lesson.order + 1) : null;
   return (
     <div className="flex h-full w-full flex-col items-center justify-center gap-3 overflow-y-auto p-6 text-center">
-      <div className="text-5xl">≡ƒîà</div>
+      <div className="text-5xl">🌅</div>
       <h2 className="wj-outline font-display text-2xl sm:text-3xl">Wonderful work today!</h2>
       <p className="font-hand text-lg text-ink-soft">
-        {lesson ? `${lesson.emoji} ${lesson.title} ΓÇö adventure complete!` : "Adventure complete!"}
+        {lesson ? `${lesson.emoji} ${lesson.title} — adventure complete!` : "Adventure complete!"}
       </p>
       <div className="flex flex-wrap justify-center gap-2">
-        {quizResult && <span className="wj-chip">≡ƒºá Quiz: {quizResult.score}/{quizResult.total}</span>}
-        {lesson?.destinationId && <span className="wj-chip">≡ƒ¢é Passport stamp earned</span>}
-        <span className="wj-chip">≡ƒôö Journal saved</span>
+        {quizResult && <span className="wj-chip">🧠 Quiz: {quizResult.score}/{quizResult.total}</span>}
+        {lesson?.destinationId && <span className="wj-chip">🛂 Passport stamp earned</span>}
+        <span className="wj-chip">📔 Journal saved</span>
       </div>
       {next && (
         <p className="font-hand rounded-2xl bg-sand px-4 py-2 text-base text-ink-soft">
@@ -577,17 +577,17 @@ function WrapUpPanel({ lesson, quizResult, onReopen, onEndCall }: {
         </p>
       )}
       <p className="font-hand text-base text-ink-soft">
-        Stay and chat as long as you like ΓÇö the call is still on. ≡ƒÆ¢
+        Stay and chat as long as you like — the call is still on. 💙
       </p>
       <div className="mt-1 flex flex-wrap justify-center gap-3">
         <button className="wj-btn wj-btn-ghost text-sm" onClick={onReopen}>Γå⌐∩╕Å Reopen the lesson</button>
-        <button className="wj-btn wj-btn-hibiscus" onClick={onEndCall}>≡ƒô₧ End Call</button>
+        <button className="wj-btn wj-btn-hibiscus" onClick={onEndCall}>📞 End Call</button>
       </div>
     </div>
   );
 }
 
-/* ΓöÇΓöÇ Failsafe: a lesson crash must never end the call ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ */
+/* ── Failsafe: a lesson crash must never end the call ───────── */
 class LessonBoundary extends React.Component<
   { children: React.ReactNode; onReturnToWrapUp: () => void },
   { failed: boolean }
@@ -600,11 +600,11 @@ class LessonBoundary extends React.Component<
     if (!this.state.failed) return this.props.children;
     return (
       <div className="flex h-full w-full flex-col items-center justify-center gap-3 p-6 text-center">
-        <div className="text-4xl">≡ƒ¢╢</div>
-        <h2 className="font-display text-xl">That lesson page hit a wave ΓÇö but the call is still on!</h2>
+        <div className="text-4xl">🛶</div>
+        <h2 className="font-display text-xl">That lesson page hit a wave — but the call is still on!</h2>
         <p className="font-hand text-ink-soft">Cameras and microphones are untouched. You can keep talking.</p>
         <div className="flex gap-3">
-          <button className="wj-btn wj-btn-ghost text-sm" onClick={() => this.setState({ failed: false })}>≡ƒöä Retry Lesson</button>
+          <button className="wj-btn wj-btn-ghost text-sm" onClick={() => this.setState({ failed: false })}>🔄 Retry Lesson</button>
           <button className="wj-btn text-sm" onClick={this.props.onReturnToWrapUp}>Return to Wrap-Up</button>
         </div>
       </div>
@@ -631,7 +631,7 @@ function ParticipantTile({ participant, isLocal, hand, version, onClick, tall = 
   // ΓÜá∩╕Å Anti-glitch fix: attach/detach only when the TRACK ITSELF changes,
   // never on `version` (which also bumps on ActiveSpeakersChanged, firing
   // ~every second for the whole room). Re-attaching that often tore down
-  // and rebuilt the live video every second ΓÇö the flicker/freeze both
+  // and rebuilt the live video every second — the flicker/freeze both
   // sides were seeing during class.
   useEffect(() => {
     if (camTrack && videoRef.current) camTrack.attach(videoRef.current);
@@ -658,7 +658,7 @@ function ParticipantTile({ participant, isLocal, hand, version, onClick, tall = 
         <CameraOffTile />
       )}
       <span className="absolute bottom-2 left-2 rounded-full bg-ink/70 px-2.5 py-0.5 text-xs font-bold text-white">
-        {participant.name || participant.identity}{isLocal ? " (you)" : ""}{hand ? " Γ£ï" : ""}{muted ? " ≡ƒöç" : ""}
+        {participant.name || participant.identity}{isLocal ? " (you)" : ""}{hand ? " ✋" : ""}{muted ? " 🔇" : ""}
       </span>
     </div>
   );
@@ -675,7 +675,7 @@ function ShareView({ track }: { track: MediaStreamTrack }) {
   return <video ref={ref} autoPlay playsInline className="h-full w-full bg-ink object-contain" />;
 }
 
-/* ΓöÇΓöÇ Solo classroom (no/wrong class code ΓÇö local camera only) ΓöÇΓöÇ */
+/* ── Solo classroom (no/wrong class code — local camera only) ── */
 function SoloRoom({ lesson, isGuest = false, onGoLive, onLeave }: {
   lesson: Lesson | null;
   isGuest?: boolean;
@@ -728,20 +728,20 @@ function SoloRoom({ lesson, isGuest = false, onGoLive, onLeave }: {
     <div className={`space-y-3 ${tvMode ? "tv-mode scale-[1.02] origin-top contrast-125 transition-transform" : "transition-transform"}`}>
       <div className="wj-card-bubble wj-note flex flex-wrap items-center justify-between gap-2 p-3 text-center">
         {isGuest ? (
-          // ≡ƒ¢í∩╕Å GUEST DEMO ΓÇö the full classroom experience, connected to
+          // 🛡️ GUEST DEMO — the full classroom experience, connected to
           // NOBODY. A guest camera can never enter a family's real room
           // (the server refuses codeless connections), so families stay
           // private and guests still feel the magic.
           <p className="font-display text-sm text-white">
-            Γ£¿ Demo classroom ΓÇö this is how your family&apos;s class will look and feel.
-            Love it? Ask Teacher Sharon for your family&apos;s own code! ≡ƒÆ¢
+            ✨ Demo classroom — this is how your family's class will look and feel.
+            Love it? Ask Teacher Sharon for your family's own code! 💙
           </p>
         ) : (
           <>
             <p className="font-display text-sm text-white">
-              Your camera is on! We couldn&apos;t reach the live room just now. ≡ƒÆ¢
+              Your camera is on! We couldn't reach the live room just now. 💙
             </p>
-            <button className="wj-btn !px-4 !py-1.5 text-sm" onClick={onGoLive}>≡ƒÜÇ Try again</button>
+            <button className="wj-btn !px-4 !py-1.5 text-sm" onClick={onGoLive}>🚀 Try again</button>
           </>
         )}
       </div>
@@ -758,12 +758,12 @@ function SoloRoom({ lesson, isGuest = false, onGoLive, onLeave }: {
             <AdventureTheater lesson={stageLesson} embedded onExit={() => setStageLesson(null)} />
           ) : (
             <div className="flex flex-col items-center gap-4 overflow-y-auto p-8 text-center">
-              <div className="text-6xl">{lesson?.emoji ?? "≡ƒî┤"}</div>
+              <div className="text-6xl">{lesson?.emoji ?? "🌴"}</div>
               <h2 className="wj-outline font-display text-2xl sm:text-3xl">{lesson?.title ?? "Today's Adventure"}</h2>
               <p className="font-hand text-lg text-ink-soft">{lesson?.subtitle}</p>
               {lesson && (
                 <button className="wj-btn text-lg" onClick={() => setStageLesson(lesson)}>
-                  ≡ƒÄ¼ Open the Adventure
+                  🎬 Open the Adventure
                 </button>
               )}
             </div>
@@ -771,15 +771,15 @@ function SoloRoom({ lesson, isGuest = false, onGoLive, onLeave }: {
           {drawing && <AnnotationLayer onClose={() => setDrawing(false)} />}
         </div>
 
-        {/* Camera rail: ≡ƒæ¿ΓÇì≡ƒæ⌐ΓÇì≡ƒæºΓÇì≡ƒæª Family ABOVE ≡ƒæ⌐ΓÇì≡ƒÅ½ Teacher */}
+        {/* Camera rail: 👨‍👩‍👧‍👦 Family ABOVE 👩‍🏫 Teacher */}
         <div className="flex flex-col gap-3 lg:sticky lg:top-3">
           <div>
             <p className="mb-1 text-center text-[11px] font-bold uppercase tracking-wide text-ink-soft">
-              ≡ƒæ¿ΓÇì≡ƒæ⌐ΓÇì≡ƒæºΓÇì≡ƒæª {isGuest ? call.name || "Your Family" : familyName}
+              👨‍👩‍👧‍👦 {isGuest ? call.name || "Your Family" : familyName}
             </p>
             {call.isTeacher ? (
               <div className="flex aspect-[4/3] w-full flex-col items-center justify-center rounded-2xl border-2 border-dashed border-sand-deep bg-sand text-center text-ink-soft">
-                <span className="text-3xl">≡ƒÆ¢</span>
+                <span className="text-3xl">💙</span>
                 <span className="font-hand px-2 text-sm">Family video appears once you go live together</span>
               </div>
             ) : (
@@ -793,7 +793,7 @@ function SoloRoom({ lesson, isGuest = false, onGoLive, onLeave }: {
             )}
           </div>
           <div>
-            <p className="mb-1 text-center text-[11px] font-bold uppercase tracking-wide text-ink-soft">≡ƒæ⌐ΓÇì≡ƒÅ½ {teacherName}</p>
+            <p className="mb-1 text-center text-[11px] font-bold uppercase tracking-wide text-ink-soft">👩‍🏫 {teacherName}</p>
             {call.isTeacher ? (
               <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-ink">
                 <video ref={call.isTeacher ? soloVideoRef : undefined} autoPlay muted playsInline className={`h-full w-full object-cover ${call.camOn ? "" : "hidden"}`} />
@@ -804,7 +804,7 @@ function SoloRoom({ lesson, isGuest = false, onGoLive, onLeave }: {
               </div>
             ) : (
               <div className="flex aspect-video w-full flex-col items-center justify-center rounded-2xl border-2 border-dashed border-sand-deep bg-sand text-center text-ink-soft">
-                <span className="text-3xl">≡ƒÆ¢</span>
+                <span className="text-3xl">💙</span>
                 <span className="font-hand px-2 text-sm">Teacher Sharon appears once you go live together</span>
               </div>
             )}
@@ -813,17 +813,17 @@ function SoloRoom({ lesson, isGuest = false, onGoLive, onLeave }: {
       </div>
 
       <div className="wj-card sticky bottom-2 z-10 flex flex-wrap items-center justify-center gap-2 p-3">
-        <ToolBtn onClick={call.toggleMic} active={call.micOn} label={call.micOn ? "≡ƒÄñ Mic" : "≡ƒöç Muted"} />
-        <ToolBtn onClick={call.toggleCam} active={call.camOn} label={call.camOn ? "≡ƒô╖ Cam" : "≡ƒô╖ Off"} />
-        <ToolBtn onClick={() => void toggleShare()} active={sharing} label="≡ƒûÑ∩╕Å Share" />
-        <ToolBtn onClick={() => setDrawing((d) => !d)} active={drawing} label="Γ£Å∩╕Å Draw" />
+        <ToolBtn onClick={call.toggleMic} active={call.micOn} label={call.micOn ? "🎤 Mic" : "🔇 Muted"} />
+        <ToolBtn onClick={call.toggleCam} active={call.camOn} label={call.camOn ? "📷 Cam" : "📷 Off"} />
+        <ToolBtn onClick={() => void toggleShare()} active={sharing} label="🖥️ Share" />
+        <ToolBtn onClick={() => setDrawing((d) => !d)} active={drawing} label="✏️ Draw" />
         <span className="mx-1 hidden h-6 w-px bg-sand-deep sm:block" />
         <button
           className="rounded-full bg-hibiscus px-4 py-2 font-display text-sm text-white transition-[filter] hover:brightness-95"
           onClick={leave}
           title="Disconnects and returns to Home Base"
         >
-          ≡ƒô₧ End Call
+          📞 End Call
         </button>
       </div>
     </div>

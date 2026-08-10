@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { brand, siteUrl } from "@/config/brand";
+import { AuthProvider } from "@/lib/auth-context";
 
 const title = `${brand.productName} — ${brand.worldName}`;
 const description = `${brand.tagline} ${brand.worldSubtitle}.`;
@@ -61,7 +62,9 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased">
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

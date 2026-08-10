@@ -11,32 +11,50 @@ export function normalizeMode(raw: string | null | undefined): Mode {
   return raw === "teacher" ? "teacher" : "family";
 }
 
+export type NavIcon =
+  | "home"
+  | "classroom"
+  | "map"
+  | "passport"
+  | "award"
+  | "cooking"
+  | "journal"
+  | "language"
+  | "resources"
+  | "lesson-plan"
+  | "message"
+  | "photos"
+  | "blessings"
+  | "celebrations"
+  | "backpack";
+
 export type NavItem = {
   href: string;
   label: string;
-  emoji: string;
+  emoji?: string;
+  icon?: NavIcon;
 };
 
 // The Family Portal — the warm adventure world.
 export const familyNav: NavItem[] = [
-  { href: "/family", label: "Home Base", emoji: "🏠" },
-  { href: "/classroom", label: "Live Classroom", emoji: "🎥" },
-  { href: "/blessings", label: "Morning Blessings", emoji: "☀️" },
-  { href: "/lessons", label: "Adventure Map", emoji: "🗺️" },
-  { href: "/passport", label: "Passport", emoji: "🛂" },
-  { href: "/awards", label: "Badges", emoji: "🏅" },
-  { href: "/celebrations", label: "Celebrations", emoji: "🎉" },
-  { href: "/backpack", label: "Adventure Tree", emoji: "🌳" },
-  { href: "/cooking", label: "Cooking Academy", emoji: "🧭" },
-  { href: "/cookbook", label: "Family Cookbook", emoji: "📖" },
-  { href: "/journal", label: "Family Journal", emoji: "📚" },
-  { href: "/languages", label: "Languages", emoji: "💬" },
-  { href: "/resources", label: "Resources", emoji: "🎬" },
+  { href: "/family", label: "Home Base", icon: "home" },
+  { href: "/classroom", label: "Live Classroom", icon: "classroom" },
+  { href: "/blessings", label: "Morning Blessings", emoji: "☀️", icon: "blessings" },
+  { href: "/lessons", label: "Adventure Map", icon: "map" },
+  { href: "/passport", label: "Passport", icon: "passport" },
+  { href: "/awards", label: "Badges", icon: "award" },
+  { href: "/celebrations", label: "Celebrations", emoji: "🎉", icon: "celebrations" },
+  { href: "/backpack", label: "Adventure Tree", emoji: "🌳", icon: "backpack" },
+  { href: "/cooking", label: "Cooking Academy", icon: "cooking" },
+  { href: "/cookbook", label: "Family Cookbook", icon: "cooking" },
+  { href: "/journal", label: "Family Journal", icon: "journal" },
+  { href: "/languages", label: "Languages", icon: "language" },
+  { href: "/resources", label: "Resources", icon: "resources" },
 ];
 
 // Teacher Portal — Sharon's studio (shown as its own section).
 export const teacherNav: NavItem[] = [
-  { href: "/teacher", label: "Lesson Plans", emoji: "📋" },
-  { href: "/teacher/whatsapp", label: "WhatsApp Helper", emoji: "📱" },
-  { href: "/photos", label: "Photo Studio", emoji: "🖼️" },
+  { href: "/teacher", label: "Lesson Plans", icon: "lesson-plan" },
+  { href: "/teacher/whatsapp", label: "WhatsApp Helper", icon: "message" },
+  { href: "/photos", label: "Photo Studio", icon: "photos" },
 ];

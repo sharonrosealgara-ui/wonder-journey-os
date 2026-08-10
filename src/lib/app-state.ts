@@ -113,3 +113,26 @@ export function getTomorrowsPrayerLeader(date = new Date()): string {
   t.setDate(t.getDate() + 1);
   return getTodaysPrayerLeader(t);
 }
+
+export type LessonDisplayStatus = "completed" | "available" | "upcoming";
+
+export function getLessonDisplayStatus(
+  lessonId: string,
+  lessonDate: string,
+  completions: LessonCompletion[],
+  activeStudentId: string | null
+): LessonDisplayStatus {
+  const isCompleted = completions.some(
+    (c) => c.lessonId === lessonId && (!activeStudentId || c.studentId === activeStudentId)
+  );
+
+  if (isCompleted) {
+    return "completed";
+  }
+
+  if (lessonDate > todayISO()) {
+    return "upcoming";
+  }
+
+  return "available";
+}

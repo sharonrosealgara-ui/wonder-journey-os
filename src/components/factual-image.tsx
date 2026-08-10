@@ -45,10 +45,22 @@ interface FactualImageProps {
 
 export function FactualImage({ media, className = "", fill = false, priority = false }: FactualImageProps) {
   if (media.status === "pending" || media.status === "rejected") {
+    // Premium neutral geometric fallback, NO fake/placeholder photos.
     return (
-      <div className={`relative overflow-hidden rounded-xl bg-sand/50 flex items-center justify-center ${className}`}>
+      <div className={`relative overflow-hidden rounded-xl bg-sand-deep flex items-center justify-center ${className}`}>
         <div className={fill ? "absolute inset-0" : "relative w-full aspect-[4/3] flex items-center justify-center"}>
-          <span className="text-ink-soft text-sm font-medium">Image not available</span>
+          {/* Subtle map/vector motif background */}
+          <div className="absolute inset-0 opacity-20 pointer-events-none" 
+               style={{ 
+                 backgroundImage: "radial-gradient(circle at 2px 2px, var(--color-ink) 1px, transparent 0)", 
+                 backgroundSize: "24px 24px" 
+               }} />
+          <div className="absolute inset-0 opacity-10 pointer-events-none bg-gradient-to-tr from-ocean-deep to-transparent" />
+          <div className="relative flex flex-col items-center justify-center gap-2">
+            <div className="w-10 h-10 rounded-full border border-ink/10 flex items-center justify-center bg-paper/50 backdrop-blur-sm shadow-sm">
+              <span className="w-4 h-4 rounded-full bg-ink-soft/40" />
+            </div>
+          </div>
         </div>
       </div>
     );

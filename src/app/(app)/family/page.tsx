@@ -1,12 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, ReactNode } from "react";
 import { parentNames } from "@/config/family";
 import { celebrations, daysUntil, type Celebration } from "@/config/celebrations";
 import { getTodaysLesson, type Lesson } from "@/config/lessons";
 import { useProgress } from "@/lib/progress";
-import { SmartPhoto } from "@/components/smart-photo";
+import { Map, Star, BookHeart, Medal, MoveRight } from "lucide-react";
 
 // 🏠 HOME BASE — the family's dashboard landing.
 export default function HomeBase() {
@@ -22,42 +22,39 @@ export default function HomeBase() {
   const familyGreeting = `${parentNames.join(" & ")} Family`;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* ── Hero ─────────────────────────────────────────────── */}
-      <section className="wj-card relative overflow-hidden">
-        <div className="grid gap-0 md:grid-cols-[1.15fr_1fr]">
+      <section className="wj-card relative overflow-hidden bg-sand-deep border border-sand">
+        <div className="grid gap-0 md:grid-cols-[1.2fr_1fr]">
           {/* left: greeting */}
-          <div className="p-6 sm:p-8">
-            <h1 className="wj-outline font-display text-4xl leading-none sm:text-5xl">
-              <span className="mr-1 text-2xl text-mango-deep" style={{ WebkitTextStroke: "0" }}>✦</span>
+          <div className="relative z-10 p-8 sm:p-10 flex flex-col justify-center">
+            <h1 className="font-display text-4xl sm:text-5xl tracking-tight text-ink">
               Kumusta,
             </h1>
-            <h1 className="wj-outline mt-1 font-display text-3xl leading-tight text-ocean-deep sm:text-4xl">
-              {familyGreeting}! 👋
+            <h1 className="font-display text-3xl sm:text-4xl text-ocean-deep font-semibold mt-1">
+              {familyGreeting}.
             </h1>
-            <div className="my-4 h-0.5 w-40 bg-gradient-to-r from-mango to-transparent" />
-            <p className="text-lg text-ink">
-              Your backpacks are packed and your passports are ready —{" "}
-              <b className="text-ocean-deep">World 1: the Philippines</b> 🇵🇭 is calling!
+            <div className="my-6 h-px w-32 bg-gradient-to-r from-ocean/50 to-transparent" />
+            <p className="text-lg text-ink/80 leading-relaxed max-w-lg">
+              Your backpacks are packed and passports ready.{" "}
+              <b className="text-ocean-deep font-semibold">World 1: The Philippines</b> awaits!
             </p>
-            <p className="font-hand mt-2 text-lg text-ink-soft">
-              Together we&apos;ll wander breathtaking islands, cook delicious dishes, learn
-              beautiful new words, and write another page in our family&apos;s story — one
-              adventure at a time.
+            <p className="mt-3 text-base text-ink-soft leading-relaxed max-w-lg">
+              Discover breathtaking islands, cook traditional dishes, learn beautiful words, and write another chapter in our family story.
             </p>
-            <div className="mt-5 flex flex-wrap gap-3">
+            <div className="mt-8 flex flex-wrap gap-4">
               {lesson && (
-                <Link href={`/adventure/${lesson.id}`} className="wj-btn text-lg">
-                  🌴 Begin Today&apos;s Adventure
+                <Link href={`/adventure/${lesson.id}`} className="wj-btn shadow-sm">
+                  Begin Today&apos;s Adventure
                 </Link>
               )}
-              <Link href="/lessons" className="wj-btn wj-btn-ghost text-lg">
-                🧭 Explore the Adventure Map
+              <Link href="/lessons" className="wj-btn wj-btn-ghost shadow-sm bg-white/50">
+                Explore the Adventure Map
               </Link>
             </div>
           </div>
 
-          {/* right: CSS tropical scene (drop a real image here later) */}
+          {/* right: Premium Geometric Scene */}
           <HeroScene />
         </div>
       </section>
@@ -65,71 +62,69 @@ export default function HomeBase() {
       {/* ── Stat cards ───────────────────────────────────────── */}
       <section className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         <StatCard
-          emoji="🗺️"
+          icon={<Map className="w-5 h-5 text-palm-deep" />}
           label="Places Explored"
           value={`${p.placesExplored} / ${p.placesTotal}`}
-          note="Let's discover more amazing places!"
-          color="var(--color-palm-deep)"
+          note="Discover more places"
         />
         <StatCard
-          emoji="⭐"
+          icon={<Star className="w-5 h-5 text-mango-deep" />}
           label="Explorer Points"
           value={`${p.points}`}
-          note="Keep learning, keep growing!"
-          color="var(--color-mango-deep)"
+          note="Keep growing"
         />
         <StatCard
-          emoji="🛂"
+          icon={<BookHeart className="w-5 h-5 text-ocean-deep" />}
           label="Passport Stamps"
           value={`${p.stamps}`}
-          note="Collect stamps from every journey!"
-          color="var(--color-ocean-deep)"
+          note="Collect stamps"
         />
         <StatCard
-          emoji="🏅"
-          label="Adventure Achievements"
+          icon={<Medal className="w-5 h-5 text-ube-deep" />}
+          label="Achievements"
           value={`${p.badgesEarned} / ${p.badgesTotal}`}
-          note="Earn badges and celebrate together!"
-          color="var(--color-ube-deep)"
+          note="Earn badges together"
         />
       </section>
 
       {/* ── Today's Adventure + Upcoming Celebration ─────────── */}
-      <section className="grid gap-4 lg:grid-cols-[1.6fr_1fr]">
+      <section className="grid gap-6 lg:grid-cols-[1.6fr_1fr]">
         {lesson && (
-          <div className="wj-card overflow-hidden">
-            <div className="flex items-center gap-2 bg-gradient-to-r from-ocean/15 to-mango/15 px-6 py-3">
-              <span className="text-2xl">🌴</span>
-              <h2 className="font-display text-xl">Today&apos;s Adventure</h2>
-              <span className="font-hand text-ink-soft">Your journey continues here...</span>
-            </div>
-            <div className="flex flex-wrap items-center justify-between gap-4 p-6">
-              <div>
-                <span className="wj-chip">World 1 · {lesson.category}</span>
-                <h3 className="mt-2 font-display text-2xl text-ocean-deep">
-                  {lesson.emoji} {lesson.title}
-                </h3>
-                <p className="font-hand text-lg text-ink-soft">{lesson.subtitle}</p>
+          <div className="wj-card overflow-hidden flex flex-col border border-sand">
+            <div className="flex items-center justify-between bg-sand-deep/50 px-6 py-4 border-b border-sand/50">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-ocean animate-pulse" />
+                <h2 className="font-display font-semibold text-lg text-ink tracking-wide">Today&apos;s Adventure</h2>
               </div>
-              <Link href={`/adventure/${lesson.id}`} className="wj-btn">
-                Continue Adventure ›
+              <span className="text-xs font-semibold uppercase tracking-wider text-ink-soft">World 1 · {lesson.category}</span>
+            </div>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 p-6 flex-1 bg-white">
+              <div>
+                <h3 className="font-display text-2xl text-ocean-deep font-bold flex items-center gap-2">
+                  <span aria-hidden className="text-3xl">{lesson.emoji}</span>
+                  {lesson.title}
+                </h3>
+                <p className="mt-2 text-ink-soft leading-relaxed max-w-md">{lesson.subtitle}</p>
+              </div>
+              <Link href={`/adventure/${lesson.id}`} className="wj-btn shrink-0 w-full sm:w-auto shadow-sm">
+                Continue <MoveRight className="w-4 h-4 ml-1" />
               </Link>
             </div>
           </div>
         )}
 
         {nextCeleb && (
-          <Link href="/celebrations" className="wj-card wj-card-hover flex flex-col justify-center p-6 text-center">
-            <div className="text-sm font-bold uppercase tracking-wide text-ink-soft">
-              🎉 Upcoming Celebration
+          <Link href="/celebrations" className="wj-card wj-card-hover flex flex-col justify-center p-6 text-center border border-sand bg-gradient-to-b from-white to-sand-deep/20">
+            <div className="text-xs font-bold uppercase tracking-widest text-ink-soft/70 mb-4">
+              Upcoming Celebration
             </div>
-            <div className="mt-2 text-4xl">{nextCeleb.emoji}</div>
-            <div className="mt-1 font-display text-xl text-hibiscus-deep">
+            <div className="text-4xl mb-3">{nextCeleb.emoji}</div>
+            <div className="font-display text-xl text-hibiscus-deep font-bold">
               {nextCeleb.type === "birthday" ? `${nextCeleb.name}'s Birthday` : nextCeleb.name}
             </div>
-            <div className="font-hand text-lg text-ink-soft">
+            <div className="mt-2 text-sm font-medium text-ink-soft">
               {daysUntil(nextCeleb) === 0
-                ? "Today! 🎊"
+                ? "Today!"
                 : `in ${daysUntil(nextCeleb)} day${daysUntil(nextCeleb) === 1 ? "" : "s"}`}
             </div>
           </Link>
@@ -141,42 +136,58 @@ export default function HomeBase() {
 
 function HeroScene() {
   return (
-    <div className="relative min-h-[220px] overflow-hidden md:min-h-full">
-      <SmartPhoto 
-        mediaId="philippines-hero"
-        alt="Philippine landscape"
-        emoji="🇵🇭"
-        className="absolute inset-0 h-full w-full"
+    <div className="relative min-h-[220px] overflow-hidden md:min-h-full bg-sand-deep/40 hidden md:block">
+      {/* Topographic map lines motif */}
+      <div 
+        className="absolute inset-0 opacity-[0.03]"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 50 Q 25 25 50 50 T 100 50' stroke='%23000' fill='none' stroke-width='1'/%3E%3Cpath d='M0 70 Q 25 45 50 70 T 100 70' stroke='%23000' fill='none' stroke-width='1'/%3E%3Cpath d='M0 30 Q 25 5 50 30 T 100 30' stroke='%23000' fill='none' stroke-width='1'/%3E%3C/svg%3E")`,
+          backgroundSize: "150px 150px"
+        }}
       />
-      {/* soft edge blend into the card */}
-      <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-paper to-transparent" />
+      
+      {/* Restrained structural layers to provide depth without WebGL or photos */}
+      <div className="absolute top-1/4 right-1/4 w-64 h-64 rounded-full bg-ocean/5 mix-blend-multiply blur-3xl" />
+      <div className="absolute bottom-1/4 right-1/3 w-48 h-48 rounded-full bg-mango/5 mix-blend-multiply blur-2xl" />
+      
+      <div className="absolute inset-y-0 right-0 w-full max-w-xs flex items-center justify-center opacity-80">
+        <div className="w-full h-[120%] border-l border-ink/5 -rotate-12 translate-x-12" />
+        <div className="w-full h-[120%] border-l border-ink/5 -rotate-12 translate-x-6" />
+      </div>
+
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 border border-ink/10 rounded-full flex items-center justify-center shadow-sm bg-white/30 backdrop-blur-[2px]">
+        <div className="w-32 h-32 border border-ink/5 rounded-full flex items-center justify-center bg-white/40">
+           <span className="text-4xl opacity-90 drop-shadow-sm">🇵🇭</span>
+        </div>
+      </div>
+
+      {/* soft edge blend into the card text area */}
+      <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-sand-deep to-transparent" />
     </div>
   );
 }
 
 function StatCard({
-  emoji,
+  icon,
   label,
   value,
   note,
-  color,
 }: {
-  emoji: string;
+  icon: ReactNode;
   label: string;
   value: string;
   note: string;
-  color: string;
 }) {
   return (
-    <div className="wj-card p-5">
-      <div className="text-xs font-bold uppercase tracking-wide text-ink-soft">{label}</div>
-      <div className="mt-1 flex items-center justify-between gap-2">
-        <div className="font-display text-3xl" style={{ color }}>
-          {value}
-        </div>
-        <span className="text-3xl">{emoji}</span>
+    <div className="wj-card p-5 border border-sand bg-white/80">
+      <div className="flex items-center gap-2 text-ink-soft">
+        {icon}
+        <div className="text-xs font-bold uppercase tracking-widest">{label}</div>
       </div>
-      <p className="font-hand mt-1 text-sm text-ink-soft">{note}</p>
+      <div className="mt-3 font-display text-3xl font-semibold text-ink">
+        {value}
+      </div>
+      <p className="mt-1 text-xs text-ink-soft/80 font-medium">{note}</p>
     </div>
   );
 }

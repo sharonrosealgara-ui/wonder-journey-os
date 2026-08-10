@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, ReactNode } from "react";
 import { brand } from "@/config/brand";
-import { familyNav, teacherNav } from "@/config/navigation";
+import { familyNav, teacherNav, type NavItem, type NavIcon } from "@/config/navigation";
 import { familyName, teacherName } from "@/config/family";
 import { useProgress } from "@/lib/progress";
 import { initMute, setMuted, sfx } from "@/lib/sound";
@@ -14,6 +14,36 @@ import { BirthdayPopup } from "@/components/birthday-popup";
 import { CameraDock } from "@/components/camera-dock";
 import { TropicalDecor } from "@/components/tropical-decor";
 import { CallProvider } from "@/lib/call-context";
+import {
+  Home, Presentation, Map, BookHeart, BookOpen, Medal,
+  PartyPopper, Trees, ChefHat, BookA, Languages, Film,
+  LayoutDashboard, MessageCircle, Image as ImageIcon
+} from "lucide-react";
+
+function renderNavIcon(icon?: NavIcon, emoji?: string) {
+  if (emoji) return <span className="text-lg w-5 text-center leading-none">{emoji}</span>;
+  if (!icon) return <span className="text-lg w-5 text-center leading-none">·</span>;
+
+  const props = { className: "w-5 h-5 opacity-90" };
+  switch (icon) {
+    case "home": return <Home {...props} />;
+    case "classroom": return <Presentation {...props} />;
+    case "map": return <Map {...props} />;
+    case "passport": return <BookHeart {...props} />;
+    case "award": return <Medal {...props} />;
+    case "celebrations": return <PartyPopper {...props} />;
+    case "backpack": return <Trees {...props} />;
+    case "cooking": return <ChefHat {...props} />;
+    case "journal": return <BookA {...props} />;
+    case "language": return <Languages {...props} />;
+    case "resources": return <Film {...props} />;
+    case "lesson-plan": return <LayoutDashboard {...props} />;
+    case "message": return <MessageCircle {...props} />;
+    case "photos": return <ImageIcon {...props} />;
+    case "blessings": return <span className="text-lg w-5 text-center leading-none">☀️</span>;
+    default: return null;
+  }
+}
 
 // 🌴 Home Base layout — left sidebar + XP top bar, like a family
 // learning clubhouse. The Adventure Theater portals over all of this.
@@ -216,7 +246,7 @@ function SidebarLink({
   item,
   active,
 }: {
-  item: { href: string; label: string; emoji: string };
+  item: NavItem;
   active: boolean;
 }) {
   return (
@@ -227,7 +257,9 @@ function SidebarLink({
         active ? "bg-white text-ocean-deep shadow" : "text-white/85 hover:bg-white/10"
       }`}
     >
-      <span className="text-lg">{item.emoji}</span>
+      <div className="flex h-6 w-6 items-center justify-center">
+        {renderNavIcon(item.icon, item.emoji)}
+      </div>
       {item.label}
     </Link>
   );
@@ -266,45 +298,35 @@ function TopBar({
   }
 
   return (
-    <header className="sticky top-0 z-20 flex items-center gap-3 border-b-2 border-sand-deep bg-paper/85 px-4 py-2.5 backdrop-blur sm:px-6">
+    <header className="sticky top-0 z-20 flex items-center gap-3 border-b border-sand-deep bg-paper/90 px-4 py-2.5 backdrop-blur-md sm:px-6">
       <button className="wj-chip lg:hidden" onClick={onMenu} aria-label="Open menu">
         ☰
       </button>
 
-      {/* Explorer level + XP — a 3D-inset track with a star riding the
-          progress edge, so growth feels physical */}
+      {/* Explorer level + XP — A professional, solid progress bar without arcade artifacts */}
       <div className="hidden min-w-0 items-center gap-3 sm:flex">
-        <span className="font-display text-sm text-ink">Explorer Level {p.level}</span>
-        {/* Zero-lag rule: the fill animates with transform (scaleX), never
-            width/left — GPU-cheap even on an old iPad */}
-        <div className="relative h-3.5 w-28 overflow-hidden rounded-full bg-sand-deep shadow-[inset_0_2px_4px_rgba(44,27,24,0.28)] md:w-40">
+        <span className="font-display text-sm font-semibold text-ink">Level {p.level}</span>
+        <div className="relative h-2 w-28 overflow-hidden rounded-full bg-sand-deep/60 md:w-40">
           <div
-            className="absolute inset-0 origin-left rounded-full bg-gradient-to-r from-mango to-sunset shadow-[inset_0_-2px_3px_rgba(44,27,24,0.18)] transition-transform duration-700 ease-out"
+            className="absolute inset-0 origin-left rounded-full bg-ocean transition-transform duration-700 ease-out"
             style={{ transform: `scaleX(${pct / 100})` }}
           />
-          <span
-            className="wj-sticker absolute top-1/2 h-6 w-6 -translate-y-1/2 text-xs"
-            style={{ left: `calc(${Math.min(Math.max(pct, 5), 95)}% - 12px)` }}
-            aria-hidden
-          >
-            ⭐
-          </span>
         </div>
-        <span className="text-xs font-bold text-ink-soft">
+        <span className="text-xs font-semibold text-ink-soft">
           {p.xpInLevel} / {p.xpForLevel} XP
         </span>
       </div>
 
       <div className="flex flex-1 items-center justify-end gap-2">
-        <Counter emoji="⭐" value={p.points} label="Points" />
-        <Counter emoji="🛂" value={p.stamps} label="Stamps" />
-        <Counter emoji="🏅" value={p.badgesEarned} label="Badges" />
+        <Counter icon={<Map className="w-3.5 h-3.5 text-mango-deep" />} value={p.stamps} label="Stamps" />
+        <Counter icon={<Medal className="w-3.5 h-3.5 text-ube" />} value={p.badgesEarned} label="Badges" />
 
         {/* the teacher's device wears a quiet badge — the role comes from
             her code, so there is nothing to "exit" anymore */}
         {teacherMode && (
-          <span className="wj-chip !bg-hibiscus/15 !text-hibiscus-deep" title="This device holds the teacher code">
-            🍎 <span className="hidden sm:inline">Teacher</span>
+          <span className="wj-chip !bg-hibiscus/10 !text-hibiscus-deep !font-semibold !text-xs border border-hibiscus/20" title="This device holds the teacher code">
+            <span className="hidden sm:inline">Teacher Mode</span>
+            <span className="sm:hidden">Teacher</span>
           </span>
         )}
         <button
@@ -331,11 +353,11 @@ function TopBar({
   );
 }
 
-function Counter({ emoji, value, label }: { emoji: string; value: number; label: string }) {
+function Counter({ icon, value, label }: { icon: ReactNode; value: number; label: string }) {
   return (
-    <span className="wj-chip" title={label}>
-      {emoji} <b className="text-ink">{value}</b>
-      <span className="hidden text-ink-soft md:inline"> {label}</span>
+    <span className="wj-chip flex items-center gap-1.5" title={label}>
+      {icon} <b className="text-ink font-semibold">{value}</b>
+      <span className="hidden text-ink-soft text-xs md:inline"> {label}</span>
     </span>
   );
 }

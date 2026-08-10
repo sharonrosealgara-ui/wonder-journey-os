@@ -241,63 +241,77 @@ function Lobby({ name, setName, lesson, joining, joinError, onJoin }: {
   }
 
   return (
-    <div className="mx-auto max-w-4xl space-y-6">
-      <div className="text-center">
-        <div className="mb-2 text-4xl">🎥🌴</div>
-        <h1 className="wj-outline font-display text-3xl sm:text-4xl">Live Adventure Classroom</h1>
-        <p className="font-hand mt-1 text-lg text-ink-soft">Mabuhay, {familyName}! Let&apos;s get you ready. 💛</p>
+    <div className="mx-auto max-w-5xl space-y-8 relative z-10 pt-4">
+      {/* Subtle map background for the Lobby */}
+      <div className="fixed inset-0 pointer-events-none opacity-[0.03] z-[-1]"
+           style={{
+             backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 50 Q 25 25 50 50 T 100 50' stroke='%23004060' fill='none' stroke-width='2'/%3E%3Cpath d='M0 70 Q 25 45 50 70 T 100 70' stroke='%23004060' fill='none' stroke-width='2'/%3E%3Cpath d='M0 30 Q 25 5 50 30 T 100 30' stroke='%23004060' fill='none' stroke-width='2'/%3E%3C/svg%3E")`,
+             backgroundSize: "200px 200px"
+           }}
+      />
+      <div className="fixed top-0 left-0 w-full h-[50vh] bg-gradient-to-b from-ocean/10 to-transparent pointer-events-none z-[-1]" />
+
+      <div className="text-center drop-shadow-sm">
+        <div className="mb-4 text-5xl">🎥🌴</div>
+        <h1 className="font-display text-4xl sm:text-5xl font-extrabold text-ocean-deep tracking-tight drop-shadow-sm">Live Adventure Classroom</h1>
+        <p className="font-medium mt-3 text-xl text-ink-soft">Mabuhay, {familyName}! Let&apos;s get you ready. 💛</p>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-[1.3fr_1fr]">
-        <div className="wj-card overflow-hidden p-3">
-          <LocalCameraView streamRef={cam.streamRef} camOn={cam.camOn} tick={cam.tick} className="aspect-video w-full" label={name} />
+      <div className="grid gap-8 md:grid-cols-[1.4fr_1fr]">
+        <div className="wj-card overflow-hidden p-4 border-2 border-white/60 bg-white/80 shadow-lg backdrop-blur-sm">
+          <div className="rounded-2xl border border-sand/50 shadow-inner bg-ink/5 p-1">
+            <LocalCameraView streamRef={cam.streamRef} camOn={cam.camOn} tick={cam.tick} className="aspect-video w-full shadow-sm" label={name} />
+          </div>
           {cam.error && (
-            <div className="mt-3 rounded-2xl bg-hibiscus/10 p-3 text-sm text-hibiscus-deep">
+            <div className="mt-4 rounded-2xl bg-hibiscus/10 border border-hibiscus/20 p-4 text-sm font-semibold text-hibiscus-deep shadow-sm">
               {cam.error}
-              <button className="wj-btn wj-btn-ghost mt-2 text-sm" onClick={() => void cam.start()}>Retry</button>
+              <button className="wj-btn wj-btn-ghost mt-3 text-sm border border-hibiscus/20 bg-white/50 hover:bg-white" onClick={() => void cam.start()}>Retry</button>
             </div>
           )}
-          <div className="mt-3 flex items-center justify-center gap-3">
-            <button className={`wj-btn ${cam.camOn ? "wj-btn-ocean" : "wj-btn-ghost"} !px-4`} onClick={cam.toggleCam}>
+          <div className="mt-4 flex items-center justify-center gap-4">
+            <button className={`wj-btn ${cam.camOn ? "wj-btn-ocean shadow-md hover:-translate-y-0.5" : "wj-btn-ghost border border-sand bg-white/50 hover:bg-white"} !px-6 py-2.5 transition-all`} onClick={cam.toggleCam}>
               {cam.camOn ? "📷 Camera On" : "📷 Camera Off"}
             </button>
-            <button className={`wj-btn ${cam.micOn ? "wj-btn-ocean" : "wj-btn-ghost"} !px-4`} onClick={cam.toggleMic}>
+            <button className={`wj-btn ${cam.micOn ? "wj-btn-ocean shadow-md hover:-translate-y-0.5" : "wj-btn-ghost border border-sand bg-white/50 hover:bg-white"} !px-6 py-2.5 transition-all`} onClick={cam.toggleMic}>
               {cam.micOn ? "🎤 Mic On" : "🔇 Mic Off"}
             </button>
           </div>
-          <div className="mt-3">
-            <p className="text-xs font-bold text-ink-soft">Microphone</p>
-            <div className="mt-1 h-2.5 overflow-hidden rounded-full bg-sand-deep">
-              <div className="h-full rounded-full bg-gradient-to-r from-palm to-mango transition-[width] duration-100" style={{ width: `${cam.micOn ? level : 0}%` }} />
+          <div className="mt-5 px-2">
+            <p className="text-xs font-bold text-ink-soft/70 uppercase tracking-widest mb-1.5">Microphone Level</p>
+            <div className="h-2 overflow-hidden rounded-full bg-sand-deep/50 shadow-inner">
+              <div className="h-full rounded-full bg-gradient-to-r from-palm via-mango to-hibiscus transition-[width] duration-100" style={{ width: `${cam.micOn ? level : 0}%` }} />
             </div>
           </div>
         </div>
 
-        <div className="wj-card space-y-4 p-5">
+        <div className="wj-card space-y-5 p-6 border-2 border-white/60 bg-white/80 shadow-lg backdrop-blur-sm">
           <div>
-            <label className="text-sm font-bold text-ink-soft">Your name in class</label>
-            <input className="wj-input mt-1" value={name} onChange={(e) => setName(e.target.value)} />
+            <label className="text-xs font-bold text-ocean-deep uppercase tracking-widest mb-1 block">Your name in class</label>
+            <input className="wj-input mt-1 shadow-inner border-sand focus:border-mango transition-colors" value={name} onChange={(e) => setName(e.target.value)} />
           </div>
           <div>
-            <label className="text-sm font-bold text-ink-soft">📷 Camera</label>
-            <select className="wj-input mt-1" value={cam.camId} onChange={(e) => cam.setCamId(e.target.value)}>
+            <label className="text-xs font-bold text-ocean-deep uppercase tracking-widest mb-1 block">📷 Camera</label>
+            <select className="wj-input mt-1 shadow-inner border-sand focus:border-mango transition-colors" value={cam.camId} onChange={(e) => cam.setCamId(e.target.value)}>
               {cam.cams.length === 0 && <option>Default camera</option>}
               {cam.cams.map((c) => (<option key={c.id} value={c.id}>{c.label}</option>))}
             </select>
           </div>
           <div>
-            <label className="text-sm font-bold text-ink-soft">🎤 Microphone</label>
-            <select className="wj-input mt-1" value={cam.micId} onChange={(e) => cam.setMicId(e.target.value)}>
+            <label className="text-xs font-bold text-ocean-deep uppercase tracking-widest mb-1 block">🎤 Microphone</label>
+            <select className="wj-input mt-1 shadow-inner border-sand focus:border-mango transition-colors" value={cam.micId} onChange={(e) => cam.setMicId(e.target.value)}>
               {cam.mics.length === 0 && <option>Default microphone</option>}
               {cam.mics.map((m) => (<option key={m.id} value={m.id}>{m.label}</option>))}
             </select>
           </div>
-          <div className="rounded-2xl bg-sand p-3 text-sm text-ink-soft">
-            <p className="font-bold">Today&apos;s Adventure</p>
-            <p className="font-hand text-base">{lesson ? `${lesson.emoji} ${lesson.title}` : "Loading..."}</p>
+          <div className="rounded-2xl bg-gradient-to-br from-sand to-sand-deep/40 p-4 border border-white shadow-sm mt-6">
+            <p className="font-bold text-xs uppercase tracking-widest text-ink-soft mb-1">Today&apos;s Adventure</p>
+            <p className="font-display font-bold text-lg text-ink drop-shadow-sm flex items-center gap-2">
+              <span className="text-2xl">{lesson ? lesson.emoji : "🌴"}</span> 
+              {lesson ? lesson.title : "Loading..."}
+            </p>
           </div>
-          {joinError && <p className="rounded-2xl bg-hibiscus/10 p-3 text-sm font-bold text-hibiscus-deep">{joinError}</p>}
-          <button className="wj-btn w-full text-lg" onClick={handleJoin} disabled={joining}>
+          {joinError && <p className="rounded-2xl bg-hibiscus/10 border border-hibiscus/20 p-4 text-sm font-semibold text-hibiscus-deep shadow-sm">{joinError}</p>}
+          <button className="wj-btn wj-btn-ocean w-full text-lg py-4 mt-6 shadow-md hover:-translate-y-0.5 transition-all" onClick={handleJoin} disabled={joining}>
             {joining ? "Connecting… 🌐" : "🚀 Join the Adventure"}
           </button>
         </div>
@@ -356,20 +370,32 @@ function ConnectedRoom({ lesson, onLeave }: {
   const enlargedP = enlarged ? everyone.find((p) => p.identity === enlarged) ?? null : null;
 
   return (
-    <div className={`space-y-3 ${tvMode ? "tv-mode scale-[1.02] origin-top contrast-125 transition-transform" : "transition-transform"}`}>
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <span className="wj-chip">{stateChip} · {everyone.length} in class</span>
+    <div className={`space-y-4 relative z-10 ${tvMode ? "tv-mode scale-[1.02] origin-top contrast-125 transition-transform" : "transition-transform"}`}>
+      {/* Layered learning room background */}
+      <div className="fixed inset-0 pointer-events-none z-[-1]">
+        <div className="absolute inset-0 opacity-[0.02]"
+             style={{
+               backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 50 Q 25 25 50 50 T 100 50' stroke='%23004060' fill='none' stroke-width='2'/%3E%3Cpath d='M0 70 Q 25 45 50 70 T 100 70' stroke='%23004060' fill='none' stroke-width='2'/%3E%3Cpath d='M0 30 Q 25 5 50 30 T 100 30' stroke='%23004060' fill='none' stroke-width='2'/%3E%3C/svg%3E")`,
+               backgroundSize: "150px 150px"
+             }}
+        />
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-mango/5 blur-[100px] rounded-full" />
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-ocean/5 blur-[100px] rounded-full" />
+      </div>
+
+      <div className="flex flex-wrap items-center justify-between gap-3 bg-white/60 p-2.5 rounded-2xl border border-white/60 shadow-sm backdrop-blur-md">
+        <span className="wj-chip !bg-white border border-sand shadow-sm">{stateChip} · {everyone.length} in class</span>
         <div className="flex items-center gap-2">
           {isTeacher && (
-            <button className={`wj-chip hover:bg-mango/20 ${showDiagnostics ? "!bg-mango" : ""}`} onClick={() => setShowDiagnostics((d) => !d)} title="View connection diagnostics">
+            <button className={`wj-chip hover:bg-mango/20 ${showDiagnostics ? "!bg-mango" : ""} !bg-white border border-sand shadow-sm`} onClick={() => setShowDiagnostics((d) => !d)} title="View connection diagnostics">
               📡 Diagnostics
             </button>
           )}
-          <span className="wj-chip">🎥 {lesson ? `${lesson.emoji} ${lesson.title}` : "Adventure"}</span>
-          <button className="wj-chip hover:bg-mango/20" onClick={() => setTvMode((v) => !v)} title="Toggle TV Mode (bigger text, high contrast)">
+          <span className="wj-chip !bg-white border border-sand shadow-sm font-bold text-ocean-deep">🎥 {lesson ? `${lesson.emoji} ${lesson.title}` : "Adventure"}</span>
+          <button className="wj-chip hover:bg-mango/20 !bg-white border border-sand shadow-sm" onClick={() => setTvMode((v) => !v)} title="Toggle TV Mode (bigger text, high contrast)">
             {tvMode ? "📺 TV Mode: On" : "📺 TV Mode"}
           </button>
-          <button className="wj-chip hover:bg-mango/20" onClick={() => setCamsVisible((v) => !v)} title={camsVisible ? "Hide video" : "Show video"}>
+          <button className="wj-chip hover:bg-mango/20 !bg-white border border-sand shadow-sm" onClick={() => setCamsVisible((v) => !v)} title={camsVisible ? "Hide video" : "Show video"}>
             {camsVisible ? "👥 Hide video" : "👥 Show video"}
           </button>
         </div>
@@ -378,10 +404,10 @@ function ConnectedRoom({ lesson, onLeave }: {
       {/* Focused teaching room: LESSON STAGE (75%) left · CAMERA RAIL (25%) right.
           Family camera ABOVE teacher camera (Decision 044). On small screens
           the lesson leads and the rail stacks beneath it — family still first. */}
-      <div className={`grid grid-cols-1 gap-3 ${camsVisible ? "lg:grid-cols-[3fr_1fr]" : ""} lg:items-start`}>
+      <div className={`grid grid-cols-1 gap-4 ${camsVisible ? "lg:grid-cols-[3fr_1fr]" : ""} lg:items-start`}>
         {/* stage — lessons open here; the shell around it never unmounts */}
         <div
-          className={`wj-card relative overflow-hidden p-0 ${
+          className={`wj-card relative overflow-hidden p-0 border-2 border-white/80 shadow-lg bg-white/90 backdrop-blur-sm ${
             stageLesson ? "h-[74vh] lg:h-[78vh]" : "flex min-h-[46vh] items-center justify-center lg:h-[78vh]"
           }`}
         >
@@ -408,16 +434,16 @@ function ConnectedRoom({ lesson, onLeave }: {
               onEndCall={onLeave}
             />
           ) : (
-            <div className="flex flex-col items-center gap-4 overflow-y-auto p-8 text-center">
-              <div className="text-6xl">{lesson?.emoji ?? "🌴"}</div>
-              <h2 className="wj-outline font-display text-2xl sm:text-3xl">{lesson?.title ?? "Today's Adventure"}</h2>
-              <p className="font-hand text-lg text-ink-soft">{lesson?.subtitle}</p>
+            <div className="flex flex-col items-center gap-5 overflow-y-auto p-10 text-center max-w-lg">
+              <div className="text-7xl drop-shadow-md hover:scale-110 transition-transform duration-500">{lesson?.emoji ?? "🌴"}</div>
+              <h2 className="font-display font-extrabold text-3xl sm:text-4xl text-ocean-deep drop-shadow-sm leading-tight">{lesson?.title ?? "Today's Adventure"}</h2>
+              <p className="font-medium text-lg text-ink-soft leading-relaxed">{lesson?.subtitle}</p>
               {lesson && (
-                <button className="wj-btn text-lg" onClick={() => setStageLesson(lesson)}>
+                <button className="wj-btn wj-btn-ocean text-lg px-8 py-3 mt-4 shadow-md hover:-translate-y-1 transition-all" onClick={() => setStageLesson(lesson)}>
                   🎬 Open the Adventure
                 </button>
               )}
-              {isTeacher && <p className="text-xs text-ink-soft">The lesson opens right here — cameras stay on. Or share your screen 👇</p>}
+              {isTeacher && <p className="text-xs font-bold text-ink-soft/70 uppercase tracking-widest mt-4">The lesson opens right here — cameras stay on. Or share your screen 👇</p>}
             </div>
           )}
 
@@ -721,30 +747,42 @@ function SoloRoom({ lesson, isGuest = false, onGoLive, onLeave }: {
   }
 
   return (
-    <div className={`space-y-3 ${tvMode ? "tv-mode scale-[1.02] origin-top contrast-125 transition-transform" : "transition-transform"}`}>
-      <div className="wj-card-bubble wj-note flex flex-wrap items-center justify-between gap-2 p-3 text-center">
+    <div className={`space-y-4 relative z-10 ${tvMode ? "tv-mode scale-[1.02] origin-top contrast-125 transition-transform" : "transition-transform"}`}>
+      {/* Layered learning room background */}
+      <div className="fixed inset-0 pointer-events-none z-[-1]">
+        <div className="absolute inset-0 opacity-[0.02]"
+             style={{
+               backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 50 Q 25 25 50 50 T 100 50' stroke='%23004060' fill='none' stroke-width='2'/%3E%3Cpath d='M0 70 Q 25 45 50 70 T 100 70' stroke='%23004060' fill='none' stroke-width='2'/%3E%3Cpath d='M0 30 Q 25 5 50 30 T 100 30' stroke='%23004060' fill='none' stroke-width='2'/%3E%3C/svg%3E")`,
+               backgroundSize: "150px 150px"
+             }}
+        />
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-mango/5 blur-[100px] rounded-full" />
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-ocean/5 blur-[100px] rounded-full" />
+      </div>
+
+      <div className="wj-card-bubble wj-note flex flex-wrap items-center justify-between gap-2 p-3 text-center shadow-sm">
         {isGuest ? (
           // 🛡️ GUEST DEMO — the full classroom experience, connected to
           // NOBODY. A guest camera can never enter a family's real room
           // (the server refuses codeless connections), so families stay
           // private and guests still feel the magic.
-          <p className="font-display text-sm text-white">
+          <p className="font-display text-sm text-white font-bold tracking-wide">
             ✨ Demo classroom — this is how your family&apos;s class will look and feel.
             Love it? Ask Teacher Sharon for your family&apos;s own code! 💛
           </p>
         ) : (
           <>
-            <p className="font-display text-sm text-white">
+            <p className="font-display text-sm text-white font-bold tracking-wide">
               Your camera is on! We couldn&apos;t reach the live room just now. 💛
             </p>
-            <button className="wj-btn !px-4 !py-1.5 text-sm" onClick={onGoLive}>🚀 Try again</button>
+            <button className="wj-btn !px-5 !py-2 text-sm shadow-sm" onClick={onGoLive}>🚀 Try again</button>
           </>
         )}
       </div>
 
       {/* Focused room: lesson stage left · camera rail right, family ABOVE teacher */}
-      <div className="grid grid-cols-1 gap-3 lg:grid-cols-[3fr_1fr] lg:items-start">
-        <div className={`wj-card relative overflow-hidden p-0 ${stageLesson ? "h-[74vh] lg:h-[78vh]" : "flex min-h-[46vh] items-center justify-center lg:h-[78vh]"}`}>
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-[3fr_1fr] lg:items-start">
+        <div className={`wj-card relative overflow-hidden p-0 border-2 border-white/80 shadow-lg bg-white/90 backdrop-blur-sm ${stageLesson ? "h-[74vh] lg:h-[78vh]" : "flex min-h-[46vh] items-center justify-center lg:h-[78vh]"}`}>
           {sharing && (
             <div className="absolute inset-0 z-20 bg-ink">
               <video ref={shareVideoRef} autoPlay playsInline className="h-full w-full object-contain" />
@@ -753,12 +791,12 @@ function SoloRoom({ lesson, isGuest = false, onGoLive, onLeave }: {
           {stageLesson ? (
             <AdventureTheater lesson={stageLesson} embedded onExit={() => setStageLesson(null)} />
           ) : (
-            <div className="flex flex-col items-center gap-4 overflow-y-auto p-8 text-center">
-              <div className="text-6xl">{lesson?.emoji ?? "🌴"}</div>
-              <h2 className="wj-outline font-display text-2xl sm:text-3xl">{lesson?.title ?? "Today's Adventure"}</h2>
-              <p className="font-hand text-lg text-ink-soft">{lesson?.subtitle}</p>
+            <div className="flex flex-col items-center gap-5 overflow-y-auto p-10 text-center max-w-lg">
+              <div className="text-7xl drop-shadow-md hover:scale-110 transition-transform duration-500">{lesson?.emoji ?? "🌴"}</div>
+              <h2 className="font-display font-extrabold text-3xl sm:text-4xl text-ocean-deep drop-shadow-sm leading-tight">{lesson?.title ?? "Today's Adventure"}</h2>
+              <p className="font-medium text-lg text-ink-soft leading-relaxed">{lesson?.subtitle}</p>
               {lesson && (
-                <button className="wj-btn text-lg" onClick={() => setStageLesson(lesson)}>
+                <button className="wj-btn wj-btn-ocean text-lg px-8 py-3 mt-4 shadow-md hover:-translate-y-1 transition-all" onClick={() => setStageLesson(lesson)}>
                   🎬 Open the Adventure
                 </button>
               )}

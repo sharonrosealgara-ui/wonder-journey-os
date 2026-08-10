@@ -8,37 +8,52 @@ export default function LandingPage() {
     <div className="bg-paper min-h-screen">
       
       {/* ── HERO SECTION ── */}
-      <section className="relative overflow-hidden pt-20 pb-32">
+      <section className="relative overflow-hidden pt-24 pb-32">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10 text-center">
-          <h1 className="font-display text-5xl md:text-7xl text-ocean-deep leading-tight max-w-4xl mx-auto">
+          <h1 className="font-display text-5xl md:text-7xl text-ocean-deep leading-tight max-w-4xl mx-auto drop-shadow-sm">
             Custom learning adventures designed around <span className="text-mango-deep">your family.</span>
           </h1>
-          <p className="mt-6 text-xl md:text-2xl text-ink-soft max-w-3xl mx-auto font-hand">
+          <div className="my-8 h-1 w-32 bg-mango rounded-full opacity-80 mx-auto" />
+          <p className="text-xl md:text-2xl text-ink max-w-3xl mx-auto font-medium leading-relaxed">
             Wonder Journey combines personalized lessons, live teaching, interactive activities, family projects, progress tracking, and a private learning platform built around each learner’s needs.
           </p>
-          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="#contact" className="wj-btn text-xl px-8 py-4 w-full sm:w-auto">
+          <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-6">
+            <Link href="#contact" className="wj-btn text-xl px-10 py-5 w-full sm:w-auto shadow-md hover:-translate-y-1 transition-transform">
               Request a Custom Learning Experience
             </Link>
-            <Link href="#features" className="wj-btn wj-btn-ghost text-xl px-8 py-4 w-full sm:w-auto">
+            <Link href="#features" className="wj-btn wj-btn-ghost text-xl px-10 py-5 w-full sm:w-auto border-2 border-ocean/20 bg-white/60 backdrop-blur-sm shadow-sm hover:-translate-y-1 transition-transform hover:bg-white">
               Explore Wonder Journey
             </Link>
           </div>
         </div>
         
-        {/* Soft tropical background blobs */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-tr from-mango/20 to-ocean/20 rounded-full blur-3xl -z-10" />
+        {/* Soft tropical background blobs & motifs */}
+        <div className="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none z-0" 
+             style={{
+               backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 50 Q 25 25 50 50 T 100 50' stroke='%23004060' fill='none' stroke-width='2'/%3E%3Cpath d='M0 70 Q 25 45 50 70 T 100 70' stroke='%23004060' fill='none' stroke-width='2'/%3E%3Cpath d='M0 30 Q 25 5 50 30 T 100 30' stroke='%23004060' fill='none' stroke-width='2'/%3E%3C/svg%3E")`,
+               backgroundSize: "200px 200px"
+             }}
+        />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-gradient-to-tr from-mango/10 via-ocean/10 to-transparent rounded-full blur-[100px] -z-10" />
       </section>
 
       {/* ── PRODUCT PREVIEW / SCREENSHOTS ── */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 pb-24">
-        <div className="rounded-3xl border-4 border-white shadow-xl overflow-hidden bg-white aspect-video relative flex items-center justify-center">
-          {/* We'll use a placeholder for now since we can't generate an actual UI screenshot of this exact app */}
-          <div className="absolute inset-0 bg-gradient-to-br from-[#c9dff2] to-[#f4ead1] opacity-50"></div>
-          <div className="relative text-center p-8">
-            <span className="text-6xl mb-4 block">📸</span>
-            <h3 className="font-display text-3xl text-ocean-deep">Your Private Family Portal</h3>
-            <p className="font-hand text-xl text-ink-soft mt-2">A safe, ad-free environment just for your family.</p>
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 pb-32">
+        <div className="rounded-3xl border-8 border-white/80 shadow-2xl overflow-hidden bg-gradient-to-br from-ocean/5 to-mango/5 aspect-video relative flex items-center justify-center backdrop-blur-md transform hover:scale-[1.01] transition-transform duration-500">
+          <div className="absolute inset-0 bg-white/20 backdrop-blur-sm"></div>
+          
+          {/* Subtle map overlay for depth */}
+          <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none" 
+             style={{
+               backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 20 Q 10 10 20 20 T 40 20' stroke='%23004060' fill='none' stroke-width='1' stroke-dasharray='2,2'/%3E%3C/svg%3E")`,
+               backgroundSize: "80px 80px"
+             }}
+          />
+          
+          <div className="relative text-center p-12 bg-white/80 border-2 border-white rounded-3xl shadow-lg backdrop-blur-md max-w-2xl">
+            <span className="text-7xl mb-6 block drop-shadow-md">🗺️</span>
+            <h3 className="font-display text-4xl text-ocean-deep font-extrabold tracking-tight">Your Private Family Portal</h3>
+            <p className="text-2xl text-ink-soft mt-4 font-medium">A beautifully crafted, ad-free environment just for your family.</p>
           </div>
         </div>
       </section>

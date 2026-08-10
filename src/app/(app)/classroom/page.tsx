@@ -109,6 +109,7 @@ export default function ClassroomPage() {
       joining={joining || call.status === "connecting"}
       joinError={joinError}
       onJoin={join}
+      role={role ?? "family"}
     />
   );
 }
@@ -205,13 +206,14 @@ function LocalCameraView({ streamRef, camOn, tick, label, className = "" }: {
 }
 
 /* ── Pre-join lobby ─────────────────────────────────────────── */
-function Lobby({ name, setName, lesson, joining, joinError, onJoin }: {
+function Lobby({ name, setName, lesson, joining, joinError, onJoin, role }: {
   name: string;
   setName: (s: string) => void;
   lesson: Lesson | null;
   joining: boolean;
   joinError: string | null;
   onJoin: (d: { camId: string; micId: string; camOn: boolean; micOn: boolean }) => void;
+  role: "teacher" | "family";
 }) {
   const cam = useLocalCamera();
   const [level, setLevel] = useState(0);
@@ -249,7 +251,7 @@ function Lobby({ name, setName, lesson, joining, joinError, onJoin }: {
       <div className="text-center">
         <div className="mb-2 text-4xl">🎥🌴</div>
         <h1 className="wj-outline font-display text-3xl sm:text-4xl">Live Adventure Classroom</h1>
-        <p className="font-hand mt-1 text-lg text-ink-soft">Mabuhay, {familyName}! Let's get you ready. 💙</p>
+        <p className="font-hand mt-1 text-lg text-ink-soft">Mabuhay, {role === "teacher" ? teacherName : familyName}! Let's get you ready. 💙</p>
       </div>
 
       <div className="grid gap-6 md:grid-cols-[1.3fr_1fr]">

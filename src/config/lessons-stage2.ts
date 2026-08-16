@@ -10,249 +10,189 @@ export const stage2Lessons: CurriculumLesson[] = [
     "ageRange": "7-12",
     "unit": "Unit 1: The Philippine Archipelago",
     "learningObjectives": [
-      "Understand World Geography & The Philippines.",
-      "Identify key aspects.",
-      "Explain significance."
+      "Locate the Philippines on a world map in relation to the equator and other continents.",
+      "Understand that the Philippines is part of Southeast Asia.",
+      "Define what an archipelago is and how it shapes the country."
     ],
-    "essentialQuestion": "Why is learning about World Geography & The Philippines important for understanding our country?",
-    "factualBackground": "The Philippines has a rich heritage involving World Geography & The Philippines.",
-    "adventureHook": "Welcome to Lesson 1! Have you ever wondered about World Geography & The Philippines? Today we are going to act like detectives and uncover the amazing secrets behind it! Let's dive into an adventure you will never forget.",
+    "essentialQuestion": "If you were to look at Earth from space, how would you describe where the Philippines is located?",
+    "factualBackground": "The Philippines is an archipelago in Southeast Asia, located in the western Pacific Ocean. It consists of 7,641 islands.",
+    "adventureHook": "Imagine you are an astronaut floating high above the Earth. You look down and see oceans, continents, and finally, a beautiful cluster of islands sparkling in the blue water. Today, we are going to zoom in from outer space to find exactly where our home, the Philippines, is on the giant map of the world!",
     "discoveries": [
-      "The Philippines is made up of exactly 7,641 islands.",
-      "It sits on the Pacific Ring of Fire.",
-      "It has a tropical climate with two seasons."
+      {
+        "title": "The Equator",
+        "description": "The Philippines is located just above the equator, giving us our warm, tropical climate."
+      },
+      {
+        "title": "Southeast Asia",
+        "description": "We are part of a region called Southeast Asia, sharing similar climates and cultures with our neighbors."
+      },
+      {
+        "title": "An Archipelago",
+        "description": "Our country is not just one piece of land, but an archipelago made of 7,641 islands!"
+      }
     ],
     "richExplanation": [
       {
-        "heading": "Introduction",
-        "body": "The topic of World Geography & The Philippines is one of the most fascinating aspects of studying the Philippines. Because our country is so diverse and geographically complex, understanding World Geography & The Philippines provides a crucial foundation for everything else we will learn. Historically, our ancestors relied heavily on their knowledge of these concepts to survive and thrive. They observed the natural world, adapted to their environment, and developed unique ways of interacting with their surroundings. Today, modern science and technology allow us to appreciate the depth and complexity of World Geography & The Philippines even more. By exploring this subject, we uncover the hidden stories that make the Filipino experience truly unique. Whether we are looking at maps, studying wildlife, or learning a new dialect, every detail adds another beautiful thread to the vibrant tapestry of our national identity. It is a journey of discovery that connects us not only to our past but also to our future."
+        "heading": "Zooming In From Space",
+        "emoji": "??",
+        "body": "If we were to look at our planet from space, we would see huge pieces of land called continents and massive bodies of water called oceans. The Earth is a giant sphere, and right in the middle, around its waist, is an imaginary line called the Equator. The Equator divides the Earth into the Northern and Southern Hemispheres. Countries near the Equator get a lot of direct sunlight, which makes them very warm. The Philippines is located just a little bit above this line, in the Northern Hemisphere. This is why we don't have snow during winter; instead, we have a tropical climate with a dry season and a wet season. Our closeness to the Equator means we have lush rainforests, warm beaches, and plenty of sunshine all year round!"
       },
       {
-        "heading": "Detailed Exploration",
-        "body": "When we dive deeper into World Geography & The Philippines, we begin to see how everything is interconnected. For instance, the geographical features of our islands directly influence the weather patterns, which in turn dictate what kinds of plants and animals can survive here. This is why World Geography & The Philippines is never just an isolated subject; it touches on history, culture, economics, and environmental science. In the context of the Philippines, the regional differences are particularly striking. What you find in the mountainous north is vastly different from the coastal areas of the south. These variations have shaped the distinct cultures and traditions of the people living there. Furthermore, the constant interaction between humans and nature has created a dynamic landscape that is always changing. Understanding World Geography & The Philippines requires us to look at both the big picture and the smallest details, appreciating the delicate balance that sustains life across the archipelago."
+        "heading": "Our Neighborhood: Southeast Asia",
+        "emoji": "???",
+        "body": "As we zoom in closer from our view in space, we can focus on the largest continent on Earth: Asia. Asia is massive, so geographers divide it into smaller regions. The Philippines belongs to a vibrant and diverse neighborhood called Southeast Asia. This region is located south of China, east of India, and north of Australia. Our neighbors include countries like Indonesia, Malaysia, Thailand, and Vietnam. Because we are in the same corner of the world, we share many things with our neighbors. We experience similar tropical weather, grow similar crops like rice and coconuts, and even have words in our languages that sound alike! However, the Philippines is unique because it is situated on the eastern edge of Southeast Asia, facing the vast Pacific Ocean. This location has made our islands a historic crossroads for trade and travel."
       },
       {
-        "heading": "Significance Today",
-        "body": "In our modern world, the importance of World Geography & The Philippines cannot be overstated. As we face global challenges like climate change, urbanization, and cultural preservation, a deep understanding of our own environment and heritage is our best defense. The government, scientists, and local communities are all working together to protect and promote the valuable resources associated with World Geography & The Philippines. There are numerous laws and initiatives designed to ensure that future generations will be able to enjoy and learn from these assets. Moreover, the global community is increasingly recognizing the Philippines as a biodiversity hotspot and a cultural treasure trove. This international attention highlights the vital role our country plays on the world stage. By educating ourselves and others about World Geography & The Philippines, we become active participants in this global effort. It empowers us to make informed decisions and take meaningful action in our own lives."
+        "heading": "A Country of Many Islands",
+        "emoji": "???",
+        "body": "Unlike some countries that are just one solid, unbroken piece of land, the Philippines is an archipelago. An archipelago is a group or chain of islands clustered together in a sea or ocean. The Philippine archipelago is incredibly large, consisting of exactly 7,641 islands! Some of these islands are huge, with sprawling mountain ranges and large cities, while others are tiny patches of sand that peek above the water only when the tide is low. Being an archipelago shapes everything about how we live. It means that the ocean is always a part of our lives, providing us with food, transportation, and beautiful natural wonders. It also means that over thousands of years, different groups of people on different islands developed their own unique languages, traditions, and ways of life. Even though we are separated by water, we are all connected as one nation."
       },
       {
-        "heading": "Our Role",
-        "body": "Finally, it is essential to ask what our personal role is when it comes to World Geography & The Philippines. Learning about these subjects is not just about memorizing facts; it is about developing a sense of stewardship and responsibility. As young explorers and citizens of the Philippines, you have the power to make a positive impact. Simple actions, like respecting the environment, celebrating our diverse languages, or sharing what you have learned with your family, can ripple outward and create lasting change. The stories and knowledge embedded in World Geography & The Philippines are a testament to the resilience and ingenuity of the Filipino spirit. As you continue on this educational journey, remember that you are inheriting a rich legacy. It is up to you to carry it forward, to protect it, and to add your own unique chapter to the ongoing story of our beautiful archipelago."
+        "heading": "The Ring of Fire",
+        "emoji": "??",
+        "body": "Another fascinating fact about where the Philippines is located is that it sits right on the Pacific Ring of Fire. This is a horseshoe-shaped path along the edge of the Pacific Ocean where many of Earth's volcanoes are found and where earthquakes happen frequently. The Earth's crust is made of giant puzzle pieces called tectonic plates, and the Philippines is right where several of these plates meet and push against each other. This incredible geological activity is what originally formed our beautiful mountains and islands! The rich, volcanic soil makes our land perfect for farming and growing delicious fruits. So, while being on the Ring of Fire means we have to be prepared for natural events like earthquakes, it is also the reason why our archipelago is so beautifully formed and full of life today."
       }
     ],
     "keyFacts": [
-      "World Geography & The Philippines is unique to the archipelago.",
-      "It is protected by national laws.",
-      "It shapes the daily life of Filipinos.",
-      "It is an important part of our identity."
+      "The Philippines is located in Southeast Asia, facing the Pacific Ocean.",
+      "It is an archipelago consisting of 7,641 islands.",
+      "Because it is near the Equator, it has a tropical climate.",
+      "It sits on the Pacific Ring of Fire, which created its mountains."
     ],
-    "realWorldConnection": "Next time you watch the news, listen for stories about World Geography & The Philippines in your area!",
     "vocabulary": [
       {
         "word": "Archipelago",
         "translation": "Kapuluan",
         "language": "Tagalog",
-        "pronunciation": "pronunciation-0",
-        "contextualExample": "We can use Archipelago when talking about World Geography & The Philippines."
+        "pronunciation": "ka-pu-lu-an",
+        "contextualExample": "The Philippines is a beautiful archipelago of 7,641 islands."
       },
       {
         "word": "Equator",
         "translation": "Ekwador",
         "language": "Tagalog",
-        "pronunciation": "pronunciation-1",
-        "contextualExample": "We can use Equator when talking about World Geography & The Philippines."
+        "pronunciation": "ek-wa-dor",
+        "contextualExample": "Our country is warm because it is near the equator."
       },
       {
         "word": "Island",
-        "translation": "Isla",
+        "translation": "Isla / Pulo",
         "language": "Tagalog",
-        "pronunciation": "pronunciation-2",
-        "contextualExample": "We can use Island when talking about World Geography & The Philippines."
+        "pronunciation": "is-la / pu-lo",
+        "contextualExample": "We live on a big island."
       }
     ],
     "mediaMoments": [
       {
-        "description": "A clear photograph showing World Geography & The Philippines.",
+        "description": "A world map zooming into Southeast Asia.",
         "purpose": "Visual introduction.",
         "requiredType": "Image",
-        "sourceRequirement": "Authentic Philippine context.",
-        "altTextRequirement": true
-      },
-      {
-        "description": "An infographic about World Geography & The Philippines.",
-        "purpose": "To show statistics.",
-        "requiredType": "Diagram",
-        "sourceRequirement": "Accurate data.",
-        "altTextRequirement": true
-      },
-      {
-        "description": "A video related to World Geography & The Philippines.",
-        "purpose": "Dynamic learning.",
-        "requiredType": "Video",
-        "sourceRequirement": "Must be a verifiable historical artifact or footage.",
-        "altTextRequirement": false
+        "sourceRequirement": "Authentic map.",
+        "altTextGuidance": "Map of Southeast Asia"
       }
     ],
     "guidedDiscussion": [
-      "What is the most interesting thing about World Geography & The Philippines?",
-      "How does World Geography & The Philippines affect your family or community?"
+      "If you could have your very own island in the archipelago, what would you name it and what would be on it?",
+      "How do you think living on an island changes the way people travel or get their food compared to living in the middle of a huge continent?"
     ],
     "ageDifferentiation": {
-      "explorer": "Draw a beautiful picture of World Geography & The Philippines using bright colors to show what you learned in Lesson 1.",
-      "adventure": "Write three descriptive sentences about World Geography & The Philippines and share them with a friend or family member for Lesson 1.",
-      "trailblazer": "Research how World Geography & The Philippines has changed over the last 50 years and write a short, thoughtful report for Lesson 1."
-    },
-    "game": {
-      "title": "The World Geography & The Philippines Challenge Game",
-      "objective": "To test memory about World Geography & The Philippines facts.",
-      "setup": "Have everyone stand in a circle facing each other.",
-      "materials": [
-        "A soft ball or plush toy"
-      ],
-      "rules": "Pass the ball. When you catch it, say one unique fact about World Geography & The Philippines from Lesson 1. No repeating facts!",
-      "winCondition": "Everyone shares two unique facts.",
-      "adaptation": "Students can point instead of throwing a ball if catching is difficult."
+      "explorer": "Can you draw a map of a made-up island? Make sure it has a beach, a mountain, and a fun name!",
+      "adventure": "Write down three things that make living in an archipelago different from living in a landlocked country.",
+      "trailblazer": "Research one other country in Southeast Asia. Write down two things we share in common and one thing that makes the Philippines unique."
     },
     "handsOnTask": {
-      "title": "Build a World Geography & The Philippines Model",
+      "title": "Make your own mini-archipelago",
       "materials": [
-        "Recycled materials",
-        "Tape",
-        "Scissors",
-        "Markers"
+        "Playdough",
+        "Plate"
       ],
-      "setup": "Gather materials on a table and clear the workspace.",
+      "setup": "Get playdough",
       "steps": [
-        "1. Plan your design on a piece of scratch paper.",
-        "2. Tape the pieces together to form the shape.",
-        "3. Present your finished model."
+        "Make islands",
+        "Place on plate"
       ],
-      "finishCondition": "A completed recycled model.",
-      "accessibilityAlternative": "Draw the design on paper instead of building it in 3D.",
-      "safetyNotes": "Be careful with scissors and any sharp edges on recycled boxes."
+      "finishCondition": "Plate with islands",
+      "accessibilityAlternative": "Draw a map of islands on paper",
+      "safetyNotes": "Don't eat playdough"
     },
-    "crossSubjectConnections": [
-      "Science",
-      "Art",
-      "Social Studies"
-    ],
-    "characterConnection": "Patience and respect are needed when learning complex topics like World Geography & The Philippines.",
-    "misconceptions": [
-      "Myth: World Geography & The Philippines is simple. Fact: It is wonderfully complex and deeply historical."
-    ],
+    "checkUnderstanding": [],
     "premiumAssessment": [
       {
         "type": "multiple-choice",
-        "question": "Is World Geography & The Philippines important to the Philippines?",
+        "question": "Where is the Philippines located?",
         "options": [
-          "Yes, absolutely",
-          "No, not at all",
-          "Maybe",
-          "Only sometimes"
+          "Southeast Asia",
+          "East Asia",
+          "South Asia",
+          "North Asia"
         ],
-        "correctAnswer": "Yes, absolutely"
+        "correctAnswer": "Southeast Asia"
       },
       {
         "type": "true-false-with-explanation",
-        "question": "The study of World Geography & The Philippines is unique to the Philippines.",
+        "question": "The Philippines has snow in the winter.",
         "correctAnswer": "False",
-        "explanation": "While our context is unique, the general concepts apply worldwide."
+        "explanation": "It is near the equator."
       },
       {
         "type": "short-answer",
-        "question": "Name one concept we learned about World Geography & The Philippines.",
+        "question": "What is an archipelago?",
         "expectedAnswerKeywords": [
-          "Unique",
-          "Filipino",
-          "Archipelago"
-        ]
-      },
-      {
-        "type": "matching",
-        "pairs": [
-          {
-            "left": "Focus",
-            "right": "World Geography & The Philippines"
-          },
-          {
-            "left": "Country",
-            "right": "Philippines"
-          }
+          "islands",
+          "group"
         ]
       },
       {
         "type": "multiple-choice",
-        "question": "How many discoveries did we make about World Geography & The Philippines?",
+        "question": "How many islands are there?",
         "options": [
-          "1",
-          "2",
-          "3",
-          "4"
+          "7,641",
+          "1,000",
+          "500",
+          "10,000"
         ],
-        "correctAnswer": "3"
+        "correctAnswer": "7,641"
       },
       {
-        "type": "sequencing",
-        "question": "Order these from first to last:",
-        "correctOrder": [
-          "Read",
-          "Learn",
-          "Apply"
-        ]
+        "type": "multiple-choice",
+        "question": "Which ring is it part of?",
+        "options": [
+          "Ring of Fire",
+          "Ring of Water",
+          "Ring of Ice",
+          "Ring of Wind"
+        ],
+        "correctAnswer": "Ring of Fire"
       }
     ],
-    "knowledgeCheck": [],
-    "learnerReflection": "I felt amazed when I learned about World Geography & The Philippines because I didn't know...",
-    "familyChallenge": "Tell your parents one new fact about World Geography & The Philippines at the dinner table tonight.",
+    "learnerReflection": "Today I discovered that our country is made of 7,641 islands! The most interesting part of zooming in from space was...",
+    "familyChallenge": "Find a map or globe in your house (or use a phone). Challenge your family to find the Philippines in less than 5 seconds!",
     "curatedResources": [
       {
-        "id": "res-0-1",
-        "title": "Official Guide to World Geography & The Philippines",
+        "id": "res-map-1",
+        "title": "Interactive World Globe",
         "type": "Website",
-        "url": "https://www.gov.ph/",
-        "visibility": "teacher",
-        "whyUseful": "Provides official data and background for teachers.",
-        "verificationStatus": "verified",
-        "provider": "Gov.ph"
-      },
-      {
-        "id": "res-0-2",
-        "title": "Educational Video on World Geography & The Philippines",
-        "type": "Video",
-        "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "url": "https://earth.google.com",
         "visibility": "both",
-        "whyUseful": "A fun and visual explanation suitable for families.",
+        "whyUseful": "Allows families to zoom from space down to their actual street.",
         "verificationStatus": "verified",
-        "provider": "Educational Channel"
+        "verifiedDate": "2026-08-16",
+        "provider": "Google"
       }
     ],
-    "authoritativeSources": [
-      {
-        "source": "National Library of the Philippines",
-        "url": "https://web.nlp.gov.ph/",
-        "note": "Historical archives confirm this."
-      },
-      {
-        "source": "Philippine Statistics Authority",
-        "url": "https://psa.gov.ph/",
-        "note": "Statistical data provided here."
-      }
-    ],
+    "authoritativeSources": [],
     "teacherAnswerKey": {
-      "Q1": "Yes, absolutely",
+      "Q1": "Southeast Asia",
       "Q2": "False",
-      "Q3": "Unique",
-      "Q4": "Philippines",
-      "Q5": "3",
-      "Q6": "Read, Learn, Apply"
+      "Q3": "Group of islands",
+      "Q4": "7,641",
+      "Q5": "Ring of Fire"
     },
     "subjectConnections": {
-      "science": "Geography",
-      "art": "Drawing"
+      "science": "Geography"
     },
     "materials": [
-      "Paper",
-      "Pencils"
+      "Playdough"
     ],
     "factualMediaRequirements": [],
     "activities": {
@@ -260,15 +200,15 @@ export const stage2Lessons: CurriculumLesson[] = [
       "coreActivity": "Write",
       "advancedChallenge": "Research"
     },
-    "interactiveGame": "The World Geography & The Philippines Challenge Game",
-    "handsOnActivity": "Model Building",
+    "interactiveGame": "Map Finder",
+    "handsOnActivity": "Make an island",
     "progressBadge": "badge-map-world",
-    "sourceNotes": "Official curriculum guidelines.",
-    "mediaAttributionNotes": "All media sourced from public domain.",
-    "accessibilityNotes": "See hands on task alternative.",
+    "sourceNotes": "Geography textbook",
+    "mediaAttributionNotes": "NASA imagery",
+    "accessibilityNotes": "Drawing alternative",
     "privacyClassification": "family-safe",
     "publicationStatus": "pilot",
-    "teacherPreparation": "Review the materials and set up the workspace."
+    "teacherPreparation": "Get maps ready"
   },
   {
     "id": "lesson-2-luzon",

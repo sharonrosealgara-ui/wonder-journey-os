@@ -33,7 +33,7 @@ export type CurriculumLesson = {
   richExplanation?: { heading?: string; body: string; emoji?: string }[];
   keyFacts?: string[];
   realWorldConnection?: string;
-  mediaMoments?: { description: string; purpose: string; requiredType: string; sourceRequirement: string; altTextRequirement: boolean }[];
+  mediaMoments?: { description: string; purpose: string; requiredType: string; factualRequirement?: string; sourceRequirement: string; altTextGuidance?: string }[];
   guidedDiscussion?: string[];
   ageDifferentiation?: {
     explorer: string;
@@ -77,7 +77,7 @@ export type CurriculumLesson = {
   learningObjectives: string[];
   essentialQuestion: string;
   factualBackground: string;
-  vocabulary: { word: string; translation?: string; language?: string; hiligaynon?: string; pronunciation?: string; mediaId?: string }[];
+  vocabulary: { word: string; translation?: string; language?: string; hiligaynon?: string; pronunciation?: string; contextualExample?: string; mediaId?: string }[];
   subjectConnections: {
     geography?: string;
     science?: string;
@@ -123,7 +123,7 @@ export type FamilyPremiumLesson = Pick<
   | "adventureHook" | "discoveries" | "richExplanation" | "keyFacts" | "realWorldConnection"
   | "vocabulary" | "mediaMoments" | "guidedDiscussion" | "ageDifferentiation"
   | "game" | "handsOnTask" | "crossSubjectConnections" | "characterConnection"
-  | "misconceptions" | "knowledgeCheck" | "learnerReflection" | "familyChallenge"
+  | "misconceptions" | "premiumAssessment" | "knowledgeCheck" | "learnerReflection" | "familyChallenge"
   | "curatedResources" | "optionalExtensions" | "suggestedPacing"
   | "accessibilityNotes" | "materials" | "interactiveGame" | "handsOnActivity"
 >;

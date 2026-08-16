@@ -42,7 +42,19 @@ export type SlideKind =
   | "reflection"
   | "challenge"
   | "memory"
-  | "complete";
+  | "complete"
+  // Premium Kinds
+  | "hook"
+  | "essentialQuestion"
+  | "discoveries"
+  | "richExplanation"
+  | "keyFacts"
+  | "mediaMoment"
+  | "guidedDiscussion"
+  | "ageChallenge"
+  | "handsOnMission"
+  | "checkUnderstanding"
+  | "premiumAssessment";
 
 export type Slide = {
   id: string;
@@ -51,6 +63,7 @@ export type Slide = {
   emoji: string;
   mascot: Mascot;
   section?: LessonSection; // for story/learning slides
+  content?: any; // For premium data passing
 };
 
 const guideFor: Record<SlideKind, Mascot> = {
@@ -70,6 +83,18 @@ const guideFor: Record<SlideKind, Mascot> = {
   challenge: mascots.kiko,
   memory: mascots.mangga,
   complete: mascots.tala,
+  // Premium Mascots
+  hook: mascots.kiko,
+  essentialQuestion: mascots.tala,
+  discoveries: mascots.lila,
+  richExplanation: mascots.tala,
+  keyFacts: mascots.lila,
+  mediaMoment: mascots.tala,
+  guidedDiscussion: mascots.isla,
+  ageChallenge: mascots.kiko,
+  handsOnMission: mascots.mangga,
+  checkUnderstanding: mascots.lila,
+  premiumAssessment: mascots.tala,
 };
 
 export function buildMission(lesson: Lesson): string[] {
@@ -85,34 +110,70 @@ export function buildMission(lesson: Lesson): string[] {
 
 export function buildSlides(lesson: Lesson): Slide[] {
   const slides: Slide[] = [];
-  const push = (kind: SlideKind, title: string, emoji: string, section?: LessonSection) =>
-    slides.push({ id: `${kind}-${slides.length}`, kind, title, emoji, mascot: guideFor[kind], section });
+  const push = (kind: SlideKind, title: string, emoji: string, section?: LessonSection, content?: any) =>
+    slides.push({ id: `${kind}-${slides.length}`, kind, title, emoji, mascot: guideFor[kind], section, content });
 
   push("welcome", "Welcome Explorers!", "🌴");
   push("blessings", "Morning Blessings", "🙏");
   push("prayer", "Opening Prayer", "🕊️");
-  push("mission", "Today's Mission", "🎯");
 
-  lesson.sections.forEach((section, i) => {
-    push(i === 0 ? "story" : "learning", section.heading, section.emoji, section);
-  });
+  const isPremium = !!lesson.premiumContent?.richExplanation || !!lesson.premiumContent?.adventureHook;
 
-  if (lesson.phrases && lesson.phrases.length > 0) {
-    push("vocab", "Words for the Adventure", "💬");
+  if (isPremium) {
+    // Premium Flow
+    if (lesson.premiumContent?.adventureHook) push("hook", "Adventure Hook", "🎣", undefined, lesson.premiumContent?.adventureHook);
+    if (lesson.premiumContent?.essentialQuestion) push("essentialQuestion", "Essential Question", "❓", undefined, lesson.premiumContent?.essentialQuestion);
+
+    // Core Learning
+    if (lesson.premiumContent?.richExplanation) {
+      lesson.premiumContent?.richExplanation.forEach((re, i) => push("richExplanation", re.heading || "Explanation", re.emoji || "📖", undefined, re));
+    }
+    if (lesson.premiumContent?.discoveries) push("discoveries", "Discoveries", "🔍", undefined, lesson.premiumContent?.discoveries);
+    if (lesson.premiumContent?.keyFacts) push("keyFacts", "Key Facts", "💡", undefined, lesson.premiumContent?.keyFacts);
+    if (lesson.premiumContent?.vocabulary && lesson.premiumContent?.vocabulary.length > 0) push("vocab", "Words for the Adventure", "💬");
+    if (lesson.premiumContent?.mediaMoments) {
+      lesson.premiumContent?.mediaMoments.forEach((mm, i) => push("mediaMoment", mm.requiredType === "video" ? "Video Moment" : "Media Moment", mm.requiredType === "video" ? "🎬" : "📸", undefined, mm));
+    }
+
+    // Engagement
+    if (lesson.premiumContent?.guidedDiscussion) push("guidedDiscussion", "Guided Discussion", "🗣️", undefined, lesson.premiumContent?.guidedDiscussion);
+    if (lesson.premiumContent?.ageDifferentiation) push("ageChallenge", "Age Challenge", "⭐", undefined, lesson.premiumContent?.ageDifferentiation);
+    if (lesson.premiumContent?.handsOnTask) push("handsOnMission", "Hands-On Mission", "🛠️", undefined, lesson.premiumContent?.handsOnTask);
+    if (lesson.premiumContent?.game) push("game", lesson.premiumContent?.game.title || "Game", "🎮", undefined, lesson.premiumContent?.game);
+
+    // Assessment & Reflection
+    if (lesson.premiumContent?.knowledgeCheck && lesson.premiumContent?.knowledgeCheck.length > 0) push("checkUnderstanding", "Check for Understanding", "✅", undefined, lesson.premiumContent?.knowledgeCheck);
+    if (lesson.premiumContent?.premiumAssessment) push("premiumAssessment", "Assessment", "🧠", undefined, lesson.premiumContent?.premiumAssessment);
+    if (lesson.premiumContent?.learnerReflection) push("reflection", "Reflection", "💭", undefined, lesson.premiumContent?.learnerReflection);
+    if (lesson.familyChallenge) push("challenge", "Family Challenge", "🏆", undefined, lesson.familyChallenge);
+  } else {
+    // Legacy Flow
+    push("mission", "Today's Mission", "🎯");
+
+    lesson.sections?.forEach((section, i) => {
+      push(i === 0 ? "story" : "learning", section.heading, section.emoji, section);
+    });
+
+    if (lesson.phrases && lesson.phrases.length > 0) {
+      push("vocab", "Words for the Adventure", "💬");
+    }
+    if (lesson.videoLinks && lesson.videoLinks.length > 0) {
+      push("video", "Adventure Videos", "🎬");
+    }
+    if (lesson.phrases && lesson.phrases.length >= 3) {
+      push("game", "Matching Game", "🎮");
+    }
+    if (lesson.recipeId) {
+      push("recipe", "Cooking Time!", "👩‍🍳");
+    }
+    push("quiz", "Adventure Quiz", "🧠");
+    push("academy", "Adventure Academy", "🎓");
+    push("reflection", "Reflection", "💭");
+    if (lesson.familyChallenge) {
+      push("challenge", "Family Challenge", "🏆");
+    }
   }
-  if (lesson.videoLinks.length > 0) {
-    push("video", "Adventure Videos", "🎬");
-  }
-  if (lesson.phrases && lesson.phrases.length >= 3) {
-    push("game", "Matching Game", "🎮");
-  }
-  if (lesson.recipeId) {
-    push("recipe", "Cooking Time!", "👩‍🍳");
-  }
-  push("quiz", "Adventure Quiz", "🧠");
-  push("academy", "Adventure Academy", "🎓");
-  push("reflection", "Reflection", "💭");
-  push("challenge", "Family Challenge", "🏆");
+
   push("memory", "Capture Today's Memory", "📷");
   push("complete", "Adventure Complete!", "🌅");
 

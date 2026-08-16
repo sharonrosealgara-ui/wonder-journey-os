@@ -2,6 +2,8 @@ const fs = require('fs');
 const path = require('path');
 
 const suspiciousPatterns = [
+  /\uFFFD/, /�/, /\?\? The Premium Journey/, /\?\? Explorer/, /\?\? Adventure/, /\?\? Trailblazer/, /\?\?\?/,
+
   /ðŸ/, /Ã/, /â€/, /â€™/, /â€œ/, /â€ /, /â€“/, /â€”/, /â†/, /ï¸/, /Â/,
   /ΓÇ/, /Γö/, /≡ƒ/, /Γ£/, /Γé/, /Γä/
 ];

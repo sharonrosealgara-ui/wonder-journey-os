@@ -75,7 +75,7 @@ export function LessonView({ id }: { id: string }) {
       {lesson.premiumContent ? (
         <>
           <section className="wj-card p-6 border-t-4 border-t-mango">
-            <h2 className="font-display text-2xl font-extrabold text-mango-deep">?? The Premium Journey</h2>
+            <h2 className="font-display text-2xl font-extrabold text-mango-deep">🌟 The Premium Journey</h2>
             {lesson.premiumContent.essentialQuestion && (
               <div className="mt-4 p-4 bg-sand rounded-xl border border-sand-deep">
                 <p className="text-sm font-bold text-ink-soft uppercase tracking-wider">Essential Question</p>
@@ -89,7 +89,7 @@ export function LessonView({ id }: { id: string }) {
                 <ul className="mt-3 space-y-2">
                   {lesson.premiumContent.keyFacts.map((fact, idx) => (
                     <li key={idx} className="flex gap-2 text-md">
-                      <span className="text-ocean-deep">??</span>
+                      <span className="text-ocean-deep">💡</span>
                       <span>{fact}</span>
                     </li>
                   ))}
@@ -105,7 +105,7 @@ export function LessonView({ id }: { id: string }) {
                     <div key={v.word} className="p-3 bg-white rounded-lg border border-sand-deep shadow-sm">
                       <p className="font-bold text-lg">{v.word} <span className="text-sm text-ink-soft ml-2">({v.language})</span></p>
                       <p className="text-sunset-deep">{v.translation}</p>
-                      <p className="text-xs text-ink-soft mt-1">??? {v.pronunciation}</p>
+                      <p className="text-xs text-ink-soft mt-1">🔊 {v.pronunciation}</p>
                     </div>
                   ))}
                 </div>
@@ -120,7 +120,7 @@ export function LessonView({ id }: { id: string }) {
                   {lesson.premiumContent.curatedResources.map(r => (
                     <li key={r.id} className="flex flex-col text-md">
                       <a href={r.url} target="_blank" rel="noopener noreferrer" className="font-bold text-ocean-deep hover:underline">
-                        ?? {r.title}
+                        🔗 {r.title}
                       </a>
                       <span className="text-sm text-ink-soft ml-6">{r.type}</span>
                     </li>
@@ -133,9 +133,9 @@ export function LessonView({ id }: { id: string }) {
               <div className="mt-6 p-5 bg-ocean/10 rounded-xl">
                 <h3 className="font-display text-lg font-bold">Family Challenge by Age</h3>
                 <div className="mt-3 space-y-3">
-                  <p><strong>?? Explorer (7-8):</strong> {lesson.premiumContent.ageDifferentiation.explorer}</p>
-                  <p><strong>?? Adventure (9-10):</strong> {lesson.premiumContent.ageDifferentiation.adventure}</p>
-                  <p><strong>?? Trailblazer (11-12+):</strong> {lesson.premiumContent.ageDifferentiation.trailblazer}</p>
+                  <p><strong>🧭 Explorer (7-8):</strong> {lesson.premiumContent.ageDifferentiation.explorer}</p>
+                  <p><strong>🏕️ Adventure (9-10):</strong> {lesson.premiumContent.ageDifferentiation.adventure}</p>
+                  <p><strong>🚀 Trailblazer (11-12+):</strong> {lesson.premiumContent.ageDifferentiation.trailblazer}</p>
                 </div>
               </div>
             )}

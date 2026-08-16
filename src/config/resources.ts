@@ -1,19 +1,22 @@
-// ─────────────────────────────────────────────────────────────
-// RESOURCE LIBRARY — videos, links & materials for classes.
-// The teacher can also add links per-lesson in lessons.ts.
-// ─────────────────────────────────────────────────────────────
+﻿
+import { stage2Lessons } from "./lessons-stage2";
+
+// -------------------------------------------------------------
+// RESOURCE LIBRARY - videos, links & materials for classes.
+// Includes global resources and dynamic lesson curated resources.
+// -------------------------------------------------------------
 
 export type Resource = {
   id: string;
   title: string;
   emoji: string;
-  type: "Video" | "Website" | "Printable" | "Presentation";
+  type: "Video" | "Website" | "Printable" | "Presentation" | "Article" | "Activity" | string;
   url: string;
   description: string;
   category: string;
 };
 
-export const resources: Resource[] = [
+const globalResources: Resource[] = [
   {
     id: "philippines-4k",
     title: "The Philippines from Above",
@@ -25,8 +28,8 @@ export const resources: Resource[] = [
   },
   {
     id: "tagalog-kids",
-    title: "Tagalog for Kids — Greetings",
-    emoji: "💬",
+    title: "Tagalog for Kids - Greetings",
+    emoji: "🗣️",
     type: "Video",
     url: "https://www.youtube.com/results?search_query=tagalog+greetings+for+kids",
     description: "Simple, sing-along Tagalog greeting videos.",
@@ -43,8 +46,8 @@ export const resources: Resource[] = [
   },
   {
     id: "bayanihan-video",
-    title: "Bayanihan — Moving a House Together",
-    emoji: "🤝",
+    title: "Bayanihan - Moving a House Together",
+    emoji: "🏠",
     type: "Video",
     url: "https://www.youtube.com/results?search_query=bayanihan+filipino+tradition",
     description: "See the amazing tradition of neighbors carrying a whole house!",
@@ -53,7 +56,7 @@ export const resources: Resource[] = [
   {
     id: "chocolate-hills",
     title: "Chocolate Hills & Tarsiers of Bohol",
-    emoji: "🍫",
+    emoji: "🐒",
     type: "Video",
     url: "https://www.youtube.com/results?search_query=chocolate+hills+bohol+tarsier",
     description: "Explore 1,268 chocolate-colored hills and the world's tiniest primate.",
@@ -71,7 +74,7 @@ export const resources: Resource[] = [
   {
     id: "canva-lessons",
     title: "Canva Lesson Presentations",
-    emoji: "🎨",
+    emoji: "🖥️",
     type: "Presentation",
     url: "https://www.canva.com/",
     description: "Teacher Sharon's slide decks for each lesson (links added per lesson).",
@@ -87,3 +90,22 @@ export const resources: Resource[] = [
     category: "Discover the Philippines",
   },
 ];
+
+// Dynamically extract family-safe resources from lessons
+const lessonResources: Resource[] = stage2Lessons.flatMap((lesson) => {
+  if (!lesson.curatedResources) return [];
+  return lesson.curatedResources
+    .filter((res) => res.visibility === "family" || res.visibility === "both")
+    .map((res) => ({
+      id: res.id,
+      title: res.title,
+      emoji: res.type === "Video" ? "▶️" : res.type === "Article" ? "📄" : "🔗",
+      type: res.type,
+      url: res.url,
+      description: `${res.whyUseful} (From: ${lesson.title})`,
+      category: `Lesson Resources: ${lesson.unit || "Unit"}`
+    }));
+});
+
+export const resources: Resource[] = [...globalResources, ...lessonResources];
+

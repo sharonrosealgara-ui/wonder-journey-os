@@ -11,6 +11,14 @@ export type QuizQuestion = {
   correctAnswer: string;
 };
 
+export type PremiumAssessment = 
+  | { type: 'multiple-choice'; question: string; options: string[]; correctAnswer: string }
+  | { type: 'true-false-with-explanation'; question: string; correctAnswer: 'True' | 'False'; explanation: string }
+  | { type: 'short-answer'; question: string; expectedAnswerKeywords: string[] }
+  | { type: 'matching'; pairs: { left: string; right: string }[] }
+  | { type: 'sequencing'; question: string; correctOrder: string[] }
+  | { type: 'scenario-application'; scenario: string; question: string; expectedResolution: string };
+
 export type FactualSource = {
   source: string;
   url?: string;
@@ -48,15 +56,16 @@ export type CurriculumLesson = {
     steps: string[];
     finishCondition?: string;
     safetyNotes?: string;
-    alternative?: string;
+    accessibilityAlternative?: string;
   };
-  curatedResources?: { id: string; title: string; url: string; type: string }[];
+  curatedResources?: { id: string; title: string; url: string; type: string; visibility: "teacher" | "family" | "both"; whyUseful: string; verificationStatus: "verified" | "unverified"; provider: string; }[];
   authoritativeSources?: { source: string; url: string; note: string }[];
   optionalExtensions?: string[];
   suggestedPacing?: Record<string, string>;
   crossSubjectConnections?: string[];
   characterConnection?: string;
   misconceptions?: string[];
+  premiumAssessment?: PremiumAssessment[];
 
   id: string; // stable lesson id
   date: string; // ISO YYYY-MM-DD
@@ -132,7 +141,18 @@ export function createFamilyPremiumProjection(lesson: CurriculumLesson): FamilyP
   return familySafe as FamilyPremiumLesson;
 }
 
-export type FamilyVisibleCurriculumLesson = Omit<CurriculumLesson, 'teacherPreparation' | 'teacherAnswerKey' | 'privateTeacherNotes' | 'internalFactCheckNotes'>;
+export type FamilyVisibleCurriculumLesson = Pick<CurriculumLesson,
+  | "id" | "date" | "title" | "topic" | "ageRange" | "unit" | "essentialQuestion"
+  | "adventureHook" | "discoveries" | "richExplanation" | "keyFacts" | "realWorldConnection"
+  | "vocabulary" | "mediaMoments" | "guidedDiscussion" | "ageDifferentiation"
+  | "game" | "handsOnTask" | "crossSubjectConnections" | "characterConnection"
+  | "misconceptions" | "premiumAssessment" | "knowledgeCheck" | "learnerReflection" | "familyChallenge"
+  | "curatedResources" | "optionalExtensions" | "suggestedPacing"
+  | "accessibilityNotes" | "materials" | "interactiveGame" | "handsOnActivity"
+  | "learningObjectives" | "factualBackground" | "subjectConnections" | "factualMediaRequirements"
+  | "mediaReferences" | "activities" | "progressBadge" | "privacyClassification" | "publicationStatus"
+  | "gratitudePrompt" | "prayerPrompt" | "weekday" | "sourceNotes" | "mediaAttributionNotes" | "factualSources"
+>;
 
 // Exclude teacher-only fields for Family serialization
 export function serializeForFamily(lesson: CurriculumLesson): FamilyVisibleCurriculumLesson {

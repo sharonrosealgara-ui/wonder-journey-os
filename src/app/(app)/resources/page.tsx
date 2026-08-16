@@ -1,3 +1,4 @@
+﻿
 "use client";
 
 import { PageHeader } from "@/components/page-header";
@@ -46,3 +47,4 @@ export default function ResourcesPage() {
     </div>
   );
 }
+

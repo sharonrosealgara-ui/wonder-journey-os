@@ -39,9 +39,9 @@ function mapToLegacy(c: CurriculumLesson, order: number, emoji: string): any {
 
 const pilotLessons = stage2Lessons.map((l, i) => mapToLegacy(l, i + 1, "🌟"));
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─────────────────────────────────────────────────────────────
 // LESSON LIBRARY — add new lessons here; pages render them automatically.
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─────────────────────────────────────────────────────────────
 
 export type LessonSection = {
   heading: string;
@@ -1322,12 +1322,12 @@ export const unscheduledLessons: Lesson[] = [
     gratitudePrompt: "Today I am grateful to the Lord because...",
   },
 
-  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  // ═══════════════════════════════════════════════════════════
   // SEPTEMBER — "Creatures & Character" (Units 2 · 8 · 6 · 4)
-  // â­ Feast season: Sep 21 (Day of Atonement) is marked no-class in
+  // ⭐ Feast season: Sep 21 (Day of Atonement) is marked no-class in
   // the Season Calendar; Tabernacles week (~Sep 28–Oct 2) pauses.
   // Dates STILL pending confirmation from Shaun & Taylor.
-  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  // ═══════════════════════════════════════════════════════════
   {
     id: "food-words-around-the-table",
     order: 23,
@@ -1568,7 +1568,7 @@ export const unscheduledLessons: Lesson[] = [
     category: "Cooking",
     date: "2026-09-11",
     time: "9:00 AM",
-    materials: ["1 cup flour", "½ cup sugar", "â…“ cup butter (soft)", "1 egg, ½ cup milk", "1 tsp baking powder, splash of vanilla", "Frosting + sprinkles for decorating", "Cupcake liners + muffin tray (oven = grown-up!)"],
+    materials: ["1 cup flour", "½ cup sugar", "⅓ cup butter (soft)", "1 egg, ½ cup milk", "1 tsp baking powder, splash of vanilla", "Frosting + sprinkles for decorating", "Cupcake liners + muffin tray (oven = grown-up!)"],
     canvaLink: "https://www.canva.com/",
     videoLinks: [
       { label: "Cupcake decorating for kids (search on YouTube)", url: "https://www.youtube.com/results?search_query=cupcake+decorating+for+kids" },
@@ -1587,7 +1587,7 @@ export const unscheduledLessons: Lesson[] = [
         emoji: "🧺",
         body: "Line up your ingredients first — a good baker is a tidy baker!",
         bullets: [
-          "1 cup flour · ½ cup sugar · â…“ cup soft butter",
+          "1 cup flour · ½ cup sugar · ⅓ cup soft butter",
           "1 egg · ½ cup milk · a splash of vanilla",
           "1 teaspoon baking powder",
           "Makes about 8 cupcakes — plus frosting and sprinkles to decorate",
@@ -1601,7 +1601,7 @@ export const unscheduledLessons: Lesson[] = [
           "1. Cream soft butter and sugar until pale and fluffy",
           "2. Beat in the egg and vanilla, then add milk",
           "3. Gently stir in flour and baking powder — don't over-mix!",
-          "4. Spoon into liners, filling each â…” full (that's a fraction — leave room to rise!)",
+          "4. Spoon into liners, filling each ⅔ full (that's a fraction — leave room to rise!)",
           "5. Grown-up bakes at 180°C (350°F) about 18 minutes; cool completely, THEN decorate",
         ],
       },
@@ -1742,7 +1742,7 @@ export const unscheduledLessons: Lesson[] = [
     category: "Cooking",
     date: "2026-09-18",
     time: "9:00 AM",
-    materials: ["½ cup butter", "1 cup sugar", "2 eggs, 1 tsp vanilla", "½ cup flour", "â…“ cup cocoa powder, pinch of salt", "Square pan + oven (grown-up!)"],
+    materials: ["½ cup butter", "1 cup sugar", "2 eggs, 1 tsp vanilla", "½ cup flour", "⅓ cup cocoa powder, pinch of salt", "Square pan + oven (grown-up!)"],
     canvaLink: "https://www.canva.com/",
     videoLinks: [
       { label: "Easy brownies with kids (search on YouTube)", url: "https://www.youtube.com/results?search_query=easy+fudgy+brownies+kids" },
@@ -1763,7 +1763,7 @@ export const unscheduledLessons: Lesson[] = [
         bullets: [
           "½ cup melted butter · 1 cup sugar",
           "2 eggs · 1 teaspoon vanilla",
-          "½ cup flour · â…“ cup cocoa powder · a pinch of salt",
+          "½ cup flour · ⅓ cup cocoa powder · a pinch of salt",
           "Makes one pan — enough squares to share generously",
         ],
       },
@@ -1861,7 +1861,7 @@ export const unscheduledLessons: Lesson[] = [
     category: "Cooking",
     date: "2026-09-25",
     time: "9:00 AM",
-    materials: ["3 very ripe bananas", "â…“ cup melted butter", "½ cup sugar, 1 egg, 1 tsp vanilla", "1½ cups flour, 1 tsp baking soda, pinch of salt", "A loaf pan + oven (grown-up!)"],
+    materials: ["3 very ripe bananas", "⅓ cup melted butter", "½ cup sugar, 1 egg, 1 tsp vanilla", "1½ cups flour, 1 tsp baking soda, pinch of salt", "A loaf pan + oven (grown-up!)"],
     canvaLink: "https://www.canva.com/",
     videoLinks: [
       { label: "Easy banana bread with kids (search on YouTube)", url: "https://www.youtube.com/results?search_query=easy+banana+bread+with+kids" },
@@ -1880,7 +1880,7 @@ export const unscheduledLessons: Lesson[] = [
         emoji: "🧺",
         body: "The riper the bananas, the better — this is the recipe that saves them!",
         bullets: [
-          "3 very ripe (brown-spotted) bananas · â…“ cup melted butter",
+          "3 very ripe (brown-spotted) bananas · ⅓ cup melted butter",
           "½ cup sugar · 1 egg · 1 teaspoon vanilla",
           "1½ cups flour · 1 teaspoon baking soda · a pinch of salt",
           "Makes one loaf — about 8 cozy slices to share",
@@ -1916,10 +1916,10 @@ export const unscheduledLessons: Lesson[] = [
     gratitudePrompt: "Today I am grateful to the Lord because...",
   },
 
-  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  // ═══════════════════════════════════════════════════════════
   // OCTOBER — "Fiesta & Trails" (Units 6 · 10 · 7 · 9 · 8)
   // Resumes after the Feast of Tabernacles pause (~Sep 28–Oct 2).
-  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  // ═══════════════════════════════════════════════════════════
   {
     id: "gentle-giants-of-the-sea",
     order: 33,

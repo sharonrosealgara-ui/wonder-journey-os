@@ -1,5 +1,4 @@
-
-import { stage2Lessons } from "./lessons-stage2";
+﻿import { stage2Lessons } from "./lessons-stage2";
 
 // -------------------------------------------------------------
 // RESOURCE LIBRARY - videos, links & materials for classes.
@@ -16,10 +15,16 @@ export type Resource = {
   category: string;
 };
 
-const globalResources: Resource[] = []; // All legacy resources were unverified placeholders and have been removed.
+const globalResources: Resource[] = [];
 
-// Dynamically extract family-safe resources from lessons
+// Approved lesson IDs whose curated resources are validated and authorized for the Family Library
+export const APPROVED_RESOURCE_LESSON_IDS = new Set([
+  "lesson-1-world-map"
+]);
+
+// Dynamically extract family-safe resources from approved lessons
 const lessonResources: Resource[] = stage2Lessons.flatMap((lesson) => {
+  if (!APPROVED_RESOURCE_LESSON_IDS.has(lesson.id)) return [];
   if (lesson.publicationStatus !== "published" && lesson.publicationStatus !== "pilot") return [];
   if (!lesson.curatedResources) return [];
   return lesson.curatedResources
@@ -27,7 +32,7 @@ const lessonResources: Resource[] = stage2Lessons.flatMap((lesson) => {
     .map((res) => ({
       id: res.id,
       title: res.title,
-      emoji: res.type === "Video" ? "▶️" : res.type === "Article" ? "📄" : "🔗",
+      emoji: res.type === "Video" ? "🎥" : res.type === "Article" ? "📖" : "🔗",
       type: res.type,
       url: res.url,
       description: `${res.whyUseful} (From: ${lesson.title})`,
@@ -36,4 +41,3 @@ const lessonResources: Resource[] = stage2Lessons.flatMap((lesson) => {
 });
 
 export const resources: Resource[] = [...globalResources, ...lessonResources];
-

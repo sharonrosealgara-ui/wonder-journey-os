@@ -2,241 +2,373 @@ import { CurriculumLesson } from "../lib/curriculum-schema";
 
 export const stage2Lessons: CurriculumLesson[] = [
   {
-    "id": "lesson-1-world-map",
-    "date": "2026-08-03",
-    "weekday": "Monday",
-    "title": "Our Place in the World",
-    "topic": "World Geography & The Philippines",
-    "ageRange": "7-12",
-    "unit": "Unit 1: The Philippine Archipelago",
-    "learningObjectives": [
-      "Locate the Philippines on a world map in relation to the equator and other continents.",
-      "Understand that the Philippines is part of Southeast Asia.",
-      "Identify the basic geography of the Earth, continents, and the Philippines."
-    ],
-    "essentialQuestion": "If you were to look at Earth from space, how would you describe where the Philippines is located?",
-    "factualBackground": "The Philippines is located in Southeast Asia, in the western Pacific Ocean. It consists of about 7,641 islands.",
-    "adventureHook": "Imagine you are an astronaut floating high above the Earth. You look down and see oceans, continents, and finally, a beautiful cluster of islands sparkling in the blue water. Today, we are going to zoom in from outer space to find exactly where our home, the Philippines, is on the giant map of the world!",
-    "discoveries": [
-      {
-        "title": "The Equator",
-        "description": "The Philippines is located just above the equator, giving us a warm, tropical climate."
-      },
-      {
-        "title": "Southeast Asia",
-        "description": "We are part of a vibrant region called Southeast Asia."
-      },
-      {
-        "title": "A Chain of Islands",
-        "description": "Our country is an archipelago made of about 7,641 islands!"
-      }
-    ],
-    "richExplanation": [
-      {
-        "heading": "Zooming In From Space",
-        "emoji": "🌍",
-        "body": "If we were to look at our planet from space, we would see huge pieces of land called continents and massive bodies of water called oceans. The Earth is a giant sphere, and right in the middle, around its waist, is an imaginary line called the Equator. The Equator divides the Earth into the Northern and Southern Hemispheres. The Philippines is located just a little bit above this line, in the Northern Hemisphere. This means we have a tropical maritime climate. We generally experience two major seasons—wet and dry—though actual rainfall patterns vary greatly depending on where you are in the country."
-      },
-      {
-        "heading": "The Giant Continents",
-        "emoji": "🗺️",
-        "body": "As we get closer to Earth, we can see the seven large continents. The largest of them all is Asia. It is so massive that it stretches across many time zones and climates! To make it easier to study, geographers divide Asia into different regions. The Philippines belongs to a vibrant and diverse neighborhood called Southeast Asia. This region is located south of China, east of India, and north of Australia."
-      },
-      {
-        "heading": "Our Neighborhood: Southeast Asia",
-        "emoji": "🤝",
-        "body": "Because we are in the same corner of the world as countries like Indonesia, Malaysia, Thailand, and Vietnam, we share many things with our neighbors. We experience similar weather patterns and grow similar crops like rice and coconuts. However, the Philippines is unique because it is situated on the easternmost edge of Southeast Asia, directly facing the vast Pacific Ocean. This specific location has made our islands a historic crossroads for trade and travel over many centuries."
-      },
-      {
-        "heading": "A Preview of Our Archipelago",
-        "emoji": "🏝️",
-        "body": "Unlike countries that sit on massive continental landmasses, the Philippines is an archipelago. An archipelago is a group or chain of islands clustered together in a body of water. According to official mapping authorities, the Philippine archipelago consists of about 7,641 islands! Some of these islands are large enough to hold sprawling mountain ranges and bustling cities, while others are tiny sandbars. This geography shapes everything about how we live, from our transportation to our diverse local cultures and languages."
-      },
-      {
-        "heading": "A Restless Earth",
-        "emoji": "🌋",
-        "body": "Our location has another interesting feature: we sit along the Pacific Ring of Fire. This is a path along the edge of the Pacific Ocean known for active volcanoes and frequent earthquakes. As the Philippine Institute of Volcanology and Seismology (PHIVOLCS) explains, the Philippines is situated at the boundaries of major tectonic plates that are constantly moving and interacting. This incredible geological activity has shaped much of our dramatic landscape, creating the beautiful mountains and deep ocean trenches we see today."
-      }
-    ],
-    "keyFacts": [
-      "The Philippines is located in Southeast Asia, facing the Pacific Ocean.",
-      "It is an archipelago consisting of about 7,641 islands.",
-      "It is situated just above the equator, giving it a tropical maritime climate.",
-      "It sits on the Pacific Ring of Fire, leading to active geology and beautiful landscapes."
-    ],
-    "realWorldConnection": "Next time you look at a globe or open a map app on a phone, try to find the equator first, then look for Asia, and finally spot the Philippines! Recognizing how close we are to other countries helps us understand international news, weather, and trade.",
-    "crossSubjectConnections": {
-      "science": "Understanding how the equator affects sunlight and climate.",
-      "geography": "Reading a world map, identifying continents and oceans."
+  "id": "lesson-1-world-map",
+  "date": "2026-08-03",
+  "weekday": "Monday",
+  "title": "Our Place in the World",
+  "topic": "World Geography & The Philippines",
+  "ageRange": "7-12",
+  "unit": "Unit 1: The Philippine Archipelago",
+  "learningObjectives": [
+    "Locate the Philippines on a world map in relation to the equator, Asia, and Southeast Asia.",
+    "Understand that the Earth consists of continents and oceans, with Asia being the largest continent.",
+    "Identify the Philippines as a tropical archipelago of about 7,641 islands in the western Pacific Ocean."
+  ],
+  "essentialQuestion": "If you were to look at Earth from space, how would you describe where the Philippines is located?",
+  "factualBackground": "The Philippines is an archipelagic nation of about 7,641 islands located in Southeast Asia, in the western Pacific Ocean. Situated just north of the Equator in the Northern Hemisphere, it features a tropical maritime climate characterized by warm temperatures and distinct wet and dry seasons.",
+  "adventureHook": "Imagine you are an astronaut floating high above planet Earth in a spacecraft! Looking down through the window, you see vast blue oceans and giant landmasses called continents. As our ship zooms closer, we spot the largest continent, Asia, and nestled in its warm southeastern corner is a sparkling cluster of islands. Today, we are going on a cosmic quest to discover our country's exact home on the world map!",
+  "discoveries": [
+    {
+      "title": "The Equator and Climate",
+      "description": "The Philippines is located just above the Equator in the Northern Hemisphere, blessing our islands with warm sunshine and a tropical maritime climate."
     },
-    "misconceptions": [
-      "Misconception: The Philippines has four seasons like America. Fact: The Philippines has a tropical maritime climate with primarily wet and dry seasons, though rainfall varies locally.",
-      "Misconception: The Philippines is just one big island. Fact: It is an archipelago of about 7,641 islands."
-    ],
-    "vocabulary": [
-      {
-        "word": "Archipelago",
-        "translation": "Kapuluan",
-        "language": "Tagalog",
-        "pronunciation": "ka-pu-lu-an",
-        "contextualExample": "The Philippines is a beautiful archipelago of about 7,641 islands."
-      },
-      {
-        "word": "Equator",
-        "translation": "Ekwador",
-        "language": "Tagalog",
-        "pronunciation": "ek-wa-dor",
-        "contextualExample": "Our country is warm because it is near the equator."
-      },
-      {
-        "word": "Continent",
-        "translation": "Kontinente",
-        "language": "Tagalog",
-        "pronunciation": "kon-ti-nen-te",
-        "contextualExample": "Asia is the largest continent on Earth."
-      }
-    ],
-    "mediaMoments": [
-      {
-        "description": "A spinning globe zooming in from space down to Southeast Asia.",
-        "purpose": "Visual introduction.",
-        "requiredType": "Video",
-        "sourceRequirement": "Authentic map simulation.",
-        "altTextGuidance": "Globe zooming to Asia"
-      },
-      {
-        "description": "A world map highlighting the Equator in red.",
-        "purpose": "Show our latitude.",
-        "requiredType": "Image",
-        "sourceRequirement": "Educational map.",
-        "altTextGuidance": "Map showing the equator"
-      },
-      {
-        "description": "A close-up map of the Pacific Ring of Fire highlighting the Philippines.",
-        "purpose": "Show our tectonic location.",
-        "requiredType": "Image",
-        "sourceRequirement": "Geological map.",
-        "altTextGuidance": "Map of the Ring of Fire"
-      }
-    ],
-    "guidedDiscussion": [
-      "If you could have your very own island in the archipelago, what would you name it and what would be on it?",
-      "How do you think living close to the equator changes the kinds of houses people build or the clothes they wear?"
-    ],
-    "ageDifferentiation": {
-      "explorer": "Can you draw a map of Earth and put a big star where the Philippines is? Color the oceans blue and the land green!",
-      "adventure": "Write down three things that make living in a tropical archipelago different from living in a cold, landlocked country."
+    {
+      "title": "Our Southeast Asian Neighborhood",
+      "description": "The Philippines is part of Southeast Asia, sitting south of mainland China, east of Vietnam, and north of Indonesia and Malaysia."
     },
-    "handsOnTask": {
-      "title": "Mapping Our Place in the World",
-      "description": "Create a tiered map to understand global scale.",
-      "materials": ["Paper", "Crayons or markers", "Scissors", "Glue"],
-      "steps": [
-        "Draw a large circle to represent the Earth.",
-        "Inside the Earth, draw a smaller shape for the continent of Asia.",
-        "Inside Asia, draw an even smaller shape for Southeast Asia.",
-        "Finally, draw a tiny star to represent the Philippines.",
-        "Label each part and explain to a family member how we zoom in from Earth to our country."
-      ],
-      "finishCondition": "A labeled, tiered drawing showing the progression from Earth down to the Philippines.",
-      "accessibilityAlternative": "Use pre-cut concentric circles of different sizes to represent Earth, Asia, Southeast Asia, and the Philippines, and assemble them in order."
+    {
+      "title": "An Island Archipelago",
+      "description": "Our country is not a single giant continent, but an archipelago made of about 7,641 unique islands surrounded by the Pacific Ocean and the South China Sea!"
+    }
+  ],
+  "richExplanation": [
+    {
+      "heading": "Looking at Earth from Space",
+      "emoji": "🌍",
+      "body": "If we were to look at our planet from high in outer space, we would see a magnificent sphere covered in deep blue oceans and green-and-brown landmasses. Right around the waist of the Earth runs an imaginary line called the Equator. The Equator divides our planet into two halves: the Northern Hemisphere and the Southern Hemisphere. The Philippines sits just north of the Equator, at approximately 4 to 21 degrees north latitude. Because sunlight hits the equatorial region directly all year, countries near the equator do not experience freezing snowy winters. Instead, the Philippines enjoys a tropical maritime climate with warm temperatures and two primary seasonal rhythms—the wet rainy season and the dry sunny season."
     },
-    "authoritativeSources": [
-      {
-        "source": "NAMRIA Official Map",
-        "url": "https://www.namria.gov.ph",
-        "note": "Used to verify the count of about 7,641 islands.",
-        "publisher": "National Mapping and Resource Information Authority",
-        "verificationStatus": "verified",
-        "verifiedDate": "2026-08-01",
-        "context": "Used to verify the count of about 7,641 islands."
-      },
-      {
-        "source": "PHIVOLCS Tectonic Map",
-        "url": "https://www.phivolcs.dost.gov.ph",
-        "note": "Used to describe the tectonic location of the Philippines.",
-        "publisher": "PHIVOLCS",
-        "verificationStatus": "verified",
-        "verifiedDate": "2026-08-01",
-        "context": "Used to describe the tectonic location of the Philippines."
-      }
-    ],
-    "curatedResources": [
-      {
-        "id": "res-1",
-        "title": "Google Earth: The Philippines",
-        "url": "https://earth.google.com",
-        "type": "Interactive Map",
-        "provider": "Google",
-        "visibility": "both",
-        "whyUseful": "Explore the Philippines from a satellite view.",
-        "verificationStatus": "verified",
-        "verifiedDate": "2026-08-01"
-      },
-      {
-        "id": "res-2",
-        "title": "National Geographic Kids: Asia",
-        "url": "https://kids.nationalgeographic.com/geography/countries/article/asia",
-        "type": "Article",
-        "provider": "National Geographic",
-        "visibility": "both",
-        "whyUseful": "Learn more about the vast continent of Asia.",
-        "verificationStatus": "verified",
-        "verifiedDate": "2026-08-01"
-      }
-    ],
-    "premiumAssessment": [
-      {
-        "id": "q1",
-        "type": "multiple-choice",
-        "question": "Which continent is the Philippines a part of?",
-        "options": ["Europe", "Africa", "Asia", "South America"],
-        "correctOptionId": "Asia"
-      },
-      {
-        "id": "q2",
-        "type": "multiple-choice",
-        "question": "The Philippines is located in which specific region?",
-        "options": ["East Asia", "Southeast Asia", "South Asia", "Central Asia"],
-        "correctOptionId": "Southeast Asia"
-      },
-      {
-        "id": "q3",
-        "type": "true-false-with-explanation",
-        "question": "The Philippines is mostly made of one single large landmass.",
-        "options": ["True", "False"],
-        "correctOptionId": "False"
-      },
-      {
-        "id": "q4",
-        "type": "short-answer",
-        "question": "What is the imaginary line around the middle of the Earth that the Philippines is near?",
-        "options": [],
-        "correctOptionId": "Equator"
-      },
-      {
-        "id": "q5",
-        "type": "multiple-choice",
-        "question": "About how many islands make up the Philippine archipelago?",
-        "options": ["Around 100", "About 7,641", "Exactly 50", "Over 100,000"],
-        "correctOptionId": "About 7,641"
-      }
-    ],
-    "suggestedPacing": "30-45 minutes.",
-    "optionalExtensions": "Use a globe or interactive digital map to find other countries that sit on the equator.",
-    "learnerReflection": "Think about our place on the globe. What makes you proud to live in a tropical archipelago?",
-    "familyChallenge": "Find the equator on a map in your house. Then try to find three other countries that are also near the equator.",
-    "teacherPreparation": "Ensure you have a globe, a large world map, or a digital map loaded on a tablet ready for the lesson. Review the concept of hemispheres and tectonic plates beforehand.",
-    "teacherAnswerKey": {
-      "q1": "Asia",
-      "q2": "Southeast Asia",
-      "q3": "False. It is an archipelago of about 7,641 islands.",
-      "q4": "The Equator",
-      "q5": "About 7,641"
+    {
+      "heading": "The Seven Continents and Vast Oceans",
+      "emoji": "🗺️",
+      "body": "As we zoom in closer toward Earth, we can identify seven massive land areas called continents: Asia, Africa, North America, South America, Antarctica, Europe, and Australia. Surrounding these continents are five major oceans, with the Pacific Ocean being the largest and deepest of all. Among all seven continents, Asia is the largest in both land area and population. Asia stretches all the way from the frozen Arctic circle in the north down to the warm tropical seas in the south. Because Asia is so enormous, geographers divide it into smaller regional neighborhoods to help us study its diverse cultures, climates, and landscapes."
     },
-    "publicationStatus": "pilot",
-    "privacyClassification": "family-safe"
+    {
+      "heading": "Southeast Asia: Our Regional Home",
+      "emoji": "🤝",
+      "body": "Because we are in the same corner of the world as countries like Indonesia, Malaysia, Thailand, Vietnam, Singapore, and Brunei, we share many things with our neighbors. We experience similar weather patterns and grow similar crops like rice and coconuts. However, the Philippines is unique because it is situated on the easternmost edge of Southeast Asia, directly facing the vast Pacific Ocean. This specific location has made our islands a historic crossroads for trade and travel over many centuries."
+    },
+    {
+      "heading": "The Philippine Archipelago",
+      "emoji": "🏝️",
+      "body": "Unlike countries that sit entirely on one huge mainland, the Philippines is an archipelago—a geographic term for a chain or cluster of islands surrounded by water. According to official cartographic surveys by the National Mapping and Resource Information Authority (NAMRIA), the Philippines is composed of about 7,641 islands! These islands stretch more than 1,800 kilometers from north to south. While people live on about 2,000 of these islands, thousands more are pristine islets, coral atolls, and coastal sanctuaries where marine life thrives."
+    },
+    {
+      "heading": "Why Global Location Matters",
+      "emoji": "🧭",
+      "body": "Understanding our exact location on the world map helps us see how our daily lives connect to the entire globe. Being near the equator means our seas stay warm and support some of the richest coral reefs on Earth. Facing the open Pacific Ocean means we welcome sea breezes and maritime trade routes that have connected Filipino communities with international travelers for centuries. When you look at a globe or map app, finding the Equator, locating Asia, and identifying the Philippine islands helps you understand international weather, travel routes, and our special place in the global family."
+    }
+  ],
+  "keyFacts": [
+    "The Philippines is located in Southeast Asia in the western Pacific Ocean, just north of the Equator.",
+    "It is an archipelago consisting of about 7,641 islands stretching across the tropics.",
+    "Asia is the largest continent on Earth, and the Philippines sits on its eastern tropical boundary.",
+    "Being situated near the Equator gives the Philippines a warm tropical maritime climate."
+  ],
+  "realWorldConnection": "Next time you look at a globe in school, open Google Earth, or look at a weather map on a smartphone, find the Equator first! Then trace your finger to the right across the Pacific Ocean until you spot the Philippine islands just north of the line. Seeing our location helps you understand why our weather is tropical and how airplanes fly to our Asian neighbors.",
+  "crossSubjectConnections": {
+    "geography": "Reading world maps, understanding cardinal directions, and identifying continents, oceans, and hemispheres.",
+    "science": "Learning how sunlight angle and proximity to the Equator create tropical climates and wet/dry seasons.",
+    "socialStudies": "Understanding how our maritime position in Southeast Asia connects the Philippines to neighboring cultures and historical trade routes."
   },
+  "misconceptions": [
+    "Misconception: The Philippines has four traditional seasons (spring, summer, autumn, winter) like North America or Europe. Check: Because the Philippines sits near the Equator, it has a tropical climate with warm temperatures year-round and primarily wet and dry seasons.",
+    "Misconception: The Philippines is one single big solid landmass. Check: The Philippines is actually an archipelago made up of about 7,641 separate islands surrounded by water."
+  ],
+  "vocabulary": [
+    {
+      "word": "Archipelago",
+      "translation": "Kapuluan",
+      "language": "Tagalog",
+      "pronunciation": "ka-pu-lu-an",
+      "contextualExample": "The Philippines is a beautiful archipelago of about 7,641 islands."
+    },
+    {
+      "word": "Equator",
+      "translation": "Ekwador",
+      "language": "Tagalog",
+      "pronunciation": "ek-wa-dor",
+      "contextualExample": "Our country enjoys warm weather because we are located near the equator."
+    },
+    {
+      "word": "Continent",
+      "translation": "Kontinente",
+      "language": "Tagalog",
+      "pronunciation": "kon-ti-nen-te",
+      "contextualExample": "Asia is the largest continent on Earth, and our country is in Southeast Asia."
+    },
+    {
+      "word": "Ocean",
+      "translation": "Karagatan",
+      "language": "Tagalog",
+      "pronunciation": "ka-ra-ga-tan",
+      "contextualExample": "The vast Pacific Ocean lies directly to the east of our islands."
+    }
+  ],
+  "mediaMoments": [
+    {
+      "description": "A rotating 3D planetary globe simulation showing global continents, oceans, and Earth viewed from space.",
+      "purpose": "Help learners visualize the spherical Earth and observe the scale of continents compared to oceans.",
+      "requiredType": "Video",
+      "factualRequirement": "Accurate 3D planetary globe model showing major continents and oceanic bodies.",
+      "sourceRequirement": "Satellite imagery or educational globe model (e.g. NASA Earth Science / Google Earth).",
+      "altTextGuidance": "3D Earth globe rotating in space showing continents and oceans"
+    },
+    {
+      "description": "World map diagram clearly showing the Equator line (0° latitude) and labeled Northern and Southern Hemispheres.",
+      "purpose": "Illustrate how the Equator divides the globe and identify the Philippines positioned in the Northern Hemisphere.",
+      "requiredType": "Diagram",
+      "factualRequirement": "Clear depiction of the Equator at 0 degrees latitude and tropical latitude bands.",
+      "sourceRequirement": "Educational cartographic reference map.",
+      "altTextGuidance": "World map highlighting the Equator and Northern Hemisphere"
+    },
+    {
+      "description": "Regional geographic map zooming in from the continent of Asia to Southeast Asia, highlighting the Philippine archipelago.",
+      "purpose": "Demonstrate the progressive spatial relationship from continent to regional neighborhood to island nation.",
+      "requiredType": "Map",
+      "factualRequirement": "Accurate political and physical map of Southeast Asia showing the Philippines relative to neighboring Asian countries.",
+      "sourceRequirement": "Cartographic map (e.g. NAMRIA / WorldAtlas).",
+      "altTextGuidance": "Regional map of Southeast Asia highlighting the Philippine islands"
+    }
+  ],
+  "guidedDiscussion": [
+    "If you were looking down at Earth from an airplane or spacecraft, what clues would tell you that you are flying over an archipelago instead of a mainland continent?",
+    "How does living in a tropical country near the Equator shape the food we eat, the clothes we wear, and the games we play outdoors?",
+    "Why do you think knowing where our country is located on the world map is helpful when making friends with people from other parts of the world?"
+  ],
+  "ageDifferentiation": {
+    "explorer": "Draw a picture of planet Earth as a big blue and green sphere. Color the vast oceans blue, draw the continent of Asia, and mark the Philippines with a bright yellow star!",
+    "adventure": "Using a globe or world map, trace the Equator with your finger. Identify two continents that the Equator passes through, and explain in your own words why the Philippines has a warm tropical climate because it sits just north of this line.",
+    "trailblazer": "Compare the geographic location of the Philippines (an island archipelago near the Equator in the western Pacific Ocean) with a landlocked or northern country (such as Mongolia or Canada). Using latitude and surrounding bodies of water, explain how geographic location affects each country's seasons, weather patterns, and reliance on ocean shipping for trade."
+  },
+  "handsOnTask": {
+    "title": "Mapping Our Place in the World",
+    "description": "Create a multi-tiered concentric map model to visualize how we zoom from the entire planet down to our island home.",
+    "materials": [
+      "Paper (or construction paper)",
+      "Crayons, colored pencils, or markers",
+      "Scissors (with adult supervision)",
+      "Glue stick or tape"
+    ],
+    "setup": "Clear a workspace on the table. Gather paper sheets and drawing tools. Lay out a world map or globe for visual reference.",
+    "steps": [
+      "Draw and color a large outer circle representing planet Earth (blue oceans and green continents).",
+      "Draw a red dotted line across the middle of your Earth circle to represent the Equator.",
+      "Inside the Northern Hemisphere, draw the outline of the continent of Asia and label it.",
+      "Within the southeastern corner of Asia, draw the cluster of islands representing the Philippines.",
+      "Add cardinal direction labels (North, South, East, West) and present your map zoom to your family!"
+    ],
+    "finishCondition": "A labeled, multi-tiered drawing showing the progressive zoom from Earth → Equator → Asia → Southeast Asia → Philippines.",
+    "safetyNotes": "Use safety scissors with adult guidance when cutting paper shapes.",
+    "accessibilityAlternative": "Use four pre-cut paper circles or bowls of decreasing sizes (Large = Earth, Medium = Asia, Small = Southeast Asia, Tiny Star = Philippines). Stack or arrange them in order and verbally describe the zoom."
+  },
+  "game": {
+    "title": "Cosmic Zoom: Find Our Island Home",
+    "objective": "Guide your family exploration ship through 4 progressive zoom levels from outer space down to the Philippine archipelago by naming and locating the correct geographic zone at each stage.",
+    "materials": [
+      "World map, globe, or Google Earth on a screen",
+      "A small token or coin (your spaceship!)",
+      "Paper and marker for keeping team score"
+    ],
+    "setup": "Place the world map flat in the center of the table. Have all family members gather around. The youngest explorer starts as Flight Commander holding the spaceship token.",
+    "rules": "The game progresses through 4 Zoom Levels. Level 1 (Cosmic Orbit): Point to planet Earth and identify the Equator line. Level 2 (Continent Approach): Identify the largest continent, Asia, and state which direction it lies. Level 3 (Regional Sector): Locate the Southeast Asia neighborhood south of China. Level 4 (Touchdown): Place the token directly on the Philippine islands and name at least one surrounding ocean (Pacific Ocean or South China Sea). Each player takes turns navigating the ship through the sequence.",
+    "winCondition": "Successfully complete all 4 Zoom Levels and celebrate with a family team cheer: 'Mabuhay Pilipinas!'",
+    "adaptation": "Explorer (7-8): Focus on pointing to colors (blue ocean, green land) and finding Asia. Adventure (9-10): Must name the Equator and two Southeast Asian neighboring countries before landing. Trailblazer (11-12+): Must state the hemisphere (Northern/Eastern) and explain which body of water lies on the east (Pacific Ocean) versus west (South China Sea / West Philippine Sea)."
+  },
+  "authoritativeSources": [
+    {
+      "source": "NAMRIA (National Mapping and Resource Information Authority)",
+      "exactUrl": "https://www.namria.gov.ph/",
+      "publisher": "Department of Environment and Natural Resources, Republic of the Philippines",
+      "claimSupported": "The official Philippine mapping authority verifying that the Philippine archipelago consists of about 7,641 islands and documenting Philippine maritime territory.",
+      "verifiedDate": "2026-08-17"
+    },
+    {
+      "source": "WorldAtlas: Philippines Geography and Maps",
+      "exactUrl": "https://www.worldatlas.com/maps/philippines",
+      "publisher": "WorldAtlas",
+      "claimSupported": "Geographic documentation detailing the location of the Philippines in Southeast Asia in the western Pacific Ocean, bounded by the Philippine Sea and South China Sea, and positioned north of the Equator.",
+      "verifiedDate": "2026-08-17"
+    },
+    {
+      "source": "NASA Earth Science",
+      "exactUrl": "https://science.nasa.gov/earth/",
+      "publisher": "National Aeronautics and Space Administration (NASA)",
+      "claimSupported": "Planetary observation data documenting global continents, oceans, equatorial latitude zones, and Earth hemisphere divisions from space.",
+      "verifiedDate": "2026-08-17"
+    }
+  ],
+  "curatedResources": [
+    {
+      "id": "res-google-earth",
+      "title": "Google Earth: Explore Planet Earth",
+      "url": "https://earth.google.com/web/",
+      "type": "Interactive Map",
+      "provider": "Google",
+      "visibility": "both",
+      "whyUseful": "Fly from space down to Asia, Southeast Asia, and zoom in on the Philippine archipelago in 3D satellite imagery.",
+      "verificationStatus": "verified",
+      "verifiedDate": "2026-08-17"
+    },
+    {
+      "id": "res-natgeo-kids-philippines",
+      "title": "National Geographic Kids: Philippines Country Profile",
+      "url": "https://kids.nationalgeographic.com/geography/countries/article/philippines",
+      "type": "Article",
+      "provider": "National Geographic Kids",
+      "visibility": "both",
+      "whyUseful": "Engaging, kid-friendly guide exploring the geography, islands, wildlife, and people of the Philippines.",
+      "verificationStatus": "verified",
+      "verifiedDate": "2026-08-17"
+    }
+  ],
+  "premiumAssessment": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "question": "Which continent is the Philippines a part of?",
+      "options": [
+        "Europe",
+        "Africa",
+        "Asia",
+        "South America"
+      ],
+      "correctAnswer": "Asia",
+      "correctOptionId": "Asia",
+      "explanation": "The Philippines is located in the southeastern region of the continent of Asia."
+    },
+    {
+      "id": "q2",
+      "type": "multiple-choice",
+      "question": "The Philippines is located in which specific regional neighborhood?",
+      "options": [
+        "East Asia",
+        "Southeast Asia",
+        "South Asia",
+        "Central Asia"
+      ],
+      "correctAnswer": "Southeast Asia",
+      "correctOptionId": "Southeast Asia",
+      "explanation": "The Philippines is located in Southeast Asia, alongside neighbors like Indonesia, Malaysia, and Vietnam."
+    },
+    {
+      "id": "q3",
+      "type": "true-false-with-explanation",
+      "question": "The Philippines is composed of a single giant landmass.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correctAnswer": "False",
+      "correctOptionId": "False",
+      "explanation": "The Philippines is an archipelago made of about 7,641 islands surrounded by water."
+    },
+    {
+      "id": "q4",
+      "type": "short-answer",
+      "question": "What is the name of the imaginary line around the middle of the Earth that gives the Philippines its warm tropical climate?",
+      "options": [
+        "The Equator"
+      ],
+      "correctAnswer": "The Equator",
+      "correctOptionId": "The Equator",
+      "expectedAnswerKeywords": [
+        "Equator",
+        "equator",
+        "Ekwador"
+      ],
+      "explanation": "The Equator is the 0° latitude line dividing the Northern and Southern Hemispheres."
+    },
+    {
+      "id": "q5",
+      "type": "multiple-choice",
+      "question": "According to official geographic surveys, about how many islands make up the Philippine archipelago?",
+      "options": [
+        "Around 100",
+        "About 7,641",
+        "Exactly 50",
+        "Over 100,000"
+      ],
+      "correctAnswer": "About 7,641",
+      "correctOptionId": "About 7,641",
+      "explanation": "Official surveys by NAMRIA record approximately 7,641 islands in the Philippine archipelago."
+    }
+  ],
+  "suggestedPacing": {
+    "hook": 5,
+    "teaching": 20,
+    "discussionVocabulary": 10,
+    "handsOnOrGame": 15,
+    "assessment": 5,
+    "reflectionClosing": 5,
+    "total": 60
+  },
+  "optionalExtensions": [
+    "Use Google Earth to fly across the Equator and measure the distance from Manila to the Equator in kilometers.",
+    "Create a family passport page for Planet Earth featuring stamps for the continents you have explored."
+  ],
+  "learnerReflection": "When you look at the giant world map, what makes you feel amazed about our special place as an island nation in Southeast Asia?",
+  "familyChallenge": "Find a map or globe in your home (or on a digital screen). Have each family member point to the Equator, locate Asia, and find the Philippine islands. Take a family photo pointing to our island home on the map!",
+  "teacherPreparation": "Prepare a physical globe, world map, or ensure Google Earth is loaded on a shared family screen. Review the cardinal directions (North, South, East, West) and hemisphere concepts. Have paper and coloring tools ready for the hands-on mapping zoom activity and the Cosmic Zoom game.",
+  "teacherAnswerKey": {
+    "q1": "Asia",
+    "q2": "Southeast Asia",
+    "q3": "False. The Philippines is an archipelago of about 7,641 islands.",
+    "q4": "The Equator (Ekwador)",
+    "q5": "About 7,641 islands"
+  },
+  "publicationStatus": "pilot",
+  "privacyClassification": "family-safe",
+  "materials": [
+    "World map or globe (or digital map/Google Earth)",
+    "Paper and coloring tools",
+    "Token or coin for game"
+  ],
+  "factualMediaRequirements": [
+    "media-globe-earth",
+    "media-world-equator",
+    "media-seasia-philippines"
+  ],
+  "activities": {
+    "beginnerSupport": "Point to the big blue ocean and the green land of Asia on a world map.",
+    "coreActivity": "Trace the Equator and find the Philippines in Southeast Asia on the globe.",
+    "advancedChallenge": "Compare the location of the Philippines with a northern country and explain how latitude affects climate."
+  },
+  "interactiveGame": "Cosmic Zoom: Find Our Island Home",
+  "handsOnActivity": "Mapping Our Place in the World concentric map model",
+  "knowledgeCheck": [
+    {
+      "question": "Which continent is the Philippines a part of?",
+      "options": [
+        "Europe",
+        "Africa",
+        "Asia",
+        "South America"
+      ],
+      "correctAnswer": "Asia"
+    },
+    {
+      "question": "Is the Philippines located north or south of the Equator?",
+      "options": [
+        "North of the Equator",
+        "South of the Equator"
+      ],
+      "correctAnswer": "North of the Equator"
+    },
+    {
+      "question": "About how many islands make up the Philippine archipelago?",
+      "options": [
+        "Around 100",
+        "About 7,641",
+        "Over 100,000"
+      ],
+      "correctAnswer": "About 7,641"
+    }
+  ],
+  "progressBadge": "World Explorer 🌍",
+  "sourceNotes": "Official geographic data verified from NAMRIA and WorldAtlas.",
+  "mediaAttributionNotes": "All referenced media moments use educational satellite imagery and cartographic diagrams.",
+  "accessibilityNotes": "Provide pre-cut concentric shapes and tactile globe options for learners with fine-motor or visual differences."
+},
   {
     "id": "lesson-2-archipelago",
     "date": "2026-08-04",
@@ -254,9 +386,9 @@ export const stage2Lessons: CurriculumLesson[] = [
     "factualBackground": "The Philippines has a rich heritage involving Luzon Island Group.",
     "adventureHook": "Welcome to Lesson 2! Have you ever wondered about Luzon Island Group? Today we are going to act like detectives and uncover the amazing secrets behind it! Let's dive into an adventure you will never forget.",
     "discoveries": [
-      "Luzon is the largest and most populous island group.",
-      "It contains the capital city, Manila.",
-      "The Cordillera mountains are home to ancient rice terraces."
+      { "title": "Discovery 1", "description": "Luzon is the largest and most populous island group." },
+      { "title": "Discovery 2", "description": "It contains the capital city, Manila." },
+      { "title": "Discovery 3", "description": "The Cordillera mountains are home to ancient rice terraces." }
     ],
     "richExplanation": [
       {
@@ -523,9 +655,9 @@ export const stage2Lessons: CurriculumLesson[] = [
     "factualBackground": "The Philippines has a rich heritage involving Visayas Island Group.",
     "adventureHook": "Welcome to Lesson 3! Have you ever wondered about Visayas Island Group? Today we are going to act like detectives and uncover the amazing secrets behind it! Let's dive into an adventure you will never forget.",
     "discoveries": [
-      "The Visayas is a collection of islands in the middle of the country.",
-      "It is known for the Chocolate Hills of Bohol.",
-      "Cebu is the oldest city in the Philippines."
+      { "title": "Discovery 1", "description": "The Visayas is a collection of islands in the middle of the country." },
+      { "title": "Discovery 2", "description": "It is known for the Chocolate Hills of Bohol." },
+      { "title": "Discovery 3", "description": "Cebu is the oldest city in the Philippines." }
     ],
     "richExplanation": [
       {
@@ -792,9 +924,9 @@ export const stage2Lessons: CurriculumLesson[] = [
     "factualBackground": "The Philippines has a rich heritage involving Mindanao Island Group.",
     "adventureHook": "Welcome to Lesson 4! Have you ever wondered about Mindanao Island Group? Today we are going to act like detectives and uncover the amazing secrets behind it! Let's dive into an adventure you will never forget.",
     "discoveries": [
-      "Mindanao is the second largest island in the Philippines.",
-      "It is home to Mount Apo, the highest peak.",
-      "It has a rich Islamic heritage and culture."
+      { "title": "Discovery 1", "description": "Mindanao is the second largest island in the Philippines." },
+      { "title": "Discovery 2", "description": "It is home to Mount Apo, the highest peak." },
+      { "title": "Discovery 3", "description": "It has a rich Islamic heritage and culture." }
     ],
     "richExplanation": [
       {
@@ -1061,9 +1193,9 @@ export const stage2Lessons: CurriculumLesson[] = [
     "factualBackground": "The Philippines has a rich heritage involving Administrative Regions.",
     "adventureHook": "Welcome to Lesson 5! Have you ever wondered about Administrative Regions? Today we are going to act like detectives and uncover the amazing secrets behind it! Let's dive into an adventure you will never forget.",
     "discoveries": [
-      "The Philippines is divided into 18 administrative regions, including the newly formed NIR.",
-      "Regions help the government manage the country better.",
-      "Provinces are divided into cities, municipalities, and barangays."
+      { "title": "Discovery 1", "description": "The Philippines is divided into 18 administrative regions, including the newly formed NIR." },
+      { "title": "Discovery 2", "description": "Regions help the government manage the country better." },
+      { "title": "Discovery 3", "description": "Provinces are divided into cities, municipalities, and barangays." }
     ],
     "richExplanation": [
       {
@@ -1330,9 +1462,9 @@ export const stage2Lessons: CurriculumLesson[] = [
     "factualBackground": "The Philippines has a rich heritage involving Mountains and Volcanoes.",
     "adventureHook": "Welcome to Lesson 6! Have you ever wondered about Mountains and Volcanoes? Today we are going to act like detectives and uncover the amazing secrets behind it! Let's dive into an adventure you will never forget.",
     "discoveries": [
-      "Mayon Volcano is famous for its perfect cone shape.",
-      "Taal Volcano is one of the smallest active volcanoes in the world.",
-      "Volcanic soil is very fertile for farming."
+      { "title": "Discovery 1", "description": "Mayon Volcano is famous for its perfect cone shape." },
+      { "title": "Discovery 2", "description": "Taal Volcano is one of the smallest active volcanoes in the world." },
+      { "title": "Discovery 3", "description": "Volcanic soil is very fertile for farming." }
     ],
     "richExplanation": [
       {
@@ -1599,9 +1731,9 @@ export const stage2Lessons: CurriculumLesson[] = [
     "factualBackground": "The Philippines has a rich heritage involving Waterways and Beaches.",
     "adventureHook": "Welcome to Lesson 7! Have you ever wondered about Waterways and Beaches? Today we are going to act like detectives and uncover the amazing secrets behind it! Let's dive into an adventure you will never forget.",
     "discoveries": [
-      "The Puerto Princesa Subterranean River is a UNESCO World Heritage site.",
-      "The Philippines has one of the longest coastlines in the world.",
-      "Rivers were the main highways for our ancestors."
+      { "title": "Discovery 1", "description": "The Puerto Princesa Subterranean River is a UNESCO World Heritage site." },
+      { "title": "Discovery 2", "description": "The Philippines has one of the longest coastlines in the world." },
+      { "title": "Discovery 3", "description": "Rivers were the main highways for our ancestors." }
     ],
     "richExplanation": [
       {
@@ -1868,9 +2000,9 @@ export const stage2Lessons: CurriculumLesson[] = [
     "factualBackground": "The Philippines has a rich heritage involving Unique Plants.",
     "adventureHook": "Welcome to Lesson 8! Have you ever wondered about Unique Plants? Today we are going to act like detectives and uncover the amazing secrets behind it! Let's dive into an adventure you will never forget.",
     "discoveries": [
-      "The Waling-waling is one of the most beautiful orchids in the world.",
-      "Rafflesia, the world's largest flower, can be found here.",
-      "Sampaguita is our national flower and smells very sweet."
+      { "title": "Discovery 1", "description": "The Waling-waling is one of the most beautiful orchids in the world." },
+      { "title": "Discovery 2", "description": "Rafflesia, the world's largest flower, can be found here." },
+      { "title": "Discovery 3", "description": "Sampaguita is our national flower and smells very sweet." }
     ],
     "richExplanation": [
       {
@@ -2137,9 +2269,9 @@ export const stage2Lessons: CurriculumLesson[] = [
     "factualBackground": "The Philippines has a rich heritage involving Unique Animals.",
     "adventureHook": "Welcome to Lesson 9! Have you ever wondered about Unique Animals? Today we are going to act like detectives and uncover the amazing secrets behind it! Let's dive into an adventure you will never forget.",
     "discoveries": [
-      "The Philippine Eagle is one of the largest and rarest eagles.",
-      "The Tarsier is a tiny primate with huge eyes.",
-      "The Tamaraw is a dwarf buffalo found only in Mindoro."
+      { "title": "Discovery 1", "description": "The Philippine Eagle is one of the largest and rarest eagles." },
+      { "title": "Discovery 2", "description": "The Tarsier is a tiny primate with huge eyes." },
+      { "title": "Discovery 3", "description": "The Tamaraw is a dwarf buffalo found only in Mindoro." }
     ],
     "richExplanation": [
       {
@@ -2406,9 +2538,9 @@ export const stage2Lessons: CurriculumLesson[] = [
     "factualBackground": "The Philippines has a rich heritage involving Filipino Languages.",
     "adventureHook": "Welcome to Lesson 10! Have you ever wondered about Filipino Languages? Today we are going to act like detectives and uncover the amazing secrets behind it! Let's dive into an adventure you will never forget.",
     "discoveries": [
-      "There are over 170 languages spoken in the Philippines.",
-      "Tagalog is the basis of the national language, Filipino.",
-      "Hiligaynon, Cebuano, and Ilocano are widely spoken."
+      { "title": "Discovery 1", "description": "There are over 170 languages spoken in the Philippines." },
+      { "title": "Discovery 2", "description": "Tagalog is the basis of the national language, Filipino." },
+      { "title": "Discovery 3", "description": "Hiligaynon, Cebuano, and Ilocano are widely spoken." }
     ],
     "richExplanation": [
       {
@@ -2675,9 +2807,9 @@ export const stage2Lessons: CurriculumLesson[] = [
     "factualBackground": "The Philippines has a rich heritage involving National Symbols.",
     "adventureHook": "Welcome to Lesson 11! Have you ever wondered about National Symbols? Today we are going to act like detectives and uncover the amazing secrets behind it! Let's dive into an adventure you will never forget.",
     "discoveries": [
-      "The Philippine flag can be flown upside down to indicate a state of war.",
-      "The Mango is our national fruit.",
-      "The Narra tree is our national tree, known for its strength."
+      { "title": "Discovery 1", "description": "The Philippine flag can be flown upside down to indicate a state of war." },
+      { "title": "Discovery 2", "description": "The Mango is our national fruit." },
+      { "title": "Discovery 3", "description": "The Narra tree is our national tree, known for its strength." }
     ],
     "richExplanation": [
       {
@@ -2944,9 +3076,9 @@ export const stage2Lessons: CurriculumLesson[] = [
     "factualBackground": "The Philippines has a rich heritage involving Traditions and Values.",
     "adventureHook": "Welcome to Lesson 12! Have you ever wondered about Traditions and Values? Today we are going to act like detectives and uncover the amazing secrets behind it! Let's dive into an adventure you will never forget.",
     "discoveries": [
-      "Bayanihan is the spirit of communal unity and cooperation.",
-      "Respect for elders is shown by using 'po' and 'opo' and doing the 'mano'.",
-      "Fiestas are held to give thanks for a good harvest."
+      { "title": "Discovery 1", "description": "Bayanihan is the spirit of communal unity and cooperation." },
+      { "title": "Discovery 2", "description": "Respect for elders is shown by using 'po' and 'opo' and doing the 'mano'." },
+      { "title": "Discovery 3", "description": "Fiestas are held to give thanks for a good harvest." }
     ],
     "richExplanation": [
       {
@@ -3213,9 +3345,9 @@ export const stage2Lessons: CurriculumLesson[] = [
     "factualBackground": "The Philippines has a rich heritage involving August Review.",
     "adventureHook": "We have reached the end of August! It is time for The Great August Showcase, where we celebrate everything we learned about Luzon, Visayas, Mindanao, our symbols, and languages!",
     "discoveries": [
-      "We explored the geography of Luzon, Visayas, and Mindanao.",
-      "We learned about our national symbols and diverse languages.",
-      "We discovered the unique animals and plants that share our islands."
+      { "title": "Discovery 1", "description": "We explored the geography of Luzon, Visayas, and Mindanao." },
+      { "title": "Discovery 2", "description": "We learned about our national symbols and diverse languages." },
+      { "title": "Discovery 3", "description": "We discovered the unique animals and plants that share our islands." }
     ],
     "richExplanation": [
       {

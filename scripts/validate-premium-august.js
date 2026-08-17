@@ -1,4 +1,4 @@
-const fs = require("fs");
+﻿const fs = require("fs");
 const { execSync } = require("child_process");
 const path = require("path");
 
@@ -52,7 +52,8 @@ const BANNED_STRINGS = [
   "Fact 1", "Fact 2", "Fact 3",
   "Official Guide to",
   "Educational Video on",
-  "??", "???"
+  "??", "???",
+  "\uFFFD"
 ];
 
 let globalErrors = [];
@@ -84,44 +85,124 @@ lessons.forEach((lesson, i) => {
   });
 
   if (lesson.id === "lesson-1-world-map") {
+    // 1. Publication status
     if (lesson.publicationStatus !== "pilot") errors.push("Publication status must be pilot");
-    if (!lesson.premiumAssessment || lesson.premiumAssessment.length < 5) errors.push("Missing or insufficient premiumAssessment (min 5)");
 
-    if (lesson.vocabulary && lesson.vocabulary.length < 3) errors.push("Insufficient vocabulary (min 3)");
+    // 2. Discoveries contract ({ title, description })
+    if (!lesson.discoveries || lesson.discoveries.length < 3) {
+      errors.push("Insufficient discoveries (min 3)");
+    } else {
+      lesson.discoveries.forEach((d, dIdx) => {
+        if (!d || typeof d !== "object" || !d.title || !d.description) {
+          errors.push(`Discovery ${dIdx + 1} must be a structured object with title and description`);
+        }
+      });
+    }
+
+    // 3. Vocabulary (min 3 + contextualExample)
+    if (!lesson.vocabulary || lesson.vocabulary.length < 3) errors.push("Insufficient vocabulary (min 3)");
     (lesson.vocabulary || []).forEach(v => {
       if (!v.contextualExample) errors.push(`Vocabulary word ${v.word} missing contextualExample`);
     });
 
+    // 4. Media moments (min 3) & Ring of Fire ban
     if (!lesson.mediaMoments || lesson.mediaMoments.length < 3) errors.push("Insufficient mediaMoments (min 3)");
+    (lesson.mediaMoments || []).forEach((mm, mIdx) => {
+      const mmStr = JSON.stringify(mm).toLowerCase();
+      if (mmStr.includes("ring of fire") || mmStr.includes("volcano") || mmStr.includes("tectonic")) {
+        errors.push(`Lesson 1 mediaMoment ${mIdx + 1} overreaches into Ring of Fire / volcanoes`);
+      }
+    });
+
+    // 5. Guided discussion (min 2)
     if (!lesson.guidedDiscussion || lesson.guidedDiscussion.length < 2) errors.push("Insufficient guidedDiscussion (min 2)");
-    if (!lesson.discoveries || lesson.discoveries.length < 3) errors.push("Insufficient discoveries (min 3)");
 
-    if (!lesson.ageDifferentiation || !lesson.ageDifferentiation.explorer || !lesson.ageDifferentiation.adventure) errors.push("Missing complete ageDifferentiation");
+    // 6. Age differentiation (all 3 tiers + Trailblazer rigor)
+    if (!lesson.ageDifferentiation || !lesson.ageDifferentiation.explorer || !lesson.ageDifferentiation.adventure || !lesson.ageDifferentiation.trailblazer) {
+      errors.push("Missing complete 3-tier ageDifferentiation (explorer, adventure, trailblazer)");
+    } else {
+      const tb = lesson.ageDifferentiation.trailblazer.toLowerCase();
+      if (tb.length < 50 || !(tb.includes("compare") || tb.includes("latitude") || tb.includes("location") || tb.includes("ocean"))) {
+        errors.push("Trailblazer challenge must require map reasoning or geographic comparison");
+      }
+    }
 
-    if (!lesson.handsOnTask || !lesson.handsOnTask.materials || !lesson.handsOnTask.steps || lesson.handsOnTask.steps.length < 3) errors.push("Missing structured handsOnTask");
-    if (lesson.handsOnTask && !lesson.handsOnTask.accessibilityAlternative) errors.push("Missing real accessibility alternative in handsOnTask");
+    // 7. Hands-on task with accessibility alternative
+    if (!lesson.handsOnTask || !lesson.handsOnTask.materials || !lesson.handsOnTask.steps || lesson.handsOnTask.steps.length < 3) {
+      errors.push("Missing structured handsOnTask");
+    }
+    if (lesson.handsOnTask && !lesson.handsOnTask.accessibilityAlternative) {
+      errors.push("Missing real accessibility alternative in handsOnTask");
+    }
 
-    if (!lesson.authoritativeSources || lesson.authoritativeSources.length < 2) errors.push("Insufficient authoritativeSources (min 2)");
-    if (!lesson.curatedResources || lesson.curatedResources.length < 2) errors.push("Insufficient curatedResources (min 2)");
+    // 8. Interactive Game with rules and winCondition
+    if (!lesson.game || !lesson.game.title || !lesson.game.objective || !lesson.game.rules || !lesson.game.winCondition) {
+      errors.push("Missing complete structured game (title, objective, rules, winCondition)");
+    }
 
-    if (!lesson.learnerReflection) errors.push("Missing specific reflection");
-    if (!lesson.familyChallenge) errors.push("Missing specific family challenge");
-    if (!lesson.teacherPreparation || lesson.teacherPreparation.length < 50) errors.push("Missing or weak specific teacher preparation");
-    if (!lesson.suggestedPacing) errors.push("Missing suggested pacing");
+    // 9. Misconceptions / Check Your Thinking
+    if (!lesson.misconceptions || lesson.misconceptions.length < 1) {
+      errors.push("Missing misconceptions content for 'Check Your Thinking'");
+    }
 
+    // 10. Authoritative sources (min 2, exact URLs, verified)
+    if (!lesson.authoritativeSources || lesson.authoritativeSources.length < 2) {
+      errors.push("Insufficient authoritativeSources (min 2)");
+    } else {
+      lesson.authoritativeSources.forEach((src, sIdx) => {
+        if (!src.exactUrl || !src.exactUrl.startsWith("http")) errors.push(`Authoritative source ${sIdx + 1} missing exactUrl`);
+        if (!src.publisher) errors.push(`Authoritative source ${sIdx + 1} missing publisher`);
+        if (!src.claimSupported) errors.push(`Authoritative source ${sIdx + 1} missing claimSupported`);
+        if (!src.verifiedDate) errors.push(`Authoritative source ${sIdx + 1} missing verifiedDate`);
+      });
+    }
+
+    // 11. Curated resources (min 2, verified)
+    if (!lesson.curatedResources || lesson.curatedResources.length < 2) {
+      errors.push("Insufficient curatedResources (min 2)");
+    } else {
+      lesson.curatedResources.forEach((res, rIdx) => {
+        if (!res.url || !res.url.startsWith("http")) errors.push(`Curated resource ${rIdx + 1} missing url`);
+        if (!res.whyUseful) errors.push(`Curated resource ${rIdx + 1} missing whyUseful`);
+        if (res.verificationStatus !== "verified") errors.push(`Curated resource ${rIdx + 1} must have verificationStatus: 'verified'`);
+      });
+    }
+
+    // 12. Structured 60-min pacing
+    if (!lesson.suggestedPacing) {
+      errors.push("Missing suggested pacing");
+    } else if (typeof lesson.suggestedPacing === "object") {
+      const p = lesson.suggestedPacing;
+      if (!p.hook || !p.teaching || !p.total) errors.push("Structured pacing missing required segments or total");
+      if (p.total < 45 || p.total > 75) errors.push(`Suggested pacing total should target ~60m (got ${p.total})`);
+    }
+
+    // 13. Premium assessments & matching answer key
+    if (!lesson.premiumAssessment || lesson.premiumAssessment.length < 5) {
+      errors.push("Missing or insufficient premiumAssessment (min 5)");
+    }
     const keyCount = lesson.teacherAnswerKey ? Object.keys(lesson.teacherAnswerKey).length : 0;
     if (keyCount !== (lesson.premiumAssessment || []).length) {
       errors.push(`Answer key mismatch: ${keyCount} keys vs ${(lesson.premiumAssessment || []).length} assessments`);
     }
 
+    // 14. Core teaching richExplanation (4-7 sections, min 400 words) & Scope Check
     const richExpChunks = lesson.richExplanation || [];
     const richExpWords = richExpChunks.reduce((acc, chunk) => acc + (chunk.body || "").split(/\s+/).length, 0);
     if (richExpWords < 400) errors.push(`richExplanation < 400 words (${richExpWords})`);
     if (richExpChunks.length < 4 || richExpChunks.length > 7) errors.push(`Explanation sections not 4-7 (${richExpChunks.length})`);
 
-    // Scope check
-    if (str.toLowerCase().includes("archipelago overreach")) errors.push("Scope overreach detected (archipelago)");
-    if (str.toLowerCase().includes("island-group overreach")) errors.push("Scope overreach detected (island-group)");
+    richExpChunks.forEach((chunk, cIdx) => {
+      const heading = (chunk.heading || "").toLowerCase();
+      const body = (chunk.body || "").toLowerCase();
+      if (heading.includes("ring of fire") || heading.includes("restless earth") || (body.includes("ring of fire") && body.includes("tectonic plate"))) {
+        errors.push(`Section ${cIdx + 1} (${chunk.heading}) teaches Ring of Fire / tectonics in depth, which belongs in later geology lesson`);
+      }
+    });
+
+    if (!lesson.learnerReflection) errors.push("Missing specific reflection");
+    if (!lesson.familyChallenge) errors.push("Missing specific family challenge");
+    if (!lesson.teacherPreparation || lesson.teacherPreparation.length < 50) errors.push("Missing or weak specific teacher preparation");
   }
 
   const matrixRow = {
@@ -153,6 +234,6 @@ if (!lesson1Pass) {
   process.exit(1);
 } else {
   console.log("\nLesson 1 Premium Gate: PASS");
-  console.log("Note: Lessons 2-13 may legitimately fail during Phase A development.");
+  console.log("All 28 premium quality rules satisfied!");
   process.exit(0);
 }

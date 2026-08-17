@@ -1,4 +1,4 @@
-export type LevelSupport = {
+﻿export type LevelSupport = {
   beginnerSupport: string;
   coreActivity: string;
   advancedChallenge: string;
@@ -11,13 +11,18 @@ export type QuizQuestion = {
   correctAnswer: string;
 };
 
+export type Discovery = {
+  title: string;
+  description: string;
+};
+
 export type PremiumAssessment = 
-  | { type: 'multiple-choice'; question: string; options: string[]; correctAnswer: string }
-  | { type: 'true-false-with-explanation'; question: string; correctAnswer: 'True' | 'False'; explanation: string }
-  | { type: 'short-answer'; question: string; expectedAnswerKeywords: string[] }
-  | { type: 'matching'; pairs: { left: string; right: string }[] }
-  | { type: 'sequencing'; question: string; correctOrder: string[] }
-  | { type: 'scenario-application'; scenario: string; question: string; expectedResolution: string };
+  | { id?: string; type: 'multiple-choice'; question: string; options: string[]; correctAnswer?: string; correctOptionId?: string; explanation?: string }
+  | { id?: string; type: 'true-false-with-explanation'; question: string; correctAnswer?: 'True' | 'False' | string; correctOptionId?: string; explanation?: string; options?: string[] }
+  | { id?: string; type: 'short-answer'; question: string; expectedAnswerKeywords?: string[]; correctOptionId?: string; options?: string[] }
+  | { id?: string; type: 'matching'; pairs: { left: string; right: string }[]; question?: string }
+  | { id?: string; type: 'sequencing'; question: string; correctOrder: string[] }
+  | { id?: string; type: 'scenario-application'; scenario: string; question: string; expectedResolution: string };
 
 export type FactualSource = {
   source: string;
@@ -25,44 +30,102 @@ export type FactualSource = {
   note?: string;
 };
 
-export type CurriculumLesson = {
+export type CuratedResource = {
+  id: string;
+  title: string;
+  url: string;
+  type: string;
+  visibility: "teacher" | "family" | "both";
+  whyUseful: string;
+  verificationStatus: "verified" | "unverified";
+  provider: string;
+  verifiedDate?: string;
+};
 
+export type AuthoritativeSource = {
+  source: string;
+  exactUrl: string;
+  publisher: string;
+  claimSupported: string;
+  verifiedDate: string;
+  context?: string;
+  note?: string;
+  url?: string;
+};
+
+export type SuggestedPacing = {
+  hook: number;
+  teaching: number;
+  discussionVocabulary: number;
+  handsOnOrGame: number;
+  assessment: number;
+  reflectionClosing: number;
+  total: number;
+};
+
+export type AgeDifferentiation = {
+  explorer: string;
+  adventure: string;
+  trailblazer: string;
+};
+
+export type Game = {
+  title: string;
+  objective: string;
+  materials: string[];
+  setup: string;
+  rules: string;
+  winCondition: string;
+  adaptation?: string;
+};
+
+export type HandsOnTask = {
+  title: string;
+  description?: string;
+  materials: string[];
+  setup?: string;
+  steps: string[];
+  finishCondition?: string;
+  safetyNotes?: string;
+  accessibilityAlternative?: string;
+};
+
+export type VocabularyItem = {
+  word: string;
+  translation?: string;
+  language?: string;
+  hiligaynon?: string;
+  pronunciation?: string;
+  contextualExample?: string;
+  mediaId?: string;
+};
+
+export type MediaMoment = {
+  description: string;
+  purpose: string;
+  requiredType: string;
+  factualRequirement?: string;
+  sourceRequirement: string;
+  altTextGuidance?: string;
+};
+
+export type CurriculumLesson = {
   // Premium Fields
   adventureHook?: string;
-  discoveries?: string[];
+  discoveries?: Discovery[];
   richExplanation?: { heading?: string; body: string; emoji?: string }[];
   keyFacts?: string[];
   realWorldConnection?: string;
-  mediaMoments?: { description: string; purpose: string; requiredType: string; factualRequirement?: string; sourceRequirement: string; altTextGuidance?: string }[];
+  mediaMoments?: MediaMoment[];
   guidedDiscussion?: string[];
-  ageDifferentiation?: {
-    explorer: string;
-    adventure: string;
-    trailblazer: string;
-  };
-  game?: {
-    title: string;
-    objective: string;
-    materials: string[];
-    setup: string;
-    rules: string;
-    winCondition: string;
-    adaptation?: string;
-  };
-  handsOnTask?: {
-    title: string;
-    materials: string[];
-    setup?: string;
-    steps: string[];
-    finishCondition?: string;
-    safetyNotes?: string;
-    accessibilityAlternative?: string;
-  };
-  curatedResources?: { id: string; title: string; url: string; type: string; visibility: "teacher" | "family" | "both"; whyUseful: string; verificationStatus: "verified" | "unverified"; provider: string; }[];
-  authoritativeSources?: { source: string; url: string; note: string }[];
-  optionalExtensions?: string[];
-  suggestedPacing?: Record<string, string>;
-  crossSubjectConnections?: string[];
+  ageDifferentiation?: AgeDifferentiation;
+  game?: Game;
+  handsOnTask?: HandsOnTask;
+  curatedResources?: CuratedResource[];
+  authoritativeSources?: AuthoritativeSource[];
+  optionalExtensions?: string[] | string;
+  suggestedPacing?: SuggestedPacing | Record<string, string | number> | string;
+  crossSubjectConnections?: string[] | Record<string, string>;
   characterConnection?: string;
   misconceptions?: string[];
   premiumAssessment?: PremiumAssessment[];
@@ -77,7 +140,7 @@ export type CurriculumLesson = {
   learningObjectives: string[];
   essentialQuestion: string;
   factualBackground: string;
-  vocabulary: { word: string; translation?: string; language?: string; hiligaynon?: string; pronunciation?: string; contextualExample?: string; mediaId?: string }[];
+  vocabulary: VocabularyItem[];
   subjectConnections: {
     geography?: string;
     science?: string;
@@ -115,7 +178,6 @@ export type CurriculumLesson = {
   privateTeacherNotes?: string;
   internalFactCheckNotes?: string;
 };
-
 
 export type FamilyPremiumLesson = Pick<
   CurriculumLesson,
@@ -163,13 +225,15 @@ export function createFamilyPremiumProjection(lesson: CurriculumLesson): FamilyP
     interactiveGame: lesson.interactiveGame,
     handsOnActivity: lesson.handsOnActivity
   } satisfies FamilyPremiumLesson;
+
   for (const k of Object.keys(result) as Array<keyof typeof result>) {
     if (result[k] === undefined) delete result[k];
   }
   return result;
 }
 
-export type FamilyVisibleCurriculumLesson = Pick<CurriculumLesson,
+export type FamilyVisibleCurriculumLesson = Pick<
+  CurriculumLesson,
   | "id" | "date" | "title" | "topic" | "ageRange" | "unit" | "essentialQuestion"
   | "adventureHook" | "discoveries" | "richExplanation" | "keyFacts" | "realWorldConnection"
   | "vocabulary" | "mediaMoments" | "guidedDiscussion" | "ageDifferentiation"
@@ -239,7 +303,7 @@ export function serializeForFamily(lesson: CurriculumLesson): FamilyVisibleCurri
   return result;
 }
 
-// Lightweight runtime validator — useful for build-time checks and unit tests
+// Lightweight runtime validator for build-time checks and unit tests
 export function validateCurriculumLesson(value: any): { ok: boolean; errors: string[] } {
   const errors: string[] = [];
   if (!value || typeof value !== 'object') {

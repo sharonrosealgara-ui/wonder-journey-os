@@ -113,7 +113,7 @@ export function SlideView({
   }
 }
 
-/* â”€â”€ Individual slides â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── Individual slides ─────────────────────────────────────── */
 
 // Family Mode opening screen — one shared screen, the whole family together.
 function WelcomeSlide({ slide, lesson, onNext }: { slide: Slide; lesson: Lesson; onNext: () => void }) {
@@ -1005,7 +1005,7 @@ function CompleteSlide({
               <div className="font-display text-xs uppercase tracking-wide">
                 {destination.name}
               </div>
-              <div className="text-[10px]">â˜… STAMPED â˜…</div>
+              <div className="text-[10px]">★ STAMPED ★</div>
             </div>
           </div>
         )}
@@ -1050,46 +1050,53 @@ function Stat({ label, value, emoji }: { label: string; value: string; emoji: st
 // -- Premium Presentation Slides -----------------------------
 
 function PremiumHookSlide({ slide }: { slide: Slide }) {
-  const content = slide.content as string;
+  const content = String(slide.content || "");
   return (
     <div className="mx-auto max-w-3xl text-center">
-      <div className="mb-3 text-6xl">📌</div>
+      <div className="mb-3 text-6xl">🎣</div>
       <h1 className="wj-outline font-display text-4xl sm:text-5xl">Adventure Hook</h1>
-      <div className="mt-8 rounded-3xl bg-sand p-8 shadow-xl">
-        <p className="font-hand text-2xl text-ink leading-relaxed">{content}</p>
+      <div className="mt-8 rounded-3xl bg-mango-light border-4 border-mango p-8 shadow-xl">
+        <p className="font-hand text-3xl text-mango-deep leading-relaxed">{content}</p>
       </div>
-      <MascotBubble slide={slide} line="Ready to cast our line? Let's see what we catch today!" />
+      <MascotBubble slide={slide} line="Are you ready for today's quest? Let's dive in!" />
     </div>
   );
 }
 
 function PremiumEQSlide({ slide }: { slide: Slide }) {
-  const content = slide.content as string;
+  const content = String(slide.content || "");
   return (
     <div className="mx-auto max-w-3xl text-center">
-      <div className="mb-3 text-6xl">🎯</div>
+      <div className="mb-3 text-6xl">❓</div>
       <h1 className="wj-outline font-display text-4xl sm:text-5xl">Essential Question</h1>
-      <div className="mt-8 rounded-3xl bg-mango-light p-8 shadow-xl border-4 border-mango">
-        <p className="font-display text-3xl text-mango-deep leading-relaxed">{content}</p>
+      <div className="mt-8 rounded-3xl bg-sand p-8 shadow-md border-2 border-sand-deep">
+        <p className="font-display text-2xl italic text-ink sm:text-3xl leading-relaxed">"{content}"</p>
       </div>
-      <MascotBubble slide={slide} line="Keep this question in your head during our whole adventure!" />
+      <MascotBubble slide={slide} line="Keep this question in mind as we explore today!" />
     </div>
   );
 }
 
 function PremiumDiscoveriesSlide({ slide }: { slide: Slide }) {
-  const content = slide.content as any[];
+  const content = (slide.content as any[]) || [];
   return (
     <div className="mx-auto max-w-3xl text-center">
-      <div className="mb-3 text-6xl">📌</div>
+      <div className="mb-3 text-6xl">🔍</div>
       <h1 className="wj-outline font-display text-4xl sm:text-5xl">Discoveries</h1>
       <div className="mt-8 space-y-4">
-        {content.map((c, i) => (
-          <div key={i} className="rounded-3xl bg-white p-6 shadow-md border-l-8 border-ocean">
-            <h3 className="font-display text-2xl text-ocean-deep text-left">{c.title}</h3>
-            <p className="font-hand text-xl text-ink-soft text-left mt-2">{c.description}</p>
-          </div>
-        ))}
+        {content.map((c, i) => {
+          const title = typeof c === "string" ? c : c.title;
+          const desc = typeof c === "object" ? c.description : null;
+          return (
+            <div key={i} className="rounded-3xl bg-white p-6 shadow-md border-l-8 border-ocean text-left">
+              <h3 className="font-display text-2xl text-ocean-deep flex items-center gap-2">
+                <span>✨</span>
+                <span>{title}</span>
+              </h3>
+              {desc && <p className="font-hand text-xl text-ink-soft mt-2">{desc}</p>}
+            </div>
+          );
+        })}
       </div>
       <MascotBubble slide={slide} line="Look closely! What did we just discover?" />
     </div>
@@ -1097,25 +1104,28 @@ function PremiumDiscoveriesSlide({ slide }: { slide: Slide }) {
 }
 
 function PremiumRichExplanationSlide({ slide, lesson }: { slide: Slide; lesson: Lesson }) {
-  const content = slide.content as any;
+  const content = (slide.content as any) || {};
   const photoSrc = useSmartSrc("lesson", lesson.id);
   const t = lessonThemes[lesson.category] || lessonThemes.Philippines;
+  const text = content.body || content.text || "";
+  const heading = content.heading || "Explanation";
+
   return (
     <div className="mx-auto w-full max-w-5xl">
       <div className="text-center">
-        <div className="mb-2 text-6xl">{content.emoji || "💡"}</div>
-        <h1 className="wj-outline font-display text-3xl sm:text-5xl">{content.heading || "Explanation"}</h1>
+        <div className="mb-2 text-6xl">{content.emoji || "📖"}</div>
+        <h1 className="wj-outline font-display text-3xl sm:text-5xl">{heading}</h1>
       </div>
       <div className="mt-6 grid items-start gap-6 lg:grid-cols-5">
         <div className={`rounded-3xl p-6 shadow-lg sm:p-8 lg:col-span-3 ${t.card}`}>
           <p className="wj-read">
-            <Highlight text={content.text} accent={t.accent} />
+            <Highlight text={text} accent={t.accent} />
           </p>
         </div>
         <div className={`hidden items-center justify-center rounded-3xl p-6 lg:col-span-2 lg:flex ${t.panel}`}>
           <Polaroid
             src={photoSrc}
-            alt={content.heading || "Explanation"}
+            alt={heading}
             tilt={t.tilt}
             caption={lesson.title}
             className="w-full max-w-xs"
@@ -1127,15 +1137,15 @@ function PremiumRichExplanationSlide({ slide, lesson }: { slide: Slide; lesson: 
 }
 
 function PremiumKeyFactsSlide({ slide }: { slide: Slide }) {
-  const content = slide.content as string[];
+  const content = (slide.content as string[]) || [];
   return (
     <div className="mx-auto max-w-3xl text-center">
-      <div className="mb-3 text-6xl">📌</div>
+      <div className="mb-3 text-6xl">💡</div>
       <h1 className="wj-outline font-display text-4xl sm:text-5xl">Key Facts</h1>
       <ul className="mt-8 space-y-4 text-left">
         {content.map((c, i) => (
           <li key={i} className="flex gap-4 rounded-2xl bg-sand p-4 shadow-sm items-center">
-            <span className="text-3xl text-sunset-deep flex-shrink-0">?</span>
+            <span className="text-3xl text-sunset-deep flex-shrink-0">💡</span>
             <span className="font-hand text-xl text-ink leading-tight">{c}</span>
           </li>
         ))}
@@ -1146,31 +1156,38 @@ function PremiumKeyFactsSlide({ slide }: { slide: Slide }) {
 }
 
 function PremiumMediaMomentSlide({ slide }: { slide: Slide }) {
-  const content = slide.content as any;
-  const embed = content.type === "video" ? getYouTubeEmbed(content.url) : null;
+  const content = (slide.content as any) || {};
+  const isVideo = content.requiredType?.toLowerCase() === "video" || content.type === "video";
+  const embed = isVideo && content.url ? getYouTubeEmbed(content.url) : null;
+  const caption = content.caption || content.description || "Media Moment";
+
   return (
     <div className="mx-auto max-w-4xl text-center">
-      <div className="mb-3 text-6xl">{content.type === "video" ? "🎬" : "🖼️"}</div>
-      <h1 className="wj-outline font-display text-4xl sm:text-5xl">{content.caption}</h1>
-      <div className="mt-8 wj-card overflow-hidden p-2">
-        {content.type === "video" && embed ? (
+      <div className="mb-3 text-6xl">{isVideo ? "🎬" : "🖼️"}</div>
+      <h1 className="wj-outline font-display text-4xl sm:text-5xl">{caption}</h1>
+      <div className="mt-8 wj-card overflow-hidden p-6">
+        {isVideo && embed ? (
           <iframe
             src={embed}
-            title={content.caption}
+            title={caption}
             className="aspect-video w-full rounded-2xl bg-black"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
           />
-        ) : content.type === "image" ? (
-          <img src={content.url} alt={content.caption} className="w-full h-auto rounded-2xl object-cover max-h-[60vh]" />
+        ) : content.url ? (
+          <img src={content.url} alt={caption} className="w-full h-auto rounded-2xl object-cover max-h-[60vh]" />
         ) : (
-          <div className="p-8"><a href={content.url} target="_blank" rel="noreferrer" className="wj-btn">Open Media Link</a></div>
+          <div className="p-6 bg-sand rounded-2xl text-left">
+            <p className="font-bold text-lg text-ink">{content.description}</p>
+            {content.purpose && <p className="mt-2 text-sm text-ink-soft">{content.purpose}</p>}
+            {content.sourceRequirement && <p className="mt-2 text-xs text-ocean-deep"><strong>Source:</strong> {content.sourceRequirement}</p>}
+          </div>
         )}
       </div>
       {content.discussionPrompt && (
-         <div className="mt-4 p-4 bg-ocean-light rounded-xl">
-           <p className="font-hand text-xl text-ocean-deep">🗣️ {content.discussionPrompt}</p>
-         </div>
+        <div className="mt-4 p-4 bg-ocean-light rounded-xl">
+          <p className="font-hand text-xl text-ocean-deep">🗣️ {content.discussionPrompt}</p>
+        </div>
       )}
       <MascotBubble slide={slide} line="A picture is worth a thousand words — let's take a look!" />
     </div>
@@ -1178,15 +1195,17 @@ function PremiumMediaMomentSlide({ slide }: { slide: Slide }) {
 }
 
 function PremiumGuidedDiscussionSlide({ slide }: { slide: Slide }) {
-  const content = slide.content as string[];
+  const content = (slide.content as string[]) || [];
   return (
     <div className="mx-auto max-w-3xl text-center">
       <div className="mb-3 text-6xl">💬</div>
       <h1 className="wj-outline font-display text-4xl sm:text-5xl">Guided Discussion</h1>
       <div className="mt-8 space-y-6">
         {content.map((q, i) => (
-          <div key={i} className="rounded-3xl bg-hibiscus-light p-6 shadow-md">
-            <p className="font-display text-2xl text-hibiscus-deep leading-relaxed">{q}</p>
+          <div key={i} className="rounded-3xl bg-hibiscus-light p-6 shadow-md text-left">
+            <p className="font-display text-2xl text-hibiscus-deep leading-relaxed">
+              <span className="mr-2">🗣️</span> {q}
+            </p>
           </div>
         ))}
       </div>
@@ -1196,8 +1215,8 @@ function PremiumGuidedDiscussionSlide({ slide }: { slide: Slide }) {
 }
 
 function PremiumAgeChallengeSlide({ slide, level }: { slide: Slide; level: ExplorerLevel }) {
-  const content = slide.content as any;
-  const challenge = content[level];
+  const content = (slide.content as any) || {};
+  const challenge = content[level] || content.adventure || content.explorer || "";
   return (
     <div className="mx-auto max-w-3xl text-center">
       <div className="mb-3 text-6xl">🎯</div>
@@ -1212,13 +1231,43 @@ function PremiumAgeChallengeSlide({ slide, level }: { slide: Slide; level: Explo
 }
 
 function PremiumHandsOnMissionSlide({ slide }: { slide: Slide }) {
-  const content = slide.content as string;
+  const content = slide.content as any;
+  if (!content) return null;
+
+  const isStructured = typeof content === "object";
+  const title = isStructured ? (content.title || "Hands-On Mission") : "Hands-On Mission";
+  const materials = isStructured && Array.isArray(content.materials) ? content.materials : [];
+  const steps = isStructured && Array.isArray(content.steps) ? content.steps : [];
+  const text = isStructured ? (content.description || "") : String(content);
+  const alt = isStructured ? content.accessibilityAlternative : null;
+
   return (
     <div className="mx-auto max-w-3xl text-center">
-      <div className="mb-3 text-6xl">💬</div>
-      <h1 className="wj-outline font-display text-4xl sm:text-5xl">Hands-On Mission</h1>
-      <div className="mt-8 rounded-3xl bg-palm-light border-4 border-palm p-8 shadow-xl">
-        <p className="font-hand text-2xl text-palm-deep leading-relaxed">{content}</p>
+      <div className="mb-3 text-6xl">🛠️</div>
+      <h1 className="wj-outline font-display text-4xl sm:text-5xl">{title}</h1>
+      <div className="mt-8 rounded-3xl bg-palm-light border-4 border-palm p-8 shadow-xl text-left">
+        {text && <p className="font-hand text-2xl text-palm-deep leading-relaxed mb-4">{text}</p>}
+        {materials.length > 0 && (
+          <div className="mb-4">
+            <h4 className="font-bold text-sm text-ink-soft uppercase tracking-wider">Materials</h4>
+            <p className="mt-1 text-ink">{materials.join(", ")}</p>
+          </div>
+        )}
+        {steps.length > 0 && (
+          <div>
+            <h4 className="font-bold text-sm text-ink-soft uppercase tracking-wider mb-2">Steps</h4>
+            <ol className="list-decimal list-inside space-y-1.5 text-ink">
+              {steps.map((step: string, i: number) => (
+                <li key={i}>{step}</li>
+              ))}
+            </ol>
+          </div>
+        )}
+        {alt && (
+          <p className="mt-4 text-xs italic text-ink-soft bg-white/70 p-3 rounded-xl">
+            <strong>Alternative:</strong> {alt}
+          </p>
+        )}
       </div>
       <MascotBubble slide={slide} line="Time to roll up our sleeves and make something happen!" />
     </div>
@@ -1226,48 +1275,90 @@ function PremiumHandsOnMissionSlide({ slide }: { slide: Slide }) {
 }
 
 function PremiumCheckUnderstandingSlide({ slide }: { slide: Slide }) {
-  const content = slide.content as any[];
+  const content = (slide.content as any[]) || [];
   const [revealed, setRevealed] = useState<number[]>([]);
   return (
     <div className="mx-auto max-w-3xl text-center">
-      <div className="mb-3 text-6xl">🎯</div>
-      <h1 className="wj-outline font-display text-4xl sm:text-5xl">Check for Understanding</h1>
+      <div className="mb-3 text-6xl">💡</div>
+      <h1 className="wj-outline font-display text-4xl sm:text-5xl">Check Your Thinking</h1>
       <div className="mt-8 space-y-4">
         {content.map((q, i) => {
-           const open = revealed.includes(i);
-           return (
-             <button
-               key={i}
-               onClick={() => setRevealed((r) => open ? r.filter(x => x !== i) : [...r, i])}
-               className="wj-card w-full text-left p-6 hover:shadow-lg transition-all"
-             >
-               <p className="font-display text-xl">{q.question}</p>
-               {open ? (
-                 <div className="mt-3 pt-3 border-t-2 border-sand-deep wj-pop-in">
-                   <p className="font-hand text-xl text-ocean-deep">A: {q.answer}</p>
-                 </div>
-               ) : (
-                 <p className="mt-2 text-sm text-ink-soft italic">Tap to reveal answer...</p>
-               )}
-             </button>
-           );
+          const open = revealed.includes(i);
+          const questionText = typeof q === 'string' ? q : (q.question || q.prompt || q.misconception);
+          const answerText = typeof q === 'object' ? (q.answer || q.reality || q.correctAnswer) : null;
+          return (
+            <div
+              key={i}
+              className="wj-card w-full text-left p-6 shadow-sm border-l-4 border-ocean"
+            >
+              <p className="font-display text-xl">{questionText}</p>
+              {answerText && (
+                open ? (
+                  <div className="mt-3 pt-3 border-t-2 border-sand-deep wj-pop-in">
+                    <p className="font-hand text-xl text-ocean-deep">Fact: {answerText}</p>
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => setRevealed((r) => [...r, i])}
+                    className="mt-3 text-sm text-ocean-deep font-semibold hover:underline cursor-pointer"
+                  >
+                    Tap to check the fact 💡
+                  </button>
+                )
+              )}
+            </div>
+          );
         })}
       </div>
+      <MascotBubble slide={slide} line="Thinking like a true explorer means asking great questions!" />
     </div>
   );
 }
 
 function PremiumAssessmentSlide({ slide }: { slide: Slide }) {
   const content = slide.content as any;
+  const questions = Array.isArray(content) ? content : (content?.questions || []);
+  const [selectedAnswers, setSelectedAnswers] = useState<Record<number, string>>({});
+
   return (
     <div className="mx-auto max-w-3xl text-center">
-      <div className="mb-3 text-6xl">📌</div>
-      <h1 className="wj-outline font-display text-4xl sm:text-5xl">Assessment</h1>
-      <div className="mt-8 space-y-4">
-        <div className="rounded-3xl bg-ube-light p-6 shadow-md border-l-8 border-ube text-left">
-           <h3 className="font-display text-2xl text-ube-deep">{content.rubric || "Rubric"}</h3>
-           <p className="font-hand text-xl text-ink-soft mt-2">{content.prompt}</p>
-        </div>
+      <div className="mb-3 text-6xl">📝</div>
+      <h1 className="wj-outline font-display text-4xl sm:text-5xl">Adventure Assessment</h1>
+      <div className="mt-8 space-y-4 text-left">
+        {questions.map((q: any, i: number) => (
+          <div key={i} className="rounded-3xl bg-ube-light p-6 shadow-md border-l-8 border-ube">
+            <h3 className="font-display text-xl text-ube-deep">
+              {i + 1}. {q.question || q.prompt || (q.type === "scenario-application" ? `${q.scenario} ${q.question}` : "Question")}
+            </h3>
+            {q.options && Array.isArray(q.options) && q.options.length > 0 && (
+              <div className="mt-3 grid gap-2 sm:grid-cols-2">
+                {q.options.map((opt: string, j: number) => {
+                  const isSelected = selectedAnswers[i] === opt;
+                  return (
+                    <button
+                      key={j}
+                      onClick={() => setSelectedAnswers((prev) => ({ ...prev, [i]: opt }))}
+                      className={`p-3 rounded-xl border text-sm font-semibold transition-all text-left cursor-pointer ${
+                        isSelected
+                          ? "bg-ocean text-white border-ocean-deep shadow-md"
+                          : "bg-white text-ink border-sand-deep hover:bg-sand"
+                      }`}
+                    >
+                      {opt}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+            {q.pairs && (
+              <ul className="mt-2 list-disc list-inside text-sm text-ink-soft">
+                {q.pairs.map((p: any, j: number) => (
+                  <li key={j}>{p.left} = {p.right}</li>
+                ))}
+              </ul>
+            )}
+          </div>
+        ))}
       </div>
       <MascotBubble slide={slide} line="Show us what you learned today!" />
     </div>

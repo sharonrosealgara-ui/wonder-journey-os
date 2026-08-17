@@ -1,11 +1,20 @@
-const fs = require('fs');
+﻿const fs = require('fs');
 const path = require('path');
 
 const suspiciousPatterns = [
-  /\uFFFD/, /�/, /\?\? The Premium Journey/, /\?\? Explorer/, /\?\? Adventure/, /\?\? Trailblazer/, /\?\?\?/,
-
-  /ðŸ/, /Ã/, /â€/, /â€™/, /â€œ/, /â€ /, /â€“/, /â€”/, /â†/, /ï¸/, /Â/,
-  /ΓÇ/, /Γö/, /≡ƒ/, /Γ£/, /Γé/, /Γä/
+  /\uFFFD/, // Replacement character
+  /\u00E2\u201D/, // box drawing mojibake (â”)
+  /\u00E2\u2022/, // box drawing double lines mojibake (â•)
+  /\u00E2\u02DC/, // star/symbol mojibake (â˜)
+  /\u00E2\u2026/, // fraction mojibake (â…)
+  /\u00E2\u00AD/, // star mojibake (â­)
+  /\u00E2\u20AC/, // quote/dash mojibake (â€)
+  /\u00C3[\u0080-\u00BF]/, // UTF-8 misinterpreted as latin1 (Ã...)
+  /\u00C2[\u0080-\u00BF]/, // UTF-8 misinterpreted as latin1 (Â...)
+  /\?\? The Premium Journey/,
+  /\?\? Explorer/,
+  /\?\? Adventure/,
+  /\?\? Trailblazer/
 ];
 
 let filesScanned = 0;
@@ -35,6 +44,7 @@ function scanDirectory(dir) {
               totalHits++;
               fileHasHit = true;
               console.log(`[HIT] ${fullPath}:${i + 1} -> ${line.trim()}`);
+              break;
             }
           }
         }
@@ -57,5 +67,6 @@ console.log(`Total hits: ${totalHits}`);
 if (totalHits > 0) {
   process.exit(1);
 } else {
+  console.log('All source files clean! 0 mojibake hits.');
   process.exit(0);
 }

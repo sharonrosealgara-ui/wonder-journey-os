@@ -142,7 +142,11 @@ export function buildSlides(lesson: Lesson): Slide[] {
     if (lesson.premiumContent?.game) push("game", lesson.premiumContent?.game.title || "Game", "🎮", undefined, lesson.premiumContent?.game);
 
     // Assessment & Reflection
-    if (lesson.premiumContent?.knowledgeCheck && lesson.premiumContent?.knowledgeCheck.length > 0) push("checkUnderstanding", "Check for Understanding", "✅", undefined, lesson.premiumContent?.knowledgeCheck);
+    if (lesson.premiumContent?.misconceptions && lesson.premiumContent?.misconceptions.length > 0) {
+      push("checkUnderstanding", "Check Your Thinking", "💡", undefined, lesson.premiumContent?.misconceptions);
+    } else if (lesson.premiumContent?.knowledgeCheck && lesson.premiumContent?.knowledgeCheck.length > 0) {
+      push("checkUnderstanding", "Check for Understanding", "💡", undefined, lesson.premiumContent?.knowledgeCheck);
+    }
     if (lesson.premiumContent?.premiumAssessment) push("premiumAssessment", "Assessment", "🧠", undefined, lesson.premiumContent?.premiumAssessment);
     if (lesson.premiumContent?.learnerReflection) push("reflection", "Reflection", "💭", undefined, lesson.premiumContent?.learnerReflection);
     if (lesson.familyChallenge) push("challenge", "Family Challenge", "🏆", undefined, lesson.familyChallenge);

@@ -1,82 +1,74 @@
-const { createFamilyPremiumProjection } = require("../dist-temp/curriculum-schema.js");
 
-const dummyLesson = {
-  id: "test-lesson",
+const fs = require("fs");
+const { execSync } = require("child_process");
+const path = require("path");
+
+const tempDir = path.join(__dirname, "../temp-test-dto");
+
+try {
+  console.log("Compiling curriculum schema for test...");
+  execSync(`npx tsc src/lib/curriculum-schema.ts --outDir temp-test-dto --esModuleInterop`);
+} catch (err) {
+  console.error("Compilation failed", err.stdout ? err.stdout.toString() : err);
+  process.exit(1);
+}
+
+const { createFamilyPremiumProjection } = require("../temp-test-dto/curriculum-schema.js");
+
+const mockLesson = {
+  id: "test-id",
   date: "2026-08-01",
   title: "Test Lesson",
   topic: "Testing",
-  ageRange: "7-12",
-  unit: "Test Unit",
-  essentialQuestion: "Is this safe?",
-  learningObjectives: ["Test obj"],
-  factualBackground: "Fact",
-  vocabulary: [],
-  subjectConnections: {},
-  materials: [],
-  factualMediaRequirements: [],
-  activities: { beginnerSupport: "a", coreActivity: "b", advancedChallenge: "c" },
-  interactiveGame: "Game",
-  handsOnActivity: "Activity",
-  knowledgeCheck: [],
-  learnerReflection: "Reflect",
-  familyChallenge: "Challenge",
-  progressBadge: "Badge",
-  sourceNotes: "Source Note",
-  mediaAttributionNotes: "Attribution",
-  accessibilityNotes: "Accessibility",
-  privacyClassification: "family-safe",
-  publicationStatus: "pilot",
-  weekday: "Monday",
-  
-  // Teacher only fields
   teacherPreparation: "SECRET_TEACHER_PREP",
-  teacherAnswerKey: { q1: "SECRET_ANSWER_KEY" },
-  privateTeacherNotes: "SECRET_PRIVATE_NOTE",
-  internalFactCheckNotes: "SECRET_FACTCHECK",
-  factualSources: [{ source: "Test", url: "http", note: "SECRET_SOURCE_NOTE" }]
+  teacherAnswerKey: { "Q1": "SECRET" },
+  privateTeacherNotes: "SECRET_NOTES",
+  futureInternalSecret: "SECRET_FUTURE_FIELD",
+  richExplanation: []
 };
 
-const result = createFamilyPremiumProjection(dummyLesson);
-const jsonStr = JSON.stringify(result);
+const FAMILY_ALLOWED_KEYS = new Set([
+  "id", "date", "title", "topic", "ageRange", "unit", "essentialQuestion",
+  "adventureHook", "discoveries", "richExplanation", "keyFacts", "realWorldConnection",
+  "vocabulary", "mediaMoments", "guidedDiscussion", "ageDifferentiation",
+  "game", "handsOnTask", "crossSubjectConnections", "characterConnection",
+  "misconceptions", "premiumAssessment", "knowledgeCheck", "learnerReflection", "familyChallenge",
+  "curatedResources", "optionalExtensions", "suggestedPacing",
+  "accessibilityNotes", "materials", "interactiveGame", "handsOnActivity"
+]);
 
-const sentinels = [
-  "SECRET_TEACHER_PREP",
-  "SECRET_ANSWER_KEY",
-  "SECRET_PRIVATE_NOTE",
-  "SECRET_FACTCHECK",
-  "SECRET_SOURCE_NOTE"
-];
+const dto = createFamilyPremiumProjection(mockLesson);
 
 let failed = false;
 
-sentinels.forEach(s => {
-  if (jsonStr.includes(s)) {
-    console.error(`FAIL: Sentinel ${s} leaked into Family payload!`);
+// Check for leaks
+if (dto.futureInternalSecret === "SECRET_FUTURE_FIELD") {
+  console.error("FAIL: futureInternalSecret leaked!");
+  failed = true;
+}
+if (dto.teacherPreparation) {
+  console.error("FAIL: teacherPreparation leaked!");
+  failed = true;
+}
+if (dto.teacherAnswerKey) {
+  console.error("FAIL: teacherAnswerKey leaked!");
+  failed = true;
+}
+
+// Check all returned keys
+for (const key of Object.keys(dto)) {
+  if (!FAMILY_ALLOWED_KEYS.has(key)) {
+    console.error(`FAIL: Unknown key found in DTO: ${key}`);
     failed = true;
   }
-});
+}
 
-const privateKeys = [
-  "teacherPreparation",
-  "teacherAnswerKey",
-  "privateTeacherNotes",
-  "internalFactCheckNotes",
-  "sourceNotes",
-  "factualSources"
-];
-
-const resultKeys = Object.keys(result);
-privateKeys.forEach(k => {
-  if (resultKeys.includes(k)) {
-    console.error(`FAIL: Private key ${k} found in Family payload!`);
-    failed = true;
-  }
-});
+// Cleanup
+fs.rmSync(tempDir, { recursive: true, force: true });
 
 if (failed) {
   process.exit(1);
 } else {
-  console.log("PASS: No teacher data leaked into Family Premium payload.");
-  process.exit(0);
+  console.log("PASS: No teacher data leaked into Family Premium payload. Literal allowlist enforced.");
 }
 

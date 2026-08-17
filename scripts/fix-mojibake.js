@@ -1,41 +1,44 @@
-const fs = require('fs');
+const fs = require("fs");
+let code = fs.readFileSync("src/components/adventure/slide-views.tsx", "utf8");
 
 const replacements = {
-  "≡ƒÄÑ": "🎥",
-  "ΓÇö": "—",
-  "≡ƒÆ¢": "💙",
-  "ΓöÇ": "─",
-  "≡ƒô╖": "📷",
-  "≡ƒûÑ∩╕Å": "🖥️",
-  "Γ£Å∩╕Å": "✏️",
-  "Γ£ï": "✋",
-  "≡ƒÆ¼": "💬",
-  "≡ƒÅü": "🏁",
-  "≡ƒô₧": "📞",
-  "≡ƒîà": "🌅",
-  "≡ƒºá": "🧠",
-  "≡ƒ¢é": "🛂",
-  "≡ƒôö": "📔",
-  "≡ƒöä": "🔄",
-  "≡ƒöç": "🔇",
-  "≡ƒ¢í∩╕Å": "🛡️",
-  "Γ£¿": "✨",
-  "≡ƒÜÇ": "🚀",
-  "≡ƒî┤": "🌴",
-  "≡ƒÄ¼": "🎬",
-  "≡ƒæ¿ΓÇì≡ƒæ⌐ΓÇì≡ƒæºΓÇì≡ƒæª": "👨‍👩‍👧‍👦",
-  "≡ƒæ⌐ΓÇì≡ƒÅ½": "👩‍🏫",
-  "≡ƒÄñ": "🎤",
-  "≡ƒ¢╢": "🛶",
-  "&apos;": "'"
+  "â€”": "—",
+  "ðŸ …": "🏆",
+  "ðŸ‘¨â€ ðŸ‘©â€ ðŸ‘§â€ ðŸ‘¦": "👨‍👩‍👧‍👦",
+  "ðŸŒ´": "🌴",
+  "ðŸ§º": "🧽",
+  "ðŸ‘£": "👣",
+  "ðŸ‘©â€ ðŸ ³": "👩‍🍳",
+  "ðŸ’­": "💭",
+  "ðŸ“”âœ¨": "📓✨",
+  "ðŸ“”": "📓",
+  "ðŸ †": "🏆",
+  "ðŸ“·": "📸",
+  "ðŸŽ’âœ¨": "🎒✨",
+  "ðŸ“¸": "📸",
+  "ðŸŽ’": "🎒",
+  "ðŸŒ…": "🌅",
+  "ðŸ’¬": "💬",
+  "ðŸ§ ": "🧠",
+  "ðŸ›‚": "🛂",
+  "ðŸ’›": "💛",
+  "âœ…": "✅",
+  "ðŸŽ¥": "🎥",
+  "ðŸŽ®": "🎮",
+  "â ±ï¸ ": "⏱️",
+  "Â·": "·"
 };
 
-const filePath = "src/app/(app)/classroom/page.tsx";
-let content = fs.readFileSync(filePath, "utf8");
-
 for (const [bad, good] of Object.entries(replacements)) {
-  content = content.split(bad).join(good);
+  code = code.split(bad).join(good);
 }
 
-fs.writeFileSync(filePath, content, "utf8");
-console.log("Replacements done.");
+// Replace literal "??" and "???" with appropriate emojis in the new premium slides
+code = code.replace(/{content.emoji \|\| "\?\?"}/g, `{content.emoji || "💡"}`);
+code = code.replace(/<div className="mb-3 text-6xl">\?\?<\/div>/g, `<div className="mb-3 text-6xl">📌</div>`);
+code = code.replace(/<div className="mb-3 text-6xl">{content\.type === "video" \? "\?\?" : "\?\?"}<\/div>/g, `<div className="mb-3 text-6xl">{content.type === "video" ? "🎬" : "🖼️"}</div>`);
+code = code.replace(/className="font-hand text-xl text-ocean-deep">\?\? {content\.discussionPrompt}<\/p>/g, `className="font-hand text-xl text-ocean-deep">🗣️ {content.discussionPrompt}</p>`);
+code = code.replace(/<div className="mb-3 text-6xl">\?\?\?<\/div>/g, `<div className="mb-3 text-6xl">💬</div>`);
+code = code.replace(/<div className="mb-3 text-6xl">\?<\/div>/g, `<div className="mb-3 text-6xl">🎯</div>`);
+
+fs.writeFileSync("src/components/adventure/slide-views.tsx", code, "utf8");

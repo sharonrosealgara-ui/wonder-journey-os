@@ -1,84 +1,16 @@
-"use client";
 
-import Link from "next/link";
-import { SmartPhoto } from "@/components/smart-photo";
-import { useSmartSrc } from "@/lib/photos";
-import { getDestination } from "@/config/destinations";
-import { getStudent } from "@/config/family";
-import { getLesson } from "@/config/lessons";
-import { formatDate, KEYS, todayISO, type LessonCompletion } from "@/lib/app-state";
-import { useStored } from "@/lib/storage";
+const fs = require("fs");
+let code = fs.readFileSync("src/app/(app)/lessons/[id]/lesson-view.tsx", "utf8");
 
-export function LessonView({ id }: { id: string }) {
+const start = code.indexOf("<section className=\"wj-card p-6 border-t-4 border-t-mango space-y-6\">");
+const end = code.indexOf("</section>", start) + "</section>".length;
 
-  const lesson = getLesson(id);
-  const [activeStudentId] = useStored<string | null>(KEYS.activeStudent, null);
-  const [completions, setCompletions] = useStored<LessonCompletion[]>(KEYS.completions, []);
-  const student = getStudent(activeStudentId);
-  const photoSrc = useSmartSrc("lesson", id);
-
-  if (!lesson) {
-    return (
-      <div className="wj-card p-8 text-center">
-        <p>Hmm, that lesson has sailed away. 🛶</p>
-        <Link href="/lessons" className="wj-btn mt-4">Back to Lesson Library</Link>
-      </div>
-    );
-  }
-
-  const destination = lesson.destinationId ? getDestination(lesson.destinationId) : undefined;
-  const done = completions.some(
-    (c) => c.lessonId === lesson.id && (!student || c.studentId === student.id)
-  );
-
-  function complete() {
-    if (!lesson) return;
-    const studentId = student?.id ?? "family";
-    setCompletions((prev) =>
-      prev.some((c) => c.lessonId === lesson.id && c.studentId === studentId)
-        ? prev
-        : [...prev, { lessonId: lesson.id, studentId, date: todayISO() }]
-    );
-  }
-
-  const isPremium = !!lesson.premiumContent?.richExplanation || !!lesson.premiumContent?.adventureHook;
-
-  return (
-    <div className="mx-auto max-w-3xl space-y-6">
-      {/* Header */}
-      <section className="wj-card overflow-hidden">
-        <SmartPhoto
-          src={photoSrc}
-          alt={lesson.title}
-          className="h-44 w-full sm:h-52"
-        />
-        <div className="bg-gradient-to-br from-ocean/10 to-mango/15 p-6 sm:p-8">
-          <div className="flex flex-wrap gap-2">
-            <span className="wj-chip">Lesson {lesson.order}</span>
-            <span className="wj-chip">{lesson.category}</span>
-            <span className="wj-chip">🗓️ {formatDate(lesson.date)} · {lesson.time || "30m"}</span>
-          </div>
-          <h1 className="mt-3 font-display text-3xl font-extrabold sm:text-4xl">
-            {lesson.emoji} {lesson.title}
-          </h1>
-          <p className="mt-1 text-ink-soft">{lesson.subtitle || lesson.premiumContent?.topic}</p>
-          <div className="mt-4">
-            <Link href={`/adventure/${lesson.id}`} className="wj-btn text-lg">
-              🎬 Start Adventure Theater
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Content sections */}
-      {isPremium ? (
-        <>
-          <section className="wj-card p-6 border-t-4 border-t-mango space-y-8">
-            <h2 className="font-display text-2xl font-extrabold text-mango-deep">🌟 The Premium Journey</h2>
+const newSection = `<section className="wj-card p-6 border-t-4 border-t-mango space-y-8">
+            <h2 className="font-display text-2xl font-extrabold text-mango-deep">?? The Premium Journey</h2>
 
             {lesson.premiumContent?.adventureHook && (
               <div className="p-5 bg-mango/10 rounded-xl">
-                <h3 className="font-display text-xl font-bold">🎣 Adventure Hook</h3>
+                <h3 className="font-display text-xl font-bold">?? Adventure Hook</h3>
                 <p className="mt-2 text-ink">{lesson.premiumContent.adventureHook}</p>
               </div>
             )}
@@ -155,13 +87,16 @@ export function LessonView({ id }: { id: string }) {
 
             {lesson.premiumContent?.mediaMoments && lesson.premiumContent.mediaMoments.length > 0 && (
               <div>
-                <h3 className="font-display text-lg font-bold">🖼️ Media Moments</h3>
+                <h3 className="font-display text-lg font-bold">??? Media Moments</h3>
                 <div className="mt-3 space-y-4">
                   {lesson.premiumContent.mediaMoments.map((media, i) => (
                     <div key={i} className="p-4 bg-sand rounded-lg border border-sand-deep">
-                      <p className="font-bold">{media.requiredType} - {media.description}</p>
-                      <p className="text-sm mt-1">{media.purpose}</p>
-                      {media.sourceRequirement && <p className="text-xs text-ink-soft mt-1">Source: {media.sourceRequirement}</p>}
+                      <p className="font-bold">{media.type} - {media.description}</p>
+                      {media.url && (
+                        <a href={media.url} target="_blank" rel="noopener noreferrer" className="text-sm text-ocean hover:underline block mt-1">
+                          View Media ?
+                        </a>
+                      )}
                     </div>
                   ))}
                 </div>
@@ -170,11 +105,11 @@ export function LessonView({ id }: { id: string }) {
 
             {lesson.premiumContent?.ageDifferentiation && (
               <div className="p-5 bg-ocean/10 rounded-xl">
-                <h3 className="font-display text-lg font-bold">👥 Family Challenge by Age</h3>
+                <h3 className="font-display text-lg font-bold">?? Family Challenge by Age</h3>
                 <div className="mt-3 space-y-3">
-                  <p><strong>🧭 Explorer (7-8):</strong> {lesson.premiumContent.ageDifferentiation.explorer}</p>
-                  <p><strong>🏕️ Adventure (9-10):</strong> {lesson.premiumContent.ageDifferentiation.adventure}</p>
-                  <p><strong>🚀 Trailblazer (11-12+):</strong> {lesson.premiumContent.ageDifferentiation.trailblazer}</p>
+                  <p><strong>?? Explorer (7-8):</strong> {lesson.premiumContent.ageDifferentiation.explorer}</p>
+                  <p><strong>??? Adventure (9-10):</strong> {lesson.premiumContent.ageDifferentiation.adventure}</p>
+                  <p><strong>?? Trailblazer (11-12+):</strong> {lesson.premiumContent.ageDifferentiation.trailblazer}</p>
                 </div>
               </div>
             )}
@@ -201,12 +136,8 @@ export function LessonView({ id }: { id: string }) {
 
             {lesson.premiumContent?.game && (
               <div className="p-4 bg-sunset/10 rounded-lg">
-                <h3 className="font-display text-lg font-bold text-sunset-deep">?? Game: {lesson.premiumContent.game.title}</h3>
-                <p className="mt-1"><strong>Objective:</strong> {lesson.premiumContent.game.objective}</p>
-                {lesson.premiumContent.game.materials && lesson.premiumContent.game.materials.length > 0 && (
-                  <p className="mt-1 text-sm"><strong>Materials:</strong> {lesson.premiumContent.game.materials.join(", ")}</p>
-                )}
-                <p className="mt-1 text-sm"><strong>Rules:</strong> {lesson.premiumContent.game.rules}</p>
+                <h3 className="font-display text-lg font-bold text-sunset-deep">?? Game</h3>
+                <p className="mt-1">{lesson.premiumContent.game}</p>
               </div>
             )}
 
@@ -235,7 +166,7 @@ export function LessonView({ id }: { id: string }) {
                   {lesson.premiumContent.knowledgeCheck.map((check, i) => (
                     <li key={i} className="flex gap-2">
                       <span className="text-ocean">??</span>
-                      <span><strong>{check.question}</strong> - Answer: {check.correctAnswer}</span>
+                      <span>{check}</span>
                     </li>
                   ))}
                 </ul>
@@ -248,20 +179,13 @@ export function LessonView({ id }: { id: string }) {
                 <div className="mt-3 space-y-4">
                   {lesson.premiumContent.premiumAssessment.map((q, i) => (
                     <div key={i} className="space-y-1">
-                      <p className="font-bold">{i + 1}. [{q.type}] {q.type === "matching" ? "Matching Exercise" : q.type === "scenario-application" ? q.scenario + " " + q.question : q.question}</p>
-                      {q.type === "multiple-choice" && q.options && (
+                      <p className="font-bold">{i + 1}. {q.question}</p>
+                      {q.options && q.options.length > 0 && (
                         <ul className="list-[lower-alpha] list-inside ml-2">
                           {q.options.map((opt, j) => (
                             <li key={j}>{opt}</li>
                           ))}
                         </ul>
-                      )}
-                      {q.type === "matching" && q.pairs && (
-                         <ul className="list-disc list-inside ml-2">
-                          {q.pairs.map((p, j) => (
-                            <li key={j}>{p.left} = {p.right}</li>
-                          ))}
-                         </ul>
                       )}
                     </div>
                   ))}
@@ -307,120 +231,8 @@ export function LessonView({ id }: { id: string }) {
                 </ul>
               </div>
             )}
-          </section>
-        </>
-      ) : (
-        <>
-          {/* Legacy Fallback Rendering */}
-          {lesson.sections && lesson.sections.map((section: any) => (
-            <section key={section.heading} className="wj-card p-6">
-              <h2 className="font-display text-xl font-extrabold">
-                {section.emoji} {section.heading}
-              </h2>
-              <p className="mt-2 text-ink-soft">{section.body}</p>
-              {section.bullets && (
-                <ul className="mt-3 space-y-1.5">
-                  {section.bullets.map((b: string) => (
-                    <li key={b} className="flex gap-2 text-sm">
-                      <span className="text-mango-deep">★</span>
-                      <span>{b}</span>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </section>
-          ))}
+          </section>`;
 
-          {lesson.phrases && lesson.phrases.length > 0 && (
-            <section className="wj-card p-6">
-              <h2 className="font-display text-xl font-extrabold">💬 Words for this adventure</h2>
-              <div className="mt-4 overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="text-left font-display text-ink-soft">
-                      <th className="pb-2 pr-4">English</th>
-                      <th className="pb-2 pr-4">Tagalog</th>
-                      <th className="pb-2">Say it like...</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {lesson.phrases.map((p: any) => (
-                      <tr key={p.english} className="border-t border-sand-deep">
-                        <td className="py-2.5 pr-4 font-bold">{p.english}</td>
-                        <td className="py-2.5 pr-4 font-bold text-sunset-deep">{p.tagalog}</td>
-                        <td className="py-2.5 text-ink-soft">{p.pronunciation}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              <Link href="/languages" className="wj-btn wj-btn-ocean mt-4">
-                Practice with games 🎮
-              </Link>
-            </section>
-          )}
+const updated = code.substring(0, start) + newSection + code.substring(end);
+fs.writeFileSync("src/app/(app)/lessons/[id]/lesson-view.tsx", updated, "utf8");
 
-          {lesson.familyChallenge && (
-            <section className="wj-card-bubble wj-note p-6">
-              <h2 className="font-display text-xl text-white">🏆 Family Challenge</h2>
-              <p className="mt-2 font-semibold text-white/95">{lesson.familyChallenge}</p>
-            </section>
-          )}
-
-          {lesson.reflection && (
-            <section className="wj-card p-6">
-              <h2 className="font-display text-xl font-extrabold">💭 Reflection</h2>
-              <p className="mt-2 text-ink-soft">{lesson.reflection}</p>
-              {lesson.gratitudePrompt && (
-                <div className="mt-4 rounded-2xl bg-sand p-4">
-                  <p className="text-sm font-bold text-ink-soft">Gratitude prompt for the journal:</p>
-                  <p className="mt-1 italic">&ldquo;{lesson.gratitudePrompt}&rdquo;</p>
-                  <Link href="/blessings" className="wj-btn mt-3 text-sm">
-                    Write it in Morning Blessings 🙏
-                  </Link>
-                </div>
-              )}
-            </section>
-          )}
-        </>
-      )}
-
-      {/* Complete + passport stamp applies to both */}
-      <section className="wj-card p-6 text-center">
-        {done ? (
-          <div className="wj-pop-in">
-            <div className="text-4xl">🎉</div>
-            <h2 className="mt-2 font-display text-2xl font-extrabold text-palm-deep">
-              Adventure complete{student ? `, ${student.name}` : ""}!
-            </h2>
-            {destination && (
-              <div className="mx-auto mt-4 inline-block">
-                <div className="wj-stamp wj-stamp-earned px-6 py-4">
-                  <div className="text-3xl">{destination.emoji}</div>
-                  <div className="font-display text-sm font-extrabold uppercase tracking-wide">
-                    {destination.name}
-                  </div>
-                  <div className="text-xs">stamped!</div>
-                </div>
-              </div>
-            )}
-            <div className="mt-4">
-              <Link href="/passport" className="wj-btn wj-btn-ocean">
-                View Travel Passport 🛂
-              </Link>
-            </div>
-          </div>
-        ) : (
-          <>
-            <p className="text-ink-soft">
-              Finished the whole adventure{destination ? ` and ready for your ${destination.name} stamp` : ""}?
-            </p>
-            <button className="wj-btn mt-3" onClick={complete}>
-              Mark adventure complete {destination ? "& stamp my passport 🛂" : "✅"}
-            </button>
-          </>
-        )}
-      </section>
-    </div>
-  );
-}

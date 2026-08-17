@@ -1,4 +1,4 @@
-﻿
+
 import { stage2Lessons } from "./lessons-stage2";
 
 // -------------------------------------------------------------
@@ -20,6 +20,7 @@ const globalResources: Resource[] = []; // All legacy resources were unverified 
 
 // Dynamically extract family-safe resources from lessons
 const lessonResources: Resource[] = stage2Lessons.flatMap((lesson) => {
+  if (lesson.publicationStatus !== "published" && lesson.publicationStatus !== "pilot") return [];
   if (!lesson.curatedResources) return [];
   return lesson.curatedResources
     .filter((res) => res.visibility === "family" || res.visibility === "both")

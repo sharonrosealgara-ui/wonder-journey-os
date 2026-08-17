@@ -27,7 +27,7 @@ import { buildAcademy, buildMission, getYouTubeEmbed, levelForAge, levelMeta, ty
 import { sfx } from "@/lib/sound";
 import { newId, useStored } from "@/lib/storage";
 
-// A mascot introduces each slide with a speech bubble â€” scaled up so the
+// A mascot introduces each slide with a speech bubble — scaled up so the
 // call-to-action is unmissable for young readers (Sharon's guidelines).
 export function MascotBubble({ slide, line }: { slide: Slide; line: string }) {
   return (
@@ -35,7 +35,7 @@ export function MascotBubble({ slide, line }: { slide: Slide; line: string }) {
       <span className="wj-sticker wj-bob h-16 w-16 shrink-0 text-3xl">{slide.mascot.emoji}</span>
       <div className="wj-card -ml-1 px-5 py-3 text-left shadow-lg">
         <p className="text-xs font-bold text-ink-soft">
-          {slide.mascot.name} Â· {slide.mascot.role}
+          {slide.mascot.name} · {slide.mascot.role}
         </p>
         <p className="font-hand text-xl leading-snug">{line}</p>
       </div>
@@ -115,16 +115,16 @@ export function SlideView({
 
 /* â”€â”€ Individual slides â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
-// Family Mode opening screen â€” one shared screen, the whole family together.
+// Family Mode opening screen — one shared screen, the whole family together.
 function WelcomeSlide({ slide, lesson, onNext }: { slide: Slide; lesson: Lesson; onNext: () => void }) {
   const explorers = [
     ...students.map((s) => `${s.emoji} ${s.name}`),
-    ...familyAdults.map((a) => `ðŸ’› ${a}`),
-    `ðŸŒº ${teacherName}`,
+    ...familyAdults.map((a) => `💛 ${a}`),
+    `🌺 ${teacherName}`,
   ];
   return (
     <div className="text-center">
-      <div className="mb-3 text-6xl">ðŸŒ´ðŸ—ºï¸âœ¨</div>
+      <div className="mb-3 text-6xl">🌴🗺️✨</div>
       <h1 className="wj-outline font-display text-4xl sm:text-6xl">
         Welcome, {familyName}!
       </h1>
@@ -143,20 +143,20 @@ function WelcomeSlide({ slide, lesson, onNext }: { slide: Slide; lesson: Lesson;
       </div>
 
       <button className="wj-btn mt-6 text-xl" onClick={onNext}>
-        ðŸŽ’ Start Today&apos;s Adventure
+        🎒 Start Today&apos;s Adventure
       </button>
       <MascotBubble slide={slide} line={slide.mascot.catchphrase} />
     </div>
   );
 }
 
-// Adventure Academy â€” 15-min English + 15-min Math at the end of every class.
+// Adventure Academy — 15-min English + 15-min Math at the end of every class.
 // Oral and shared-screen: prompts the family answers together, not forms.
-// ðŸŽ“ ADVENTURE ACADEMY
-// One shared screen, four explorers, four ages (7â€“12). "Everyone" mode
+// 🎓 ADVENTURE ACADEMY
+// One shared screen, four explorers, four ages (7–12). "Everyone" mode
 // shows each child their OWN mission at the same time, so nobody waits
 // and nobody is stretched too far. Each card is that explorer's
-// adventure role â€” never a grade, never a ranking
+// adventure role — never a grade, never a ranking
 // (CURRICULUM_FRAMEWORK: no sibling rankings).
 function AcademySlide({
   slide,
@@ -172,7 +172,7 @@ function AcademySlide({
   const toggle = (id: string) =>
     setDone((d) => (d.includes(id) ? d.filter((x) => x !== id) : [...d, id]));
 
-  // Which explorers wear which role today â€” read from config, so a new
+  // Which explorers wear which role today — read from config, so a new
   // family just edits config/family.ts and this follows automatically.
   const tiersInFamily = (["explorer", "adventure", "trailblazer"] as ExplorerLevel[])
     .map((tier) => ({ tier, kids: students.filter((s) => levelForAge(s.age) === tier) }))
@@ -198,7 +198,7 @@ function AcademySlide({
                   checked ? "bg-palm text-white" : "bg-sand-deep"
                 }`}
               >
-                {checked ? "âœ“" : ""}
+                {checked ? "✓" : ""}
               </span>
               {item}
             </button>
@@ -213,11 +213,11 @@ function AcademySlide({
     return (
       <div className="grid gap-3 sm:grid-cols-2">
         <div>
-          <h3 className="font-display text-base">ðŸ“– English</h3>
+          <h3 className="font-display text-base">📖 English</h3>
           {renderList(english, `${keyPrefix}-en`)}
         </div>
         <div>
-          <h3 className="font-display text-base">âž• Math</h3>
+          <h3 className="font-display text-base">➕ Math</h3>
           {renderList(math, `${keyPrefix}-ma`)}
         </div>
       </div>
@@ -227,10 +227,10 @@ function AcademySlide({
   return (
     <div className={`mx-auto ${everyone ? "max-w-4xl" : "max-w-2xl"}`}>
       <h1 className="wj-outline text-center font-display text-3xl sm:text-4xl">
-        ðŸŽ“ Adventure Academy
+        🎓 Adventure Academy
       </h1>
       <p className="font-hand mt-2 text-center text-lg text-ink-soft">
-        A quick brain workout before we finish â€” answer out loud, together!
+        A quick brain workout before we finish — answer out loud, together!
       </p>
 
       {/* Everyone at once (the real family screen) vs one role at a time */}
@@ -240,7 +240,7 @@ function AcademySlide({
             onClick={() => setEveryone(true)}
             className={`rounded-full px-4 py-1.5 text-sm font-bold ${everyone ? "bg-ocean text-white" : "text-ink-soft"}`}
           >
-            ðŸ‘¨â€ðŸ‘©â€ðŸ‘§â€ðŸ‘¦ Everyone
+            👨‍👩‍👧‍👦 Everyone
           </button>
           <button
             onClick={() => setEveryone(false)}
@@ -254,7 +254,7 @@ function AcademySlide({
       {everyone ? (
         <>
           <p className="font-hand mt-3 text-center text-base text-ink-soft">
-            Everyone has their own mission today â€” big explorers can help the little ones! ðŸ’›
+            Everyone has their own mission today — big explorers can help the little ones! 💛
           </p>
           <div className="mt-4 space-y-4">
             {tiersInFamily.map(({ tier, kids }) => (
@@ -263,7 +263,7 @@ function AcademySlide({
                   <span className="text-2xl">{levelMeta[tier].emoji}</span>
                   <span className="font-display text-lg">
                     {kids.map((k) => k.name).join(" & ")}
-                    <span className="text-ink-soft"> Â· {levelMeta[tier].label} mission</span>
+                    <span className="text-ink-soft"> · {levelMeta[tier].label} mission</span>
                   </span>
                   {kids.map((k) => (
                     <span key={k.id} className="wj-chip !text-xs">{k.emoji} {k.name}</span>
@@ -278,7 +278,7 @@ function AcademySlide({
         <>
           <p className="mt-2 text-center">
             <span className="wj-chip">
-              {levelMeta[level].emoji} {levelMeta[level].label} ({levelMeta[level].ages}) â€” switch roles with the button up top
+              {levelMeta[level].emoji} {levelMeta[level].label} ({levelMeta[level].ages}) — switch roles with the button up top
             </span>
           </p>
           <div className="mt-5">{renderMissions(level, "solo")}</div>
@@ -314,14 +314,14 @@ function BlessingsSlide({ slide }: { slide: Slide }) {
 
   return (
     <div className="mx-auto max-w-xl text-center">
-      <div className="mb-3 text-5xl">ðŸŒ…</div>
+      <div className="mb-3 text-5xl">🌅</div>
       <h1 className="wj-outline font-display text-3xl sm:text-4xl">Morning Blessings</h1>
       <p className="font-hand mt-3 text-2xl text-mango-deep">
         What are you grateful to the Lord for today?
       </p>
       {saved ? (
         <div className="wj-card wj-pop-in mt-5 p-6">
-          <div className="text-4xl">ðŸŒ»</div>
+          <div className="text-4xl">🌻</div>
           <p className="mt-2 font-display text-xl text-palm-deep">
             Blessing planted in your journal!
           </p>
@@ -335,7 +335,7 @@ function BlessingsSlide({ slide }: { slide: Slide }) {
             onChange={(e) => setText(e.target.value)}
           />
           <button className="wj-btn" onClick={save} disabled={!text.trim()}>
-            Plant this blessing ðŸŒ±
+            Plant this blessing 🌱
           </button>
         </div>
       )}
@@ -348,16 +348,16 @@ function PrayerSlide({ slide }: { slide: Slide }) {
   const leader = getTodaysPrayerLeader();
   return (
     <div className="mx-auto max-w-xl text-center">
-      <div className="mb-3 text-5xl">ðŸ•Šï¸</div>
+      <div className="mb-3 text-5xl">🕊️</div>
       <h1 className="wj-outline font-display text-3xl sm:text-4xl">Opening Prayer</h1>
       <div className="wj-card mt-6 p-8">
         <p className="text-sm font-bold uppercase tracking-wide text-ink-soft">
           Today&apos;s Prayer Leader
         </p>
-        <p className="mt-2 font-display text-4xl text-ube-deep">ðŸŒŸ {leader}</p>
+        <p className="mt-2 font-display text-4xl text-ube-deep">🌟 {leader}</p>
         <p className="font-hand mx-auto mt-5 max-w-md text-lg text-ink-soft">
           If you feel comfortable, you may lead us in a short opening prayer. If not, another
-          family member or Teacher Sharon can lead. ðŸ’›
+          family member or Teacher Sharon can lead. 💛
         </p>
       </div>
       <MascotBubble slide={slide} line="Prayer is always an invitation, never a requirement." />
@@ -370,7 +370,7 @@ function MissionSlide({ slide, lesson }: { slide: Slide; lesson: Lesson }) {
   const [checked, setChecked] = useState<number[]>([]);
   return (
     <div className="mx-auto max-w-xl">
-      <h1 className="wj-outline text-center font-display text-3xl sm:text-4xl">ðŸŽ¯ Today&apos;s Mission</h1>
+      <h1 className="wj-outline text-center font-display text-3xl sm:text-4xl">🎯 Today&apos;s Mission</h1>
       <p className="font-hand mt-2 text-center text-xl text-ink-soft">Today we will...</p>
       <div className="wj-card-bubble wj-note mt-5 p-6">
         <ul className="space-y-3">
@@ -389,7 +389,7 @@ function MissionSlide({ slide, lesson }: { slide: Slide; lesson: Lesson }) {
                       done ? "bg-mango text-ink" : "bg-white/15"
                     }`}
                   >
-                    {done ? "âœ“" : ""}
+                    {done ? "✓" : ""}
                   </span>
                   {item}
                 </button>
@@ -398,14 +398,14 @@ function MissionSlide({ slide, lesson }: { slide: Slide; lesson: Lesson }) {
           })}
         </ul>
       </div>
-      <MascotBubble slide={slide} line="Check them off as we go â€” explorers love a good list!" />
+      <MascotBubble slide={slide} line="Check them off as we go — explorers love a good list!" />
     </div>
   );
 }
 
-// ðŸŽ¨ CONTEXTUAL THEMES â€” each subject wears its own world (Sharon's
-// premium art direction): Geography = explorer's field journal Â·
-// Cooking = family recipe card Â· Language = giant speech bubble Â·
+// 🎨 CONTEXTUAL THEMES — each subject wears its own world (Sharon's
+// premium art direction): Geography = explorer's field journal ·
+// Cooking = family recipe card · Language = giant speech bubble ·
 // Values = watercolor canvas. Same content model, different clothes.
 const lessonThemes: Record<
   Lesson["category"],
@@ -413,28 +413,28 @@ const lessonThemes: Record<
 > = {
   Philippines: {
     card: "border-2 border-dashed border-amber-700/30 bg-[#fffaf0]",
-    bullet: "ðŸ§­",
+    bullet: "🧭",
     accent: "text-sunset-deep",
     panel: "bg-amber-100/50",
     tilt: "-rotate-2",
   },
   Cooking: {
     card: "border-2 border-stone-200 bg-orange-50/70",
-    bullet: "ðŸ¥„",
+    bullet: "🥥",
     accent: "text-mango-deep",
     panel: "bg-orange-100/40",
     tilt: "rotate-2",
   },
   Language: {
     card: "border-4 border-sky-200 bg-sky-50/80",
-    bullet: "ðŸ’¬",
+    bullet: "💬",
     accent: "text-ocean-deep",
     panel: "bg-sky-100/50",
     tilt: "-rotate-1",
   },
   Values: {
     card: "border-2 border-teal-200/80 bg-teal-50/60",
-    bullet: "â­",
+    bullet: "⭐",
     accent: "text-hibiscus-deep",
     panel: "bg-teal-100/40",
     tilt: "rotate-1",
@@ -453,7 +453,7 @@ function SectionSlide({ slide, lesson }: { slide: Slide; lesson: Lesson }) {
         <h1 className="wj-outline font-display text-3xl sm:text-5xl">{section.heading}</h1>
       </div>
 
-      {/* 60/40 split on wide screens â€” reading card left, visual right */}
+      {/* 60/40 split on wide screens — reading card left, visual right */}
       <div className="mt-6 grid items-start gap-6 lg:grid-cols-5">
         <div className={`rounded-3xl p-6 shadow-lg sm:p-8 lg:col-span-3 ${t.card}`}>
           <p className="wj-read">
@@ -505,19 +505,19 @@ function VocabSlide({
   return (
     <div className="mx-auto max-w-2xl">
       <h1 className="wj-outline text-center font-display text-3xl sm:text-4xl">
-        ðŸ’¬ Words for the Adventure
+        💬 Words for the Adventure
       </h1>
       <p className="font-hand mt-2 text-center text-lg text-ink-soft">
-        Tap a card to reveal â€” then everyone says it out loud, three times, big smile!
+        Tap a card to reveal — then everyone says it out loud, three times, big smile!
       </p>
       {level === "adventure" && (
         <p className="mt-2 text-center">
-          <span className="wj-chip">ðŸ¦… Adventure Challenge: use each word in a full sentence!</span>
+          <span className="wj-chip">🦅 Adventure Challenge: use each word in a full sentence!</span>
         </p>
       )}
       {level === "trailblazer" && (
         <p className="mt-2 text-center">
-          <span className="wj-chip">ðŸ”ï¸ Trailblazer Challenge: build a mini dialogue using three of these words!</span>
+          <span className="wj-chip">🏔️ Trailblazer Challenge: build a mini dialogue using three of these words!</span>
         </p>
       )}
       <div className="mt-5 grid gap-3 sm:grid-cols-2">
@@ -534,9 +534,9 @@ function VocabSlide({
               <p className="font-display text-xl">{p.english}</p>
               {open ? (
                 <div className="wj-pop-in mt-2 space-y-1">
-                  <p className="font-display text-xl text-sunset-deep">ðŸ‡µðŸ‡­ {p.tagalog}</p>
+                  <p className="font-display text-xl text-sunset-deep">🇵🇭 {p.tagalog}</p>
                   {p.pronunciation && (
-                    <p className="font-hand text-ink-soft">ðŸ—£ï¸ {p.pronunciation}</p>
+                    <p className="font-hand text-ink-soft">🗣️ {p.pronunciation}</p>
                   )}
                   <span
                     role="button"
@@ -553,11 +553,11 @@ function VocabSlide({
                     }}
                     className="mt-1 inline-flex items-center gap-1.5 rounded-full bg-mango/30 px-3 py-1 font-display text-sm text-mango-deep transition-transform hover:scale-105 active:scale-95"
                   >
-                    ðŸ”Š Hear it
+                    🔊 Hear it
                   </span>
                 </div>
               ) : (
-                <p className="font-hand mt-1 text-ink-soft">Tap to reveal! âœ¨</p>
+                <p className="font-hand mt-1 text-ink-soft">Tap to reveal! ✨</p>
               )}
             </button>
           );
@@ -570,7 +570,7 @@ function VocabSlide({
 function VideoSlide({ slide, lesson }: { slide: Slide; lesson: Lesson }) {
   return (
     <div className="mx-auto w-full max-w-3xl">
-      <h1 className="wj-outline text-center font-display text-3xl sm:text-4xl">ðŸŽ¬ Adventure Videos</h1>
+      <h1 className="wj-outline text-center font-display text-3xl sm:text-4xl">🎬 Adventure Videos</h1>
       <div className="mt-5 space-y-4">
         {lesson.videoLinks.map((v) => {
           const embed = getYouTubeEmbed(v.url);
@@ -593,22 +593,22 @@ function VideoSlide({ slide, lesson }: { slide: Slide; lesson: Lesson }) {
               rel="noopener noreferrer"
               className="wj-card wj-card-hover flex items-center gap-4 p-5"
             >
-              <span className="wj-sticker h-14 w-14 text-3xl">ðŸŽ¬</span>
+              <span className="wj-sticker h-14 w-14 text-3xl">🎬</span>
               <div>
                 <p className="font-display text-lg">{v.label}</p>
-                <p className="font-hand text-ink-soft">Opens in a new tab â€” watch together!</p>
+                <p className="font-hand text-ink-soft">Opens in a new tab — watch together!</p>
               </div>
             </a>
           );
         })}
       </div>
-      {/* Offline / backup mode â€” the class never stops because a video fails */}
+      {/* Offline / backup mode — the class never stops because a video fails */}
       <div className="wj-card mt-4 border-2 border-dashed border-sand-deep p-5">
-        <p className="font-display text-ink">ðŸ“´ No internet? Backup plan:</p>
+        <p className="font-display text-ink">📼 No internet? Backup plan:</p>
         <ul className="font-hand mt-2 space-y-1 text-lg text-ink-soft">
-          <li>ðŸ—£ï¸ Retell today&apos;s story in your own words â€” kids act it out!</li>
-          <li>ðŸ’­ Family discussion: {lesson.reflection}</li>
-          <li>ðŸŽ¨ Draw what we just learned while someone describes it.</li>
+          <li>🗣️ Retell today&apos;s story in your own words — kids act it out!</li>
+          <li>💭 Family discussion: {lesson.reflection}</li>
+          <li>🎨 Draw what we just learned while someone describes it.</li>
         </ul>
       </div>
       <MascotBubble slide={slide} line="Paste a real YouTube link in the lesson config and it plays right here!" />
@@ -616,39 +616,39 @@ function VideoSlide({ slide, lesson }: { slide: Slide; lesson: Lesson }) {
   );
 }
 
-// ðŸŽ® GAME ARCADE â€” the family picks a game, so the same lesson feels
+// 🎮 GAME ARCADE — the family picks a game, so the same lesson feels
 // fresh every class. Variety + a score to beat + sibling turns = the
 // cure for boredom. Difficulty follows each explorer's age tier.
 type GameId = "facthunt" | "match" | "memory" | "scramble";
 
 const arcadeGames: { id: GameId; emoji: string; label: string; blurb: string; needsVocab: boolean }[] = [
-  { id: "facthunt", emoji: "ðŸ”", label: "Fact Hunt", blurb: "Spot the true fact from today's lesson", needsVocab: false },
-  { id: "match", emoji: "ðŸƒ", label: "Word Match", blurb: "Pair each English word with its Filipino partner", needsVocab: true },
-  { id: "memory", emoji: "ðŸ§ ", label: "Memory Flip", blurb: "Flip cards and remember where the pairs hide", needsVocab: true },
-  { id: "scramble", emoji: "ðŸ”¤", label: "Word Scramble", blurb: "Unscramble the jumbled Filipino word", needsVocab: true },
+  { id: "facthunt", emoji: "🔍", label: "Fact Hunt", blurb: "Spot the true fact from today's lesson", needsVocab: false },
+  { id: "match", emoji: "🃏", label: "Word Match", blurb: "Pair each English word with its Filipino partner", needsVocab: true },
+  { id: "memory", emoji: "🧠", label: "Memory Flip", blurb: "Flip cards and remember where the pairs hide", needsVocab: true },
+  { id: "scramble", emoji: "🔠", label: "Word Scramble", blurb: "Unscramble the jumbled Filipino word", needsVocab: true },
 ];
 
 const pairsForLevel: Record<ExplorerLevel, number> = { explorer: 4, adventure: 5, trailblazer: 6 };
 
 function stars(n: number): string {
-  return "â­".repeat(n) + "â˜†".repeat(3 - n);
+  return "⭐".repeat(n) + "☆".repeat(3 - n);
 }
 
 function GameSlide({ slide, lesson, level }: { slide: Slide; lesson: Lesson; level: ExplorerLevel }) {
-  // Tagalog-only (Sharon's decision) â€” the games always use the Tagalog word.
+  // Tagalog-only (Sharon's decision) — the games always use the Tagalog word.
   const lang = "tagalog" as const;
   const [game, setGame] = useState<GameId | null>(null);
   const phrases = lesson.phrases ?? [];
   const hasVocab = phrases.length > 0;
   const active = arcadeGames.find((g) => g.id === game);
 
-  // ðŸ… "beat your best" â€” best star rating per game, per lesson.
+  // 🏆 "beat your best" — best star rating per game, per lesson.
   const [best, setBest] = useStored<Record<string, number>>(`gamebest-${lesson.id}`, {});
   const [newBest, setNewBest] = useState(false);
   const [xp, setXp] = useStored<Record<string, number>>(KEYS.xp, {});
   const [activeStudentId] = useStored<string | null>(KEYS.activeStudent, null);
 
-  // ðŸ‘¨â€ðŸ‘©â€ðŸ‘§â€ðŸ‘¦ Pass & Play â€” optional sibling turns on the shared screen.
+  // 👨‍👩‍👧‍👦 Pass & Play — optional sibling turns on the shared screen.
   const [players, setPlayers] = useState<string[]>([]);
   const [turn, setTurn] = useState(0);
   const [tally, setTally] = useStored<Record<string, number>>(`gamestars-${lesson.id}-${todayISO()}`, {});
@@ -679,7 +679,7 @@ function GameSlide({ slide, lesson, level }: { slide: Slide; lesson: Lesson; lev
   return (
     <div className="mx-auto w-full max-w-2xl">
       <h1 className="wj-outline text-center font-display text-3xl sm:text-4xl">
-        ðŸŽ® {active ? active.label : "Game Arcade"}
+        🎮 {active ? active.label : "Game Arcade"}
       </h1>
 
 
@@ -690,21 +690,21 @@ function GameSlide({ slide, lesson, level }: { slide: Slide; lesson: Lesson; lev
           {players.map((id) => {
             const s = getStudent(id);
             return s ? (
-              <span key={id} className="wj-chip !text-xs">{s.emoji} {tally[id] ?? 0}â­</span>
+              <span key={id} className="wj-chip !text-xs">{s.emoji} {tally[id] ?? 0}⭐</span>
             ) : null;
           })}
-          <button className="wj-chip !text-xs hover:bg-hibiscus/15" onClick={() => setPlayers([])}>âœ– end turns</button>
+          <button className="wj-chip !text-xs hover:bg-hibiscus/15" onClick={() => setPlayers([])}>✖ end turns</button>
         </div>
       )}
 
       {newBest && (
-        <p className="wj-pop-in mt-3 text-center font-display text-lg text-sunset-deep">ðŸ… New best score!</p>
+        <p className="wj-pop-in mt-3 text-center font-display text-lg text-sunset-deep">🏆 New best score!</p>
       )}
 
       {!game ? (
         <>
           <p className="font-hand mt-3 text-center text-lg text-ink-soft">
-            Pick a game â€” every one uses today&apos;s lesson! ðŸŒ´
+            Pick a game — every one uses today&apos;s lesson! 🌴
           </p>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
             {arcadeGames.map((g) => {
@@ -738,7 +738,7 @@ function GameSlide({ slide, lesson, level }: { slide: Slide; lesson: Lesson; lev
 
           {/* Pass & Play setup */}
           <div className="mt-5 rounded-2xl border-2 border-dashed border-sand-deep p-4 text-center">
-            <p className="font-display text-sm">ðŸ‘¨â€ðŸ‘©â€ðŸ‘§â€ðŸ‘¦ Pass &amp; Play â€” take turns!</p>
+            <p className="font-display text-sm">👨‍👩‍👧‍👦 Pass &amp; Play — take turns!</p>
             <p className="font-hand text-sm text-ink-soft">Tap the players, then pick a game. Stars are shared on the family screen.</p>
             <div className="mt-2 flex flex-wrap justify-center gap-1.5">
               {students.map((s) => {
@@ -751,7 +751,7 @@ function GameSlide({ slide, lesson, level }: { slide: Slide; lesson: Lesson; lev
                     }
                     className={`wj-chip !text-sm ${on ? "!bg-ocean !text-white" : "hover:bg-mango/20"}`}
                   >
-                    {s.emoji} {s.name}{on ? " âœ“" : ""}
+                    {s.emoji} {s.name}{on ? " ✓" : ""}
                   </button>
                 );
               })}
@@ -762,9 +762,9 @@ function GameSlide({ slide, lesson, level }: { slide: Slide; lesson: Lesson; lev
         <div className="mt-4">
           <div className="mb-3 flex items-center justify-center gap-2">
             <button className="wj-chip hover:bg-mango/20" onClick={() => setGame(null)}>
-              â† Choose another game
+              ← Choose another game
             </button>
-            {best[game] ? <span className="wj-chip">ðŸ… Best {stars(best[game])}</span> : null}
+            {best[game] ? <span className="wj-chip">🏆 Best {stars(best[game])}</span> : null}
           </div>
           {game === "facthunt" && (
             <FactHunt key={`fh-${turn}`} lesson={lesson} level={level} onResult={(s) => handleResult("facthunt", s)} />
@@ -804,15 +804,15 @@ function RecipeSlide({ slide, lesson }: { slide: Slide; lesson: Lesson }) {
       </div>
       <h1 className="wj-outline font-display text-3xl sm:text-5xl">Cooking Time!</h1>
       <p className="font-hand mt-2 text-2xl text-ink-soft">
-        {recipe.name} Â· <span className="italic">{recipe.filipinoName}</span>
+        {recipe.name} · <span className="italic">{recipe.filipinoName}</span>
       </p>
       <div className="wj-card mt-5 p-6 text-left">
         <div className="flex flex-wrap justify-center gap-2">
           <span className="wj-chip">{recipe.type}</span>
           <span className="wj-chip">{recipe.difficulty}</span>
-          <span className="wj-chip">â±ï¸ {recipe.time}</span>
-          <span className="wj-chip">ðŸ§º {recipe.ingredients.length} ingredients</span>
-          <span className="wj-chip">ðŸ‘£ {recipe.steps.length} steps</span>
+          <span className="wj-chip">⏱️ {recipe.time}</span>
+          <span className="wj-chip">🧽 {recipe.ingredients.length} ingredients</span>
+          <span className="wj-chip">👣 {recipe.steps.length} steps</span>
         </div>
         <p className="font-hand mt-4 text-center text-lg text-ink-soft">
           Aprons on! Open the full recipe with tap-to-check steps, safety reminders, and
@@ -820,7 +820,7 @@ function RecipeSlide({ slide, lesson }: { slide: Slide; lesson: Lesson }) {
         </p>
         <div className="mt-4 text-center">
           <Link href={`/cooking/${recipe.id}`} target="_blank" className="wj-btn">
-            Open Cooking Mode ðŸ‘©â€ðŸ³
+            Open Cooking Mode 👩‍🍳
           </Link>
         </div>
       </div>
@@ -853,12 +853,12 @@ function ReflectionSlide({ slide, lesson }: { slide: Slide; lesson: Lesson }) {
 
   return (
     <div className="mx-auto max-w-xl text-center">
-      <div className="mb-3 text-5xl">ðŸ’­</div>
+      <div className="mb-3 text-5xl">💭</div>
       <h1 className="wj-outline font-display text-3xl sm:text-4xl">Reflection</h1>
       <p className="font-hand mt-3 text-xl text-ink-soft">{lesson.reflection}</p>
       {saved ? (
         <div className="wj-card wj-pop-in mt-5 p-6">
-          <div className="text-4xl">ðŸ“”âœ¨</div>
+          <div className="text-4xl">📓✨</div>
           <p className="mt-2 font-display text-xl text-palm-deep">Saved to your journal!</p>
         </div>
       ) : (
@@ -870,7 +870,7 @@ function ReflectionSlide({ slide, lesson }: { slide: Slide; lesson: Lesson }) {
             onChange={(e) => setText(e.target.value)}
           />
           <button className="wj-btn" onClick={save} disabled={!text.trim()}>
-            Save My Reflection ðŸ“”
+            Save My Reflection 📓
           </button>
         </div>
       )}
@@ -881,12 +881,12 @@ function ReflectionSlide({ slide, lesson }: { slide: Slide; lesson: Lesson }) {
 function ChallengeSlide({ slide, lesson }: { slide: Slide; lesson: Lesson }) {
   return (
     <div className="mx-auto max-w-xl text-center">
-      <div className="mb-3 text-5xl">ðŸ†</div>
+      <div className="mb-3 text-5xl">🏆</div>
       <h1 className="wj-outline font-display text-3xl sm:text-4xl">Family Challenge</h1>
       <div className="wj-card-bubble wj-note mt-6 p-7">
         <p className="font-display text-xl leading-relaxed text-white">{lesson.familyChallenge}</p>
       </div>
-      <MascotBubble slide={slide} line="The adventure continues at home â€” that's the best part!" />
+      <MascotBubble slide={slide} line="The adventure continues at home — that's the best part!" />
     </div>
   );
 }
@@ -915,18 +915,18 @@ function MemorySlide({ slide, lesson }: { slide: Slide; lesson: Lesson }) {
 
   return (
     <div className="mx-auto max-w-xl text-center">
-      <h1 className="wj-outline font-display text-3xl sm:text-4xl">ðŸ“· Capture Today&apos;s Memory</h1>
+      <h1 className="wj-outline font-display text-3xl sm:text-4xl">📸 Capture Today&apos;s Memory</h1>
       <p className="font-hand mt-2 text-lg text-ink-soft">
-        A photo, a drawing, a project â€” save today into the family Backpack!
+        A photo, a drawing, a project — save today into the family Backpack!
       </p>
       {saved ? (
         <div className="wj-card wj-pop-in mt-5 p-6">
-          <div className="text-4xl">ðŸŽ’âœ¨</div>
+          <div className="text-4xl">🎒✨</div>
           <p className="mt-2 font-display text-xl text-palm-deep">Memory packed in the Backpack!</p>
         </div>
       ) : (
         <div className="wj-card mt-5 space-y-3 p-6 text-left">
-          <PhotoUpload label="Upload today's photo ðŸ“¸" photo={photo} onPhoto={setPhoto} />
+          <PhotoUpload label="Upload today's photo 📸" photo={photo} onPhoto={setPhoto} />
           <input
             className="wj-input"
             placeholder="Caption this memory..."
@@ -934,7 +934,7 @@ function MemorySlide({ slide, lesson }: { slide: Slide; lesson: Lesson }) {
             onChange={(e) => setCaption(e.target.value)}
           />
           <button className="wj-btn w-full" onClick={save}>
-            Save to Backpack ðŸŽ’
+            Save to Backpack 🎒
           </button>
         </div>
       )}
@@ -976,27 +976,27 @@ function CompleteSlide({
       {/* sunset finale */}
       <div className="wj-card overflow-hidden">
         <div className="bg-gradient-to-b from-sunset/70 via-mango/60 to-sky p-8">
-          <div className="text-6xl">ðŸŒ…</div>
+          <div className="text-6xl">🌅</div>
           <h1 className="wj-outline mt-2 font-display text-4xl">Adventure Complete!</h1>
           <p className="font-hand mt-1 text-xl text-ink">
             {lesson.emoji} {lesson.title}
           </p>
         </div>
         <div className="grid grid-cols-2 gap-3 p-6 sm:grid-cols-3">
-          <Stat label="New Words" value={`${lesson.phrases?.length ?? 0}`} emoji="ðŸ’¬" />
+          <Stat label="New Words" value={`${lesson.phrases?.length ?? 0}`} emoji="💬" />
           <Stat
             label="Quiz"
             value={quizResult ? `${quizResult.score}/${quizResult.total}` : "Done!"}
-            emoji="ðŸ§ "
+            emoji="🧠"
           />
-          <Stat label="Journal" value="Saved" emoji="ðŸ“”" />
+          <Stat label="Journal" value="Saved" emoji="📓" />
           <Stat
             label="Passport"
-            value={destination ? "Stamp!" : "â€”"}
-            emoji={destination?.emoji ?? "ðŸ›‚"}
+            value={destination ? "Stamp!" : "—"}
+            emoji={destination?.emoji ?? "🛂"}
           />
-          <Stat label="Backpack" value="Updated" emoji="ðŸŽ’" />
-          <Stat label="Family" value="Together" emoji="ðŸ’›" />
+          <Stat label="Backpack" value="Updated" emoji="🎒" />
+          <Stat label="Family" value="Together" emoji="💛" />
         </div>
         {destination && (
           <div className="pb-4">
@@ -1011,10 +1011,10 @@ function CompleteSlide({
         )}
         <div className="space-y-2 p-6 pt-0">
           <button className="wj-btn w-full" onClick={finish} disabled={alreadyDone}>
-            {alreadyDone ? "Adventure recorded! âœ…" : "Stamp my passport & finish ðŸ›‚"}
+            {alreadyDone ? "Adventure recorded! ✅" : "Stamp my passport & finish 🛂"}
           </button>
           {onExitTheater ? (
-            // Live class: return to the classroom â€” never navigate away
+            // Live class: return to the classroom — never navigate away
             // (the LiveKit room and cameras stay connected).
             <button
               className="wj-btn wj-btn-ocean w-full"
@@ -1023,11 +1023,11 @@ function CompleteSlide({
                 onExitTheater();
               }}
             >
-              Back to the Classroom ðŸŽ¥
+              Back to the Classroom 🎥
             </button>
           ) : (
             <Link href="/today" className="wj-btn wj-btn-ocean w-full" onClick={finish}>
-              See you next adventure! ðŸŒ´
+              See you next adventure! 🌴
             </Link>
           )}
         </div>
@@ -1053,7 +1053,7 @@ function PremiumHookSlide({ slide }: { slide: Slide }) {
   const content = slide.content as string;
   return (
     <div className="mx-auto max-w-3xl text-center">
-      <div className="mb-3 text-6xl">??</div>
+      <div className="mb-3 text-6xl">📌</div>
       <h1 className="wj-outline font-display text-4xl sm:text-5xl">Adventure Hook</h1>
       <div className="mt-8 rounded-3xl bg-sand p-8 shadow-xl">
         <p className="font-hand text-2xl text-ink leading-relaxed">{content}</p>
@@ -1067,7 +1067,7 @@ function PremiumEQSlide({ slide }: { slide: Slide }) {
   const content = slide.content as string;
   return (
     <div className="mx-auto max-w-3xl text-center">
-      <div className="mb-3 text-6xl">?</div>
+      <div className="mb-3 text-6xl">🎯</div>
       <h1 className="wj-outline font-display text-4xl sm:text-5xl">Essential Question</h1>
       <div className="mt-8 rounded-3xl bg-mango-light p-8 shadow-xl border-4 border-mango">
         <p className="font-display text-3xl text-mango-deep leading-relaxed">{content}</p>
@@ -1081,7 +1081,7 @@ function PremiumDiscoveriesSlide({ slide }: { slide: Slide }) {
   const content = slide.content as any[];
   return (
     <div className="mx-auto max-w-3xl text-center">
-      <div className="mb-3 text-6xl">??</div>
+      <div className="mb-3 text-6xl">📌</div>
       <h1 className="wj-outline font-display text-4xl sm:text-5xl">Discoveries</h1>
       <div className="mt-8 space-y-4">
         {content.map((c, i) => (
@@ -1103,7 +1103,7 @@ function PremiumRichExplanationSlide({ slide, lesson }: { slide: Slide; lesson: 
   return (
     <div className="mx-auto w-full max-w-5xl">
       <div className="text-center">
-        <div className="mb-2 text-6xl">{content.emoji || "??"}</div>
+        <div className="mb-2 text-6xl">{content.emoji || "💡"}</div>
         <h1 className="wj-outline font-display text-3xl sm:text-5xl">{content.heading || "Explanation"}</h1>
       </div>
       <div className="mt-6 grid items-start gap-6 lg:grid-cols-5">
@@ -1130,7 +1130,7 @@ function PremiumKeyFactsSlide({ slide }: { slide: Slide }) {
   const content = slide.content as string[];
   return (
     <div className="mx-auto max-w-3xl text-center">
-      <div className="mb-3 text-6xl">??</div>
+      <div className="mb-3 text-6xl">📌</div>
       <h1 className="wj-outline font-display text-4xl sm:text-5xl">Key Facts</h1>
       <ul className="mt-8 space-y-4 text-left">
         {content.map((c, i) => (
@@ -1150,7 +1150,7 @@ function PremiumMediaMomentSlide({ slide }: { slide: Slide }) {
   const embed = content.type === "video" ? getYouTubeEmbed(content.url) : null;
   return (
     <div className="mx-auto max-w-4xl text-center">
-      <div className="mb-3 text-6xl">{content.type === "video" ? "??" : "??"}</div>
+      <div className="mb-3 text-6xl">{content.type === "video" ? "🎬" : "🖼️"}</div>
       <h1 className="wj-outline font-display text-4xl sm:text-5xl">{content.caption}</h1>
       <div className="mt-8 wj-card overflow-hidden p-2">
         {content.type === "video" && embed ? (
@@ -1169,7 +1169,7 @@ function PremiumMediaMomentSlide({ slide }: { slide: Slide }) {
       </div>
       {content.discussionPrompt && (
          <div className="mt-4 p-4 bg-ocean-light rounded-xl">
-           <p className="font-hand text-xl text-ocean-deep">?? {content.discussionPrompt}</p>
+           <p className="font-hand text-xl text-ocean-deep">🗣️ {content.discussionPrompt}</p>
          </div>
       )}
       <MascotBubble slide={slide} line="A picture is worth a thousand words — let's take a look!" />
@@ -1181,7 +1181,7 @@ function PremiumGuidedDiscussionSlide({ slide }: { slide: Slide }) {
   const content = slide.content as string[];
   return (
     <div className="mx-auto max-w-3xl text-center">
-      <div className="mb-3 text-6xl">???</div>
+      <div className="mb-3 text-6xl">💬</div>
       <h1 className="wj-outline font-display text-4xl sm:text-5xl">Guided Discussion</h1>
       <div className="mt-8 space-y-6">
         {content.map((q, i) => (
@@ -1200,7 +1200,7 @@ function PremiumAgeChallengeSlide({ slide, level }: { slide: Slide; level: Explo
   const challenge = content[level];
   return (
     <div className="mx-auto max-w-3xl text-center">
-      <div className="mb-3 text-6xl">?</div>
+      <div className="mb-3 text-6xl">🎯</div>
       <h1 className="wj-outline font-display text-4xl sm:text-5xl">Age Challenge</h1>
       <div className="mt-8 rounded-3xl border-4 border-mango bg-white p-8 shadow-xl">
         <div className="text-lg text-ink-soft mb-2 uppercase font-bold tracking-wider">{levelMeta[level].label} ({levelMeta[level].ages})</div>
@@ -1215,7 +1215,7 @@ function PremiumHandsOnMissionSlide({ slide }: { slide: Slide }) {
   const content = slide.content as string;
   return (
     <div className="mx-auto max-w-3xl text-center">
-      <div className="mb-3 text-6xl">???</div>
+      <div className="mb-3 text-6xl">💬</div>
       <h1 className="wj-outline font-display text-4xl sm:text-5xl">Hands-On Mission</h1>
       <div className="mt-8 rounded-3xl bg-palm-light border-4 border-palm p-8 shadow-xl">
         <p className="font-hand text-2xl text-palm-deep leading-relaxed">{content}</p>
@@ -1230,7 +1230,7 @@ function PremiumCheckUnderstandingSlide({ slide }: { slide: Slide }) {
   const [revealed, setRevealed] = useState<number[]>([]);
   return (
     <div className="mx-auto max-w-3xl text-center">
-      <div className="mb-3 text-6xl">?</div>
+      <div className="mb-3 text-6xl">🎯</div>
       <h1 className="wj-outline font-display text-4xl sm:text-5xl">Check for Understanding</h1>
       <div className="mt-8 space-y-4">
         {content.map((q, i) => {
@@ -1261,7 +1261,7 @@ function PremiumAssessmentSlide({ slide }: { slide: Slide }) {
   const content = slide.content as any;
   return (
     <div className="mx-auto max-w-3xl text-center">
-      <div className="mb-3 text-6xl">??</div>
+      <div className="mb-3 text-6xl">📌</div>
       <h1 className="wj-outline font-display text-4xl sm:text-5xl">Assessment</h1>
       <div className="mt-8 space-y-4">
         <div className="rounded-3xl bg-ube-light p-6 shadow-md border-l-8 border-ube text-left">

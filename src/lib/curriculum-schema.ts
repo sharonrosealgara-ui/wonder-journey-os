@@ -129,16 +129,44 @@ export type FamilyPremiumLesson = Pick<
 >;
 
 export function createFamilyPremiumProjection(lesson: CurriculumLesson): FamilyPremiumLesson {
-  const {
-    teacherPreparation,
-    teacherAnswerKey,
-    privateTeacherNotes,
-    internalFactCheckNotes,
-    sourceNotes,
-    factualSources,
-    ...familySafe
-  } = lesson as any;
-  return familySafe as FamilyPremiumLesson;
+  const result = {
+    id: lesson.id,
+    date: lesson.date,
+    title: lesson.title,
+    topic: lesson.topic,
+    ageRange: lesson.ageRange,
+    unit: lesson.unit,
+    essentialQuestion: lesson.essentialQuestion,
+    adventureHook: lesson.adventureHook,
+    discoveries: lesson.discoveries,
+    richExplanation: lesson.richExplanation,
+    keyFacts: lesson.keyFacts,
+    realWorldConnection: lesson.realWorldConnection,
+    vocabulary: lesson.vocabulary,
+    mediaMoments: lesson.mediaMoments,
+    guidedDiscussion: lesson.guidedDiscussion,
+    ageDifferentiation: lesson.ageDifferentiation,
+    game: lesson.game,
+    handsOnTask: lesson.handsOnTask,
+    crossSubjectConnections: lesson.crossSubjectConnections,
+    characterConnection: lesson.characterConnection,
+    misconceptions: lesson.misconceptions,
+    premiumAssessment: lesson.premiumAssessment,
+    knowledgeCheck: lesson.knowledgeCheck,
+    learnerReflection: lesson.learnerReflection,
+    familyChallenge: lesson.familyChallenge,
+    curatedResources: lesson.curatedResources,
+    optionalExtensions: lesson.optionalExtensions,
+    suggestedPacing: lesson.suggestedPacing,
+    accessibilityNotes: lesson.accessibilityNotes,
+    materials: lesson.materials,
+    interactiveGame: lesson.interactiveGame,
+    handsOnActivity: lesson.handsOnActivity
+  } satisfies FamilyPremiumLesson;
+  for (const k of Object.keys(result) as Array<keyof typeof result>) {
+    if (result[k] === undefined) delete result[k];
+  }
+  return result;
 }
 
 export type FamilyVisibleCurriculumLesson = Pick<CurriculumLesson,
@@ -156,14 +184,59 @@ export type FamilyVisibleCurriculumLesson = Pick<CurriculumLesson,
 
 // Exclude teacher-only fields for Family serialization
 export function serializeForFamily(lesson: CurriculumLesson): FamilyVisibleCurriculumLesson {
-  const {
-    teacherPreparation,
-    teacherAnswerKey,
-    privateTeacherNotes,
-    internalFactCheckNotes,
-    ...familyVisible
-  } = lesson as any;
-  return familyVisible as FamilyVisibleCurriculumLesson;
+  const result = {
+    id: lesson.id,
+    date: lesson.date,
+    title: lesson.title,
+    topic: lesson.topic,
+    ageRange: lesson.ageRange,
+    unit: lesson.unit,
+    essentialQuestion: lesson.essentialQuestion,
+    adventureHook: lesson.adventureHook,
+    discoveries: lesson.discoveries,
+    richExplanation: lesson.richExplanation,
+    keyFacts: lesson.keyFacts,
+    realWorldConnection: lesson.realWorldConnection,
+    vocabulary: lesson.vocabulary,
+    mediaMoments: lesson.mediaMoments,
+    guidedDiscussion: lesson.guidedDiscussion,
+    ageDifferentiation: lesson.ageDifferentiation,
+    game: lesson.game,
+    handsOnTask: lesson.handsOnTask,
+    crossSubjectConnections: lesson.crossSubjectConnections,
+    characterConnection: lesson.characterConnection,
+    misconceptions: lesson.misconceptions,
+    premiumAssessment: lesson.premiumAssessment,
+    knowledgeCheck: lesson.knowledgeCheck,
+    learnerReflection: lesson.learnerReflection,
+    familyChallenge: lesson.familyChallenge,
+    curatedResources: lesson.curatedResources,
+    optionalExtensions: lesson.optionalExtensions,
+    suggestedPacing: lesson.suggestedPacing,
+    accessibilityNotes: lesson.accessibilityNotes,
+    materials: lesson.materials,
+    interactiveGame: lesson.interactiveGame,
+    handsOnActivity: lesson.handsOnActivity,
+    learningObjectives: lesson.learningObjectives,
+    factualBackground: lesson.factualBackground,
+    subjectConnections: lesson.subjectConnections,
+    factualMediaRequirements: lesson.factualMediaRequirements,
+    mediaReferences: lesson.mediaReferences,
+    activities: lesson.activities,
+    progressBadge: lesson.progressBadge,
+    privacyClassification: lesson.privacyClassification,
+    publicationStatus: lesson.publicationStatus,
+    gratitudePrompt: lesson.gratitudePrompt,
+    prayerPrompt: lesson.prayerPrompt,
+    weekday: lesson.weekday,
+    sourceNotes: lesson.sourceNotes,
+    mediaAttributionNotes: lesson.mediaAttributionNotes,
+    factualSources: lesson.factualSources
+  } satisfies FamilyVisibleCurriculumLesson;
+  for (const k of Object.keys(result) as Array<keyof typeof result>) {
+    if (result[k] === undefined) delete result[k];
+  }
+  return result;
 }
 
 // Lightweight runtime validator — useful for build-time checks and unit tests

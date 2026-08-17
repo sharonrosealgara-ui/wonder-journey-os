@@ -13,6 +13,7 @@ import { useSmartSrc } from "@/lib/photos";
 import { getDestination } from "@/config/destinations";
 import { familyAdults, familyName, getStudent, students, teacherName } from "@/config/family";
 import type { Lesson } from "@/config/lessons";
+import type { FamilyPremiumAssessment } from "@/lib/curriculum-schema";
 import { getRecipe } from "@/config/recipes";
 import {
   getTodaysPrayerLeader,
@@ -23,7 +24,7 @@ import {
   type JournalEntry,
   type LessonCompletion,
 } from "@/lib/app-state";
-import { buildAcademy, buildMission, getYouTubeEmbed, levelForAge, levelMeta, type ExplorerLevel, type Slide } from "@/lib/slides";
+import { buildAcademy, buildMission, getYouTubeEmbed, levelForAge, levelMeta, type ExplorerLevel, type Slide, type SlideOf } from "@/lib/slides";
 import { sfx } from "@/lib/sound";
 import { newId, useStored } from "@/lib/storage";
 
@@ -1049,8 +1050,8 @@ function Stat({ label, value, emoji }: { label: string; value: string; emoji: st
 
 // -- Premium Presentation Slides -----------------------------
 
-function PremiumHookSlide({ slide }: { slide: Slide }) {
-  const content = String(slide.content || "");
+function PremiumHookSlide({ slide }: { slide: SlideOf<"hook"> }) {
+  const content = slide.content || "";
   return (
     <div className="mx-auto max-w-3xl text-center">
       <div className="mb-3 text-6xl">🎣</div>
@@ -1063,8 +1064,8 @@ function PremiumHookSlide({ slide }: { slide: Slide }) {
   );
 }
 
-function PremiumEQSlide({ slide }: { slide: Slide }) {
-  const content = String(slide.content || "");
+function PremiumEQSlide({ slide }: { slide: SlideOf<"essentialQuestion"> }) {
+  const content = slide.content || "";
   return (
     <div className="mx-auto max-w-3xl text-center">
       <div className="mb-3 text-6xl">❓</div>
@@ -1077,37 +1078,33 @@ function PremiumEQSlide({ slide }: { slide: Slide }) {
   );
 }
 
-function PremiumDiscoveriesSlide({ slide }: { slide: Slide }) {
-  const content = (slide.content as any[]) || [];
+function PremiumDiscoveriesSlide({ slide }: { slide: SlideOf<"discoveries"> }) {
+  const content = slide.content || [];
   return (
     <div className="mx-auto max-w-3xl text-center">
       <div className="mb-3 text-6xl">🔍</div>
       <h1 className="wj-outline font-display text-4xl sm:text-5xl">Discoveries</h1>
       <div className="mt-8 space-y-4">
-        {content.map((c, i) => {
-          const title = typeof c === "string" ? c : c.title;
-          const desc = typeof c === "object" ? c.description : null;
-          return (
-            <div key={i} className="rounded-3xl bg-white p-6 shadow-md border-l-8 border-ocean text-left">
-              <h3 className="font-display text-2xl text-ocean-deep flex items-center gap-2">
-                <span>✨</span>
-                <span>{title}</span>
-              </h3>
-              {desc && <p className="font-hand text-xl text-ink-soft mt-2">{desc}</p>}
-            </div>
-          );
-        })}
+        {content.map((c, i) => (
+          <div key={i} className="rounded-3xl bg-white p-6 shadow-md border-l-8 border-ocean text-left">
+            <h3 className="font-display text-2xl text-ocean-deep flex items-center gap-2">
+              <span>✨</span>
+              <span>{c.title}</span>
+            </h3>
+            {c.description && <p className="font-hand text-xl text-ink-soft mt-2 leading-relaxed">{c.description}</p>}
+          </div>
+        ))}
       </div>
       <MascotBubble slide={slide} line="Look closely! What did we just discover?" />
     </div>
   );
 }
 
-function PremiumRichExplanationSlide({ slide, lesson }: { slide: Slide; lesson: Lesson }) {
-  const content = (slide.content as any) || {};
+function PremiumRichExplanationSlide({ slide, lesson }: { slide: SlideOf<"richExplanation">; lesson: Lesson }) {
+  const content = slide.content || { body: "" };
   const photoSrc = useSmartSrc("lesson", lesson.id);
   const t = lessonThemes[lesson.category] || lessonThemes.Philippines;
-  const text = content.body || content.text || "";
+  const text = content.body;
   const heading = content.heading || "Explanation";
 
   return (
@@ -1136,8 +1133,8 @@ function PremiumRichExplanationSlide({ slide, lesson }: { slide: Slide; lesson: 
   );
 }
 
-function PremiumKeyFactsSlide({ slide }: { slide: Slide }) {
-  const content = (slide.content as string[]) || [];
+function PremiumKeyFactsSlide({ slide }: { slide: SlideOf<"keyFacts"> }) {
+  const content = slide.content || [];
   return (
     <div className="mx-auto max-w-3xl text-center">
       <div className="mb-3 text-6xl">💡</div>
@@ -1155,9 +1152,9 @@ function PremiumKeyFactsSlide({ slide }: { slide: Slide }) {
   );
 }
 
-function PremiumMediaMomentSlide({ slide }: { slide: Slide }) {
-  const content = (slide.content as any) || {};
-  const isVideo = content.requiredType?.toLowerCase() === "video" || content.type === "video";
+function PremiumMediaMomentSlide({ slide }: { slide: SlideOf<"mediaMoment"> }) {
+  const content = slide.content || { description: "", purpose: "", requiredType: "image", sourceRequirement: "" };
+  const isVideo = content.requiredType.toLowerCase() === "video";
   const embed = isVideo && content.url ? getYouTubeEmbed(content.url) : null;
   const caption = content.caption || content.description || "Media Moment";
 
@@ -1184,18 +1181,13 @@ function PremiumMediaMomentSlide({ slide }: { slide: Slide }) {
           </div>
         )}
       </div>
-      {content.discussionPrompt && (
-        <div className="mt-4 p-4 bg-ocean-light rounded-xl">
-          <p className="font-hand text-xl text-ocean-deep">🗣️ {content.discussionPrompt}</p>
-        </div>
-      )}
       <MascotBubble slide={slide} line="A picture is worth a thousand words — let's take a look!" />
     </div>
   );
 }
 
-function PremiumGuidedDiscussionSlide({ slide }: { slide: Slide }) {
-  const content = (slide.content as string[]) || [];
+function PremiumGuidedDiscussionSlide({ slide }: { slide: SlideOf<"guidedDiscussion"> }) {
+  const content = slide.content || [];
   return (
     <div className="mx-auto max-w-3xl text-center">
       <div className="mb-3 text-6xl">💬</div>
@@ -1214,8 +1206,8 @@ function PremiumGuidedDiscussionSlide({ slide }: { slide: Slide }) {
   );
 }
 
-function PremiumAgeChallengeSlide({ slide, level }: { slide: Slide; level: ExplorerLevel }) {
-  const content = (slide.content as any) || {};
+function PremiumAgeChallengeSlide({ slide, level }: { slide: SlideOf<"ageChallenge">; level: ExplorerLevel }) {
+  const content = slide.content || { explorer: "", adventure: "", trailblazer: "" };
   const challenge = content[level] || content.adventure || content.explorer || "";
   return (
     <div className="mx-auto max-w-3xl text-center">
@@ -1230,16 +1222,15 @@ function PremiumAgeChallengeSlide({ slide, level }: { slide: Slide; level: Explo
   );
 }
 
-function PremiumHandsOnMissionSlide({ slide }: { slide: Slide }) {
-  const content = slide.content as any;
+function PremiumHandsOnMissionSlide({ slide }: { slide: SlideOf<"handsOnMission"> }) {
+  const content = slide.content;
   if (!content) return null;
 
-  const isStructured = typeof content === "object";
-  const title = isStructured ? (content.title || "Hands-On Mission") : "Hands-On Mission";
-  const materials = isStructured && Array.isArray(content.materials) ? content.materials : [];
-  const steps = isStructured && Array.isArray(content.steps) ? content.steps : [];
-  const text = isStructured ? (content.description || "") : String(content);
-  const alt = isStructured ? content.accessibilityAlternative : null;
+  const title = content.title || "Hands-On Mission";
+  const materials = Array.isArray(content.materials) ? content.materials : [];
+  const steps = Array.isArray(content.steps) ? content.steps : [];
+  const text = content.description || "";
+  const alt = content.accessibilityAlternative;
 
   return (
     <div className="mx-auto max-w-3xl text-center">
@@ -1257,7 +1248,7 @@ function PremiumHandsOnMissionSlide({ slide }: { slide: Slide }) {
           <div>
             <h4 className="font-bold text-sm text-ink-soft uppercase tracking-wider mb-2">Steps</h4>
             <ol className="list-decimal list-inside space-y-1.5 text-ink">
-              {steps.map((step: string, i: number) => (
+              {steps.map((step, i) => (
                 <li key={i}>{step}</li>
               ))}
             </ol>
@@ -1274,28 +1265,28 @@ function PremiumHandsOnMissionSlide({ slide }: { slide: Slide }) {
   );
 }
 
-function PremiumCheckUnderstandingSlide({ slide }: { slide: Slide }) {
-  const content = (slide.content as any[]) || [];
+function PremiumCheckUnderstandingSlide({ slide }: { slide: SlideOf<"checkUnderstanding"> }) {
+  const content = slide.content || [];
   const [revealed, setRevealed] = useState<number[]>([]);
   return (
     <div className="mx-auto max-w-3xl text-center">
       <div className="mb-3 text-6xl">💡</div>
       <h1 className="wj-outline font-display text-4xl sm:text-5xl">Check Your Thinking</h1>
       <div className="mt-8 space-y-4">
-        {content.map((q, i) => {
+        {content.map((item, i) => {
           const open = revealed.includes(i);
-          const questionText = typeof q === 'string' ? q : (q.question || q.prompt || q.misconception);
-          const answerText = typeof q === 'object' ? (q.answer || q.reality || q.correctAnswer) : null;
+          const questionText = typeof item === "string" ? item : ("question" in item ? item.question : item.misconception);
+          const detailText = typeof item === "object" && "correction" in item ? item.correction : null;
           return (
             <div
               key={i}
               className="wj-card w-full text-left p-6 shadow-sm border-l-4 border-ocean"
             >
               <p className="font-display text-xl">{questionText}</p>
-              {answerText && (
+              {detailText && (
                 open ? (
                   <div className="mt-3 pt-3 border-t-2 border-sand-deep wj-pop-in">
-                    <p className="font-hand text-xl text-ocean-deep">Fact: {answerText}</p>
+                    <p className="font-hand text-xl text-ocean-deep">Fact: {detailText}</p>
                   </div>
                 ) : (
                   <button
@@ -1315,50 +1306,135 @@ function PremiumCheckUnderstandingSlide({ slide }: { slide: Slide }) {
   );
 }
 
-function PremiumAssessmentSlide({ slide }: { slide: Slide }) {
-  const content = slide.content as any;
-  const questions = Array.isArray(content) ? content : (content?.questions || []);
+function PremiumAssessmentSlide({ slide }: { slide: SlideOf<"premiumAssessment"> }) {
+  const questions: FamilyPremiumAssessment[] = slide.content || [];
   const [selectedAnswers, setSelectedAnswers] = useState<Record<number, string>>({});
+  const [submittedAnswers, setSubmittedAnswers] = useState<Record<number, boolean>>({});
+
+  const handleSelect = (idx: number, opt: string) => {
+    if (submittedAnswers[idx]) return;
+    setSelectedAnswers((prev) => ({ ...prev, [idx]: opt }));
+  };
+
+  const handleSubmit = (idx: number) => {
+    setSubmittedAnswers((prev) => ({ ...prev, [idx]: true }));
+  };
 
   return (
     <div className="mx-auto max-w-3xl text-center">
       <div className="mb-3 text-6xl">📝</div>
       <h1 className="wj-outline font-display text-4xl sm:text-5xl">Adventure Assessment</h1>
-      <div className="mt-8 space-y-4 text-left">
-        {questions.map((q: any, i: number) => (
-          <div key={i} className="rounded-3xl bg-ube-light p-6 shadow-md border-l-8 border-ube">
-            <h3 className="font-display text-xl text-ube-deep">
-              {i + 1}. {q.question || q.prompt || (q.type === "scenario-application" ? `${q.scenario} ${q.question}` : "Question")}
-            </h3>
-            {q.options && Array.isArray(q.options) && q.options.length > 0 && (
-              <div className="mt-3 grid gap-2 sm:grid-cols-2">
-                {q.options.map((opt: string, j: number) => {
-                  const isSelected = selectedAnswers[i] === opt;
-                  return (
-                    <button
-                      key={j}
-                      onClick={() => setSelectedAnswers((prev) => ({ ...prev, [i]: opt }))}
-                      className={`p-3 rounded-xl border text-sm font-semibold transition-all text-left cursor-pointer ${
-                        isSelected
-                          ? "bg-ocean text-white border-ocean-deep shadow-md"
-                          : "bg-white text-ink border-sand-deep hover:bg-sand"
-                      }`}
-                    >
-                      {opt}
-                    </button>
-                  );
-                })}
+      <div className="mt-8 space-y-6 text-left">
+        {questions.map((q, i) => {
+          const isSubmitted = !!submittedAnswers[i];
+          const hasSelected = !!selectedAnswers[i];
+
+          return (
+            <div key={i} className="rounded-3xl bg-ube-light p-6 shadow-md border-l-8 border-ube">
+              <h3 className="font-display text-xl text-ube-deep">
+                {i + 1}. {q.type === "scenario-application" ? `${q.scenario} ${q.question}` : q.question}
+              </h3>
+
+              {/* Multiple Choice and True/False */}
+              {(q.type === "multiple-choice" || q.type === "true-false-with-explanation") && q.options && (
+                <div className="mt-4 grid gap-2.5 sm:grid-cols-2">
+                  {q.options.map((opt, j) => {
+                    const isSelected = selectedAnswers[i] === opt;
+                    return (
+                      <button
+                        key={j}
+                        type="button"
+                        disabled={isSubmitted}
+                        onClick={() => handleSelect(i, opt)}
+                        className={`p-3.5 rounded-2xl border text-sm font-semibold transition-all text-left cursor-pointer ${
+                          isSelected
+                            ? "bg-ocean text-white border-ocean-deep shadow-md ring-2 ring-ocean/50"
+                            : "bg-white text-ink border-sand-deep hover:bg-sand/60"
+                        }`}
+                      >
+                        {opt}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+
+              {/* Short Answer */}
+              {q.type === "short-answer" && (
+                <div className="mt-4 space-y-2">
+                  <input
+                    type="text"
+                    disabled={isSubmitted}
+                    placeholder="Type your answer here..."
+                    value={selectedAnswers[i] || ""}
+                    onChange={(e) => setSelectedAnswers((prev) => ({ ...prev, [i]: e.target.value }))}
+                    className="w-full p-3.5 rounded-xl border border-sand-deep bg-white text-ink text-sm font-medium focus:ring-2 focus:ring-ocean outline-none"
+                  />
+                </div>
+              )}
+
+              {/* Matching (Separated columns - Never revealed pairs) */}
+              {q.type === "matching" && (
+                <div className="mt-4 grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <p className="text-xs font-bold text-ink-soft uppercase tracking-wider">Items</p>
+                    {q.leftItems.map((item, j) => (
+                      <div key={j} className="p-2.5 bg-white rounded-lg border border-sand-deep text-sm font-medium text-ink">
+                        {item}
+                      </div>
+                    ))}
+                  </div>
+                  <div className="space-y-2">
+                    <p className="text-xs font-bold text-ink-soft uppercase tracking-wider">Matches</p>
+                    {q.rightItems.map((item, j) => (
+                      <div key={j} className="p-2.5 bg-sand rounded-lg border border-sand-deep text-sm font-medium text-ink">
+                        {item}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Sequencing */}
+              {q.type === "sequencing" && (
+                <div className="mt-4 space-y-2">
+                  <p className="text-xs font-bold text-ink-soft uppercase tracking-wider">Steps to Order</p>
+                  {q.items.map((item, j) => (
+                    <div key={j} className="p-2.5 bg-white rounded-lg border border-sand-deep text-sm font-medium text-ink flex items-center gap-2">
+                      <span className="w-6 h-6 rounded-full bg-sand flex items-center justify-center text-xs font-bold text-ink-soft">
+                        {j + 1}
+                      </span>
+                      <span>{item}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Submission / Evaluation Feedback */}
+              <div className="mt-4 pt-3 border-t border-ube/20 flex items-center justify-between">
+                {!isSubmitted ? (
+                  <button
+                    type="button"
+                    disabled={!hasSelected}
+                    onClick={() => handleSubmit(i)}
+                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                      hasSelected
+                        ? "bg-ocean text-white hover:bg-ocean-deep shadow-sm"
+                        : "bg-sand text-ink-soft cursor-not-allowed"
+                    }`}
+                  >
+                    Check / Record Choice ✨
+                  </button>
+                ) : (
+                  <div className="flex items-center gap-2 text-xs font-semibold text-ocean-deep bg-white/80 px-3 py-1.5 rounded-lg border border-ocean/20 wj-pop-in">
+                    <span>🌟</span>
+                    <span>Response recorded! Share and discuss your reasoning with family.</span>
+                  </div>
+                )}
               </div>
-            )}
-            {q.pairs && (
-              <ul className="mt-2 list-disc list-inside text-sm text-ink-soft">
-                {q.pairs.map((p: any, j: number) => (
-                  <li key={j}>{p.left} = {p.right}</li>
-                ))}
-              </ul>
-            )}
-          </div>
-        ))}
+            </div>
+          );
+        })}
       </div>
       <MascotBubble slide={slide} line="Show us what you learned today!" />
     </div>

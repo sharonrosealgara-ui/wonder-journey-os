@@ -1,4 +1,4 @@
-// ─────────────────────────────────────────────────────────────
+﻿// ─────────────────────────────────────────────────────────────
 // ADVENTURE THEATER SLIDE ENGINE
 // Turns any Lesson config object into a full theater episode:
 // Welcome → Blessings → Prayer → Mission → Story → Learning →
@@ -9,6 +9,17 @@
 
 import type { Lesson, LessonSection, PhrasePair } from "@/config/lessons";
 import { mascots, type Mascot } from "@/config/mascots";
+import type {
+  Discovery,
+  RichExplanationSection,
+  MediaMoment,
+  AgeDifferentiation,
+  HandsOnTask,
+  Game,
+  FamilyPremiumAssessment,
+  FamilyKnowledgeCheck,
+  MisconceptionItem
+} from "@/lib/curriculum-schema";
 
 // Three-tier Age Adaptation: the family learns together on one screen,
 // each child gets age-appropriate challenge (Decision 042).
@@ -56,15 +67,50 @@ export type SlideKind =
   | "checkUnderstanding"
   | "premiumAssessment";
 
-export type Slide = {
-  id: string;
-  kind: SlideKind;
-  title: string;
-  emoji: string;
-  mascot: Mascot;
-  section?: LessonSection; // for story/learning slides
-  content?: any; // For premium data passing
+export type SlideContentMap = {
+  welcome: undefined;
+  blessings: undefined;
+  prayer: undefined;
+  mission: undefined;
+  story: undefined;
+  learning: undefined;
+  vocab: undefined;
+  video: undefined;
+  game: Game | undefined;
+  recipe: undefined;
+  quiz: undefined;
+  academy: undefined;
+  reflection: string | undefined;
+  challenge: string | undefined;
+  memory: undefined;
+  complete: undefined;
+  // Premium typed contents
+  hook: string;
+  essentialQuestion: string;
+  discoveries: Discovery[];
+  richExplanation: RichExplanationSection;
+  keyFacts: string[];
+  mediaMoment: MediaMoment;
+  guidedDiscussion: string[];
+  ageChallenge: AgeDifferentiation;
+  handsOnMission: HandsOnTask;
+  checkUnderstanding: MisconceptionItem[] | FamilyKnowledgeCheck[];
+  premiumAssessment: FamilyPremiumAssessment[];
 };
+
+export type Slide = {
+  [K in SlideKind]: {
+    id: string;
+    kind: K;
+    title: string;
+    emoji: string;
+    mascot: Mascot;
+    section?: LessonSection;
+    content?: SlideContentMap[K];
+  };
+}[SlideKind];
+
+export type SlideOf<K extends SlideKind> = Extract<Slide, { kind: K }>;
 
 const guideFor: Record<SlideKind, Mascot> = {
   welcome: mascots.kiko,
@@ -110,8 +156,8 @@ export function buildMission(lesson: Lesson): string[] {
 
 export function buildSlides(lesson: Lesson): Slide[] {
   const slides: Slide[] = [];
-  const push = (kind: SlideKind, title: string, emoji: string, section?: LessonSection, content?: any) =>
-    slides.push({ id: `${kind}-${slides.length}`, kind, title, emoji, mascot: guideFor[kind], section, content });
+  const push = <K extends SlideKind>(kind: K, title: string, emoji: string, section?: LessonSection, content?: SlideContentMap[K]) =>
+    slides.push({ id: `${kind}-${slides.length}`, kind, title, emoji, mascot: guideFor[kind], section, content } as any);
 
   push("welcome", "Welcome Explorers!", "🌴");
   push("blessings", "Morning Blessings", "🙏");
@@ -121,34 +167,35 @@ export function buildSlides(lesson: Lesson): Slide[] {
 
   if (isPremium) {
     // Premium Flow
-    if (lesson.premiumContent?.adventureHook) push("hook", "Adventure Hook", "🎣", undefined, lesson.premiumContent?.adventureHook);
-    if (lesson.premiumContent?.essentialQuestion) push("essentialQuestion", "Essential Question", "❓", undefined, lesson.premiumContent?.essentialQuestion);
+    if (lesson.premiumContent?.adventureHook) push("hook", "Adventure Hook", "🎣", undefined, lesson.premiumContent.adventureHook);
+    if (lesson.premiumContent?.essentialQuestion) push("essentialQuestion", "Essential Question", "❓", undefined, lesson.premiumContent.essentialQuestion);
 
     // Core Learning
     if (lesson.premiumContent?.richExplanation) {
-      lesson.premiumContent?.richExplanation.forEach((re, i) => push("richExplanation", re.heading || "Explanation", re.emoji || "📖", undefined, re));
+      lesson.premiumContent.richExplanation.forEach((re) => push("richExplanation", re.heading || "Explanation", re.emoji || "📖", undefined, re));
     }
-    if (lesson.premiumContent?.discoveries) push("discoveries", "Discoveries", "🔍", undefined, lesson.premiumContent?.discoveries);
-    if (lesson.premiumContent?.keyFacts) push("keyFacts", "Key Facts", "💡", undefined, lesson.premiumContent?.keyFacts);
-    if (lesson.premiumContent?.vocabulary && lesson.premiumContent?.vocabulary.length > 0) push("vocab", "Words for the Adventure", "💬");
+    if (lesson.premiumContent?.discoveries) push("discoveries", "Discoveries", "🔍", undefined, lesson.premiumContent.discoveries);
+    if (lesson.premiumContent?.keyFacts) push("keyFacts", "Key Facts", "💡", undefined, lesson.premiumContent.keyFacts);
+    if (lesson.premiumContent?.vocabulary && lesson.premiumContent.vocabulary.length > 0) push("vocab", "Words for the Adventure", "💬");
     if (lesson.premiumContent?.mediaMoments) {
-      lesson.premiumContent?.mediaMoments.forEach((mm, i) => push("mediaMoment", mm.requiredType === "video" ? "Video Moment" : "Media Moment", mm.requiredType === "video" ? "🎬" : "📸", undefined, mm));
+      lesson.premiumContent.mediaMoments.forEach((mm) => push("mediaMoment", mm.requiredType === "video" ? "Video Moment" : "Media Moment", mm.requiredType === "video" ? "🎬" : "📸", undefined, mm));
     }
 
     // Engagement
-    if (lesson.premiumContent?.guidedDiscussion) push("guidedDiscussion", "Guided Discussion", "🗣️", undefined, lesson.premiumContent?.guidedDiscussion);
-    if (lesson.premiumContent?.ageDifferentiation) push("ageChallenge", "Age Challenge", "⭐", undefined, lesson.premiumContent?.ageDifferentiation);
-    if (lesson.premiumContent?.handsOnTask) push("handsOnMission", "Hands-On Mission", "🛠️", undefined, lesson.premiumContent?.handsOnTask);
-    if (lesson.premiumContent?.game) push("game", lesson.premiumContent?.game.title || "Game", "🎮", undefined, lesson.premiumContent?.game);
+    if (lesson.premiumContent?.guidedDiscussion) push("guidedDiscussion", "Guided Discussion", "🗣️", undefined, lesson.premiumContent.guidedDiscussion);
+    if (lesson.premiumContent?.ageDifferentiation) push("ageChallenge", "Age Challenge", "⭐", undefined, lesson.premiumContent.ageDifferentiation);
+    if (lesson.premiumContent?.handsOnTask) push("handsOnMission", "Hands-On Mission", "🛠️", undefined, lesson.premiumContent.handsOnTask);
+    if (lesson.premiumContent?.game) push("game", lesson.premiumContent.game.title || "Game", "🎮", undefined, lesson.premiumContent.game);
 
     // Assessment & Reflection
-    if (lesson.premiumContent?.misconceptions && lesson.premiumContent?.misconceptions.length > 0) {
-      push("checkUnderstanding", "Check Your Thinking", "💡", undefined, lesson.premiumContent?.misconceptions);
-    } else if (lesson.premiumContent?.knowledgeCheck && lesson.premiumContent?.knowledgeCheck.length > 0) {
-      push("checkUnderstanding", "Check for Understanding", "💡", undefined, lesson.premiumContent?.knowledgeCheck);
+    if (lesson.premiumContent?.misconceptions && lesson.premiumContent.misconceptions.length > 0) {
+      push("checkUnderstanding", "Check Your Thinking", "💡", undefined, lesson.premiumContent.misconceptions);
+    } else if (lesson.premiumContent?.knowledgeCheck && lesson.premiumContent.knowledgeCheck.length > 0) {
+      push("checkUnderstanding", "Check for Understanding", "💡", undefined, lesson.premiumContent.knowledgeCheck);
     }
-    if (lesson.premiumContent?.premiumAssessment) push("premiumAssessment", "Assessment", "🧠", undefined, lesson.premiumContent?.premiumAssessment);
-    if (lesson.premiumContent?.learnerReflection) push("reflection", "Reflection", "💭", undefined, lesson.premiumContent?.learnerReflection);
+
+    if (lesson.premiumContent?.premiumAssessment) push("premiumAssessment", "Assessment", "🧠", undefined, lesson.premiumContent.premiumAssessment);
+    if (lesson.premiumContent?.learnerReflection) push("reflection", "Reflection", "💭", undefined, lesson.premiumContent.learnerReflection);
     if (lesson.familyChallenge) push("challenge", "Family Challenge", "🏆", undefined, lesson.familyChallenge);
   } else {
     // Legacy Flow
@@ -203,7 +250,6 @@ const directions: Direction[] = [
   { from: "hiligaynon", to: "english", label: "in English" },
 ];
 
-// distractorCount: 1 = Younger Explorer Mode (2 choices), 2 = Older Explorer Challenge (3 choices)
 export function buildQuiz(phrases: PhrasePair[], seedCount = 5, distractorCount = 2): QuizQuestion[] {
   if (phrases.length < 2) return [];
   const count = Math.min(seedCount, Math.max(3, phrases.length));
@@ -233,11 +279,6 @@ export function buildQuiz(phrases: PhrasePair[], seedCount = 5, distractorCount 
   return questions;
 }
 
-// ── Adventure Academy ────────────────────────────────────────
-// 15-min English + 15-min Math practice at the end of every class.
-// Oral, shared-screen, family-mode friendly — prompts, not forms.
-// Difficulty follows the active tier; math always themes on the lesson.
-
 export function buildAcademy(
   lesson: Lesson,
   level: ExplorerLevel
@@ -246,7 +287,6 @@ export function buildAcademy(
   const p1 = phrases[0];
   const p2 = phrases[1] ?? p1;
   const wordCount = Math.max(phrases.length, 3);
-  // Prefer a short, clean single word for spelling practice.
   const spellable = [...phrases]
     .map((p) => p.english.replace(/[^a-zA-Z ]/g, "").trim())
     .filter((w) => w && !w.includes(" "))
@@ -297,7 +337,7 @@ export function buildAcademy(
           lesson.recipeId
             ? `Our recipe uses 2 cups of cream for 8 servings. How much cream for 12 servings? Show your thinking.`
             : `A flight to Manila covers about 11,000 km in 14 hours. Roughly how many km per hour is that?`,
-          `Only about 2,000 of the Philippines' 7,641 islands are inhabited. Estimate that as a fraction and a percent.`,
+          `The Philippines comprises about 7,641 islands. Estimate that as a fraction and a percent.`,
           `Plan it: with ₱500 and pancit ingredients costing ₱85, ₱120, ₱65, and ₱95 — what's the total and the change?`,
           `Word problem challenge: write your OWN word problem about today's lesson and quiz the family!`,
         ];
@@ -314,8 +354,6 @@ export function shuffle<T>(arr: T[]): T[] {
   return a;
 }
 
-// YouTube helper: real video URLs become privacy-friendly embeds,
-// search links stay as open-in-new-tab cards.
 export function getYouTubeEmbed(url: string): string | null {
   const watch = url.match(/[?&]v=([\w-]{6,})/);
   const short = url.match(/youtu\.be\/([\w-]{6,})/);

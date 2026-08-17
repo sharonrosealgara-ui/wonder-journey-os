@@ -5,18 +5,47 @@ const path = require("path");
 const tempDir = path.join(__dirname, "../temp-validate");
 
 console.log("Compiling stage 2 lessons for validation...");
+
+const tempTsconfig = {
+  compilerOptions: {
+    target: "ES2022",
+    module: "commonjs",
+    moduleResolution: "node",
+    esModuleInterop: true,
+    baseUrl: ".",
+    paths: {
+      "@/*": ["src/*"]
+    },
+    outDir: "temp-validate",
+    noEmit: false,
+    skipLibCheck: true
+  },
+  include: [
+    "src/config/lessons-stage2.ts",
+    "src/lib/curriculum-schema.ts"
+  ]
+};
+
+const tempConfigPath = path.join(__dirname, "../temp-val-tsconfig.json");
+fs.writeFileSync(tempConfigPath, JSON.stringify(tempTsconfig, null, 2), "utf8");
+
 try {
-  execSync(`npx tsc src/config/lessons-stage2.ts --module commonjs --target ES2022 --outDir temp-validate --esModuleInterop true`, { stdio: "pipe" });
+  execSync(`npx tsc --project temp-val-tsconfig.json`, { stdio: "pipe" });
 } catch (e) {
   console.error("Compilation failed:", e.stdout ? e.stdout.toString() : e);
+  if (fs.existsSync(tempConfigPath)) fs.unlinkSync(tempConfigPath);
   process.exit(1);
 }
 
+if (fs.existsSync(tempConfigPath)) fs.unlinkSync(tempConfigPath);
+
 let stage2;
+let curriculumSchema;
 try {
   stage2 = require("../temp-validate/config/lessons-stage2.js");
+  curriculumSchema = require("../temp-validate/lib/curriculum-schema.js");
 } catch (e) {
-  console.error("Failed to load compiled lessons-stage2.js:", e);
+  console.error("Failed to load compiled modules:", e);
   process.exit(1);
 }
 
@@ -145,10 +174,18 @@ lessons.forEach((lesson, i) => {
       errors.push("Missing misconceptions content for 'Check Your Thinking'");
     }
 
-    // 10. Authoritative sources (min 2, exact URLs, verified)
-    if (!lesson.authoritativeSources || lesson.authoritativeSources.length < 2) {
-      errors.push("Insufficient authoritativeSources (min 2)");
+    // 10. Authoritative Primary Sources (PSA, PAGASA, NASA)
+    if (!lesson.authoritativeSources || lesson.authoritativeSources.length < 3) {
+      errors.push("Insufficient authoritativeSources (min 3: PSA, PAGASA, NASA)");
     } else {
+      const hasPSA = lesson.authoritativeSources.some(s => s.source.toLowerCase().includes("psa") || s.source.toLowerCase().includes("philippine statistics authority"));
+      const hasPAGASA = lesson.authoritativeSources.some(s => s.exactUrl.includes("pagasa.dost.gov.ph"));
+      const hasNASA = lesson.authoritativeSources.some(s => s.exactUrl.includes("science.nasa.gov"));
+
+      if (!hasPSA) errors.push("Missing exact PSA authoritative source for island count claim");
+      if (!hasPAGASA) errors.push("Missing exact PAGASA authoritative source for climate and rainfall types");
+      if (!hasNASA) errors.push("Missing exact NASA authoritative source for Earth observation");
+
       lesson.authoritativeSources.forEach((src, sIdx) => {
         if (!src.exactUrl || !src.exactUrl.startsWith("http")) errors.push(`Authoritative source ${sIdx + 1} missing exactUrl`);
         if (!src.publisher) errors.push(`Authoritative source ${sIdx + 1} missing publisher`);
@@ -157,10 +194,15 @@ lessons.forEach((lesson, i) => {
       });
     }
 
-    // 11. Curated resources (min 2, verified)
+    // 11. Curated resources (Google Earth & NatGeo Kids)
     if (!lesson.curatedResources || lesson.curatedResources.length < 2) {
       errors.push("Insufficient curatedResources (min 2)");
     } else {
+      const hasGE = lesson.curatedResources.some(r => r.url.includes("earth.google.com"));
+      const hasNG = lesson.curatedResources.some(r => r.url.includes("kids.nationalgeographic.com"));
+      if (!hasGE) errors.push("Missing Google Earth curated resource");
+      if (!hasNG) errors.push("Missing NatGeo Kids curated resource");
+
       lesson.curatedResources.forEach((res, rIdx) => {
         if (!res.url || !res.url.startsWith("http")) errors.push(`Curated resource ${rIdx + 1} missing url`);
         if (!res.whyUseful) errors.push(`Curated resource ${rIdx + 1} missing whyUseful`);
@@ -186,7 +228,17 @@ lessons.forEach((lesson, i) => {
       errors.push(`Answer key mismatch: ${keyCount} keys vs ${(lesson.premiumAssessment || []).length} assessments`);
     }
 
-    // 14. Core teaching richExplanation (4-7 sections, min 400 words) & Scope Check
+    // 14. DTO Answer Safety Projection Verification
+    const familyProj = curriculumSchema.createFamilyPremiumProjection(lesson);
+    const familyProjStr = JSON.stringify(familyProj);
+    const forbiddenKeys = ["correctAnswer", "correctOptionId", "expectedResolution", "correctOrder", "teacherPreparation", "teacherAnswerKey", "privateTeacherNotes"];
+    forbiddenKeys.forEach(k => {
+      if (familyProjStr.includes(`"${k}"`)) {
+        errors.push(`Family projection leaked forbidden key: ${k}`);
+      }
+    });
+
+    // 15. Core teaching richExplanation (4-7 sections, min 400 words) & Scope Check
     const richExpChunks = lesson.richExplanation || [];
     const richExpWords = richExpChunks.reduce((acc, chunk) => acc + (chunk.body || "").split(/\s+/).length, 0);
     if (richExpWords < 400) errors.push(`richExplanation < 400 words (${richExpWords})`);
@@ -234,6 +286,6 @@ if (!lesson1Pass) {
   process.exit(1);
 } else {
   console.log("\nLesson 1 Premium Gate: PASS");
-  console.log("All 28 premium quality rules satisfied!");
+  console.log("All 28 premium quality rules + PSA/PAGASA source fidelity + DTO answer safety verified!");
   process.exit(0);
 }

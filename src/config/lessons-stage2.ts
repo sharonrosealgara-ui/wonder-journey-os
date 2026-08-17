@@ -10,12 +10,12 @@ export const stage2Lessons: CurriculumLesson[] = [
   "ageRange": "7-12",
   "unit": "Unit 1: The Philippine Archipelago",
   "learningObjectives": [
-    "Locate the Philippines on a world map in relation to the equator, Asia, and Southeast Asia.",
+    "Locate the Philippines on a world map in relation to the Equator, Asia, and Southeast Asia.",
     "Understand that the Earth consists of continents and oceans, with Asia being the largest continent.",
     "Identify the Philippines as a tropical archipelago of about 7,641 islands in the western Pacific Ocean."
   ],
   "essentialQuestion": "If you were to look at Earth from space, how would you describe where the Philippines is located?",
-  "factualBackground": "The Philippines is an archipelagic nation of about 7,641 islands located in Southeast Asia, in the western Pacific Ocean. Situated just north of the Equator in the Northern Hemisphere, it features a tropical maritime climate characterized by warm temperatures and distinct wet and dry seasons.",
+  "factualBackground": "The Philippines is an archipelagic nation of about 7,641 islands located in Southeast Asia, in the western Pacific Ocean. Situated just north of the Equator in the Northern Hemisphere, it features a tropical maritime climate characterized by two major national seasons (rainy and dry) alongside regional rainfall variations classified into four climate types by PAGASA.",
   "adventureHook": "Imagine you are an astronaut floating high above planet Earth in a spacecraft! Looking down through the window, you see vast blue oceans and giant landmasses called continents. As our ship zooms closer, we spot the largest continent, Asia, and nestled in its warm southeastern corner is a sparkling cluster of islands. Today, we are going on a cosmic quest to discover our country's exact home on the world map!",
   "discoveries": [
     {
@@ -35,34 +35,39 @@ export const stage2Lessons: CurriculumLesson[] = [
     {
       "heading": "Looking at Earth from Space",
       "emoji": "🌍",
-      "body": "If we were to look at our planet from high in outer space, we would see a magnificent sphere covered in deep blue oceans and green-and-brown landmasses. Right around the waist of the Earth runs an imaginary line called the Equator. The Equator divides our planet into two halves: the Northern Hemisphere and the Southern Hemisphere. The Philippines sits just north of the Equator, at approximately 4 to 21 degrees north latitude. Because sunlight hits the equatorial region directly all year, countries near the equator do not experience freezing snowy winters. Instead, the Philippines enjoys a tropical maritime climate with warm temperatures and two primary seasonal rhythms—the wet rainy season and the dry sunny season."
+      "body": "If we were to look at our planet from high in outer space, we would see a magnificent sphere covered in deep blue oceans and green-and-brown landmasses. Right around the waist of the Earth runs an imaginary line called the Equator. The Equator divides our planet into two halves: the Northern Hemisphere and the Southern Hemisphere. The Philippines sits just north of the Equator, at approximately 4 to 21 degrees north latitude. Because sunlight hits the equatorial region directly throughout the year, countries near the equator do not experience freezing snowy winters. Instead, the Philippines enjoys a tropical maritime climate with warm temperatures across its surrounding seas."
     },
     {
       "heading": "The Seven Continents and Vast Oceans",
       "emoji": "🗺️",
-      "body": "As we zoom in closer toward Earth, we can identify seven massive land areas called continents: Asia, Africa, North America, South America, Antarctica, Europe, and Australia. Surrounding these continents are five major oceans, with the Pacific Ocean being the largest and deepest of all. Among all seven continents, Asia is the largest in both land area and population. Asia stretches all the way from the frozen Arctic circle in the north down to the warm tropical seas in the south. Because Asia is so enormous, geographers divide it into smaller regional neighborhoods to help us study its diverse cultures, climates, and landscapes."
+      "body": "As we zoom in closer toward Earth, we can identify seven massive land areas called continents: Asia, Africa, North America, South America, Antarctica, Europe, and Australia. Surrounding these continents are five major oceans, with the Pacific Ocean being the largest and deepest of all. Among all seven continents, Asia is the largest in both land area and population. Asia stretches all the way from the cold northern latitudes down to the warm tropical seas in the south. Because Asia is so enormous, geographers divide it into smaller regional neighborhoods to help us study its diverse cultures, climates, and landscapes."
     },
     {
       "heading": "Southeast Asia: Our Regional Home",
       "emoji": "🤝",
-      "body": "Because we are in the same corner of the world as countries like Indonesia, Malaysia, Thailand, Vietnam, Singapore, and Brunei, we share many things with our neighbors. We experience similar weather patterns and grow similar crops like rice and coconuts. However, the Philippines is unique because it is situated on the easternmost edge of Southeast Asia, directly facing the vast Pacific Ocean. This specific location has made our islands a historic crossroads for trade and travel over many centuries."
+      "body": "The Philippines belongs to a vibrant regional neighborhood known as Southeast Asia. This region is located south of mainland China, east of India, and north of Australia. In Southeast Asia, our country is joined by neighboring nations including Indonesia, Malaysia, Thailand, Vietnam, Singapore, and Brunei. Together, we share tropical environments, lush rainforests, and agricultural traditions like growing delicious rice, mangoes, and coconuts. What makes the Philippines especially distinctive is that our islands sit on the easternmost frontier of Southeast Asia, directly greeting the open waters of the Philippine Sea and the vast Pacific Ocean."
     },
     {
       "heading": "The Philippine Archipelago",
       "emoji": "🏝️",
-      "body": "Unlike countries that sit entirely on one huge mainland, the Philippines is an archipelago—a geographic term for a chain or cluster of islands surrounded by water. According to official cartographic surveys by the National Mapping and Resource Information Authority (NAMRIA), the Philippines is composed of about 7,641 islands! These islands stretch more than 1,800 kilometers from north to south. While people live on about 2,000 of these islands, thousands more are pristine islets, coral atolls, and coastal sanctuaries where marine life thrives."
+      "body": "Unlike countries that sit entirely on one huge mainland, the Philippines is an archipelago—a geographic term for a chain or cluster of islands surrounded by water. According to official statistical surveys by the Philippine government, the Philippines is composed of about 7,641 islands! These islands stretch more than 1,800 kilometers from north to south. While major populations live on large island regions like Luzon, Mindanao, and the Visayan islands, many smaller islands are pristine islets, coral atolls, and coastal marine habitats where diverse sea life thrives."
+    },
+    {
+      "heading": "Understanding Climate and Monsoons",
+      "emoji": "🌦️",
+      "body": "According to the national meteorological agency PAGASA, the Philippines generally experiences two major national seasons: the rainy season and the dry season. However, because our islands are spread across hundreds of kilometers of sea and bordered by mountain ranges, rainfall patterns differ across regions. PAGASA recognizes four distinct climate types across the archipelago based on monthly rainfall distribution. Understanding these weather patterns helps Filipino families plan farming, fishing, and safe sea travel throughout the year."
     },
     {
       "heading": "Why Global Location Matters",
       "emoji": "🧭",
-      "body": "Understanding our exact location on the world map helps us see how our daily lives connect to the entire globe. Being near the equator means our seas stay warm and support some of the richest coral reefs on Earth. Facing the open Pacific Ocean means we welcome sea breezes and maritime trade routes that have connected Filipino communities with international travelers for centuries. When you look at a globe or map app, finding the Equator, locating Asia, and identifying the Philippine islands helps you understand international weather, travel routes, and our special place in the global family."
+      "body": "Understanding our exact location on the world map helps us see how our daily lives connect to the entire globe. Being near the equator means our seas stay warm and support some of the richest marine biodiversity on the planet. Facing the open Pacific Ocean means we welcome maritime trade routes that have connected Filipino communities with international travelers for centuries. When you look at a globe or map app, finding the Equator, locating Asia, and identifying the Philippine islands helps you understand world weather, travel routes, and our special place in the global family."
     }
   ],
   "keyFacts": [
     "The Philippines is located in Southeast Asia in the western Pacific Ocean, just north of the Equator.",
     "It is an archipelago consisting of about 7,641 islands stretching across the tropics.",
     "Asia is the largest continent on Earth, and the Philippines sits on its eastern tropical boundary.",
-    "Being situated near the Equator gives the Philippines a warm tropical maritime climate."
+    "PAGASA recognizes a tropical maritime climate with two major national seasons and four regional rainfall types."
   ],
   "realWorldConnection": "Next time you look at a globe in school, open Google Earth, or look at a weather map on a smartphone, find the Equator first! Then trace your finger to the right across the Pacific Ocean until you spot the Philippine islands just north of the line. Seeing our location helps you understand why our weather is tropical and how airplanes fly to our Asian neighbors.",
   "crossSubjectConnections": {
@@ -71,8 +76,14 @@ export const stage2Lessons: CurriculumLesson[] = [
     "socialStudies": "Understanding how our maritime position in Southeast Asia connects the Philippines to neighboring cultures and historical trade routes."
   },
   "misconceptions": [
-    "Misconception: The Philippines has four traditional seasons (spring, summer, autumn, winter) like North America or Europe. Check: Because the Philippines sits near the Equator, it has a tropical climate with warm temperatures year-round and primarily wet and dry seasons.",
-    "Misconception: The Philippines is one single big solid landmass. Check: The Philippines is actually an archipelago made up of about 7,641 separate islands surrounded by water."
+    {
+      "misconception": "The Philippines has four traditional seasons (spring, summer, autumn, winter) like North America or Europe.",
+      "correction": "Because the Philippines sits near the Equator, PAGASA documents a tropical maritime climate with two major national seasons (rainy and dry) and four regional rainfall types."
+    },
+    {
+      "misconception": "The Philippines is one single big solid landmass.",
+      "correction": "The Philippines is actually an archipelago made up of about 7,641 separate islands surrounded by water."
+    }
   ],
   "vocabulary": [
     {
@@ -126,7 +137,7 @@ export const stage2Lessons: CurriculumLesson[] = [
       "purpose": "Demonstrate the progressive spatial relationship from continent to regional neighborhood to island nation.",
       "requiredType": "Map",
       "factualRequirement": "Accurate political and physical map of Southeast Asia showing the Philippines relative to neighboring Asian countries.",
-      "sourceRequirement": "Cartographic map (e.g. NAMRIA / WorldAtlas).",
+      "sourceRequirement": "Cartographic map (e.g. NAMRIA / National Geographic).",
       "altTextGuidance": "Regional map of Southeast Asia highlighting the Philippine islands"
     }
   ],
@@ -176,24 +187,24 @@ export const stage2Lessons: CurriculumLesson[] = [
   },
   "authoritativeSources": [
     {
-      "source": "NAMRIA (National Mapping and Resource Information Authority)",
-      "exactUrl": "https://www.namria.gov.ph/",
-      "publisher": "Department of Environment and Natural Resources, Republic of the Philippines",
-      "claimSupported": "The official Philippine mapping authority verifying that the Philippine archipelago consists of about 7,641 islands and documenting Philippine maritime territory.",
+      "source": "Philippine Statistics Authority (PSA) - Technical Notes on the Philippine Ocean Economy",
+      "exactUrl": "https://psa.gov.ph",
+      "publisher": "Philippine Statistics Authority, Republic of the Philippines",
+      "claimSupported": "Official Philippine government statistical documentation establishing that the Philippine archipelago comprises approximately 7,641 islands in Southeast Asia.",
       "verifiedDate": "2026-08-17"
     },
     {
-      "source": "WorldAtlas: Philippines Geography and Maps",
-      "exactUrl": "https://www.worldatlas.com/maps/philippines",
-      "publisher": "WorldAtlas",
-      "claimSupported": "Geographic documentation detailing the location of the Philippines in Southeast Asia in the western Pacific Ocean, bounded by the Philippine Sea and South China Sea, and positioned north of the Equator.",
+      "source": "PAGASA: Climate of the Philippines",
+      "exactUrl": "https://bagong.pagasa.dost.gov.ph/information/climate-philippines",
+      "publisher": "Philippine Atmospheric, Geophysical and Astronomical Services Administration (DOST-PAGASA)",
+      "claimSupported": "Official national meteorological documentation detailing the tropical maritime climate of the Philippines, characterized by two major national seasons (rainy and dry) and four recognized regional climate types based on rainfall distribution.",
       "verifiedDate": "2026-08-17"
     },
     {
-      "source": "NASA Earth Science",
+      "source": "NASA Earth Science: Planetary Perspectives",
       "exactUrl": "https://science.nasa.gov/earth/",
       "publisher": "National Aeronautics and Space Administration (NASA)",
-      "claimSupported": "Planetary observation data documenting global continents, oceans, equatorial latitude zones, and Earth hemisphere divisions from space.",
+      "claimSupported": "Planetary observation documentation illustrating Earth's spherical shape, global continent-ocean distributions, equatorial latitude lines, and northern/southern hemisphere divisions.",
       "verifiedDate": "2026-08-17"
     }
   ],
@@ -290,7 +301,7 @@ export const stage2Lessons: CurriculumLesson[] = [
       ],
       "correctAnswer": "About 7,641",
       "correctOptionId": "About 7,641",
-      "explanation": "Official surveys by NAMRIA record approximately 7,641 islands in the Philippine archipelago."
+      "explanation": "Official surveys by the Philippine government record approximately 7,641 islands in the Philippine archipelago."
     }
   ],
   "suggestedPacing": {
@@ -365,7 +376,7 @@ export const stage2Lessons: CurriculumLesson[] = [
     }
   ],
   "progressBadge": "World Explorer 🌍",
-  "sourceNotes": "Official geographic data verified from NAMRIA and WorldAtlas.",
+  "sourceNotes": "Official geographic data verified from PSA and PAGASA.",
   "mediaAttributionNotes": "All referenced media moments use educational satellite imagery and cartographic diagrams.",
   "accessibilityNotes": "Provide pre-cut concentric shapes and tactile globe options for learners with fine-motor or visual differences."
 },

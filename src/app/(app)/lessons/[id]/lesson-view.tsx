@@ -258,13 +258,18 @@ export function LessonView({ id }: { id: string }) {
               <div className="p-5 bg-ocean/10 rounded-xl border border-ocean-deep/20">
                 <h3 className="font-display text-lg font-bold text-ocean-deep">💡 Check Your Thinking</h3>
                 <div className="mt-3 space-y-2.5">
-                  {lesson.premiumContent.misconceptions.map((item, idx) => (
-                    <div key={idx} className="rounded-lg bg-white p-3.5 shadow-sm border border-sand-deep">
-                      <p className="text-sm font-medium text-ink">
-                        {typeof item === "string" ? item : (item as any).prompt || (item as any).misconception}
-                      </p>
-                    </div>
-                  ))}
+                  {lesson.premiumContent.misconceptions.map((item, idx) => {
+                    const text = typeof item === "string" ? item : (item.prompt || item.misconception);
+                    const correction = typeof item === "object" && item.correction ? item.correction : null;
+                    return (
+                      <div key={idx} className="rounded-lg bg-white p-3.5 shadow-sm border border-sand-deep space-y-1">
+                        <p className="text-sm font-medium text-ink">{text}</p>
+                        {correction && (
+                          <p className="text-xs text-ocean-deep font-semibold">💡 Fact: {correction}</p>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             )}
@@ -297,23 +302,46 @@ export function LessonView({ id }: { id: string }) {
                 <h3 className="font-display text-lg font-bold">📝 Premium Assessment</h3>
                 <div className="mt-3 space-y-4">
                   {lesson.premiumContent.premiumAssessment.map((q, i) => (
-                    <div key={i} className="space-y-1.5 text-left">
+                    <div key={i} className="space-y-2 text-left">
                       <p className="font-bold text-ink">
-                        {i + 1}. {("question" in q && q.question) ? q.question : (q.type === "scenario-application" ? `${q.scenario} ${q.question}` : "Assessment Question")}
+                        {i + 1}. {q.type === "scenario-application" ? `${q.scenario} ${q.question}` : q.question}
                       </p>
                       {"options" in q && Array.isArray(q.options) && q.options.length > 0 && (
                         <ul className="list-[lower-alpha] list-inside ml-2 text-sm text-ink-soft space-y-0.5">
-                          {q.options.map((opt: string, j: number) => (
+                          {q.options.map((opt, j) => (
                             <li key={j}>{opt}</li>
                           ))}
                         </ul>
                       )}
-                      {"pairs" in q && Array.isArray(q.pairs) && (
-                        <ul className="list-disc list-inside ml-2 text-sm text-ink-soft">
-                          {q.pairs.map((p: { left: string; right: string }, j: number) => (
-                            <li key={j}>{p.left} = {p.right}</li>
-                          ))}
-                        </ul>
+                      {q.type === "matching" && (
+                        <div className="grid grid-cols-2 gap-3 text-xs bg-white p-3 rounded-lg border border-sand-deep">
+                          <div>
+                            <p className="font-bold text-ink-soft mb-1">Items</p>
+                            <ul className="space-y-1">
+                              {q.leftItems.map((item, j) => (
+                                <li key={j} className="text-ink">• {item}</li>
+                              ))}
+                            </ul>
+                          </div>
+                          <div>
+                            <p className="font-bold text-ink-soft mb-1">Options to Match</p>
+                            <ul className="space-y-1">
+                              {q.rightItems.map((item, j) => (
+                                <li key={j} className="text-ink-soft">• {item}</li>
+                              ))}
+                            </ul>
+                          </div>
+                        </div>
+                      )}
+                      {q.type === "sequencing" && (
+                        <div className="text-xs bg-white p-3 rounded-lg border border-sand-deep">
+                          <p className="font-bold text-ink-soft mb-1">Steps to arrange in order:</p>
+                          <ul className="space-y-1">
+                            {q.items.map((item, j) => (
+                              <li key={j} className="text-ink">• {item}</li>
+                            ))}
+                          </ul>
+                        </div>
                       )}
                     </div>
                   ))}

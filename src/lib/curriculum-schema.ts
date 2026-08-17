@@ -16,13 +16,35 @@ export type Discovery = {
   description: string;
 };
 
-export type PremiumAssessment = 
-  | { id?: string; type: 'multiple-choice'; question: string; options: string[]; correctAnswer?: string; correctOptionId?: string; explanation?: string }
-  | { id?: string; type: 'true-false-with-explanation'; question: string; correctAnswer?: 'True' | 'False' | string; correctOptionId?: string; explanation?: string; options?: string[] }
-  | { id?: string; type: 'short-answer'; question: string; expectedAnswerKeywords?: string[]; correctOptionId?: string; options?: string[] }
-  | { id?: string; type: 'matching'; pairs: { left: string; right: string }[]; question?: string }
-  | { id?: string; type: 'sequencing'; question: string; correctOrder: string[] }
-  | { id?: string; type: 'scenario-application'; scenario: string; question: string; expectedResolution: string };
+// Complete Teacher/Internal Assessment Types (contains answers/keys)
+export type PremiumAssessment =
+  | { id?: string; type: 'multiple-choice'; question: string; options: string[]; correctAnswer?: string; correctOptionId?: string; explanation?: string; prompt?: string }
+  | { id?: string; type: 'true-false-with-explanation'; question: string; correctAnswer?: 'True' | 'False' | string; correctOptionId?: string; explanation?: string; options?: string[]; prompt?: string }
+  | { id?: string; type: 'short-answer'; question: string; expectedAnswerKeywords?: string[]; correctOptionId?: string; options?: string[]; prompt?: string }
+  | { id?: string; type: 'matching'; pairs: { left: string; right: string }[]; question?: string; prompt?: string }
+  | { id?: string; type: 'sequencing'; question: string; correctOrder: string[]; prompt?: string }
+  | { id?: string; type: 'scenario-application'; scenario: string; question: string; expectedResolution?: string; prompt?: string };
+
+// Learner-Safe Family Assessment Types (Strictly NO answers/keys/solutions)
+export type FamilyPremiumAssessment =
+  | { id?: string; type: 'multiple-choice'; question: string; options: string[]; prompt?: string }
+  | { id?: string; type: 'true-false-with-explanation'; question: string; options?: string[]; prompt?: string }
+  | { id?: string; type: 'short-answer'; question: string; prompt?: string }
+  | { id?: string; type: 'matching'; question?: string; leftItems: string[]; rightItems: string[]; prompt?: string }
+  | { id?: string; type: 'sequencing'; question: string; items: string[]; prompt?: string }
+  | { id?: string; type: 'scenario-application'; scenario: string; question: string; prompt?: string };
+
+export type FamilyKnowledgeCheck = {
+  question: string;
+  options?: string[];
+  prompt?: string;
+};
+
+export type MisconceptionItem = {
+  misconception: string;
+  correction?: string;
+  prompt?: string;
+} | string;
 
 export type FactualSource = {
   source: string;
@@ -107,13 +129,21 @@ export type MediaMoment = {
   factualRequirement?: string;
   sourceRequirement: string;
   altTextGuidance?: string;
+  url?: string;
+  caption?: string;
+};
+
+export type RichExplanationSection = {
+  heading?: string;
+  body: string;
+  emoji?: string;
 };
 
 export type CurriculumLesson = {
   // Premium Fields
   adventureHook?: string;
   discoveries?: Discovery[];
-  richExplanation?: { heading?: string; body: string; emoji?: string }[];
+  richExplanation?: RichExplanationSection[];
   keyFacts?: string[];
   realWorldConnection?: string;
   mediaMoments?: MediaMoment[];
@@ -127,7 +157,7 @@ export type CurriculumLesson = {
   suggestedPacing?: SuggestedPacing | Record<string, string | number> | string;
   crossSubjectConnections?: string[] | Record<string, string>;
   characterConnection?: string;
-  misconceptions?: string[];
+  misconceptions?: MisconceptionItem[];
   premiumAssessment?: PremiumAssessment[];
 
   id: string; // stable lesson id
@@ -171,7 +201,7 @@ export type CurriculumLesson = {
   accessibilityNotes: string;
   privacyClassification: "family-safe" | "teacher-only" | "private" | "public";
   publicationStatus: "draft" | "pilot" | "published";
-  
+
   // Teacher-only fields (MUST NOT be exposed to Family routes)
   teacherPreparation: string;
   teacherAnswerKey: Record<string, string>;
@@ -179,19 +209,109 @@ export type CurriculumLesson = {
   internalFactCheckNotes?: string;
 };
 
-export type FamilyPremiumLesson = Pick<
-  CurriculumLesson,
-  | "id" | "date" | "title" | "topic" | "ageRange" | "unit" | "essentialQuestion"
-  | "adventureHook" | "discoveries" | "richExplanation" | "keyFacts" | "realWorldConnection"
-  | "vocabulary" | "mediaMoments" | "guidedDiscussion" | "ageDifferentiation"
-  | "game" | "handsOnTask" | "crossSubjectConnections" | "characterConnection"
-  | "misconceptions" | "premiumAssessment" | "knowledgeCheck" | "learnerReflection" | "familyChallenge"
-  | "curatedResources" | "optionalExtensions" | "suggestedPacing"
-  | "accessibilityNotes" | "materials" | "interactiveGame" | "handsOnActivity"
->;
+export type FamilyPremiumLesson = {
+  id: string;
+  date: string;
+  title: string;
+  topic: string;
+  ageRange: string;
+  unit: string;
+  essentialQuestion: string;
+  adventureHook?: string;
+  discoveries?: Discovery[];
+  richExplanation?: RichExplanationSection[];
+  keyFacts?: string[];
+  realWorldConnection?: string;
+  vocabulary?: VocabularyItem[];
+  mediaMoments?: MediaMoment[];
+  guidedDiscussion?: string[];
+  ageDifferentiation?: AgeDifferentiation;
+  game?: Game;
+  handsOnTask?: HandsOnTask;
+  crossSubjectConnections?: string[] | Record<string, string>;
+  characterConnection?: string;
+  misconceptions?: MisconceptionItem[];
+  premiumAssessment?: FamilyPremiumAssessment[];
+  knowledgeCheck?: FamilyKnowledgeCheck[];
+  learnerReflection?: string;
+  familyChallenge?: string;
+  curatedResources?: CuratedResource[];
+  optionalExtensions?: string[] | string;
+  suggestedPacing?: SuggestedPacing | Record<string, string | number> | string;
+  accessibilityNotes?: string;
+  materials?: string[];
+  interactiveGame?: string;
+  handsOnActivity?: string;
+};
+
+// Transforms teacher assessments into learner-safe DTOs stripping all answers and solutions
+export function transformAssessmentsForFamily(assessments?: PremiumAssessment[]): FamilyPremiumAssessment[] | undefined {
+  if (!assessments) return undefined;
+  return assessments.map((q) => {
+    switch (q.type) {
+      case "multiple-choice":
+        return {
+          id: q.id,
+          type: "multiple-choice",
+          question: q.question,
+          options: [...q.options],
+          prompt: q.prompt
+        };
+      case "true-false-with-explanation":
+        return {
+          id: q.id,
+          type: "true-false-with-explanation",
+          question: q.question,
+          options: q.options ? [...q.options] : ["True", "False"],
+          prompt: q.prompt
+        };
+      case "short-answer":
+        return {
+          id: q.id,
+          type: "short-answer",
+          question: q.question,
+          prompt: q.prompt
+        };
+      case "matching":
+        return {
+          id: q.id,
+          type: "matching",
+          question: q.question || "Match the following items:",
+          leftItems: q.pairs.map((p) => p.left),
+          rightItems: [...q.pairs.map((p) => p.right)].sort(),
+          prompt: q.prompt
+        };
+      case "sequencing":
+        return {
+          id: q.id,
+          type: "sequencing",
+          question: q.question,
+          items: [...q.correctOrder].sort(),
+          prompt: q.prompt
+        };
+      case "scenario-application":
+        return {
+          id: q.id,
+          type: "scenario-application",
+          scenario: q.scenario,
+          question: q.question,
+          prompt: q.prompt
+        };
+    }
+  });
+}
+
+// Transforms knowledge check into learner-safe DTO stripping correctAnswer
+export function transformKnowledgeCheckForFamily(checks?: QuizQuestion[]): FamilyKnowledgeCheck[] | undefined {
+  if (!checks) return undefined;
+  return checks.map((c) => ({
+    question: c.question,
+    options: c.options ? [...c.options] : undefined
+  }));
+}
 
 export function createFamilyPremiumProjection(lesson: CurriculumLesson): FamilyPremiumLesson {
-  const result = {
+  const result: FamilyPremiumLesson = {
     id: lesson.id,
     date: lesson.date,
     title: lesson.title,
@@ -213,8 +333,8 @@ export function createFamilyPremiumProjection(lesson: CurriculumLesson): FamilyP
     crossSubjectConnections: lesson.crossSubjectConnections,
     characterConnection: lesson.characterConnection,
     misconceptions: lesson.misconceptions,
-    premiumAssessment: lesson.premiumAssessment,
-    knowledgeCheck: lesson.knowledgeCheck,
+    premiumAssessment: transformAssessmentsForFamily(lesson.premiumAssessment),
+    knowledgeCheck: transformKnowledgeCheckForFamily(lesson.knowledgeCheck),
     learnerReflection: lesson.learnerReflection,
     familyChallenge: lesson.familyChallenge,
     curatedResources: lesson.curatedResources,
@@ -224,7 +344,7 @@ export function createFamilyPremiumProjection(lesson: CurriculumLesson): FamilyP
     materials: lesson.materials,
     interactiveGame: lesson.interactiveGame,
     handsOnActivity: lesson.handsOnActivity
-  } satisfies FamilyPremiumLesson;
+  };
 
   for (const k of Object.keys(result) as Array<keyof typeof result>) {
     if (result[k] === undefined) delete result[k];
@@ -232,23 +352,30 @@ export function createFamilyPremiumProjection(lesson: CurriculumLesson): FamilyP
   return result;
 }
 
-export type FamilyVisibleCurriculumLesson = Pick<
-  CurriculumLesson,
-  | "id" | "date" | "title" | "topic" | "ageRange" | "unit" | "essentialQuestion"
-  | "adventureHook" | "discoveries" | "richExplanation" | "keyFacts" | "realWorldConnection"
-  | "vocabulary" | "mediaMoments" | "guidedDiscussion" | "ageDifferentiation"
-  | "game" | "handsOnTask" | "crossSubjectConnections" | "characterConnection"
-  | "misconceptions" | "premiumAssessment" | "knowledgeCheck" | "learnerReflection" | "familyChallenge"
-  | "curatedResources" | "optionalExtensions" | "suggestedPacing"
-  | "accessibilityNotes" | "materials" | "interactiveGame" | "handsOnActivity"
-  | "learningObjectives" | "factualBackground" | "subjectConnections" | "factualMediaRequirements"
-  | "mediaReferences" | "activities" | "progressBadge" | "privacyClassification" | "publicationStatus"
-  | "gratitudePrompt" | "prayerPrompt" | "weekday" | "sourceNotes" | "mediaAttributionNotes" | "factualSources"
->;
+export type FamilyVisibleCurriculumLesson = Omit<
+  FamilyPremiumLesson,
+  never
+> & {
+  learningObjectives?: string[];
+  factualBackground?: string;
+  subjectConnections?: CurriculumLesson["subjectConnections"];
+  factualMediaRequirements?: string[];
+  mediaReferences?: string[];
+  activities?: LevelSupport;
+  progressBadge?: string;
+  privacyClassification?: string;
+  publicationStatus?: string;
+  gratitudePrompt?: string;
+  prayerPrompt?: string;
+  weekday?: string;
+  sourceNotes?: string;
+  mediaAttributionNotes?: string;
+  factualSources?: FactualSource[];
+};
 
-// Exclude teacher-only fields for Family serialization
+// Exclude teacher-only fields and transform assessments for Family serialization
 export function serializeForFamily(lesson: CurriculumLesson): FamilyVisibleCurriculumLesson {
-  const result = {
+  const result: FamilyVisibleCurriculumLesson = {
     id: lesson.id,
     date: lesson.date,
     title: lesson.title,
@@ -270,8 +397,8 @@ export function serializeForFamily(lesson: CurriculumLesson): FamilyVisibleCurri
     crossSubjectConnections: lesson.crossSubjectConnections,
     characterConnection: lesson.characterConnection,
     misconceptions: lesson.misconceptions,
-    premiumAssessment: lesson.premiumAssessment,
-    knowledgeCheck: lesson.knowledgeCheck,
+    premiumAssessment: transformAssessmentsForFamily(lesson.premiumAssessment),
+    knowledgeCheck: transformKnowledgeCheckForFamily(lesson.knowledgeCheck),
     learnerReflection: lesson.learnerReflection,
     familyChallenge: lesson.familyChallenge,
     curatedResources: lesson.curatedResources,
@@ -296,7 +423,8 @@ export function serializeForFamily(lesson: CurriculumLesson): FamilyVisibleCurri
     sourceNotes: lesson.sourceNotes,
     mediaAttributionNotes: lesson.mediaAttributionNotes,
     factualSources: lesson.factualSources
-  } satisfies FamilyVisibleCurriculumLesson;
+  };
+
   for (const k of Object.keys(result) as Array<keyof typeof result>) {
     if (result[k] === undefined) delete result[k];
   }

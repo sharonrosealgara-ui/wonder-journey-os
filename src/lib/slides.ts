@@ -156,8 +156,24 @@ export function buildMission(lesson: Lesson): string[] {
 
 export function buildSlides(lesson: Lesson): Slide[] {
   const slides: Slide[] = [];
-  const push = <K extends SlideKind>(kind: K, title: string, emoji: string, section?: LessonSection, content?: SlideContentMap[K]) =>
-    slides.push({ id: `${kind}-${slides.length}`, kind, title, emoji, mascot: guideFor[kind], section, content } as any);
+  function push<K extends SlideKind>(
+    kind: K,
+    title: string,
+    emoji: string,
+    section?: LessonSection,
+    content?: SlideContentMap[K]
+  ) {
+    const slide = {
+      id: `${kind}-${slides.length}`,
+      kind,
+      title,
+      emoji,
+      mascot: guideFor[kind],
+      section,
+      content,
+    } as SlideOf<K>;
+    slides.push(slide);
+  }
 
   push("welcome", "Welcome Explorers!", "🌴");
   push("blessings", "Morning Blessings", "🙏");

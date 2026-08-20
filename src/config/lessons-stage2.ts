@@ -188,14 +188,14 @@ export const stage2Lessons: CurriculumLesson[] = [
   "authoritativeSources": [
     {
       "source": "Philippine Statistics Authority (PSA) - Technical Notes on the Philippine Ocean Economy",
-      "exactUrl": "https://psa.gov.ph",
+      "exactUrl": "https://psa.gov.ph/statistics/ocean-economy/technical-notes",
       "publisher": "Philippine Statistics Authority, Republic of the Philippines",
       "claimSupported": "Official Philippine government statistical documentation establishing that the Philippine archipelago comprises approximately 7,641 islands in Southeast Asia.",
       "verifiedDate": "2026-08-17"
     },
     {
       "source": "PAGASA: Climate of the Philippines",
-      "exactUrl": "https://bagong.pagasa.dost.gov.ph/information/climate-philippines",
+      "exactUrl": "https://www.pagasa.dost.gov.ph/information/climate-philippines",
       "publisher": "Philippine Atmospheric, Geophysical and Astronomical Services Administration (DOST-PAGASA)",
       "claimSupported": "Official national meteorological documentation detailing the tropical maritime climate of the Philippines, characterized by two major national seasons (rainy and dry) and four recognized regional climate types based on rainfall distribution.",
       "verifiedDate": "2026-08-17"

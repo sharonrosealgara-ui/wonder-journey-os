@@ -18,7 +18,7 @@ const tempTsconfig = {
     noEmit: false,
     skipLibCheck: true
   },
-  include: ["src/lib/curriculum-schema.ts"]
+  include: ["src/lib/curriculum-schema.ts", "src/lib/assessment-state.ts"]
 };
 
 const tempConfigPath = path.join(__dirname, "../temp-dto-tsconfig.json");
@@ -52,6 +52,11 @@ const SENTINEL_MATCH_RIGHT = "SECRET_MATCH_RIGHT_SOLVED";
 const SENTINEL_SEQ_ORDER = "SECRET_SEQUENCE_EXACT_ORDER";
 const SENTINEL_SCENARIO_RES = "SECRET_SCENARIO_EXPECTED_RESOLUTION";
 const SENTINEL_KC_CORRECT = "SECRET_KNOWLEDGE_CHECK_ANSWER";
+const SENTINEL_SOURCE_NOTES = "SECRET_SOURCE_NOTES_DO_NOT_LEAK";
+const SENTINEL_MEDIA_ATTR = "SECRET_MEDIA_ATTR_DO_NOT_LEAK";
+const SENTINEL_FACTUAL_SOURCES = "SECRET_FACTUAL_SOURCES_DO_NOT_LEAK";
+const SENTINEL_AUTH_SOURCES = "SECRET_AUTH_SOURCES_DO_NOT_LEAK";
+const SENTINEL_TEACHER_RESOURCE = "SECRET_TEACHER_RESOURCE_DO_NOT_LEAK";
 
 const syntheticLesson = {
   id: "test-lesson-sentinel",
@@ -85,9 +90,43 @@ const syntheticLesson = {
   privacyClassification: "family-safe",
   publicationStatus: "pilot",
   progressBadge: "Badge",
-  sourceNotes: "Notes",
-  mediaAttributionNotes: "Attr",
   accessibilityNotes: "Access",
+
+  // Internal verification and teacher metadata (must not leak)
+  sourceNotes: SENTINEL_SOURCE_NOTES,
+  mediaAttributionNotes: SENTINEL_MEDIA_ATTR,
+  factualSources: [{ source: SENTINEL_FACTUAL_SOURCES, url: "https://example.com" }],
+  authoritativeSources: [
+    {
+      source: SENTINEL_AUTH_SOURCES,
+      exactUrl: "https://example.com/notes",
+      publisher: "Internal Publisher",
+      claimSupported: "Internal Claim",
+      verifiedDate: "2026-08-18"
+    }
+  ],
+  curatedResources: [
+    {
+      id: "res-family",
+      title: "Family Resource",
+      url: "https://family.example.com",
+      type: "Interactive",
+      visibility: "family",
+      whyUseful: "Great for families",
+      verificationStatus: "verified",
+      provider: "Provider"
+    },
+    {
+      id: "res-teacher",
+      title: "Teacher Only Resource",
+      url: "https://teacher.example.com",
+      type: "Guide",
+      visibility: "teacher",
+      whyUseful: SENTINEL_TEACHER_RESOURCE,
+      verificationStatus: "verified",
+      provider: "Teacher Provider"
+    }
+  ],
 
   // Sensitive assessments with sentinels
   knowledgeCheck: [
@@ -126,14 +165,16 @@ const syntheticLesson = {
       type: "matching",
       question: "Match items:",
       pairs: [
-        { left: "Left Item 1", right: SENTINEL_MATCH_RIGHT }
+        { left: "Left Item 1", right: "Right Item 1" },
+        { left: "Left Item 2", right: "Right Item 2" },
+        { left: "Left Item 3", right: SENTINEL_MATCH_RIGHT }
       ]
     },
     {
       id: "q5",
       type: "sequencing",
       question: "Sequence items:",
-      correctOrder: ["Step A", "Step B", SENTINEL_SEQ_ORDER]
+      correctOrder: ["Step A", "Step B", "Step C", SENTINEL_SEQ_ORDER]
     },
     {
       id: "q6",
@@ -163,7 +204,12 @@ const sentinels = [
   SENTINEL_TF_CORRECT,
   SENTINEL_SA_KEYWORD,
   SENTINEL_SCENARIO_RES,
-  SENTINEL_KC_CORRECT
+  SENTINEL_KC_CORRECT,
+  SENTINEL_SOURCE_NOTES,
+  SENTINEL_MEDIA_ATTR,
+  SENTINEL_FACTUAL_SOURCES,
+  SENTINEL_AUTH_SOURCES,
+  SENTINEL_TEACHER_RESOURCE
 ];
 
 const forbiddenKeys = [
@@ -175,7 +221,11 @@ const forbiddenKeys = [
   "teacherPreparation",
   "teacherAnswerKey",
   "privateTeacherNotes",
-  "internalFactCheckNotes"
+  "internalFactCheckNotes",
+  "sourceNotes",
+  "mediaAttributionNotes",
+  "factualSources",
+  "authoritativeSources"
 ];
 
 function checkSentinels(name, obj) {
@@ -206,8 +256,46 @@ checkForbiddenKeys("createFamilyPremiumProjection", familyProjection);
 checkSentinels("serializeForFamily", familySerialized);
 checkForbiddenKeys("serializeForFamily", familySerialized);
 
+// Validate Matching DTO safety
+const matchingFamily = familyProjection.premiumAssessment.find(a => a.type === "matching");
+if (!matchingFamily || !matchingFamily.leftItems || !matchingFamily.rightItems) {
+  console.error("FAIL: Matching DTO missing leftItems or rightItems");
+  process.exit(1);
+}
+if ("pairs" in matchingFamily) {
+  console.error("FAIL: Matching DTO leaked solved 'pairs' array");
+  process.exit(1);
+}
+
+// Validate Sequencing DTO safety
+const seqFamily = familyProjection.premiumAssessment.find(a => a.type === "sequencing");
+if (!seqFamily || !seqFamily.items) {
+  console.error("FAIL: Sequencing DTO missing items");
+  process.exit(1);
+}
+if ("correctOrder" in seqFamily) {
+  console.error("FAIL: Sequencing DTO leaked 'correctOrder'");
+  process.exit(1);
+}
+const origSeq = syntheticLesson.premiumAssessment.find(a => a.type === "sequencing").correctOrder;
+if (seqFamily.items.every((v, i) => v === origSeq[i])) {
+  console.error("FAIL: Sequencing items in DTO must not be in exact correctOrder");
+  process.exit(1);
+}
+
+// Validate Scenario DTO safety
+const scenFamily = familyProjection.premiumAssessment.find(a => a.type === "scenario-application");
+if (!scenFamily || !scenFamily.scenario || !scenFamily.question) {
+  console.error("FAIL: Scenario DTO missing scenario or question");
+  process.exit(1);
+}
+if ("expectedResolution" in scenFamily) {
+  console.error("FAIL: Scenario DTO leaked 'expectedResolution'");
+  process.exit(1);
+}
+
 // Clean temp directory
 fs.rmSync(path.join(__dirname, "../temp-dto-test"), { recursive: true, force: true });
 
-console.log("PASS: Nested Answer Leak Test succeeded! All sentinels and forbidden scoring keys strictly stripped.");
+console.log("PASS: Nested Answer & Internal Metadata Leak Test succeeded! All sentinels, forbidden scoring keys, and internal notes strictly stripped.");
 process.exit(0);

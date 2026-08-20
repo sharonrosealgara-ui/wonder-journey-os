@@ -1310,10 +1310,57 @@ function PremiumAssessmentSlide({ slide }: { slide: SlideOf<"premiumAssessment">
   const questions: FamilyPremiumAssessment[] = slide.content || [];
   const [selectedAnswers, setSelectedAnswers] = useState<Record<number, string>>({});
   const [submittedAnswers, setSubmittedAnswers] = useState<Record<number, boolean>>({});
+  const [matchingSelections, setMatchingSelections] = useState<Record<number, { activeLeft: string | null; pairs: Record<string, string> }>>({});
+  const [sequenceOrders, setSequenceOrders] = useState<Record<number, string[]>>({});
+  const [scenarioAnswers, setScenarioAnswers] = useState<Record<number, string>>({});
 
   const handleSelect = (idx: number, opt: string) => {
     if (submittedAnswers[idx]) return;
     setSelectedAnswers((prev) => ({ ...prev, [idx]: opt }));
+  };
+
+  const handleScenarioChange = (idx: number, text: string) => {
+    if (submittedAnswers[idx]) return;
+    setScenarioAnswers((prev) => ({ ...prev, [idx]: text }));
+  };
+
+  const handleMatchingLeftClick = (qIdx: number, leftItem: string) => {
+    if (submittedAnswers[qIdx]) return;
+    setMatchingSelections((prev) => {
+      const cur = prev[qIdx] || { activeLeft: null, pairs: {} };
+      return {
+        ...prev,
+        [qIdx]: { ...cur, activeLeft: cur.activeLeft === leftItem ? null : leftItem }
+      };
+    });
+  };
+
+  const handleMatchingRightClick = (qIdx: number, rightItem: string) => {
+    if (submittedAnswers[qIdx]) return;
+    setMatchingSelections((prev) => {
+      const cur = prev[qIdx] || { activeLeft: null, pairs: {} };
+      if (!cur.activeLeft) return prev;
+      return {
+        ...prev,
+        [qIdx]: {
+          activeLeft: null,
+          pairs: { ...cur.pairs, [cur.activeLeft]: rightItem }
+        }
+      };
+    });
+  };
+
+  const handleMoveSequence = (qIdx: number, itemIdx: number, direction: "up" | "down", defaultItems: string[]) => {
+    if (submittedAnswers[qIdx]) return;
+    setSequenceOrders((prev) => {
+      const currentList = prev[qIdx] ? [...prev[qIdx]] : [...defaultItems];
+      const targetIdx = direction === "up" ? itemIdx - 1 : itemIdx + 1;
+      if (targetIdx < 0 || targetIdx >= currentList.length) return prev;
+      const temp = currentList[itemIdx];
+      currentList[itemIdx] = currentList[targetIdx];
+      currentList[targetIdx] = temp;
+      return { ...prev, [qIdx]: currentList };
+    });
   };
 
   const handleSubmit = (idx: number) => {
@@ -1327,7 +1374,21 @@ function PremiumAssessmentSlide({ slide }: { slide: SlideOf<"premiumAssessment">
       <div className="mt-8 space-y-6 text-left">
         {questions.map((q, i) => {
           const isSubmitted = !!submittedAnswers[i];
-          const hasSelected = !!selectedAnswers[i];
+          const hasMC = !!selectedAnswers[i];
+          const hasScenario = !!(scenarioAnswers[i] && scenarioAnswers[i].trim().length > 0);
+          const currentMatching = matchingSelections[i] || { activeLeft: null, pairs: {} };
+          const hasMatching = Object.keys(currentMatching.pairs).length > 0;
+          const currentSequence = sequenceOrders[i] || (q.type === "sequencing" ? q.items : []);
+          const hasSequence = currentSequence.length > 0;
+
+          const isActionable =
+            q.type === "matching"
+              ? hasMatching
+              : q.type === "sequencing"
+              ? hasSequence
+              : q.type === "scenario-application"
+              ? hasScenario
+              : hasMC;
 
           return (
             <div key={i} className="rounded-3xl bg-ube-light p-6 shadow-md border-l-8 border-ube">
@@ -1373,38 +1434,115 @@ function PremiumAssessmentSlide({ slide }: { slide: SlideOf<"premiumAssessment">
                 </div>
               )}
 
-              {/* Matching (Separated columns - Never revealed pairs) */}
+              {/* Scenario Application */}
+              {q.type === "scenario-application" && (
+                <div className="mt-4 space-y-2">
+                  <textarea
+                    rows={3}
+                    disabled={isSubmitted}
+                    placeholder="Write your explanation or resolution..."
+                    value={scenarioAnswers[i] || ""}
+                    onChange={(e) => handleScenarioChange(i, e.target.value)}
+                    className="w-full p-3.5 rounded-xl border border-sand-deep bg-white text-ink text-sm font-medium focus:ring-2 focus:ring-ocean outline-none"
+                  />
+                </div>
+              )}
+
+              {/* Interactive Matching (Learner creates pairs; never shows answers) */}
               {q.type === "matching" && (
-                <div className="mt-4 grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <p className="text-xs font-bold text-ink-soft uppercase tracking-wider">Items</p>
-                    {q.leftItems.map((item, j) => (
-                      <div key={j} className="p-2.5 bg-white rounded-lg border border-sand-deep text-sm font-medium text-ink">
-                        {item}
-                      </div>
-                    ))}
-                  </div>
-                  <div className="space-y-2">
-                    <p className="text-xs font-bold text-ink-soft uppercase tracking-wider">Matches</p>
-                    {q.rightItems.map((item, j) => (
-                      <div key={j} className="p-2.5 bg-sand rounded-lg border border-sand-deep text-sm font-medium text-ink">
-                        {item}
-                      </div>
-                    ))}
+                <div className="mt-4 space-y-3">
+                  <p className="text-xs text-ink-soft italic">
+                    Tap an item on the left, then tap its match on the right to pair them.
+                  </p>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <p className="text-xs font-bold text-ink-soft uppercase tracking-wider">Items</p>
+                      {q.leftItems.map((item, j) => {
+                        const isSelected = currentMatching.activeLeft === item;
+                        const hasPair = !!currentMatching.pairs[item];
+                        return (
+                          <button
+                            key={j}
+                            type="button"
+                            disabled={isSubmitted}
+                            onClick={() => handleMatchingLeftClick(i, item)}
+                            className={`w-full p-2.5 rounded-xl border text-sm font-medium text-left transition-all cursor-pointer ${
+                              isSelected
+                                ? "bg-ocean text-white border-ocean-deep ring-2 ring-ocean/50"
+                                : hasPair
+                                ? "bg-white border-palm text-palm-deep font-semibold"
+                                : "bg-white border-sand-deep text-ink hover:bg-sand/60"
+                            }`}
+                          >
+                            <span>{item}</span>
+                            {hasPair && <span className="block text-xs text-palm-deep font-normal mt-0.5">↳ {currentMatching.pairs[item]}</span>}
+                          </button>
+                        );
+                      })}
+                    </div>
+                    <div className="space-y-2">
+                      <p className="text-xs font-bold text-ink-soft uppercase tracking-wider">Options</p>
+                      {q.rightItems.map((item, j) => {
+                        return (
+                          <button
+                            key={j}
+                            type="button"
+                            disabled={isSubmitted || !currentMatching.activeLeft}
+                            onClick={() => handleMatchingRightClick(i, item)}
+                            className={`w-full p-2.5 rounded-xl border text-sm font-medium text-left transition-all cursor-pointer ${
+                              currentMatching.activeLeft
+                                ? "bg-sand border-ocean-deep hover:bg-ocean/10 text-ink"
+                                : "bg-sand/50 border-sand-deep text-ink-soft cursor-default"
+                            }`}
+                          >
+                            {item}
+                          </button>
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
               )}
 
-              {/* Sequencing */}
+              {/* Interactive Sequencing (Learner arranges order with Up/Down buttons) */}
               {q.type === "sequencing" && (
                 <div className="mt-4 space-y-2">
-                  <p className="text-xs font-bold text-ink-soft uppercase tracking-wider">Steps to Order</p>
-                  {q.items.map((item, j) => (
-                    <div key={j} className="p-2.5 bg-white rounded-lg border border-sand-deep text-sm font-medium text-ink flex items-center gap-2">
-                      <span className="w-6 h-6 rounded-full bg-sand flex items-center justify-center text-xs font-bold text-ink-soft">
-                        {j + 1}
-                      </span>
-                      <span>{item}</span>
+                  <p className="text-xs text-ink-soft italic">
+                    Use the arrows to arrange these steps in the correct order:
+                  </p>
+                  {currentSequence.map((item, j) => (
+                    <div
+                      key={j}
+                      className="p-3 bg-white rounded-xl border border-sand-deep text-sm font-medium text-ink flex items-center justify-between shadow-sm"
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className="w-6 h-6 rounded-full bg-sand flex items-center justify-center text-xs font-bold text-ink">
+                          {j + 1}
+                        </span>
+                        <span>{item}</span>
+                      </div>
+                      {!isSubmitted && (
+                        <div className="flex items-center gap-1">
+                          <button
+                            type="button"
+                            disabled={j === 0}
+                            onClick={() => handleMoveSequence(i, j, "up", q.items)}
+                            className="p-1.5 rounded-lg bg-sand hover:bg-sand-deep text-xs disabled:opacity-30 cursor-pointer"
+                            title="Move Up"
+                          >
+                            ▲
+                          </button>
+                          <button
+                            type="button"
+                            disabled={j === currentSequence.length - 1}
+                            onClick={() => handleMoveSequence(i, j, "down", q.items)}
+                            className="p-1.5 rounded-lg bg-sand hover:bg-sand-deep text-xs disabled:opacity-30 cursor-pointer"
+                            title="Move Down"
+                          >
+                            ▼
+                          </button>
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>
@@ -1415,20 +1553,20 @@ function PremiumAssessmentSlide({ slide }: { slide: SlideOf<"premiumAssessment">
                 {!isSubmitted ? (
                   <button
                     type="button"
-                    disabled={!hasSelected}
+                    disabled={!isActionable}
                     onClick={() => handleSubmit(i)}
                     className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                      hasSelected
+                      isActionable
                         ? "bg-ocean text-white hover:bg-ocean-deep shadow-sm"
                         : "bg-sand text-ink-soft cursor-not-allowed"
                     }`}
                   >
-                    Check / Record Choice ✨
+                    Record Response ✨
                   </button>
                 ) : (
                   <div className="flex items-center gap-2 text-xs font-semibold text-ocean-deep bg-white/80 px-3 py-1.5 rounded-lg border border-ocean/20 wj-pop-in">
                     <span>🌟</span>
-                    <span>Response recorded! Share and discuss your reasoning with family.</span>
+                    <span>Response recorded — explain your reasoning with your family!</span>
                   </div>
                 )}
               </div>

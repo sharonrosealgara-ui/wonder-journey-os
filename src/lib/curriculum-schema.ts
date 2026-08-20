@@ -1,4 +1,6 @@
-﻿export type LevelSupport = {
+﻿import { scrambleSequencing, scrambleRightItems } from "./assessment-state";
+
+export type LevelSupport = {
   beginnerSupport: string;
   coreActivity: string;
   advancedChallenge: string;
@@ -278,7 +280,7 @@ export function transformAssessmentsForFamily(assessments?: PremiumAssessment[])
           type: "matching",
           question: q.question || "Match the following items:",
           leftItems: q.pairs.map((p) => p.left),
-          rightItems: [...q.pairs.map((p) => p.right)].sort(),
+          rightItems: scrambleRightItems(q.pairs, q.id || q.question || "matching-seed"),
           prompt: q.prompt
         };
       case "sequencing":
@@ -286,7 +288,7 @@ export function transformAssessmentsForFamily(assessments?: PremiumAssessment[])
           id: q.id,
           type: "sequencing",
           question: q.question,
-          items: [...q.correctOrder].sort(),
+          items: scrambleSequencing(q.correctOrder, q.id || q.question || "sequencing-seed"),
           prompt: q.prompt
         };
       case "scenario-application":
@@ -311,6 +313,10 @@ export function transformKnowledgeCheckForFamily(checks?: QuizQuestion[]): Famil
 }
 
 export function createFamilyPremiumProjection(lesson: CurriculumLesson): FamilyPremiumLesson {
+  const familyCurated = lesson.curatedResources
+    ? lesson.curatedResources.filter((r) => r.visibility !== "teacher")
+    : undefined;
+
   const result: FamilyPremiumLesson = {
     id: lesson.id,
     date: lesson.date,
@@ -337,7 +343,7 @@ export function createFamilyPremiumProjection(lesson: CurriculumLesson): FamilyP
     knowledgeCheck: transformKnowledgeCheckForFamily(lesson.knowledgeCheck),
     learnerReflection: lesson.learnerReflection,
     familyChallenge: lesson.familyChallenge,
-    curatedResources: lesson.curatedResources,
+    curatedResources: familyCurated,
     optionalExtensions: lesson.optionalExtensions,
     suggestedPacing: lesson.suggestedPacing,
     accessibilityNotes: lesson.accessibilityNotes,
@@ -368,13 +374,14 @@ export type FamilyVisibleCurriculumLesson = Omit<
   gratitudePrompt?: string;
   prayerPrompt?: string;
   weekday?: string;
-  sourceNotes?: string;
-  mediaAttributionNotes?: string;
-  factualSources?: FactualSource[];
 };
 
-// Exclude teacher-only fields and transform assessments for Family serialization
+// Exclude teacher-only and internal verification fields and transform assessments for Family serialization
 export function serializeForFamily(lesson: CurriculumLesson): FamilyVisibleCurriculumLesson {
+  const familyCurated = lesson.curatedResources
+    ? lesson.curatedResources.filter((r) => r.visibility !== "teacher")
+    : undefined;
+
   const result: FamilyVisibleCurriculumLesson = {
     id: lesson.id,
     date: lesson.date,
@@ -401,7 +408,7 @@ export function serializeForFamily(lesson: CurriculumLesson): FamilyVisibleCurri
     knowledgeCheck: transformKnowledgeCheckForFamily(lesson.knowledgeCheck),
     learnerReflection: lesson.learnerReflection,
     familyChallenge: lesson.familyChallenge,
-    curatedResources: lesson.curatedResources,
+    curatedResources: familyCurated,
     optionalExtensions: lesson.optionalExtensions,
     suggestedPacing: lesson.suggestedPacing,
     accessibilityNotes: lesson.accessibilityNotes,
@@ -420,9 +427,6 @@ export function serializeForFamily(lesson: CurriculumLesson): FamilyVisibleCurri
     gratitudePrompt: lesson.gratitudePrompt,
     prayerPrompt: lesson.prayerPrompt,
     weekday: lesson.weekday,
-    sourceNotes: lesson.sourceNotes,
-    mediaAttributionNotes: lesson.mediaAttributionNotes,
-    factualSources: lesson.factualSources
   };
 
   for (const k of Object.keys(result) as Array<keyof typeof result>) {
@@ -478,44 +482,15 @@ export function validateCurriculumLesson(value: any): { ok: boolean; errors: str
   }
 
   if (!value.activities || typeof value.activities !== 'object') errors.push('activities must be present and an object');
-  else {
-    if (typeof value.activities.beginnerSupport !== 'string') errors.push('activities.beginnerSupport must be a string');
-    if (typeof value.activities.coreActivity !== 'string') errors.push('activities.coreActivity must be a string');
-    if (typeof value.activities.advancedChallenge !== 'string') errors.push('activities.advancedChallenge must be a string');
-  }
 
-  // Validate knowledgeCheck shape
-  if (!Array.isArray(value.knowledgeCheck)) errors.push('knowledgeCheck must be an array');
-  else {
-    value.knowledgeCheck.forEach((q: any, i: number) => {
-      if (!q || typeof q.question !== 'string') errors.push(`knowledgeCheck[${i}].question must be a string`);
-      if (!Array.isArray(q.options) || q.options.some((o: any) => typeof o !== 'string')) errors.push(`knowledgeCheck[${i}].options must be an array of strings`);
-      if (typeof q.correctAnswer !== 'string') errors.push(`knowledgeCheck[${i}].correctAnswer must be a string`);
+  if (value.curatedResources && Array.isArray(value.curatedResources)) {
+    value.curatedResources.forEach((res: any, i: number) => {
+      if (!res.id || typeof res.id !== 'string') errors.push(`curatedResources[${i}].id must be a string`);
+      if (!res.title || typeof res.title !== 'string') errors.push(`curatedResources[${i}].title must be a string`);
+      if (!res.url || typeof res.url !== 'string') errors.push(`curatedResources[${i}].url must be a string`);
+      if (!['teacher', 'family', 'both'].includes(res.visibility)) errors.push(`curatedResources[${i}].visibility must be 'teacher', 'family', or 'both'`);
     });
   }
-
-  // Date format basic check YYYY-MM-DD
-  if (value.date && !/^\d{4}-\d{2}-\d{2}$/.test(value.date)) errors.push('date must be ISO YYYY-MM-DD');
-
-  mustBeString('privacyClassification');
-  if (value.privacyClassification && !["family-safe", "teacher-only", "private", "public"].includes(value.privacyClassification)) {
-    errors.push('privacyClassification must be one of family-safe, teacher-only, private, public');
-  }
-
-  mustBeString('publicationStatus');
-  if (value.publicationStatus && !["draft", "pilot", "published"].includes(value.publicationStatus)) {
-    errors.push('publicationStatus must be one of draft, pilot, published');
-  }
-
-  if (value.gratitudePrompt && typeof value.gratitudePrompt !== 'string') errors.push('gratitudePrompt must be a string when present');
-  if (value.prayerPrompt && typeof value.prayerPrompt !== 'string') errors.push('prayerPrompt must be a string when present');
-  if (value.sourceNotes && typeof value.sourceNotes !== 'string') errors.push('sourceNotes must be a string');
-  if (value.mediaAttributionNotes && typeof value.mediaAttributionNotes !== 'string') errors.push('mediaAttributionNotes must be a string');
-  if (value.accessibilityNotes && typeof value.accessibilityNotes !== 'string') errors.push('accessibilityNotes must be a string');
-
-  // Ensure teacher-only fields presence and types
-  if (!('teacherPreparation' in value) || typeof value.teacherPreparation !== 'string') errors.push('teacherPreparation must be present as a string');
-  if (!('teacherAnswerKey' in value) || typeof value.teacherAnswerKey !== 'object') errors.push('teacherAnswerKey must be present as an object');
 
   return { ok: errors.length === 0, errors };
 }

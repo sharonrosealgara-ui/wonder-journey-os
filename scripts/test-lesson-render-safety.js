@@ -32,6 +32,7 @@ const tempTsconfig = {
     skipLibCheck: true
   },
   include: [
+    "src/lib/assessment-state.ts",
     "src/config/lessons-stage2.ts",
     "src/lib/curriculum-schema.ts",
     "src/lib/slides.ts",
@@ -77,9 +78,6 @@ if (!validationResult.ok) {
   console.error("FAIL: CurriculumLesson validation failed:", validationResult.errors);
   process.exit(1);
 }
-
-const familyProjection = createFamilyPremiumProjection(lesson1);
-const familySerialized = serializeForFamily(lesson1);
 
 // 2. Load Slides and Components
 const { buildSlides } = require("../temp-render-test/lib/slides.js");
@@ -133,7 +131,7 @@ for (const level of levels) {
   }
 }
 
-// 4. Exercise all 6 Premium Assessment variants in real component rendering
+// 4. Exercise all 6 Premium Assessment variants in real component rendering & assert interactive controls
 const mockAssessments = [
   { id: "a1", type: "multiple-choice", question: "Which ocean is east?", options: ["Pacific", "Atlantic"] },
   { id: "a2", type: "true-false-with-explanation", question: "Is Earth round?", options: ["True", "False"] },
@@ -147,8 +145,8 @@ const mockAssessmentSlide = {
   id: "assessment-all-types",
   kind: "premiumAssessment",
   title: "Assessment Test",
-  emoji: "📝",
-  mascot: { id: "tala", name: "Tala", avatar: "🌟", color: "#FFD700" },
+  emoji: "??",
+  mascot: { id: "tala", name: "Tala", avatar: "??", color: "#FFD700" },
   content: mockAssessments
 };
 
@@ -159,11 +157,45 @@ try {
     level: "trailblazer"
   });
   const html = ReactDOMServer.renderToStaticMarkup(element);
+
+  // Assert no [object Object]
   if (html.includes("[object Object]")) {
     console.error("FAIL: [object Object] in mock assessment variant markup");
     process.exit(1);
   }
-  console.log("All 6 Premium Assessment variants rendered cleanly to static markup.");
+
+  // Assert controls exist
+  if (!html.includes("Pacific") || !html.includes("Atlantic")) {
+    console.error("FAIL: Multiple-choice options not rendered");
+    process.exit(1);
+  }
+  if (!html.includes("<input") || !html.includes("placeholder=\"Type your answer here...\"")) {
+    console.error("FAIL: Short-answer input control not rendered");
+    process.exit(1);
+  }
+  if (!html.includes("<textarea") || !html.includes("placeholder=\"Write your explanation or resolution...\"")) {
+    console.error("FAIL: Scenario textarea control not rendered");
+    process.exit(1);
+  }
+  if (!html.includes("Tap an item on the left, then tap its match on the right")) {
+    console.error("FAIL: Matching interactive instructions not rendered");
+    process.exit(1);
+  }
+  if (!html.includes("Use the arrows to arrange these steps in the correct order")) {
+    console.error("FAIL: Sequencing interactive instructions not rendered");
+    process.exit(1);
+  }
+
+  // Assert no forbidden keys or sentinels in markup
+  const forbidden = ["correctAnswer", "correctOptionId", "expectedResolution", "correctOrder", "teacherAnswerKey", "SECRET_"];
+  for (const f of forbidden) {
+    if (html.includes(f)) {
+      console.error(`FAIL: Rendered markup leaked forbidden keyword "${f}"`);
+      process.exit(1);
+    }
+  }
+
+  console.log("All 6 Premium Assessment variants rendered interactive controls cleanly with 0 answer leakage.");
 } catch (err) {
   console.error("FAIL: Error rendering mock assessment variants:", err);
   process.exit(1);

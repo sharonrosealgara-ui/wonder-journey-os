@@ -1,4 +1,4 @@
-﻿import { stage2Lessons } from "./lessons-stage2";
+﻿import { stage2LessonsFamily } from "./lessons-stage2-family";
 
 // -------------------------------------------------------------
 // RESOURCE LIBRARY - videos, links & materials for classes.
@@ -23,7 +23,7 @@ export const APPROVED_RESOURCE_LESSON_IDS = new Set([
 ]);
 
 // Dynamically extract family-safe resources from approved lessons
-const lessonResources: Resource[] = stage2Lessons.flatMap((lesson) => {
+const lessonResources: Resource[] = stage2LessonsFamily.flatMap((lesson) => {
   if (!APPROVED_RESOURCE_LESSON_IDS.has(lesson.id)) return [];
   if (lesson.publicationStatus !== "published" && lesson.publicationStatus !== "pilot") return [];
   if (!lesson.curatedResources) return [];

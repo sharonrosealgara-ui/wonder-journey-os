@@ -1,43 +1,46 @@
-import { stage4Lessons } from "./lessons-stage4";
-import { stage5Lessons } from "./lessons-stage5";
-import { stage6Lessons } from "./lessons-stage6";
-import { stage7Lessons } from "./lessons-stage7";
+import { stage4LessonsFamily } from "./lessons-stage4-family";
+import { stage5LessonsFamily } from "./lessons-stage5-family";
+import { stage6LessonsFamily } from "./lessons-stage6-family";
+import { stage7LessonsFamily } from "./lessons-stage7-family";
 
-import { stage2Lessons } from './lessons-stage2';
-import { CurriculumLesson, FamilyPremiumLesson, createFamilyPremiumProjection } from "../lib/curriculum-schema";
+import { stage2LessonsFamily } from "./lessons-stage2-family";
+import type {
+  FamilyVisibleCurriculumLesson,
+  FamilyPremiumLesson
+} from "@/lib/curriculum-schema";
 
-function mapToLegacy(c: CurriculumLesson, order: number, emoji: string): any {
+function mapToLegacy(c: FamilyVisibleCurriculumLesson, order: number, emoji: string): Lesson {
   return {
     id: c.id,
     order,
     title: c.title,
-    subtitle: c.unit,
+    subtitle: c.unit || "",
     emoji,
     category: "Philippines",
     date: c.date,
     time: "9:00 AM",
-    materials: c.materials,
+    materials: c.materials || [],
     canvaLink: "",
     videoLinks: [],
-    familyChallenge: c.familyChallenge,
+    familyChallenge: c.familyChallenge || "",
     notes: "",
     sections: c.richExplanation && c.richExplanation.length > 0
-      ? c.richExplanation.map(r => ({ heading: r.heading || "Fact", emoji: "💡", body: r.body }))
+      ? c.richExplanation.map((r: any) => ({ heading: r.heading || "Fact", emoji: "🗺️", body: r.body }))
       : [
           { heading: "Objective", emoji: "🎯", body: c.learningObjectives?.join(", ") || "" },
-          { heading: "Fact", emoji: "💡", body: c.factualBackground || "" },
+          { heading: "Fact", emoji: "🗺️", body: c.factualBackground || "" },
           { heading: "Beginner", emoji: "🌱", body: c.activities?.beginnerSupport || "" },
-          { heading: "Core", emoji: "⭐", body: c.activities?.coreActivity || "" },
-          { heading: "Advanced", emoji: "🚀", body: c.activities?.advancedChallenge || "" }
+          { heading: "Core", emoji: "🌿", body: c.activities?.coreActivity || "" },
+          { heading: "Advanced", emoji: "🌳", body: c.activities?.advancedChallenge || "" }
         ],
-    phrases: c.vocabulary ? c.vocabulary.map(v => ({ english: v.translation, tagalog: v.word, pronunciation: v.pronunciation })) : [],
+    phrases: c.vocabulary ? c.vocabulary.map((v: any) => ({ english: v.translation || "", tagalog: v.word, pronunciation: v.pronunciation || "" })) : [],
     reflection: c.learnerReflection || "",
-    premiumContent: createFamilyPremiumProjection(c),
+    premiumContent: c as FamilyPremiumLesson,
     gratitudePrompt: "Today I am grateful to the Lord for..."
   };
 }
 
-const pilotLessons = stage2Lessons.map((l, i) => mapToLegacy(l, i + 1, "🌟"));
+const pilotLessons = stage2LessonsFamily.map((l, i) => mapToLegacy(l, i + 1, "🌟"));
 
 // ─────────────────────────────────────────────────────────────
 // LESSON LIBRARY — add new lessons here; pages render them automatically.
@@ -83,10 +86,10 @@ export type Lesson = {
 
 export const lessons: Lesson[] = [
   ...pilotLessons,
-  ...stage4Lessons.map((l, i) => mapToLegacy(l, i + 14, '📚')),
-  ...stage5Lessons.map((l, i) => mapToLegacy(l, i + 27, '📚')),
-  ...stage6Lessons.map((l, i) => mapToLegacy(l, i + 40, '🍲')),
-  ...stage7Lessons.map((lesson, index) => mapToLegacy(lesson, index + 53, "⭐"))
+  ...stage4LessonsFamily.map((l, i) => mapToLegacy(l, i + 14, '📚')),
+  ...stage5LessonsFamily.map((l, i) => mapToLegacy(l, i + 27, '📚')),
+  ...stage6LessonsFamily.map((l, i) => mapToLegacy(l, i + 40, '🍲')),
+  ...stage7LessonsFamily.map((lesson, index) => mapToLegacy(lesson, index + 53, "⭐"))
 ];
 
 export const unscheduledLessons: Lesson[] = [

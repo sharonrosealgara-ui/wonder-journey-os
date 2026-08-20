@@ -131,6 +131,7 @@ export type MediaMoment = {
   factualRequirement?: string;
   sourceRequirement: string;
   altTextGuidance?: string;
+  altTextRequirement?: string | boolean;
   url?: string;
   caption?: string;
 };

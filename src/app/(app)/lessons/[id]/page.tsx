@@ -1,4 +1,5 @@
-﻿import { lessons } from "@/config/lessons";
+﻿import Link from "next/link";
+import { getLesson, lessons } from "@/config/lessons";
 import { LessonView } from "./lesson-view";
 
 // Pre-render one static page per lesson (static export for Netlify).
@@ -8,5 +9,16 @@ export function generateStaticParams() {
 
 export default async function LessonPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  return <LessonView id={id} />;
+  const lesson = getLesson(id);
+
+  if (!lesson) {
+    return (
+      <div className="wj-card p-8 text-center">
+        <p>Hmm, that lesson has sailed away. ⛵</p>
+        <Link href="/lessons" className="wj-btn mt-4">Back to Lesson Library</Link>
+      </div>
+    );
+  }
+
+  return <LessonView lesson={lesson} />;
 }

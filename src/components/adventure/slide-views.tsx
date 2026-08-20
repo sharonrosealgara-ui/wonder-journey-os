@@ -27,6 +27,17 @@ import {
 import { buildAcademy, buildMission, getYouTubeEmbed, levelForAge, levelMeta, type ExplorerLevel, type Slide, type SlideOf } from "@/lib/slides";
 import { sfx } from "@/lib/sound";
 import { newId, useStored } from "@/lib/storage";
+import {
+  recordMultipleChoice,
+  recordTrueFalse,
+  recordShortAnswer,
+  updateMatchingPair,
+  recordMatching,
+  moveSequenceItem,
+  recordSequencing,
+  recordScenario,
+  type AssessmentRecordState,
+} from "@/lib/assessment-state";
 
 // A mascot introduces each slide with a speech bubble — scaled up so the
 // call-to-action is unmissable for young readers (Sharon's guidelines).
@@ -110,7 +121,7 @@ export function SlideView({
     case "ageChallenge": return <PremiumAgeChallengeSlide slide={slide} level={level} />;
     case "handsOnMission": return <PremiumHandsOnMissionSlide slide={slide} />;
     case "checkUnderstanding": return <PremiumCheckUnderstandingSlide slide={slide} />;
-    case "premiumAssessment": return <PremiumAssessmentSlide slide={slide} />;
+    case "premiumAssessment": return <PremiumAssessmentSlide slide={slide} lesson={lesson} />;
   }
 }
 
@@ -1306,8 +1317,17 @@ function PremiumCheckUnderstandingSlide({ slide }: { slide: SlideOf<"checkUnders
   );
 }
 
-function PremiumAssessmentSlide({ slide }: { slide: SlideOf<"premiumAssessment"> }) {
+function PremiumAssessmentSlide({
+  slide,
+  lesson
+}: {
+  slide: SlideOf<"premiumAssessment">;
+  lesson?: Lesson;
+}) {
   const questions: FamilyPremiumAssessment[] = slide.content || [];
+  const lessonKey = lesson?.id ? `assessment:${lesson.id}` : "assessment:default";
+  const [savedResponses, setSavedResponses] = useStored<AssessmentRecordState>(lessonKey, {});
+
   const [selectedAnswers, setSelectedAnswers] = useState<Record<number, string>>({});
   const [submittedAnswers, setSubmittedAnswers] = useState<Record<number, boolean>>({});
   const [matchingSelections, setMatchingSelections] = useState<Record<number, { activeLeft: string | null; pairs: Record<string, string> }>>({});
@@ -1340,11 +1360,12 @@ function PremiumAssessmentSlide({ slide }: { slide: SlideOf<"premiumAssessment">
     setMatchingSelections((prev) => {
       const cur = prev[qIdx] || { activeLeft: null, pairs: {} };
       if (!cur.activeLeft) return prev;
+      const updatedPairs = updateMatchingPair(cur.pairs, cur.activeLeft, rightItem);
       return {
         ...prev,
         [qIdx]: {
           activeLeft: null,
-          pairs: { ...cur.pairs, [cur.activeLeft]: rightItem }
+          pairs: updatedPairs
         }
       };
     });
@@ -1354,16 +1375,32 @@ function PremiumAssessmentSlide({ slide }: { slide: SlideOf<"premiumAssessment">
     if (submittedAnswers[qIdx]) return;
     setSequenceOrders((prev) => {
       const currentList = prev[qIdx] ? [...prev[qIdx]] : [...defaultItems];
-      const targetIdx = direction === "up" ? itemIdx - 1 : itemIdx + 1;
-      if (targetIdx < 0 || targetIdx >= currentList.length) return prev;
-      const temp = currentList[itemIdx];
-      currentList[itemIdx] = currentList[targetIdx];
-      currentList[targetIdx] = temp;
-      return { ...prev, [qIdx]: currentList };
+      const updatedList = moveSequenceItem(currentList, itemIdx, direction);
+      return { ...prev, [qIdx]: updatedList };
     });
   };
 
   const handleSubmit = (idx: number) => {
+    const q = questions[idx];
+    if (!q) return;
+    const qId = q.id || `q-${idx + 1}`;
+
+    if (q.type === "multiple-choice" && selectedAnswers[idx]) {
+      setSavedResponses((prev) => recordMultipleChoice(prev, qId, selectedAnswers[idx]));
+    } else if (q.type === "true-false-with-explanation" && selectedAnswers[idx]) {
+      setSavedResponses((prev) => recordTrueFalse(prev, qId, selectedAnswers[idx]));
+    } else if (q.type === "short-answer" && selectedAnswers[idx]) {
+      setSavedResponses((prev) => recordShortAnswer(prev, qId, selectedAnswers[idx]));
+    } else if (q.type === "matching") {
+      const curPairs = matchingSelections[idx]?.pairs || {};
+      setSavedResponses((prev) => recordMatching(prev, qId, curPairs));
+    } else if (q.type === "sequencing") {
+      const curSeq = sequenceOrders[idx] || q.items;
+      setSavedResponses((prev) => recordSequencing(prev, qId, curSeq));
+    } else if (q.type === "scenario-application" && scenarioAnswers[idx]) {
+      setSavedResponses((prev) => recordScenario(prev, qId, scenarioAnswers[idx]));
+    }
+
     setSubmittedAnswers((prev) => ({ ...prev, [idx]: true }));
   };
 

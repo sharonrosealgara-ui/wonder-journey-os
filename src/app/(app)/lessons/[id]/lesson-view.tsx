@@ -5,26 +5,15 @@ import { SmartPhoto } from "@/components/smart-photo";
 import { useSmartSrc } from "@/lib/photos";
 import { getDestination } from "@/config/destinations";
 import { getStudent } from "@/config/family";
-import { getLesson } from "@/config/lessons";
+import type { Lesson } from "@/config/lessons";
 import { formatDate, KEYS, todayISO, type LessonCompletion } from "@/lib/app-state";
 import { useStored } from "@/lib/storage";
 
-export function LessonView({ id }: { id: string }) {
-
-  const lesson = getLesson(id);
+export function LessonView({ lesson }: { lesson: Lesson }) {
   const [activeStudentId] = useStored<string | null>(KEYS.activeStudent, null);
   const [completions, setCompletions] = useStored<LessonCompletion[]>(KEYS.completions, []);
   const student = getStudent(activeStudentId);
-  const photoSrc = useSmartSrc("lesson", id);
-
-  if (!lesson) {
-    return (
-      <div className="wj-card p-8 text-center">
-        <p>Hmm, that lesson has sailed away. 🛶</p>
-        <Link href="/lessons" className="wj-btn mt-4">Back to Lesson Library</Link>
-      </div>
-    );
-  }
+  const photoSrc = useSmartSrc("lesson", lesson.id);
 
   const destination = lesson.destinationId ? getDestination(lesson.destinationId) : undefined;
   const done = completions.some(
@@ -94,7 +83,7 @@ export function LessonView({ id }: { id: string }) {
               <div>
                 <h3 className="font-display text-xl font-bold">🔍 Discoveries</h3>
                 <div className="mt-3 space-y-3">
-                  {lesson.premiumContent.discoveries.map((disc, idx) => (
+                  {lesson.premiumContent.discoveries.map((disc: any, idx: number) => (
                     <div key={idx} className="rounded-xl border border-sand-deep bg-white p-4 shadow-sm">
                       <h4 className="font-bold text-lg text-ocean-deep flex items-center gap-2">
                         <span>✨</span>
@@ -112,7 +101,7 @@ export function LessonView({ id }: { id: string }) {
             {lesson.premiumContent?.richExplanation && lesson.premiumContent.richExplanation.length > 0 && (
               <div className="space-y-6">
                 <h3 className="font-display text-xl font-bold">📖 Story & Explanation</h3>
-                {lesson.premiumContent.richExplanation.map((section, idx) => (
+                {lesson.premiumContent.richExplanation.map((section: any, idx: number) => (
                   <div key={idx} className="space-y-2">
                     {section.heading && (
                       <h4 className="font-bold text-lg text-ink flex items-center gap-2">
@@ -130,7 +119,7 @@ export function LessonView({ id }: { id: string }) {
               <div className="p-5 bg-white border border-sand-deep rounded-xl shadow-sm">
                 <h3 className="font-display text-lg font-bold text-sunset-deep">💡 Key Facts</h3>
                 <ul className="mt-3 space-y-2">
-                  {lesson.premiumContent.keyFacts.map((fact, idx) => (
+                  {lesson.premiumContent.keyFacts.map((fact: any, idx: number) => (
                     <li key={idx} className="flex gap-2 text-md">
                       <span>💡</span>
                       <span className="font-medium text-ink">{fact}</span>
@@ -151,7 +140,7 @@ export function LessonView({ id }: { id: string }) {
               <div>
                 <h3 className="font-display text-lg font-bold">💬 New Words</h3>
                 <div className="mt-3 grid gap-3 sm:grid-cols-2">
-                  {lesson.premiumContent.vocabulary.map((v, i) => (
+                  {lesson.premiumContent.vocabulary.map((v: any, i: number) => (
                     <div key={v.word || i} className="p-4 bg-white rounded-lg border border-sand-deep shadow-sm">
                       <p className="font-bold text-lg">{v.word} {v.language && <span className="text-sm text-ink-soft ml-2">({v.language})</span>}</p>
                       {v.translation && <p className="text-sunset-deep font-semibold">{v.translation}</p>}
@@ -167,7 +156,7 @@ export function LessonView({ id }: { id: string }) {
               <div>
                 <h3 className="font-display text-lg font-bold">🖼️ Media Moments</h3>
                 <div className="mt-3 space-y-4">
-                  {lesson.premiumContent.mediaMoments.map((media, i) => (
+                  {lesson.premiumContent.mediaMoments.map((media: any, i: number) => (
                     <div key={i} className="p-4 bg-sand rounded-lg border border-sand-deep">
                       <p className="font-bold">{media.requiredType} - {media.description}</p>
                       <p className="text-sm mt-1 text-ink-soft">{media.purpose}</p>
@@ -182,7 +171,7 @@ export function LessonView({ id }: { id: string }) {
               <div className="p-5 bg-hibiscus-light rounded-xl border border-hibiscus-deep/20">
                 <h3 className="font-display text-lg font-bold text-hibiscus-deep">🗣️ Guided Discussion</h3>
                 <ul className="mt-3 space-y-2.5">
-                  {lesson.premiumContent.guidedDiscussion.map((q, i) => (
+                  {lesson.premiumContent.guidedDiscussion.map((q: any, i: number) => (
                     <li key={i} className="flex gap-2 text-md">
                       <span className="text-hibiscus-deep">💬</span>
                       <span className="font-medium text-ink">{q}</span>
@@ -221,7 +210,7 @@ export function LessonView({ id }: { id: string }) {
                 )}
                 {lesson.premiumContent.handsOnTask.steps && (
                   <ol className="mt-2 list-decimal list-inside space-y-1 text-sm text-ink">
-                    {lesson.premiumContent.handsOnTask.steps.map((step, i) => (
+                    {lesson.premiumContent.handsOnTask.steps.map((step: any, i: number) => (
                       <li key={i}>{step}</li>
                     ))}
                   </ol>
@@ -258,7 +247,7 @@ export function LessonView({ id }: { id: string }) {
               <div className="p-5 bg-ocean/10 rounded-xl border border-ocean-deep/20">
                 <h3 className="font-display text-lg font-bold text-ocean-deep">💡 Check Your Thinking</h3>
                 <div className="mt-3 space-y-2.5">
-                  {lesson.premiumContent.misconceptions.map((item, idx) => {
+                  {lesson.premiumContent.misconceptions.map((item: any, idx: number) => {
                     const text = typeof item === "string" ? item : (item.prompt || item.misconception);
                     const correction = typeof item === "object" && item.correction ? item.correction : null;
                     return (
@@ -279,8 +268,8 @@ export function LessonView({ id }: { id: string }) {
                 <h3 className="font-display text-lg font-bold">🔗 Cross-Subject Connections</h3>
                 <ul className="mt-2 list-disc list-inside space-y-1 text-sm text-ink">
                   {Array.isArray(lesson.premiumContent.crossSubjectConnections)
-                    ? lesson.premiumContent.crossSubjectConnections.map((conn, i) => (
-                        <li key={i}>{typeof conn === "string" ? conn : JSON.stringify(conn)}</li>
+                    ? lesson.premiumContent.crossSubjectConnections.map((conn: any, i: number) => (
+                        <li key={i}>{typeof conn === "string" ? conn : (JSON.stringify(conn) as React.ReactNode)}</li>
                       ))
                     : Object.entries(lesson.premiumContent.crossSubjectConnections).map(([subj, desc]) => (
                         <li key={subj}><strong>{subj.charAt(0).toUpperCase() + subj.slice(1)}:</strong> {desc}</li>
@@ -301,14 +290,14 @@ export function LessonView({ id }: { id: string }) {
               <div className="p-5 bg-sand rounded-xl border border-sand-deep">
                 <h3 className="font-display text-lg font-bold">📝 Premium Assessment</h3>
                 <div className="mt-3 space-y-4">
-                  {lesson.premiumContent.premiumAssessment.map((q, i) => (
+                  {lesson.premiumContent.premiumAssessment.map((q: any, i: number) => (
                     <div key={i} className="space-y-2 text-left">
                       <p className="font-bold text-ink">
                         {i + 1}. {q.type === "scenario-application" ? `${q.scenario} ${q.question}` : q.question}
                       </p>
                       {"options" in q && Array.isArray(q.options) && q.options.length > 0 && (
                         <ul className="list-[lower-alpha] list-inside ml-2 text-sm text-ink-soft space-y-0.5">
-                          {q.options.map((opt, j) => (
+                          {q.options.map((opt: any, j: number) => (
                             <li key={j}>{opt}</li>
                           ))}
                         </ul>
@@ -318,7 +307,7 @@ export function LessonView({ id }: { id: string }) {
                           <div>
                             <p className="font-bold text-ink-soft mb-1">Items</p>
                             <ul className="space-y-1">
-                              {q.leftItems.map((item, j) => (
+                              {q.leftItems.map((item: any, j: number) => (
                                 <li key={j} className="text-ink">• {item}</li>
                               ))}
                             </ul>
@@ -326,7 +315,7 @@ export function LessonView({ id }: { id: string }) {
                           <div>
                             <p className="font-bold text-ink-soft mb-1">Options to Match</p>
                             <ul className="space-y-1">
-                              {q.rightItems.map((item, j) => (
+                              {q.rightItems.map((item: any, j: number) => (
                                 <li key={j} className="text-ink-soft">• {item}</li>
                               ))}
                             </ul>
@@ -337,7 +326,7 @@ export function LessonView({ id }: { id: string }) {
                         <div className="text-xs bg-white p-3 rounded-lg border border-sand-deep">
                           <p className="font-bold text-ink-soft mb-1">Steps to arrange in order:</p>
                           <ul className="space-y-1">
-                            {q.items.map((item, j) => (
+                            {q.items.map((item: any, j: number) => (
                               <li key={j} className="text-ink">• {item}</li>
                             ))}
                           </ul>
@@ -406,7 +395,7 @@ export function LessonView({ id }: { id: string }) {
               <div className="p-5 bg-mango/10 rounded-xl border border-mango-deep/20">
                 <h3 className="font-display text-lg font-bold">📚 Curated Resources</h3>
                 <ul className="mt-3 space-y-3">
-                  {lesson.premiumContent.curatedResources.map((r, i) => (
+                  {lesson.premiumContent.curatedResources.map((r: any, i: number) => (
                     <li key={r.id || i} className="flex flex-col text-md">
                       <a href={r.url} target="_blank" rel="noopener noreferrer" className="font-bold text-ocean-deep hover:underline">
                         🔗 {r.title}

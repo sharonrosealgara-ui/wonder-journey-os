@@ -22,7 +22,7 @@ export type Discovery = {
 export type PremiumAssessment =
   | { id?: string; type: 'multiple-choice'; question: string; options: string[]; correctAnswer?: string; correctOptionId?: string; explanation?: string; prompt?: string }
   | { id?: string; type: 'true-false-with-explanation'; question: string; correctAnswer?: 'True' | 'False' | string; correctOptionId?: string; explanation?: string; options?: string[]; prompt?: string }
-  | { id?: string; type: 'short-answer'; question: string; expectedAnswerKeywords?: string[]; correctOptionId?: string; options?: string[]; prompt?: string }
+  | { id?: string; type: 'short-answer'; question: string; expectedAnswerKeywords?: string[]; correctAnswer?: string; correctOptionId?: string; explanation?: string; options?: string[]; prompt?: string }
   | { id?: string; type: 'matching'; pairs: { left: string; right: string }[]; question?: string; prompt?: string }
   | { id?: string; type: 'sequencing'; question: string; correctOrder: string[]; prompt?: string }
   | { id?: string; type: 'scenario-application'; scenario: string; question: string; expectedResolution?: string; prompt?: string };
@@ -174,7 +174,7 @@ export type CurriculumLesson = {
   essentialQuestion: string;
   factualBackground: string;
   vocabulary: VocabularyItem[];
-  subjectConnections: {
+  subjectConnections?: {
     geography?: string;
     science?: string;
     history?: string;

@@ -24,30 +24,32 @@ if (uniqueLessonIds.size !== lessonIds.length) {
 }
 pass('No duplicate lesson IDs in stage2Lessons');
 
-const lesson1 = stage2Lessons[0];
-const validation = validateCurriculumLesson(lesson1);
-if (!validation.ok) {
-  fail(`Lesson 1 failed schema validation: ${validation.errors.join('; ')}`);
-}
-pass('Lesson 1 validated against curriculum schema');
+stage2Lessons.forEach((lesson, idx) => {
+  const validation = validateCurriculumLesson(lesson);
+  if (!validation.ok) {
+    fail(`Lesson ${idx + 1} (${lesson.id}) failed schema validation: ${validation.errors.join('; ')}`);
+  }
+});
+pass('All 13 Stage 2 lessons validated against curriculum schema');
 
-const sampleLesson = stage2Lessons[0];
-const serialized = serializeForFamily(sampleLesson);
-if (
-  'teacherPreparation' in serialized ||
-  'teacherAnswerKey' in serialized ||
-  'privateTeacherNotes' in serialized ||
-  'internalFactCheckNotes' in serialized ||
-  'sourceNotes' in serialized ||
-  'mediaAttributionNotes' in serialized ||
-  'factualSources' in serialized ||
-  'authoritativeSources' in serialized
-) {
-  fail('Teacher-only or internal fields leaked in Family serialization');
-}
-if (typeof serialized.familyChallenge !== 'string' || serialized.familyChallenge.length === 0) {
-  fail('Family-visible content missing familyChallenge after serialization');
-}
-pass('Family serialization excludes teacher-only fields and preserves family-visible content');
+stage2Lessons.forEach((lesson) => {
+  const serialized = serializeForFamily(lesson);
+  if (
+    'teacherPreparation' in serialized ||
+    'teacherAnswerKey' in serialized ||
+    'privateTeacherNotes' in serialized ||
+    'internalFactCheckNotes' in serialized ||
+    'sourceNotes' in serialized ||
+    'mediaAttributionNotes' in serialized ||
+    'factualSources' in serialized ||
+    'authoritativeSources' in serialized
+  ) {
+    fail(`Teacher-only or internal fields leaked in Family serialization for ${lesson.id}`);
+  }
+  if (typeof serialized.familyChallenge !== 'string' || serialized.familyChallenge.length === 0) {
+    fail(`Family-visible content missing familyChallenge after serialization for ${lesson.id}`);
+  }
+});
+pass('Family serialization excludes teacher-only fields across all 13 lessons');
 
 pass('All curriculum tests passed');

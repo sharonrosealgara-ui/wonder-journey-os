@@ -5,7 +5,16 @@ import { SmartPhoto } from "@/components/smart-photo";
 import { useSmartSrc } from "@/lib/photos";
 import { getDestination } from "@/config/destinations";
 import { getStudent } from "@/config/family";
-import type { Lesson } from "@/config/lessons";
+import type { Lesson, LessonSection, PhrasePair } from "@/config/lessons";
+import type {
+  Discovery,
+  RichExplanationSection,
+  VocabularyItem,
+  MediaMoment,
+  MisconceptionItem,
+  CuratedResource,
+  FamilyPremiumAssessment
+} from "@/lib/curriculum-schema";
 import { formatDate, KEYS, todayISO, type LessonCompletion } from "@/lib/app-state";
 import { useStored } from "@/lib/storage";
 
@@ -83,7 +92,7 @@ export function LessonView({ lesson }: { lesson: Lesson }) {
               <div>
                 <h3 className="font-display text-xl font-bold">🔍 Discoveries</h3>
                 <div className="mt-3 space-y-3">
-                  {lesson.premiumContent.discoveries.map((disc: any, idx: number) => (
+                  {lesson.premiumContent.discoveries.map((disc: Discovery, idx: number) => (
                     <div key={idx} className="rounded-xl border border-sand-deep bg-white p-4 shadow-sm">
                       <h4 className="font-bold text-lg text-ocean-deep flex items-center gap-2">
                         <span>✨</span>
@@ -101,7 +110,7 @@ export function LessonView({ lesson }: { lesson: Lesson }) {
             {lesson.premiumContent?.richExplanation && lesson.premiumContent.richExplanation.length > 0 && (
               <div className="space-y-6">
                 <h3 className="font-display text-xl font-bold">📖 Story & Explanation</h3>
-                {lesson.premiumContent.richExplanation.map((section: any, idx: number) => (
+                {lesson.premiumContent.richExplanation.map((section: RichExplanationSection, idx: number) => (
                   <div key={idx} className="space-y-2">
                     {section.heading && (
                       <h4 className="font-bold text-lg text-ink flex items-center gap-2">
@@ -119,7 +128,7 @@ export function LessonView({ lesson }: { lesson: Lesson }) {
               <div className="p-5 bg-white border border-sand-deep rounded-xl shadow-sm">
                 <h3 className="font-display text-lg font-bold text-sunset-deep">💡 Key Facts</h3>
                 <ul className="mt-3 space-y-2">
-                  {lesson.premiumContent.keyFacts.map((fact: any, idx: number) => (
+                  {lesson.premiumContent.keyFacts.map((fact: string, idx: number) => (
                     <li key={idx} className="flex gap-2 text-md">
                       <span>💡</span>
                       <span className="font-medium text-ink">{fact}</span>
@@ -140,7 +149,7 @@ export function LessonView({ lesson }: { lesson: Lesson }) {
               <div>
                 <h3 className="font-display text-lg font-bold">💬 New Words</h3>
                 <div className="mt-3 grid gap-3 sm:grid-cols-2">
-                  {lesson.premiumContent.vocabulary.map((v: any, i: number) => (
+                  {lesson.premiumContent.vocabulary.map((v: VocabularyItem, i: number) => (
                     <div key={v.word || i} className="p-4 bg-white rounded-lg border border-sand-deep shadow-sm">
                       <p className="font-bold text-lg">{v.word} {v.language && <span className="text-sm text-ink-soft ml-2">({v.language})</span>}</p>
                       {v.translation && <p className="text-sunset-deep font-semibold">{v.translation}</p>}
@@ -156,7 +165,7 @@ export function LessonView({ lesson }: { lesson: Lesson }) {
               <div>
                 <h3 className="font-display text-lg font-bold">🖼️ Media Moments</h3>
                 <div className="mt-3 space-y-4">
-                  {lesson.premiumContent.mediaMoments.map((media: any, i: number) => (
+                  {lesson.premiumContent.mediaMoments.map((media: MediaMoment, i: number) => (
                     <div key={i} className="p-4 bg-sand rounded-lg border border-sand-deep">
                       <p className="font-bold">{media.requiredType} - {media.description}</p>
                       <p className="text-sm mt-1 text-ink-soft">{media.purpose}</p>
@@ -171,7 +180,7 @@ export function LessonView({ lesson }: { lesson: Lesson }) {
               <div className="p-5 bg-hibiscus-light rounded-xl border border-hibiscus-deep/20">
                 <h3 className="font-display text-lg font-bold text-hibiscus-deep">🗣️ Guided Discussion</h3>
                 <ul className="mt-3 space-y-2.5">
-                  {lesson.premiumContent.guidedDiscussion.map((q: any, i: number) => (
+                  {lesson.premiumContent.guidedDiscussion.map((q: string, i: number) => (
                     <li key={i} className="flex gap-2 text-md">
                       <span className="text-hibiscus-deep">💬</span>
                       <span className="font-medium text-ink">{q}</span>
@@ -210,7 +219,7 @@ export function LessonView({ lesson }: { lesson: Lesson }) {
                 )}
                 {lesson.premiumContent.handsOnTask.steps && (
                   <ol className="mt-2 list-decimal list-inside space-y-1 text-sm text-ink">
-                    {lesson.premiumContent.handsOnTask.steps.map((step: any, i: number) => (
+                    {lesson.premiumContent.handsOnTask.steps.map((step: string, i: number) => (
                       <li key={i}>{step}</li>
                     ))}
                   </ol>
@@ -247,7 +256,7 @@ export function LessonView({ lesson }: { lesson: Lesson }) {
               <div className="p-5 bg-ocean/10 rounded-xl border border-ocean-deep/20">
                 <h3 className="font-display text-lg font-bold text-ocean-deep">💡 Check Your Thinking</h3>
                 <div className="mt-3 space-y-2.5">
-                  {lesson.premiumContent.misconceptions.map((item: any, idx: number) => {
+                  {lesson.premiumContent.misconceptions.map((item: string | MisconceptionItem, idx: number) => {
                     const text = typeof item === "string" ? item : (item.prompt || item.misconception);
                     const correction = typeof item === "object" && item.correction ? item.correction : null;
                     return (
@@ -268,7 +277,7 @@ export function LessonView({ lesson }: { lesson: Lesson }) {
                 <h3 className="font-display text-lg font-bold">🔗 Cross-Subject Connections</h3>
                 <ul className="mt-2 list-disc list-inside space-y-1 text-sm text-ink">
                   {Array.isArray(lesson.premiumContent.crossSubjectConnections)
-                    ? lesson.premiumContent.crossSubjectConnections.map((conn: any, i: number) => (
+                    ? lesson.premiumContent.crossSubjectConnections.map((conn: string | Record<string, unknown>, i: number) => (
                         <li key={i}>{typeof conn === "string" ? conn : (JSON.stringify(conn) as React.ReactNode)}</li>
                       ))
                     : Object.entries(lesson.premiumContent.crossSubjectConnections).map(([subj, desc]) => (
@@ -290,14 +299,14 @@ export function LessonView({ lesson }: { lesson: Lesson }) {
               <div className="p-5 bg-sand rounded-xl border border-sand-deep">
                 <h3 className="font-display text-lg font-bold">📝 Premium Assessment</h3>
                 <div className="mt-3 space-y-4">
-                  {lesson.premiumContent.premiumAssessment.map((q: any, i: number) => (
+                  {lesson.premiumContent.premiumAssessment.map((q: FamilyPremiumAssessment, i: number) => (
                     <div key={i} className="space-y-2 text-left">
                       <p className="font-bold text-ink">
                         {i + 1}. {q.type === "scenario-application" ? `${q.scenario} ${q.question}` : q.question}
                       </p>
                       {"options" in q && Array.isArray(q.options) && q.options.length > 0 && (
                         <ul className="list-[lower-alpha] list-inside ml-2 text-sm text-ink-soft space-y-0.5">
-                          {q.options.map((opt: any, j: number) => (
+                          {q.options.map((opt: string, j: number) => (
                             <li key={j}>{opt}</li>
                           ))}
                         </ul>
@@ -307,7 +316,7 @@ export function LessonView({ lesson }: { lesson: Lesson }) {
                           <div>
                             <p className="font-bold text-ink-soft mb-1">Items</p>
                             <ul className="space-y-1">
-                              {q.leftItems.map((item: any, j: number) => (
+                              {q.leftItems.map((item: string, j: number) => (
                                 <li key={j} className="text-ink">• {item}</li>
                               ))}
                             </ul>
@@ -315,7 +324,7 @@ export function LessonView({ lesson }: { lesson: Lesson }) {
                           <div>
                             <p className="font-bold text-ink-soft mb-1">Options to Match</p>
                             <ul className="space-y-1">
-                              {q.rightItems.map((item: any, j: number) => (
+                              {q.rightItems.map((item: string, j: number) => (
                                 <li key={j} className="text-ink-soft">• {item}</li>
                               ))}
                             </ul>
@@ -326,7 +335,7 @@ export function LessonView({ lesson }: { lesson: Lesson }) {
                         <div className="text-xs bg-white p-3 rounded-lg border border-sand-deep">
                           <p className="font-bold text-ink-soft mb-1">Steps to arrange in order:</p>
                           <ul className="space-y-1">
-                            {q.items.map((item: any, j: number) => (
+                            {q.items.map((item: string, j: number) => (
                               <li key={j} className="text-ink">• {item}</li>
                             ))}
                           </ul>
@@ -395,7 +404,7 @@ export function LessonView({ lesson }: { lesson: Lesson }) {
               <div className="p-5 bg-mango/10 rounded-xl border border-mango-deep/20">
                 <h3 className="font-display text-lg font-bold">📚 Curated Resources</h3>
                 <ul className="mt-3 space-y-3">
-                  {lesson.premiumContent.curatedResources.map((r: any, i: number) => (
+                  {lesson.premiumContent.curatedResources.map((r: CuratedResource, i: number) => (
                     <li key={r.id || i} className="flex flex-col text-md">
                       <a href={r.url} target="_blank" rel="noopener noreferrer" className="font-bold text-ocean-deep hover:underline">
                         🔗 {r.title}
@@ -411,7 +420,7 @@ export function LessonView({ lesson }: { lesson: Lesson }) {
       ) : (
         <>
           {/* Legacy Fallback Rendering */}
-          {lesson.sections && lesson.sections.map((section: any) => (
+          {lesson.sections && lesson.sections.map((section: LessonSection) => (
             <section key={section.heading} className="wj-card p-6">
               <h2 className="font-display text-xl font-extrabold">
                 {section.emoji} {section.heading}
@@ -443,7 +452,7 @@ export function LessonView({ lesson }: { lesson: Lesson }) {
                     </tr>
                   </thead>
                   <tbody>
-                    {lesson.phrases.map((p: any) => (
+                    {lesson.phrases.map((p: PhrasePair) => (
                       <tr key={p.english} className="border-t border-sand-deep">
                         <td className="py-2.5 pr-4 font-bold">{p.english}</td>
                         <td className="py-2.5 pr-4 font-bold text-sunset-deep">{p.tagalog}</td>

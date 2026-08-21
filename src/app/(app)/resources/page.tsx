@@ -42,7 +42,7 @@ export default function ResourcesPage() {
         </section>
       ))}
       <p className="text-center text-sm text-ink-soft">
-        💡 Teacher Sharon adds lesson-specific links inside each lesson page.
+        💡 Teacher Guide adds lesson-specific links inside each lesson page.
       </p>
     </div>
   );

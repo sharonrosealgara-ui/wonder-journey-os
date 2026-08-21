@@ -1,7 +1,13 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { ClassroomGameEvent, PermissionLevel } from "@/lib/classroom-protocol";
+import {
+  generateLearnerSafeGame,
+  evaluateGameAttempt,
+  LearnerSafeGameDTO,
+  LearnerSortItem,
+} from "@/lib/lesson-game-generator";
 
 export type GameType =
   | "hotspot"
@@ -21,42 +27,6 @@ export interface ClassroomGamesProps {
   incomingGameEvent?: ClassroomGameEvent | null;
 }
 
-// ── Deterministic Lesson Game Data (Answer Keys isolated) ──────
-
-interface HotspotTarget {
-  id: string;
-  label: string;
-  x: number; // percentage [0..100]
-  y: number; // percentage [0..100]
-  radius: number;
-}
-
-interface MatchingPair {
-  id: string;
-  leftText: string;
-  rightText: string;
-}
-
-interface SequenceStep {
-  id: string;
-  stepNumber: number;
-  text: string;
-  emoji: string;
-}
-
-interface SortItem {
-  id: string;
-  text: string;
-  category: string;
-}
-
-interface MemoryCard {
-  id: string;
-  pairId: string;
-  content: string;
-  type: "tagalog" | "english";
-}
-
 export function ClassroomGames({
   lessonId,
   lessonTitle,
@@ -71,93 +41,62 @@ export function ClassroomGames({
     permissionLevel === "game_interactive" ||
     permissionLevel === "full_interactive";
 
-  const [activeGame, setActiveGame] = useState<GameType>("matching");
+  const [activeGame, setActiveGame] = useState<GameType>("drag_drop_sort");
+  const [gameDTO, setGameDTO] = useState<LearnerSafeGameDTO>(() =>
+    generateLearnerSafeGame(lessonId, lessonTitle)
+  );
 
-  // ── Game States ──
-  // 1. Hotspot State
-  const [selectedHotspot, setSelectedHotspot] = useState<string | null>(null);
-  const [foundHotspots, setFoundHotspots] = useState<string[]>([]);
-
-  // 2. Drag & Drop Sorting State
-  const [sortedItems, setSortedItems] = useState<Record<string, string>>({}); // itemId -> category
-  const [unplacedItems, setUnplacedItems] = useState<string[]>([
-    "Mango", "Luzon", "Rice", "Visayas", "Adobo", "Mindanao"
-  ]);
-
-  // 3. Matching State
-  const [selectedLeft, setSelectedLeft] = useState<string | null>(null);
-  const [matchedPairs, setMatchedPairs] = useState<string[]>([]);
-
-  // 4. Sequencing State
-  const [currentSequence, setCurrentSequence] = useState<string[]>([
-    "Serve & Share with Family",
-    "Layer Sweet Cream & Condensed Milk",
-    "Arrange Fresh Ripe Mango Slices",
-    "Line Bottom with Graham Crackers",
-  ]);
-
-  // 5. Multiple Choice State
-  const [selectedOption, setSelectedOption] = useState<number | null>(null);
-  const [revealed, setRevealed] = useState(false);
-
-  // 6. Memory Pairs State
-  const [flippedCardIds, setFlippedCardIds] = useState<string[]>([]);
-  const [solvedPairIds, setSolvedPairIds] = useState<string[]>([]);
-
-  // 7. Review Activity State
-  const [score, setScore] = useState<number>(0);
-  const [reviewStep, setReviewStep] = useState<number>(1);
-
-  // ── Handle Incoming Synced Game Events ──
+  // Re-generate lesson games when lessonId changes
   useEffect(() => {
-    if (!incomingGameEvent) return;
-    const { payload } = incomingGameEvent;
-    if (!payload) return;
+    setGameDTO(generateLearnerSafeGame(lessonId, lessonTitle));
+    setSortedPlacements({});
+    setMatchedPairs([]);
+    setSelectedLeft(null);
+    setSelectedRight(null);
+    setFlippedCards([]);
+    setSolvedMemoryCards([]);
+    setSelectedOptionId(null);
+    setQuizFeedback(null);
+    setSequenceOrder(null);
+    setSelectedHotspot(null);
+    setHotspotFeedback(null);
+  }, [lessonId, lessonTitle]);
 
-    if (payload.action === "reset") {
-      setFoundHotspots([]);
-      setSelectedHotspot(null);
-      setSortedItems({});
-      setMatchedPairs([]);
-      setSelectedLeft(null);
-      setFlippedCardIds([]);
-      setSolvedPairIds([]);
-      setRevealed(false);
-      setSelectedOption(null);
-      setScore(0);
-      setReviewStep(1);
-    } else if (payload.action === "tap_hotspot") {
-      const spotId = payload.data?.spotId as string;
-      if (spotId && !foundHotspots.includes(spotId)) {
-        setFoundHotspots((prev) => [...prev, spotId]);
-      }
-    } else if (payload.action === "sort_item") {
-      const { itemId, category } = payload.data as { itemId: string; category: string };
-      if (itemId && category) {
-        setSortedItems((prev) => ({ ...prev, [itemId]: category }));
-        setUnplacedItems((prev) => prev.filter((i) => i !== itemId));
-      }
-    } else if (payload.action === "match_pair") {
-      const pairId = payload.data?.pairId as string;
-      if (pairId && !matchedPairs.includes(pairId)) {
-        setMatchedPairs((prev) => [...prev, pairId]);
-      }
-    } else if (payload.action === "move_order") {
-      const newSeq = payload.data?.sequence as string[];
-      if (Array.isArray(newSeq)) {
-        setCurrentSequence(newSeq);
-      }
-    } else if (payload.action === "flip_card") {
-      const cardId = payload.data?.cardId as string;
-      if (cardId && !flippedCardIds.includes(cardId)) {
-        setFlippedCardIds((prev) => (prev.length >= 2 ? [cardId] : [...prev, cardId]));
-      }
-    } else if (payload.action === "reveal_authorized") {
-      setRevealed(true);
-    }
-  }, [incomingGameEvent]);
+  // ── Feedback & Score State ──
+  const [gameScore, setGameScore] = useState<number | null>(null);
+  const [gameFeedback, setGameFeedback] = useState<string | null>(null);
 
-  // ── Game Action Dispatchers ──
+  // ── 1. Drag & Drop Sorting State ──
+  const [sortedPlacements, setSortedPlacements] = useState<Record<string, string>>({}); // itemId -> binId
+  const [draggedItemId, setDraggedItemId] = useState<string | null>(null);
+  const [selectedSortItemKey, setSelectedSortItemKey] = useState<string | null>(null); // For keyboard a11y
+
+  // ── 2. Matching State ──
+  const [selectedLeft, setSelectedLeft] = useState<string | null>(null);
+  const [selectedRight, setSelectedRight] = useState<string | null>(null);
+  const [matchedPairs, setMatchedPairs] = useState<string[]>([]); // matched leftItemIds
+
+  // ── 3. Sequencing State ──
+  const [sequenceOrder, setSequenceOrder] = useState<string[] | null>(null);
+  const currentSequenceItems = sequenceOrder
+    ? sequenceOrder
+        .map((id) => gameDTO.sequencing.items.find((i) => i.id === id)!)
+        .filter(Boolean)
+    : gameDTO.sequencing.items;
+
+  // ── 4. Multiple Choice State ──
+  const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
+  const [quizFeedback, setQuizFeedback] = useState<string | null>(null);
+
+  // ── 5. Memory State ──
+  const [flippedCards, setFlippedCards] = useState<string[]>([]); // 0, 1, or 2 card IDs
+  const [solvedMemoryCards, setSolvedMemoryCards] = useState<string[]>([]);
+
+  // ── 6. Hotspot State ──
+  const [selectedHotspot, setSelectedHotspot] = useState<string | null>(null);
+  const [hotspotFeedback, setHotspotFeedback] = useState<string | null>(null);
+
+  // ── Synchronized Event Dispatcher ──
   const emitGame = useCallback(
     (action: ClassroomGameEvent["payload"]["action"], data: Record<string, unknown>) => {
       if (!onEmitGameEvent) return;
@@ -183,163 +122,235 @@ export function ClassroomGames({
     [activeGame, onEmitGameEvent]
   );
 
-  // Hotspot Handlers
-  const handleHotspotClick = (spot: HotspotTarget) => {
+  // ── Handle Incoming LiveKit Game Events ──
+  useEffect(() => {
+    if (!incomingGameEvent) return;
+    const { action, data } = incomingGameEvent.payload;
+
+    if (action === "reset") {
+      setSortedPlacements({});
+      setMatchedPairs([]);
+      setSolvedMemoryCards([]);
+      setFlippedCards([]);
+      setSelectedOptionId(null);
+      setGameFeedback("Teacher reset the classroom activity.");
+      setTimeout(() => setGameFeedback(null), 3000);
+    } else if (action === "submit_attempt" && isTeacher && data) {
+      // Teacher evaluates student attempt and sends broadcast result
+      const evalRes = evaluateGameAttempt(
+        lessonId,
+        incomingGameEvent.payload.gameType,
+        data as Record<string, unknown>
+      );
+      setGameScore(evalRes.score);
+      setGameFeedback(evalRes.feedback);
+    }
+  }, [incomingGameEvent, isTeacher, lessonId]);
+
+  // ── Drag and Drop Handlers (HTML5 + Pointer + Touch) ──
+  const handleDragStart = (e: React.DragEvent, itemId: string) => {
     if (!canInteract) return;
-    setSelectedHotspot(spot.id);
-    if (!foundHotspots.includes(spot.id)) {
-      setFoundHotspots((prev) => [...prev, spot.id]);
-      emitGame("tap_hotspot", { spotId: spot.id, label: spot.label });
+    setDraggedItemId(itemId);
+    e.dataTransfer.setData("text/plain", itemId);
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (e: React.DragEvent, binId: string) => {
+    e.preventDefault();
+    const itemId = e.dataTransfer.getData("text/plain") || draggedItemId;
+    if (!itemId || !canInteract) return;
+
+    const newPlacements = { ...sortedPlacements, [itemId]: binId };
+    setSortedPlacements(newPlacements);
+    setDraggedItemId(null);
+    setSelectedSortItemKey(null);
+
+    emitGame("sort_item", { itemId, binId });
+
+    // Check if all items sorted
+    if (Object.keys(newPlacements).length === gameDTO.sorting.items.length) {
+      const evalRes = evaluateGameAttempt(lessonId, "sorting", { placements: newPlacements });
+      setGameFeedback(evalRes.feedback);
+      setGameScore(evalRes.score);
+      emitGame("submit_attempt", { placements: newPlacements });
     }
   };
 
-  // Matching Handlers
-  const matchingPairs: MatchingPair[] = [
-    { id: "m1", leftText: "Salamat", rightText: "Thank You" },
-    { id: "m2", leftText: "Magandang Umaga", rightText: "Good Morning" },
-    { id: "m3", leftText: "Masarap", rightText: "Delicious" },
-    { id: "m4", leftText: "Pamilya", rightText: "Family" },
-  ];
-
-  const handleLeftClick = (id: string) => {
+  // Keyboard accessibility for drag and drop
+  const handleSortItemKeyDown = (e: React.KeyboardEvent, itemId: string) => {
     if (!canInteract) return;
-    setSelectedLeft(id);
-  };
-
-  const handleRightClick = (pairId: string) => {
-    if (!canInteract) return;
-    if (selectedLeft === pairId && !matchedPairs.includes(pairId)) {
-      setMatchedPairs((prev) => [...prev, pairId]);
-      setSelectedLeft(null);
-      emitGame("match_pair", { pairId });
-    } else {
-      setSelectedLeft(null);
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      setSelectedSortItemKey(selectedSortItemKey === itemId ? null : itemId);
     }
   };
 
-  // Sorting Handlers
-  const categories = ["Island Groups", "Heritage Foods"];
-  const handleSort = (item: string, cat: string) => {
-    if (!canInteract) return;
-    setSortedItems((prev) => ({ ...prev, [item]: cat }));
-    setUnplacedItems((prev) => prev.filter((i) => i !== item));
-    emitGame("sort_item", { itemId: item, category: cat });
-  };
+  const handleBinKeyDown = (e: React.KeyboardEvent, binId: string) => {
+    if (!canInteract || !selectedSortItemKey) return;
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      const newPlacements = { ...sortedPlacements, [selectedSortItemKey]: binId };
+      setSortedPlacements(newPlacements);
+      setSelectedSortItemKey(null);
+      emitGame("sort_item", { itemId: selectedSortItemKey, binId });
 
-  // Sequencing Handlers
-  const moveSequenceItem = (index: number, direction: "up" | "down") => {
-    if (!canInteract) return;
-    const newSeq = [...currentSequence];
-    const targetIdx = direction === "up" ? index - 1 : index + 1;
-    if (targetIdx < 0 || targetIdx >= newSeq.length) return;
-    const temp = newSeq[index];
-    newSeq[index] = newSeq[targetIdx];
-    newSeq[targetIdx] = temp;
-    setCurrentSequence(newSeq);
-    emitGame("move_order", { sequence: newSeq });
-  };
-
-  // Multiple Choice Handlers
-  const quizOptions = [
-    "7,641 beautiful tropical islands",
-    "Only 50 islands",
-    "12 volcanic islands",
-    "300 coral reefs",
-  ];
-  const handleSelectQuiz = (idx: number) => {
-    if (!canInteract) return;
-    setSelectedOption(idx);
-    emitGame("submit_attempt", { optionIndex: idx });
-  };
-
-  // Memory Game Handlers
-  const memoryCards: MemoryCard[] = [
-    { id: "c1", pairId: "p1", content: "Araw (Sun)", type: "tagalog" },
-    { id: "c2", pairId: "p1", content: "☀️ Sun", type: "english" },
-    { id: "c3", pairId: "p2", content: "Dagat (Sea)", type: "tagalog" },
-    { id: "c4", pairId: "p2", content: "🌊 Sea", type: "english" },
-    { id: "c5", pairId: "p3", content: "Bundok (Mountain)", type: "tagalog" },
-    { id: "c6", pairId: "p3", content: "⛰️ Mountain", type: "english" },
-  ];
-
-  const handleCardClick = (card: MemoryCard) => {
-    if (!canInteract) return;
-    if (solvedPairIds.includes(card.pairId) || flippedCardIds.includes(card.id)) return;
-
-    const newFlipped = flippedCardIds.length >= 2 ? [card.id] : [...flippedCardIds, card.id];
-    setFlippedCardIds(newFlipped);
-    emitGame("flip_card", { cardId: card.id });
-
-    if (newFlipped.length === 2) {
-      const c1 = memoryCards.find((c) => c.id === newFlipped[0]);
-      const c2 = memoryCards.find((c) => c.id === newFlipped[1]);
-      if (c1 && c2 && c1.pairId === c2.pairId) {
-        setSolvedPairIds((prev) => [...prev, c1.pairId]);
-        setTimeout(() => setFlippedCardIds([]), 800);
-      } else {
-        setTimeout(() => setFlippedCardIds([]), 1200);
+      if (Object.keys(newPlacements).length === gameDTO.sorting.items.length) {
+        const evalRes = evaluateGameAttempt(lessonId, "sorting", { placements: newPlacements });
+        setGameFeedback(evalRes.feedback);
+        setGameScore(evalRes.score);
+        emitGame("submit_attempt", { placements: newPlacements });
       }
     }
   };
 
-  // Reset Game
-  const handleReset = () => {
-    if (!isTeacher) return;
-    setFoundHotspots([]);
-    setSelectedHotspot(null);
-    setSortedItems({});
-    setUnplacedItems(["Mango", "Luzon", "Rice", "Visayas", "Adobo", "Mindanao"]);
-    setMatchedPairs([]);
+  // ── Matching Handlers ──
+  const handleLeftMatchClick = (id: string) => {
+    if (!canInteract || matchedPairs.includes(id)) return;
+    setSelectedLeft(id);
+    if (selectedRight) {
+      checkMatchPair(id, selectedRight);
+    }
+  };
+
+  const handleRightMatchClick = (id: string) => {
+    if (!canInteract) return;
+    setSelectedRight(id);
+    if (selectedLeft) {
+      checkMatchPair(selectedLeft, id);
+    }
+  };
+
+  const checkMatchPair = (leftId: string, rightId: string) => {
+    const evalRes = evaluateGameAttempt(lessonId, "matching", { pair: { leftId, rightId } });
+    if (evalRes.result === "correct") {
+      setMatchedPairs((prev) => [...prev, leftId]);
+      setGameFeedback(evalRes.feedback);
+    } else {
+      setGameFeedback(evalRes.feedback);
+    }
     setSelectedLeft(null);
-    setFlippedCardIds([]);
-    setSolvedPairIds([]);
-    setRevealed(false);
-    setSelectedOption(null);
-    setScore(0);
-    setReviewStep(1);
+    setSelectedRight(null);
+    emitGame("match_pair", { leftId, rightId, matched: evalRes.result === "correct" });
+  };
+
+  // ── Sequencing Handlers ──
+  const handleMoveSequence = (index: number, direction: "up" | "down") => {
+    if (!canInteract) return;
+    const current = currentSequenceItems.map((i) => i.id);
+    const targetIdx = direction === "up" ? index - 1 : index + 1;
+    if (targetIdx < 0 || targetIdx >= current.length) return;
+
+    const temp = current[index];
+    current[index] = current[targetIdx];
+    current[targetIdx] = temp;
+
+    setSequenceOrder([...current]);
+    emitGame("move_order", { newOrder: current });
+
+    const evalRes = evaluateGameAttempt(lessonId, "sequencing", { order: current });
+    if (evalRes.result === "correct") {
+      setGameFeedback("Tumpak! Perfect sequence!");
+      setGameScore(100);
+      emitGame("submit_attempt", { order: current });
+    }
+  };
+
+  // ── Multiple Choice Handlers ──
+  const handleSelectQuizOption = (optId: string) => {
+    if (!canInteract) return;
+    setSelectedOptionId(optId);
+    const evalRes = evaluateGameAttempt(lessonId, "quiz", { selectedOptionId: optId });
+    setQuizFeedback(evalRes.feedback);
+    setGameScore(evalRes.score);
+    emitGame("submit_attempt", { selectedOptionId: optId });
+  };
+
+  // ── Memory Card Handlers ──
+  const handleCardClick = (cardId: string) => {
+    if (!canInteract || solvedMemoryCards.includes(cardId) || flippedCards.includes(cardId)) return;
+
+    if (flippedCards.length === 0) {
+      setFlippedCards([cardId]);
+      emitGame("flip_card", { cardId });
+    } else if (flippedCards.length === 1) {
+      const firstId = flippedCards[0];
+      const secondId = cardId;
+      setFlippedCards([firstId, secondId]);
+      emitGame("flip_card", { cardId });
+
+      const evalRes = evaluateGameAttempt(lessonId, "memory_flip", { cardIds: [firstId, secondId] });
+      if (evalRes.result === "correct") {
+        setSolvedMemoryCards((prev) => [...prev, firstId, secondId]);
+        setFlippedCards([]);
+        setGameFeedback("Match found!");
+      } else {
+        setTimeout(() => {
+          setFlippedCards([]);
+        }, 1200);
+      }
+    }
+  };
+
+  // ── Hotspot Handlers ──
+  const handleHotspotClick = (targetId: string) => {
+    if (!canInteract) return;
+    setSelectedHotspot(targetId);
+    const evalRes = evaluateGameAttempt(lessonId, "hotspot", { targetId });
+    setHotspotFeedback(evalRes.feedback);
+    emitGame("tap_hotspot", { targetId, isCorrect: evalRes.result === "correct" });
+  };
+
+  // Teacher reset
+  const handleTeacherReset = () => {
+    if (!isTeacher) return;
+    setSortedPlacements({});
+    setMatchedPairs([]);
+    setSolvedMemoryCards([]);
+    setFlippedCards([]);
+    setSelectedOptionId(null);
+    setSequenceOrder(null);
+    setGameFeedback(null);
+    setGameScore(null);
     emitGame("reset", {});
   };
 
   return (
-    <div
-      id="classroom-interactive-games-engine"
-      className="w-full h-full flex flex-col bg-slate-950/90 backdrop-blur-md rounded-2xl border border-sky-500/20 text-white p-5 select-none overflow-y-auto"
-      role="region"
-      aria-label="Synchronized Classroom Games"
-    >
-      {/* ── Game Navigation Header ── */}
-      <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-800">
-        <div className="flex items-center gap-3">
-          <div className="px-3 py-1 bg-amber-500/20 border border-amber-500/40 rounded-full text-amber-300 font-bold text-xs uppercase tracking-wider flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
-            Live Classroom Game
-          </div>
-          <h2 className="text-lg font-bold text-slate-100">{lessonTitle}</h2>
+    <div className="w-full bg-slate-900 text-slate-100 rounded-2xl p-6 shadow-2xl border border-slate-800 flex flex-col gap-6">
+      {/* Header & Game Selector Bar */}
+      <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-800">
+        <div>
+          <span className="text-xs uppercase font-bold tracking-widest text-emerald-400">
+            Interactive Classroom Activity
+          </span>
+          <h2 className="text-xl font-black text-white">{lessonTitle}</h2>
         </div>
 
-        {/* Game Mode Selector */}
-        <div className="flex items-center gap-1.5 bg-slate-900/80 p-1 rounded-xl border border-slate-800 text-xs">
+        {/* Game Navigation Tabs */}
+        <div className="flex flex-wrap gap-2">
           {(
             [
-              ["matching", "🧩 Match Pairs"],
-              ["hotspot", "📍 Hotspots"],
-              ["drag_drop_sort", "📦 Sort Words"],
-              ["sequencing", "🔢 Sequence"],
-              ["multiple_choice", "❓ Quiz"],
-              ["memory_pairs", "🃏 Memory"],
-              ["lesson_review", "🌟 Quest Review"],
+              ["drag_drop_sort", "Sorting"],
+              ["matching", "Matching"],
+              ["sequencing", "Sequencing"],
+              ["multiple_choice", "Quiz"],
+              ["memory_pairs", "Memory"],
+              ["hotspot", "Hotspot"],
+              ["lesson_review", "Review"],
             ] as [GameType, string][]
-          ).map(([type, label]) => (
+          ).map(([gType, label]) => (
             <button
-              key={type}
+              key={gType}
               onClick={() => {
-                setActiveGame(type);
-                handleReset();
+                setActiveGame(gType);
+                setGameFeedback(null);
               }}
-              className={`px-3 py-1.5 rounded-lg font-medium transition-all ${
-                activeGame === type
-                  ? "bg-sky-500 text-white shadow-md shadow-sky-500/30"
-                  : "text-slate-400 hover:text-slate-200 hover:bg-slate-800/60"
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                activeGame === gType
+                  ? "bg-emerald-500 text-slate-950 shadow-md scale-105"
+                  : "bg-slate-800 text-slate-300 hover:bg-slate-700"
               }`}
             >
               {label}
@@ -350,215 +361,217 @@ export function ClassroomGames({
         {/* Teacher Controls */}
         {isTeacher && (
           <button
-            onClick={handleReset}
-            className="px-3 py-1.5 bg-rose-600/20 border border-rose-500/30 hover:bg-rose-600/30 text-rose-300 rounded-lg text-xs font-semibold transition"
+            onClick={handleTeacherReset}
+            className="px-3 py-1.5 bg-rose-600 hover:bg-rose-500 text-white rounded-lg text-xs font-bold transition shadow"
           >
-            🔄 Reset Board
+            Reset Activity
           </button>
         )}
       </div>
 
-      {/* Permission Warning Banner for Students */}
+      {/* Mode / Permission Status Notice */}
       {!canInteract && (
-        <div className="mt-3 py-2 px-4 bg-amber-900/30 border border-amber-600/40 rounded-xl text-amber-200 text-xs flex items-center justify-between">
-          <span>👀 View-Only Mode: Teacher Sharon will enable student game tools shortly.</span>
+        <div className="p-3 bg-amber-500/10 border border-amber-500/30 rounded-xl text-amber-300 text-xs flex items-center gap-2">
+          <span>👀 View-Only Mode: Teacher will enable student interaction tools shortly.</span>
         </div>
       )}
 
-      {/* ── Active Game Stage ── */}
-      <div className="flex-1 mt-4 flex flex-col justify-center">
-        {/* 1. MATCHING GAME */}
-        {activeGame === "matching" && (
-          <div className="max-w-xl mx-auto w-full grid grid-cols-2 gap-6 p-4">
-            {/* Left Column (Tagalog) */}
-            <div className="flex flex-col gap-3">
-              <span className="text-xs font-bold text-sky-400 uppercase tracking-wider">
-                Tagalog Word
-              </span>
-              {matchingPairs.map((p) => {
-                const isMatched = matchedPairs.includes(p.id);
-                const isSelected = selectedLeft === p.id;
-                return (
-                  <button
-                    key={p.id}
-                    disabled={!canInteract || isMatched}
-                    onClick={() => handleLeftClick(p.id)}
-                    className={`p-3.5 rounded-xl border text-sm font-semibold transition text-left flex items-center justify-between ${
-                      isMatched
-                        ? "bg-emerald-950/60 border-emerald-500/50 text-emerald-300"
-                        : isSelected
-                        ? "bg-sky-600 border-sky-400 text-white shadow-lg shadow-sky-500/30 scale-[1.02]"
-                        : "bg-slate-900/80 border-slate-800 text-slate-200 hover:border-sky-500/40"
-                    }`}
-                  >
-                    <span>{p.leftText}</span>
-                    {isMatched && <span className="text-emerald-400">✓</span>}
-                  </button>
-                );
-              })}
-            </div>
+      {/* Feedback Banner */}
+      {gameFeedback && (
+        <div className="p-3 bg-emerald-500/20 border border-emerald-500/40 rounded-xl text-emerald-200 text-sm font-semibold animate-pulse">
+          {gameFeedback}
+        </div>
+      )}
 
-            {/* Right Column (English) */}
-            <div className="flex flex-col gap-3">
-              <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider">
-                English Meaning
-              </span>
-              {matchingPairs.map((p) => {
-                const isMatched = matchedPairs.includes(p.id);
-                return (
-                  <button
-                    key={p.id}
-                    disabled={!canInteract || isMatched || !selectedLeft}
-                    onClick={() => handleRightClick(p.id)}
-                    className={`p-3.5 rounded-xl border text-sm font-semibold transition text-left flex items-center justify-between ${
-                      isMatched
-                        ? "bg-emerald-950/60 border-emerald-500/50 text-emerald-300"
-                        : selectedLeft
-                        ? "bg-slate-900 border-sky-500/40 text-sky-200 hover:bg-sky-950/60 cursor-pointer animate-pulse"
-                        : "bg-slate-900/50 border-slate-800 text-slate-400 cursor-not-allowed"
+      {/* ── 1. DRAG & DROP / WORD SORTING ACTIVITY ── */}
+      {activeGame === "drag_drop_sort" && (
+        <div className="flex flex-col gap-6">
+          <div className="text-sm font-semibold text-slate-300">
+            {gameDTO.sorting.title} ·{" "}
+            <span className="text-xs text-slate-400">
+              Drag items into their category bins (or use keyboard: select with Space, press Enter in target bin).
+            </span>
+          </div>
+
+          {/* Unsorted Items Pool */}
+          <div className="bg-slate-950/60 p-4 rounded-xl border border-slate-800/80 min-h-[80px]">
+            <div className="text-xs uppercase font-bold text-slate-400 mb-2">Available Items:</div>
+            <div className="flex flex-wrap gap-3">
+              {gameDTO.sorting.items
+                .filter((item) => !sortedPlacements[item.id])
+                .map((item) => (
+                  <div
+                    key={item.id}
+                    draggable={canInteract}
+                    onDragStart={(e) => handleDragStart(e, item.id)}
+                    tabIndex={canInteract ? 0 : -1}
+                    onKeyDown={(e) => handleSortItemKeyDown(e, item.id)}
+                    className={`px-4 py-2 rounded-xl text-sm font-bold border transition-all select-none ${
+                      selectedSortItemKey === item.id
+                        ? "bg-emerald-500 text-slate-950 border-emerald-300 scale-105 ring-2 ring-emerald-400"
+                        : "bg-slate-800 text-slate-100 border-slate-700 hover:border-emerald-500 cursor-grab active:cursor-grabbing"
                     }`}
                   >
-                    <span>{p.rightText}</span>
-                    {isMatched && <span className="text-emerald-400">✓</span>}
-                  </button>
-                );
-              })}
+                    {item.text}
+                  </div>
+                ))}
+              {gameDTO.sorting.items.every((item) => sortedPlacements[item.id]) && (
+                <div className="text-sm text-emerald-400 font-bold">All items placed! Excellent work.</div>
+              )}
             </div>
           </div>
-        )}
 
-        {/* 2. HOTSPOTS GAME */}
-        {activeGame === "hotspot" && (
-          <div className="relative max-w-2xl mx-auto w-full aspect-video bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden flex items-center justify-center p-6">
-            <div className="absolute inset-0 bg-gradient-to-tr from-sky-950/40 to-slate-900 flex items-center justify-center pointer-events-none">
-              <span className="text-6xl opacity-20">🗺️</span>
-            </div>
+          {/* Target Categorization Bins */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {gameDTO.sorting.bins.map((bin) => {
+              const itemsInBin = gameDTO.sorting.items.filter(
+                (item) => sortedPlacements[item.id] === bin.id
+              );
 
-            {/* Hotspot Target Markers */}
-            {[
-              { id: "h1", label: "Luzon (North)", x: 50, y: 25, radius: 24 },
-              { id: "h2", label: "Visayas (Central)", x: 55, y: 55, radius: 24 },
-              { id: "h3", label: "Mindanao (South)", x: 65, y: 80, radius: 24 },
-            ].map((spot) => {
-              const isFound = foundHotspots.includes(spot.id);
               return (
-                <button
-                  key={spot.id}
-                  disabled={!canInteract}
-                  onClick={() => handleHotspotClick(spot)}
-                  style={{ top: `${spot.y}%`, left: `${spot.x}%` }}
-                  className={`absolute -translate-x-1/2 -translate-y-1/2 px-3 py-1.5 rounded-full font-bold text-xs flex items-center gap-1.5 transition-all shadow-lg ${
-                    isFound
-                      ? "bg-emerald-500 text-white ring-4 ring-emerald-500/30 scale-110"
-                      : "bg-sky-500/80 hover:bg-sky-400 text-white ring-2 ring-sky-400/50 animate-bounce"
+                <div
+                  key={bin.id}
+                  onDragOver={handleDragOver}
+                  onDrop={(e) => handleDrop(e, bin.id)}
+                  tabIndex={selectedSortItemKey ? 0 : -1}
+                  onKeyDown={(e) => handleBinKeyDown(e, bin.id)}
+                  className={`p-4 rounded-xl border-2 transition-all flex flex-col gap-3 min-h-[160px] ${
+                    selectedSortItemKey
+                      ? "border-emerald-400/60 bg-slate-800/80 cursor-pointer hover:bg-emerald-950/20"
+                      : "border-dashed border-slate-700 bg-slate-950/40"
                   }`}
                 >
-                  <span>{isFound ? "📍" : "⭕"}</span>
-                  <span>{spot.label}</span>
-                </button>
+                  <div className="text-sm font-black text-emerald-400 flex items-center justify-between">
+                    <span>{bin.label}</span>
+                    <span className="text-xs px-2 py-0.5 rounded-full bg-slate-800 text-slate-300">
+                      {itemsInBin.length}
+                    </span>
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    {itemsInBin.map((item) => (
+                      <div
+                        key={item.id}
+                        className="px-3 py-1.5 bg-slate-800/90 rounded-lg text-xs font-semibold text-slate-200 border border-slate-700 flex justify-between items-center"
+                      >
+                        <span>{item.text}</span>
+                        {canInteract && (
+                          <button
+                            onClick={() => {
+                              const next = { ...sortedPlacements };
+                              delete next[item.id];
+                              setSortedPlacements(next);
+                            }}
+                            className="text-slate-400 hover:text-rose-400 ml-2"
+                            title="Remove"
+                          >
+                            ×
+                          </button>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
               );
             })}
           </div>
-        )}
+        </div>
+      )}
 
-        {/* 3. DRAG & DROP / SORTING */}
-        {activeGame === "drag_drop_sort" && (
-          <div className="max-w-2xl mx-auto w-full flex flex-col gap-6">
-            {/* Unplaced Items Pool */}
-            <div className="bg-slate-900/80 p-4 rounded-xl border border-slate-800 flex flex-wrap gap-2.5 items-center min-h-[64px]">
-              <span className="text-xs text-slate-400 font-bold mr-2">Items to Sort:</span>
-              {unplacedItems.map((item) => (
-                <div
-                  key={item}
-                  className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-sky-300 font-semibold rounded-lg text-xs flex items-center gap-2 border border-slate-700 shadow-sm"
-                >
-                  <span>{item}</span>
-                  {canInteract && (
-                    <div className="flex gap-1">
-                      <button
-                        onClick={() => handleSort(item, categories[0])}
-                        title={`Move to ${categories[0]}`}
-                        className="px-1.5 py-0.5 bg-sky-600 hover:bg-sky-500 text-white rounded text-[10px]"
-                      >
-                        1
-                      </button>
-                      <button
-                        onClick={() => handleSort(item, categories[1])}
-                        title={`Move to ${categories[1]}`}
-                        className="px-1.5 py-0.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded text-[10px]"
-                      >
-                        2
-                      </button>
-                    </div>
-                  )}
-                </div>
-              ))}
-              {unplacedItems.length === 0 && (
-                <span className="text-xs text-emerald-400 font-semibold">🎉 All items sorted!</span>
-              )}
+      {/* ── 2. MATCHING ACTIVITY ── */}
+      {activeGame === "matching" && (
+        <div className="flex flex-col gap-6">
+          <div className="text-sm font-semibold text-slate-300">
+            {gameDTO.matching.title} · Select one Tagalog item on the left and its English counterpart on the right.
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Left Items */}
+            <div className="flex flex-col gap-3">
+              <div className="text-xs uppercase font-bold text-slate-400">Tagalog Concept:</div>
+              {gameDTO.matching.leftItems.map((item) => {
+                const isMatched = matchedPairs.includes(item.id);
+                const isSelected = selectedLeft === item.id;
+
+                return (
+                  <button
+                    key={item.id}
+                    disabled={!canInteract || isMatched}
+                    onClick={() => handleLeftMatchClick(item.id)}
+                    className={`p-4 rounded-xl text-sm font-bold border text-left transition-all ${
+                      isMatched
+                        ? "bg-emerald-950/40 border-emerald-500/50 text-emerald-300 opacity-80"
+                        : isSelected
+                        ? "bg-emerald-500 text-slate-950 border-emerald-300 scale-102 ring-2 ring-emerald-400"
+                        : "bg-slate-800 text-slate-100 border-slate-700 hover:border-slate-500"
+                    }`}
+                  >
+                    {item.text} {isMatched && "✓"}
+                  </button>
+                );
+              })}
             </div>
 
-            {/* Target Bins */}
-            <div className="grid grid-cols-2 gap-4">
-              {categories.map((cat, i) => (
-                <div
-                  key={cat}
-                  className="bg-slate-900/50 p-4 rounded-xl border border-slate-800 flex flex-col gap-3 min-h-[140px]"
-                >
-                  <span className="text-xs font-bold text-slate-300 flex items-center justify-between">
-                    <span>{cat}</span>
-                    <span className="text-[10px] px-2 py-0.5 bg-slate-800 rounded-full text-slate-400">
-                      Bin {i + 1}
-                    </span>
-                  </span>
-                  <div className="flex flex-wrap gap-2">
-                    {Object.entries(sortedItems)
-                      .filter(([_, c]) => c === cat)
-                      .map(([item]) => (
-                        <span
-                          key={item}
-                          className="px-2.5 py-1 bg-emerald-950 border border-emerald-500/40 text-emerald-300 rounded-lg text-xs font-medium"
-                        >
-                          {item} ✓
-                        </span>
-                      ))}
-                  </div>
-                </div>
-              ))}
+            {/* Right Items */}
+            <div className="flex flex-col gap-3">
+              <div className="text-xs uppercase font-bold text-slate-400">English Translation:</div>
+              {gameDTO.matching.rightItems.map((item) => {
+                const isSelected = selectedRight === item.id;
+
+                return (
+                  <button
+                    key={item.id}
+                    disabled={!canInteract}
+                    onClick={() => handleRightMatchClick(item.id)}
+                    className={`p-4 rounded-xl text-sm font-bold border text-left transition-all ${
+                      isSelected
+                        ? "bg-emerald-500 text-slate-950 border-emerald-300 scale-102 ring-2 ring-emerald-400"
+                        : "bg-slate-800 text-slate-100 border-slate-700 hover:border-slate-500"
+                    }`}
+                  >
+                    {item.text}
+                  </button>
+                );
+              })}
             </div>
           </div>
-        )}
+        </div>
+      )}
 
-        {/* 4. SEQUENCING GAME */}
-        {activeGame === "sequencing" && (
-          <div className="max-w-md mx-auto w-full flex flex-col gap-3">
-            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider text-center">
-              Order the Steps Correctly (1 to 4)
-            </span>
-            {currentSequence.map((step, idx) => (
+      {/* ── 3. SEQUENCING ACTIVITY ── */}
+      {activeGame === "sequencing" && (
+        <div className="flex flex-col gap-6">
+          <div className="text-sm font-semibold text-slate-300">
+            {gameDTO.sequencing.title} · Arrange the steps in the correct chronological order from top to bottom.
+          </div>
+
+          <div className="flex flex-col gap-3">
+            {currentSequenceItems.map((item, idx) => (
               <div
-                key={step}
-                className="p-3.5 bg-slate-900 rounded-xl border border-slate-800 flex items-center justify-between text-sm"
+                key={item.id}
+                className="p-4 bg-slate-800 border border-slate-700 rounded-xl flex items-center justify-between gap-4"
               >
                 <div className="flex items-center gap-3">
-                  <span className="w-6 h-6 rounded-full bg-sky-500/20 text-sky-400 font-bold flex items-center justify-center text-xs">
+                  <span className="w-8 h-8 rounded-full bg-emerald-500 text-slate-950 font-black text-sm flex items-center justify-center">
                     {idx + 1}
                   </span>
-                  <span className="text-slate-200 font-medium">{step}</span>
+                  <span className="text-2xl">{item.emoji}</span>
+                  <span className="text-sm font-bold text-slate-100">{item.text}</span>
                 </div>
+
                 {canInteract && (
-                  <div className="flex gap-1">
+                  <div className="flex gap-2">
                     <button
                       disabled={idx === 0}
-                      onClick={() => moveSequenceItem(idx, "up")}
-                      className="p-1 px-2 bg-slate-800 hover:bg-slate-700 disabled:opacity-30 rounded text-xs"
+                      onClick={() => handleMoveSequence(idx, "up")}
+                      className="px-3 py-1 bg-slate-700 hover:bg-slate-600 disabled:opacity-30 rounded text-xs font-bold"
                     >
                       ▲
                     </button>
                     <button
-                      disabled={idx === currentSequence.length - 1}
-                      onClick={() => moveSequenceItem(idx, "down")}
-                      className="p-1 px-2 bg-slate-800 hover:bg-slate-700 disabled:opacity-30 rounded text-xs"
+                      disabled={idx === currentSequenceItems.length - 1}
+                      onClick={() => handleMoveSequence(idx, "down")}
+                      className="px-3 py-1 bg-slate-700 hover:bg-slate-600 disabled:opacity-30 rounded text-xs font-bold"
                     >
                       ▼
                     </button>
@@ -567,88 +580,117 @@ export function ClassroomGames({
               </div>
             ))}
           </div>
-        )}
+        </div>
+      )}
 
-        {/* 5. MULTIPLE CHOICE / QUIZ */}
-        {activeGame === "multiple_choice" && (
-          <div className="max-w-lg mx-auto w-full flex flex-col gap-4">
-            <div className="bg-slate-900 p-4 rounded-xl border border-slate-800 text-sm font-semibold text-slate-100">
-              How many islands make up the Philippine archipelago?
-            </div>
-            <div className="flex flex-col gap-2.5">
-              {quizOptions.map((opt, i) => {
-                const isSelected = selectedOption === i;
-                return (
-                  <button
-                    key={opt}
-                    disabled={!canInteract}
-                    onClick={() => handleSelectQuiz(i)}
-                    className={`p-3.5 rounded-xl border text-sm text-left font-medium transition flex items-center justify-between ${
-                      isSelected
-                        ? "bg-sky-600 border-sky-400 text-white font-bold"
-                        : "bg-slate-900/70 border-slate-800 text-slate-300 hover:bg-slate-800/80"
-                    }`}
-                  >
-                    <span>{opt}</span>
-                    {revealed && i === 0 && <span className="text-emerald-400">✓ Correct</span>}
-                  </button>
-                );
-              })}
-            </div>
-            {isTeacher && (
-              <button
-                onClick={() => emitGame("reveal_authorized", {})}
-                className="mt-2 py-2 px-4 bg-emerald-600/30 border border-emerald-500/40 text-emerald-300 rounded-xl text-xs font-bold hover:bg-emerald-600/40"
-              >
-                📢 Reveal Answer to Students
-              </button>
-            )}
+      {/* ── 4. MULTIPLE CHOICE ACTIVITY ── */}
+      {activeGame === "multiple_choice" && (
+        <div className="flex flex-col gap-6">
+          <div className="p-4 bg-slate-800/80 border border-slate-700 rounded-xl text-base font-bold text-slate-100">
+            {gameDTO.quiz.question}
           </div>
-        )}
 
-        {/* 6. MEMORY PAIRS */}
-        {activeGame === "memory_pairs" && (
-          <div className="max-w-lg mx-auto w-full grid grid-cols-3 gap-3">
-            {memoryCards.map((card) => {
-              const isFlipped =
-                flippedCardIds.includes(card.id) || solvedPairIds.includes(card.pairId);
-              const isSolved = solvedPairIds.includes(card.pairId);
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {gameDTO.quiz.options.map((opt) => (
+              <button
+                key={opt.id}
+                disabled={!canInteract}
+                onClick={() => handleSelectQuizOption(opt.id)}
+                className={`p-4 rounded-xl text-sm font-bold border text-left transition-all ${
+                  selectedOptionId === opt.id
+                    ? "bg-emerald-500 text-slate-950 border-emerald-300 scale-102 ring-2 ring-emerald-400"
+                    : "bg-slate-800 text-slate-200 border-slate-700 hover:border-slate-500"
+                }`}
+              >
+                {opt.text}
+              </button>
+            ))}
+          </div>
+
+          {quizFeedback && (
+            <div className="p-3 bg-emerald-500/20 border border-emerald-500/40 rounded-xl text-emerald-200 text-sm font-semibold">
+              {quizFeedback}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* ── 5. MEMORY PAIRS ACTIVITY ── */}
+      {activeGame === "memory_pairs" && (
+        <div className="flex flex-col gap-6">
+          <div className="text-sm font-semibold text-slate-300">
+            {gameDTO.memory.title} · Flip cards to match Tagalog vocabulary pairs.
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            {gameDTO.memory.cards.map((card) => {
+              const isFlipped = flippedCards.includes(card.id) || solvedMemoryCards.includes(card.id);
+              const isSolved = solvedMemoryCards.includes(card.id);
+
               return (
                 <button
                   key={card.id}
                   disabled={!canInteract || isSolved}
-                  onClick={() => handleCardClick(card)}
-                  className={`aspect-video rounded-xl border p-2 flex items-center justify-center font-bold text-xs transition-all shadow-md ${
+                  onClick={() => handleCardClick(card.id)}
+                  className={`h-28 rounded-xl font-black text-sm p-3 border transition-all flex items-center justify-center text-center ${
                     isSolved
-                      ? "bg-emerald-950/80 border-emerald-500/50 text-emerald-300"
+                      ? "bg-emerald-950/40 border-emerald-500 text-emerald-300"
                       : isFlipped
-                      ? "bg-sky-600 border-sky-400 text-white scale-105"
-                      : "bg-slate-900 border-slate-800 text-slate-500 hover:border-slate-700"
+                      ? "bg-emerald-500 text-slate-950 border-emerald-300"
+                      : "bg-slate-800 text-slate-400 border-slate-700 hover:border-slate-500"
                   }`}
                 >
-                  {isFlipped ? card.content : "🇵🇭"}
+                  {isFlipped ? card.text : "🇵🇭"}
                 </button>
               );
             })}
           </div>
-        )}
+        </div>
+      )}
 
-        {/* 7. LESSON REVIEW ACTIVITY */}
-        {activeGame === "lesson_review" && (
-          <div className="max-w-lg mx-auto w-full bg-slate-900/90 p-6 rounded-2xl border border-slate-800 flex flex-col items-center text-center gap-4">
-            <span className="text-4xl">🌟</span>
-            <h3 className="text-base font-bold text-white">Grand Lesson Adventure Quest</h3>
-            <p className="text-xs text-slate-300 max-w-sm">
-              Work together with Teacher Sharon to complete today&apos;s heritage challenges and earn your
-              Wonder Journey adventure badge!
-            </p>
-            <div className="flex items-center gap-4 py-2 px-5 bg-slate-800/80 rounded-xl border border-slate-700">
-              <span className="text-xs text-slate-400">Stars Earned:</span>
-              <span className="text-base font-black text-amber-400">⭐⭐⭐⭐⭐ 5/5</span>
-            </div>
+      {/* ── 6. HOTSPOT ACTIVITY ── */}
+      {activeGame === "hotspot" && (
+        <div className="flex flex-col gap-6">
+          <div className="text-sm font-semibold text-slate-300">{gameDTO.hotspots.prompt}</div>
+
+          <div className="relative w-full aspect-video bg-slate-950 rounded-2xl overflow-hidden border border-slate-800">
+            {gameDTO.hotspots.targets.map((spot) => (
+              <button
+                key={spot.id}
+                disabled={!canInteract}
+                onClick={() => handleHotspotClick(spot.id)}
+                style={{ left: `${spot.x}%`, top: `${spot.y}%` }}
+                className={`absolute -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full border-2 transition-all flex items-center justify-center ${
+                  selectedHotspot === spot.id
+                    ? "bg-emerald-500/60 border-emerald-300 scale-125 animate-pulse"
+                    : "bg-emerald-500/20 border-emerald-400 hover:scale-110"
+                }`}
+              >
+                <span className="text-xs font-black text-white">📍</span>
+              </button>
+            ))}
           </div>
-        )}
-      </div>
+
+          {hotspotFeedback && (
+            <div className="p-3 bg-emerald-500/20 border border-emerald-500/40 rounded-xl text-emerald-200 text-sm font-semibold">
+              {hotspotFeedback}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* ── 7. LESSON REVIEW ── */}
+      {activeGame === "lesson_review" && (
+        <div className="flex flex-col gap-6 p-4 bg-slate-950/60 rounded-xl border border-slate-800">
+          <h3 className="text-lg font-black text-emerald-400">{gameDTO.review.title}</h3>
+          <p className="text-sm text-slate-300">{gameDTO.review.summary}</p>
+          <ul className="list-disc list-inside text-xs text-slate-400 flex flex-col gap-1">
+            {gameDTO.review.keyPoints.map((pt, idx) => (
+              <li key={idx}>{pt}</li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }

@@ -45,14 +45,14 @@ export function SmartPhoto({
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={actualSrc}
-          alt={media?.descriptiveAltText || alt}
+          alt={media?.altText || media?.descriptiveAltText || alt}
           loading="lazy"
           className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
           onError={() => setFailed(true)}
         />
 
         {/* Verified Badge & Attribution Tooltip */}
-        {media?.verificationStatus === "verified" && (
+        {media && (
           <div className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity z-10">
             <div className="relative group/tooltip">
               <button
@@ -64,9 +64,9 @@ export function SmartPhoto({
               </button>
               <div className="absolute bottom-full right-0 mb-2 w-72 bg-paper/95 p-3 rounded-xl shadow-xl border border-sand-deep text-ink hidden group-hover/tooltip:block backdrop-blur-md text-xs text-left z-20">
                 <p className="font-bold mb-1 text-ink">{media.title}</p>
-                <p className="mb-1 text-ink-soft">🏛️ {media.creatorOrOrganization}</p>
+                <p className="mb-1 text-ink-soft">🏛️ {media.creator || media.creatorOrOrganization || media.sourceOrganization}</p>
                 <p className="mb-1 text-ink-soft">📄 {media.license}</p>
-                <p className="text-ocean-deep font-medium italic mt-1">{media.factualCaption}</p>
+                <p className="text-ocean-deep font-medium italic mt-1">{media.caption || media.factualCaption || media.description}</p>
                 <div className="mt-2 pt-2 border-t border-sand-deep/50 text-[10px] text-ink-soft flex justify-between">
                   <span>Verified Factual Media</span>
                   <span className="font-mono text-[9px]">ID: {media.id}</span>

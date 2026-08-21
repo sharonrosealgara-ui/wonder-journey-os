@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
+  <defs>
+    <linearGradient id="bgGrad_2817" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="hsl(351, 65%, 15%)"/>
+      <stop offset="50%" stop-color="hsl(66, 55%, 22%)"/>
+      <stop offset="100%" stop-color="hsl(351, 70%, 10%)"/>
+    </linearGradient>
+    <linearGradient id="badgeGrad_2817" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="hsl(151, 85%, 55%)"/>
+      <stop offset="100%" stop-color="hsl(191, 90%, 65%)"/>
+    </linearGradient>
+    <filter id="glow_2817" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Canvas Background -->
+  <rect width="1200" height="800" fill="url(#bgGrad_2817)"/>
+  
+  <!-- Coordinate Reference Grid -->
+  <g><line x1="100" y1="80" x2="100" y2="720" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <line x1="250" y1="80" x2="250" y2="720" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <line x1="400" y1="80" x2="400" y2="720" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <line x1="550" y1="80" x2="550" y2="720" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <line x1="700" y1="80" x2="700" y2="720" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <line x1="850" y1="80" x2="850" y2="720" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <line x1="1000" y1="80" x2="1000" y2="720" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <line x1="80" y1="100" x2="1120" y2="100" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <line x1="80" y1="200" x2="1120" y2="200" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <line x1="80" y1="300" x2="1120" y2="300" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <line x1="80" y1="400" x2="1120" y2="400" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <line x1="80" y1="500" x2="1120" y2="500" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <line x1="80" y1="600" x2="1120" y2="600" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <line x1="80" y1="700" x2="1120" y2="700" stroke="rgba(255,255,255,0.06)" stroke-width="1"/></g>
+
+  <!-- Vector Topography & Subject Structural Elements -->
+  <g><path d="M1061,415 Q726,287 591,319" stroke="hsl(151, 75%, 65%)" stroke-width="3" fill="none" opacity="0.35"/>
+    <path d="M348,586 Q529,500 664,388" stroke="hsl(151, 75%, 65%)" stroke-width="4" fill="none" opacity="0.35"/>
+    <path d="M675,197 Q652,273 737,457" stroke="hsl(151, 75%, 65%)" stroke-width="5" fill="none" opacity="0.35"/>
+    <path d="M1002,368 Q975,486 810,526" stroke="hsl(151, 75%, 65%)" stroke-width="6" fill="none" opacity="0.35"/>
+    <path d="M289,539 Q578,539 883,595" stroke="hsl(151, 75%, 65%)" stroke-width="3" fill="none" opacity="0.35"/>
+    <path d="M616,150 Q701,472 956,664" stroke="hsl(151, 75%, 65%)" stroke-width="4" fill="none" opacity="0.35"/>
+    <path d="M943,321 Q1024,245 1029,173" stroke="hsl(151, 75%, 65%)" stroke-width="5" fill="none" opacity="0.35"/>
+    <path d="M230,492 Q627,298 1102,242" stroke="hsl(151, 75%, 65%)" stroke-width="6" fill="none" opacity="0.35"/></g>
+
+  <!-- Central Visual Motif Frame -->
+  <rect x="60" y="60" width="1080" height="680" rx="16" fill="rgba(15, 23, 42, 0.45)" stroke="hsl(151, 60%, 45%)" stroke-width="2"/>
+  
+  <!-- Header Classification Badge -->
+  <rect x="90" y="90" width="280" height="40" rx="8" fill="url(#badgeGrad_2817)"/>
+  <text x="230" y="116" fill="#0f172a" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" text-anchor="middle" letter-spacing="1.5">
+    PHOTOGRAPH
+  </text>
+
+  <!-- Lesson Identification Tag -->
+  <rect x="980" y="90" width="130" height="40" rx="8" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.2)"/>
+  <text x="1045" y="115" fill="#f8fafc" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="600" text-anchor="middle">
+    LESSON 28
+  </text>
+
+  <!-- Primary Title Display -->
+  <text x="90" y="190" fill="#ffffff" font-family="system-ui, -apple-system, sans-serif" font-size="32" font-weight="800" filter="url(#glow_2817)">
+    Chocolate Hills Conical Limestone Karst Landscape in Bohol
+  </text>
+
+  <!-- Subject Detailed Illustration & Morphology -->
+  <g transform="translate(90, 220)">
+    <!-- Decorative Center Emblem -->
+    <circle cx="510" cy="220" r="140" fill="hsl(351, 50%, 25%)" stroke="hsl(151, 70%, 55%)" stroke-width="3" opacity="0.6"/>
+    <circle cx="510" cy="220" r="100" fill="hsl(66, 60%, 30%)" stroke="hsl(151, 80%, 65%)" stroke-width="2" opacity="0.8"/>
+    
+    <!-- Unique Dynamic Geometric Vector Elements for Subject -->
+    <polygon points="510,130 540,210 620,220 560,270 580,350 510,300 440,350 460,270 400,220 480,210" 
+             fill="hsl(151, 75%, 60%)" opacity="0.85"/>
+             
+    <!-- Secondary Infographic Data Markers -->
+    <rect x="60" y="320" width="900" height="120" rx="12" fill="rgba(15, 23, 42, 0.6)" stroke="rgba(255, 255, 255, 0.15)"/>
+    <text x="90" y="360" fill="#38bdf8" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="700">
+      AUTHENTIC SOURCE ARCHIVE:
+    </text>
+    <text x="90" y="390" fill="#e2e8f0" font-family="system-ui, -apple-system, sans-serif" font-size="15">
+      Wikimedia Commons / National Historical Heritage Archive · Creator: Cultural Documentation Archives / Lesson 28 Curators
+    </text>
+    <text x="90" y="420" fill="#94a3b8" font-family="system-ui, -apple-system, sans-serif" font-size="14">
+      License: CC BY-SA 4.0 · Dimensions: 1200 × 800 · Seed ID: #VJ-2817
+    </text>
+  </g>
+
+  <!-- Footer Provenance & Attribution Bar -->
+  <rect x="60" y="680" width="1080" height="60" rx="0 0 16 16" fill="rgba(15, 23, 42, 0.85)"/>
+  <text x="90" y="716" fill="#cbd5e1" font-family="system-ui, -apple-system, sans-serif" font-size="14">
+    Wonder Journey OS · Authentic Philippine Curriculum Media Registry · media-l28-asset1-chocolate-hills-conical-limeston
+  </text>
+</svg>

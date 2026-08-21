@@ -59,7 +59,7 @@ export const destinations: Destination[] = [
     region: "Visayas",
     emoji: "⛪",
     knownFor: "The heart of Hiligaynon language and warm hospitality",
-    funFact: "Iloilo is called the 'City of Love' — Teacher Sharon's home region, where Hiligaynon is spoken!",
+    funFact: "Iloilo is called the 'City of Love' — Teacher Guide's home region, where Hiligaynon is spoken!",
   },
   {
     id: "bago",

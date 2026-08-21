@@ -144,8 +144,8 @@ assertCheck(
   "Zero internal teacher secret keys found in scanned client files"
 );
 
-// ── 7. RLS Verification Classification ──
-// Explicitly check SQL migrations and declare static vs runtime execution
+// ── 7. RLS Verification Classification (Static Schema Inspection) ──
+// Explicitly verify SQL migrations statically and declare static AST vs runtime execution
 const sqlMigrationPath = path.join(__dirname, "../supabase/migrations/0005_classroom_sessions.sql");
 const sqlExists = fs.existsSync(sqlMigrationPath);
 let sqlHasRls = false;
@@ -161,9 +161,9 @@ if (sqlExists) {
 }
 
 assertCheck(
-  "PostgreSQL / Supabase Migration RLS static definition check",
+  "Database RLS Static SQL Schema Inspection (Static Analysis — No Live Database Connection Required)",
   sqlExists && sqlHasRls,
-  "All 4 tables have ENABLE ROW LEVEL SECURITY and tenant workspace isolation policies"
+  "All 4 classroom tables statically verified to define ENABLE ROW LEVEL SECURITY and tenant workspace isolation policies"
 );
 
 console.log("\n--------------------------------------------------------------------------------");

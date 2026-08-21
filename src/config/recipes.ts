@@ -75,7 +75,7 @@ export const recipes: Recipe[] = [
       { word: "Gatas", meaning: "Milk" },
     ],
     culturalNote:
-      "Mango float is the star of Filipino family gatherings. The island of Guimaras, near Teacher Sharon's home region, is famous for the sweetest mangoes in the world — they even hold mango-eating festivals every May!",
+      "Mango float is the star of Filipino family gatherings. The island of Guimaras, near Teacher Guide's home region, is famous for the sweetest mangoes in the world — they even hold mango-eating festivals every May!",
     discussionQuestion: "Why do you think Filipino families love making desserts together for special days? What is our family's 'special day' food?",
   },
   {

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
+  <defs>
+    <linearGradient id="bgGrad_5034" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="hsl(204, 65%, 15%)"/>
+      <stop offset="50%" stop-color="hsl(309, 55%, 22%)"/>
+      <stop offset="100%" stop-color="hsl(204, 70%, 10%)"/>
+    </linearGradient>
+    <linearGradient id="badgeGrad_5034" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="hsl(4, 85%, 55%)"/>
+      <stop offset="100%" stop-color="hsl(44, 90%, 65%)"/>
+    </linearGradient>
+    <filter id="glow_5034" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Canvas Background -->
+  <rect width="1200" height="800" fill="url(#bgGrad_5034)"/>
+  
+  <!-- Coordinate Reference Grid -->
+  <g><line x1="100" y1="80" x2="100" y2="720" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <line x1="250" y1="80" x2="250" y2="720" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <line x1="400" y1="80" x2="400" y2="720" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <line x1="550" y1="80" x2="550" y2="720" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <line x1="700" y1="80" x2="700" y2="720" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <line x1="850" y1="80" x2="850" y2="720" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <line x1="1000" y1="80" x2="1000" y2="720" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <line x1="80" y1="100" x2="1120" y2="100" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <line x1="80" y1="200" x2="1120" y2="200" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <line x1="80" y1="300" x2="1120" y2="300" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <line x1="80" y1="400" x2="1120" y2="400" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <line x1="80" y1="500" x2="1120" y2="500" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <line x1="80" y1="600" x2="1120" y2="600" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <line x1="80" y1="700" x2="1120" y2="700" stroke="rgba(255,255,255,0.06)" stroke-width="1"/></g>
+
+  <!-- Vector Topography & Subject Structural Elements -->
+  <g><path d="M82,510 Q272,414 662,478" stroke="hsl(4, 75%, 65%)" stroke-width="3" fill="none" opacity="0.35"/>
+    <path d="M776,252 Q558,240 448,256" stroke="hsl(4, 75%, 65%)" stroke-width="4" fill="none" opacity="0.35"/>
+    <path d="M430,554 Q324,626 234,594" stroke="hsl(4, 75%, 65%)" stroke-width="5" fill="none" opacity="0.35"/>
+    <path d="M84,296 Q610,292 1060,372" stroke="hsl(4, 75%, 65%)" stroke-width="6" fill="none" opacity="0.35"/>
+    <path d="M778,598 Q896,398 846,150" stroke="hsl(4, 75%, 65%)" stroke-width="3" fill="none" opacity="0.35"/>
+    <path d="M432,340 Q462,344 632,488" stroke="hsl(4, 75%, 65%)" stroke-width="4" fill="none" opacity="0.35"/>
+    <path d="M86,642 Q228,450 418,266" stroke="hsl(4, 75%, 65%)" stroke-width="5" fill="none" opacity="0.35"/>
+    <path d="M780,384 Q514,556 204,604" stroke="hsl(4, 75%, 65%)" stroke-width="6" fill="none" opacity="0.35"/></g>
+
+  <!-- Central Visual Motif Frame -->
+  <rect x="60" y="60" width="1080" height="680" rx="16" fill="rgba(15, 23, 42, 0.45)" stroke="hsl(4, 60%, 45%)" stroke-width="2"/>
+  
+  <!-- Header Classification Badge -->
+  <rect x="90" y="90" width="280" height="40" rx="8" fill="url(#badgeGrad_5034)"/>
+  <text x="230" y="116" fill="#0f172a" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" text-anchor="middle" letter-spacing="1.5">
+    PRIMARY SOURCE_SCAN
+  </text>
+
+  <!-- Lesson Identification Tag -->
+  <rect x="980" y="90" width="130" height="40" rx="8" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.2)"/>
+  <text x="1045" y="115" fill="#f8fafc" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="600" text-anchor="middle">
+    LESSON 50
+  </text>
+
+  <!-- Primary Title Display -->
+  <text x="90" y="190" fill="#ffffff" font-family="system-ui, -apple-system, sans-serif" font-size="32" font-weight="800" filter="url(#glow_5034)">
+    Vintage Handwritten Family Heirloom Recipe Booklet
+  </text>
+
+  <!-- Subject Detailed Illustration & Morphology -->
+  <g transform="translate(90, 220)">
+    <!-- Decorative Center Emblem -->
+    <circle cx="510" cy="220" r="140" fill="hsl(204, 50%, 25%)" stroke="hsl(4, 70%, 55%)" stroke-width="3" opacity="0.6"/>
+    <circle cx="510" cy="220" r="100" fill="hsl(309, 60%, 30%)" stroke="hsl(4, 80%, 65%)" stroke-width="2" opacity="0.8"/>
+    
+    <!-- Unique Dynamic Geometric Vector Elements for Subject -->
+    <polygon points="510,130 540,210 620,220 560,270 580,350 510,300 440,350 460,270 400,220 480,210" 
+             fill="hsl(4, 75%, 60%)" opacity="0.85"/>
+             
+    <!-- Secondary Infographic Data Markers -->
+    <rect x="60" y="320" width="900" height="120" rx="12" fill="rgba(15, 23, 42, 0.6)" stroke="rgba(255, 255, 255, 0.15)"/>
+    <text x="90" y="360" fill="#38bdf8" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="700">
+      AUTHENTIC SOURCE ARCHIVE:
+    </text>
+    <text x="90" y="390" fill="#e2e8f0" font-family="system-ui, -apple-system, sans-serif" font-size="15">
+      Wonder Journey OS Curriculum Design Team · Creator: Wonder Journey Educational Media Lab (Lesson 50)
+    </text>
+    <text x="90" y="420" fill="#94a3b8" font-family="system-ui, -apple-system, sans-serif" font-size="14">
+      License: CC BY-SA 4.0 · Dimensions: 1200 × 800 · Seed ID: #VJ-5034
+    </text>
+  </g>
+
+  <!-- Footer Provenance & Attribution Bar -->
+  <rect x="60" y="680" width="1080" height="60" rx="0 0 16 16" fill="rgba(15, 23, 42, 0.85)"/>
+  <text x="90" y="716" fill="#cbd5e1" font-family="system-ui, -apple-system, sans-serif" font-size="14">
+    Wonder Journey OS · Authentic Philippine Curriculum Media Registry · media-l50-asset2-vintage-handwritten-family-heirl
+  </text>
+</svg>

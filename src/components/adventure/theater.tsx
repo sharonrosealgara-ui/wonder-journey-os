@@ -382,7 +382,7 @@ ${recordingLink ? `\n🎥 CLASS RECORDING\n${recordingLink}` : ""}
 ${teacherNote ? `\n📝 TEACHER NOTE\n${teacherNote}` : ""}
 
 Salamat for adventuring with us!
-Teacher Sharon 🌺`;
+Teacher Guide 🌺`;
 }
 
 function PrepChecklist({ lesson, onStart }: { lesson: Lesson; onStart: () => void }) {
@@ -403,7 +403,7 @@ function PrepChecklist({ lesson, onStart }: { lesson: Lesson; onStart: () => voi
       <div className="wj-card wj-pop-in max-h-full w-full max-w-md overflow-y-auto p-6">
         <h2 className="wj-outline font-display text-2xl">🍎 Class Prep Checklist</h2>
         <p className="font-hand mt-1 text-lg text-ink-soft">
-          {lesson.emoji} {lesson.title} — ready when you are, Teacher Sharon!
+          {lesson.emoji} {lesson.title} — ready when you are, Teacher Guide!
         </p>
         <ul className="mt-4 space-y-2">
           {items.map((item, i) => {

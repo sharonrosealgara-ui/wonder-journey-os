@@ -2,7 +2,7 @@
 //
 // Wonder Journey has exactly TWO roles (Decision 040):
 //   family  — the shared Family Portal
-//   teacher — Teacher Sharon's portal
+//   teacher — Teacher Guide's portal
 // Legacy stored values ("student"/"parent") are treated as "family".
 
 export type Mode = "family" | "teacher";
@@ -52,7 +52,7 @@ export const familyNav: NavItem[] = [
   { href: "/resources", label: "Resources", icon: "resources" },
 ];
 
-// Teacher Portal — Sharon's studio (shown as its own section).
+// Teacher Portal — the Teacher's studio (shown as its own section).
 export const teacherNav: NavItem[] = [
   { href: "/teacher", label: "Lesson Plans", icon: "lesson-plan" },
   { href: "/teacher/whatsapp", label: "WhatsApp Helper", icon: "message" },

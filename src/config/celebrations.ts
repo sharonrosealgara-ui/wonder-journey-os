@@ -1,8 +1,6 @@
 // ─────────────────────────────────────────────────────────────
 // FAMILY CELEBRATIONS — birthdays & special dates.
-// ⚠️ EDIT THE DATES BELOW with the family's real birthdays!
-// month: 1–12, day: 1–31. The year is not needed for birthdays.
-// The birthday pop-up appears automatically on the matching day.
+// Generic synthetic fixtures for production & testing.
 // ─────────────────────────────────────────────────────────────
 
 export type Celebration = {
@@ -17,12 +15,12 @@ export type Celebration = {
 };
 
 export const celebrations: Celebration[] = [
-  // ── PLACEHOLDER BIRTHDAYS — replace with real dates! ──
-  { id: "bday-rylee", name: "Rylee", studentId: "rylee", type: "birthday", month: 3, day: 15, emoji: "🧵", note: "Rylee's special day!" },
-  { id: "bday-ezra", name: "Ezra", studentId: "ezra", type: "birthday", month: 6, day: 22, emoji: "🍳", note: "Ezra's special day!" },
-  { id: "bday-asa", name: "Asa", studentId: "asa", type: "birthday", month: 9, day: 8, emoji: "🚜", note: "Asa's special day!" },
-  { id: "bday-selah", name: "Selah", studentId: "selah", type: "birthday", month: 11, day: 30, emoji: "🧁", note: "Selah's special day!" },
-  { id: "bday-sharon", name: "Teacher Sharon", type: "birthday", month: 7, day: 21, emoji: "🌺", note: "Teacher Sharon's special day!" },
+  // ── SYNTHETIC FIXTURE BIRTHDAYS ──
+  { id: "bday-learner-001", name: "Learner One", studentId: "learner-001", type: "birthday", month: 3, day: 15, emoji: "🧵", note: "Learner One's special day!" },
+  { id: "bday-learner-002", name: "Learner Two", studentId: "learner-002", type: "birthday", month: 6, day: 22, emoji: "🍳", note: "Learner Two's special day!" },
+  { id: "bday-learner-003", name: "Learner Three", studentId: "learner-003", type: "birthday", month: 9, day: 8, emoji: "🚜", note: "Learner Three's special day!" },
+  { id: "bday-learner-004", name: "Learner Four", studentId: "learner-004", type: "birthday", month: 11, day: 30, emoji: "🧁", note: "Learner Four's special day!" },
+  { id: "bday-teacher-001", name: "Teacher Guide", type: "birthday", month: 7, day: 21, emoji: "🌺", note: "Teacher Guide's special day!" },
   // ── FAMILY DATES — add anniversaries & feast days here ──
   { id: "first-class", name: "First Wonder Journey Class!", type: "family", month: 7, day: 13, emoji: "🎒", note: "The day our Philippine adventure began" },
 ];

@@ -12,7 +12,7 @@ type Lang = "tagalog";
 export default function LanguagesPage() {
   const [categoryId, setCategoryId] = useState(phraseCategories[0].id);
   const [view, setView] = useState<View>("table");
-  // Tagalog-only (Sharon's decision) — one language, learned well.
+  // Tagalog-only (the Teacher's decision) — one language, learned well.
   const lang: Lang = "tagalog";
 
   const category = phraseCategories.find((c) => c.id === categoryId) ?? phraseCategories[0];
@@ -72,7 +72,7 @@ export default function LanguagesPage() {
 
 // Goodbye spreadsheet — every phrase is a chunky, floating word block a
 // child can love. The pronunciation lives in a warm yellow speech bubble
-// that begs to be read aloud (Sharon's Family OS direction).
+// that begs to be read aloud (the Teacher's Family OS direction).
 function WordTable({ phrases }: { phrases: Phrase[] }) {
   return (
     <div className="grid gap-3 sm:grid-cols-2">

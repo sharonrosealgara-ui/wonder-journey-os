@@ -11,7 +11,7 @@
 //      the app falls back gracefully to layer 1/3, nothing breaks.
 //   3. The device's default voice (robot accent) — last resort only
 //
-// The forever-plan stays: Teacher Sharon's own recorded voice can
+// The forever-plan stays: Teacher Guide's own recorded voice can
 // replace all of this later without changing any call site.
 
 let filipinoVoice: SpeechSynthesisVoice | null = null;

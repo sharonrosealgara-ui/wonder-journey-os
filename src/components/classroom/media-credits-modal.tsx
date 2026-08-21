@@ -77,7 +77,7 @@ export function MediaCreditsModal({
                   <div className="relative mb-3 aspect-video w-full overflow-hidden rounded-xl bg-sand flex items-center justify-center border border-sand-deep">
                     <img
                       src={media.storedAssetPath}
-                      alt={media.descriptiveAltText}
+                      alt={media.altText || media.descriptiveAltText || media.title}
                       className="h-full w-full object-contain"
                     />
                     <span className="absolute top-2 left-2 rounded-md bg-ink/75 px-2 py-0.5 text-[10px] font-bold text-white uppercase tracking-wider">
@@ -89,21 +89,21 @@ export function MediaCreditsModal({
                     {media.title}
                   </h3>
                   <p className="font-hand text-sm text-ocean-deep mt-1 leading-snug">
-                    {media.factualCaption}
+                    {media.caption || media.factualCaption || media.description}
                   </p>
 
                   <div className="mt-3 pt-3 border-t border-sand-deep text-xs text-ink-soft space-y-1">
                     <p>
-                      <strong>Source / Authority:</strong> {media.creatorOrOrganization}
+                      <strong>Source / Authority:</strong> {media.creator || media.creatorOrOrganization || media.sourceOrganization}
                     </p>
                     <p>
                       <strong>License:</strong> {media.license}
                     </p>
                     <p>
-                      <strong>Purpose:</strong> {media.educationalPurpose}
+                      <strong>Purpose:</strong> {media.description || media.educationalPurpose}
                     </p>
                     <p className="font-mono text-[10px] text-ink-soft/70 truncate">
-                      SHA256: {media.sha256}
+                      SHA256: {media.sha256Checksum || media.sha256}
                     </p>
                   </div>
 

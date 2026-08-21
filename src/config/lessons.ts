@@ -127,7 +127,7 @@ export const unscheduledLessons: Lesson[] = [
         body: "The islands are grouped into three main regions. Think of them like three big neighborhoods of one happy country.",
         bullets: [
           "LUZON (north) — home of the capital city Manila and the famous Banaue Rice Terraces",
-          "VISAYAS (middle) — islands of beaches and festivals, including Iloilo and Bago City where Teacher Sharon is from!",
+          "VISAYAS (middle) — islands of beaches and festivals, including Iloilo and Bago City where Teacher Guide is from!",
           "MINDANAO (south) — land of mountains, fruit farms, and the tallest peak, Mt. Apo",
         ],
       },
@@ -177,7 +177,7 @@ export const unscheduledLessons: Lesson[] = [
       {
         heading: "Two Beautiful Languages",
         emoji: "🗣️",
-        body: "The Philippines has over 170 languages! Today we learn greetings in two of them: Tagalog (spoken in and around Manila and understood everywhere) and Hiligaynon (spoken in Western Visayas — Iloilo and Negros, Teacher Sharon's home region).",
+        body: "The Philippines has over 170 languages! Today we learn greetings in two of them: Tagalog (spoken in and around Manila and understood everywhere) and Hiligaynon (spoken in Western Visayas — Iloilo and Negros, Teacher Guide's home region).",
       },
       {
         heading: "Speaking Practice",
@@ -420,9 +420,9 @@ export const unscheduledLessons: Lesson[] = [
     gratitudePrompt: "One thing that made me happy today is...",
   },
   {
-    id: "meet-teacher-sharon",
+    id: "meet-teacher-001",
     order: 7,
-    title: "Meet Teacher Sharon",
+    title: "Meet Teacher Guide",
     subtitle: "A real friend from the other side of the world",
     emoji: "👩‍🏫",
     category: "Philippines",
@@ -434,18 +434,18 @@ export const unscheduledLessons: Lesson[] = [
       { label: "Negros Occidental from above (search on YouTube)", url: "https://www.youtube.com/results?search_query=negros+occidental+aerial+tour" },
     ],
     familyChallenge:
-          "Before class, each explorer prepares 2 interview questions for Teacher Sharon — one about growing up in the Philippines, and one about her favorites (food? animal? place?). Ask them live during class!",
+          "Before class, each explorer prepares 2 interview questions for Teacher Guide — one about growing up in the Philippines, and one about her favorites (food? animal? place?). Ask them live during class!",
     notes: "This episode is mostly conversation — share photos of home, answer their questions, and let the relationship grow. Personalize the sections below with your own stories!",
     sections: [
       {
         heading: "A Letter Across the Ocean",
         emoji: "✉️",
-        body: "Imagine getting a letter from the other side of the world: 'Dear explorers — while you are eating breakfast, I am watching the sunset. While you have winter, I have mangoes. Come and see my world!' Today the letter-writer introduces herself: your guide for this whole adventure, Teacher Sharon.",
+        body: "Imagine getting a letter from the other side of the world: 'Dear explorers — while you are eating breakfast, I am watching the sunset. While you have winter, I have mangoes. Come and see my world!' Today the letter-writer introduces herself: your guide for this whole adventure, Teacher Guide.",
       },
       {
         heading: "From the Land of Sugar and Smiles",
         emoji: "🌱",
-        body: "Teacher Sharon comes from Negros Occidental in the Visayas — the 'Sugarbowl of the Philippines,' where green sugarcane fields stretch to the mountains. Her language is Hiligaynon, called one of the sweetest-sounding languages in the world — from the sweetest-sounding region, of course!",
+        body: "Teacher Guide comes from Negros Occidental in the Visayas — the 'Sugarbowl of the Philippines,' where green sugarcane fields stretch to the mountains. Her language is Hiligaynon, called one of the sweetest-sounding languages in the world — from the sweetest-sounding region, of course!",
         bullets: [
           "Home region: Negros Occidental, Western Visayas",
           "Home language: Hiligaynon — 'Kamusta!'",
@@ -455,7 +455,7 @@ export const unscheduledLessons: Lesson[] = [
       {
         heading: "The Interview",
         emoji: "🎤",
-        body: "Now it's your turn to be explorers AND reporters. Ask Teacher Sharon your prepared questions! Listen for one surprising thing — you'll write it in your journal afterward.",
+        body: "Now it's your turn to be explorers AND reporters. Ask Teacher Guide your prepared questions! Listen for one surprising thing — you'll write it in your journal afterward.",
       },
       {
         heading: "Friends Across the World",
@@ -469,14 +469,14 @@ export const unscheduledLessons: Lesson[] = [
       { english: "Where do you live?", tagalog: "Saan ka nakatira?", hiligaynon: "Diin ka nagapuyo?", pronunciation: "sah-AHN kah nah-kah-TEE-rah / dee-IN kah nah-gah-POO-yoh" },
       { english: "Friend", tagalog: "Kaibigan", hiligaynon: "Abyan", pronunciation: "kah-ee-BEE-gahn / AHB-yahn" },
     ],
-    reflection: "What was the most surprising thing you learned about Teacher Sharon today? What would you tell her about YOUR daily life?",
+    reflection: "What was the most surprising thing you learned about Teacher Guide today? What would you tell her about YOUR daily life?",
     gratitudePrompt: "Today I am grateful to the Lord for a person in my life because...",
   },
   {
     id: "where-i-live",
     order: 8,
     title: "Where I Live: Bago City",
-    subtitle: "Sugarcane fields, waterfalls, and Teacher Sharon's hometown",
+    subtitle: "Sugarcane fields, waterfalls, and Teacher Guide's hometown",
     emoji: "🏞️",
     category: "Philippines",
     destinationId: "bago",
@@ -495,7 +495,7 @@ export const unscheduledLessons: Lesson[] = [
       {
         heading: "The Green Ocean",
         emoji: "🌾",
-        body: "Close your eyes and picture an ocean — but green. Waves of tall sugarcane swaying in the wind, as far as you can see, with blue mountains standing behind them. That's the road to Bago City, Teacher Sharon's hometown in Negros Occidental. Locals call Negros the 'Sugarbowl of the Philippines' — and today you'll see why.",
+        body: "Close your eyes and picture an ocean — but green. Waves of tall sugarcane swaying in the wind, as far as you can see, with blue mountains standing behind them. That's the road to Bago City, Teacher Guide's hometown in Negros Occidental. Locals call Negros the 'Sugarbowl of the Philippines' — and today you'll see why.",
       },
       {
         heading: "A City of Farms and Waterfalls",
@@ -524,7 +524,7 @@ export const unscheduledLessons: Lesson[] = [
       { english: "Field / farm", tagalog: "Bukid", hiligaynon: "Uma", pronunciation: "boo-KID / oo-MAH" },
       { english: "Home / house", tagalog: "Tahanan / Bahay", hiligaynon: "Balay", pronunciation: "tah-HAH-nahn / BAH-lie" },
     ],
-    reflection: "What makes YOUR hometown special? If Teacher Sharon visited you, what three places would you show her?",
+    reflection: "What makes YOUR hometown special? If Teacher Guide visited you, what three places would you show her?",
     gratitudePrompt: "One blessing I noticed today is...",
   },
   {
@@ -681,7 +681,7 @@ export const unscheduledLessons: Lesson[] = [
         body: "These titles are little gifts of respect — using them tells someone their place in your heart.",
         bullets: [
           "Ate (AH-teh) — older sister · Kuya (KOO-yah) — older brother (Tagalog)",
-          "Manang — older sister · Manong — older brother (Hiligaynon, Teacher Sharon's home words!)",
+          "Manang — older sister · Manong — older brother (Hiligaynon, Teacher Guide's home words!)",
           "Lola — grandmother · Lolo — grandfather — the most beloved words in any Filipino house",
           "Even friends and neighbors get titles — a kind older lady is 'Tita,' a family friend is 'Tito'",
         ],
@@ -727,7 +727,7 @@ export const unscheduledLessons: Lesson[] = [
     ],
     familyChallenge:
       "Invent your family's OWN halo-halo layer! Each explorer adds one ingredient nobody expects — name your creation and draw its 'menu card' for the Family Cookbook.",
-    notes: "Teacher: verify Hiligaynon kitchen words below. Grandma Jeannie will love this one — layering is a perfect job for many hands.",
+    notes: "Teacher: verify Hiligaynon kitchen words below. Grandparent will love this one — layering is a perfect job for many hands.",
     sections: [
       {
         heading: "The Bell on the Hottest Day",
@@ -891,7 +891,7 @@ export const unscheduledLessons: Lesson[] = [
     ],
     familyChallenge:
       "Before mixing, make Fruit Rainbow Art: arrange your fruit on a big plate in rainbow order and let Selah direct the design. Photograph it for the Family Cookbook — THEN mix it into the bowl. Art first, dessert second!",
-    notes: "Fiesta/celebration dish framing (per family guidelines). Grandma Jeannie's travel-and-cooking stories fit beautifully here — invite her to share a fruit memory.",
+    notes: "Fiesta/celebration dish framing (per family guidelines). Grandparent's travel-and-cooking stories fit beautifully here — invite her to share a fruit memory.",
     sections: [
       {
         heading: "The Bowl That Comes Out for Happy Days",
@@ -935,7 +935,7 @@ export const unscheduledLessons: Lesson[] = [
     id: "visayas-our-home-islands",
     order: 16,
     title: "Visayas — Our Home Islands",
-    subtitle: "The middle islands where Teacher Sharon grew up — beaches, festivals, and Hiligaynon hearts",
+    subtitle: "The middle islands where Teacher Guide grew up — beaches, festivals, and Hiligaynon hearts",
     emoji: "🏝️",
     category: "Philippines",
     date: "2026-08-17",
@@ -946,13 +946,13 @@ export const unscheduledLessons: Lesson[] = [
       { label: "Visayas islands from above (search on YouTube)", url: "https://www.youtube.com/results?search_query=visayas+philippines+islands+4k" },
     ],
     familyChallenge:
-      "Fold a fleet of paper boats — one for each explorer — and name them after Visayan islands. Then 'sail' them across a blue blanket sea from island to island while Teacher Sharon tells you what makes each one special.",
-    notes: "Regional intro — Teacher Sharon's personal geography! Iloilo & Bago stamps were earned in July; Cebu/Bohol/Boracay stamps come with their own future episodes.",
+      "Fold a fleet of paper boats — one for each explorer — and name them after Visayan islands. Then 'sail' them across a blue blanket sea from island to island while Teacher Guide tells you what makes each one special.",
+    notes: "Regional intro — Teacher Guide's personal geography! Iloilo & Bago stamps were earned in July; Cebu/Bohol/Boracay stamps come with their own future episodes.",
     sections: [
       {
         heading: "The Ferry Horn at First Light",
         emoji: "⛴️",
-        body: "A deep horn sounds across the water — HHRRRMMM! — and the big white ferry pulls away from Iloilo's port, its deck full of sleepy passengers, sacks of mangoes, and one excited grandmother going home to Negros. In the Visayas, the sea isn't a wall between places. It's the ROAD. Islands here are neighbors who wave at each other across the water — and today, we're sailing right through the middle of Teacher Sharon's world.",
+        body: "A deep horn sounds across the water — HHRRRMMM! — and the big white ferry pulls away from Iloilo's port, its deck full of sleepy passengers, sacks of mangoes, and one excited grandmother going home to Negros. In the Visayas, the sea isn't a wall between places. It's the ROAD. Islands here are neighbors who wave at each other across the water — and today, we're sailing right through the middle of Teacher Guide's world.",
       },
       {
         heading: "The Middle Kingdom of Islands",
@@ -966,9 +966,9 @@ export const unscheduledLessons: Lesson[] = [
         ],
       },
       {
-        heading: "Teacher Sharon's Sea",
+        heading: "Teacher Guide's Sea",
         emoji: "💛",
-        body: "Somewhere on that map, between Panay and Negros, is the stretch of water Teacher Sharon has crossed her whole life — the Guimaras Strait, where the sweetest mangoes on Earth grow on the little island in the middle (you already earned that stamp!). When she says 'home,' this is the blue and green she means. Today, ask her anything about it — this is the lesson where your teacher IS the textbook.",
+        body: "Somewhere on that map, between Panay and Negros, is the stretch of water Teacher Guide has crossed her whole life — the Guimaras Strait, where the sweetest mangoes on Earth grow on the little island in the middle (you already earned that stamp!). When she says 'home,' this is the blue and green she means. Today, ask her anything about it — this is the lesson where your teacher IS the textbook.",
       },
       {
         heading: "Words That Cross the Water",
@@ -984,14 +984,14 @@ export const unscheduledLessons: Lesson[] = [
       { english: "Fish", tagalog: "Isda", hiligaynon: "Isda", pronunciation: "ees-DAH" },
       { english: "Beautiful!", tagalog: "Ang ganda!", hiligaynon: "Katahum!", pronunciation: "ahng gahn-DAH / kah-TAH-hoom" },
     ],
-    reflection: "Teacher Sharon's home is islands connected by sea-roads. What connects YOUR family to the places and people you call home?",
+    reflection: "Teacher Guide's home is islands connected by sea-roads. What connects YOUR family to the places and people you call home?",
     gratitudePrompt: "Today I am grateful to the Lord because...",
   },
   {
     id: "hiligaynon-simple-sentences",
     order: 17,
     title: "Hiligaynon — Your First Sentences",
-    subtitle: "Teacher Sharon's home language — now YOU can speak it in whole sentences",
+    subtitle: "Teacher Guide's home language — now YOU can speak it in whole sentences",
     emoji: "🗣️",
     category: "Language",
     date: "2026-08-19",
@@ -1002,13 +1002,13 @@ export const unscheduledLessons: Lesson[] = [
       { label: "Basic Hiligaynon phrases (search on YouTube)", url: "https://www.youtube.com/results?search_query=hiligaynon+ilonggo+basic+phrases" },
     ],
     familyChallenge:
-      "Sentence-strip relay! Write each sentence on a card. Explorers take turns drawing a card and saying it TO someone in the family who must respond correctly. Winner is whoever makes Teacher Sharon smile biggest at the next class.",
+      "Sentence-strip relay! Write each sentence on a card. Explorers take turns drawing a card and saying it TO someone in the family who must respond correctly. Winner is whoever makes Teacher Guide smile biggest at the next class.",
     notes: "Unit 3 — Hiligaynon as a first-class language, never a footnote. Teacher: these sentences are yours to correct and re-record in your own voice someday.",
     sections: [
       {
         heading: "The Language That Sings",
         emoji: "🎵",
-        body: "People in Iloilo and Negros say their language is malambing — sweet, gentle, almost sung instead of spoken. When two Ilonggos meet far from home, they can hear it in each other's voices in three words flat, and suddenly they're family. Today you learn to make whole sentences in the language Teacher Sharon dreamed in as a little girl. Speak them softly — this language likes kindness.",
+        body: "People in Iloilo and Negros say their language is malambing — sweet, gentle, almost sung instead of spoken. When two Ilonggos meet far from home, they can hear it in each other's voices in three words flat, and suddenly they're family. Today you learn to make whole sentences in the language Teacher Guide dreamed in as a little girl. Speak them softly — this language likes kindness.",
       },
       {
         heading: "The Sentence Machine",
@@ -1227,7 +1227,7 @@ export const unscheduledLessons: Lesson[] = [
     ],
     familyChallenge:
       "The Adobo Council: after tasting, the whole family votes on ONE change for your next batch — more garlic? sweeter? extra sauce? Write your official family adobo rules in the Cookbook. This recipe will now evolve for generations. Handle with care.",
-    notes: "The big one — Ezra's episode. Grandma Jeannie's cooking wisdom formally requested. Longer cook time; start the pot early in class.",
+    notes: "The big one — Ezra's episode. Grandparent's cooking wisdom formally requested. Longer cook time; start the pot early in class.",
     sections: [
       {
         heading: "The Smell That Means 'Come Home'",
@@ -2052,7 +2052,7 @@ export const unscheduledLessons: Lesson[] = [
     ],
     familyChallenge:
       "The Longest Noodle Ceremony! At the table, everyone lifts their noodles high with their fork before the first bite — the higher the lift, the longer the life, say the lolas. Measure who found the longest unbroken noodle. Then each person shares one hope for their long, happy life.",
-    notes: "Unit 7 Cooking — linked to the existing pancit recipe. Birthday-tradition framing (and a wink: Sharon's birthday was in July, but pancit is for EVERY celebration). Tagalog-only vocabulary.",
+    notes: "Unit 7 Cooking — linked to the existing pancit recipe. Birthday-tradition framing (and a wink: the Teacher's birthday was in July, but pancit is for EVERY celebration). Tagalog-only vocabulary.",
     sections: [
       {
         heading: "The Dish That Comes to Every Birthday",

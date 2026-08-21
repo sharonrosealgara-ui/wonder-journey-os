@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "validate:release": "node scripts/validate-release-candidate.js",
-    "lint": "tsc --noEmit",
+    "lint": "eslint src/",
     "test": "npx tsx src/__tests__/curriculum.test.ts",
     "typecheck": "tsc --noEmit"
   },
@@ -24,12 +24,16 @@
     "react-dom": "19.1.0"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.62.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "eslint": "^10.9.0",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "typescript-eslint": "^8.67.0"
   },
   "engines": {
     "node": "22.x"

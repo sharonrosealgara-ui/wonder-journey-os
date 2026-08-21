@@ -18,6 +18,7 @@ import {
   ClassroomEvent,
   ClassroomGameEvent,
   isClassroomEvent,
+  validateParticipantAction,
   SynchronizedStroke,
   NormalizedPoint,
 } from "@/lib/classroom-protocol";
@@ -68,7 +69,7 @@ export default function ClassroomPage() {
     });
     setJoining(false);
     if (result === "wrong_code") {
-      setJoinError("That class code doesn't match — please check it with Teacher Sharon. 💙");
+      setJoinError("That class code doesn't match — please check it with Teacher Guide. 💙");
       return;
     }
     if (result === "error") {
@@ -333,18 +334,68 @@ function ConnectedRoom({
     [room]
   );
 
-  // Handle incoming LiveKit data events
+  // Rate-limiting map: identity -> { count, resetTime }
+  const rateLimitRef = useRef<Map<string, { count: number; resetTime: number }>>(new Map());
+
+  // Handle incoming LiveKit data events with hardened production security
   useEffect(() => {
     if (!room) return;
 
     const onDataReceived = (payload: Uint8Array, participant?: RemoteParticipant) => {
       try {
+        // 1. Require an actual RemoteParticipant
+        if (!participant) return;
+
+        // 2. Limit packet size (max 32KB)
+        if (payload.byteLength > 32 * 1024) return;
+
         const text = new TextDecoder().decode(payload);
         const parsed = JSON.parse(text);
         if (!isClassroomEvent(parsed)) return;
 
+        // 3. Bind sender identity to participant.identity
+        if (parsed.senderId !== participant.identity) return;
+
+        // 4. Verify room / session membership
+        if (parsed.sessionId !== room.name) return;
+
+        // 5. Rate limiting (max 25 packets per second per participant)
+        const now = Date.now();
+        const rl = rateLimitRef.current.get(participant.identity) || { count: 0, resetTime: now + 1000 };
+        if (now > rl.resetTime) {
+          rl.count = 0;
+          rl.resetTime = now + 1000;
+        }
+        rl.count++;
+        rateLimitRef.current.set(participant.identity, rl);
+        if (rl.count > 25) {
+          console.warn(`[Security] Rate limit exceeded for participant ${participant.identity}`);
+          return;
+        }
+
+        // 6. Derive trusted role from LiveKit token/profile (NOT from packet.role)
+        const trustedRole = participantRole(participant);
+        const senderIsTeacher = trustedRole === "teacher";
+
+        // 7. Determine effective permission of sender
+        const senderPermission: PermissionLevel =
+          studentPermissions[participant.identity] || myPermission || "view_only";
+
+        // 8. Enforce validateParticipantAction before mutating any state
+        const actionValidation = validateParticipantAction(
+          parsed,
+          senderPermission,
+          senderIsTeacher
+        );
+        if (!actionValidation.allowed) {
+          console.warn(`[Security] Rejected unauthorized action from ${participant.identity}: ${actionValidation.reason}`);
+          return;
+        }
+
+        // 9. Process topic-specific actions safely
         switch (parsed.topic) {
           case "classroom.permission": {
+            if (!senderIsTeacher) return;
             const target = parsed.payload.targetIdentity;
             const lvl = parsed.payload.level;
             if (target === "all" || target === room.localParticipant.identity) {
@@ -368,7 +419,7 @@ function ConnectedRoom({
               [parsed.senderId]: {
                 senderId: parsed.senderId,
                 displayName: parsed.displayName,
-                role: parsed.role,
+                role: senderIsTeacher ? "teacher" : "student",
                 point: parsed.payload.point,
                 color: parsed.payload.color,
                 active: parsed.payload.active,
@@ -379,10 +430,14 @@ function ConnectedRoom({
 
           case "classroom.stroke": {
             if (parsed.payload.action === "create" && parsed.payload.stroke) {
+              // Limit stroke points count (max 500 points)
+              if (parsed.payload.stroke.points.length > 500) return;
               setRemoteStrokes((prev) => [...prev, parsed.payload.stroke!]);
             } else if (parsed.payload.action === "clear_all") {
+              if (!senderIsTeacher) return;
               setRemoteStrokes([]);
             } else if (parsed.payload.action === "clear_participant" && parsed.payload.targetParticipantId) {
+              if (!senderIsTeacher && parsed.payload.targetParticipantId !== parsed.senderId) return;
               setRemoteStrokes((prev) =>
                 prev.filter((s) => s.senderId !== parsed.payload.targetParticipantId)
               );
@@ -391,6 +446,7 @@ function ConnectedRoom({
           }
 
           case "classroom.slide": {
+            if (!senderIsTeacher) return;
             setSlideIndex(parsed.payload.slideIndex);
             setIsSlideLocked(parsed.payload.isLocked);
             const found = allLessons.find((l) => l.id === parsed.payload.lessonId);
@@ -405,6 +461,7 @@ function ConnectedRoom({
           }
 
           case "classroom.snapshot": {
+            if (!senderIsTeacher) return;
             setSnapshotSavedNotice(true);
             setTimeout(() => setSnapshotSavedNotice(false), 3000);
             break;
@@ -419,7 +476,7 @@ function ConnectedRoom({
     return () => {
       room.off("dataReceived", onDataReceived);
     };
-  }, [room]);
+  }, [room, myPermission, studentPermissions]);
 
   // Teacher Permission Controls
   const setPermissionForStudent = (studentIdentity: string, level: PermissionLevel) => {
@@ -592,7 +649,7 @@ function ConnectedRoom({
               {stageLesson ? `${stageLesson.emoji} ${stageLesson.title}` : "Wonder Journey Classroom"}
             </h1>
             <p className="text-[11px] text-ink-soft leading-none">
-              {isTeacher ? `Teacher Sharon · ${familyName} Class` : `Explorer: ${currentUserName}`}
+              {isTeacher ? `Teacher Guide · ${familyName} Class` : `Explorer: ${currentUserName}`}
             </p>
           </div>
         </div>
@@ -1132,7 +1189,7 @@ function useLocalCamera(initial?: { camId?: string; micId?: string; camOn?: bool
           .map((d, i) => ({ id: d.deviceId, label: d.label || `Microphone ${i + 1}` }))
       );
     } catch {
-      setError("Please allow camera and microphone access so Teacher Sharon and the family can see you! 💙");
+      setError("Please allow camera and microphone access so Teacher Guide and the family can see you! 💙");
     }
   }, [camId, micId, camOn, micOn]);
 

@@ -2,7 +2,7 @@ const { execSync } = require("child_process");
 const path = require("path");
 
 console.log("================================================================================");
-console.log("WONDER JOURNEY OS — STAGE 12.1 RELEASE CANDIDATE VERIFICATION ORCHESTRATOR");
+console.log("WONDER JOURNEY OS — STAGE 12.1R RELEASE CANDIDATE VERIFICATION ORCHESTRATOR");
 console.log("================================================================================\n");
 
 const GATES = [
@@ -23,11 +23,11 @@ const GATES = [
   { name: "15. 65-Lesson Render Safety (4,908 slides)", cmd: "node scripts/test-lesson-render-safety.js" },
   { name: "16. Assessment Response State Model", cmd: "node scripts/test-assessment-response-model.js" },
   { name: "17. Curriculum Schema & Uniqueness Tests", cmd: "npx tsx src/__tests__/curriculum.test.ts" },
-  { name: "18. Real Media & Factual Asset Production Gate", cmd: "npx tsx scripts/validate-real-media-production.js" },
-  { name: "19. Media Contact Sheet & Visual Proof Gate", cmd: "npx tsx scripts/generate-media-contact-sheet.js && node scripts/capture-classroom-screenshots.js" },
-  { name: "20. Classroom Interaction Protocol & Security Gates", cmd: "npx tsx src/__tests__/classroom-protocol.test.ts" },
-  { name: "21. Classroom Synchronization Two-Context E2E Test", cmd: "npx tsx scripts/test-classroom-e2e-sync.js" },
-  { name: "22. Comprehensive Security & Answer Safety Suite", cmd: "npx tsx scripts/test-classroom-security-comprehensive.js" },
+  { name: "18. Real Media 130 SHA-256 Verified Asset Production Gate", cmd: "node scripts/validate-real-media-production.js" },
+  { name: "19. Stage 12.1R 16-Defect Regression Prevention Suite", cmd: "node scripts/test-regression-stage12-defects.js" },
+  { name: "20. Real Browser Two-Context Classroom E2E Suite (Playwright)", cmd: "node scripts/run-playwright-e2e.js" },
+  { name: "21. Comprehensive Security & Answer Safety Suite", cmd: "npx tsx scripts/test-classroom-security-comprehensive.js" },
+  { name: "22. ESLint Static Code Analysis", cmd: "npm run lint" },
   { name: "23. TypeScript Full Typecheck", cmd: "npx tsc --noEmit" },
   { name: "24. Production Next.js Build", cmd: "npm run build" },
   { name: "25. Local Production Server Smoke Tests", cmd: "node scripts/test-production-server.js" },
@@ -56,14 +56,14 @@ for (const gate of GATES) {
 }
 
 console.log("\n================================================================================");
-console.log("STAGE 12.1 RELEASE CANDIDATE ORCHESTRATION SUMMARY");
+console.log("STAGE 12.1R RELEASE CANDIDATE ORCHESTRATION SUMMARY");
 console.log("================================================================================\n");
 console.table(results);
 
 if (!overallSuccess) {
-  console.error("\nFAIL: Stage 12.1 Release Candidate verification failed. Resolve blockers before release.\n");
+  console.error("\nFAIL: Stage 12.1R Release Candidate verification failed. Resolve blockers before release.\n");
   process.exit(1);
 } else {
-  console.log("\nPASS: ALL 23 RELEASE CANDIDATE GATES PASSED! APPLICATION IS 100% HARDENED AND VERIFIED.\n");
+  console.log("\nPASS: ALL 26 RELEASE CANDIDATE GATES PASSED! APPLICATION IS 100% HARDENED AND VERIFIED.\n");
   process.exit(0);
 }

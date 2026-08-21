@@ -36,7 +36,7 @@ export default function PrayerPage() {
 
         <p className="mx-auto mt-6 max-w-md rounded-2xl bg-sand p-5 text-ink-soft">
           If you feel comfortable, you may lead us in a short opening prayer. If not, another
-          family member or Teacher Sharon can lead. 💛
+          family member or Teacher Guide can lead. 💛
         </p>
         <p className="mt-4 text-sm text-ink-soft">
           Prayer is always an invitation, never a requirement.

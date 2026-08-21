@@ -42,7 +42,7 @@ import {
 } from "@/lib/assessment-state";
 
 // A mascot introduces each slide with a speech bubble — scaled up so the
-// call-to-action is unmissable for young readers (Sharon's guidelines).
+// call-to-action is unmissable for young readers (the Teacher's guidelines).
 export function MascotBubble({ slide, line }: { slide: Slide; line: string }) {
   return (
     <div className="mx-auto mb-4 mt-5 flex max-w-xl items-center justify-center gap-3">
@@ -371,7 +371,7 @@ function PrayerSlide({ slide }: { slide: Slide }) {
         <p className="mt-2 font-display text-4xl text-ube-deep">🌟 {leader}</p>
         <p className="font-hand mx-auto mt-5 max-w-md text-lg text-ink-soft">
           If you feel comfortable, you may lead us in a short opening prayer. If not, another
-          family member or Teacher Sharon can lead. 💛
+          family member or Teacher Guide can lead. 💛
         </p>
       </div>
       <MascotBubble slide={slide} line="Prayer is always an invitation, never a requirement." />
@@ -417,7 +417,7 @@ function MissionSlide({ slide, lesson }: { slide: Slide; lesson: Lesson }) {
   );
 }
 
-// 🎨 CONTEXTUAL THEMES — each subject wears its own world (Sharon's
+// 🎨 CONTEXTUAL THEMES — each subject wears its own world (the Teacher's
 // premium art direction): Geography = explorer's field journal ·
 // Cooking = family recipe card · Language = giant speech bubble ·
 // Values = watercolor canvas. Same content model, different clothes.
@@ -649,7 +649,7 @@ function stars(n: number): string {
 }
 
 function GameSlide({ slide, lesson, level }: { slide: Slide; lesson: Lesson; level: ExplorerLevel }) {
-  // Tagalog-only (Sharon's decision) — the games always use the Tagalog word.
+  // Tagalog-only (the Teacher's decision) — the games always use the Tagalog word.
   const lang = "tagalog" as const;
   const [game, setGame] = useState<GameId | null>(null);
   const phrases = lesson.phrases ?? [];
@@ -1140,9 +1140,9 @@ function PremiumRichExplanationSlide({ slide, lesson }: { slide: SlideOf<"richEx
             <Polaroid
               src={photoSrc}
               lessonId={lesson.id}
-              alt={heroMedia?.descriptiveAltText || heading}
+              alt={heroMedia?.altText || heroMedia?.descriptiveAltText || heading}
               tilt={t.tilt}
-              caption={heroMedia?.factualCaption || lesson.title}
+              caption={heroMedia?.caption || heroMedia?.factualCaption || lesson.title}
               className="w-full max-w-xs"
             />
             {heroMedia && (
@@ -1218,14 +1218,14 @@ function PremiumMediaMomentSlide({ slide, lesson }: { slide: SlideOf<"mediaMomen
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={displaySrc}
-              alt={activeMedia?.descriptiveAltText || caption}
+              alt={activeMedia?.altText || activeMedia?.descriptiveAltText || caption}
               className="w-full h-auto rounded-2xl object-cover max-h-[55vh] shadow-md transition-transform duration-300 group-hover:scale-[1.01]"
             />
             {activeMedia && (
               <div className="mt-4 flex flex-wrap items-center justify-between gap-2 text-left bg-sand/80 p-3 rounded-xl border border-sand-deep text-xs">
                 <div>
-                  <p className="font-bold text-ink">{activeMedia.factualCaption}</p>
-                  <p className="text-ink-soft text-[11px] mt-0.5">Source: {activeMedia.attribution}</p>
+                  <p className="font-bold text-ink">{activeMedia.caption || activeMedia.factualCaption || activeMedia.title}</p>
+                  <p className="text-ink-soft text-[11px] mt-0.5">Source: {activeMedia.creator || activeMedia.sourceOrganization || activeMedia.attribution || "Public Domain"}</p>
                 </div>
                 <button
                   type="button"

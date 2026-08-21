@@ -13,7 +13,7 @@ export type GratitudeEntry = {
   // Morning Blessings V2 (all optional — older entries still valid)
   prayer?: string; // today's prayer request
   kindness?: string; // kindness goal for the day
-  hearts?: number; // ❤️ encouragements from Teacher Sharon
+  hearts?: number; // ❤️ encouragements from Teacher Guide
   teacherNote?: string; // a short written encouragement
 };
 

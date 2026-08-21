@@ -8,7 +8,7 @@ import { readStored, useStored, writeStored } from "@/lib/storage";
 // 🔑 ACCESS GATE — the front door of Wonder Journey.
 // One class code, entered ONCE on this device, opens everything: the
 // platform, the live classroom, and the cloud. The same code works for
-// Teacher Sharon and for the family, so there is nothing else to
+// Teacher Guide and for the family, so there is nothing else to
 // remember and no second code inside the classroom.
 //
 // Magic links skip the door entirely:
@@ -118,7 +118,7 @@ export function AccessGate({ children }: { children: React.ReactNode }) {
         body: JSON.stringify({ code: c }),
       });
       if (res.status === 401) {
-        setError("That code doesn't match — please check it with Teacher Sharon. 💛");
+        setError("That code doesn't match — please check it with Teacher Guide. 💛");
         setBusy(false);
         return;
       }
@@ -218,7 +218,7 @@ export function AccessGate({ children }: { children: React.ReactNode }) {
           value={name}
           onChange={(e) => setName(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && void unlock()}
-          placeholder="e.g. Ferrell Family"
+          placeholder="e.g. Wonder Journey Family"
         />
 
         <p className="font-hand mt-2 text-sm text-ink-soft">

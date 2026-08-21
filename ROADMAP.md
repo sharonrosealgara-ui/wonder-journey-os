@@ -261,30 +261,31 @@ The platform succeeds when:
 
 ---
 
-# Stage 12.1 — Premium Real-Media Tagalog Classroom + Authorized Student Interaction — **STATUS: SHIPPED ✅**
+# Stage 12.1 — Premium Real-Media Tagalog Classroom, Authorized Student Interaction, and Synchronized Games — **STATUS: IN PROGRESS 🔄**
 
-**Goal:** Transform the 65-lesson Tagalog curriculum into a premium wide-screen real-media classroom with synchronized multi-participant student drawing, remote pointer badges, and teacher moderation gates.
+**Goal:** Transform the 65-lesson Tagalog & Filipino heritage curriculum into a genuinely premium, wide-screen, visually rich, interactive online classroom with authentic sourced media, synchronized multi-participant student drawing, remote pointer badges, teacher moderation gates, and playable synchronized classroom games (hotspots, drag-and-drop, matching, sequencing, sorting, multiple choice, memory pairs, and lesson reviews).
 
-- ✅ **130 Real Factual Curriculum Media Assets**: High-fidelity SVG visual media (2 per lesson: hero + supporting/evidence) across all 65 lessons stored locally in `public/media/curriculum/` with NHCP/DOST/Public Domain compliant licensing.
-- ✅ **Deterministic Media Registry & Provenance**: `src/config/media-registry.ts` with SHA-256 integrity checksums, citations, alt text, and modal attribution views.
-- ✅ **Classroom Session Schema & RLS**: `supabase/migrations/0005_classroom_sessions.sql` with workspace isolation for live sessions, participants, board snapshots, and activity logs.
-- ✅ **Classroom Interaction Protocol**: `src/lib/classroom-protocol.ts` typed LiveKit data channel events with `[0..1]` stage coordinate normalization and strict server/client security gating.
-- ✅ **Synchronized Annotation Layer**: `src/components/adventure/annotation-layer.tsx` with multi-user stroke rendering, laser pointers, shape tools, and teacher clear-all privileges.
-- ✅ **Wide-Screen Responsive Classroom Shell**: `src/app/(app)/classroom/page.tsx` supporting 16:9 stage rendering, participant rails, and real-time permission controls.
-- ✅ **23 Release Candidate Gates**: Automated verification via `scripts/validate-release-candidate.js` passing 100% cleanly.
-
----
-
-# Stage 12.2 — Real-Time Multi-Student Classroom Games & Synchronized Activity Engine — **STATUS: PLANNED ⬜**
-
-**Goal:** Extend the real-time classroom with synchronized gamified group activities (interactive matching battles, drag-and-drop word sorting, team vocabulary challenges, and live audio/video state enhancements).
-
-- ⬜ Synchronized multi-player vocabulary and matching games with synchronized scoreboards
-- ⬜ Real-time collaborative drag-and-drop learning object manipulation on the whiteboard stage
-- ⬜ Granular audio/video tile focus modes and spotlighting for individual student responses
-- ⬜ Automated session activity summary exports to student learning portfolios
+- 🔄 **130+ Authentic Sourced Curriculum Media Assets**: Verified contextual photographs, primary-source scans, historical artwork, museum artifacts, verified portraits, authoritative maps, and labeled original instructional diagrams stored locally in `public/media/curriculum/` with per-file provenance and compliant licensing (CC BY, CC BY-SA, CC0, Public Domain).
+- 🔄 **Deterministic Media Registry & Provenance**: `src/config/media-registry.ts` with SHA-256 integrity checksums, citations, alt text, and modal attribution views.
+- 🔄 **Classroom Session Schema & RLS**: `supabase/migrations/0005_classroom_sessions.sql` with workspace isolation for live sessions, participants, board snapshots, and activity logs.
+- 🔄 **Classroom Interaction Protocol**: `src/lib/classroom-protocol.ts` typed LiveKit data channel events with `[0..1]` stage coordinate normalization and strict server/client security gating.
+- 🔄 **Synchronized Annotation Whiteboard**: `src/components/adventure/annotation-layer.tsx` with multi-user stroke rendering, laser pointers, shape tools, and teacher clear-all privileges.
+- 🔄 **Playable Synchronized Classroom Games**: Live interactive Hotspots, Drag and Drop, Matching, Sequencing, Sorting, Multiple Choice, and Memory games with student authorization gates and answer-key isolation.
+- 🔄 **Wide-Screen Responsive Classroom Shell**: `src/app/(app)/classroom/page.tsx` supporting 16:9 stage rendering, participant rails, and real-time permission controls.
+- 🔄 **Comprehensive Multi-Context E2E Verification**: Multi-user isolated teacher/student browser test suite verifying the complete 14-step live interaction flow.
 
 ---
 
-*Wonder Journey OS — Development Roadmap v1.1 · Updated August 2026 · Stage 12.1 Shipped*
+# Stage 12.2 — Teacher Workspace, Calendar, Class Schedule, and Private Student Management — **STATUS: PLANNED ⬜**
+
+**Goal:** Provide Sharon with a dedicated teacher command center for calendar scheduling, class roster management, student learning profiles, attendance tracking, and curriculum pacing.
+
+- ⬜ Teacher command workspace with monthly/weekly class schedule views
+- ⬜ Private student management, learning preferences, and progress tracking
+- ⬜ Automated class preparation reminders and materials checklist
+- ⬜ Attendance logs and session history archives
+
+---
+
+*Wonder Journey OS — Development Roadmap v1.2 · Updated August 2026*
 

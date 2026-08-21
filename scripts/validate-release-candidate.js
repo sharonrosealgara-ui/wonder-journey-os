@@ -24,11 +24,14 @@ const GATES = [
   { name: "16. Assessment Response State Model", cmd: "node scripts/test-assessment-response-model.js" },
   { name: "17. Curriculum Schema & Uniqueness Tests", cmd: "npx tsx src/__tests__/curriculum.test.ts" },
   { name: "18. Real Media & Factual Asset Production Gate", cmd: "npx tsx scripts/validate-real-media-production.js" },
-  { name: "19. Classroom Interaction Protocol & Security Gates", cmd: "npx tsx src/__tests__/classroom-protocol.test.ts" },
-  { name: "20. TypeScript Full Typecheck", cmd: "npx tsc --noEmit" },
-  { name: "21. Production Next.js Build", cmd: "npm run build" },
-  { name: "22. Local Production Server Smoke Tests", cmd: "node scripts/test-production-server.js" },
-  { name: "23. Client-Bundle Answer & Key Leak Gate", cmd: "node scripts/test-client-bundle-leak.js" }
+  { name: "19. Media Contact Sheet & Visual Proof Gate", cmd: "npx tsx scripts/generate-media-contact-sheet.js && node scripts/capture-classroom-screenshots.js" },
+  { name: "20. Classroom Interaction Protocol & Security Gates", cmd: "npx tsx src/__tests__/classroom-protocol.test.ts" },
+  { name: "21. Classroom Synchronization Two-Context E2E Test", cmd: "npx tsx scripts/test-classroom-e2e-sync.js" },
+  { name: "22. Comprehensive Security & Answer Safety Suite", cmd: "npx tsx scripts/test-classroom-security-comprehensive.js" },
+  { name: "23. TypeScript Full Typecheck", cmd: "npx tsc --noEmit" },
+  { name: "24. Production Next.js Build", cmd: "npm run build" },
+  { name: "25. Local Production Server Smoke Tests", cmd: "node scripts/test-production-server.js" },
+  { name: "26. Client-Bundle Answer & Key Leak Gate", cmd: "node scripts/test-client-bundle-leak.js" }
 ];
 
 let results = [];

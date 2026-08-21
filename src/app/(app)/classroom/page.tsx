@@ -16,10 +16,12 @@ import { useAuth } from "@/lib/auth-context";
 import {
   PermissionLevel,
   ClassroomEvent,
+  ClassroomGameEvent,
   isClassroomEvent,
   SynchronizedStroke,
   NormalizedPoint,
 } from "@/lib/classroom-protocol";
+import { ClassroomGames } from "@/components/classroom/classroom-games";
 import { MediaCreditsModal } from "@/components/classroom/media-credits-modal";
 import { getMediaForLesson, FactualMedia } from "@/config/media-registry";
 
@@ -296,6 +298,9 @@ function ConnectedRoom({
   const [showMediaModal, setShowMediaModal] = useState(false);
   const [snapshotSavedNotice, setSnapshotSavedNotice] = useState(false);
 
+  const [gameActive, setGameActive] = useState(false);
+  const [incomingGameEvent, setIncomingGameEvent] = useState<ClassroomGameEvent | null>(null);
+
   // Student Permissions State
   const [studentPermissions, setStudentPermissions] = useState<Record<string, PermissionLevel>>({});
   const [myPermission, setMyPermission] = useState<PermissionLevel>(
@@ -390,6 +395,12 @@ function ConnectedRoom({
             setIsSlideLocked(parsed.payload.isLocked);
             const found = allLessons.find((l) => l.id === parsed.payload.lessonId);
             if (found) setStageLesson(found);
+            break;
+          }
+
+          case "classroom.game": {
+            setIncomingGameEvent(parsed as ClassroomGameEvent);
+            setGameActive(true);
             break;
           }
 
@@ -547,6 +558,21 @@ function ConnectedRoom({
     setTimeout(() => setSnapshotSavedNotice(false), 3000);
   };
 
+  const handleEmitGameEvent = (event: Partial<ClassroomGameEvent>) => {
+    const fullEv: ClassroomGameEvent = {
+      topic: "classroom.game",
+      version: 1,
+      eventId: `game-${Date.now()}`,
+      sessionId: room.name,
+      senderId: room.localParticipant.identity,
+      senderName: currentUserName,
+      role: isTeacher ? "teacher" : "student",
+      timestamp: Date.now(),
+      payload: event.payload as ClassroomGameEvent["payload"],
+    };
+    broadcastClassroomEvent(fullEv);
+  };
+
   const everyone = call.participants;
   const screenShare = getScreenShare(everyone);
 
@@ -593,6 +619,21 @@ function ConnectedRoom({
               ? "✏️ Drawing Enabled"
               : "🎮 Interactive Game"}
           </span>
+
+          {/* Interactive Games Toggle */}
+          <button
+            type="button"
+            onClick={() => setGameActive((g) => !g)}
+            aria-label="Toggle Interactive Games"
+            className={`flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold transition-all cursor-pointer shadow-sm ${
+              gameActive
+                ? "bg-amber-500 text-white ring-2 ring-amber-400/50"
+                : "bg-amber-500/10 text-amber-700 hover:bg-amber-500/20 border border-amber-500/30"
+            }`}
+          >
+            <span>🎮</span>
+            <span>{gameActive ? "Close Game" : "Games & Activities"}</span>
+          </button>
 
           {/* Media Info & Provenance Button */}
           <button
@@ -678,6 +719,30 @@ function ConnectedRoom({
                     🎬 Open Lesson Presentation
                   </button>
                 )}
+              </div>
+            )}
+
+            {/* Classroom Interactive Games Overlay */}
+            {gameActive && (
+              <div className="absolute inset-0 z-30 bg-slate-950/95 flex flex-col p-4">
+                <div className="flex justify-end mb-2">
+                  <button
+                    onClick={() => setGameActive(false)}
+                    className="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-bold border border-slate-700 cursor-pointer"
+                  >
+                    ✕ Return to Lesson Slide
+                  </button>
+                </div>
+                <div className="flex-1 overflow-hidden">
+                  <ClassroomGames
+                    lessonId={stageLesson?.id || "lesson-1"}
+                    lessonTitle={stageLesson?.title || "Classroom Adventure"}
+                    role={isTeacher ? "teacher" : "student"}
+                    permissionLevel={myPermission}
+                    onEmitGameEvent={handleEmitGameEvent}
+                    incomingGameEvent={incomingGameEvent}
+                  />
+                </div>
               </div>
             )}
 

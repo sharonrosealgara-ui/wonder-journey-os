@@ -27,7 +27,7 @@ export function SmartPhoto({
   const [failed, setFailed] = useState(false);
 
   // 1. Look up by direct mediaId
-  let media: FactualMedia | null = mediaId ? getMedia(mediaId) : null;
+  let media: FactualMedia | null = mediaId ? (getMedia(mediaId) ?? null) : null;
 
   // 2. If lessonId is provided, look up registered media for lesson
   if (!media && lessonId) {

@@ -113,13 +113,32 @@ export type ClassroomGameEvent = {
   version: 1;
   eventId: string;
   sessionId: string;
+  workspaceId?: string;
   senderId: string;
   senderName: string;
   role: "teacher" | "family" | "student";
   timestamp: number;
   payload: {
-    gameType: "matching" | "sequencing" | "word_scramble" | "memory_flip" | "quiz" | "custom";
-    action: "select" | "match_pair" | "move_order" | "reset" | "reveal_authorized" | "submit_attempt";
+    gameType:
+      | "matching"
+      | "sequencing"
+      | "word_scramble"
+      | "memory_flip"
+      | "quiz"
+      | "hotspot"
+      | "sorting"
+      | "review"
+      | "custom";
+    action:
+      | "select"
+      | "match_pair"
+      | "move_order"
+      | "reset"
+      | "reveal_authorized"
+      | "submit_attempt"
+      | "tap_hotspot"
+      | "sort_item"
+      | "flip_card";
     data: Record<string, unknown>;
   };
 };

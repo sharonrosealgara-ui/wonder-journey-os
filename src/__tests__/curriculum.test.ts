@@ -3,6 +3,7 @@ import { stage2Lessons } from '../config/lessons-stage2';
 import { stage4Lessons } from '../config/lessons-stage4';
 import { stage5Lessons } from '../config/lessons-stage5';
 import { stage6Lessons } from '../config/lessons-stage6';
+import { stage7Lessons } from '../config/lessons-stage7';
 
 function fail(message: string): never {
   console.error(`FAIL: ${message}`);
@@ -13,7 +14,7 @@ function pass(message: string): void {
   console.log(`PASS: ${message}`);
 }
 
-console.log('Running Stages 2, 4, 5 & 6 curriculum validation tests...');
+console.log('Running Stages 2, 4, 5, 6 & 7 curriculum validation tests...');
 
 // Stage 2 (August) Tests
 if (!Array.isArray(stage2Lessons) || stage2Lessons.length !== 13) {
@@ -99,15 +100,36 @@ stage6Lessons.forEach((lesson, idx) => {
 });
 pass('All 13 Stage 6 lessons validated against curriculum schema');
 
-// Global uniqueness check
-const allIds = [...stage2Ids, ...stage4Ids, ...stage5Ids, ...stage6Ids];
-if (new Set(allIds).size !== allIds.length) {
-  fail('Duplicate lesson IDs detected across Stages 2, 4, 5, and 6');
+// Stage 7 (December) Tests
+if (!Array.isArray(stage7Lessons) || stage7Lessons.length !== 13) {
+  fail(`Expected 13 Stage 7 lessons in lessons-stage7.ts, got ${stage7Lessons?.length}`);
 }
-pass('All 52 lesson IDs across Stages 2, 4, 5, and 6 are globally unique');
+pass('Stage 7 lesson count is correct (13 lessons)');
 
-// Family serialization safety check
-[...stage2Lessons, ...stage4Lessons, ...stage5Lessons, ...stage6Lessons].forEach((lesson) => {
+const stage7Ids = stage7Lessons.map((lesson) => lesson.id);
+const uniqueStage7Ids = new Set(stage7Ids);
+if (uniqueStage7Ids.size !== stage7Ids.length) {
+  fail('Duplicate lesson IDs found in stage7Lessons');
+}
+pass('No duplicate lesson IDs in stage7Lessons');
+
+stage7Lessons.forEach((lesson, idx) => {
+  const validation = validateCurriculumLesson(lesson);
+  if (!validation.ok) {
+    fail(`Stage 7 Lesson ${idx + 1} (${lesson.id}) failed schema validation: ${validation.errors.join('; ')}`);
+  }
+});
+pass('All 13 Stage 7 lessons validated against curriculum schema');
+
+// Global uniqueness check across all 65 lessons
+const allIds = [...stage2Ids, ...stage4Ids, ...stage5Ids, ...stage6Ids, ...stage7Ids];
+if (new Set(allIds).size !== allIds.length) {
+  fail('Duplicate lesson IDs detected across Stages 2, 4, 5, 6, and 7');
+}
+pass('All 65 lesson IDs across Stages 2, 4, 5, 6, and 7 are globally unique');
+
+// Family serialization safety check across all 65 lessons
+[...stage2Lessons, ...stage4Lessons, ...stage5Lessons, ...stage6Lessons, ...stage7Lessons].forEach((lesson) => {
   const serialized = serializeForFamily(lesson);
   if (
     'teacherPreparation' in serialized ||
@@ -125,6 +147,6 @@ pass('All 52 lesson IDs across Stages 2, 4, 5, and 6 are globally unique');
     fail(`Family-visible content missing familyChallenge after serialization for ${lesson.id}`);
   }
 });
-pass('Family serialization excludes teacher-only fields across all 52 lessons');
+pass('Family serialization excludes teacher-only fields across all 65 lessons');
 
-pass('All Stage 2, Stage 4, Stage 5, and Stage 6 curriculum schema tests passed successfully!');
+pass('All Stage 2, Stage 4, Stage 5, Stage 6, and Stage 7 curriculum schema tests passed successfully!');

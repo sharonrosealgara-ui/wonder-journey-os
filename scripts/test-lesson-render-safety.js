@@ -3,7 +3,7 @@ const path = require("path");
 const { execSync } = require("child_process");
 const Module = require("module");
 
-console.log("Compiling components and data for Real Component Render Safety Test (August, September, October & November)...");
+console.log("Compiling components and data for Real Component Render Safety Test (All 65 August-December Lessons)...");
 
 // Setup path alias resolver for compiled temp modules
 const origResolve = Module._resolveFilename;
@@ -41,6 +41,8 @@ const tempTsconfig = {
     "src/config/stage5/*.ts",
     "src/config/lessons-stage6.ts",
     "src/config/stage6/*.ts",
+    "src/config/lessons-stage7.ts",
+    "src/config/stage7/*.ts",
     "src/config/lessons-stage2-family.ts",
     "src/config/lessons-stage4-family.ts",
     "src/config/lessons-stage5-family.ts",
@@ -74,6 +76,7 @@ const stage2 = require("../temp-render-test/config/lessons-stage2.js");
 const stage4 = require("../temp-render-test/config/lessons-stage4.js");
 const stage5 = require("../temp-render-test/config/lessons-stage5.js");
 const stage6 = require("../temp-render-test/config/lessons-stage6.js");
+const stage7 = require("../temp-render-test/config/lessons-stage7.js");
 const { buildSlides } = require("../temp-render-test/lib/slides.js");
 const { lessons } = require("../temp-render-test/config/lessons.js");
 const slideViews = require("../temp-render-test/components/adventure/slide-views.js");
@@ -87,7 +90,8 @@ const allStageLessons = [
   ...stage2.stage2Lessons,
   ...stage4.stage4Lessons,
   ...stage5.stage5Lessons,
-  ...stage6.stage6Lessons
+  ...stage6.stage6Lessons,
+  ...stage7.stage7Lessons
 ];
 
 allStageLessons.forEach((rawLesson) => {
@@ -131,7 +135,7 @@ allStageLessons.forEach((rawLesson) => {
   }
 });
 
-console.log(`PASS: Successfully rendered ${totalRenderedSlides} slide instances across all 52 August, September, October & November lessons and 3 age tiers with 0 errors.`);
+console.log(`PASS: Successfully rendered ${totalRenderedSlides} slide instances across all 65 August-December lessons and 3 age tiers with 0 errors.`);
 
 // Exercise all 6 Premium Assessment variants in real component rendering & assert interactive controls
 const mockAssessments = [

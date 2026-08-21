@@ -2,6 +2,7 @@
 import { stage4LessonsFamily } from "./lessons-stage4-family";
 import { stage5LessonsFamily } from "./lessons-stage5-family";
 import { stage6LessonsFamily } from "./lessons-stage6-family";
+import { stage7LessonsFamily } from "./lessons-stage7-family";
 
 // -------------------------------------------------------------
 // RESOURCE LIBRARY - videos, links & materials for classes.
@@ -77,14 +78,29 @@ export const APPROVED_RESOURCE_LESSON_IDS = new Set([
   "lesson-49-kakanin",
   "lesson-50-grandmas-recipe-box",
   "lesson-51-family-heritage-wall",
-  "lesson-52-november-showcase"
+  "lesson-52-november-showcase",
+  // Stage 7 (December)
+  "lesson-53-geography-championship",
+  "lesson-54-cultural-game-show",
+  "lesson-55-family-recipe-showcase",
+  "lesson-56-gratitude-journal",
+  "lesson-57-biblical-stewardship",
+  "lesson-58-bayanihan-review",
+  "lesson-59-faith-and-heroes",
+  "lesson-60-christmas-traditions",
+  "lesson-61-simbang-gabi",
+  "lesson-62-showcase-prep",
+  "lesson-63-the-nativity",
+  "lesson-64-looking-forward",
+  "lesson-65-year-end-showcase"
 ]);
 
 const allApprovedFamilyLessons = [
   ...stage2LessonsFamily,
   ...stage4LessonsFamily,
   ...stage5LessonsFamily,
-  ...stage6LessonsFamily
+  ...stage6LessonsFamily,
+  ...stage7LessonsFamily
 ];
 
 // Dynamically extract family-safe resources from approved lessons

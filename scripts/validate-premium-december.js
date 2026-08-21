@@ -1,45 +1,8 @@
-﻿const fs = require("fs");
+const fs = require("fs");
 const path = require("path");
-const { execSync } = require("child_process");
 
-const tempDir = path.join(__dirname, "../temp-validate-december");
-console.log("Compiling stage 7 lessons for validation...");
-
-const tempTsconfig = {
-  compilerOptions: {
-    target: "ES2022",
-    module: "commonjs",
-    moduleResolution: "node",
-    esModuleInterop: true,
-    baseUrl: ".",
-    paths: {
-      "@/*": ["src/*"]
-    },
-    outDir: "temp-validate-december",
-    noEmit: false,
-    skipLibCheck: true
-  },
-  include: [
-    "src/lib/curriculum-schema.ts",
-    "src/config/lessons-stage7.ts",
-    "src/config/stage7/*.ts"
-  ]
-};
-
-const tsconfigPath = path.join(__dirname, "../tsconfig.temp-december.json");
-fs.writeFileSync(tsconfigPath, JSON.stringify(tempTsconfig, null, 2), "utf8");
-
-try {
-  execSync("npx tsc -p tsconfig.temp-december.json", { stdio: "pipe" });
-} catch (e) {
-  console.error("Compilation error in validate-premium-december:", e.stdout ? e.stdout.toString() : e);
-  if (fs.existsSync(tsconfigPath)) fs.unlinkSync(tsconfigPath);
-  process.exit(1);
-} finally {
-  if (fs.existsSync(tsconfigPath)) fs.unlinkSync(tsconfigPath);
-}
-
-const { stage7Lessons } = require(path.join(tempDir, "config/lessons-stage7.js"));
+const { stage7Lessons } = require("../src/config/lessons-stage7");
+const curriculumSchema = require("../src/lib/curriculum-schema");
 
 const EXPECTED_MANIFEST = [
   { id: "lesson-53-geography-championship", date: "2026-12-01", weekday: "Tuesday", title: "The Grand Philippine Geography Championship: Archipelagic Mastery" },
@@ -221,7 +184,9 @@ console.log("DECEMBER PREMIUM CURRICULUM QUALITY MATRIX (13 LESSONS)");
 console.log("=========================================================\n");
 console.table(matrix);
 
-fs.rmSync(tempDir, { recursive: true, force: true });
+try {
+  fs.rmSync(tempDir, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
+} catch {}
 
 if (failures.length > 0) {
   console.error(`\nFAIL: ${failures.length} validation issues detected in December curriculum!`);

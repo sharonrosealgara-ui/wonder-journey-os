@@ -1,8 +1,8 @@
-﻿const { execSync } = require("child_process");
+const { execSync } = require("child_process");
 const path = require("path");
 
 console.log("================================================================================");
-console.log("WONDER JOURNEY OS — STAGE 12 RELEASE CANDIDATE VERIFICATION ORCHESTRATOR");
+console.log("WONDER JOURNEY OS — STAGE 12.1 RELEASE CANDIDATE VERIFICATION ORCHESTRATOR");
 console.log("================================================================================\n");
 
 const GATES = [
@@ -14,19 +14,21 @@ const GATES = [
   { name: "6. Route Access & RBAC Matrix", cmd: "node scripts/test-route-access-matrix.js" },
   { name: "7. Broken Links & Public Asset Audit", cmd: "node scripts/test-broken-links-assets.js" },
   { name: "8. Accessibility & Responsive QA", cmd: "node scripts/test-accessibility-responsive.js" },
-  { name: "9. August Curriculum Premium Gate", cmd: "node scripts/validate-premium-august.js" },
-  { name: "10. September Curriculum Premium Gate", cmd: "node scripts/validate-premium-september.js" },
-  { name: "11. October Curriculum Premium Gate", cmd: "node scripts/validate-premium-october.js" },
-  { name: "12. November Curriculum Premium Gate", cmd: "node scripts/validate-premium-november.js" },
-  { name: "13. December Curriculum Premium Gate", cmd: "node scripts/validate-premium-december.js" },
+  { name: "9. August Curriculum Premium Gate", cmd: "npx tsx scripts/validate-premium-august.js" },
+  { name: "10. September Curriculum Premium Gate", cmd: "npx tsx scripts/validate-premium-september.js" },
+  { name: "11. October Curriculum Premium Gate", cmd: "npx tsx scripts/validate-premium-october.js" },
+  { name: "12. November Curriculum Premium Gate", cmd: "npx tsx scripts/validate-premium-november.js" },
+  { name: "13. December Curriculum Premium Gate", cmd: "npx tsx scripts/validate-premium-december.js" },
   { name: "14. DTO Leak & Projection Sync Gate", cmd: "node scripts/test-dto-leak.js && node scripts/test-family-projection-sync.js" },
   { name: "15. 65-Lesson Render Safety (4,908 slides)", cmd: "node scripts/test-lesson-render-safety.js" },
   { name: "16. Assessment Response State Model", cmd: "node scripts/test-assessment-response-model.js" },
   { name: "17. Curriculum Schema & Uniqueness Tests", cmd: "npx tsx src/__tests__/curriculum.test.ts" },
-  { name: "18. TypeScript Full Typecheck", cmd: "npx tsc --noEmit" },
-  { name: "19. Production Next.js Build", cmd: "npm run build" },
-  { name: "20. Local Production Server Smoke Tests", cmd: "node scripts/test-production-server.js" },
-  { name: "21. Client-Bundle Answer & Key Leak Gate", cmd: "node scripts/test-client-bundle-leak.js" }
+  { name: "18. Real Media & Factual Asset Production Gate", cmd: "npx tsx scripts/validate-real-media-production.js" },
+  { name: "19. Classroom Interaction Protocol & Security Gates", cmd: "npx tsx src/__tests__/classroom-protocol.test.ts" },
+  { name: "20. TypeScript Full Typecheck", cmd: "npx tsc --noEmit" },
+  { name: "21. Production Next.js Build", cmd: "npm run build" },
+  { name: "22. Local Production Server Smoke Tests", cmd: "node scripts/test-production-server.js" },
+  { name: "23. Client-Bundle Answer & Key Leak Gate", cmd: "node scripts/test-client-bundle-leak.js" }
 ];
 
 let results = [];
@@ -51,14 +53,14 @@ for (const gate of GATES) {
 }
 
 console.log("\n================================================================================");
-console.log("STAGE 12 RELEASE CANDIDATE ORCHESTRATION SUMMARY");
+console.log("STAGE 12.1 RELEASE CANDIDATE ORCHESTRATION SUMMARY");
 console.log("================================================================================\n");
 console.table(results);
 
 if (!overallSuccess) {
-  console.error("\nFAIL: Stage 12 Release Candidate verification failed. Resolve blockers before release.\n");
+  console.error("\nFAIL: Stage 12.1 Release Candidate verification failed. Resolve blockers before release.\n");
   process.exit(1);
 } else {
-  console.log("\nPASS: ALL 21 RELEASE CANDIDATE GATES PASSED! APPLICATION IS 100% HARDENED AND VERIFIED.\n");
+  console.log("\nPASS: ALL 23 RELEASE CANDIDATE GATES PASSED! APPLICATION IS 100% HARDENED AND VERIFIED.\n");
   process.exit(0);
 }

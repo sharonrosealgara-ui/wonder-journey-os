@@ -1,13 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { getMedia } from "@/config/media-registry";
+import { getMedia, getMediaForLesson, FactualMedia } from "@/config/media-registry";
 
-// Shows a real photograph when one exists, and gracefully falls back to
-// the emoji + watercolor gradient if the photo is missing or fails to load.
-// If a mediaId is provided and its status is "pending", it enforces a strict
-// "Real image pending verification" fallback.
-// Drop a real photo into /public and pass its path as `src` — done.
+// Shows a real photograph or factual media asset from the Media Registry,
+// and gracefully displays attribution tooltip on hover.
 export function SmartPhoto({
   mediaId,
   src,
@@ -16,6 +13,7 @@ export function SmartPhoto({
   className = "",
   gradient = "from-mango/25 to-ocean/15",
   emojiClass = "text-6xl",
+  lessonId,
 }: {
   mediaId?: string;
   src?: string | null;
@@ -24,58 +22,54 @@ export function SmartPhoto({
   className?: string;
   gradient?: string;
   emojiClass?: string;
+  lessonId?: string;
 }) {
   const [failed, setFailed] = useState(false);
-  const media = mediaId ? getMedia(mediaId) : null;
 
-  // Strict Fallback Policy: If marked as pending OR unknown mediaId, explicitly show the pending verification UI
-  if (mediaId && (!media || media.verificationStatus === "pending")) {
-    return (
-      <div
-        className={`${className} flex flex-col items-center justify-center bg-[#e5e5e5] text-ink-soft p-4`}
-        role="img"
-        aria-label={alt || "Image pending verification"}
-      >
-        <span className="text-3xl mb-2">⏳</span>
-        <span className="text-[10px] font-bold uppercase tracking-widest text-center">
-          Real image pending verification
-        </span>
-      </div>
-    );
+  // 1. Look up by direct mediaId
+  let media: FactualMedia | null = mediaId ? getMedia(mediaId) : null;
+
+  // 2. If lessonId is provided, look up registered media for lesson
+  if (!media && lessonId) {
+    const list = getMediaForLesson(lessonId);
+    if (list.length > 0) {
+      media = list[0];
+    }
   }
 
   const actualSrc = media?.storedAssetPath || src;
 
   if (actualSrc && !failed) {
     return (
-      <div className={`group relative ${className}`}>
+      <div className={`group relative overflow-hidden ${className}`}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={actualSrc}
-        alt={media?.descriptiveAltText || alt}
+          alt={media?.descriptiveAltText || alt}
           loading="lazy"
-          className="h-full w-full object-cover"
+          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
           onError={() => setFailed(true)}
         />
-        
-        {/* Attribution Overlay */}
+
+        {/* Verified Badge & Attribution Tooltip */}
         {media?.verificationStatus === "verified" && (
           <div className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity z-10">
             <div className="relative group/tooltip">
-              <button className="bg-black/60 text-white rounded-full w-7 h-7 flex items-center justify-center text-xs backdrop-blur-md hover:bg-black/80 transition-colors">
+              <button
+                type="button"
+                aria-label={`Media provenance for ${media.title}`}
+                className="bg-black/70 text-white rounded-full w-7 h-7 flex items-center justify-center text-xs backdrop-blur-md hover:bg-black/90 transition-colors shadow-md"
+              >
                 ℹ️
               </button>
-              <div className="absolute bottom-full right-0 mb-2 w-64 bg-paper/95 p-3 rounded-xl shadow-xl border border-sand-deep text-ink hidden group-hover/tooltip:block backdrop-blur-md text-xs text-left">
-                <p className="font-bold mb-1">{media.title}</p>
-                {media.creatorOrOrganization && <p className="mb-1 text-ink-soft">📷 {media.creatorOrOrganization}</p>}
-                {media.license && <p className="mb-1 text-ink-soft">📄 {media.license}</p>}
-                {media.originalSourceUrl && (
-                  <a href={media.originalSourceUrl} target="_blank" rel="noopener noreferrer" className="text-ocean-deep hover:underline mt-1 block">
-                    Source Link ↗
-                  </a>
-                )}
-                <div className="mt-2 pt-2 border-t border-sand-deep/50 text-[10px] text-ink-soft">
-                  Reviewed: {media.dateReviewed}
+              <div className="absolute bottom-full right-0 mb-2 w-72 bg-paper/95 p-3 rounded-xl shadow-xl border border-sand-deep text-ink hidden group-hover/tooltip:block backdrop-blur-md text-xs text-left z-20">
+                <p className="font-bold mb-1 text-ink">{media.title}</p>
+                <p className="mb-1 text-ink-soft">🏛️ {media.creatorOrOrganization}</p>
+                <p className="mb-1 text-ink-soft">📄 {media.license}</p>
+                <p className="text-ocean-deep font-medium italic mt-1">{media.factualCaption}</p>
+                <div className="mt-2 pt-2 border-t border-sand-deep/50 text-[10px] text-ink-soft flex justify-between">
+                  <span>Verified Factual Media</span>
+                  <span className="font-mono text-[9px]">ID: {media.id}</span>
                 </div>
               </div>
             </div>
@@ -85,22 +79,19 @@ export function SmartPhoto({
     );
   }
 
-  // Generic fallback if not explicitly pending but image missing/failed
+  // Fallback if image failed to load
   return (
     <div
       className={`${className} flex items-center justify-center bg-gradient-to-br ${gradient} ${emojiClass}`}
       role="img"
       aria-label={alt}
     >
-      {emoji}
+      {emoji || "🖼️"}
     </div>
   );
 }
 
-// 📸 POLAROID — real photos become physical, collectible objects:
-// a thick white mat, a deep soft shadow, a gentle tilt, and a strip of
-// washi tape holding it to the page. Hovering straightens it, like
-// picking the photo up to look closer.
+// 📸 POLAROID — real photos become physical, collectible objects
 export function Polaroid({
   mediaId,
   src,
@@ -109,14 +100,16 @@ export function Polaroid({
   caption,
   tilt = "-rotate-2",
   className = "",
+  lessonId,
 }: {
   mediaId?: string;
   src?: string | null;
   alt: string;
   emoji?: string;
   caption?: string;
-  tilt?: string; // e.g. "rotate-2" | "-rotate-2" — alternate for variety
+  tilt?: string;
   className?: string;
+  lessonId?: string;
 }) {
   return (
     <figure
@@ -125,6 +118,7 @@ export function Polaroid({
       <span aria-hidden className="wj-tape -top-3 left-1/2 -translate-x-1/2 rotate-3" />
       <SmartPhoto
         mediaId={mediaId}
+        lessonId={lessonId}
         src={src}
         alt={alt}
         emoji={emoji}
@@ -138,8 +132,11 @@ export function Polaroid({
   );
 }
 
-// Convention helpers: real photos live in these public folders, named by id.
-// e.g. public/lesson-photos/welcome-to-the-philippines.jpg
-export const lessonPhoto = (id: string) => `/lesson-photos/${id}.jpg`;
+export const lessonPhoto = (id: string) => {
+  const list = getMediaForLesson(id);
+  if (list.length > 0) return list[0].storedAssetPath;
+  return `/lesson-photos/${id}.jpg`;
+};
+
 export const destinationPhoto = (id: string) => `/destination-photos/${id}.jpg`;
 export const recipePhoto = (id: string) => `/recipe-photos/${id}.jpg`;

@@ -27,6 +27,8 @@ import {
 import { buildAcademy, buildMission, getYouTubeEmbed, levelForAge, levelMeta, type ExplorerLevel, type Slide, type SlideOf } from "@/lib/slides";
 import { sfx } from "@/lib/sound";
 import { newId, useStored } from "@/lib/storage";
+import { getMediaForLesson } from "@/config/media-registry";
+import { MediaCreditsModal } from "@/components/classroom/media-credits-modal";
 import {
   recordMultipleChoice,
   recordTrueFalse,
@@ -116,7 +118,7 @@ export function SlideView({
     case "discoveries": return <PremiumDiscoveriesSlide slide={slide} />;
     case "richExplanation": return <PremiumRichExplanationSlide slide={slide} lesson={lesson} />;
     case "keyFacts": return <PremiumKeyFactsSlide slide={slide} />;
-    case "mediaMoment": return <PremiumMediaMomentSlide slide={slide} />;
+    case "mediaMoment": return <PremiumMediaMomentSlide slide={slide} lesson={lesson} />;
     case "guidedDiscussion": return <PremiumGuidedDiscussionSlide slide={slide} />;
     case "ageChallenge": return <PremiumAgeChallengeSlide slide={slide} level={level} />;
     case "handsOnMission": return <PremiumHandsOnMissionSlide slide={slide} />;
@@ -1113,10 +1115,13 @@ function PremiumDiscoveriesSlide({ slide }: { slide: SlideOf<"discoveries"> }) {
 
 function PremiumRichExplanationSlide({ slide, lesson }: { slide: SlideOf<"richExplanation">; lesson: Lesson }) {
   const content = slide.content || { body: "" };
-  const photoSrc = useSmartSrc("lesson", lesson.id);
+  const lessonMedia = getMediaForLesson(lesson.id);
+  const heroMedia = lessonMedia[0];
+  const photoSrc = heroMedia?.storedAssetPath || useSmartSrc("lesson", lesson.id);
   const t = lessonThemes[lesson.category] || lessonThemes.Philippines;
   const text = content.body;
   const heading = content.heading || "Explanation";
+  const [showCredits, setShowCredits] = useState(false);
 
   return (
     <div className="mx-auto w-full max-w-5xl">
@@ -1131,15 +1136,35 @@ function PremiumRichExplanationSlide({ slide, lesson }: { slide: SlideOf<"richEx
           </p>
         </div>
         <div className={`hidden items-center justify-center rounded-3xl p-6 lg:col-span-2 lg:flex ${t.panel}`}>
-          <Polaroid
-            src={photoSrc}
-            alt={heading}
-            tilt={t.tilt}
-            caption={lesson.title}
-            className="w-full max-w-xs"
-          />
+          <div className="flex flex-col items-center">
+            <Polaroid
+              src={photoSrc}
+              lessonId={lesson.id}
+              alt={heroMedia?.descriptiveAltText || heading}
+              tilt={t.tilt}
+              caption={heroMedia?.factualCaption || lesson.title}
+              className="w-full max-w-xs"
+            />
+            {heroMedia && (
+              <button
+                type="button"
+                onClick={() => setShowCredits(true)}
+                className="mt-3 inline-flex items-center gap-1 rounded-full bg-white/85 px-3 py-1 text-[11px] font-semibold text-ocean shadow-sm hover:bg-white hover:text-ocean-deep transition-colors cursor-pointer"
+              >
+                <span>ℹ️ Media Provenance</span>
+              </button>
+            )}
+          </div>
         </div>
       </div>
+      {showCredits && (
+        <MediaCreditsModal
+          isOpen={showCredits}
+          onClose={() => setShowCredits(false)}
+          mediaList={lessonMedia}
+          lessonTitle={lesson.title}
+        />
+      )}
     </div>
   );
 }
@@ -1163,17 +1188,23 @@ function PremiumKeyFactsSlide({ slide }: { slide: SlideOf<"keyFacts"> }) {
   );
 }
 
-function PremiumMediaMomentSlide({ slide }: { slide: SlideOf<"mediaMoment"> }) {
+function PremiumMediaMomentSlide({ slide, lesson }: { slide: SlideOf<"mediaMoment">; lesson?: Lesson }) {
   const content = slide.content || { description: "", purpose: "", requiredType: "image", sourceRequirement: "" };
   const isVideo = content.requiredType.toLowerCase() === "video";
   const embed = isVideo && content.url ? getYouTubeEmbed(content.url) : null;
   const caption = content.caption || content.description || "Media Moment";
+  const lessonId = lesson?.id || slide.id.split(":")[0];
+  const lessonMedia = lessonId ? getMediaForLesson(lessonId) : [];
+  const activeMedia = lessonMedia[1] || lessonMedia[0];
+  const [showCredits, setShowCredits] = useState(false);
+
+  const displaySrc = content.url || activeMedia?.storedAssetPath;
 
   return (
     <div className="mx-auto max-w-4xl text-center">
       <div className="mb-3 text-6xl">{isVideo ? "🎬" : "🖼️"}</div>
-      <h1 className="wj-outline font-display text-4xl sm:text-5xl">{caption}</h1>
-      <div className="mt-8 wj-card overflow-hidden p-6">
+      <h1 className="wj-outline font-display text-4xl sm:text-5xl">{activeMedia?.title || caption}</h1>
+      <div className="mt-8 wj-card overflow-hidden p-6 shadow-xl border-2 border-sand-deep">
         {isVideo && embed ? (
           <iframe
             src={embed}
@@ -1182,8 +1213,30 @@ function PremiumMediaMomentSlide({ slide }: { slide: SlideOf<"mediaMoment"> }) {
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
           />
-        ) : content.url ? (
-          <img src={content.url} alt={caption} className="w-full h-auto rounded-2xl object-cover max-h-[60vh]" />
+        ) : displaySrc ? (
+          <div className="relative group overflow-hidden rounded-2xl">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={displaySrc}
+              alt={activeMedia?.descriptiveAltText || caption}
+              className="w-full h-auto rounded-2xl object-cover max-h-[55vh] shadow-md transition-transform duration-300 group-hover:scale-[1.01]"
+            />
+            {activeMedia && (
+              <div className="mt-4 flex flex-wrap items-center justify-between gap-2 text-left bg-sand/80 p-3 rounded-xl border border-sand-deep text-xs">
+                <div>
+                  <p className="font-bold text-ink">{activeMedia.factualCaption}</p>
+                  <p className="text-ink-soft text-[11px] mt-0.5">Source: {activeMedia.attribution}</p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setShowCredits(true)}
+                  className="rounded-full bg-ocean px-3 py-1 text-[11px] font-bold text-white shadow-sm hover:bg-ocean-deep transition-colors cursor-pointer shrink-0"
+                >
+                  ℹ️ Provenance &amp; License
+                </button>
+              </div>
+            )}
+          </div>
         ) : (
           <div className="p-6 bg-sand rounded-2xl text-left">
             <p className="font-bold text-lg text-ink">{content.description}</p>
@@ -1193,6 +1246,15 @@ function PremiumMediaMomentSlide({ slide }: { slide: SlideOf<"mediaMoment"> }) {
         )}
       </div>
       <MascotBubble slide={slide} line="A picture is worth a thousand words — let's take a look!" />
+
+      {showCredits && (
+        <MediaCreditsModal
+          isOpen={showCredits}
+          onClose={() => setShowCredits(false)}
+          mediaList={lessonMedia}
+          lessonTitle={lesson?.title || caption}
+        />
+      )}
     </div>
   );
 }

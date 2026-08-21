@@ -261,4 +261,30 @@ The platform succeeds when:
 
 ---
 
-*Wonder Journey OS — Development Roadmap v1.0 · July 2026 · First class: Monday, July 13*
+# Stage 12.1 — Premium Real-Media Tagalog Classroom + Authorized Student Interaction — **STATUS: SHIPPED ✅**
+
+**Goal:** Transform the 65-lesson Tagalog curriculum into a premium wide-screen real-media classroom with synchronized multi-participant student drawing, remote pointer badges, and teacher moderation gates.
+
+- ✅ **130 Real Factual Curriculum Media Assets**: High-fidelity SVG visual media (2 per lesson: hero + supporting/evidence) across all 65 lessons stored locally in `public/media/curriculum/` with NHCP/DOST/Public Domain compliant licensing.
+- ✅ **Deterministic Media Registry & Provenance**: `src/config/media-registry.ts` with SHA-256 integrity checksums, citations, alt text, and modal attribution views.
+- ✅ **Classroom Session Schema & RLS**: `supabase/migrations/0005_classroom_sessions.sql` with workspace isolation for live sessions, participants, board snapshots, and activity logs.
+- ✅ **Classroom Interaction Protocol**: `src/lib/classroom-protocol.ts` typed LiveKit data channel events with `[0..1]` stage coordinate normalization and strict server/client security gating.
+- ✅ **Synchronized Annotation Layer**: `src/components/adventure/annotation-layer.tsx` with multi-user stroke rendering, laser pointers, shape tools, and teacher clear-all privileges.
+- ✅ **Wide-Screen Responsive Classroom Shell**: `src/app/(app)/classroom/page.tsx` supporting 16:9 stage rendering, participant rails, and real-time permission controls.
+- ✅ **23 Release Candidate Gates**: Automated verification via `scripts/validate-release-candidate.js` passing 100% cleanly.
+
+---
+
+# Stage 12.2 — Real-Time Multi-Student Classroom Games & Synchronized Activity Engine — **STATUS: PLANNED ⬜**
+
+**Goal:** Extend the real-time classroom with synchronized gamified group activities (interactive matching battles, drag-and-drop word sorting, team vocabulary challenges, and live audio/video state enhancements).
+
+- ⬜ Synchronized multi-player vocabulary and matching games with synchronized scoreboards
+- ⬜ Real-time collaborative drag-and-drop learning object manipulation on the whiteboard stage
+- ⬜ Granular audio/video tile focus modes and spotlighting for individual student responses
+- ⬜ Automated session activity summary exports to student learning portfolios
+
+---
+
+*Wonder Journey OS — Development Roadmap v1.1 · Updated August 2026 · Stage 12.1 Shipped*
+

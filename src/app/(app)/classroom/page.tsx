@@ -2,27 +2,30 @@
 
 import { useRouter } from "next/navigation";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { ConnectionState, Participant, Track } from "livekit-client";
-import { AnnotationLayer } from "@/components/adventure/annotation-layer";
+import { ConnectionState, Participant, Track, RemoteParticipant } from "livekit-client";
+import { AnnotationLayer, RemotePointer } from "@/components/adventure/annotation-layer";
 import { CameraOffTile } from "@/components/friendly-avatar";
 import { AdventureTheater } from "@/components/adventure/theater";
-import { familyName, familySlug, getStudent, teacherName } from "@/config/family";
+import { familyName, familySlug, getStudent, teacherName, students } from "@/config/family";
 import { getTodaysLesson, lessons as allLessons, type Lesson } from "@/config/lessons";
-import type { Mode } from "@/config/navigation";
-import { normalizeMode } from "@/config/navigation";
 import { KEYS, todayISO } from "@/lib/app-state";
 import { getScreenShare, participantRole, useCall } from "@/lib/call-context";
 import { initCloudSync, sendEvent } from "@/lib/cloud-sync";
 import { readStored, useStored } from "@/lib/storage";
 import { useAuth } from "@/lib/auth-context";
+import {
+  PermissionLevel,
+  ClassroomEvent,
+  isClassroomEvent,
+  SynchronizedStroke,
+  NormalizedPoint,
+} from "@/lib/classroom-protocol";
+import { MediaCreditsModal } from "@/components/classroom/media-credits-modal";
+import { getMediaForLesson, FactualMedia } from "@/config/media-registry";
 
-// 🎥 LIVE ADVENTURE CLASSROOM
-// The call itself lives in the global CallProvider (app-shell), so it
-// follows the family across every page. This page is the full-size
-// room: lesson stage + camera rail + teaching toolbar.
-// Solo mode (no/wrong class code) still gives a working local camera.
-
-type Device = { id: string; label: string };
+// 🎥 LIVE ADVENTURE CLASSROOM — STAGE 12.1
+// Full 16:9 wide classroom with synchronized teacher-controlled student interaction,
+// normalized annotation drawing, LiveKit data packets, and authentic factual media.
 
 export default function ClassroomPage() {
   const { role } = useAuth();
@@ -31,7 +34,6 @@ export default function ClassroomPage() {
   const [activeStudentId] = useStored<string | null>(KEYS.activeStudent, null);
   const student = getStudent(activeStudentId);
   const [name, setName] = useState("");
-  // the code is entered once at the front door (AccessGate) — never here
   const [classCode] = useStored<string>("classCode", "");
   const [lesson, setLesson] = useState<Lesson | null>(null);
   const [joinError, setJoinError] = useState<string | null>(null);
@@ -40,8 +42,8 @@ export default function ClassroomPage() {
   useEffect(() => {
     setLesson(getTodaysLesson());
   }, []);
+
   useEffect(() => {
-    // If teacher, authoritative name is Teacher Sharon. Do not leak Family displayName.
     if (role === "teacher") {
       setName(teacherName);
     } else {
@@ -50,10 +52,6 @@ export default function ClassroomPage() {
     }
   }, [student, role]);
 
-  // ONE stable classroom per family — never date- or lesson-derived, so
-  // the teacher (in the Philippines) and the family (in the US) always
-  // land in the SAME room even when it's a different calendar day on
-  // each side. A family's classroom is like a personal meeting room.
   const roomName = `wj-room-${familySlug}`;
 
   async function join(devices: { camId: string; micId: string; camOn: boolean; micOn: boolean }) {
@@ -79,7 +77,6 @@ export default function ClassroomPage() {
     if (result === "connected") sendEvent("class.joined", { who: name, room: roomName });
   }
 
-  // END CALL — the only action that disconnects. Back to Home Base.
   function endCall() {
     if (call.status === "connected") sendEvent("class.ended", { who: name, room: roomName });
     call.endCall();
@@ -87,16 +84,14 @@ export default function ClassroomPage() {
   }
 
   if (call.status === "connected" && call.room) {
-    return <ConnectedRoom lesson={lesson} onLeave={endCall} />;
+    return <ConnectedRoom lesson={lesson} onLeave={endCall} currentUserName={name} />;
   }
   if (call.status === "solo") {
     return (
       <SoloRoom
         lesson={lesson}
         isGuest={readStored<boolean>("guest", false)}
-        onGoLive={() =>
-          join({ camId: "", micId: "", camOn: call.camOn, micOn: call.micOn })
-        }
+        onGoLive={() => join({ camId: "", micId: "", camOn: call.camOn, micOn: call.micOn })}
         onLeave={endCall}
       />
     );
@@ -114,197 +109,158 @@ export default function ClassroomPage() {
   );
 }
 
-/* ── Local camera (lobby preview) ───────────────────────────── */
-function useLocalCamera(initial?: { camId?: string; micId?: string; camOn?: boolean; micOn?: boolean }) {
-  const streamRef = useRef<MediaStream | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [cams, setCams] = useState<Device[]>([]);
-  const [mics, setMics] = useState<Device[]>([]);
-  const [camId, setCamId] = useStored("wj-cam-id", initial?.camId ?? "");
-  const [micId, setMicId] = useStored("wj-mic-id", initial?.micId ?? "");
-  const [camOn, setCamOn] = useStored("wj-cam-on", initial?.camOn ?? true);
-  const [micOn, setMicOn] = useStored("wj-mic-on", initial?.micOn ?? true);
-  const [ready, setReady] = useState(false);
-  const [tick, setTick] = useState(0);
-
-  const start = useCallback(async () => {
-    try {
-      streamRef.current?.getTracks().forEach((t) => t.stop());
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: camId ? { deviceId: { exact: camId } } : true,
-        audio: micId ? { deviceId: { exact: micId } } : true,
-      });
-      streamRef.current = stream;
-      stream.getVideoTracks().forEach((t) => (t.enabled = camOn));
-      stream.getAudioTracks().forEach((t) => (t.enabled = micOn));
-      const devices = await navigator.mediaDevices.enumerateDevices();
-      setCams(devices.filter((d) => d.kind === "videoinput").map((d, i) => ({ id: d.deviceId, label: d.label || `Camera ${i + 1}` })));
-      setMics(devices.filter((d) => d.kind === "audioinput").map((d, i) => ({ id: d.deviceId, label: d.label || `Microphone ${i + 1}` })));
-      setError(null);
-      setReady(true);
-      setTick((t) => t + 1);
-    } catch {
-      setError("We couldn't reach your camera. Please allow camera & microphone access, then tap Retry.");
-      setReady(false);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [camId, micId]);
-
-  useEffect(() => {
-    void start();
-    return () => streamRef.current?.getTracks().forEach((t) => t.stop());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [camId, micId]);
-
-  function toggleCam() {
-    setCamOn((v) => {
-      const nv = !v;
-      streamRef.current?.getVideoTracks().forEach((t) => (t.enabled = nv));
-      return nv;
-    });
-  }
-  function toggleMic() {
-    setMicOn((v) => {
-      const nv = !v;
-      streamRef.current?.getAudioTracks().forEach((t) => (t.enabled = nv));
-      return nv;
-    });
-  }
-  function stop() {
-    streamRef.current?.getTracks().forEach((t) => t.stop());
-    streamRef.current = null;
-  }
-
-  return { streamRef, error, cams, mics, camId, setCamId, micId, setMicId, camOn, micOn, toggleCam, toggleMic, ready, start, stop, tick };
-}
-
-function LocalCameraView({ streamRef, camOn, tick, label, className = "" }: {
-  streamRef: React.MutableRefObject<MediaStream | null>;
-  camOn: boolean;
-  tick: number;
-  label?: string;
-  className?: string;
-}) {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  useEffect(() => {
-    if (videoRef.current && streamRef.current) {
-      videoRef.current.srcObject = streamRef.current;
-      void videoRef.current.play().catch(() => {});
-    }
-  }, [streamRef, tick]);
-  return (
-    <div className={`relative overflow-hidden rounded-2xl bg-ink ${className}`}>
-      <video ref={videoRef} autoPlay muted playsInline className={`h-full w-full object-cover ${camOn ? "" : "hidden"}`} />
-      {!camOn && (
-        <CameraOffTile />
-      )}
-      {label && (
-        <span className="absolute bottom-2 left-2 rounded-full bg-ink/70 px-2.5 py-0.5 text-xs font-bold text-white">{label}</span>
-      )}
-    </div>
-  );
-}
-
-/* ── Pre-join lobby ─────────────────────────────────────────── */
-function Lobby({ name, setName, lesson, joining, joinError, onJoin, role }: {
+/* ── Lobby Preview ─────────────────────────────────────────── */
+function Lobby({
+  name,
+  setName,
+  lesson,
+  joining,
+  joinError,
+  onJoin,
+  role,
+}: {
   name: string;
-  setName: (s: string) => void;
+  setName: (n: string) => void;
   lesson: Lesson | null;
   joining: boolean;
   joinError: string | null;
   onJoin: (d: { camId: string; micId: string; camOn: boolean; micOn: boolean }) => void;
-  role: "teacher" | "family";
+  role: string;
 }) {
   const cam = useLocalCamera();
   const [level, setLevel] = useState(0);
 
   useEffect(() => {
-    if (!cam.ready || !cam.streamRef.current) return;
+    if (!cam.streamRef.current || !cam.micOn) {
+      setLevel(0);
+      return;
+    }
+    const ctx = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
+    const src = ctx.createMediaStreamSource(cam.streamRef.current);
+    const ana = ctx.createAnalyser();
+    ana.fftSize = 64;
+    src.connect(ana);
+    const data = new Uint8Array(ana.frequencyBinCount);
     let raf = 0;
-    let ctx: AudioContext | null = null;
-    try {
-      const AC = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-      ctx = new AC();
-      const src = ctx.createMediaStreamSource(cam.streamRef.current);
-      const analyser = ctx.createAnalyser();
-      analyser.fftSize = 256;
-      src.connect(analyser);
-      const data = new Uint8Array(analyser.frequencyBinCount);
-      const loop = () => {
-        analyser.getByteFrequencyData(data);
-        setLevel(Math.min(100, Math.round((data.reduce((a, b) => a + b, 0) / data.length / 128) * 100)));
-        raf = requestAnimationFrame(loop);
-      };
-      loop();
-    } catch { /* ignore */ }
-    return () => { cancelAnimationFrame(raf); void ctx?.close(); };
-  }, [cam.ready, cam.tick, cam.streamRef]);
-
-  function handleJoin() {
-    const d = { camId: cam.camId, micId: cam.micId, camOn: cam.camOn, micOn: cam.micOn };
-    cam.stop(); // release devices so LiveKit (or solo room) can take them
-    onJoin(d);
-  }
+    const loop = () => {
+      ana.getByteFrequencyData(data);
+      let sum = 0;
+      for (let i = 0; i < data.length; i++) sum += data[i];
+      const avg = sum / data.length;
+      setLevel(Math.min(100, Math.round((avg / 128) * 100)));
+      raf = requestAnimationFrame(loop);
+    };
+    loop();
+    return () => {
+      cancelAnimationFrame(raf);
+      void ctx.close();
+    };
+  }, [cam.streamRef, cam.micOn, cam.tick]);
 
   return (
-    <div className="mx-auto max-w-4xl space-y-6">
+    <div className="mx-auto max-w-4xl space-y-6 py-6 px-4">
       <div className="text-center">
         <div className="mb-2 text-4xl">🎥🌴</div>
         <h1 className="wj-outline font-display text-3xl sm:text-4xl">Live Adventure Classroom</h1>
-        <p className="font-hand mt-1 text-lg text-ink-soft">Mabuhay, {role === "teacher" ? teacherName : familyName}! Let's get you ready. 💙</p>
+        <p className="font-hand mt-1 text-lg text-ink-soft">
+          Mabuhay, {role === "teacher" ? teacherName : familyName}! Ready to learn together? 💙
+        </p>
       </div>
 
       <div className="grid gap-6 md:grid-cols-[1.3fr_1fr]">
-        <div className="wj-card overflow-hidden p-3">
-          <LocalCameraView streamRef={cam.streamRef} camOn={cam.camOn} tick={cam.tick} className="aspect-video w-full" label={name} />
+        <div className="wj-card overflow-hidden p-4 shadow-lg border-2 border-sand-deep">
+          <LocalCameraView
+            streamRef={cam.streamRef}
+            camOn={cam.camOn}
+            tick={cam.tick}
+            className="aspect-video w-full rounded-2xl overflow-hidden bg-ink"
+            label={name}
+          />
           {cam.error && (
             <div className="mt-3 rounded-2xl bg-hibiscus/10 p-3 text-sm text-hibiscus-deep">
               {cam.error}
-              <button className="wj-btn wj-btn-ghost mt-2 text-sm" onClick={() => void cam.start()}>Retry</button>
+              <button className="wj-btn wj-btn-ghost mt-2 text-sm" onClick={() => void cam.start()}>
+                Retry
+              </button>
             </div>
           )}
           <div className="mt-3 flex items-center justify-center gap-3">
-            <button className={`wj-btn ${cam.camOn ? "wj-btn-ocean" : "wj-btn-ghost"} !px-4`} onClick={cam.toggleCam}>
+            <button
+              className={`wj-btn ${cam.camOn ? "wj-btn-ocean" : "wj-btn-ghost"} !px-4 text-sm`}
+              onClick={cam.toggleCam}
+            >
               {cam.camOn ? "📷 Camera On" : "📷 Camera Off"}
             </button>
-            <button className={`wj-btn ${cam.micOn ? "wj-btn-ocean" : "wj-btn-ghost"} !px-4`} onClick={cam.toggleMic}>
+            <button
+              className={`wj-btn ${cam.micOn ? "wj-btn-ocean" : "wj-btn-ghost"} !px-4 text-sm`}
+              onClick={cam.toggleMic}
+            >
               {cam.micOn ? "🎤 Mic On" : "🔇 Mic Off"}
             </button>
           </div>
           <div className="mt-3">
-            <p className="text-xs font-bold text-ink-soft">Microphone</p>
+            <p className="text-xs font-bold text-ink-soft">Microphone Level</p>
             <div className="mt-1 h-2.5 overflow-hidden rounded-full bg-sand-deep">
-              <div className="h-full rounded-full bg-gradient-to-r from-palm to-mango transition-[width] duration-100" style={{ width: `${cam.micOn ? level : 0}%` }} />
+              <div
+                className="h-full rounded-full bg-gradient-to-r from-palm to-mango transition-[width] duration-100"
+                style={{ width: `${cam.micOn ? level : 0}%` }}
+              />
             </div>
           </div>
         </div>
 
-        <div className="wj-card space-y-4 p-5">
+        <div className="wj-card space-y-4 p-5 shadow-lg border-2 border-sand-deep">
           <div>
             <label className="text-sm font-bold text-ink-soft">Your name in class</label>
             <input className="wj-input mt-1" value={name} onChange={(e) => setName(e.target.value)} />
           </div>
           <div>
-            <label className="text-sm font-bold text-ink-soft">📷 Camera</label>
-            <select className="wj-input mt-1" value={cam.camId} onChange={(e) => cam.setCamId(e.target.value)}>
+            <label className="text-sm font-bold text-ink-soft">📷 Camera Device</label>
+            <select
+              className="wj-input mt-1"
+              value={cam.camId}
+              onChange={(e) => cam.setCamId(e.target.value)}
+            >
               {cam.cams.length === 0 && <option>Default camera</option>}
-              {cam.cams.map((c) => (<option key={c.id} value={c.id}>{c.label}</option>))}
+              {cam.cams.map((c) => (
+                <option key={c.id} value={c.id}>
+                  {c.label}
+                </option>
+              ))}
             </select>
           </div>
           <div>
-            <label className="text-sm font-bold text-ink-soft">🎤 Microphone</label>
-            <select className="wj-input mt-1" value={cam.micId} onChange={(e) => cam.setMicId(e.target.value)}>
+            <label className="text-sm font-bold text-ink-soft">🎤 Microphone Device</label>
+            <select
+              className="wj-input mt-1"
+              value={cam.micId}
+              onChange={(e) => cam.setMicId(e.target.value)}
+            >
               {cam.mics.length === 0 && <option>Default microphone</option>}
-              {cam.mics.map((m) => (<option key={m.id} value={m.id}>{m.label}</option>))}
+              {cam.mics.map((m) => (
+                <option key={m.id} value={m.id}>
+                  {m.label}
+                </option>
+              ))}
             </select>
           </div>
           <div className="rounded-2xl bg-sand p-3 text-sm text-ink-soft">
-            <p className="font-bold">Today's Adventure</p>
-            <p className="font-hand text-base">{lesson ? `${lesson.emoji} ${lesson.title}` : "Loading..."}</p>
+            <p className="font-bold text-ink">Today&apos;s Adventure</p>
+            <p className="font-hand text-base text-ocean-deep">
+              {lesson ? `${lesson.emoji} ${lesson.title}` : "Loading..."}
+            </p>
           </div>
-          {joinError && <p className="rounded-2xl bg-hibiscus/10 p-3 text-sm font-bold text-hibiscus-deep">{joinError}</p>}
-          <button className="wj-btn w-full text-lg" onClick={handleJoin} disabled={joining}>
-            {joining ? "Connecting… 🌐" : "🚀 Join the Adventure"}
+          {joinError && (
+            <p className="rounded-2xl bg-hibiscus/10 p-3 text-sm font-bold text-hibiscus-deep">
+              {joinError}
+            </p>
+          )}
+          <button
+            className="wj-btn w-full text-lg shadow-lg"
+            onClick={() => onJoin({ camId: cam.camId, micId: cam.micId, camOn: cam.camOn, micOn: cam.micOn })}
+            disabled={joining}
+          >
+            {joining ? "Connecting… 🌐" : "🚀 Enter Classroom"}
           </button>
         </div>
       </div>
@@ -312,315 +268,878 @@ function Lobby({ name, setName, lesson, joining, joinError, onJoin, role }: {
   );
 }
 
-/* ── LiveKit connected classroom (shared call context) ──────── */
-function ConnectedRoom({ lesson, onLeave }: {
+/* ── LiveKit Connected Classroom ────────────────────────────── */
+function ConnectedRoom({
+  lesson,
+  onLeave,
+  currentUserName,
+}: {
   lesson: Lesson | null;
   onLeave: () => void;
+  currentUserName: string;
 }) {
   const call = useCall();
   const room = call.room!;
   const isTeacher = call.isTeacher;
+  const router = useRouter();
+
+  // Classroom States
+  const [selectedLesson, setSelectedLesson] = useState<Lesson | null>(lesson);
+  const [stageLesson, setStageLesson] = useState<Lesson | null>(lesson);
+  const [slideIndex, setSlideIndex] = useState(0);
+  const [isSlideLocked, setIsSlideLocked] = useState(false);
+  const [drawingActive, setDrawingActive] = useState(false);
+  const [fullscreenStage, setFullscreenStage] = useState(false);
+  const [camsVisible, setCamsVisible] = useState(true);
   const [chatOpen, setChatOpen] = useState(false);
   const [msg, setMsg] = useState("");
-  // The lesson opens INSIDE the stage — the route never changes, so the
-  // LiveKit room, cameras, and toolbar are never unmounted.
-  const [stageLesson, setStageLesson] = useState<Lesson | null>(null);
-  const [wrapUp, setWrapUp] = useState(false); // Adventure Wrap-Up: lesson done, call stays alive
-  const [camsVisible, setCamsVisible] = useState(true); // explicit "Hide video" only
-  const [enlarged, setEnlarged] = useState<string | null>(null); // participant identity, pinned big
-  const [drawing, setDrawing] = useState(false); // whiteboard over the stage
-  const [tvMode, setTvMode] = useStored<boolean>("wj-tv-mode", false); // TV Mode scales typography and contrast
-  const [showDiagnostics, setShowDiagnostics] = useState(false);
+  const [showMediaModal, setShowMediaModal] = useState(false);
+  const [snapshotSavedNotice, setSnapshotSavedNotice] = useState(false);
 
-  // FINISH LESSON — closes the presentation only. The LiveKit room,
-  // cameras, and microphones stay connected for the wrap-up chat.
-  function finishLesson() {
-    setStageLesson(null);
-    setWrapUp(true);
-    if (lesson) sendEvent("lesson.finished", { lessonId: lesson.id, title: lesson.title });
-  }
+  // Student Permissions State
+  const [studentPermissions, setStudentPermissions] = useState<Record<string, PermissionLevel>>({});
+  const [myPermission, setMyPermission] = useState<PermissionLevel>(
+    isTeacher ? "full_interactive" : "view_only"
+  );
+
+  // Synchronized Interaction Data
+  const [remoteStrokes, setRemoteStrokes] = useState<SynchronizedStroke[]>([]);
+  const [remotePointers, setRemotePointers] = useState<Record<string, RemotePointer>>({});
+
+  const stageMediaList = useMemo(() => {
+    if (!stageLesson) return [];
+    return getMediaForLesson(stageLesson.id);
+  }, [stageLesson]);
+
+  // Broadcast data packet over LiveKit
+  const broadcastClassroomEvent = useCallback(
+    async (event: ClassroomEvent, lossy = false) => {
+      if (!room || room.state !== ConnectionState.Connected) return;
+      try {
+        const payloadBytes = new TextEncoder().encode(JSON.stringify(event));
+        await room.localParticipant.publishData(payloadBytes, {
+          reliable: !lossy,
+          topic: event.topic,
+        });
+      } catch (err) {
+        console.warn("Error publishing classroom packet:", err);
+      }
+    },
+    [room]
+  );
+
+  // Handle incoming LiveKit data events
+  useEffect(() => {
+    if (!room) return;
+
+    const onDataReceived = (payload: Uint8Array, participant?: RemoteParticipant) => {
+      try {
+        const text = new TextDecoder().decode(payload);
+        const parsed = JSON.parse(text);
+        if (!isClassroomEvent(parsed)) return;
+
+        switch (parsed.topic) {
+          case "classroom.permission": {
+            const target = parsed.payload.targetIdentity;
+            const lvl = parsed.payload.level;
+            if (target === "all" || target === room.localParticipant.identity) {
+              setMyPermission(lvl);
+            }
+            if (target === "all") {
+              setStudentPermissions((prev) => {
+                const next: Record<string, PermissionLevel> = {};
+                Object.keys(prev).forEach((k) => (next[k] = lvl));
+                return next;
+              });
+            } else {
+              setStudentPermissions((prev) => ({ ...prev, [target]: lvl }));
+            }
+            break;
+          }
+
+          case "classroom.pointer": {
+            setRemotePointers((prev) => ({
+              ...prev,
+              [parsed.senderId]: {
+                senderId: parsed.senderId,
+                displayName: parsed.displayName,
+                role: parsed.role,
+                point: parsed.payload.point,
+                color: parsed.payload.color,
+                active: parsed.payload.active,
+              },
+            }));
+            break;
+          }
+
+          case "classroom.stroke": {
+            if (parsed.payload.action === "create" && parsed.payload.stroke) {
+              setRemoteStrokes((prev) => [...prev, parsed.payload.stroke!]);
+            } else if (parsed.payload.action === "clear_all") {
+              setRemoteStrokes([]);
+            } else if (parsed.payload.action === "clear_participant" && parsed.payload.targetParticipantId) {
+              setRemoteStrokes((prev) =>
+                prev.filter((s) => s.senderId !== parsed.payload.targetParticipantId)
+              );
+            }
+            break;
+          }
+
+          case "classroom.slide": {
+            setSlideIndex(parsed.payload.slideIndex);
+            setIsSlideLocked(parsed.payload.isLocked);
+            const found = allLessons.find((l) => l.id === parsed.payload.lessonId);
+            if (found) setStageLesson(found);
+            break;
+          }
+
+          case "classroom.snapshot": {
+            setSnapshotSavedNotice(true);
+            setTimeout(() => setSnapshotSavedNotice(false), 3000);
+            break;
+          }
+        }
+      } catch {
+        /* Ignore malformed packets */
+      }
+    };
+
+    room.on("dataReceived", onDataReceived);
+    return () => {
+      room.off("dataReceived", onDataReceived);
+    };
+  }, [room]);
+
+  // Teacher Permission Controls
+  const setPermissionForStudent = (studentIdentity: string, level: PermissionLevel) => {
+    if (!isTeacher) return;
+    setStudentPermissions((prev) => ({ ...prev, [studentIdentity]: level }));
+    broadcastClassroomEvent({
+      topic: "classroom.permission",
+      version: 1,
+      eventId: `perm-${Date.now()}`,
+      sessionId: room.name,
+      workspaceId: familySlug,
+      senderId: room.localParticipant.identity,
+      role: "teacher",
+      timestamp: Date.now(),
+      payload: {
+        targetIdentity: studentIdentity,
+        level,
+      },
+    });
+  };
+
+  const setGlobalPermission = (level: PermissionLevel) => {
+    if (!isTeacher) return;
+    setStudentPermissions({});
+    broadcastClassroomEvent({
+      topic: "classroom.permission",
+      version: 1,
+      eventId: `perm-global-${Date.now()}`,
+      sessionId: room.name,
+      workspaceId: familySlug,
+      senderId: room.localParticipant.identity,
+      role: "teacher",
+      timestamp: Date.now(),
+      payload: {
+        targetIdentity: "all",
+        level,
+      },
+    });
+  };
+
+  // Synchronized Slide Navigation
+  const handleSlideChange = (newIndex: number) => {
+    setSlideIndex(newIndex);
+    if (isTeacher && stageLesson) {
+      broadcastClassroomEvent({
+        topic: "classroom.slide",
+        version: 1,
+        eventId: `slide-${Date.now()}`,
+        sessionId: room.name,
+        senderId: room.localParticipant.identity,
+        role: "teacher",
+        timestamp: Date.now(),
+        payload: {
+          slideIndex: newIndex,
+          lessonId: stageLesson.id,
+          isLocked: isSlideLocked,
+        },
+      });
+    }
+  };
+
+  // Local Stroke Emission
+  const handleEmitStroke = (stroke: SynchronizedStroke) => {
+    broadcastClassroomEvent({
+      topic: "classroom.stroke",
+      version: 1,
+      eventId: `stroke-ev-${Date.now()}`,
+      sessionId: room.name,
+      senderId: room.localParticipant.identity,
+      senderName: currentUserName,
+      role: isTeacher ? "teacher" : "student",
+      timestamp: Date.now(),
+      payload: {
+        action: "create",
+        stroke,
+      },
+    });
+  };
+
+  // Local Pointer Emission (Lossy UDP packet under 1300B)
+  const handleEmitPointer = (point: NormalizedPoint, active: boolean) => {
+    broadcastClassroomEvent(
+      {
+        topic: "classroom.pointer",
+        version: 1,
+        eventId: `ptr-${Date.now()}`,
+        sessionId: room.name,
+        senderId: room.localParticipant.identity,
+        displayName: currentUserName,
+        role: isTeacher ? "teacher" : "student",
+        timestamp: Date.now(),
+        payload: {
+          point,
+          active,
+          color: isTeacher ? "#e4573b" : "#2e9563",
+        },
+      },
+      true
+    );
+  };
+
+  const handleClearAllStrokes = () => {
+    if (!isTeacher) return;
+    setRemoteStrokes([]);
+    broadcastClassroomEvent({
+      topic: "classroom.stroke",
+      version: 1,
+      eventId: `clear-${Date.now()}`,
+      sessionId: room.name,
+      senderId: room.localParticipant.identity,
+      senderName: currentUserName,
+      role: "teacher",
+      timestamp: Date.now(),
+      payload: { action: "clear_all" },
+    });
+  };
+
+  const handleSaveBoardSnapshot = () => {
+    if (!isTeacher || !stageLesson) return;
+    broadcastClassroomEvent({
+      topic: "classroom.snapshot",
+      version: 1,
+      eventId: `snap-${Date.now()}`,
+      sessionId: room.name,
+      senderId: room.localParticipant.identity,
+      role: "teacher",
+      timestamp: Date.now(),
+      payload: {
+        snapshotId: `snap-${Date.now()}`,
+        slideId: `${stageLesson.id}-slide-${slideIndex}`,
+        slideIndex,
+        strokes: remoteStrokes,
+      },
+    });
+    setSnapshotSavedNotice(true);
+    setTimeout(() => setSnapshotSavedNotice(false), 3000);
+  };
 
   const everyone = call.participants;
   const screenShare = getScreenShare(everyone);
 
-  function send() {
-    if (!msg.trim()) return;
-    call.sendChat(msg);
-    setMsg("");
-  }
-
-  const stateChip =
-    call.connState === ConnectionState.Reconnecting ? "🟡 Reconnecting…" :
-    call.connState === ConnectionState.Connected ? "🟢 Live" : "🔴 Connecting…";
-
-  // ── EXACTLY TWO CAMERAS (Sharon's rule): one Teacher, one Family.
-  // Each tile is picked by ROLE — the server decided it from the code
-  // (two-code system) — so it never matters which device this is, and a
-  // stray extra connection can never appear as a third camera.
   const familyFeed = everyone.find((p) => participantRole(p) === "family") ?? null;
   const teacherFeed = everyone.find((p) => participantRole(p) === "teacher") ?? null;
-  const enlargedP = enlarged ? everyone.find((p) => p.identity === enlarged) ?? null : null;
 
   return (
-    <div className={`space-y-3 ${tvMode ? "tv-mode scale-[1.02] origin-top contrast-125 transition-transform" : "transition-transform"}`}>
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <span className="wj-chip">{stateChip} ┬╖ {everyone.length} in class</span>
+    <div className="flex flex-col h-[100dvh] w-[100vw] overflow-hidden bg-sand-deep text-ink">
+      {/* ── 1. Top Classroom Bar (56-64px) ───────────────────────── */}
+      <header className="flex h-14 shrink-0 items-center justify-between border-b-2 border-sand-deep bg-white px-4 shadow-sm z-30">
+        <div className="flex items-center gap-3">
+          <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-ocean text-white font-display text-sm shadow">
+            🌴
+          </span>
+          <div>
+            <h1 className="font-display text-base font-bold leading-tight">
+              {stageLesson ? `${stageLesson.emoji} ${stageLesson.title}` : "Wonder Journey Classroom"}
+            </h1>
+            <p className="text-[11px] text-ink-soft leading-none">
+              {isTeacher ? `Teacher Sharon · ${familyName} Class` : `Explorer: ${currentUserName}`}
+            </p>
+          </div>
+        </div>
+
+        {/* Status Pills & Controls */}
         <div className="flex items-center gap-2">
-          {isTeacher && (
-            <button className={`wj-chip hover:bg-mango/20 ${showDiagnostics ? "!bg-mango" : ""}`} onClick={() => setShowDiagnostics((d) => !d)} title="View connection diagnostics">
-              📡 Diagnostics
-            </button>
-          )}
-          <span className="wj-chip">🎥 {lesson ? `${lesson.emoji} ${lesson.title}` : "Adventure"}</span>
-          <button className="wj-chip hover:bg-mango/20" onClick={() => setTvMode((v) => !v)} title="Toggle TV Mode (bigger text, high contrast)">
-            {tvMode ? "📺 TV Mode: On" : "📺 TV Mode"}
+          {/* Permission Status Pill */}
+          <span
+            className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold shadow-sm ${
+              isTeacher
+                ? "bg-mango/20 text-mango-deep border border-mango/30"
+                : myPermission === "view_only"
+                ? "bg-sand-deep text-ink-soft"
+                : "bg-palm/20 text-palm-deep border border-palm/30"
+            }`}
+          >
+            {isTeacher
+              ? "👑 Teacher Host"
+              : myPermission === "view_only"
+              ? "🔒 View-Only"
+              : myPermission === "pointer_only"
+              ? "👆 Pointer Ready"
+              : myPermission === "annotate"
+              ? "✏️ Drawing Enabled"
+              : "🎮 Interactive Game"}
+          </span>
+
+          {/* Media Info & Provenance Button */}
+          <button
+            type="button"
+            onClick={() => setShowMediaModal(true)}
+            aria-label="View media provenance & licensing"
+            className="flex items-center gap-1.5 rounded-full bg-sand px-3 py-1 text-xs font-semibold text-ocean hover:bg-ocean hover:text-white transition-colors cursor-pointer border border-ocean/20"
+          >
+            <span>ℹ️ Media Credits</span>
+            <span className="rounded-full bg-ocean/20 px-1.5 py-0.2 text-[10px] font-bold">
+              {stageMediaList.length}
+            </span>
           </button>
-          <button className="wj-chip hover:bg-mango/20" onClick={() => setCamsVisible((v) => !v)} title={camsVisible ? "Hide video" : "Show video"}>
-            {camsVisible ? "👥 Hide video" : "👥 Show video"}
+
+          {/* Fullscreen Toggle */}
+          <button
+            type="button"
+            onClick={() => setFullscreenStage((f) => !f)}
+            aria-label="Toggle Fullscreen Stage"
+            className="flex h-8 px-2.5 items-center justify-center rounded-full bg-sand text-xs font-bold text-ink hover:bg-sand-deep cursor-pointer"
+          >
+            {fullscreenStage ? "🗗 Standard" : "🗖 Fullscreen"}
+          </button>
+
+          {/* Toggle Video Panel */}
+          <button
+            type="button"
+            onClick={() => setCamsVisible((v) => !v)}
+            aria-label="Toggle Participant Videos"
+            className={`flex h-8 px-3 items-center justify-center rounded-full text-xs font-bold transition-colors cursor-pointer ${
+              camsVisible ? "bg-ocean text-white shadow-sm" : "bg-sand text-ink hover:bg-sand-deep"
+            }`}
+          >
+            👥 Video ({everyone.length})
+          </button>
+
+          {/* End Call */}
+          <button
+            type="button"
+            onClick={onLeave}
+            className="rounded-full bg-hibiscus px-4 py-1.5 font-display text-xs font-bold text-white shadow hover:brightness-95 transition-all cursor-pointer"
+          >
+            📞 Leave
           </button>
         </div>
-      </div>
+      </header>
 
-      {/* Focused teaching room: LESSON STAGE (75%) left ┬╖ CAMERA RAIL (25%) right.
-          Family camera ABOVE teacher camera (Decision 044). On small screens
-          the lesson leads and the rail stacks beneath it — family still first. */}
-      <div className={`grid grid-cols-1 gap-3 ${camsVisible ? "lg:grid-cols-[3fr_1fr]" : ""} lg:items-start`}>
-        {/* stage — lessons open here; the shell around it never unmounts */}
-        <div
-          className={`wj-card relative overflow-hidden p-0 ${
-            stageLesson ? "h-[74vh] lg:h-[78vh]" : "flex min-h-[46vh] items-center justify-center lg:h-[78vh]"
+      {/* ── 2. Main Classroom Workspace (Stage + Participant Panel) ── */}
+      <div className="flex flex-1 overflow-hidden relative">
+        {/* Central 16:9 Lesson Stage */}
+        <main
+          className={`flex-1 flex flex-col items-center justify-center p-3 relative overflow-hidden transition-all ${
+            fullscreenStage ? "w-full" : ""
           }`}
         >
-          {/* screen share overlays the stage; the lesson stays mounted */}
-          {screenShare && (
-            <div className="absolute inset-0 z-20 bg-ink">
-              <ShareView track={screenShare.track.mediaStreamTrack} />
+          {/* Responsive 16:9 Lesson Stage Container */}
+          <div
+            className="relative w-full max-w-[1280px] aspect-[16/9] max-h-[calc(100vh-140px)] rounded-3xl overflow-hidden shadow-2xl bg-paper border-4 border-white flex flex-col justify-between"
+            id="classroom-lesson-stage"
+          >
+            {/* Screen Share Overlay */}
+            {screenShare && (
+              <div className="absolute inset-0 z-20 bg-ink">
+                <ShareView track={screenShare.track.mediaStreamTrack} />
+              </div>
+            )}
+
+            {/* Lesson Theater Content */}
+            {stageLesson ? (
+              <div className="h-full w-full overflow-y-auto">
+                <AdventureTheater lesson={stageLesson} embedded onExit={() => setStageLesson(null)} />
+              </div>
+            ) : (
+              <div className="flex h-full w-full flex-col items-center justify-center gap-4 p-8 text-center bg-sand/30">
+                <div className="text-6xl">{lesson?.emoji ?? "🌴"}</div>
+                <h2 className="wj-outline font-display text-3xl">{lesson?.title ?? "Adventure Stage"}</h2>
+                <p className="font-hand text-xl text-ink-soft">{lesson?.subtitle}</p>
+                {lesson && (
+                  <button
+                    className="wj-btn text-lg shadow-lg"
+                    onClick={() => setStageLesson(lesson)}
+                  >
+                    🎬 Open Lesson Presentation
+                  </button>
+                )}
+              </div>
+            )}
+
+            {/* Synchronized Annotation Layer Overlay */}
+            {drawingActive && (
+              <AnnotationLayer
+                onClose={() => setDrawingActive(false)}
+                isTeacher={isTeacher}
+                permission={myPermission}
+                userId={room.localParticipant.identity}
+                userName={currentUserName}
+                userRole={isTeacher ? "teacher" : "student"}
+                slideIndex={slideIndex}
+                onEmitStroke={handleEmitStroke}
+                onEmitPointer={handleEmitPointer}
+                onClearAll={handleClearAllStrokes}
+                remoteStrokes={remoteStrokes}
+                remotePointers={Object.values(remotePointers)}
+              />
+            )}
+
+            {/* Snapshot Saved Notification */}
+            {snapshotSavedNotice && (
+              <div className="absolute top-4 right-4 z-50 rounded-2xl bg-palm px-4 py-2 text-xs font-bold text-white shadow-xl animate-bounce">
+                📸 Classroom Board Snapshot Saved!
+              </div>
+            )}
+          </div>
+        </main>
+
+        {/* ── 3. Participant & Video Panel (280-320px) ──────────────── */}
+        {camsVisible && !fullscreenStage && (
+          <aside className="w-80 shrink-0 border-l-2 border-sand-deep bg-white flex flex-col justify-between overflow-y-auto z-20 shadow-lg">
+            <div className="p-3 space-y-3">
+              <h2 className="font-display text-xs font-bold text-ink-soft uppercase tracking-wider px-1">
+                Live Classroom Cameras
+              </h2>
+
+              {/* Family Tile (Above) */}
+              <div>
+                <p className="mb-1 text-[11px] font-bold text-ink-soft flex items-center justify-between">
+                  <span>👨‍👩‍👧‍👦 {familyName}</span>
+                  {familyFeed && <span className="text-palm text-[10px]">🟢 Live</span>}
+                </p>
+                {familyFeed ? (
+                  <ParticipantTile
+                    participant={familyFeed}
+                    isLocal={familyFeed === room.localParticipant}
+                    hand={call.hands[familyFeed.identity] ?? false}
+                    version={call.version}
+                    tall
+                  />
+                ) : (
+                  <div className="flex aspect-[4/3] w-full flex-col items-center justify-center rounded-2xl border-2 border-dashed border-sand-deep bg-sand text-center text-ink-soft">
+                    <span className="text-3xl">💙</span>
+                    <span className="font-hand px-2 text-xs">Waiting for family…</span>
+                  </div>
+                )}
+              </div>
+
+              {/* Teacher Tile (Below) */}
+              <div>
+                <p className="mb-1 text-[11px] font-bold text-ink-soft flex items-center justify-between">
+                  <span>👩‍🏫 {teacherName}</span>
+                  {teacherFeed && <span className="text-palm text-[10px]">🟢 Host</span>}
+                </p>
+                {teacherFeed ? (
+                  <ParticipantTile
+                    participant={teacherFeed}
+                    isLocal={teacherFeed === room.localParticipant}
+                    hand={call.hands[teacherFeed.identity] ?? false}
+                    version={call.version}
+                  />
+                ) : (
+                  <div className="flex aspect-video w-full flex-col items-center justify-center rounded-2xl border-2 border-dashed border-sand-deep bg-sand text-center text-ink-soft">
+                    <span className="text-3xl">💙</span>
+                    <span className="font-hand px-2 text-xs">Teacher joins soon…</span>
+                  </div>
+                )}
+              </div>
+
+              {/* ── Teacher-Only Permissions Control Panel ────────────── */}
+              {isTeacher && (
+                <div className="mt-4 rounded-2xl bg-sand p-3 border border-sand-deep space-y-2">
+                  <p className="font-display text-xs font-bold text-ink">
+                    👑 Student Interaction Controls
+                  </p>
+
+                  <div className="grid grid-cols-2 gap-1.5 text-[11px]">
+                    <button
+                      onClick={() => setGlobalPermission("view_only")}
+                      className="rounded-lg bg-white p-1.5 font-semibold text-ink-soft hover:bg-sand-deep border border-sand-deep cursor-pointer"
+                    >
+                      🔒 Lock All (View)
+                    </button>
+                    <button
+                      onClick={() => setGlobalPermission("pointer_only")}
+                      className="rounded-lg bg-white p-1.5 font-semibold text-ocean hover:bg-sand-deep border border-sand-deep cursor-pointer"
+                    >
+                      👆 Pointer Only
+                    </button>
+                    <button
+                      onClick={() => setGlobalPermission("annotate")}
+                      className="rounded-lg bg-white p-1.5 font-semibold text-palm hover:bg-sand-deep border border-sand-deep cursor-pointer"
+                    >
+                      ✏️ Enable Drawing
+                    </button>
+                    <button
+                      onClick={() => setGlobalPermission("game_interactive")}
+                      className="rounded-lg bg-white p-1.5 font-semibold text-mango-deep hover:bg-sand-deep border border-sand-deep cursor-pointer"
+                    >
+                      🎮 Game Ready
+                    </button>
+                  </div>
+
+                  <div className="pt-2 border-t border-sand-deep flex gap-2">
+                    <button
+                      onClick={handleSaveBoardSnapshot}
+                      className="flex-1 rounded-lg bg-ocean/10 p-1.5 text-[11px] font-bold text-ocean hover:bg-ocean/20 cursor-pointer"
+                    >
+                      📸 Save Snapshot
+                    </button>
+                    <button
+                      onClick={handleClearAllStrokes}
+                      className="rounded-lg bg-sunset/10 px-2 py-1.5 text-[11px] font-bold text-sunset hover:bg-sunset/20 cursor-pointer"
+                    >
+                      🗑️ Clear
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
-          )}
+
+            {/* Chat Box */}
+            {chatOpen && (
+              <div className="border-t-2 border-sand-deep p-3 bg-sand/30 space-y-2">
+                <p className="font-display text-xs font-bold text-ink">Class Chat</p>
+                <div className="max-h-28 space-y-1 overflow-y-auto text-xs">
+                  {call.chat.length === 0 && (
+                    <p className="text-ink-soft italic">No messages yet. 👋</p>
+                  )}
+                  {call.chat.map((c, i) => (
+                    <p key={i} className="leading-snug">
+                      <strong className="text-ocean-deep">{c.who}:</strong> {c.text}
+                    </p>
+                  ))}
+                </div>
+                <div className="flex gap-1.5">
+                  <input
+                    className="wj-input !py-1 !text-xs flex-1"
+                    value={msg}
+                    onChange={(e) => setMsg(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" && msg.trim()) {
+                        call.sendChat(msg);
+                        setMsg("");
+                      }
+                    }}
+                    placeholder="Message class…"
+                  />
+                  <button
+                    className="wj-btn !py-1 !px-2.5 text-xs"
+                    onClick={() => {
+                      if (msg.trim()) {
+                        call.sendChat(msg);
+                        setMsg("");
+                      }
+                    }}
+                  >
+                    Send
+                  </button>
+                </div>
+              </div>
+            )}
+          </aside>
+        )}
+      </div>
+
+      {/* ── 4. Bottom Interaction Tool Rail ───────────────────────── */}
+      <footer className="h-14 shrink-0 border-t-2 border-sand-deep bg-white px-4 flex items-center justify-center gap-3 z-30 shadow-md">
+        <button
+          onClick={call.toggleMic}
+          className={`flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-bold transition-colors cursor-pointer ${
+            call.micOn ? "bg-palm text-white" : "bg-sunset/10 text-sunset"
+          }`}
+        >
+          {call.micOn ? "🎤 Mic On" : "🔇 Muted"}
+        </button>
+
+        <button
+          onClick={call.toggleCam}
+          className={`flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-bold transition-colors cursor-pointer ${
+            call.camOn ? "bg-ocean text-white" : "bg-sand-deep text-ink-soft"
+          }`}
+        >
+          {call.camOn ? "📷 Video On" : "📷 Video Off"}
+        </button>
+
+        <button
+          onClick={call.toggleShare}
+          className={`flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-bold transition-colors cursor-pointer ${
+            call.sharing ? "bg-mango text-white" : "bg-sand text-ink hover:bg-sand-deep"
+          }`}
+        >
+          🖥️ Screen Share
+        </button>
+
+        {/* Whiteboard / Annotation Toggle */}
+        <button
+          onClick={() => setDrawingActive((d) => !d)}
+          className={`flex items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-bold transition-all cursor-pointer ${
+            drawingActive
+              ? "bg-ocean-deep text-white ring-2 ring-ocean shadow-md scale-105"
+              : "bg-sand text-ink hover:bg-sand-deep"
+          }`}
+        >
+          ✏️ Draw &amp; Annotate
+        </button>
+
+        <button
+          onClick={call.toggleHand}
+          className={`flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-bold transition-colors cursor-pointer ${
+            call.myHand ? "bg-mango text-white" : "bg-sand text-ink hover:bg-sand-deep"
+          }`}
+        >
+          ✋ Raise Hand
+        </button>
+
+        <button
+          onClick={() => setChatOpen((c) => !c)}
+          className={`flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-bold transition-colors cursor-pointer ${
+            chatOpen ? "bg-ocean text-white" : "bg-sand text-ink hover:bg-sand-deep"
+          }`}
+        >
+          💬 Chat
+        </button>
+      </footer>
+
+      {/* ── 5. Media Credits Modal ────────────────────────────────── */}
+      <MediaCreditsModal
+        isOpen={showMediaModal}
+        onClose={() => setShowMediaModal(false)}
+        mediaList={stageMediaList}
+        lessonTitle={stageLesson?.title || "Lesson Media"}
+      />
+    </div>
+  );
+}
+
+/* ── Solo Room Fallback ─────────────────────────────────────── */
+function SoloRoom({
+  lesson,
+  isGuest = false,
+  onGoLive,
+  onLeave,
+}: {
+  lesson: Lesson | null;
+  isGuest?: boolean;
+  onGoLive: () => void;
+  onLeave: () => void;
+}) {
+  const call = useCall();
+  const [stageLesson, setStageLesson] = useState<Lesson | null>(lesson);
+  const [drawing, setDrawing] = useState(false);
+  const soloVideoRef = useRef<HTMLVideoElement>(null);
+  const [showMediaModal, setShowMediaModal] = useState(false);
+
+  const mediaList = useMemo(() => {
+    if (!stageLesson) return [];
+    return getMediaForLesson(stageLesson.id);
+  }, [stageLesson]);
+
+  useEffect(() => {
+    if (soloVideoRef.current && call.soloStream) {
+      soloVideoRef.current.srcObject = call.soloStream;
+      void soloVideoRef.current.play().catch(() => {});
+    }
+  }, [call.soloStream]);
+
+  return (
+    <div className="flex flex-col h-[100dvh] w-[100vw] overflow-hidden bg-sand-deep text-ink">
+      <header className="flex h-14 shrink-0 items-center justify-between border-b-2 border-sand-deep bg-white px-4 shadow-sm z-30">
+        <div className="flex items-center gap-2">
+          <span className="text-2xl">🌴</span>
+          <h1 className="font-display text-base font-bold">
+            {stageLesson ? `${stageLesson.emoji} ${stageLesson.title}` : "Wonder Journey Classroom"}
+          </h1>
+        </div>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setShowMediaModal(true)}
+            className="rounded-full bg-sand px-3 py-1 text-xs font-semibold text-ocean border border-ocean/20 cursor-pointer"
+          >
+            ℹ️ Media Credits ({mediaList.length})
+          </button>
+          <button
+            onClick={onLeave}
+            className="rounded-full bg-hibiscus px-4 py-1.5 font-display text-xs font-bold text-white shadow cursor-pointer"
+          >
+            📞 Leave
+          </button>
+        </div>
+      </header>
+
+      <main className="flex-1 flex flex-col items-center justify-center p-3 relative overflow-hidden">
+        <div className="relative w-full max-w-[1280px] aspect-[16/9] max-h-[calc(100vh-140px)] rounded-3xl overflow-hidden shadow-2xl bg-paper border-4 border-white flex flex-col justify-between">
           {stageLesson ? (
-            <LessonBoundary onReturnToWrapUp={finishLesson}>
-              <AdventureTheater lesson={stageLesson} embedded onExit={finishLesson} />
-            </LessonBoundary>
-          ) : wrapUp ? (
-            <WrapUpPanel
-              lesson={lesson}
-              quizResult={null}
-              onReopen={() => {
-                if (lesson) {
-                  setWrapUp(false);
-                  setStageLesson(lesson);
-                }
-              }}
-              onEndCall={onLeave}
-            />
+            <div className="h-full w-full overflow-y-auto">
+              <AdventureTheater lesson={stageLesson} embedded onExit={() => setStageLesson(null)} />
+            </div>
           ) : (
-            <div className="flex flex-col items-center gap-4 overflow-y-auto p-8 text-center">
+            <div className="flex h-full w-full flex-col items-center justify-center gap-4 p-8 text-center bg-sand/30">
               <div className="text-6xl">{lesson?.emoji ?? "🌴"}</div>
-              <h2 className="wj-outline font-display text-2xl sm:text-3xl">{lesson?.title ?? "Today's Adventure"}</h2>
-              <p className="font-hand text-lg text-ink-soft">{lesson?.subtitle}</p>
+              <h2 className="wj-outline font-display text-3xl">{lesson?.title ?? "Adventure Stage"}</h2>
               {lesson && (
-                <button className="wj-btn text-lg" onClick={() => setStageLesson(lesson)}>
-                  🎬 Open the Adventure
+                <button className="wj-btn text-lg shadow-lg" onClick={() => setStageLesson(lesson)}>
+                  🎬 Open Lesson Presentation
                 </button>
               )}
-              {isTeacher && <p className="text-xs text-ink-soft">The lesson opens right here — cameras stay on. Or share your screen 👇</p>}
             </div>
           )}
 
-          {/* whiteboard over the whole stage (slides, maps, shares) */}
-          {drawing && <AnnotationLayer onClose={() => setDrawing(false)} />}
-
-          {/* pinned/enlarged camera overlay — cameras over the lesson on demand */}
-          {enlargedP && (
-            <div className="absolute bottom-3 right-3 z-40 w-72 max-w-[70%] sm:w-96">
-              <ParticipantTile
-                participant={enlargedP}
-                isLocal={enlargedP === room.localParticipant}
-                hand={call.hands[enlargedP.identity] ?? false}
-                version={call.version}
-                onClick={() => setEnlarged(null)}
-              />
-              <p className="mt-1 text-center text-[10px] font-bold text-white drop-shadow">tap to unpin</p>
-            </div>
-          )}
-
-          {/* Diagnostics Panel (Teacher Only) */}
-          {isTeacher && showDiagnostics && (
-            <div className="absolute top-3 left-3 z-50 rounded-xl bg-ink/80 p-3 text-xs text-white backdrop-blur">
-              <p className="font-bold text-mango mb-1">LiveKit Connection Diagnostics</p>
-              <p>Room: {room.name}</p>
-              <p>State: {call.connState}</p>
-              <p>Connection: {room.state === ConnectionState.Connected ? "Connected" : room.state}</p>
-              <div className="mt-2 border-t border-white/20 pt-2">
-                <p className="font-bold">Participants ({everyone.length}):</p>
-                {everyone.map(p => (
-                  <p key={p.identity}>
-                    - {p.identity}: {p.connectionQuality} (Video: {p.getTrackPublication(Track.Source.Camera)?.isMuted ? "Muted" : "On"})
-                  </p>
-                ))}
-              </div>
-            </div>
-          )}
+          {drawing && <AnnotationLayer onClose={() => setDrawing(false)} isTeacher={true} />}
         </div>
+      </main>
 
-        {/* ── CAMERA RAIL: 👨‍👩‍👧‍👦 Family ABOVE 👩‍🏫 Teacher ─────────── */}
-        {camsVisible && (
-          <div className="flex flex-col gap-3 lg:sticky lg:top-3">
-            {/* Family first — slightly more prominent so the teacher can
-                watch all four children clearly */}
-            <div>
-              <p className="mb-1 text-center text-[11px] font-bold uppercase tracking-wide text-ink-soft">👨‍👩‍👧‍👦 {familyName}</p>
-              {familyFeed ? (
-                <ParticipantTile
-                  participant={familyFeed}
-                  isLocal={familyFeed === room.localParticipant}
-                  hand={call.hands[familyFeed.identity] ?? false}
-                  version={call.version}
-                  tall
-                  onClick={() => setEnlarged(familyFeed.identity)}
-                />
-              ) : (
-                <div className="flex aspect-[4/3] w-full flex-col items-center justify-center rounded-2xl border-2 border-dashed border-sand-deep bg-sand text-center text-ink-soft">
-                  <span className="text-3xl">💙</span>
-                  <span className="font-hand px-2 text-sm">Waiting for the family to join…</span>
-                </div>
-              )}
-            </div>
-
-            {/* Teacher below — exactly one tile, never a third camera */}
-            <div>
-              <p className="mb-1 text-center text-[11px] font-bold uppercase tracking-wide text-ink-soft">👩‍🏫 {teacherName}</p>
-              {teacherFeed ? (
-                <ParticipantTile
-                  participant={teacherFeed}
-                  isLocal={teacherFeed === room.localParticipant}
-                  hand={call.hands[teacherFeed.identity] ?? false}
-                  version={call.version}
-                  onClick={() => setEnlarged(teacherFeed.identity)}
-                />
-              ) : (
-                <div className="flex aspect-video w-full flex-col items-center justify-center rounded-2xl border-2 border-dashed border-sand-deep bg-sand text-center text-ink-soft">
-                  <span className="text-3xl">💙</span>
-                  <span className="font-hand px-2 text-sm">{teacherName} joins soon…</span>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
-      </div>
-
-      {chatOpen && (
-        <div className="wj-card p-4">
-          <p className="font-display">💬 Class Chat</p>
-          <div className="mt-2 max-h-32 space-y-1 overflow-y-auto text-sm">
-            {call.chat.length === 0 && <p className="font-hand text-ink-soft">Say hello to the family! 👋</p>}
-            {call.chat.map((c, i) => (<p key={i}><b>{c.who}:</b> {c.text}</p>))}
-          </div>
-          <div className="mt-2 flex gap-2">
-            <input className="wj-input" value={msg} onChange={(e) => setMsg(e.target.value)} onKeyDown={(e) => e.key === "Enter" && send()} placeholder="Type a message…" />
-            <button className="wj-btn" onClick={send}>Send</button>
-          </div>
-        </div>
-      )}
-
-      {/* TEACHING TOOLBAR — only class tools, no dashboard navigation */}
-      <div className="wj-card sticky bottom-2 z-10 flex flex-wrap items-center justify-center gap-2 p-3">
-        <ToolBtn onClick={call.toggleMic} active={call.micOn} label={call.micOn ? "🎤 Mic" : "🔇 Muted"} />
-        <ToolBtn onClick={call.toggleCam} active={call.camOn} label={call.camOn ? "📷 Cam" : "📷 Off"} />
-        <ToolBtn onClick={call.toggleShare} active={call.sharing} label="🖥️ Share" />
-        <ToolBtn onClick={() => setDrawing((d) => !d)} active={drawing} label="✏️ Draw" />
-        <ToolBtn onClick={call.toggleHand} active={call.myHand} label="✋ Hand" />
-        <ToolBtn onClick={() => setChatOpen((c) => !c)} active={chatOpen} label="💬 Chat" />
-        <span className="mx-1 hidden h-6 w-px bg-sand-deep sm:block" />
-        {/* same pill geometry as every tool — colour fill marks the special ones */}
-        {isTeacher && stageLesson && (
-          <button
-            className="rounded-full bg-ocean px-4 py-2 font-display text-sm text-white transition-colors hover:bg-ocean-deep"
-            onClick={finishLesson}
-          >
-            🏁 Finish Lesson
-          </button>
-        )}
+      <footer className="h-14 shrink-0 border-t-2 border-sand-deep bg-white px-4 flex items-center justify-center gap-3 z-30 shadow-md">
         <button
-          className="rounded-full bg-hibiscus px-4 py-2 font-display text-sm text-white transition-[filter] hover:brightness-95"
-          onClick={onLeave}
-          title="Disconnects the call and returns to Home Base"
+          onClick={() => setDrawing((d) => !d)}
+          className="rounded-full bg-ocean px-4 py-1.5 text-xs font-bold text-white shadow cursor-pointer"
         >
-          📞 End Call
+          ✏️ Draw &amp; Annotate
         </button>
-      </div>
+        <button
+          onClick={onGoLive}
+          className="rounded-full bg-palm px-4 py-1.5 text-xs font-bold text-white shadow cursor-pointer"
+        >
+          🚀 Go Live Together
+        </button>
+      </footer>
+
+      <MediaCreditsModal
+        isOpen={showMediaModal}
+        onClose={() => setShowMediaModal(false)}
+        mediaList={mediaList}
+        lessonTitle={stageLesson?.title || "Lesson Media"}
+      />
     </div>
   );
 }
 
-/* ── Adventure Wrap-Up: lesson finished, cameras stay on ────── */
-function WrapUpPanel({ lesson, quizResult, onReopen, onEndCall }: {
-  lesson: Lesson | null;
-  quizResult: { score: number; total: number } | null;
-  onReopen: () => void;
-  onEndCall: () => void;
+/* ── Camera Hooks and Utilities ────────────────────────────── */
+function useLocalCamera(initial?: { camId?: string; micId?: string; camOn?: boolean; micOn?: boolean }) {
+  const streamRef = useRef<MediaStream | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [camId, setCamId] = useState(initial?.camId ?? "");
+  const [micId, setMicId] = useState(initial?.micId ?? "");
+  const [camOn, setCamOn] = useState(initial?.camOn ?? true);
+  const [micOn, setMicOn] = useState(initial?.micOn ?? true);
+  const [cams, setCams] = useState<{ id: string; label: string }[]>([]);
+  const [mics, setMics] = useState<{ id: string; label: string }[]>([]);
+  const [tick, setTick] = useState(0);
+
+  const start = useCallback(async () => {
+    try {
+      streamRef.current?.getTracks().forEach((t) => t.stop());
+      const s = await navigator.mediaDevices.getUserMedia({
+        video: camId ? { deviceId: { exact: camId } } : true,
+        audio: micId ? { deviceId: { exact: micId } } : true,
+      });
+      streamRef.current = s;
+      s.getVideoTracks().forEach((t) => (t.enabled = camOn));
+      s.getAudioTracks().forEach((t) => (t.enabled = micOn));
+      setError(null);
+      setTick((t) => t + 1);
+
+      const devs = await navigator.mediaDevices.enumerateDevices();
+      setCams(
+        devs
+          .filter((d) => d.kind === "videoinput")
+          .map((d, i) => ({ id: d.deviceId, label: d.label || `Camera ${i + 1}` }))
+      );
+      setMics(
+        devs
+          .filter((d) => d.kind === "audioinput")
+          .map((d, i) => ({ id: d.deviceId, label: d.label || `Microphone ${i + 1}` }))
+      );
+    } catch {
+      setError("Please allow camera and microphone access so Teacher Sharon and the family can see you! 💙");
+    }
+  }, [camId, micId, camOn, micOn]);
+
+  useEffect(() => {
+    void start();
+    return () => {
+      streamRef.current?.getTracks().forEach((t) => t.stop());
+    };
+  }, [start]);
+
+  return {
+    streamRef,
+    error,
+    camId,
+    setCamId,
+    micId,
+    setMicId,
+    camOn,
+    toggleCam: () => setCamOn((v) => !v),
+    micOn,
+    toggleMic: () => setMicOn((v) => !v),
+    cams,
+    mics,
+    start,
+    tick,
+  };
+}
+
+function LocalCameraView({
+  streamRef,
+  camOn,
+  tick,
+  className = "",
+  label,
+}: {
+  streamRef: React.RefObject<MediaStream | null>;
+  camOn: boolean;
+  tick: number;
+  className?: string;
+  label: string;
 }) {
-  const next = lesson ? allLessons.find((l) => l.order === lesson.order + 1) : null;
+  const ref = useRef<HTMLVideoElement>(null);
+  useEffect(() => {
+    if (ref.current && streamRef.current) {
+      ref.current.srcObject = streamRef.current;
+      void ref.current.play().catch(() => {});
+    }
+  }, [streamRef, tick]);
+
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center gap-3 overflow-y-auto p-6 text-center">
-      <div className="text-5xl">🌅</div>
-      <h2 className="wj-outline font-display text-2xl sm:text-3xl">Wonderful work today!</h2>
-      <p className="font-hand text-lg text-ink-soft">
-        {lesson ? `${lesson.emoji} ${lesson.title} — adventure complete!` : "Adventure complete!"}
-      </p>
-      <div className="flex flex-wrap justify-center gap-2">
-        {quizResult && <span className="wj-chip">🧠 Quiz: {quizResult.score}/{quizResult.total}</span>}
-        {lesson?.destinationId && <span className="wj-chip">🛂 Passport stamp earned</span>}
-        <span className="wj-chip">📔 Journal saved</span>
-      </div>
-      {next && (
-        <p className="font-hand rounded-2xl bg-sand px-4 py-2 text-base text-ink-soft">
-          Next adventure: <b>{next.emoji} {next.title}</b> ┬╖ {next.date}
-        </p>
-      )}
-      <p className="font-hand text-base text-ink-soft">
-        Stay and chat as long as you like — the call is still on. 💙
-      </p>
-      <div className="mt-1 flex flex-wrap justify-center gap-3">
-        <button className="wj-btn wj-btn-ghost text-sm" onClick={onReopen}>Γå⌐∩╕Å Reopen the lesson</button>
-        <button className="wj-btn wj-btn-hibiscus" onClick={onEndCall}>📞 End Call</button>
-      </div>
+    <div className={`relative ${className} bg-ink overflow-hidden flex items-center justify-center`}>
+      <video ref={ref} autoPlay muted playsInline className={`h-full w-full object-cover ${camOn ? "" : "hidden"}`} />
+      {!camOn && <CameraOffTile />}
+      <span className="absolute bottom-2 left-2 rounded-full bg-ink/70 px-2.5 py-0.5 text-xs font-bold text-white">
+        {label} (you)
+      </span>
     </div>
   );
 }
 
-/* ── Failsafe: a lesson crash must never end the call ───────── */
-class LessonBoundary extends React.Component<
-  { children: React.ReactNode; onReturnToWrapUp: () => void },
-  { failed: boolean }
-> {
-  state = { failed: false };
-  static getDerivedStateFromError() {
-    return { failed: true };
-  }
-  render() {
-    if (!this.state.failed) return this.props.children;
-    return (
-      <div className="flex h-full w-full flex-col items-center justify-center gap-3 p-6 text-center">
-        <div className="text-4xl">🛶</div>
-        <h2 className="font-display text-xl">That lesson page hit a wave — but the call is still on!</h2>
-        <p className="font-hand text-ink-soft">Cameras and microphones are untouched. You can keep talking.</p>
-        <div className="flex gap-3">
-          <button className="wj-btn wj-btn-ghost text-sm" onClick={() => this.setState({ failed: false })}>🔄 Retry Lesson</button>
-          <button className="wj-btn text-sm" onClick={this.props.onReturnToWrapUp}>Return to Wrap-Up</button>
-        </div>
-      </div>
-    );
-  }
-}
-
-function ParticipantTile({ participant, isLocal, hand, version, onClick, tall = false }: {
+function ParticipantTile({
+  participant,
+  isLocal,
+  hand,
+  version,
+  tall = false,
+}: {
   participant: Participant;
   isLocal: boolean;
   hand: boolean;
   version: number;
-  onClick?: () => void;
-  tall?: boolean; // family tile gets slightly more visual prominence
+  tall?: boolean;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -630,11 +1149,6 @@ function ParticipantTile({ participant, isLocal, hand, version, onClick, tall = 
   const camTrack = camPub?.track;
   const micTrack = micPub?.track;
 
-  // ΓÜá∩╕Å Anti-glitch fix: attach/detach only when the TRACK ITSELF changes,
-  // never on `version` (which also bumps on ActiveSpeakersChanged, firing
-  // ~every second for the whole room). Re-attaching that often tore down
-  // and rebuilt the live video every second — the flicker/freeze both
-  // sides were seeing during class.
   useEffect(() => {
     if (camTrack && videoRef.current) camTrack.attach(videoRef.current);
     if (!isLocal && micTrack && audioRef.current) micTrack.attach(audioRef.current);
@@ -645,22 +1159,31 @@ function ParticipantTile({ participant, isLocal, hand, version, onClick, tall = 
   }, [camTrack, micTrack, isLocal]);
 
   const camLive = !!camPub?.track && !camPub.isMuted;
-  void version; // still forces the re-render that keeps isSpeaking/mute UI fresh
+  void version;
   const muted = !micPub?.track || micPub.isMuted;
 
   return (
     <div
-      onClick={onClick}
-      title={onClick ? "Tap to pin / enlarge" : undefined}
-      className={`relative ${tall ? "aspect-[4/3]" : "aspect-video"} w-full overflow-hidden rounded-2xl bg-ink ${participant.isSpeaking ? "ring-4 ring-mango" : ""} ${onClick ? "cursor-pointer" : ""}`}
+      className={`relative ${
+        tall ? "aspect-[4/3]" : "aspect-video"
+      } w-full overflow-hidden rounded-2xl bg-ink shadow ${
+        participant.isSpeaking ? "ring-4 ring-mango" : ""
+      }`}
     >
-      <video ref={videoRef} autoPlay muted={isLocal} playsInline className={`h-full w-full object-cover ${camLive ? "" : "hidden"}`} />
+      <video
+        ref={videoRef}
+        autoPlay
+        muted={isLocal}
+        playsInline
+        className={`h-full w-full object-cover ${camLive ? "" : "hidden"}`}
+      />
       {!isLocal && <audio ref={audioRef} autoPlay />}
-      {!camLive && (
-        <CameraOffTile />
-      )}
+      {!camLive && <CameraOffTile />}
       <span className="absolute bottom-2 left-2 rounded-full bg-ink/70 px-2.5 py-0.5 text-xs font-bold text-white">
-        {participant.name || participant.identity}{isLocal ? " (you)" : ""}{hand ? " ✋" : ""}{muted ? " 🔇" : ""}
+        {participant.name || participant.identity}
+        {isLocal ? " (you)" : ""}
+        {hand ? " ✋" : ""}
+        {muted ? " 🔇" : ""}
       </span>
     </div>
   );
@@ -675,172 +1198,4 @@ function ShareView({ track }: { track: MediaStreamTrack }) {
     }
   }, [track]);
   return <video ref={ref} autoPlay playsInline className="h-full w-full bg-ink object-contain" />;
-}
-
-/* ── Solo classroom (no/wrong class code — local camera only) ── */
-function SoloRoom({ lesson, isGuest = false, onGoLive, onLeave }: {
-  lesson: Lesson | null;
-  isGuest?: boolean;
-  onGoLive: () => void;
-  onLeave: () => void;
-}) {
-  const call = useCall();
-  const [sharing, setSharing] = useState(false);
-  const [stageLesson, setStageLesson] = useState<Lesson | null>(null);
-  const [drawing, setDrawing] = useState(false);
-  const shareRef = useRef<MediaStream | null>(null);
-  const shareVideoRef = useRef<HTMLVideoElement>(null);
-  const soloVideoRef = useRef<HTMLVideoElement>(null);
-  const [tvMode, setTvMode] = useStored<boolean>("wj-tv-mode", false);
-
-  useEffect(() => {
-    if (soloVideoRef.current && call.soloStream) {
-      soloVideoRef.current.srcObject = call.soloStream;
-      void soloVideoRef.current.play().catch(() => {});
-    }
-  }, [call.soloStream]);
-
-  async function toggleShare() {
-    if (sharing) {
-      shareRef.current?.getTracks().forEach((t) => t.stop());
-      shareRef.current = null;
-      setSharing(false);
-      return;
-    }
-    try {
-      const s = await navigator.mediaDevices.getDisplayMedia({ video: true });
-      shareRef.current = s;
-      s.getVideoTracks()[0].onended = () => setSharing(false);
-      setSharing(true);
-      setTimeout(() => {
-        if (shareVideoRef.current) {
-          shareVideoRef.current.srcObject = s;
-          void shareVideoRef.current.play().catch(() => {});
-        }
-      }, 50);
-    } catch { /* cancelled */ }
-  }
-
-  function leave() {
-    shareRef.current?.getTracks().forEach((t) => t.stop());
-    onLeave();
-  }
-
-  return (
-    <div className={`space-y-3 ${tvMode ? "tv-mode scale-[1.02] origin-top contrast-125 transition-transform" : "transition-transform"}`}>
-      <div className="wj-card-bubble wj-note flex flex-wrap items-center justify-between gap-2 p-3 text-center">
-        {isGuest ? (
-          // 🛡️ GUEST DEMO — the full classroom experience, connected to
-          // NOBODY. A guest camera can never enter a family's real room
-          // (the server refuses codeless connections), so families stay
-          // private and guests still feel the magic.
-          <p className="font-display text-sm text-white">
-            ✨ Demo classroom — this is how your family's class will look and feel.
-            Love it? Ask Teacher Sharon for your family's own code! 💙
-          </p>
-        ) : (
-          <>
-            <p className="font-display text-sm text-white">
-              Your camera is on! We couldn't reach the live room just now. 💙
-            </p>
-            <button className="wj-btn !px-4 !py-1.5 text-sm" onClick={onGoLive}>🚀 Try again</button>
-          </>
-        )}
-      </div>
-
-      {/* Focused room: lesson stage left ┬╖ camera rail right, family ABOVE teacher */}
-      <div className="grid grid-cols-1 gap-3 lg:grid-cols-[3fr_1fr] lg:items-start">
-        <div className={`wj-card relative overflow-hidden p-0 ${stageLesson ? "h-[74vh] lg:h-[78vh]" : "flex min-h-[46vh] items-center justify-center lg:h-[78vh]"}`}>
-          {sharing && (
-            <div className="absolute inset-0 z-20 bg-ink">
-              <video ref={shareVideoRef} autoPlay playsInline className="h-full w-full object-contain" />
-            </div>
-          )}
-          {stageLesson ? (
-            <AdventureTheater lesson={stageLesson} embedded onExit={() => setStageLesson(null)} />
-          ) : (
-            <div className="flex flex-col items-center gap-4 overflow-y-auto p-8 text-center">
-              <div className="text-6xl">{lesson?.emoji ?? "🌴"}</div>
-              <h2 className="wj-outline font-display text-2xl sm:text-3xl">{lesson?.title ?? "Today's Adventure"}</h2>
-              <p className="font-hand text-lg text-ink-soft">{lesson?.subtitle}</p>
-              {lesson && (
-                <button className="wj-btn text-lg" onClick={() => setStageLesson(lesson)}>
-                  🎬 Open the Adventure
-                </button>
-              )}
-            </div>
-          )}
-          {drawing && <AnnotationLayer onClose={() => setDrawing(false)} />}
-        </div>
-
-        {/* Camera rail: 👨‍👩‍👧‍👦 Family ABOVE 👩‍🏫 Teacher */}
-        <div className="flex flex-col gap-3 lg:sticky lg:top-3">
-          <div>
-            <p className="mb-1 text-center text-[11px] font-bold uppercase tracking-wide text-ink-soft">
-              👨‍👩‍👧‍👦 {isGuest ? call.name || "Your Family" : familyName}
-            </p>
-            {call.isTeacher ? (
-              <div className="flex aspect-[4/3] w-full flex-col items-center justify-center rounded-2xl border-2 border-dashed border-sand-deep bg-sand text-center text-ink-soft">
-                <span className="text-3xl">💙</span>
-                <span className="font-hand px-2 text-sm">Family video appears once you go live together</span>
-              </div>
-            ) : (
-              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-ink">
-                <video ref={soloVideoRef} autoPlay muted playsInline className={`h-full w-full object-cover ${call.camOn ? "" : "hidden"}`} />
-                {!call.camOn && (
-                  <CameraOffTile />
-                )}
-                <span className="absolute bottom-2 left-2 rounded-full bg-ink/70 px-2.5 py-0.5 text-xs font-bold text-white">{call.name || familyName}</span>
-              </div>
-            )}
-          </div>
-          <div>
-            <p className="mb-1 text-center text-[11px] font-bold uppercase tracking-wide text-ink-soft">👩‍🏫 {teacherName}</p>
-            {call.isTeacher ? (
-              <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-ink">
-                <video ref={call.isTeacher ? soloVideoRef : undefined} autoPlay muted playsInline className={`h-full w-full object-cover ${call.camOn ? "" : "hidden"}`} />
-                {!call.camOn && (
-                  <CameraOffTile />
-                )}
-                <span className="absolute bottom-2 left-2 rounded-full bg-ink/70 px-2.5 py-0.5 text-xs font-bold text-white">{call.name || teacherName}</span>
-              </div>
-            ) : (
-              <div className="flex aspect-video w-full flex-col items-center justify-center rounded-2xl border-2 border-dashed border-sand-deep bg-sand text-center text-ink-soft">
-                <span className="text-3xl">💙</span>
-                <span className="font-hand px-2 text-sm">Teacher Sharon appears once you go live together</span>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-
-      <div className="wj-card sticky bottom-2 z-10 flex flex-wrap items-center justify-center gap-2 p-3">
-        <ToolBtn onClick={call.toggleMic} active={call.micOn} label={call.micOn ? "🎤 Mic" : "🔇 Muted"} />
-        <ToolBtn onClick={call.toggleCam} active={call.camOn} label={call.camOn ? "📷 Cam" : "📷 Off"} />
-        <ToolBtn onClick={() => void toggleShare()} active={sharing} label="🖥️ Share" />
-        <ToolBtn onClick={() => setDrawing((d) => !d)} active={drawing} label="✏️ Draw" />
-        <span className="mx-1 hidden h-6 w-px bg-sand-deep sm:block" />
-        <button
-          className="rounded-full bg-hibiscus px-4 py-2 font-display text-sm text-white transition-[filter] hover:brightness-95"
-          onClick={leave}
-          title="Disconnects and returns to Home Base"
-        >
-          📞 End Call
-        </button>
-      </div>
-    </div>
-  );
-}
-
-function ToolBtn({ onClick, active, label }: { onClick: () => void; active: boolean; label: string }) {
-  return (
-    <button
-      onClick={onClick}
-      className={`rounded-full px-3.5 py-2 font-display text-sm transition-colors ${
-        active ? "bg-ocean text-white shadow" : "bg-white text-ink-soft hover:bg-sand-deep"
-      }`}
-    >
-      {label}
-    </button>
-  );
 }

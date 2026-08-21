@@ -1,45 +1,8 @@
-﻿const fs = require("fs");
-const { execSync } = require("child_process");
+const fs = require("fs");
 const path = require("path");
 
-const tempDir = path.join(__dirname, "../temp-validate-september");
-console.log("Compiling stage 4 lessons for validation...");
-
-const tempTsconfig = {
-  compilerOptions: {
-    target: "ES2022",
-    module: "commonjs",
-    moduleResolution: "node",
-    esModuleInterop: true,
-    baseUrl: ".",
-    paths: {
-      "@/*": ["src/*"]
-    },
-    outDir: "temp-validate-september",
-    noEmit: false,
-    skipLibCheck: true
-  },
-  include: ["src/config/lessons-stage4.ts", "src/lib/curriculum-schema.ts", "src/config/stage4/*.ts"]
-};
-
-fs.writeFileSync(
-  path.join(__dirname, "../tsconfig.temp-september.json"),
-  JSON.stringify(tempTsconfig, null, 2)
-);
-
-try {
-  execSync("npx tsc -p tsconfig.temp-september.json", { stdio: "pipe" });
-} catch (err) {
-  console.error("Compilation failed:", err.stdout ? err.stdout.toString() : err.message);
-  process.exit(1);
-} finally {
-  if (fs.existsSync(path.join(__dirname, "../tsconfig.temp-september.json"))) {
-    fs.unlinkSync(path.join(__dirname, "../tsconfig.temp-september.json"));
-  }
-}
-
-const curriculumSchema = require(path.join(tempDir, "lib/curriculum-schema.js"));
-const { stage4Lessons } = require(path.join(tempDir, "config/lessons-stage4.js"));
+const { stage4Lessons } = require("../src/config/lessons-stage4");
+const curriculumSchema = require("../src/lib/curriculum-schema");
 
 const EXPECTED_MANIFEST = [
   { id: "lesson-14-greetings", date: "2026-09-01", weekday: "Tuesday" },
@@ -355,7 +318,9 @@ matrix.forEach(m => {
   }
 });
 
-fs.rmSync(tempDir, { recursive: true, force: true });
+try {
+  fs.rmSync(tempDir, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
+} catch {}
 
 if (!allPassed || globalErrors.length > 0) {
   console.error("\nFAIL: One or more September curriculum quality gates failed.");

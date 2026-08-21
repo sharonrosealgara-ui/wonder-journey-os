@@ -1,64 +1,149 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  AnnotationTool,
+  NormalizedPoint,
+  SynchronizedStroke,
+  normalizeStageCoordinates,
+  denormalizeStageCoordinates,
+  PermissionLevel,
+} from "@/lib/classroom-protocol";
 
-// 🎨 Live Teaching Whiteboard — a canvas annotation layer over the lesson.
-// Draw / highlight / shapes / text / erase / laser-point, live via the
-// teacher's screen-share (no realtime backend needed). Only mounts when
-// the teacher turns it on, so it can never interfere with the theater.
-
-type Tool = "pen" | "highlighter" | "line" | "arrow" | "circle" | "rect" | "text" | "eraser" | "laser";
-type Pt = { x: number; y: number };
-
-type Stroke =
-  | { kind: "path"; tool: "pen" | "highlighter"; color: string; width: number; points: Pt[] }
-  | { kind: "shape"; tool: "line" | "arrow" | "circle" | "rect"; color: string; width: number; a: Pt; b: Pt }
-  | { kind: "text"; color: string; size: number; x: number; y: number; text: string };
+// 🎨 Real-Time Synchronized Classroom Annotation Layer
+// Operates on normalized stage coordinates (0.0 to 1.0) so annotations
+// align identically across desktop (1920x1080, 1366x768), tablet (768x1024),
+// and mobile (390x844) viewports.
 
 const COLORS = ["#e4573b", "#e5a917", "#2e9563", "#14837c", "#cf3e6b", "#274472", "#ffffff"];
 const WIDTHS = [3, 6, 12];
 
-const TOOLS: { id: Tool; emoji: string; label: string; key: string }[] = [
+const TOOLS: { id: AnnotationTool; emoji: string; label: string; key: string }[] = [
+  { id: "pointer", emoji: "👆", label: "Pointer", key: "V" },
+  { id: "laser", emoji: "🔦", label: "Laser", key: "K" },
   { id: "pen", emoji: "🖊️", label: "Pen", key: "P" },
   { id: "highlighter", emoji: "🖍️", label: "Highlighter", key: "H" },
-  { id: "line", emoji: "📏", label: "Line", key: "L" },
-  { id: "arrow", emoji: "➡️", label: "Arrow", key: "A" },
+  { id: "underline", emoji: "〰️", label: "Underline", key: "U" },
   { id: "circle", emoji: "⭕", label: "Circle", key: "C" },
   { id: "rect", emoji: "⬜", label: "Rectangle", key: "R" },
-  { id: "text", emoji: "🔤", label: "Text", key: "T" },
+  { id: "line", emoji: "📏", label: "Line", key: "L" },
+  { id: "arrow", emoji: "➡️", label: "Arrow", key: "A" },
   { id: "eraser", emoji: "🧽", label: "Eraser", key: "E" },
-  { id: "laser", emoji: "🔦", label: "Laser", key: "K" },
 ];
 
-export function AnnotationLayer({ onClose }: { onClose: () => void }) {
+export interface RemotePointer {
+  senderId: string;
+  displayName: string;
+  role: "teacher" | "family" | "student";
+  point: NormalizedPoint;
+  color: string;
+  active: boolean;
+}
+
+interface AnnotationLayerProps {
+  onClose?: () => void;
+  isTeacher?: boolean;
+  permission?: PermissionLevel;
+  userId?: string;
+  userName?: string;
+  userRole?: "teacher" | "family" | "student";
+  slideIndex?: number;
+  onEmitStroke?: (stroke: SynchronizedStroke) => void;
+  onEmitPointer?: (point: NormalizedPoint, active: boolean) => void;
+  onClearAll?: () => void;
+  remoteStrokes?: SynchronizedStroke[];
+  remotePointers?: RemotePointer[];
+}
+
+export function AnnotationLayer({
+  onClose,
+  isTeacher = true,
+  permission = "annotate",
+  userId = "local-user",
+  userName = "Teacher",
+  userRole = "teacher",
+  slideIndex = 0,
+  onEmitStroke,
+  onEmitPointer,
+  onClearAll,
+  remoteStrokes = [],
+  remotePointers = [],
+}: AnnotationLayerProps) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const strokesRef = useRef<Stroke[]>([]);
-  const redoRef = useRef<Stroke[]>([]);
-  const draftRef = useRef<Stroke | null>(null);
-  const laserRef = useRef<Pt | null>(null);
-  const [tool, setTool] = useState<Tool>("pen");
+  const localStrokesRef = useRef<SynchronizedStroke[]>([]);
+  const draftPointsRef = useRef<NormalizedPoint[]>([]);
+  const isDrawingRef = useRef(false);
+  const currentPointerRef = useRef<NormalizedPoint | null>(null);
+
+  const [tool, setTool] = useState<AnnotationTool>("pen");
   const [color, setColor] = useState(COLORS[0]);
   const [width, setWidth] = useState(WIDTHS[1]);
-  const [count, setCount] = useState(0); // drives undo button enabled state
-  const [textBox, setTextBox] = useState<{ x: number; y: number; value: string } | null>(null);
+  const [undoStack, setUndoStack] = useState<SynchronizedStroke[]>([]);
+  const [redoStack, setRedoStack] = useState<SynchronizedStroke[]>([]);
 
+  const isInteractive = isTeacher || permission === "annotate" || permission === "full_interactive";
+  const isPointerOnly = !isTeacher && permission === "pointer_only";
+
+  // Redraw all strokes (local + remote) and remote laser pointers
   const redraw = useCallback(() => {
     const cv = canvasRef.current;
     const ctx = cv?.getContext("2d");
     if (!cv || !ctx) return;
-    const dpr = window.devicePixelRatio || 1;
-    ctx.clearRect(0, 0, cv.width / dpr, cv.height / dpr);
-    const all = draftRef.current ? [...strokesRef.current, draftRef.current] : strokesRef.current;
-    for (const s of all) drawStroke(ctx, s);
-    if (laserRef.current) drawLaser(ctx, laserRef.current);
-  }, []);
 
-  // size the canvas to its wrapper (crisp on any screen)
+    const dpr = window.devicePixelRatio || 1;
+    const w = cv.width / dpr;
+    const h = cv.height / dpr;
+
+    ctx.clearRect(0, 0, w, h);
+
+    // Filter strokes for active slide
+    const allStrokes = [...localStrokesRef.current, ...remoteStrokes].filter(
+      (s) => s.slideIndex === slideIndex
+    );
+
+    // 1. Draw completed strokes
+    for (const stroke of allStrokes) {
+      drawNormalizedStroke(ctx, stroke, w, h);
+    }
+
+    // 2. Draw active local draft stroke
+    if (draftPointsRef.current.length > 0) {
+      const draftStroke: SynchronizedStroke = {
+        id: "draft",
+        senderId: userId,
+        senderName: userName,
+        senderRole: userRole,
+        tool,
+        color,
+        width,
+        points: draftPointsRef.current,
+        slideIndex,
+        createdAt: Date.now(),
+      };
+      drawNormalizedStroke(ctx, draftStroke, w, h);
+    }
+
+    // 3. Draw remote pointers
+    for (const p of remotePointers) {
+      if (p.active && p.point) {
+        drawRemotePointer(ctx, p, w, h);
+      }
+    }
+
+    // 4. Draw local laser pointer if active
+    if (tool === "laser" && currentPointerRef.current) {
+      const px = denormalizeStageCoordinates(currentPointerRef.current, w, h);
+      drawLaserDot(ctx, px.x, px.y, color, userName);
+    }
+  }, [remoteStrokes, remotePointers, slideIndex, tool, color, width, userId, userName, userRole]);
+
+  // Handle Canvas Resize and DPI Scaling
   useEffect(() => {
     const cv = canvasRef.current;
     const wrap = wrapRef.current;
     if (!cv || !wrap) return;
+
     const fit = () => {
       const r = wrap.getBoundingClientRect();
       const dpr = window.devicePixelRatio || 1;
@@ -70,340 +155,339 @@ export function AnnotationLayer({ onClose }: { onClose: () => void }) {
       if (ctx) ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       redraw();
     };
+
     fit();
     const ro = new ResizeObserver(fit);
     ro.observe(wrap);
     return () => ro.disconnect();
   }, [redraw]);
 
-  // keyboard shortcuts
-  useEffect(() => {
-    function onKey(e: KeyboardEvent) {
-      if (textBox) return; // typing text
-      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "z") {
-        e.preventDefault();
-        if (e.shiftKey) redo();
-        else undo();
-        return;
-      }
-      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "y") {
-        e.preventDefault();
-        redo();
-        return;
-      }
-      if (e.key === "Escape") {
-        onClose();
-        return;
-      }
-      const t = TOOLS.find((x) => x.key.toLowerCase() === e.key.toLowerCase());
-      if (t) setTool(t.id);
-    }
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [textBox]);
+  // Pointer Down / Start Drawing
+  const handlePointerDown = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    if (!wrapRef.current) return;
+    if (!isInteractive && !isPointerOnly) return;
 
-  function pos(e: React.PointerEvent): Pt {
-    const r = canvasRef.current!.getBoundingClientRect();
-    return { x: e.clientX - r.left, y: e.clientY - r.top };
-  }
+    const rect = wrapRef.current.getBoundingClientRect();
+    const normPt = normalizeStageCoordinates(e.clientX, e.clientY, rect);
 
-  function onDown(e: React.PointerEvent) {
-    (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
-    const p = pos(e);
-    if (tool === "text") {
-      setTextBox({ x: p.x, y: p.y, value: "" });
-      return;
-    }
-    if (tool === "laser") {
-      laserRef.current = p;
+    if (tool === "laser" || tool === "pointer") {
+      currentPointerRef.current = normPt;
+      onEmitPointer?.(normPt, true);
       redraw();
       return;
     }
-    if (tool === "eraser") {
-      eraseAt(p);
-      return;
-    }
-    if (tool === "pen" || tool === "highlighter") {
-      draftRef.current = { kind: "path", tool, color, width, points: [p] };
-    } else {
-      draftRef.current = { kind: "shape", tool, color, width, a: p, b: p };
-    }
-    redraw();
-  }
 
-  function onMove(e: React.PointerEvent) {
-    const p = pos(e);
-    if (tool === "laser") {
-      laserRef.current = p;
+    if (!isInteractive) return;
+
+    isDrawingRef.current = true;
+    draftPointsRef.current = [normPt];
+    (e.target as HTMLElement).setPointerCapture(e.pointerId);
+    redraw();
+  };
+
+  // Pointer Move
+  const handlePointerMove = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    if (!wrapRef.current) return;
+    const rect = wrapRef.current.getBoundingClientRect();
+    const normPt = normalizeStageCoordinates(e.clientX, e.clientY, rect);
+
+    if (tool === "laser" || tool === "pointer") {
+      currentPointerRef.current = normPt;
+      onEmitPointer?.(normPt, true);
       redraw();
       return;
     }
-    const d = draftRef.current;
-    if (!d) {
-      if (e.buttons && tool === "eraser") eraseAt(p);
-      return;
-    }
-    if (d.kind === "path") d.points.push(p);
-    else if (d.kind === "shape") d.b = p;
-    redraw();
-  }
 
-  function onUp() {
-    if (draftRef.current) {
-      strokesRef.current.push(draftRef.current);
-      draftRef.current = null;
-      redoRef.current = []; // a new stroke clears the redo history
-      setCount((c) => c + 1);
-    }
-    if (tool === "laser") {
-      laserRef.current = null;
-    }
-    redraw();
-  }
-
-  function eraseAt(p: Pt) {
-    const before = strokesRef.current.length;
-    strokesRef.current = strokesRef.current.filter((s) => !strokeHit(s, p, 16));
-    if (strokesRef.current.length !== before) {
-      setCount((c) => c + 1);
+    if (isDrawingRef.current && isInteractive) {
+      draftPointsRef.current.push(normPt);
       redraw();
     }
-  }
+  };
 
-  function undo() {
-    const s = strokesRef.current.pop();
-    if (s) redoRef.current.push(s);
-    setCount((c) => c + 1);
-    redraw();
-  }
-  function redo() {
-    const s = redoRef.current.pop();
-    if (s) strokesRef.current.push(s);
-    setCount((c) => c + 1);
-    redraw();
-  }
-  function clearAll() {
-    strokesRef.current = [];
-    redoRef.current = [];
-    draftRef.current = null;
-    setCount((c) => c + 1);
-    redraw();
-  }
+  // Pointer Up / Finish Stroke
+  const handlePointerUp = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    if (tool === "laser" || tool === "pointer") {
+      currentPointerRef.current = null;
+      onEmitPointer?.({ x: 0, y: 0 }, false);
+      redraw();
+      return;
+    }
 
-  function commitText() {
-    if (textBox && textBox.value.trim()) {
-      strokesRef.current.push({
-        kind: "text",
+    if (!isDrawingRef.current || !isInteractive) return;
+    isDrawingRef.current = false;
+
+    if (draftPointsRef.current.length > 1) {
+      const newStroke: SynchronizedStroke = {
+        id: `stroke-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
+        senderId: userId,
+        senderName: userName,
+        senderRole: userRole,
+        tool,
         color,
-        size: Math.max(18, width * 4),
-        x: textBox.x,
-        y: textBox.y,
-        text: textBox.value,
-      });
-      setCount((c) => c + 1);
+        width,
+        points: [...draftPointsRef.current],
+        slideIndex,
+        createdAt: Date.now(),
+      };
+
+      localStrokesRef.current.push(newStroke);
+      setUndoStack((prev) => [...prev, newStroke]);
+      setRedoStack([]);
+      onEmitStroke?.(newStroke);
     }
-    setTextBox(null);
+
+    draftPointsRef.current = [];
     redraw();
-  }
+  };
+
+  const handleUndo = () => {
+    if (undoStack.length === 0) return;
+    const last = undoStack[undoStack.length - 1];
+    setUndoStack((prev) => prev.slice(0, -1));
+    setRedoStack((prev) => [...prev, last]);
+    localStrokesRef.current = localStrokesRef.current.filter((s) => s.id !== last.id);
+    redraw();
+  };
+
+  const handleRedo = () => {
+    if (redoStack.length === 0) return;
+    const next = redoStack[redoStack.length - 1];
+    setRedoStack((prev) => prev.slice(0, -1));
+    setUndoStack((prev) => [...prev, next]);
+    localStrokesRef.current.push(next);
+    onEmitStroke?.(next);
+    redraw();
+  };
+
+  const handleClear = () => {
+    localStrokesRef.current = [];
+    setUndoStack([]);
+    setRedoStack([]);
+    draftPointsRef.current = [];
+    if (isTeacher) {
+      onClearAll?.();
+    }
+    redraw();
+  };
 
   return (
-    <div ref={wrapRef} className="absolute inset-0 z-30">
+    <div
+      ref={wrapRef}
+      className="absolute inset-0 z-30 touch-none select-none pointer-events-auto"
+      style={{ cursor: tool === "laser" ? "crosshair" : tool === "pointer" ? "default" : "crosshair" }}
+    >
+      {/* Canvas */}
       <canvas
         ref={canvasRef}
-        className={`absolute inset-0 h-full w-full touch-none ${
-          tool === "laser" ? "cursor-none" : "cursor-crosshair"
-        }`}
-        onPointerDown={onDown}
-        onPointerMove={onMove}
-        onPointerUp={onUp}
-        onPointerLeave={() => {
-          if (tool === "laser") {
-            laserRef.current = null;
-            redraw();
-          }
-        }}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        onPointerCancel={handlePointerUp}
+        className="absolute inset-0 h-full w-full"
       />
 
-      {/* inline text box */}
-      {textBox && (
-        <input
-          autoFocus
-          value={textBox.value}
-          onChange={(e) => setTextBox({ ...textBox, value: e.target.value })}
-          onBlur={commitText}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") commitText();
-            if (e.key === "Escape") setTextBox(null);
-          }}
-          placeholder="type…"
-          className="absolute rounded-lg border-2 border-mango bg-white/95 px-2 py-1 font-display text-lg outline-none"
-          style={{ left: textBox.x, top: textBox.y, color }}
-        />
-      )}
+      {/* Floating Toolbar */}
+      <div className="absolute top-4 left-1/2 -translate-x-1/2 flex items-center gap-2 rounded-full border-2 border-sand-deep bg-white/95 px-4 py-2 shadow-xl backdrop-blur-md z-40">
+        {/* Tool Selectors */}
+        <div className="flex items-center gap-1">
+          {TOOLS.map((t) => {
+            const isSelected = tool === t.id;
+            const isAllowed = isInteractive || (isPointerOnly && (t.id === "laser" || t.id === "pointer"));
+            if (!isAllowed) return null;
 
-      {/* ── Floating toolbar ─────────────────────────────────── */}
-      <div className="pointer-events-auto absolute bottom-4 left-1/2 flex max-w-[95vw] -translate-x-1/2 flex-wrap items-center justify-center gap-1.5 rounded-full border-2 border-sand-deep bg-paper/95 px-3 py-2 shadow-xl backdrop-blur">
-        {TOOLS.map((t) => (
+            return (
+              <button
+                key={t.id}
+                onClick={() => setTool(t.id)}
+                title={`${t.label} (${t.key})`}
+                className={`flex h-9 w-9 items-center justify-center rounded-full text-base transition-transform cursor-pointer ${
+                  isSelected
+                    ? "bg-ocean text-white scale-110 shadow-md ring-2 ring-ocean/30"
+                    : "text-ink hover:bg-sand-deep"
+                }`}
+              >
+                {t.emoji}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Color Palette (only for draw tools) */}
+        {isInteractive && tool !== "laser" && tool !== "pointer" && tool !== "eraser" && (
+          <div className="flex items-center gap-1.5 pl-2 border-l border-sand-deep">
+            {COLORS.map((c) => (
+              <button
+                key={c}
+                onClick={() => setColor(c)}
+                className={`h-5 w-5 rounded-full border border-black/10 transition-transform cursor-pointer ${
+                  color === c ? "scale-125 ring-2 ring-ocean shadow-sm" : "hover:scale-110"
+                }`}
+                style={{ backgroundColor: c }}
+                title={`Color: ${c}`}
+              />
+            ))}
+          </div>
+        )}
+
+        {/* Undo / Clear Actions */}
+        {isInteractive && (
+          <div className="flex items-center gap-1 pl-2 border-l border-sand-deep">
+            <button
+              onClick={handleUndo}
+              disabled={undoStack.length === 0}
+              className="flex h-8 px-2.5 items-center justify-center rounded-lg text-xs font-bold text-ink hover:bg-sand-deep disabled:opacity-30 cursor-pointer"
+              title="Undo (Ctrl+Z)"
+            >
+              ↩ Undo
+            </button>
+            <button
+              onClick={handleClear}
+              className="flex h-8 px-2.5 items-center justify-center rounded-lg text-xs font-bold text-sunset hover:bg-sunset/10 cursor-pointer"
+              title={isTeacher ? "Clear all board annotations" : "Clear your annotations"}
+            >
+              🗑️ Clear
+            </button>
+          </div>
+        )}
+
+        {/* Close Button */}
+        {onClose && (
           <button
-            key={t.id}
-            onClick={() => setTool(t.id)}
-            title={`${t.label} (${t.key})`}
-            className={`flex h-9 w-9 items-center justify-center rounded-full text-lg transition-colors ${
-              tool === t.id ? "bg-sunset text-white shadow" : "hover:bg-sand-deep"
-            }`}
+            onClick={onClose}
+            className="ml-1 flex h-7 w-7 items-center justify-center rounded-full bg-sand-deep text-xs font-bold text-ink hover:bg-ink hover:text-white cursor-pointer"
+            title="Close whiteboard (Esc)"
           >
-            {t.emoji}
+            ✕
           </button>
-        ))}
-
-        <span className="mx-1 h-6 w-px bg-sand-deep" />
-
-        {COLORS.map((c) => (
-          <button
-            key={c}
-            onClick={() => setColor(c)}
-            title="Color"
-            className={`h-6 w-6 rounded-full border-2 ${color === c ? "border-ink scale-110" : "border-white"}`}
-            style={{ background: c, boxShadow: "0 1px 3px rgba(39,68,114,.3)" }}
-          />
-        ))}
-
-        <span className="mx-1 h-6 w-px bg-sand-deep" />
-
-        {WIDTHS.map((w, i) => (
-          <button
-            key={w}
-            onClick={() => setWidth(w)}
-            title={["Thin", "Medium", "Thick"][i]}
-            className={`flex h-9 w-8 items-center justify-center rounded-full ${
-              width === w ? "bg-ocean text-white" : "hover:bg-sand-deep"
-            }`}
-          >
-            <span className="rounded-full bg-current" style={{ width: 4 + i * 3, height: 4 + i * 3 }} />
-          </button>
-        ))}
-
-        <span className="mx-1 h-6 w-px bg-sand-deep" />
-
-        <button
-          onClick={undo}
-          disabled={strokesRef.current.length === 0}
-          title="Undo (Ctrl+Z)"
-          className="flex h-9 w-9 items-center justify-center rounded-full text-lg hover:bg-sand-deep disabled:opacity-40"
-        >
-          ↩️
-        </button>
-        <button
-          onClick={redo}
-          disabled={redoRef.current.length === 0}
-          title="Redo (Ctrl+Shift+Z)"
-          className="flex h-9 w-9 items-center justify-center rounded-full text-lg hover:bg-sand-deep disabled:opacity-40"
-        >
-          ↪️
-        </button>
-        <button
-          onClick={clearAll}
-          title="Clear page"
-          className="flex h-9 w-9 items-center justify-center rounded-full text-lg hover:bg-hibiscus/20"
-        >
-          🗑️
-        </button>
-        <button
-          onClick={onClose}
-          title="Done (Esc)"
-          className="ml-1 flex h-9 items-center gap-1 rounded-full bg-palm px-3 font-display text-sm text-white shadow hover:brightness-105"
-        >
-          ✓ Done
-        </button>
+        )}
       </div>
-
-      {/* hidden marker so the undo button re-renders on stroke changes */}
-      <span className="hidden">{count}</span>
     </div>
   );
 }
 
-/* ── canvas drawing helpers ─────────────────────────────────── */
+// ── Rendering Utilities ───────────────────────────────────────
 
-function drawStroke(ctx: CanvasRenderingContext2D, s: Stroke) {
+function drawNormalizedStroke(
+  ctx: CanvasRenderingContext2D,
+  stroke: SynchronizedStroke,
+  w: number,
+  h: number
+) {
+  if (!stroke.points || stroke.points.length === 0) return;
+
+  const pts = stroke.points.map((p) => denormalizeStageCoordinates(p, w, h));
+
   ctx.save();
   ctx.lineCap = "round";
   ctx.lineJoin = "round";
-  if (s.kind === "text") {
-    ctx.fillStyle = s.color;
-    ctx.font = `700 ${s.size}px "Baloo 2", system-ui, sans-serif`;
-    ctx.textBaseline = "top";
-    ctx.fillText(s.text, s.x, s.y);
+  ctx.strokeStyle = stroke.color;
+  ctx.fillStyle = stroke.color;
+  ctx.lineWidth = stroke.width;
+
+  if (stroke.tool === "highlighter") {
+    ctx.globalAlpha = 0.35;
+    ctx.lineWidth = stroke.width * 2.5;
+  } else if (stroke.tool === "underline") {
+    ctx.lineWidth = 4;
+  }
+
+  if (stroke.tool === "circle" && pts.length >= 2) {
+    const a = pts[0];
+    const b = pts[pts.length - 1];
+    const rx = Math.abs(b.x - a.x) / 2;
+    const ry = Math.abs(b.y - a.y) / 2;
+    const cx = Math.min(a.x, b.x) + rx;
+    const cy = Math.min(a.y, b.y) + ry;
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
+    ctx.stroke();
     ctx.restore();
     return;
   }
-  ctx.strokeStyle = s.color;
-  if (s.tool === "highlighter") {
-    ctx.globalAlpha = 0.3;
-    ctx.lineWidth = s.width * 3;
-  } else {
-    ctx.lineWidth = s.width;
-  }
-  ctx.beginPath();
-  if (s.kind === "path") {
-    const pts = s.points;
-    if (pts.length) {
-      ctx.moveTo(pts[0].x, pts[0].y);
-      for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
-      if (pts.length === 1) ctx.lineTo(pts[0].x + 0.1, pts[0].y + 0.1);
-    }
-    ctx.stroke();
-  } else if (s.tool === "line" || s.tool === "arrow") {
-    ctx.moveTo(s.a.x, s.a.y);
-    ctx.lineTo(s.b.x, s.b.y);
-    ctx.stroke();
-    if (s.tool === "arrow") drawArrowHead(ctx, s.a, s.b, s.width);
-  } else if (s.tool === "circle") {
-    const cx = (s.a.x + s.b.x) / 2;
-    const cy = (s.a.y + s.b.y) / 2;
-    const rx = Math.abs(s.b.x - s.a.x) / 2;
-    const ry = Math.abs(s.b.y - s.a.y) / 2;
-    ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
-    ctx.stroke();
-  } else if (s.tool === "rect") {
+
+  if (stroke.tool === "rect" && pts.length >= 2) {
+    const a = pts[0];
+    const b = pts[pts.length - 1];
+    ctx.beginPath();
     ctx.strokeRect(
-      Math.min(s.a.x, s.b.x),
-      Math.min(s.a.y, s.b.y),
-      Math.abs(s.b.x - s.a.x),
-      Math.abs(s.b.y - s.a.y)
+      Math.min(a.x, b.x),
+      Math.min(a.y, b.y),
+      Math.abs(b.x - a.x),
+      Math.abs(b.y - a.y)
     );
+    ctx.restore();
+    return;
   }
-  ctx.restore();
-}
 
-function drawArrowHead(ctx: CanvasRenderingContext2D, a: Pt, b: Pt, w: number) {
-  const ang = Math.atan2(b.y - a.y, b.x - a.x);
-  const len = 8 + w * 2;
+  if ((stroke.tool === "line" || stroke.tool === "arrow") && pts.length >= 2) {
+    const a = pts[0];
+    const b = pts[pts.length - 1];
+    ctx.beginPath();
+    ctx.moveTo(a.x, a.y);
+    ctx.lineTo(b.x, b.y);
+    ctx.stroke();
+
+    if (stroke.tool === "arrow") {
+      const angle = Math.atan2(b.y - a.y, b.x - a.x);
+      const headlen = 16;
+      ctx.beginPath();
+      ctx.moveTo(b.x, b.y);
+      ctx.lineTo(
+        b.x - headlen * Math.cos(angle - Math.PI / 6),
+        b.y - headlen * Math.sin(angle - Math.PI / 6)
+      );
+      ctx.moveTo(b.x, b.y);
+      ctx.lineTo(
+        b.x - headlen * Math.cos(angle + Math.PI / 6),
+        b.y - headlen * Math.sin(angle + Math.PI / 6)
+      );
+      ctx.stroke();
+    }
+    ctx.restore();
+    return;
+  }
+
+  // Freehand path (pen, highlighter, underline, eraser)
   ctx.beginPath();
-  ctx.moveTo(b.x, b.y);
-  ctx.lineTo(b.x - len * Math.cos(ang - Math.PI / 6), b.y - len * Math.sin(ang - Math.PI / 6));
-  ctx.moveTo(b.x, b.y);
-  ctx.lineTo(b.x - len * Math.cos(ang + Math.PI / 6), b.y - len * Math.sin(ang + Math.PI / 6));
+  ctx.moveTo(pts[0].x, pts[0].y);
+  for (let i = 1; i < pts.length; i++) {
+    ctx.lineTo(pts[i].x, pts[i].y);
+  }
   ctx.stroke();
-}
-
-function drawLaser(ctx: CanvasRenderingContext2D, p: Pt) {
-  ctx.save();
-  ctx.beginPath();
-  ctx.arc(p.x, p.y, 16, 0, Math.PI * 2);
-  ctx.fillStyle = "rgba(255,60,60,0.25)";
-  ctx.fill();
-  ctx.beginPath();
-  ctx.arc(p.x, p.y, 6, 0, Math.PI * 2);
-  ctx.fillStyle = "rgba(255,20,20,0.95)";
-  ctx.fill();
   ctx.restore();
 }
 
-function strokeHit(s: Stroke, p: Pt, r: number): boolean {
-  const near = (a: Pt) => Math.hypot(a.x - p.x, a.y - p.y) <= r;
-  if (s.kind === "text") return Math.abs(s.x - p.x) < s.size * 3 && Math.abs(s.y - p.y) < s.size;
-  if (s.kind === "path") return s.points.some(near);
-  return near(s.a) || near(s.b) || near({ x: (s.a.x + s.b.x) / 2, y: (s.a.y + s.b.y) / 2 });
+function drawLaserDot(
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  color: string,
+  name: string
+) {
+  ctx.save();
+  // Glowing laser dot
+  ctx.beginPath();
+  ctx.arc(x, y, 8, 0, Math.PI * 2);
+  ctx.fillStyle = color;
+  ctx.shadowColor = color;
+  ctx.shadowBlur = 12;
+  ctx.fill();
+
+  // Name tag
+  ctx.font = "bold 11px sans-serif";
+  ctx.fillStyle = "#ffffff";
+  ctx.shadowBlur = 4;
+  ctx.shadowColor = "rgba(0,0,0,0.8)";
+  ctx.fillText(name, x + 12, y + 4);
+  ctx.restore();
+}
+
+function drawRemotePointer(
+  ctx: CanvasRenderingContext2D,
+  p: RemotePointer,
+  w: number,
+  h: number
+) {
+  const pt = denormalizeStageCoordinates(p.point, w, h);
+  drawLaserDot(ctx, pt.x, pt.y, p.color || "#e4573b", p.displayName);
 }

@@ -1,56 +1,8 @@
-﻿const fs = require("fs");
-const { execSync } = require("child_process");
+const fs = require("fs");
 const path = require("path");
 
-const tempDir = path.join(__dirname, "../temp-validate");
-console.log("Compiling stage 2 lessons for validation...");
-
-const tempTsconfig = {
-  compilerOptions: {
-    target: "ES2022",
-    module: "commonjs",
-    moduleResolution: "node",
-    esModuleInterop: true,
-    baseUrl: ".",
-    paths: {
-      "@/*": ["src/*"]
-    },
-    outDir: "temp-validate",
-    noEmit: false,
-    skipLibCheck: true
-  },
-  include: [
-    "src/config/lessons-stage2.ts",
-    "src/config/stage2/*.ts",
-    "src/lib/curriculum-schema.ts",
-    "src/lib/assessment-state.ts"
-  ]
-};
-
-const tempConfigPath = path.join(__dirname, "../temp-val-tsconfig.json");
-fs.writeFileSync(tempConfigPath, JSON.stringify(tempTsconfig, null, 2), "utf8");
-
-try {
-  execSync(`npx tsc --project temp-val-tsconfig.json`, { stdio: "pipe" });
-} catch (e) {
-  console.error("Compilation failed:", e.stdout ? e.stdout.toString() : e);
-  if (fs.existsSync(tempConfigPath)) fs.unlinkSync(tempConfigPath);
-  process.exit(1);
-}
-
-if (fs.existsSync(tempConfigPath)) fs.unlinkSync(tempConfigPath);
-
-let stage2;
-let curriculumSchema;
-try {
-  stage2 = require("../temp-validate/config/lessons-stage2.js");
-  curriculumSchema = require("../temp-validate/lib/curriculum-schema.js");
-} catch (e) {
-  console.error("Failed to load compiled modules:", e);
-  process.exit(1);
-}
-
-const lessons = stage2.stage2Lessons || [];
+const { stage2Lessons: lessons } = require("../src/config/lessons-stage2");
+const curriculumSchema = require("../src/lib/curriculum-schema");
 
 // Gate: Approved August Lessons
 const APPROVED_RESOURCE_LESSON_IDS = new Set([
@@ -451,8 +403,6 @@ matrix.forEach(m => {
     m.errors.forEach(e => console.log(` - ${e}`));
   }
 });
-
-fs.rmSync(tempDir, { recursive: true, force: true });
 
 if (!allPassed || globalErrors.length > 0) {
   console.error("\nFAIL: One or more August curriculum quality gates failed.");

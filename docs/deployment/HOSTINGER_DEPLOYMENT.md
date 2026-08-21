@@ -1,4 +1,4 @@
-﻿# Hostinger Managed Next.js Deployment Runbook & Staging Gate
+# Hostinger Managed Next.js Deployment Runbook & Staging Gate
 **Project**: Wonder Journey OS  
 **Repository**: `wonder-journey-os`  
 **Target Platform**: Hostinger Managed Web App Hosting (Node.js / Next.js)  
@@ -226,7 +226,7 @@ Execute this checklist immediately following a staging deployment:
   - [ ] Family user attempting to visit `/teacher` -> redirected to `/family`.
   - [ ] Unauthenticated visitor attempting private routes -> redirected to `/login`.
   - [ ] Row-Level Security (RLS) enforces student/family data isolation in Supabase.
-- [ ] **5. Direct Lesson Navigation (All 39 Lessons)**:
+- [ ] **5. Direct Lesson Navigation (All 65 Lessons)**:
   - [ ] August Lessons: `/lessons/lesson-1-world-map` through `lesson-13-august-review`.
   - [ ] September Lessons: `/lessons/lesson-14-greetings` through `lesson-26-september-review`.
   - [ ] October Lessons: `/lessons/lesson-27-bayanihan` through `lesson-39-october-showcase`.

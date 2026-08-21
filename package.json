@@ -5,7 +5,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "validate:release": "node scripts/validate-release-candidate.js",
+    "test": "npx tsx src/__tests__/curriculum.test.ts",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@netlify/blobs": "^10.7.9",

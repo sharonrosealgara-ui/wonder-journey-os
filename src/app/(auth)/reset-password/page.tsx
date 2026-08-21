@@ -1,25 +1,13 @@
-import { cookies } from 'next/headers'
+﻿import { cookies } from 'next/headers'
 import Link from 'next/link'
 import { ResetPasswordForm } from './reset-form'
-import { createServerClient } from '@supabase/ssr'
+import { createClient } from '@/lib/supabase/server'
 
 export default async function ResetPasswordPage() {
   const cookieStore = await cookies()
   const hasMarker = cookieStore.get('recovery_marker')
 
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        getAll() {
-          return cookieStore.getAll()
-        },
-        setAll() {},
-      },
-    }
-  )
-
+  const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
   if (!hasMarker || !user) {

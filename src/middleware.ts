@@ -1,4 +1,4 @@
-import { createServerClient } from '@supabase/ssr'
+﻿import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
 export async function middleware(request: NextRequest) {
@@ -7,8 +7,8 @@ export async function middleware(request: NextRequest) {
   })
 
   const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co',
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder',
     {
       cookies: {
         getAll() {
@@ -40,6 +40,7 @@ export async function middleware(request: NextRequest) {
     pathname.startsWith('/forgot-password') ||
     pathname.startsWith('/reset-password') ||
     pathname.startsWith('/auth') ||
+    pathname.startsWith('/api') ||
     pathname.startsWith('/_next') ||
     pathname.match(/\.(.*)$/)
 
@@ -75,15 +76,15 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url)
   }
 
-  // Route protection: family cannot access /teacher
-  if (pathname.startsWith('/teacher') && profile.role !== 'teacher') {
+  // Route protection: family cannot access teacher-only routes (/teacher, /prep-email)
+  const isTeacherOnlyRoute = pathname.startsWith('/teacher') || pathname.startsWith('/prep-email')
+  if (isTeacherOnlyRoute && profile.role !== 'teacher') {
     const url = request.nextUrl.clone()
     url.pathname = '/family'
     return NextResponse.redirect(url)
   }
 
-  // Teacher IS allowed to access /family (to preview the learner experience)
-
+  // Teacher IS allowed to access /family and learner experiences
 
   return supabaseResponse
 }

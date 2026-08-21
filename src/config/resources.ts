@@ -1,4 +1,5 @@
 ﻿import { stage2LessonsFamily } from "./lessons-stage2-family";
+import { stage4LessonsFamily } from "./lessons-stage4-family";
 
 // -------------------------------------------------------------
 // RESOURCE LIBRARY - videos, links & materials for classes.
@@ -19,6 +20,7 @@ const globalResources: Resource[] = [];
 
 // Approved lesson IDs whose curated resources are validated and authorized for the Family Library
 export const APPROVED_RESOURCE_LESSON_IDS = new Set([
+  // Stage 2 (August)
   "lesson-1-world-map",
   "lesson-2-archipelago",
   "lesson-3-luzon-visayas-mindanao",
@@ -31,11 +33,27 @@ export const APPROVED_RESOURCE_LESSON_IDS = new Set([
   "lesson-10-animals",
   "lesson-11-plants",
   "lesson-12-language",
-  "lesson-13-august-review"
+  "lesson-13-august-review",
+  // Stage 4 (September)
+  "lesson-14-greetings",
+  "lesson-15-respectful-gestures",
+  "lesson-16-family",
+  "lesson-17-body-parts",
+  "lesson-18-food",
+  "lesson-19-emotions",
+  "lesson-20-homes",
+  "lesson-21-schools",
+  "lesson-22-markets",
+  "lesson-23-transportation",
+  "lesson-24-carabao",
+  "lesson-25-community-helpers",
+  "lesson-26-september-review"
 ]);
 
+const allApprovedFamilyLessons = [...stage2LessonsFamily, ...stage4LessonsFamily];
+
 // Dynamically extract family-safe resources from approved lessons
-const lessonResources: Resource[] = stage2LessonsFamily.flatMap((lesson) => {
+const lessonResources: Resource[] = allApprovedFamilyLessons.flatMap((lesson) => {
   if (!APPROVED_RESOURCE_LESSON_IDS.has(lesson.id)) return [];
   if (lesson.publicationStatus !== "published" && lesson.publicationStatus !== "pilot") return [];
   if (!lesson.curatedResources) return [];

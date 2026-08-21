@@ -1,5 +1,6 @@
 ﻿import { serializeForFamily, validateCurriculumLesson } from '../lib/curriculum-schema';
 import { stage2Lessons } from '../config/lessons-stage2';
+import { stage4Lessons } from '../config/lessons-stage4';
 
 function fail(message: string): never {
   console.error(`FAIL: ${message}`);
@@ -10,16 +11,17 @@ function pass(message: string): void {
   console.log(`PASS: ${message}`);
 }
 
-console.log('Running Stage 2 curriculum validation tests...');
+console.log('Running Stage 2 & Stage 4 curriculum validation tests...');
 
+// Stage 2 (August) Tests
 if (!Array.isArray(stage2Lessons) || stage2Lessons.length !== 13) {
   fail(`Expected 13 Stage 2 lessons in lessons-stage2.ts, got ${stage2Lessons?.length}`);
 }
 pass('Stage 2 lesson count is correct (13 lessons)');
 
-const lessonIds = stage2Lessons.map((lesson) => lesson.id);
-const uniqueLessonIds = new Set(lessonIds);
-if (uniqueLessonIds.size !== lessonIds.length) {
+const stage2Ids = stage2Lessons.map((lesson) => lesson.id);
+const uniqueStage2Ids = new Set(stage2Ids);
+if (uniqueStage2Ids.size !== stage2Ids.length) {
   fail('Duplicate lesson IDs found in stage2Lessons');
 }
 pass('No duplicate lesson IDs in stage2Lessons');
@@ -27,12 +29,41 @@ pass('No duplicate lesson IDs in stage2Lessons');
 stage2Lessons.forEach((lesson, idx) => {
   const validation = validateCurriculumLesson(lesson);
   if (!validation.ok) {
-    fail(`Lesson ${idx + 1} (${lesson.id}) failed schema validation: ${validation.errors.join('; ')}`);
+    fail(`Stage 2 Lesson ${idx + 1} (${lesson.id}) failed schema validation: ${validation.errors.join('; ')}`);
   }
 });
 pass('All 13 Stage 2 lessons validated against curriculum schema');
 
-stage2Lessons.forEach((lesson) => {
+// Stage 4 (September) Tests
+if (!Array.isArray(stage4Lessons) || stage4Lessons.length !== 13) {
+  fail(`Expected 13 Stage 4 lessons in lessons-stage4.ts, got ${stage4Lessons?.length}`);
+}
+pass('Stage 4 lesson count is correct (13 lessons)');
+
+const stage4Ids = stage4Lessons.map((lesson) => lesson.id);
+const uniqueStage4Ids = new Set(stage4Ids);
+if (uniqueStage4Ids.size !== stage4Ids.length) {
+  fail('Duplicate lesson IDs found in stage4Lessons');
+}
+pass('No duplicate lesson IDs in stage4Lessons');
+
+stage4Lessons.forEach((lesson, idx) => {
+  const validation = validateCurriculumLesson(lesson);
+  if (!validation.ok) {
+    fail(`Stage 4 Lesson ${idx + 1} (${lesson.id}) failed schema validation: ${validation.errors.join('; ')}`);
+  }
+});
+pass('All 13 Stage 4 lessons validated against curriculum schema');
+
+// Global uniqueness check
+const allIds = [...stage2Ids, ...stage4Ids];
+if (new Set(allIds).size !== allIds.length) {
+  fail('Duplicate lesson IDs detected across Stage 2 and Stage 4');
+}
+pass('All 26 lesson IDs across Stage 2 and Stage 4 are globally unique');
+
+// Family serialization safety check
+[...stage2Lessons, ...stage4Lessons].forEach((lesson) => {
   const serialized = serializeForFamily(lesson);
   if (
     'teacherPreparation' in serialized ||
@@ -50,6 +81,6 @@ stage2Lessons.forEach((lesson) => {
     fail(`Family-visible content missing familyChallenge after serialization for ${lesson.id}`);
   }
 });
-pass('Family serialization excludes teacher-only fields across all 13 lessons');
+pass('Family serialization excludes teacher-only fields across all 26 lessons');
 
-pass('All curriculum tests passed');
+pass('All Stage 2 and Stage 4 curriculum schema tests passed successfully!');

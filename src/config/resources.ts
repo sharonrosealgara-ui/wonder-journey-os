@@ -1,5 +1,6 @@
 ﻿import { stage2LessonsFamily } from "./lessons-stage2-family";
 import { stage4LessonsFamily } from "./lessons-stage4-family";
+import { stage5LessonsFamily } from "./lessons-stage5-family";
 
 // -------------------------------------------------------------
 // RESOURCE LIBRARY - videos, links & materials for classes.
@@ -47,10 +48,24 @@ export const APPROVED_RESOURCE_LESSON_IDS = new Set([
   "lesson-23-transportation",
   "lesson-24-carabao",
   "lesson-25-community-helpers",
-  "lesson-26-september-review"
+  "lesson-26-september-review",
+  // Stage 5 (October)
+  "lesson-27-bayanihan",
+  "lesson-28-jose-rizal",
+  "lesson-29-andres-bonifacio",
+  "lesson-30-indigenous-peoples",
+  "lesson-31-history-timeline",
+  "lesson-32-mayon-volcano",
+  "lesson-33-weather-climate",
+  "lesson-34-tropical-forests",
+  "lesson-35-coral-reefs",
+  "lesson-36-philippine-eagle",
+  "lesson-37-environmental-stewardship",
+  "lesson-38-october-review",
+  "lesson-39-october-showcase"
 ]);
 
-const allApprovedFamilyLessons = [...stage2LessonsFamily, ...stage4LessonsFamily];
+const allApprovedFamilyLessons = [...stage2LessonsFamily, ...stage4LessonsFamily, ...stage5LessonsFamily];
 
 // Dynamically extract family-safe resources from approved lessons
 const lessonResources: Resource[] = allApprovedFamilyLessons.flatMap((lesson) => {

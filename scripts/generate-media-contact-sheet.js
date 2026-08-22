@@ -1,10 +1,17 @@
 const fs = require("fs");
 const path = require("path");
 
-const { mediaRegistry, getAllMedia } = require("../src/config/media-registry");
-const allMedia = getAllMedia();
+const registryPath = path.join(__dirname, "../src/config/media-registry.ts");
+const registryCode = fs.readFileSync(registryPath, "utf8");
+const jsonMatch = registryCode.match(/export const mediaRegistry:\s*FactualMedia\[\]\s*=\s*(\[[\s\S]*?\]);\s*export function/);
+const allMedia = jsonMatch ? JSON.parse(jsonMatch[1]) : [];
 
 console.log(`Generating visual contact sheet for ${allMedia.length} media items...`);
+
+function escapeHtml(str) {
+  if (!str) return "";
+  return str.toString().replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
 
 const html = `<!DOCTYPE html>
 <html lang="en">
@@ -37,6 +44,7 @@ const html = `<!DOCTYPE html>
     .subtitle { color: var(--text-muted); font-size: 15px; }
     .stats {
       display: flex;
+      flex-wrap: wrap;
       gap: 24px;
       margin-top: 16px;
       padding: 16px;
@@ -69,7 +77,7 @@ const html = `<!DOCTYPE html>
       overflow: hidden;
       border-bottom: 1px solid var(--border);
     }
-    .thumb-wrap img, .thumb-wrap object {
+    .thumb-wrap img {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -121,7 +129,7 @@ const html = `<!DOCTYPE html>
       <div class="stat-item">Lessons Covered: <span class="stat-val">65 / 65</span></div>
       <div class="stat-item">Photographs: <span class="stat-val">${allMedia.filter(m => m.classification === 'photograph').length}</span></div>
       <div class="stat-item">Maps: <span class="stat-val">${allMedia.filter(m => m.classification === 'authoritative_map').length}</span></div>
-      <div class="stat-item">Museum Artifacts / Scans: <span class="stat-val">${allMedia.filter(m => m.classification === 'museum_artifact' || m.classification === 'primary_source_scan' || m.classification === 'historical_artwork').length}</span></div>
+      <div class="stat-item">Scans / Artifacts / Art: <span class="stat-val">${allMedia.filter(m => ['museum_artifact', 'primary_source_scan', 'historical_artwork'].includes(m.classification)).length}</span></div>
       <div class="stat-item">Original Diagrams: <span class="stat-val">${allMedia.filter(m => m.classification === 'original_diagram').length}</span></div>
     </div>
   </header>
@@ -130,18 +138,18 @@ const html = `<!DOCTYPE html>
     ${allMedia.map(m => `
       <div class="card" id="${m.id}">
         <div class="thumb-wrap">
-          <img src="${m.storedAssetPath}" alt="${escapeHtml(m.descriptiveAltText)}" loading="lazy" />
+          <img src="${m.storedAssetPath}" alt="${escapeHtml(m.altText)}" loading="lazy" />
         </div>
         <div class="content">
-          <span class="badge badge-${m.classification}">${m.classification.replace('_', ' ')}</span>
+          <span class="badge badge-${m.classification}">${m.classification.replace(/_/g, ' ')}</span>
           <div class="title">${escapeHtml(m.title)}</div>
-          <div class="caption">${escapeHtml(m.factualCaption)}</div>
+          <div class="caption">${escapeHtml(m.caption)}</div>
           <div class="meta">
-            <div><strong>Source:</strong> ${escapeHtml(m.creatorOrOrganization)}</div>
+            <div><strong>Creator:</strong> ${escapeHtml(m.creator)} (${escapeHtml(m.sourceOrganization)})</div>
             <div><strong>License:</strong> ${escapeHtml(m.license)}</div>
-            <div><strong>Lessons:</strong> ${escapeHtml(m.associatedLessonIds.join(', '))}</div>
-            <div><strong>Dimensions:</strong> ${m.width} × ${m.height} (${(m.fileSizeBytes / 1024).toFixed(1)} KB)</div>
-            <div class="sha">SHA256: ${m.sha256}</div>
+            <div><strong>Lesson:</strong> ${escapeHtml(m.lessonId)}</div>
+            <div><strong>Dimensions:</strong> ${m.dimensions ? `${m.dimensions.width} × ${m.dimensions.height}` : 'N/A'}</div>
+            <div class="sha">SHA256: ${m.sha256Checksum}</div>
           </div>
         </div>
       </div>
@@ -149,11 +157,6 @@ const html = `<!DOCTYPE html>
   </main>
 </body>
 </html>`;
-
-function escapeHtml(str) {
-  if (!str) return "";
-  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
-}
 
 const outPath = path.join(__dirname, "../public/media-contact-sheet.html");
 fs.writeFileSync(outPath, html, "utf8");

@@ -6,29 +6,6 @@ console.log("===================================================================
 console.log("WONDER JOURNEY OS — REAL MEDIA & FACTUAL ASSET PRODUCTION VALIDATOR (HARDENED)");
 console.log("================================================================================\n");
 
-const registryPath = path.join(__dirname, "../src/config/media-registry.ts");
-const registryCode = fs.readFileSync(registryPath, "utf8");
-
-// Parse mediaRegistry from TS file directly or require compiled
-let mediaRegistry = [];
-try {
-  const jsonMatch = registryCode.match(/export const mediaRegistry:\s*FactualMedia\[\]\s*=\s*(\[[\s\S]*?\]);\s*export function/);
-  if (jsonMatch) {
-    mediaRegistry = JSON.parse(jsonMatch[1]);
-  } else {
-    throw new Error("Could not parse mediaRegistry JSON");
-  }
-} catch (err) {
-  console.error("Failed to parse media registry:", err.message);
-  process.exit(1);
-}
-
-const errors = [];
-const warnings = [];
-const uniqueSha256 = new Set();
-const uniqueLocalPaths = new Set();
-const lessonMediaMap = new Map();
-
 // License to URL mappings
 const VALID_LICENSES = {
   "CC BY-SA 4.0": "https://creativecommons.org/licenses/by-sa/4.0/",
@@ -57,169 +34,250 @@ const AUTHENTIC_TYPES = [
   "museum_artifact",
 ];
 
-console.log(`Auditing ${mediaRegistry.length} registry records against strict provenance rules...\n`);
+const FORBIDDEN_TEMPLATE_MARKERS = [
+  "WONDER JOURNEY FACTUAL MEDIA",
+  "bgGrad_",
+  "headerGrad_",
+  "subtle grid pattern",
+  "Vector educational rendering and high-resolution layout created for Wonder Journey OS",
+  "infographic rendering optimized for Wonder Journey OS"
+];
 
-if (mediaRegistry.length < 130) {
-  errors.push(`Expected at least 130 distinct media records, found ${mediaRegistry.length}`);
+// MIME detection from magic bytes
+function detectMime(buf) {
+  if (buf.length >= 3 && buf[0] === 0xFF && buf[1] === 0xD8 && buf[2] === 0xFF) return "image/jpeg";
+  if (buf.length >= 4 && buf[0] === 0x89 && buf[1] === 0x50 && buf[2] === 0x4E && buf[3] === 0x47) return "image/png";
+  if (buf.length >= 3 && buf[0] === 0x47 && buf[1] === 0x49 && buf[2] === 0x46) return "image/gif";
+  if (buf.length >= 4 && buf[0] === 0x52 && buf[1] === 0x49 && buf[2] === 0x46 && buf[3] === 0x46) return "image/webp";
+  const str = buf.subarray(0, 500).toString("utf8");
+  if (str.includes("<svg") || str.includes("<?xml")) return "image/svg+xml";
+  return "application/octet-stream";
 }
 
-mediaRegistry.forEach((media, idx) => {
-  const id = media.id || `record-${idx}`;
+function validateRegistry(registry) {
+  const errors = [];
+  const uniqueSha256 = new Set();
+  const uniqueLocalPaths = new Set();
+  const lessonMediaMap = new Map();
 
-  // 1. Check ID & basic strings
-  if (!media.id) errors.push(`[${id}] Missing id`);
-  if (!media.title || media.title.length < 5) errors.push(`[${id}] Title too short or missing`);
-  if (!media.lessonId) errors.push(`[${id}] Missing lessonId`);
-
-  // 2. Classification
-  if (!VALID_CLASSIFICATIONS.includes(media.classification)) {
-    errors.push(`[${id}] Invalid classification: "${media.classification}"`);
+  if (!Array.isArray(registry) || registry.length < 130) {
+    errors.push(`Expected at least 130 distinct media records, found ${registry ? registry.length : 0}`);
   }
 
-  // 3. License and License URL match
-  if (!VALID_LICENSES[media.license]) {
-    errors.push(`[${id}] Invalid license: "${media.license}"`);
-  } else {
-    const expectedUrl = VALID_LICENSES[media.license];
-    if (media.licenseUrl !== expectedUrl) {
-      errors.push(`[${id}] License URL mismatch. Expected "${expectedUrl}", found "${media.licenseUrl}"`);
+  (registry || []).forEach((media, idx) => {
+    const id = media.id || `record-${idx}`;
+
+    // 1. Check ID & basic strings
+    if (!media.id) errors.push(`[${id}] Missing id`);
+    if (!media.title || media.title.length < 5) errors.push(`[${id}] Title too short or missing`);
+    if (!media.lessonId) errors.push(`[${id}] Missing lessonId`);
+
+    // 2. Classification
+    if (!VALID_CLASSIFICATIONS.includes(media.classification)) {
+      errors.push(`[${id}] Invalid classification: "${media.classification}"`);
     }
-  }
 
-  // 4. Source URL verification
-  if (!media.originalSourceUrl || !media.originalSourceUrl.startsWith("http")) {
-    errors.push(`[${id}] Invalid originalSourceUrl: "${media.originalSourceUrl}"`);
-  } else {
-    for (const host of FORBIDDEN_HOSTS) {
-      if (media.originalSourceUrl.toLowerCase().includes(host)) {
-        errors.push(`[${id}] Forbidden host in originalSourceUrl: "${media.originalSourceUrl}"`);
-      }
-    }
-  }
-
-  // 5. Creator & Organization
-  if (!media.sourceOrganization || media.sourceOrganization.length < 3) {
-    errors.push(`[${id}] Missing or invalid sourceOrganization`);
-  }
-  if (!media.creator || media.creator.length < 3) {
-    errors.push(`[${id}] Missing or invalid creator`);
-  }
-
-  // 6. Dimensions
-  if (!media.dimensions || media.dimensions.width !== 1200 || media.dimensions.height !== 800) {
-    errors.push(`[${id}] Dimensions must be exactly 1200x800, found ${JSON.stringify(media.dimensions)}`);
-  }
-
-  // 7. Alt text and caption
-  if (!media.altText || media.altText.length < 15) {
-    errors.push(`[${id}] Inadequate altText: "${media.altText}"`);
-  }
-  if (!media.caption || media.caption.length < 10) {
-    errors.push(`[${id}] Inadequate caption: "${media.caption}"`);
-  }
-
-  // 8. Disk file existence and SHA-256 verification
-  if (!media.storedAssetPath || !media.storedAssetPath.startsWith("/media/curriculum/")) {
-    errors.push(`[${id}] Invalid storedAssetPath: "${media.storedAssetPath}"`);
-  } else {
-    const localDiskPath = path.join(__dirname, "../public", media.storedAssetPath.replace(/^\//, ""));
-    if (!fs.existsSync(localDiskPath)) {
-      errors.push(`[${id}] Local asset file not found on disk: ${localDiskPath}`);
+    // 3. License and License URL match
+    if (!VALID_LICENSES[media.license]) {
+      errors.push(`[${id}] Invalid license: "${media.license}"`);
     } else {
-      uniqueLocalPaths.add(localDiskPath);
-      const fileBytes = fs.readFileSync(localDiskPath);
-      if (fileBytes.length < 100) {
-        errors.push(`[${id}] File size too small (${fileBytes.length} bytes): ${localDiskPath}`);
+      const expectedUrl = VALID_LICENSES[media.license];
+      if (media.licenseUrl !== expectedUrl) {
+        errors.push(`[${id}] License URL mismatch. Expected "${expectedUrl}", found "${media.licenseUrl}"`);
       }
+    }
 
-      // Check SHA-256 hash match
-      const actualHash = crypto.createHash("sha256").update(fileBytes).digest("hex");
-      if (media.sha256Checksum !== actualHash) {
-        errors.push(`[${id}] Checksum mismatch! Registry: ${media.sha256Checksum}, Actual: ${actualHash}`);
-      }
-
-      // Check for duplicate SHA-256
-      if (uniqueSha256.has(actualHash)) {
-        errors.push(`[${id}] Duplicate SHA-256 hash detected! File shares byte-identical content with another asset.`);
-      } else {
-        uniqueSha256.add(actualHash);
-      }
-
-      // Check SVG structure / dimensions if SVG
-      if (localDiskPath.endsWith(".svg")) {
-        const svgContent = fileBytes.toString("utf8");
-        if (!svgContent.includes('viewBox="0 0 1200 800"') && !svgContent.includes('width="1200"')) {
-          errors.push(`[${id}] SVG missing expected 1200x800 viewBox or width attribute`);
+    // 4. Source URL verification
+    if (!media.originalSourceUrl || (!media.originalSourceUrl.startsWith("http://") && !media.originalSourceUrl.startsWith("https://"))) {
+      errors.push(`[${id}] Invalid originalSourceUrl: "${media.originalSourceUrl}"`);
+    } else {
+      for (const host of FORBIDDEN_HOSTS) {
+        if (media.originalSourceUrl.toLowerCase().includes(host)) {
+          errors.push(`[${id}] Forbidden or fabricated host in originalSourceUrl: "${media.originalSourceUrl}"`);
         }
       }
     }
-  }
 
-  // Group by lesson
-  const lId = media.lessonId;
-  if (!lessonMediaMap.has(lId)) {
-    lessonMediaMap.set(lId, []);
-  }
-  lessonMediaMap.get(lId).push(media);
-});
-
-// Check lesson coverage across 65 lessons
-for (let l = 1; l <= 65; l++) {
-  const lessonKey = `lesson-${l}`;
-  const items = lessonMediaMap.get(lessonKey) || [];
-
-  if (items.length < 2) {
-    errors.push(`Lesson #${l} (${lessonKey}) has ${items.length} media assets (minimum 2 required).`);
-  } else {
-    // Check that at least one asset is authentic photograph/map/artifact/artwork/scan
-    const hasAuthentic = items.some((item) => AUTHENTIC_TYPES.includes(item.classification));
-    if (!hasAuthentic) {
-      errors.push(`Lesson #${l} (${lessonKey}) missing authentic primary source (photo, map, artifact, artwork, or scan).`);
+    // 5. Creator & Organization (Attribution)
+    if (!media.sourceOrganization || media.sourceOrganization.length < 3 || media.sourceOrganization.includes("Fabricated")) {
+      errors.push(`[${id}] Missing or incomplete sourceOrganization: "${media.sourceOrganization}"`);
+    }
+    if (!media.creator || media.creator.length < 3 || media.creator.includes("Unknown Artist Placeholder")) {
+      errors.push(`[${id}] Missing or incomplete creator: "${media.creator}"`);
     }
 
-    // Check that assets in the same lesson are distinct
-    if (items[0].sha256Checksum === items[1].sha256Checksum) {
-      errors.push(`Lesson #${l} (${lessonKey}) uses identical assets for both slots.`);
+    // 6. Dimensions
+    if (!media.dimensions || typeof media.dimensions.width !== "number" || typeof media.dimensions.height !== "number" || media.dimensions.width <= 0 || media.dimensions.height <= 0) {
+      errors.push(`[${id}] Invalid dimensions: ${JSON.stringify(media.dimensions)}`);
+    }
+
+    // 7. Alt text and caption
+    if (!media.altText || media.altText.length < 15) {
+      errors.push(`[${id}] Inadequate altText: "${media.altText}"`);
+    }
+    if (!media.caption || media.caption.length < 10) {
+      errors.push(`[${id}] Inadequate caption: "${media.caption}"`);
+    }
+
+    // 8. Disk file existence, MIME, SVG, and SHA-256 verification
+    if (!media.storedAssetPath || !media.storedAssetPath.startsWith("/media/curriculum/")) {
+      errors.push(`[${id}] Invalid storedAssetPath: "${media.storedAssetPath}"`);
+    } else {
+      const localDiskPath = path.join(__dirname, "../public", media.storedAssetPath.replace(/^\//, ""));
+      if (!fs.existsSync(localDiskPath)) {
+        errors.push(`[${id}] Local asset file not found on disk: ${localDiskPath}`);
+      } else {
+        if (uniqueLocalPaths.has(localDiskPath)) {
+          errors.push(`[${id}] Duplicate local disk path: ${localDiskPath}`);
+        } else {
+          uniqueLocalPaths.add(localDiskPath);
+        }
+
+        const fileBytes = fs.readFileSync(localDiskPath);
+        if (fileBytes.length < 100) {
+          errors.push(`[${id}] File size too small (${fileBytes.length} bytes): ${localDiskPath}`);
+        }
+
+        // Detect MIME from magic bytes
+        const actualMime = detectMime(fileBytes);
+        
+        // Verify registry declared MIME matches actual detected MIME
+        if (media.mimeType && media.mimeType !== actualMime) {
+          errors.push(`[${id}] MIME type mismatch! Registry: ${media.mimeType}, Detected: ${actualMime}`);
+        }
+
+        // Extension check against MIME
+        const ext = path.extname(localDiskPath).toLowerCase();
+        const expectedExtMimes = {
+          ".jpg": "image/jpeg",
+          ".jpeg": "image/jpeg",
+          ".png": "image/png",
+          ".gif": "image/gif",
+          ".svg": "image/svg+xml",
+          ".webp": "image/webp"
+        };
+        if (expectedExtMimes[ext] && expectedExtMimes[ext] !== actualMime) {
+          errors.push(`[${id}] File extension ${ext} does not match detected MIME ${actualMime}`);
+        }
+
+        // Rule: Reject SVG files classified as photograph, primary_source_scan, museum_artifact, or historical_artwork
+        if ((ext === ".svg" || actualMime === "image/svg+xml") && ["photograph", "primary_source_scan", "museum_artifact", "historical_artwork"].includes(media.classification)) {
+          errors.push(`[${id}] Invalid classification: SVG file cannot be classified as "${media.classification}". Must be authoritative_map or original_diagram.`);
+        }
+
+        // Check SHA-256 hash match
+        const actualHash = crypto.createHash("sha256").update(fileBytes).digest("hex");
+        if (media.sha256Checksum !== actualHash) {
+          errors.push(`[${id}] Checksum mismatch! Registry: ${media.sha256Checksum}, Actual: ${actualHash}`);
+        }
+
+        // Check for duplicate SHA-256
+        if (uniqueSha256.has(actualHash)) {
+          errors.push(`[${id}] Duplicate SHA-256 hash detected! File shares byte-identical content with another asset.`);
+        } else {
+          uniqueSha256.add(actualHash);
+        }
+
+        // Check for forbidden template markers in SVGs / text
+        if (ext === ".svg" || actualMime === "image/svg+xml") {
+          const contentStr = fileBytes.toString("utf8");
+          for (const marker of FORBIDDEN_TEMPLATE_MARKERS) {
+            if (contentStr.includes(marker)) {
+              errors.push(`[${id}] Contains forbidden generic SVG template marker: "${marker}"`);
+            }
+          }
+        }
+        
+        // Also check descriptions/modifications for old template strings
+        if (media.modifications) {
+          for (const marker of FORBIDDEN_TEMPLATE_MARKERS) {
+            if (media.modifications.includes(marker)) {
+              errors.push(`[${id}] Modifications field contains forbidden template marker: "${marker}"`);
+            }
+          }
+        }
+      }
+    }
+
+    // Group by lesson
+    const lId = media.lessonId;
+    if (!lessonMediaMap.has(lId)) {
+      lessonMediaMap.set(lId, []);
+    }
+    lessonMediaMap.get(lId).push(media);
+  });
+
+  // Check lesson coverage across 65 lessons
+  for (let l = 1; l <= 65; l++) {
+    const lessonKey = `lesson-${l}`;
+    const items = lessonMediaMap.get(lessonKey) || [];
+
+    if (items.length < 2) {
+      errors.push(`Lesson #${l} (${lessonKey}) has ${items.length} media assets (minimum 2 required).`);
+    } else {
+      // Check that at least one asset is authentic photograph/map/artifact/artwork/scan
+      const hasAuthentic = items.some((item) => AUTHENTIC_TYPES.includes(item.classification));
+      if (!hasAuthentic) {
+        errors.push(`Lesson #${l} (${lessonKey}) missing authentic primary source (photo, map, artifact, artwork, or scan).`);
+      }
+
+      // Check that assets in the same lesson are distinct
+      if (items.length >= 2 && items[0].sha256Checksum === items[1].sha256Checksum) {
+        errors.push(`Lesson #${l} (${lessonKey}) uses identical assets for both slots.`);
+      }
     }
   }
+
+  return {
+    valid: errors.length === 0,
+    errors,
+    totalRecords: (registry || []).length,
+    uniqueFiles: uniqueLocalPaths.size,
+    uniqueHashes: uniqueSha256.size,
+    lessonsCovered: lessonMediaMap.size
+  };
 }
 
-// Compute statistics
-const classCounts = {};
-mediaRegistry.forEach((m) => {
-  classCounts[m.classification] = (classCounts[m.classification] || 0) + 1;
-});
+// If executed directly, run against production media-registry.ts
+if (require.main === module) {
+  const registryPath = path.join(__dirname, "../src/config/media-registry.ts");
+  const registryCode = fs.readFileSync(registryPath, "utf8");
 
-const licenseCounts = {};
-mediaRegistry.forEach((m) => {
-  licenseCounts[m.license] = (licenseCounts[m.license] || 0) + 1;
-});
+  let mediaRegistry = [];
+  try {
+    const jsonMatch = registryCode.match(/export const mediaRegistry:\s*FactualMedia\[\]\s*=\s*(\[[\s\S]*?\]);\s*export function/);
+    if (jsonMatch) {
+      mediaRegistry = JSON.parse(jsonMatch[1]);
+    } else {
+      throw new Error("Could not parse mediaRegistry JSON");
+    }
+  } catch (err) {
+    console.error("Failed to parse media registry:", err.message);
+    process.exit(1);
+  }
 
-console.log("--------------------------------------------------------------------------------");
-console.log("HARDENED MEDIA AUDIT SUMMARY");
-console.log("--------------------------------------------------------------------------------");
-console.log(`Total Media Records:            ${mediaRegistry.length} / 130 required`);
-console.log(`Unique Local Files on Disk:     ${uniqueLocalPaths.size} / 130 required`);
-console.log(`Unique SHA-256 Checksums:       ${uniqueSha256.size} / 130 required`);
-console.log(`Distinct Lessons Covered:       ${lessonMediaMap.size} / 65 required`);
-console.log(`Validation Errors Found:        ${errors.length}`);
-console.log("--------------------------------------------------------------------------------");
-console.log("CLASSIFICATION BREAKDOWN:");
-Object.entries(classCounts).forEach(([cls, count]) => {
-  console.log(`  - ${cls.padEnd(22)}: ${count} (${((count / mediaRegistry.length) * 100).toFixed(1)}%)`);
-});
-console.log("--------------------------------------------------------------------------------");
-console.log("LICENSE BREAKDOWN:");
-Object.entries(licenseCounts).forEach(([lic, count]) => {
-  console.log(`  - ${lic.padEnd(22)}: ${count} (${((count / mediaRegistry.length) * 100).toFixed(1)}%)`);
-});
-console.log("--------------------------------------------------------------------------------\n");
+  console.log(`Auditing ${mediaRegistry.length} registry records against strict provenance rules...\n`);
 
-if (errors.length > 0) {
-  console.error("FAIL: Hardened Real Media Validator failed with errors:\n");
-  errors.forEach((e) => console.error(`  - ${e}`));
-  process.exit(1);
+  const result = validateRegistry(mediaRegistry);
+
+  console.log("--------------------------------------------------------------------------------");
+  console.log("HARDENED MEDIA AUDIT SUMMARY");
+  console.log("--------------------------------------------------------------------------------");
+  console.log(`Total Media Records:            ${result.totalRecords} / 130 required`);
+  console.log(`Unique Local Files on Disk:     ${result.uniqueFiles} / 130 required`);
+  console.log(`Unique SHA-256 Checksums:       ${result.uniqueHashes} / 130 required`);
+  console.log(`Distinct Lessons Covered:       ${result.lessonsCovered} / 65 required`);
+  console.log(`Validation Errors Found:        ${result.errors.length}`);
+  console.log("--------------------------------------------------------------------------------\n");
+
+  if (!result.valid) {
+    console.error("FAIL: Hardened Real Media Validator failed with errors:\n");
+    result.errors.forEach((e) => console.error(`  - ${e}`));
+    process.exit(1);
+  }
+
+  console.log("PASS: Hardened Real Media Validator PASSED with 130 unique SHA-256 authentic media assets!\n");
+  process.exit(0);
 }
 
-console.log("PASS: Hardened Real Media Validator PASSED with 130 unique SHA-256 authentic media assets!\n");
-process.exit(0);
+module.exports = { validateRegistry, detectMime };

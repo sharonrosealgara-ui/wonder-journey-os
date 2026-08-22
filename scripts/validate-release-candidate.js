@@ -24,6 +24,7 @@ const GATES = [
   { name: "16. Assessment Response State Model", cmd: "node scripts/test-assessment-response-model.js" },
   { name: "17. Curriculum Schema & Uniqueness Tests", cmd: "npx tsx src/__tests__/curriculum.test.ts" },
   { name: "18. Real Media 130 SHA-256 Verified Asset Production Gate", cmd: "node scripts/validate-real-media-production.js" },
+  { name: "18b. Real Media Validator Negative Test Suite", cmd: "node scripts/test-validator-negative-cases.js" },
   { name: "19. Stage 12.1R 16-Defect Regression Prevention Suite", cmd: "node scripts/test-regression-stage12-defects.js" },
   { name: "20. Real Browser Two-Context Classroom E2E Suite (Playwright)", cmd: "node scripts/run-playwright-e2e.js" },
   { name: "21. Comprehensive Security & Answer Safety Suite", cmd: "npx tsx scripts/test-classroom-security-comprehensive.js" },

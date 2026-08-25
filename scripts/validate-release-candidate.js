@@ -33,7 +33,9 @@ const GATES = [
   { name: "24. Comprehensive Security & Answer Safety Suite", cmd: "npx tsx scripts/test-classroom-security-comprehensive.js" },
   { name: "25. Local Production Server Smoke Tests", cmd: "node scripts/test-production-server.js" },
   { name: "26. Client-Bundle Answer & Key Leak Gate", cmd: "node scripts/test-client-bundle-leak.js" },
-  { name: "27. Stage 12.1R.3 Negative Test Suite", cmd: "npx tsx scripts/test-negative-cases.js" }
+  { name: "27. Stage 12.1R.3 Negative Test Suite", cmd: "npx tsx scripts/test-negative-cases.js" },
+  { name: "28. Real LiveKit Teacher-Student Synchronization Test Suite", cmd: "npx tsx tests/livekit-teacher-student-sync.test.ts" },
+  { name: "29. 130 Authentic Media Provenance & Subject Audit Gate", cmd: "npx tsx scripts/audit-all-130-media.js" }
 ];
 
 let results = [];

@@ -11,13 +11,14 @@ import {
 async function evaluateGameAttemptViaApi(
   lessonId: string,
   gameType: string,
-  attemptData: Record<string, unknown>
+  attemptData: Record<string, unknown>,
+  gameToken?: string
 ): Promise<{ result: "correct" | "try_again"; score: number; feedback: string }> {
   try {
     const res = await fetch("/api/game/evaluate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ lessonId, gameType, attemptData }),
+      body: JSON.stringify({ lessonId, gameType, attemptData, gameToken }),
     });
     if (!res.ok) {
       const errData = await res.json().catch(() => ({}));
@@ -216,7 +217,12 @@ export function ClassroomGames({
 
     // Check if all items sorted
     if (Object.keys(newPlacements).length === gameDTO.sorting.items.length) {
-      const evalRes = await evaluateGameAttemptViaApi(lessonId, "sorting", { placements: newPlacements });
+      const evalRes = await evaluateGameAttemptViaApi(
+        lessonId,
+        "sorting",
+        { placements: newPlacements },
+        gameDTO.gameToken
+      );
       setGameFeedback(evalRes.feedback);
       setGameScore(evalRes.score);
       emitGame("submit_attempt", { placements: newPlacements });
@@ -242,7 +248,12 @@ export function ClassroomGames({
       emitGame("sort_item", { itemId: selectedSortItemKey, binId });
 
       if (Object.keys(newPlacements).length === gameDTO.sorting.items.length) {
-        const evalRes = await evaluateGameAttemptViaApi(lessonId, "sorting", { placements: newPlacements });
+        const evalRes = await evaluateGameAttemptViaApi(
+          lessonId,
+          "sorting",
+          { placements: newPlacements },
+          gameDTO.gameToken
+        );
         setGameFeedback(evalRes.feedback);
         setGameScore(evalRes.score);
         emitGame("submit_attempt", { placements: newPlacements });
@@ -268,7 +279,12 @@ export function ClassroomGames({
   };
 
   const checkMatchPair = async (leftId: string, rightId: string) => {
-    const evalRes = await evaluateGameAttemptViaApi(lessonId, "matching", { pair: { leftId, rightId } });
+    const evalRes = await evaluateGameAttemptViaApi(
+      lessonId,
+      "matching",
+      { pair: { leftId, rightId } },
+      gameDTO.gameToken
+    );
     if (evalRes.result === "correct") {
       setMatchedPairs((prev) => [...prev, leftId]);
       setGameFeedback(evalRes.feedback);
@@ -294,7 +310,12 @@ export function ClassroomGames({
     setSequenceOrder([...current]);
     emitGame("move_order", { newOrder: current });
 
-    const evalRes = await evaluateGameAttemptViaApi(lessonId, "sequencing", { order: current });
+    const evalRes = await evaluateGameAttemptViaApi(
+      lessonId,
+      "sequencing",
+      { order: current },
+      gameDTO.gameToken
+    );
     if (evalRes.result === "correct") {
       setGameFeedback("Tumpak! Perfect sequence!");
       setGameScore(100);
@@ -306,7 +327,12 @@ export function ClassroomGames({
   const handleSelectQuizOption = async (optId: string) => {
     if (!canInteract) return;
     setSelectedOptionId(optId);
-    const evalRes = await evaluateGameAttemptViaApi(lessonId, "quiz", { selectedOptionId: optId });
+    const evalRes = await evaluateGameAttemptViaApi(
+      lessonId,
+      "quiz",
+      { selectedOptionId: optId },
+      gameDTO.gameToken
+    );
     setQuizFeedback(evalRes.feedback);
     setGameScore(evalRes.score);
     emitGame("submit_attempt", { selectedOptionId: optId });
@@ -325,7 +351,12 @@ export function ClassroomGames({
       setFlippedCards([firstId, secondId]);
       emitGame("flip_card", { cardId });
 
-      const evalRes = await evaluateGameAttemptViaApi(lessonId, "memory_flip", { cardIds: [firstId, secondId] });
+      const evalRes = await evaluateGameAttemptViaApi(
+        lessonId,
+        "memory_flip",
+        { cardIds: [firstId, secondId] },
+        gameDTO.gameToken
+      );
       if (evalRes.result === "correct") {
         setSolvedMemoryCards((prev) => [...prev, firstId, secondId]);
         setFlippedCards([]);
@@ -342,7 +373,12 @@ export function ClassroomGames({
   const handleHotspotClick = async (targetId: string) => {
     if (!canInteract) return;
     setSelectedHotspot(targetId);
-    const evalRes = await evaluateGameAttemptViaApi(lessonId, "hotspot", { targetId });
+    const evalRes = await evaluateGameAttemptViaApi(
+      lessonId,
+      "hotspot",
+      { targetId },
+      gameDTO.gameToken
+    );
     setHotspotFeedback(evalRes.feedback);
     emitGame("tap_hotspot", { targetId, isCorrect: evalRes.result === "correct" });
   };

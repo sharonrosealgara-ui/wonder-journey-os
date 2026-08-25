@@ -1,4 +1,4 @@
-﻿const { spawn } = require("child_process");
+const { spawn } = require("child_process");
 const path = require("path");
 
 console.log("Starting Local Production-Server Smoke Test Suite...");
@@ -107,6 +107,20 @@ async function runTests() {
     body: JSON.stringify({ name: "Student", room: "classroom-1" })
   });
   assert(lkUnauthRes.status === 401, `POST /api/livekit-token unauthenticated returned HTTP ${lkUnauthRes.status} (expected 401)`);
+
+  // 15. GET /api/game/dto (Unauthenticated -> 401 Unauthorized)
+  const gameDtoUnauth = await fetch(`${BASE_URL}/api/game/dto?lessonId=lesson-1-world-map`, {
+    method: "GET"
+  });
+  assert(gameDtoUnauth.status === 401, `GET /api/game/dto unauthenticated returned HTTP ${gameDtoUnauth.status} (expected 401)`);
+
+  // 16. POST /api/game/evaluate (Unauthenticated -> 401 Unauthorized)
+  const gameEvalUnauth = await fetch(`${BASE_URL}/api/game/evaluate`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ lessonId: "lesson-1-world-map", gameType: "quiz", attemptData: {} })
+  });
+  assert(gameEvalUnauth.status === 401, `POST /api/game/evaluate unauthenticated returned HTTP ${gameEvalUnauth.status} (expected 401)`);
 
   return { passed, failed };
 }

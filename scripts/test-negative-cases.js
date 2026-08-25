@@ -1,12 +1,15 @@
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
-const { mediaRegistry } = require('../src/config/media-registry');
-const { generateServerLearnerGame } = require('../src/lib/server-game-definitions');
+const { generateServerLearnerGame, sealSolutionKey, unsealSolutionKey } = require('../src/lib/server-game-definitions');
 const { evaluateGameAttemptOnServer } = require('../src/lib/server-game-evaluator');
 
+const mediaRegistry = JSON.parse(
+  fs.readFileSync(path.join(__dirname, '../artifacts/curriculum-media-fidelity-manifest.json'), 'utf8')
+);
+
 console.log("================================================================================");
-console.log("WONDER JOURNEY OS — STAGE 12.1R.4 BEHAVIORAL NEGATIVE TEST SUITE");
+console.log("WONDER JOURNEY OS — STAGE 12.1R.5 BEHAVIORAL NEGATIVE & SECURITY TEST SUITE");
 console.log("Validating Negative Test Cases with Strict Behavioral & Security Assertions");
 console.log("================================================================================\n");
 
@@ -122,7 +125,7 @@ function testLearnerDTOZeroKeys() {
 
   const leaksSolutionMap = dtoString.includes("sortingMap") || dtoString.includes("matchingPairs") || dtoString.includes("memoryPairs");
   const leaksQuizIndex = dtoString.includes("correctQuizIndex") || dtoString.includes("correctQuizOptionId");
-  const leaksBinIndex = dto.sorting?.items?.some(i => typeof i.bin !== "undefined");
+  const leaksBinIndex = dto?.sorting?.items?.some(i => typeof i.bin !== "undefined");
 
   assertBehavior(
     "Client DTO Key Isolation",
@@ -131,9 +134,58 @@ function testLearnerDTOZeroKeys() {
   );
 }
 
-// 6. Behavioral Test: Auth Bypass Prevention
+// 6. Behavioral Test: Zero Generic Games on Unknown Lesson IDs
+function testZeroGenericGamesForUnknownLessons() {
+  console.log("▶ Running Behavioral Test 6: Zero Generic Fallback Games on Unknown Lesson IDs...");
+  const unknown1 = generateServerLearnerGame("lesson-999-fake");
+  const unknown2 = generateServerLearnerGame("random-invalid-id");
+  const unknown3 = generateServerLearnerGame("");
+
+  assertBehavior(
+    "No Generic Games",
+    unknown1 === null && unknown2 === null && unknown3 === null,
+    "Unknown lesson IDs return null (zero generic fallback games generated)"
+  );
+}
+
+// 7. Behavioral Test: Sealed Token Cryptography & Tamper Resistance
+function testSealedTokenCryptography() {
+  console.log("▶ Running Behavioral Test 7: Tamper-Proof Sealed Solution Keys...");
+  const dto = generateServerLearnerGame("lesson-1-world-map");
+  assertBehavior(
+    "Sealed Token Generation",
+    !!dto && typeof dto.gameToken === "string" && dto.gameToken.length > 30,
+    "Server generates AES-256-GCM sealed gameToken"
+  );
+
+  const tamperedToken = dto.gameToken.slice(0, -10) + "XXXXXXXXXX";
+  const unsealed = unsealSolutionKey(tamperedToken);
+  assertBehavior(
+    "Tamper Resistance",
+    unsealed === null,
+    "Tampered token unsealing rejected by AES-256-GCM authentication tag"
+  );
+}
+
+// 8. Behavioral Test: Endpoint Auth Requirements
+function testEndpointAuthProtection() {
+  console.log("▶ Running Behavioral Test 8: Game API Endpoint Auth Protection...");
+  const dtoRouteCode = fs.readFileSync(path.join(__dirname, '../src/app/api/game/dto/route.ts'), 'utf8');
+  const evalRouteCode = fs.readFileSync(path.join(__dirname, '../src/app/api/game/evaluate/route.ts'), 'utf8');
+
+  const dtoHasAuth = dtoRouteCode.includes("supabase.auth.getUser()") && dtoRouteCode.includes("status: 401");
+  const evalHasAuth = evalRouteCode.includes("supabase.auth.getUser()") && evalRouteCode.includes("status: 401");
+
+  assertBehavior(
+    "Endpoint Auth Protection",
+    dtoHasAuth && evalHasAuth,
+    "Both GET /api/game/dto and POST /api/game/evaluate enforce active Supabase authentication"
+  );
+}
+
+// 9. Behavioral Test: Auth Bypass Prevention
 function testAuthBypassPrevention() {
-  console.log("▶ Running Behavioral Test 6: Auth Bypass Prevention Audit...");
+  console.log("▶ Running Behavioral Test 9: Auth Bypass Prevention Audit...");
   const middlewareCode = fs.readFileSync(path.join(__dirname, '../src/middleware.ts'), 'utf8');
   const authContextCode = fs.readFileSync(path.join(__dirname, '../src/lib/auth-context.tsx'), 'utf8');
 
@@ -153,6 +205,9 @@ testCreatorAttributions();
 testLicenseFidelity();
 testServerEvaluatorFailClosed();
 testLearnerDTOZeroKeys();
+testZeroGenericGamesForUnknownLessons();
+testSealedTokenCryptography();
+testEndpointAuthProtection();
 testAuthBypassPrevention();
 
 console.log("\n================================================================================");

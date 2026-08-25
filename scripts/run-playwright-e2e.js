@@ -7,7 +7,7 @@ const { createLocalSupabaseMockServer } = require("./local-supabase-mock");
 
 console.log("================================================================================");
 console.log("WONDER JOURNEY OS — REAL BROWSER TWO-CONTEXT CLASSROOM E2E SUITE (PLAYWRIGHT)");
-console.log("Strict Multi-Context Assertions on http://localhost:3000/classroom");
+console.log("Strict Multi-Context Assertions & LiveKit Synchronized Stage Interaction");
 console.log("================================================================================\n");
 
 const screenshotDir = path.join(__dirname, "../artifacts/screenshots");
@@ -122,7 +122,8 @@ async function runRealClassroomE2ESuite() {
     await teacherPage.click("button:has-text('Sign In')");
     await teacherPage.waitForURL(url => url.pathname.includes("/teacher") || url.pathname.includes("/classroom"), { timeout: 15000 }).catch(() => {});
 
-    assert("Teacher authentication succeeded and redirected by server", !teacherPage.url().includes("/login"), `Current URL: ${teacherPage.url()}`);
+    const teacherAuthSuccess = teacherPage.url().includes("/teacher") || teacherPage.url().includes("/classroom");
+    assert("Teacher authentication succeeded and redirected to authorized portal", teacherAuthSuccess, `Current URL: ${teacherPage.url()}`);
 
     // 1B. Student Context
     const studentContext = await browser.newContext({
@@ -138,13 +139,14 @@ async function runRealClassroomE2ESuite() {
     await studentPage.click("button:has-text('Sign In')");
     await studentPage.waitForURL(url => url.pathname.includes("/family") || url.pathname.includes("/classroom"), { timeout: 15000 }).catch(() => {});
 
-    assert("Student authentication succeeded and redirected by server", !studentPage.url().includes("/login"), `Current URL: ${studentPage.url()}`);
+    const studentAuthSuccess = studentPage.url().includes("/family") || studentPage.url().includes("/classroom");
+    assert("Student authentication succeeded and redirected to family portal", studentAuthSuccess, `Current URL: ${studentPage.url()}`);
 
     // 1C. RBAC Route Protection Test
     console.log("  Testing RBAC: Student attempting to access /teacher...");
     await studentPage.goto("http://localhost:3000/teacher", { waitUntil: "networkidle", timeout: 15000 });
-    const studentRedirected = studentPage.url().includes("/family") || studentPage.url().includes("/login");
-    assert("RBAC Enforcement: Student blocked from /teacher and redirected by server", studentRedirected, `Redirected to: ${studentPage.url()}`);
+    const studentBlockedFromTeacher = studentPage.url().includes("/family") || studentPage.url().includes("/login");
+    assert("RBAC Enforcement: Student blocked from /teacher and redirected by server", studentBlockedFromTeacher, `Redirected to: ${studentPage.url()}`);
 
     // ─────────────────────────────────────────────────────────────
     // STEP 2: CLASSROOM ENTRY & REAL 16:9 STAGE RENDERING
@@ -170,100 +172,140 @@ async function runRealClassroomE2ESuite() {
     const teacherStage = teacherPage.locator(".aspect-video, [data-testid='classroom-stage'], .wj-card").first();
     const studentStage = studentPage.locator(".aspect-video, [data-testid='classroom-stage'], .wj-card").first();
 
-    assert("Teacher classroom 16:9 stage is active", await teacherStage.isVisible({ timeout: 5000 }).catch(() => false));
-    assert("Student classroom 16:9 stage is active", await studentStage.isVisible({ timeout: 5000 }).catch(() => false));
+    const teacherStageVisible = await teacherStage.isVisible({ timeout: 5000 }).catch(() => false);
+    const studentStageVisible = await studentStage.isVisible({ timeout: 5000 }).catch(() => false);
+
+    assert("Teacher classroom 16:9 stage is active and rendered in DOM", teacherStageVisible);
+    assert("Student classroom 16:9 stage is active and rendered in DOM", studentStageVisible);
 
     // ─────────────────────────────────────────────────────────────
-    // STEP 3: REQUIRED CONTROLS & MEDIA CREDITS MODAL
+    // STEP 3: REQUIRED CONTROLS & MEDIA CREDITS PROVENANCE MODAL
     // ─────────────────────────────────────────────────────────────
     console.log("\n▶ Step 3: Required Controls & Media Provenance Modal");
 
     const creditsBtn = teacherPage.locator("button:has-text('Media Credits')").first();
     const hasCreditsBtn = await creditsBtn.isVisible({ timeout: 4000 }).catch(() => false);
-    assert("Teacher has Media Credits provenance control", hasCreditsBtn);
+    assert("Teacher has Media Credits provenance control in UI", hasCreditsBtn);
 
     if (hasCreditsBtn) {
       await creditsBtn.click();
       await teacherPage.waitForTimeout(1000);
       const modal = teacherPage.locator("[role='dialog'], h2:has-text('Media Provenance')").first();
-      assert("Media Credits modal opened in real UI", await modal.isVisible({ timeout: 3000 }).catch(() => false));
+      const modalVisible = await modal.isVisible({ timeout: 3000 }).catch(() => false);
+      assert("Media Credits modal opened in real UI displaying provenance metadata", modalVisible);
 
       const closeBtn = teacherPage.locator("button[aria-label='Close media provenance dialog'], button:has-text('✕')").first();
       if (await closeBtn.isVisible({ timeout: 2000 }).catch(() => false)) {
         await closeBtn.click();
         await teacherPage.waitForTimeout(500);
+        const modalClosed = !(await modal.isVisible({ timeout: 1000 }).catch(() => false));
+        assert("Media Credits modal closed successfully upon user dismiss", modalClosed);
       }
     }
 
     // ─────────────────────────────────────────────────────────────
-    // STEP 4: SLIDE & LESSON STATE SYNCHRONIZATION
+    // STEP 4: TWO-CONTEXT LIVEKIT / STAGE SYNCHRONIZATION
     // ─────────────────────────────────────────────────────────────
-    console.log("\n▶ Step 4: Slide & Stage Synchronization");
+    console.log("\n▶ Step 4: Two-Context Stage & Interactive Synchronization");
 
+    // Check teacher controls and student presence
+    const teacherHeading = await teacherPage.locator("h1, h2").first().innerText().catch(() => "");
+    const studentHeading = await studentPage.locator("h1, h2").first().innerText().catch(() => "");
+
+    assert("Teacher stage rendered active curriculum heading", teacherHeading.length > 3, `Teacher header: "${teacherHeading}"`);
+    assert("Student stage rendered active curriculum heading", studentHeading.length > 3, `Student header: "${studentHeading}"`);
+
+    // Verify slide navigation controls interactability
     const nextSlideBtn = teacherPage.locator("button:has-text('Next'), button:has-text('▶'), button[aria-label='Next Slide']").first();
-    if (await nextSlideBtn.isVisible({ timeout: 3000 }).catch(() => false)) {
+    const nextBtnVisible = await nextSlideBtn.isVisible({ timeout: 3000 }).catch(() => false);
+    if (nextBtnVisible) {
       await nextSlideBtn.click();
       await teacherPage.waitForTimeout(1000);
-      assert("Teacher triggered slide navigation", true);
+      assert("Teacher triggered slide navigation successfully", true);
     } else {
-      console.log("  (Slide navigation verified via state protocol)");
-      assert("Slide navigation controls verified", true);
+      assert("Classroom stage interface loaded and operational", teacherStageVisible && studentStageVisible);
     }
 
     // ─────────────────────────────────────────────────────────────
-    // STEP 5: INTERACTIVE GAMES & SERVER-ONLY EVALUATION
+    // STEP 5: INTERACTIVE GAMES & SERVER-ONLY EVALUATION API SECURITY
     // ─────────────────────────────────────────────────────────────
-    console.log("\n▶ Step 5: Interactive Games & Server-Only Evaluation API");
+    console.log("\n▶ Step 5: Interactive Games & Server-Only Evaluation API Security");
 
-    // Test /api/game/dto
+    // 5A. Test Unauthenticated Request (MUST RETURN 401)
+    const unauthDtoRes = await fetch("http://localhost:3000/api/game/dto?lessonId=lesson-1-world-map");
+    const unauthEvalRes = await fetch("http://localhost:3000/api/game/evaluate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ lessonId: "lesson-1-world-map", gameType: "quiz", attemptData: {} }),
+    });
+
+    assert("Unauthenticated GET /api/game/dto rejected with HTTP 401 Unauthorized", unauthDtoRes.status === 401, `Status: ${unauthDtoRes.status}`);
+    assert("Unauthenticated POST /api/game/evaluate rejected with HTTP 401 Unauthorized", unauthEvalRes.status === 401, `Status: ${unauthEvalRes.status}`);
+
+    // 5B. Authenticated /api/game/dto
     const dtoRes = await teacherPage.evaluate(async () => {
       const res = await fetch("/api/game/dto?lessonId=lesson-1-world-map");
-      if (!res.ok) return { ok: false };
+      if (!res.ok) return { ok: false, status: res.status };
       const data = await res.json();
       return {
         ok: true,
+        status: res.status,
         hasSorting: !!data.sorting,
+        hasGameToken: typeof data.gameToken === "string" && data.gameToken.length > 20,
         hasBins: Array.isArray(data.sorting?.bins),
         hasItems: Array.isArray(data.sorting?.items),
         hasSolutionKey: !!data.solutionKey || !!data.sortingMap || !!data.correctQuizIndex,
+        gameToken: data.gameToken,
+        firstQuizOpt: data.quiz?.options?.[0]?.id,
       };
     });
 
-    assert("Endpoint /api/game/dto returns randomized LearnerSafeGameDTO", dtoRes.ok && dtoRes.hasSorting);
-    assert("LearnerSafeGameDTO contains ZERO client solution keys or answers", !dtoRes.hasSolutionKey);
+    assert("Authenticated GET /api/game/dto returns randomized LearnerSafeGameDTO with sealed gameToken", dtoRes.ok && dtoRes.hasSorting && dtoRes.hasGameToken);
+    assert("LearnerSafeGameDTO contains ZERO client solution keys or plaintext answer mappings", !dtoRes.hasSolutionKey);
 
-    // Test /api/game/evaluate with valid and invalid attempts
-    const evalRes = await teacherPage.evaluate(async () => {
+    // 5C. Unknown Lesson ID Fails Closed (HTTP 404)
+    const unknownLessonRes = await teacherPage.evaluate(async () => {
+      const resDto = await fetch("/api/game/dto?lessonId=unknown-lesson-xyz-999");
+      const resEval = await fetch("/api/game/evaluate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          lessonId: "unknown-lesson-xyz-999",
+          gameType: "quiz",
+          attemptData: { selectedOptionId: "test" },
+        }),
+      });
+      return {
+        dtoStatus: resDto.status,
+        evalStatus: resEval.status,
+      };
+    });
+
+    assert("Unknown lessonId in GET /api/game/dto rejected with HTTP 404 (zero generic game generation)", unknownLessonRes.dtoStatus === 404, `Status: ${unknownLessonRes.dtoStatus}`);
+    assert("Unknown lessonId in POST /api/game/evaluate rejected with HTTP 404 fail-closed", unknownLessonRes.evalStatus === 404, `Status: ${unknownLessonRes.evalStatus}`);
+
+    // 5D. Authenticated /api/game/evaluate with sealed gameToken
+    const evalRes = await teacherPage.evaluate(async (token) => {
       const validRes = await fetch("/api/game/evaluate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           lessonId: "lesson-1-world-map",
           gameType: "quiz",
-          attemptData: { selectedOptionId: "invalid_opt" },
+          attemptData: { selectedOptionId: "invalid_opt_id" },
+          gameToken: token,
         }),
       });
       const validJson = await validRes.json();
 
-      const invalidRes = await fetch("/api/game/evaluate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          lessonId: "unknown-lesson-xyz",
-          gameType: "quiz",
-          attemptData: {},
-        }),
-      });
-
       return {
+        status: validRes.status,
         evalScoreReturned: typeof validJson.score === "number",
         evalResult: validJson.result,
-        failClosedOnUnknown: invalidRes.status >= 400,
       };
-    });
+    }, dtoRes.gameToken);
 
-    assert("Endpoint /api/game/evaluate evaluates attempts on server", evalRes.evalScoreReturned);
-    assert("Endpoint /api/game/evaluate fails closed with HTTP error on invalid/unknown keys", evalRes.failClosedOnUnknown);
+    assert("POST /api/game/evaluate evaluates attempts on server using sealed instance gameToken", evalRes.status === 200 && evalRes.evalScoreReturned);
 
     // ─────────────────────────────────────────────────────────────
     // STEP 6: RECONNECT & MULTI-VIEWPORT SCREENSHOT CAPTURES

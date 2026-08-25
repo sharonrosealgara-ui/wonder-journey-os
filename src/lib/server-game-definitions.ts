@@ -52,6 +52,8 @@ export interface LearnerMemoryCard {
 export interface LearnerSafeGameDTO {
   lessonId: string;
   lessonTitle: string;
+  gameToken: string;
+  instanceId: string;
   hotspots: {
     prompt: string;
     targets: LearnerHotspot[];
@@ -95,7 +97,69 @@ export interface TeacherSolutionKey {
   memoryPairs: Record<string, string>; // cardId -> cardId
 }
 
-const activeSolutionKeys = new Map<string, TeacherSolutionKey>();
+// ─────────────────────────────────────────────────────────────
+// STATELESS SEALED EVALUATION CRYPTOGRAPHY & INSTANCE STORAGE
+// Replaces process-local lessonId-only map with tamper-proof
+// AES-256-GCM sealed session tokens + instance-indexed LRU store.
+// ─────────────────────────────────────────────────────────────
+
+const EVAL_SECRET =
+  process.env.GAME_EVALUATION_SECRET ||
+  process.env.SUPABASE_JWT_SECRET ||
+  process.env.LIVEKIT_API_SECRET ||
+  "wj_production_sealed_game_evaluation_secret_key_2026_secure";
+const SECRET_KEY = crypto.createHash("sha256").update(EVAL_SECRET).digest(); // 32 bytes
+
+export function sealSolutionKey(key: TeacherSolutionKey, instanceId: string): string {
+  const iv = crypto.randomBytes(12);
+  const cipher = crypto.createCipheriv("aes-256-gcm", SECRET_KEY, iv);
+  const payload = JSON.stringify({
+    ...key,
+    instanceId,
+    timestamp: Date.now(),
+  });
+  let encrypted = cipher.update(payload, "utf8", "base64");
+  encrypted += cipher.final("base64");
+  const authTag = cipher.getAuthTag().toString("base64");
+  return `${iv.toString("base64")}.${authTag}.${encrypted}`;
+}
+
+export function unsealSolutionKey(
+  token: string
+): (TeacherSolutionKey & { instanceId: string; timestamp: number }) | null {
+  try {
+    const parts = token.split(".");
+    if (parts.length !== 3) return null;
+    const [ivB64, tagB64, encB64] = parts;
+    const iv = Buffer.from(ivB64, "base64");
+    const authTag = Buffer.from(tagB64, "base64");
+    const decipher = crypto.createDecipheriv("aes-256-gcm", SECRET_KEY, iv);
+    decipher.setAuthTag(authTag);
+    let decrypted = decipher.update(encB64, "base64", "utf8");
+    decrypted += decipher.final("utf8");
+    const data = JSON.parse(decrypted);
+    // Expiry limit: 24 hours
+    if (Date.now() - data.timestamp > 24 * 60 * 60 * 1000) {
+      return null;
+    }
+    return data;
+  } catch {
+    return null;
+  }
+}
+
+// Instance-scoped LRU solution key cache
+const activeSolutionKeysByInstance = new Map<string, TeacherSolutionKey>();
+const MAX_STORED_KEYS = 2000;
+
+function storeInstanceSolutionKey(instanceId: string, key: TeacherSolutionKey) {
+  if (activeSolutionKeysByInstance.size >= MAX_STORED_KEYS) {
+    const firstKey = activeSolutionKeysByInstance.keys().next().value;
+    if (firstKey) activeSolutionKeysByInstance.delete(firstKey);
+  }
+  activeSolutionKeysByInstance.set(instanceId, key);
+  activeSolutionKeysByInstance.set(`${key.lessonId}:${instanceId}`, key);
+}
 
 function genId(prefix: string): string {
   return `${prefix}_${crypto.randomBytes(6).toString("hex")}`;
@@ -103,7 +167,9 @@ function genId(prefix: string): string {
 
 function getLessonTheme(lessonId: string, lessonTitle: string) {
   const numMatch = lessonId.match(/\d+/);
-  const num = numMatch ? parseInt(numMatch[0], 10) : 1;
+  if (!numMatch) return null;
+  const num = parseInt(numMatch[0], 10);
+  if (isNaN(num) || num < 1 || num > 65) return null;
 
   switch (num) {
     case 1:
@@ -4202,34 +4268,22 @@ function getLessonTheme(lessonId: string, lessonTitle: string) {
       };
 
     default:
-      return {
-        sortTitle: `Lesson ${num} Categorization`,
-        bins: ["Core Concept", "Context"],
-        items: [
-          { text: "Heritage Feature", bin: 0 },
-          { text: "Daily Application", bin: 1 }
-        ],
-        matchLeft: ["Salita", "Bayan", "Aral", "Pamilya"],
-        matchRight: ["Word", "Town", "Lesson", "Family"],
-        seqTitle: "Learning Steps",
-        seqItems: [
-          { text: "Observe lesson visual", emoji: "🔍" },
-          { text: "Learn Tagalog vocabulary", emoji: "🗣️" },
-          { text: "Complete family activity", emoji: "🤝" },
-          { text: "Record reflection", emoji: "⭐" }
-        ],
-        quizQuestion: `What is the main topic of Lesson ${num}?`,
-        quizOptions: [lessonTitle, "Unrelated topic", "Blank page", "None"],
-        correctQuizIndex: 0,
-        hotspotPrompt: "Locate main feature:",
-        memoryPairs: [["Salita", "Word"], ["Bayan", "Town"], ["Aral", "Lesson"], ["Tahanan", "Home"]]
-      };
+      return null;
   }
 }
 
-export function generateServerLearnerGame(lessonId: string, lessonTitle?: string): LearnerSafeGameDTO {
+export function generateServerLearnerGame(lessonId: string, lessonTitle?: string): LearnerSafeGameDTO | null {
+  if (!lessonId || typeof lessonId !== "string" || lessonId.length > 80) {
+    return null;
+  }
+
   const resolvedTitle = lessonTitle || `Lesson ${lessonId}`;
   const theme = getLessonTheme(lessonId, resolvedTitle);
+  if (!theme) {
+    return null;
+  }
+
+  const instanceId = genId("game_inst");
 
   // 1. Sorting: generate random bin IDs and item IDs
   const bins: LearnerSortBin[] = theme.bins.map((label, idx) => ({
@@ -4302,8 +4356,7 @@ export function generateServerLearnerGame(lessonId: string, lessonTitle?: string
     { id: genId("hotspot_target_3"), x: 75, y: 65, radius: 20 },
   ];
 
-  // Store Solution Key securely on the server
-  activeSolutionKeys.set(lessonId, {
+  const solutionKey: TeacherSolutionKey = {
     lessonId,
     hotspotTargetIds: [hotspotTarget1],
     sortingMap,
@@ -4311,11 +4364,17 @@ export function generateServerLearnerGame(lessonId: string, lessonTitle?: string
     sequenceOrder,
     correctQuizOptionId,
     memoryPairs,
-  });
+  };
+
+  // Store in instance cache and seal into tamper-proof gameToken
+  storeInstanceSolutionKey(instanceId, solutionKey);
+  const gameToken = sealSolutionKey(solutionKey, instanceId);
 
   return {
     lessonId,
     lessonTitle: resolvedTitle,
+    gameToken,
+    instanceId,
     hotspots: {
       prompt: theme.hotspotPrompt,
       targets: hotspots,
@@ -4354,12 +4413,22 @@ export function generateServerLearnerGame(lessonId: string, lessonTitle?: string
   };
 }
 
-export function getActiveTeacherSolutionKey(lessonId: string): TeacherSolutionKey | null {
-  let key = activeSolutionKeys.get(lessonId);
-  if (!key) {
-    // Generate fresh DTO and key for this lesson
-    generateServerLearnerGame(lessonId);
-    key = activeSolutionKeys.get(lessonId);
+export function getActiveTeacherSolutionKey(lessonId: string, instanceId?: string): TeacherSolutionKey | null {
+  if (instanceId) {
+    const instanceKey =
+      activeSolutionKeysByInstance.get(instanceId) ||
+      activeSolutionKeysByInstance.get(`${lessonId}:${instanceId}`);
+    if (instanceKey) return instanceKey;
   }
-  return key || null;
+
+  const numMatch = lessonId.match(/\d+/);
+  if (!numMatch) return null;
+  const num = parseInt(numMatch[0], 10);
+  if (isNaN(num) || num < 1 || num > 65) return null;
+
+  // Generate fresh DTO & key if valid lesson
+  const dto = generateServerLearnerGame(lessonId);
+  if (!dto) return null;
+  return activeSolutionKeysByInstance.get(dto.instanceId) || null;
 }
+

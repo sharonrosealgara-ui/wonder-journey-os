@@ -1,0 +1,57 @@
+name: CI Verification & Quality Gates
+
+on:
+  push:
+    branches:
+      - main
+      - 'integration/**'
+      - 'feature/**'
+      - 'fix/**'
+  pull_request:
+    branches:
+      - main
+      - 'integration/**'
+
+jobs:
+  verify:
+    name: Stage 12.1R.5 Quality & Release Gates
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run ESLint
+        run: npm run lint
+
+      - name: Run TypeScript Typecheck
+        run: npx tsc --noEmit
+
+      - name: Run Curriculum & Unit Tests
+        run: npm test
+
+      - name: Run LiveKit Teacher-Student Sync Tests
+        run: npx tsx tests/livekit-teacher-student-sync.test.ts
+
+      - name: Run 130 Authentic Media Integrity & Provenance Audit
+        run: npx tsx scripts/audit-all-130-media.js
+
+      - name: Run Full Release Candidate Verification Gates
+        run: npm run validate:release
+
+      - name: Run Playwright E2E Two-Context Suite
+        run: |
+          npx playwright install --with-deps chromium
+          node scripts/run-playwright-e2e.js
+
+      - name: Generate CI Verification Evidence
+        run: node scripts/generate-ci-evidence.js

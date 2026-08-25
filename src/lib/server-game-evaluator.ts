@@ -1,7 +1,11 @@
 if (typeof window !== "undefined") {
   throw new Error("This module is server-only and cannot be executed in browser context.");
 }
-import { getActiveTeacherSolutionKey, TeacherSolutionKey } from "./server-game-definitions";
+import {
+  getActiveTeacherSolutionKey,
+  TeacherSolutionKey,
+  unsealSolutionKey,
+} from "./server-game-definitions";
 
 // ─────────────────────────────────────────────────────────────
 // WONDER JOURNEY OS — SERVER-ONLY GAME EVALUATOR
@@ -20,9 +24,17 @@ export interface EvaluationResult {
 export function evaluateGameAttemptOnServer(
   lessonId: string,
   gameType: string,
-  attemptData: Record<string, unknown>
+  attemptData: Record<string, unknown>,
+  gameToken?: string
 ): EvaluationResult {
-  if (!lessonId || typeof lessonId !== "string" || !gameType || typeof gameType !== "string" || !attemptData || typeof attemptData !== "object") {
+  if (
+    !lessonId ||
+    typeof lessonId !== "string" ||
+    !gameType ||
+    typeof gameType !== "string" ||
+    !attemptData ||
+    typeof attemptData !== "object"
+  ) {
     return {
       success: false,
       result: "try_again",
@@ -32,7 +44,20 @@ export function evaluateGameAttemptOnServer(
     };
   }
 
-  const key: TeacherSolutionKey | null = getActiveTeacherSolutionKey(lessonId);
+  // 1. If sealed gameToken is provided, unseal and verify tamper-proof instance key
+  let key: TeacherSolutionKey | null = null;
+  if (gameToken && typeof gameToken === "string") {
+    const unsealed = unsealSolutionKey(gameToken);
+    if (unsealed && (unsealed.lessonId === lessonId || lessonId.startsWith(unsealed.lessonId))) {
+      key = unsealed;
+    }
+  }
+
+  // 2. Fallback to instance store / canonical lesson key
+  if (!key) {
+    key = getActiveTeacherSolutionKey(lessonId);
+  }
+
   if (!key) {
     return {
       success: false,

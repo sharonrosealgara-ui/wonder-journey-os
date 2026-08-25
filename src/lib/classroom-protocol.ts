@@ -274,6 +274,11 @@ export function validateParticipantAction(
     return { allowed: false, reason: "Unauthorized privileged classroom topic" };
   }
 
+  // Presence and heartbeats are always allowed for joined participants
+  if (event.topic === "classroom.presence") {
+    return { allowed: true };
+  }
+
   // Check permission level capabilities
   if (assignedPermission === "frozen" || assignedPermission === "view_only") {
     return { allowed: false, reason: "Classroom interaction is currently locked/view-only" };

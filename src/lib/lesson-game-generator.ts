@@ -46,6 +46,8 @@ export interface LearnerMemoryCard {
 export interface LearnerSafeGameDTO {
   lessonId: string;
   lessonTitle: string;
+  gameToken?: string;
+  instanceId?: string;
   hotspots: {
     prompt: string;
     targets: LearnerHotspot[];

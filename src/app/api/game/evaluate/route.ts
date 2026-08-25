@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { evaluateGameAttemptOnServer } from "@/lib/server-game-evaluator";
+import { createClient } from "@/lib/supabase/server";
 
 // In-memory rate limiting map: ipOrUser -> timestamp[]
 const rateLimitMap = new Map<string, number[]>();
@@ -9,7 +10,7 @@ const MAX_PAYLOAD_BYTES = 10 * 1024; // 10KB
 
 function checkRateLimit(key: string): boolean {
   const now = Date.now();
-  const timestamps = (rateLimitMap.get(key) || []).filter(t => now - t < RATE_LIMIT_WINDOW_MS);
+  const timestamps = (rateLimitMap.get(key) || []).filter((t) => now - t < RATE_LIMIT_WINDOW_MS);
   if (timestamps.length >= MAX_REQUESTS_PER_WINDOW) {
     return false;
   }
@@ -20,7 +21,21 @@ function checkRateLimit(key: string): boolean {
 
 export async function POST(request: NextRequest) {
   try {
-    // 1. Payload size check
+    // 1. Authenticate user session
+    const supabase = await createClient();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
+
+    if (authError || !user) {
+      return NextResponse.json(
+        { success: false, result: "try_again", score: 0, error: "Unauthorized" },
+        { status: 401 }
+      );
+    }
+
+    // 2. Payload size check
     const contentLength = request.headers.get("content-length");
     if (contentLength && parseInt(contentLength, 10) > MAX_PAYLOAD_BYTES) {
       return NextResponse.json(
@@ -29,16 +44,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 2. Rate limiting check
-    const ip = request.headers.get("x-forwarded-for") || request.headers.get("x-real-ip") || "anonymous_client";
-    if (!checkRateLimit(ip)) {
+    // 3. Rate limiting check (keyed by authenticated user ID)
+    const rateLimitKey = user.id || request.headers.get("x-forwarded-for") || "client";
+    if (!checkRateLimit(rateLimitKey)) {
       return NextResponse.json(
         { success: false, result: "try_again", score: 0, error: "Rate limit exceeded. Please wait a moment." },
         { status: 429 }
       );
     }
 
-    // 3. Parse JSON body
+    // 4. Parse JSON body
     let body: any;
     try {
       body = await request.json();
@@ -49,13 +64,23 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { lessonId, gameType, attemptData } = body || {};
+    const { lessonId, gameType, attemptData, gameToken } = body || {};
 
-    // 4. Strict schema validation
+    // 5. Strict schema validation
     if (!lessonId || typeof lessonId !== "string" || lessonId.length > 80) {
       return NextResponse.json(
         { success: false, result: "try_again", score: 0, error: "Missing or invalid lessonId" },
         { status: 400 }
+      );
+    }
+
+    // Check if lessonId is valid 1..65
+    const numMatch = lessonId.match(/\d+/);
+    const num = numMatch ? parseInt(numMatch[0], 10) : NaN;
+    if (isNaN(num) || num < 1 || num > 65) {
+      return NextResponse.json(
+        { success: false, result: "try_again", score: 0, error: `Unknown lessonId: "${lessonId}"` },
+        { status: 404 }
       );
     }
 
@@ -69,7 +94,7 @@ export async function POST(request: NextRequest) {
       "quiz",
       "memory_pairs",
       "memory_flip",
-      "lesson_review"
+      "lesson_review",
     ];
 
     if (!gameType || typeof gameType !== "string" || !VALID_GAME_TYPES.includes(gameType)) {
@@ -86,11 +111,12 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 5. Evaluate attempt strictly on server
-    const evaluation = evaluateGameAttemptOnServer(lessonId, gameType, attemptData);
+    // 6. Evaluate attempt strictly on server using unsealed gameToken or instance key
+    const evaluation = evaluateGameAttemptOnServer(lessonId, gameType, attemptData, gameToken);
 
     if (!evaluation.success && evaluation.error) {
-      return NextResponse.json(evaluation, { status: 400 });
+      const status = evaluation.error.includes("Unknown lessonId") ? 404 : 400;
+      return NextResponse.json(evaluation, { status });
     }
 
     return NextResponse.json(evaluation, { status: 200 });
@@ -102,3 +128,4 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+

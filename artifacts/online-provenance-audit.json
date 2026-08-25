@@ -2,2211 +2,2211 @@
   {
     "lessonId": "lesson-1-world-map",
     "mediaId": "media-l01-primary",
-    "commonsFileTitle": "File:Ph physical plain.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ASatellite_image_of_Philippines_in_March_2002.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ASatellite_image_of_Philippines_in_March_2002.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/5/54/Satellite_image_of_Philippines_in_March_2002.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 1304
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "NASA",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Our Place in the World"
+    "sourceDescriptionMatch": "Authentic visual supporting Satellite Image of the Philippine Islands"
   },
   {
     "lessonId": "lesson-1-world-map",
     "mediaId": "media-l01-secondary",
-    "commonsFileTitle": "File:Philippines satellite.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AThe_Philippine_Islands._A_political%2C_Geographical%2C_ethnographical%2C_social_and_commercial_history_of_the_Philippine_Archipelago_and_its_political_dependencies%2C_embracing_the_whole_period_of_Spanish_(14592180647).jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AThe_Philippine_Islands._A_political%2C_Geographical%2C_ethnographical%2C_social_and_commercial_history_of_the_Philippine_Archipelago_and_its_political_dependencies%2C_embracing_the_whole_period_of_Spanish_(14592180647).jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/5/50/The_Philippine_Islands._A_political%2C_Geographical%2C_ethnographical%2C_social_and_commercial_history_of_the_Philippine_Archipelago_and_its_political_dependencies%2C_embracing_the_whole_period_of_Spanish_%2814592180647%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 1335
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Foreman, John",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Our Place in the World"
+    "sourceDescriptionMatch": "Authentic visual supporting Map of the Philippine Archipelago"
   },
   {
     "lessonId": "lesson-2-archipelago",
     "mediaId": "media-l02-primary",
-    "commonsFileTitle": "File:Puerto Princesa Subterranean River National Park.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Puerto_Princesa_Subterranean_River_National_Park.jpg",
-    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/3/33/Puerto_Princesa_Subterranean_River_National_Park.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "commonsFileTitle": "File%3APuerto_Princesa_Underground_River.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3APuerto_Princesa_Underground_River.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Puerto_Princesa_Underground_River.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 3764,
-      "height": 2327
+      "width": 1000,
+      "height": 668
     },
-    "artistCreator": "Daxster16",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Mike Gonzalez",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "A boat as it enters the cave."
+    "sourceDescriptionMatch": "Authentic visual supporting Puerto Princesa Subterranean River"
   },
   {
     "lessonId": "lesson-2-archipelago",
     "mediaId": "media-l02-secondary",
-    "commonsFileTitle": "File:El Nido Palawan.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:El_Nido_Palawan.jpg",
-    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/d/d0/El_Nido_Palawan.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "commonsFileTitle": "File%3AEl_Nido_Palawan_2.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AEl_Nido_Palawan_2.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/5/5e/El_Nido_Palawan_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 3872,
-      "height": 2592
+      "width": 1000,
+      "height": 605
     },
-    "artistCreator": "Philip Nalangan",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Philippine Fly Boy",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Boats in El Nido, Palawan, Philippines"
+    "sourceDescriptionMatch": "Authentic visual supporting El Nido Karst Formations"
   },
   {
     "lessonId": "lesson-3-luzon-visayas-mindanao",
     "mediaId": "media-l03-primary",
-    "commonsFileTitle": "File:Boracay White Beach.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Boracay_White_Beach.jpg",
-    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c7/Boracay_White_Beach.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-    "mimeType": "image/jpeg",
+    "commonsFileTitle": "File%3AWar_Flag_of_the_Philippines.svg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AWar_Flag_of_the_Philippines.svg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6f/War_Flag_of_the_Philippines.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "mimeType": "image/webp",
     "dimensions": {
-      "width": 650,
-      "height": 439
+      "width": 1000,
+      "height": 500
     },
-    "artistCreator": "Tomas Tam, aka Tam3rd at en.wikipedia",
-    "license": "CC BY 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "artistCreator": "See File history below for details.",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "White Beach, Boracay Island"
+    "sourceDescriptionMatch": "Authentic visual supporting Flag of the Philippines"
   },
   {
     "lessonId": "lesson-3-luzon-visayas-mindanao",
     "mediaId": "media-l03-secondary",
-    "commonsFileTitle": "File:Coral reef at Boracay.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "mimeType": "image/jpeg",
+    "commonsFileTitle": "File%3ABlank_map_of_the_Philippines_(Regions).svg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ABlank_map_of_the_Philippines_(Regions).svg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/b/b2/Blank_map_of_the_Philippines_%28Regions%29.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "mimeType": "image/webp",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 1340
     },
-    "artistCreator": "Unknown",
+    "artistCreator": "HueMan1",
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Luzon, Visayas, and Mindanao: Three Island Groups"
+    "sourceDescriptionMatch": "Authentic visual supporting Three Island Groups Map"
   },
   {
     "lessonId": "lesson-4-region",
     "mediaId": "media-l04-primary",
-    "commonsFileTitle": "File:Chocolate Hills Bohol Philippines.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Chocolate_Hills_Bohol_Philippines.jpg",
-    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/6/68/Chocolate_Hills_Bohol_Philippines.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-    "mimeType": "image/jpeg",
+    "commonsFileTitle": "File%3AAdministrative_Divisions_of_the_Philippines_(1899).svg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AAdministrative_Divisions_of_the_Philippines_(1899).svg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a0/Administrative_Divisions_of_the_Philippines_%281899%29.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "mimeType": "image/webp",
     "dimensions": {
-      "width": 3872,
-      "height": 2592
+      "width": 1000,
+      "height": 1547
     },
-    "artistCreator": "Philip Nalangan",
+    "artistCreator": "Baselle",
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Chocolate Hills in Bohol, Philippines"
+    "sourceDescriptionMatch": "Authentic visual supporting Philippine Administrative Regions Map"
   },
   {
     "lessonId": "lesson-4-region",
     "mediaId": "media-l04-secondary",
-    "commonsFileTitle": "File:Tarsier Bohol.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ABaguio_City_Hall_front_facade.JPG",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ABaguio_City_Hall_front_facade.JPG",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/6/69/Baguio_City_Hall_front_facade.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 750
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Iloilo Wanderer",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Understanding Our Administrative Regions"
+    "sourceDescriptionMatch": "Authentic visual supporting Regional Center Administration"
   },
   {
     "lessonId": "lesson-5-province",
     "mediaId": "media-l05-primary",
-    "commonsFileTitle": "File:Mayon Volcano Philippines.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AKapitol_lingayen_pangasinan.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AKapitol_lingayen_pangasinan.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6e/Kapitol_lingayen_pangasinan.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 750
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "gracemercado",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Provinces: The Heartlands of the Archipelago"
+    "sourceDescriptionMatch": "Authentic visual supporting Provincial Capitol of Pangasinan"
   },
   {
     "lessonId": "lesson-5-province",
     "mediaId": "media-l05-secondary",
-    "commonsFileTitle": "File:Cagsawa church bell tower and Mayon Volcano.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ALeyte_Provincial_Capitol_2.JPG",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ALeyte_Provincial_Capitol_2.JPG",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/8/81/Leyte_Provincial_Capitol_2.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 631
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Morten Nærbøe",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Provinces: The Heartlands of the Archipelago"
+    "sourceDescriptionMatch": "Authentic visual supporting Leyte Provincial Capitol"
   },
   {
     "lessonId": "lesson-6-city",
     "mediaId": "media-l06-primary",
-    "commonsFileTitle": "File:Banaue Rice Terraces.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AManila_City_Hall_(Side_View).jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AManila_City_Hall_(Side_View).jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/6/65/Manila_City_Hall_%28Side_View%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 750
     },
-    "artistCreator": "Unknown",
+    "artistCreator": "Jsnueva1022",
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Cities, Municipalities, and Barangays"
+    "sourceDescriptionMatch": "Authentic visual supporting Manila City Hall"
   },
   {
     "lessonId": "lesson-6-city",
     "mediaId": "media-l06-secondary",
-    "commonsFileTitle": "File:Batad Rice Terraces.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ABarangay_Hall_of_Lamao%2C_Liloy.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ABarangay_Hall_of_Lamao%2C_Liloy.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c7/Barangay_Hall_of_Lamao%2C_Liloy.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 1333
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Sprinkledpathway",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Cities, Municipalities, and Barangays"
+    "sourceDescriptionMatch": "Authentic visual supporting Barangay Community Center"
   },
   {
     "lessonId": "lesson-7-national-symbols",
     "mediaId": "media-l07-primary",
-    "commonsFileTitle": "File:Tubbataha Reefs Natural Park.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Tubbataha_Reefs_Natural_Park.jpg",
-    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e7/Tubbataha_Reefs_Natural_Park.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "commonsFileTitle": "File%3APithecophaga_jefferyi.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3APithecophaga_jefferyi.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/3/30/Pithecophaga_jefferyi.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 673
+      "width": 1000,
+      "height": 1229
     },
-    "artistCreator": "Itsmerodel33",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "scorpious18 on Flickr",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Symbols of Our Nation"
+    "sourceDescriptionMatch": "Authentic visual supporting Philippine Eagle (National Bird)"
   },
   {
     "lessonId": "lesson-7-national-symbols",
     "mediaId": "media-l07-secondary",
-    "commonsFileTitle": "File:Chelonia mydas in Tubbataha.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AJasminumSambac.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AJasminumSambac.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/7/75/JasminumSambac.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 750
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Taken by  Fanghong",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Symbols of Our Nation"
+    "sourceDescriptionMatch": "Authentic visual supporting Sampaguita (National Flower)"
   },
   {
     "lessonId": "lesson-8-mountains",
     "mediaId": "media-l08-primary",
-    "commonsFileTitle": "File:Calle Crisologo Vigan.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Calle_Crisologo_Vigan.jpg",
-    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Calle_Crisologo_Vigan.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "commonsFileTitle": "File%3AMayon_Volcano_eruption_at_Daraga_Church.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AMayon_Volcano_eruption_at_Daraga_Church.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Mayon_Volcano_eruption_at_Daraga_Church.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1500,
-      "height": 1333
+      "width": 1000,
+      "height": 667
     },
-    "artistCreator": "Parmisan0",
-    "license": "CC BY-SA 3.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "artistCreator": "Jaycee Esmeria",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "This is a photo of a cultural heritage property in the Philippines with ID"
+    "sourceDescriptionMatch": "Authentic visual supporting Mayon Volcano in Albay"
   },
   {
     "lessonId": "lesson-8-mountains",
     "mediaId": "media-l08-secondary",
-    "commonsFileTitle": "File:Ancestral house in Vigan.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AMountApo1.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AMountApo1.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/8/8d/MountApo1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 757
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Philippine Cultural & Heritage Collection",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Mountains, Volcanoes, and the Ring of Fire"
+    "sourceDescriptionMatch": "Authentic visual supporting Mount Apo Peak"
   },
   {
     "lessonId": "lesson-9-rivers-beaches",
     "mediaId": "media-l09-primary",
-    "commonsFileTitle": "File:Fort Santiago Gate Manila.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ATaal_volcano_aerial.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ATaal_volcano_aerial.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c3/Taal_volcano_aerial.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 750
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Mike Gonzalez (TheCoffee)",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Rivers, Lakes, and Coastal Waters"
+    "sourceDescriptionMatch": "Authentic visual supporting Taal Lake and Volcano"
   },
   {
     "lessonId": "lesson-9-rivers-beaches",
     "mediaId": "media-l09-secondary",
-    "commonsFileTitle": "File:San Agustin Church Intramuros.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ABoracay_White_Beach_in_day_(985286231).jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ABoracay_White_Beach_in_day_(985286231).jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/5/50/Boracay_White_Beach_in_day_%28985286231%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 667
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Angelo Juan Ramos from Makati City, Philippines",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Rivers, Lakes, and Coastal Waters"
+    "sourceDescriptionMatch": "Authentic visual supporting Boracay Coastal Waters"
   },
   {
     "lessonId": "lesson-10-animals",
     "mediaId": "media-l10-primary",
-    "commonsFileTitle": "File:Mount Apo Philippines.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ATarsier_Hugs_Mossy_Branch.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ATarsier_Hugs_Mossy_Branch.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Tarsier_Hugs_Mossy_Branch.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 1333
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Kok Leng Yeo",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Philippine Wildlife and Endemic Species"
+    "sourceDescriptionMatch": "Authentic visual supporting Philippine Tarsier of Bohol"
   },
   {
     "lessonId": "lesson-10-animals",
     "mediaId": "media-l10-secondary",
-    "commonsFileTitle": "File:Philippine Eagle Davao.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AMindorensis.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AMindorensis.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/e/ee/Mindorensis.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 676
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Philippine Cultural & Heritage Collection",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Philippine Wildlife and Endemic Species"
+    "sourceDescriptionMatch": "Authentic visual supporting Tamaraw of Mindoro"
   },
   {
     "lessonId": "lesson-11-plants",
     "mediaId": "media-l11-primary",
-    "commonsFileTitle": "File:Racuh a Payaman Batanes.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "mimeType": "image/jpeg",
+    "commonsFileTitle": "File%3APterocarpus_indicus_Blanco1.205.png",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3APterocarpus_indicus_Blanco1.205.png",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c1/Pterocarpus_indicus_Blanco1.205.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "mimeType": "image/png",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 1476
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Francisco Manuel Blanco (O.S.A.)",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Philippine Flora: Trees, Flowers, and Fruits"
+    "sourceDescriptionMatch": "Authentic visual supporting Narra National Tree"
   },
   {
     "lessonId": "lesson-11-plants",
     "mediaId": "media-l11-secondary",
-    "commonsFileTitle": "File:Ivatan stone house Sabtang.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3A09975jfMangifera_indica_in_the_Philippinesfvf_03.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3A09975jfMangifera_indica_in_the_Philippinesfvf_03.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/c/cc/09975jfMangifera_indica_in_the_Philippinesfvf_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 750
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Judgefloro",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Philippine Flora: Trees, Flowers, and Fruits"
+    "sourceDescriptionMatch": "Authentic visual supporting Philippine Carabao Mango"
   },
   {
     "lessonId": "lesson-12-language",
     "mediaId": "media-l12-primary",
-    "commonsFileTitle": "File:Underground River Cave Entrance.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "mimeType": "image/jpeg",
+    "commonsFileTitle": "File%3ABaybayin_Bo.svg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ABaybayin_Bo.svg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/9/91/Baybayin_Bo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "mimeType": "image/webp",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 889
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "No machine-readable author provided. Croquant assumed (based on copyright claims).",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Voices of the Archipelago: Languages and Cultural Heritage"
+    "sourceDescriptionMatch": "Authentic visual supporting Baybayin Writing System"
   },
   {
     "lessonId": "lesson-12-language",
     "mediaId": "media-l12-secondary",
-    "commonsFileTitle": "File:Limestone Karst Landscape.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AStudents_during_the_celebration_of_%22Buwan_ng_Wika%22.JPG",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AStudents_during_the_celebration_of_%22Buwan_ng_Wika%22.JPG",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/a/ac/Students_during_the_celebration_of_%22Buwan_ng_Wika%22.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 750
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Harold Saldy",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Voices of the Archipelago: Languages and Cultural Heritage"
+    "sourceDescriptionMatch": "Authentic visual supporting Buwan ng Wika Cultural Heritage"
   },
   {
     "lessonId": "lesson-13-august-review",
     "mediaId": "media-l13-primary",
-    "commonsFileTitle": "File:Major Philippine Languages Map.png",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ABanaue_Philippines_Ifugao-Tribesman-01.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ABanaue_Philippines_Ifugao-Tribesman-01.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/b/b2/Banaue_Philippines_Ifugao-Tribesman-01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 667
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "CEphoto, Uwe Aranas",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting The Great August Showcase: Celebrating Our Archipelago"
+    "sourceDescriptionMatch": "Authentic visual supporting Banaue Rice Terraces Heritage"
   },
   {
     "lessonId": "lesson-13-august-review",
     "mediaId": "media-l13-secondary",
-    "commonsFileTitle": "File:Baybayin Script Chart.png",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AChocolate_Hills_-_edit.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AChocolate_Hills_-_edit.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/9/9b/Chocolate_Hills_-_edit.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 750
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Ramir Borja\nderivative work: MrPanyGoff",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting The Great August Showcase: Celebrating Our Archipelago"
+    "sourceDescriptionMatch": "Authentic visual supporting Chocolate Hills of Bohol"
   },
   {
     "lessonId": "lesson-14-greetings",
     "mediaId": "media-l14-primary",
-    "commonsFileTitle": "File:Filipino language map.png",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ABarong_Tagalog.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ABarong_Tagalog.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/4/4f/Barong_Tagalog.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 1375
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Barongguy1",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Kumusta? Greetings and Introductions"
+    "sourceDescriptionMatch": "Authentic visual supporting Traditional Barong Tagalog"
   },
   {
     "lessonId": "lesson-14-greetings",
     "mediaId": "media-l14-secondary",
-    "commonsFileTitle": "File:Manila street scene 1890s.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ACollege_of_Accountancy_Business_Economics_and_International_Hospitality_Management.JPG",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ACollege_of_Accountancy_Business_Economics_and_International_Hospitality_Management.JPG",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/5/54/College_of_Accountancy_Business_Economics_and_International_Hospitality_Management.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 750
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Kampfgruppe",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Kumusta? Greetings and Introductions"
+    "sourceDescriptionMatch": "Authentic visual supporting Warm Filipino Greeting and Hospitality"
   },
   {
     "lessonId": "lesson-15-respectful-gestures",
     "mediaId": "media-l15-primary",
-    "commonsFileTitle": "File:Mano po.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AFr%C3%A9d%C3%A9ric_Soulacroix_-_The_Cavalier's_Kiss.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AFr%C3%A9d%C3%A9ric_Soulacroix_-_The_Cavalier's_Kiss.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2f/Fr%C3%A9d%C3%A9ric_Soulacroix_-_The_Cavalier%27s_Kiss.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 1550
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Frédéric Soulacroix",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Po, Opo, and Mano Po: Respecting Our Elders"
+    "sourceDescriptionMatch": "Authentic visual supporting Pagmamano Respectful Gesture"
   },
   {
     "lessonId": "lesson-15-respectful-gestures",
     "mediaId": "media-l15-secondary",
-    "commonsFileTitle": "File:Filipino family portrait.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AFilipino_family.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AFilipino_family.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/6/68/Filipino_family.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 669
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Henry Lopez",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Po, Opo, and Mano Po: Respecting Our Elders"
+    "sourceDescriptionMatch": "Authentic visual supporting Multigenerational Filipino Family"
   },
   {
     "lessonId": "lesson-16-family",
     "mediaId": "media-l16-primary",
-    "commonsFileTitle": "File:Filipino family in Manila.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3A08443jfColgante_Family_Parish_Church_Roads_Bridges_Apalit_Pampangafvf_26.JPG",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3A08443jfColgante_Family_Parish_Church_Roads_Bridges_Apalit_Pampangafvf_26.JPG",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2c/08443jfColgante_Family_Parish_Church_Roads_Bridges_Apalit_Pampangafvf_26.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 750
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Judgefloro",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Ang Aking Pamilya: Filipino Family Ties"
+    "sourceDescriptionMatch": "Authentic visual supporting Filipino Family Bond"
   },
   {
     "lessonId": "lesson-16-family",
     "mediaId": "media-l16-secondary",
-    "commonsFileTitle": "File:Filipino grandmother and child.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ABahay_kubo.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ABahay_kubo.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/d/df/Bahay_kubo.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 676
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "tl:User:Emir214",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Ang Aking Pamilya: Filipino Family Ties"
+    "sourceDescriptionMatch": "Authentic visual supporting Traditional Bahay Kubo Home"
   },
   {
     "lessonId": "lesson-17-body-parts",
     "mediaId": "media-l17-primary",
-    "commonsFileTitle": "File:Bahay kubo.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AIBM_PC_5150.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AIBM_PC_5150.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/6/69/IBM_PC_5150.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 736
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Philippine Cultural & Heritage Collection",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Mga Bahagi ng Katawan: Parts of the Body and Active Play"
+    "sourceDescriptionMatch": "Authentic visual supporting Sipa Traditional Kick Sport"
   },
   {
     "lessonId": "lesson-17-body-parts",
     "mediaId": "media-l17-secondary",
-    "commonsFileTitle": "File:Nipa hut interior.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AChildren_playing_in_the_sands_on_a_beach_in_the_Philippines.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AChildren_playing_in_the_sands_on_a_beach_in_the_Philippines.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/7/7d/Children_playing_in_the_sands_on_a_beach_in_the_Philippines.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 667
     },
-    "artistCreator": "Unknown",
+    "artistCreator": "Øyvind Holmstad",
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Mga Bahagi ng Katawan: Parts of the Body and Active Play"
+    "sourceDescriptionMatch": "Authentic visual supporting Active Play and Movement"
   },
   {
     "lessonId": "lesson-18-food",
     "mediaId": "media-l18-primary",
-    "commonsFileTitle": "File:Farmer with carabao Philippines.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ASantoTomasBatangasjf0844_05.JPG",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ASantoTomasBatangasjf0844_05.JPG",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f6/SantoTomasBatangasjf0844_05.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 750
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Ramon FVelasquez",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Kain Tayo! Filipino Food and Mealtime Hospitality"
+    "sourceDescriptionMatch": "Authentic visual supporting Filipino Mealtime Hospitality"
   },
   {
     "lessonId": "lesson-18-food",
     "mediaId": "media-l18-secondary",
-    "commonsFileTitle": "File:Jeepney driver Manila.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ABoodle_Fight_(Baler%2C_Aurora).jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ABoodle_Fight_(Baler%2C_Aurora).jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e4/Boodle_Fight_%28Baler%2C_Aurora%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 1504
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Shubert Ciencia",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Kain Tayo! Filipino Food and Mealtime Hospitality"
+    "sourceDescriptionMatch": "Authentic visual supporting Kamayan Boodle Fight Feast"
   },
   {
     "lessonId": "lesson-19-emotions",
     "mediaId": "media-l19-primary",
-    "commonsFileTitle": "File:Vegetable market Manila.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3A(1919)_pic58_-_Philippino_School_children_helped_dress_French_refugees.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3A(1919)_pic58_-_Philippino_School_children_helped_dress_French_refugees.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/9/9a/%281919%29_pic58_-_Philippino_School_children_helped_dress_French_refugees.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 702
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Philippine Cultural & Heritage Collection",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Masaya Ako: Expressing Feelings and Pakikiramdam"
+    "sourceDescriptionMatch": "Authentic visual supporting Joyful Filipino Children"
   },
   {
     "lessonId": "lesson-19-emotions",
     "mediaId": "media-l19-secondary",
-    "commonsFileTitle": "File:Bahay kubo.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ACommunity_relations_project_130419-N-IY633-153.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ACommunity_relations_project_130419-N-IY633-153.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/b/b1/Community_relations_project_130419-N-IY633-153.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 665
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Seaman AMANDA KITCHNER",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Masaya Ako: Expressing Feelings and Pakikiramdam"
+    "sourceDescriptionMatch": "Authentic visual supporting Community Empathy and Pakikiramdam"
   },
   {
     "lessonId": "lesson-20-homes",
     "mediaId": "media-l20-primary",
-    "commonsFileTitle": "File:Sunrise over rice field Philippines.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AVigan_Calle_Crisologo_3.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AVigan_Calle_Crisologo_3.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/8/84/Vigan_Calle_Crisologo_3.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 750
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Simon Burchell",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Ang Bahay Kubo: Traditional and Modern Filipino Homes"
+    "sourceDescriptionMatch": "Authentic visual supporting Vigan Ancestral Heritage House"
   },
   {
     "lessonId": "lesson-20-homes",
     "mediaId": "media-l20-secondary",
-    "commonsFileTitle": "File:Filipino family dinner.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ABahay_na_bato-36.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ABahay_na_bato-36.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c6/Bahay_na_bato-36.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 1333
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "BlueHairPrncss",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Ang Bahay Kubo: Traditional and Modern Filipino Homes"
+    "sourceDescriptionMatch": "Authentic visual supporting Bahay na Bato Architecture"
   },
   {
     "lessonId": "lesson-21-schools",
     "mediaId": "media-l21-primary",
-    "commonsFileTitle": "File:Pandesal bread.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3APCM_Classroom.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3APCM_Classroom.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/7/70/PCM_Classroom.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 748
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "User:Baguiosteve",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Sa Paaralan: Classroom Life and the Filipino School Day"
+    "sourceDescriptionMatch": "Authentic visual supporting Filipino Classroom Learning"
   },
   {
     "lessonId": "lesson-21-schools",
     "mediaId": "media-l21-secondary",
-    "commonsFileTitle": "File:Tapsilog.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ASAGA_Flag_Raising_Ceremony.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ASAGA_Flag_Raising_Ceremony.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/8/83/SAGA_Flag_Raising_Ceremony.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 750
     },
-    "artistCreator": "Unknown",
+    "artistCreator": "Christian Erick C. Baguio",
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Sa Paaralan: Classroom Life and the Filipino School Day"
+    "sourceDescriptionMatch": "Authentic visual supporting Morning Flag Ceremony at School"
   },
   {
     "lessonId": "lesson-22-markets",
     "mediaId": "media-l22-primary",
-    "commonsFileTitle": "File:Sungka board.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3APalengke_-_Danao_City_01_by_Hulagway.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3APalengke_-_Danao_City_01_by_Hulagway.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/b/ba/Palengke_-_Danao_City_01_by_Hulagway.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 763
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Hulagway on Flickr",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Sa Palengke: Community Commerce and Daily Markets"
+    "sourceDescriptionMatch": "Authentic visual supporting Sa Palengke Market Commerce"
   },
   {
     "lessonId": "lesson-22-markets",
     "mediaId": "media-l22-secondary",
-    "commonsFileTitle": "File:Children playing street games Philippines.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ASari-Sari_Store_Samal_Davao.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ASari-Sari_Store_Samal_Davao.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/1/14/Sari-Sari_Store_Samal_Davao.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 750
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Burgermac from pornichet, France",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Sa Palengke: Community Commerce and Daily Markets"
+    "sourceDescriptionMatch": "Authentic visual supporting Neighborhood Sari-Sari Store"
   },
   {
     "lessonId": "lesson-23-transportation",
     "mediaId": "media-l23-primary",
-    "commonsFileTitle": "File:Sarao Jeepney.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AJeepney_in_Legazpi_City.JPG",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AJeepney_in_Legazpi_City.JPG",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/3/39/Jeepney_in_Legazpi_City.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 750
     },
-    "artistCreator": "Unknown",
+    "artistCreator": "Lawrence Ruiz",
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Sakay Na! Jeepneys, Tricycles, and Island Transport"
+    "sourceDescriptionMatch": "Authentic visual supporting Iconic Filipino Jeepney"
   },
   {
     "lessonId": "lesson-23-transportation",
     "mediaId": "media-l23-secondary",
-    "commonsFileTitle": "File:Kalesa Vigan.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ATricycle_overloaded.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ATricycle_overloaded.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/0/06/Tricycle_overloaded.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 750
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Sir Mervs from Metro Sta. Rosa, Philippines",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Sakay Na! Jeepneys, Tricycles, and Island Transport"
+    "sourceDescriptionMatch": "Authentic visual supporting Philippine Motorized Tricycle"
   },
   {
     "lessonId": "lesson-24-carabao",
     "mediaId": "media-l24-primary",
-    "commonsFileTitle": "File:Fiesta banderitas Philippines.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ACarabao_Plowing_rice_field%2C_Philippines_LOC_14333026510.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ACarabao_Plowing_rice_field%2C_Philippines_LOC_14333026510.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/2/23/Carabao_Plowing_rice_field%2C_Philippines_LOC_14333026510.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 715
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "The Library of Congress",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Ang Kalabaw: Agriculture and Rural Farm Life"
+    "sourceDescriptionMatch": "Authentic visual supporting Carabao in Agricultural Field"
   },
   {
     "lessonId": "lesson-24-carabao",
     "mediaId": "media-l24-secondary",
-    "commonsFileTitle": "File:Filipino fiesta table.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ACarabao_Racing_Festival_in_Baliwag_Bulacan_16.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ACarabao_Racing_Festival_in_Baliwag_Bulacan_16.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Carabao_Racing_Festival_in_Baliwag_Bulacan_16.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 750
     },
-    "artistCreator": "Unknown",
+    "artistCreator": "RamaGaspar",
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Ang Kalabaw: Agriculture and Rural Farm Life"
+    "sourceDescriptionMatch": "Authentic visual supporting Pulilan Carabao Festival"
   },
   {
     "lessonId": "lesson-25-community-helpers",
     "mediaId": "media-l25-primary",
-    "commonsFileTitle": "File:Filipino hospitality.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AA_Purok_Abanico_health_worker%2C_left%2C_from_the_San_Pedro_barangay_and_U.S._Army_Sgt._1st_Class_Brian_M._Reed%2C_center%2C_the_civil_affairs_team_sergeant_with_the_Combined_Joint_Civil_Military_Operations_Task_Force_120413-A-YK011-004.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AA_Purok_Abanico_health_worker%2C_left%2C_from_the_San_Pedro_barangay_and_U.S._Army_Sgt._1st_Class_Brian_M._Reed%2C_center%2C_the_civil_affairs_team_sergeant_with_the_Combined_Joint_Civil_Military_Operations_Task_Force_120413-A-YK011-004.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2a/A_Purok_Abanico_health_worker%2C_left%2C_from_the_San_Pedro_barangay_and_U.S._Army_Sgt._1st_Class_Brian_M._Reed%2C_center%2C_the_civil_affairs_team_sergeant_with_the_Combined_Joint_Civil_Military_Operations_Task_Force_120413-A-YK011-004.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 753
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "SSG Cashmere Jefferson",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Mga Katulong sa Pamayanan: Community Helpers and Bayanihan"
+    "sourceDescriptionMatch": "Authentic visual supporting Barangay Health Care Worker"
   },
   {
     "lessonId": "lesson-25-community-helpers",
     "mediaId": "media-l25-secondary",
-    "commonsFileTitle": "File:Kamayan feast.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AUSS_Ronald_Reagan_(CVN_76)_conducts_general_quarters_drill_(8446524).jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AUSS_Ronald_Reagan_(CVN_76)_conducts_general_quarters_drill_(8446524).jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/4/49/USS_Ronald_Reagan_%28CVN_76%29_conducts_general_quarters_drill_%288446524%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 665
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "U.S. Navy photo by Petty Officer 2nd Class Heather McGee",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Mga Katulong sa Pamayanan: Community Helpers and Bayanihan"
+    "sourceDescriptionMatch": "Authentic visual supporting Community Emergency Helpers"
   },
   {
     "lessonId": "lesson-26-september-review",
     "mediaId": "media-l26-primary",
-    "commonsFileTitle": "File:Philippine cultural map.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ATinikling.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ATinikling.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/b/bc/Tinikling.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 693
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "U.S. Air Force/Senior Airman Nestor Cruz",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting The Great September Showcase: Language and Daily Life Celebration"
+    "sourceDescriptionMatch": "Authentic visual supporting Tinikling Bamboo Folk Dance"
   },
   {
     "lessonId": "lesson-26-september-review",
     "mediaId": "media-l26-secondary",
-    "commonsFileTitle": "File:Philippines map 1900.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ASingkil_dance_post_card.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ASingkil_dance_post_card.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Singkil_dance_post_card.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 724
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Bulaclac Paruparu",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting The Great September Showcase: Language and Daily Life Celebration"
+    "sourceDescriptionMatch": "Authentic visual supporting Singkil Traditional Royal Dance"
   },
   {
     "lessonId": "lesson-27-bayanihan",
     "mediaId": "media-l27-primary",
-    "commonsFileTitle": "File:Laguna Copperplate Inscription.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AThe_Aesthetic_and_Cultural_Significance_of_Modern_Dance-_American_Dance_Festival_1984_50th_Anniversary_Program_-_DPLA_-_d553bf84cc19848f03a2389d24a16460.pdf",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AThe_Aesthetic_and_Cultural_Significance_of_Modern_Dance-_American_Dance_Festival_1984_50th_Anniversary_Program_-_DPLA_-_d553bf84cc19848f03a2389d24a16460.pdf",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/4/42/The_Aesthetic_and_Cultural_Significance_of_Modern_Dance-_American_Dance_Festival_1984_50th_Anniversary_Program_-_DPLA_-_d553bf84cc19848f03a2389d24a16460.pdf?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 1729
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Myers, Gerald; Myers, Martha; Reinhart, Charles L; Reinhart, Stephanie K; American Dance Festival",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Bayanihan Spirit: Community Cooperation and Unity"
+    "sourceDescriptionMatch": "Authentic visual supporting Bayanihan Carrying House Tradition"
   },
   {
     "lessonId": "lesson-27-bayanihan",
     "mediaId": "media-l27-secondary",
-    "commonsFileTitle": "File:Baybayin Characters Table.png",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ARacing_the_Storm-_18th_Wing_Helps_Disaster_Relief_Efforts_in_Philippines_(9420080).jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ARacing_the_Storm-_18th_Wing_Helps_Disaster_Relief_Efforts_in_Philippines_(9420080).jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/1/1d/Racing_the_Storm-_18th_Wing_Helps_Disaster_Relief_Efforts_in_Philippines_%289420080%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 665
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "U.S. Air Force photo by Tech. Sgt. Micaiah Anthony",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Bayanihan Spirit: Community Cooperation and Unity"
+    "sourceDescriptionMatch": "Authentic visual supporting Community Cooperation and Unity"
   },
   {
     "lessonId": "lesson-28-jose-rizal",
     "mediaId": "media-l28-primary",
-    "commonsFileTitle": "File:Manila Galleon.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AJose_rizal_craig01g.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AJose_rizal_craig01g.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/a/aa/Jose_rizal_craig01g.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 1409
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Painting from Lineage, Life and Labors of José Rizal, Philippine Patriot, by Austin Craig (1909). Information page at Project Gutenberg",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting José Rizal: Writer, Doctor, and National Hero"
+    "sourceDescriptionMatch": "Authentic visual supporting Dr. José Rizal Historical Portrait"
   },
   {
     "lessonId": "lesson-28-jose-rizal",
     "mediaId": "media-l28-secondary",
-    "commonsFileTitle": "File:Map of Manila 1671.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3A2011_The_Rizal_Monument%2C_Luneta_Park_%2C_Manila%2C_Philippines.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3A2011_The_Rizal_Monument%2C_Luneta_Park_%2C_Manila%2C_Philippines.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/a/ad/2011_The_Rizal_Monument%2C_Luneta_Park_%2C_Manila%2C_Philippines.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 608
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Joeymdph",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting José Rizal: Writer, Doctor, and National Hero"
+    "sourceDescriptionMatch": "Authentic visual supporting Rizal Monument in Luneta"
   },
   {
     "lessonId": "lesson-29-andres-bonifacio",
     "mediaId": "media-l29-primary",
-    "commonsFileTitle": "File:Rizal Monument Manila.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AGat_Andr%C3%A9s_Bonifacio.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AGat_Andr%C3%A9s_Bonifacio.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e6/Gat_Andr%C3%A9s_Bonifacio.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 1324
     },
-    "artistCreator": "Unknown",
+    "artistCreator": "La Ilustración Española y Americana",
     "license": "Public Domain",
     "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Andrés Bonifacio and the Katipunan"
+    "sourceDescriptionMatch": "Authentic visual supporting Andrés Bonifacio Portrait"
   },
   {
     "lessonId": "lesson-29-andres-bonifacio",
     "mediaId": "media-l29-secondary",
-    "commonsFileTitle": "File:Flag of the Katipunan.svg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ABonifacioMonumentjf9933_13.JPG",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ABonifacioMonumentjf9933_13.JPG",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f0/BonifacioMonumentjf9933_13.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 1333
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Ramon FVelasquez",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Andrés Bonifacio and the Katipunan"
+    "sourceDescriptionMatch": "Authentic visual supporting Bonifacio Monument by Tolentino"
   },
   {
     "lessonId": "lesson-30-indigenous-peoples",
     "mediaId": "media-l30-primary",
-    "commonsFileTitle": "File:Flag of the Philippines.svg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AIgorot_Ifugao_Traditional_Dance_by_Elder_Women.webm",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AIgorot_Ifugao_Traditional_Dance_by_Elder_Women.webm",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/9/9a/Igorot_Ifugao_Traditional_Dance_by_Elder_Women.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 960,
+      "height": 720
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Joanna Lerio",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Indigenous Peoples and Living Cultures of the Philippines"
+    "sourceDescriptionMatch": "Authentic visual supporting Ifugao Heritage of Cordillera"
   },
   {
     "lessonId": "lesson-30-indigenous-peoples",
     "mediaId": "media-l30-secondary",
-    "commonsFileTitle": "File:Aguinaldo Shrine Kawit.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AT'nalak_weaving_Tboli.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AT'nalak_weaving_Tboli.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/6/66/T%27nalak_weaving_Tboli.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 785
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Rico H. Borja for the Philippine News Agency",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Indigenous Peoples and Living Cultures of the Philippines"
+    "sourceDescriptionMatch": "Authentic visual supporting T'boli Living Heritage and Weaving"
   },
   {
     "lessonId": "lesson-31-history-timeline",
     "mediaId": "media-l31-primary",
-    "commonsFileTitle": "File:Philippine Eagle.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AManunggul_Jar.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AManunggul_Jar.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/e/eb/Manunggul_Jar.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 1124
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Philip Maise",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting A Child-Friendly Philippine History Timeline"
+    "sourceDescriptionMatch": "Authentic visual supporting Manunggul Jar Burial Vessel"
   },
   {
     "lessonId": "lesson-31-history-timeline",
     "mediaId": "media-l31-secondary",
-    "commonsFileTitle": "File:Philippine Eagle nest.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "mimeType": "image/jpeg",
+    "commonsFileTitle": "File%3ALaguna_Copperplate_Inscription.gif",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ALaguna_Copperplate_Inscription.gif",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/1/15/Laguna_Copperplate_Inscription.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "mimeType": "image/gif",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 592
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Nordenx",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting A Child-Friendly Philippine History Timeline"
+    "sourceDescriptionMatch": "Authentic visual supporting Laguna Copperplate Inscription (900 AD)"
   },
   {
     "lessonId": "lesson-32-mayon-volcano",
     "mediaId": "media-l32-primary",
-    "commonsFileTitle": "File:Tarsier Bohol.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ACAGSAWA_RUINS.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ACAGSAWA_RUINS.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/0/08/CAGSAWA_RUINS.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 751
     },
-    "artistCreator": "Unknown",
+    "artistCreator": "Tam3rd at en.wikipedia",
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Mayon Volcano: The World's Most Perfect Cone"
+    "sourceDescriptionMatch": "Authentic visual supporting Cagsawa Church Ruins and Mayon"
   },
   {
     "lessonId": "lesson-32-mayon-volcano",
     "mediaId": "media-l32-secondary",
-    "commonsFileTitle": "File:Tamaraw.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AMayon_Volcano_Eruption_3.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AMayon_Volcano_Eruption_3.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/5/5f/Mayon_Volcano_Eruption_3.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 1500
     },
-    "artistCreator": "Unknown",
+    "artistCreator": "Darkimages08",
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Mayon Volcano: The World's Most Perfect Cone"
+    "sourceDescriptionMatch": "Authentic visual supporting Mayon Volcano Majestic Cone"
   },
   {
     "lessonId": "lesson-33-weather-climate",
     "mediaId": "media-l33-primary",
-    "commonsFileTitle": "File:Tubbataha Reef.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "mimeType": "image/jpeg",
+    "commonsFileTitle": "File%3AHaiyan_2013-11-06_0225Z.png",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AHaiyan_2013-11-06_0225Z.png",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/3/3e/Haiyan_2013-11-06_0225Z.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "mimeType": "image/png",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 563
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "NASA/NOAA",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Tropical Weather, Monsoons, and Typhoons"
+    "sourceDescriptionMatch": "Authentic visual supporting Typhoon Satellite Observation (NASA)"
   },
   {
     "lessonId": "lesson-33-weather-climate",
     "mediaId": "media-l33-secondary",
-    "commonsFileTitle": "File:Sea turtle Tubbataha.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AChildren_Play_in_Monsoon_Downpour_-_Pakse_-_Laos.JPG",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AChildren_Play_in_Monsoon_Downpour_-_Pakse_-_Laos.JPG",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/c/cc/Children_Play_in_Monsoon_Downpour_-_Pakse_-_Laos.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 750
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Adam Jones Adam63",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Tropical Weather, Monsoons, and Typhoons"
+    "sourceDescriptionMatch": "Authentic visual supporting Tropical Monsoon Weather"
   },
   {
     "lessonId": "lesson-34-tropical-forests",
     "mediaId": "media-l34-primary",
-    "commonsFileTitle": "File:Sierra Madre mountain range.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ASierra_Madre_San_Ildefono_Bulacan_06.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ASierra_Madre_San_Ildefono_Bulacan_06.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/d/df/Sierra_Madre_San_Ildefono_Bulacan_06.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 750
     },
-    "artistCreator": "Unknown",
+    "artistCreator": "FBenjr123",
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Philippine Rainforests: Layers of Life and Biodiversity"
+    "sourceDescriptionMatch": "Authentic visual supporting Sierra Madre Rainforest Canopy"
   },
   {
     "lessonId": "lesson-34-tropical-forests",
     "mediaId": "media-l34-secondary",
-    "commonsFileTitle": "File:Tropical rainforest stream Philippines.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AUSAID_Measuring_Impact_Conservation_Enterprise_Retrospective_(Philippines%3B_Nagkakaisang_Tribu_ng_Palawan)_(26420955048).jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AUSAID_Measuring_Impact_Conservation_Enterprise_Retrospective_(Philippines%3B_Nagkakaisang_Tribu_ng_Palawan)_(26420955048).jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/f/fc/USAID_Measuring_Impact_Conservation_Enterprise_Retrospective_%28Philippines%3B_Nagkakaisang_Tribu_ng_Palawan%29_%2826420955048%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 667
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "USAID Biodiversity & Forestry",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Philippine Rainforests: Layers of Life and Biodiversity"
+    "sourceDescriptionMatch": "Authentic visual supporting Coastal Mangrove Ecosystem"
   },
   {
     "lessonId": "lesson-35-coral-reefs",
     "mediaId": "media-l35-primary",
-    "commonsFileTitle": "File:Bayanihan house moving.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ATubbataha_Shark.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ATubbataha_Shark.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e1/Tubbataha_Shark.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 663
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Simon Hefti, Schweiz (de:User:Nikswieweg)",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Coral Reefs: The Underwater Rainforests of the Coral Triangle"
+    "sourceDescriptionMatch": "Authentic visual supporting Tubbataha Reefs Natural Park"
   },
   {
     "lessonId": "lesson-35-coral-reefs",
     "mediaId": "media-l35-secondary",
-    "commonsFileTitle": "File:Bayanihan community.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AButanding_Whale_Shark_(Donsol%2C_Sorsogon)_(794278440).jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AButanding_Whale_Shark_(Donsol%2C_Sorsogon)_(794278440).jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/0/04/Butanding_Whale_Shark_%28Donsol%2C_Sorsogon%29_%28794278440%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 631
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Shubert Ciencia from Nueva Ecija, Philippines",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Coral Reefs: The Underwater Rainforests of the Coral Triangle"
+    "sourceDescriptionMatch": "Authentic visual supporting Whale Shark in Coral Triangle"
   },
   {
     "lessonId": "lesson-36-philippine-eagle",
     "mediaId": "media-l36-primary",
-    "commonsFileTitle": "File:Filipino family respect.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3APhilippine_review_(IA_acc5041.0001.001.umich.edu).pdf",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3APhilippine_review_(IA_acc5041.0001.001.umich.edu).pdf",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c6/Philippine_review_%28IA_acc5041.0001.001.umich.edu%29.pdf?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 1151
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Philippine information society",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting The Philippine Eagle: The Mighty King of Birds (Agila)"
+    "sourceDescriptionMatch": "Authentic visual supporting Philippine Eagle Majestic Portrait"
   },
   {
     "lessonId": "lesson-36-philippine-eagle",
     "mediaId": "media-l36-secondary",
-    "commonsFileTitle": "File:Filipino home life.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ALittle_journeys_to_Hawaii_and_the_Philippine_Islands_(IA_aay7391.0001.001.umich.edu).pdf",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ALittle_journeys_to_Hawaii_and_the_Philippine_Islands_(IA_aay7391.0001.001.umich.edu).pdf",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Little_journeys_to_Hawaii_and_the_Philippine_Islands_%28IA_aay7391.0001.001.umich.edu%29.pdf?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 1213
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "George, Marian Minnie, b. 1865",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting The Philippine Eagle: The Mighty King of Birds (Agila)"
+    "sourceDescriptionMatch": "Authentic visual supporting Philippine Eagle in Sanctuary"
   },
   {
     "lessonId": "lesson-37-environmental-stewardship",
     "mediaId": "media-l37-primary",
-    "commonsFileTitle": "File:Community pantry Philippines.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ATreesfortheFuturePhilippines.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ATreesfortheFuturePhilippines.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/2/21/TreesfortheFuturePhilippines.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 750
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Trees ForTheFuture",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Caring for God's Creation: Environmental Stewardship"
+    "sourceDescriptionMatch": "Authentic visual supporting Community Reforestation Initiative"
   },
   {
     "lessonId": "lesson-37-environmental-stewardship",
     "mediaId": "media-l37-secondary",
-    "commonsFileTitle": "File:Filipino kindness.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ADouglas_MacArthur_lands_Leyte1.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ADouglas_MacArthur_lands_Leyte1.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/0/0e/Douglas_MacArthur_lands_Leyte1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 749
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "U.S. Army Signal Corps officer Gaetano Faillace [1]",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Caring for God's Creation: Environmental Stewardship"
+    "sourceDescriptionMatch": "Authentic visual supporting Coastal Ecosystem Stewardship"
   },
   {
     "lessonId": "lesson-38-october-review",
     "mediaId": "media-l38-primary",
-    "commonsFileTitle": "File:Philippine Flag Independence Day.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AFort_Santiago_Gate.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AFort_Santiago_Gate.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/7/77/Fort_Santiago_Gate.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 1336
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "en:User:Drumlanrig",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting The Great October Quest: History, Heroes, and Nature Synthesis"
+    "sourceDescriptionMatch": "Authentic visual supporting Fort Santiago Gate in Intramuros"
   },
   {
     "lessonId": "lesson-38-october-review",
     "mediaId": "media-l38-secondary",
-    "commonsFileTitle": "File:Coastal cleanup Philippines.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3APh-mm-manila-intramuros-san_agustin_church_(2014).JPG",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3APh-mm-manila-intramuros-san_agustin_church_(2014).JPG",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/b/bc/Ph-mm-manila-intramuros-san_agustin_church_%282014%29.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 750
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Patrick Roque (talk) (Uploads)",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting The Great October Quest: History, Heroes, and Nature Synthesis"
+    "sourceDescriptionMatch": "Authentic visual supporting San Agustin Historic Church"
   },
   {
     "lessonId": "lesson-39-october-showcase",
     "mediaId": "media-l39-primary",
-    "commonsFileTitle": "File:Philippine culture mosaic.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AJuan_Luna_Spoliarium.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AJuan_Luna_Spoliarium.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/d/d4/Juan_Luna_Spoliarium.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 559
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Juan Luna",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting The Grand October Showcase: Celebrating Heroes and Heritage"
+    "sourceDescriptionMatch": "Authentic visual supporting Spoliarium (1884) by Juan Luna"
   },
   {
     "lessonId": "lesson-39-october-showcase",
     "mediaId": "media-l39-secondary",
-    "commonsFileTitle": "File:Bayanihan.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "mimeType": "image/jpeg",
+    "commonsFileTitle": "File%3AFernando_Amorsolo.png",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AFernando_Amorsolo.png",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/7/71/Fernando_Amorsolo.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "mimeType": "image/png",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 1390
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Philippine Cultural & Heritage Collection",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting The Grand October Showcase: Celebrating Heroes and Heritage"
+    "sourceDescriptionMatch": "Authentic visual supporting Planting Rice Art by Amorsolo"
   },
   {
     "lessonId": "lesson-40-kitchen-safety",
     "mediaId": "media-l40-primary",
-    "commonsFileTitle": "File:Handwashing steps diagram.png",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3APreparing_Sushi_with_Chef_Eviatar_Churi_in_4Chef_Culinary_School_kitchen%2C_Israel.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3APreparing_Sushi_with_Chef_Eviatar_Churi_in_4Chef_Culinary_School_kitchen%2C_Israel.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/1/1c/Preparing_Sushi_with_Chef_Eviatar_Churi_in_4Chef_Culinary_School_kitchen%2C_Israel.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 750
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Culinary Arts & Nutrition Collection",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Kitchen Safety and Hygiene: Junior Chef Foundations"
+    "sourceDescriptionMatch": "Authentic visual supporting Culinary Kitchen Safety & Hygiene"
   },
   {
     "lessonId": "lesson-40-kitchen-safety",
     "mediaId": "media-l40-secondary",
-    "commonsFileTitle": "File:Kitchen prep station.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AWashing_hands_with_soap_(1).jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AWashing_hands_with_soap_(1).jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/5/54/Washing_hands_with_soap_%281%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 750
     },
-    "artistCreator": "Unknown",
+    "artistCreator": "Beat Ruest",
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Kitchen Safety and Hygiene: Junior Chef Foundations"
+    "sourceDescriptionMatch": "Authentic visual supporting Hygiene and Handwashing Protocol"
   },
   {
     "lessonId": "lesson-41-measurements",
     "mediaId": "media-l41-primary",
-    "commonsFileTitle": "File:Measuring cups.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AKitchen_utensils-01.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AKitchen_utensils-01.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Kitchen_utensils-01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 750
     },
-    "artistCreator": "Unknown",
+    "artistCreator": "Jeppestown",
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Culinary Measurements and Tools: The Science of Precision"
+    "sourceDescriptionMatch": "Authentic visual supporting Culinary Measuring Tools and Scales"
   },
   {
     "lessonId": "lesson-41-measurements",
     "mediaId": "media-l41-secondary",
-    "commonsFileTitle": "File:Kitchen scale.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AThai_mortar_(stone)_and_pestle.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AThai_mortar_(stone)_and_pestle.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a1/Thai_mortar_%28stone%29_and_pestle.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 1000
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Takeaway",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Culinary Measurements and Tools: The Science of Precision"
+    "sourceDescriptionMatch": "Authentic visual supporting Traditional Mortar and Pestle (Dikdikan)"
   },
   {
     "lessonId": "lesson-42-nutrition",
     "mediaId": "media-l42-primary",
-    "commonsFileTitle": "File:Pinggang Pinoy.png",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AQueen_Victoria_Market_Fresh_Vegetables.JPG",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AQueen_Victoria_Market_Fresh_Vegetables.JPG",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/4/4e/Queen_Victoria_Market_Fresh_Vegetables.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 1333
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Nick carson at English Wikipedia",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Pinggang Pinoy and Nourishing Filipino Ingredients"
+    "sourceDescriptionMatch": "Authentic visual supporting Fresh Vegetables and Nutritious Produce"
   },
   {
     "lessonId": "lesson-42-nutrition",
     "mediaId": "media-l42-secondary",
-    "commonsFileTitle": "File:Healthy food plate.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AFresh_fish_in_market_(27002392530).jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AFresh_fish_in_market_(27002392530).jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/f/fb/Fresh_fish_in_market_%2827002392530%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 667
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Thomas Quine",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Pinggang Pinoy and Nourishing Filipino Ingredients"
+    "sourceDescriptionMatch": "Authentic visual supporting Nutritious Seafood and Protein"
   },
   {
     "lessonId": "lesson-43-rice-basics",
     "mediaId": "media-l43-primary",
-    "commonsFileTitle": "File:Rice paddy Philippines.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ABanaue_Philippines_Batad-Rice-Terraces-02.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ABanaue_Philippines_Batad-Rice-Terraces-02.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/1/11/Banaue_Philippines_Batad-Rice-Terraces-02.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 667
     },
-    "artistCreator": "Unknown",
+    "artistCreator": "CEphoto, Uwe Aranas",
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Ang Bigas at Kanin: Rice Culture and Staple Heritage"
+    "sourceDescriptionMatch": "Authentic visual supporting Rice Terraces and Agricultural Heritage"
   },
   {
     "lessonId": "lesson-43-rice-basics",
     "mediaId": "media-l43-secondary",
-    "commonsFileTitle": "File:Bowl of white rice.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ACeramic_bowl_full_of_white_rice.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ACeramic_bowl_full_of_white_rice.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/a/aa/Ceramic_bowl_full_of_white_rice.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 561
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "epSos.de",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Ang Bigas at Kanin: Rice Culture and Staple Heritage"
+    "sourceDescriptionMatch": "Authentic visual supporting Steamed Rice in Traditional Setting"
   },
   {
     "lessonId": "lesson-44-adobo-history",
     "mediaId": "media-l44-primary",
-    "commonsFileTitle": "File:Sinigang.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ALomo_en_adobo-2009.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ALomo_en_adobo-2009.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/8/8f/Lomo_en_adobo-2009.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 667
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Tamorlan",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Adobo Across the Archipelago: Regional Vinegar Heritage"
+    "sourceDescriptionMatch": "Authentic visual supporting Classic Chicken and Pork Adobo"
   },
   {
     "lessonId": "lesson-44-adobo-history",
     "mediaId": "media-l44-secondary",
-    "commonsFileTitle": "File:Tamarind fruit.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AClay_cooking_pot_Bronze_II_age_01.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AClay_cooking_pot_Bronze_II_age_01.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f2/Clay_cooking_pot_Bronze_II_age_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 563
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Hanay",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Adobo Across the Archipelago: Regional Vinegar Heritage"
+    "sourceDescriptionMatch": "Authentic visual supporting Traditional Palayok Clay Cooking Pot"
   },
   {
     "lessonId": "lesson-45-sinigang-flavors",
     "mediaId": "media-l45-primary",
-    "commonsFileTitle": "File:Chicken and pork adobo.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ASinigang_na_Baboy.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ASinigang_na_Baboy.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/b/b1/Sinigang_na_Baboy.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 750
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "??? ??? from San Francisco, California, USA",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Sinigang and Native Souring Agents: The Art of Asim"
+    "sourceDescriptionMatch": "Authentic visual supporting Sinigang na Baboy Sour Soup"
   },
   {
     "lessonId": "lesson-45-sinigang-flavors",
     "mediaId": "media-l45-secondary",
-    "commonsFileTitle": "File:Cane vinegar garlic.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ATamarindus_indica_pods.JPG",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ATamarindus_indica_pods.JPG",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2e/Tamarindus_indica_pods.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 1333
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "B.navez",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Sinigang and Native Souring Agents: The Art of Asim"
+    "sourceDescriptionMatch": "Authentic visual supporting Fresh Sampaloc (Tamarind) Souring Agent"
   },
   {
     "lessonId": "lesson-46-pancit-celebration",
     "mediaId": "media-l46-primary",
-    "commonsFileTitle": "File:Pancit Bihon.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3A6365Ginisang_Suw%C3%A1he%2C_Manok_at_Pancit_Canton_15.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3A6365Ginisang_Suw%C3%A1he%2C_Manok_at_Pancit_Canton_15.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/3/3d/6365Ginisang_Suw%C3%A1he%2C_Manok_at_Pancit_Canton_15.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 750
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "JFVelasquez Floro",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Pancit Traditions: Long Noodles, Blessings, and Celebrations"
+    "sourceDescriptionMatch": "Authentic visual supporting Pancit Canton Festive Celebration Dish"
   },
   {
     "lessonId": "lesson-46-pancit-celebration",
     "mediaId": "media-l46-secondary",
-    "commonsFileTitle": "File:Rice noodles.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3APancit_bihon_3.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3APancit_bihon_3.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/9/9d/Pancit_bihon_3.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 662
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "lynetao",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Pancit Traditions: Long Noodles, Blessings, and Celebrations"
+    "sourceDescriptionMatch": "Authentic visual supporting Pancit Bihon Guisado Heritage"
   },
   {
     "lessonId": "lesson-47-halo-halo",
     "mediaId": "media-l47-primary",
-    "commonsFileTitle": "File:Lumpia Shanghai.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AHalo_halo1.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AHalo_halo1.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/3/30/Halo_halo1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 776
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "bingbing from Quezon City, Philippines",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Halo-Halo: Layered Sweet Harmony and Shaved Ice Artistry"
+    "sourceDescriptionMatch": "Authentic visual supporting Classic Halo-Halo with Ube and Leche Flan"
   },
   {
     "lessonId": "lesson-47-halo-halo",
     "mediaId": "media-l47-secondary",
-    "commonsFileTitle": "File:Fresh Lumpia.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AUbe_halaya_(Ube_jam)_with_condensed_milk.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AUbe_halaya_(Ube_jam)_with_condensed_milk.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Ube_halaya_%28Ube_jam%29_with_condensed_milk.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 644
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Obsidian Soul",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Halo-Halo: Layered Sweet Harmony and Shaved Ice Artistry"
+    "sourceDescriptionMatch": "Authentic visual supporting Ube Halaya and Halo-Halo Ingredients"
   },
   {
     "lessonId": "lesson-48-mango-float",
     "mediaId": "media-l48-primary",
-    "commonsFileTitle": "File:Kakanin rice cakes.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AMango_TommyAtkins06_Asit.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AMango_TommyAtkins06_Asit.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/b/bc/Mango_TommyAtkins06_Asit.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 750
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Asit K. Ghosh  Thaumaturgist",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Mango Float: The Beloved No-Bake Family Heritage Dessert"
+    "sourceDescriptionMatch": "Authentic visual supporting Sweet Philippine Carabao Mango Slices"
   },
   {
     "lessonId": "lesson-48-mango-float",
     "mediaId": "media-l48-secondary",
-    "commonsFileTitle": "File:Bibingka.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AMango_float%2C_a_Filipino_icebox_cake_version_of_Crema_de_Fruta_02.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AMango_float%2C_a_Filipino_icebox_cake_version_of_Crema_de_Fruta_02.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/3/3f/Mango_float%2C_a_Filipino_icebox_cake_version_of_Crema_de_Fruta_02.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 702
     },
-    "artistCreator": "Unknown",
+    "artistCreator": "Obsidian Soul",
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Mango Float: The Beloved No-Bake Family Heritage Dessert"
+    "sourceDescriptionMatch": "Authentic visual supporting Mango Graham Float Heritage Dessert"
   },
   {
     "lessonId": "lesson-49-kakanin",
     "mediaId": "media-l49-primary",
-    "commonsFileTitle": "File:Halo-halo.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ABibingka_(Philippines).jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ABibingka_(Philippines).jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/8/83/Bibingka_%28Philippines%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 642
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Obsidian Soul",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Kakanin Heritage: Sticky Rice Delicacies and Coconut Traditions"
+    "sourceDescriptionMatch": "Authentic visual supporting Traditional Bibingka on Banana Leaf"
   },
   {
     "lessonId": "lesson-49-kakanin",
     "mediaId": "media-l49-secondary",
-    "commonsFileTitle": "File:Ube halaya and leche flan.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3APuto_bumbong.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3APuto_bumbong.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/0/02/Puto_bumbong.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 1500
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "ChildofMidnight at en.wikipedia",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Kakanin Heritage: Sticky Rice Delicacies and Coconut Traditions"
+    "sourceDescriptionMatch": "Authentic visual supporting Puto Bumbong Traditional Kakanin"
   },
   {
     "lessonId": "lesson-50-grandmas-recipe-box",
     "mediaId": "media-l50-primary",
-    "commonsFileTitle": "File:Palayok clay pot.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AGood_things%3B_ethical_recipes_for_feast_days_and_other_days%2C_with_graces_for_all_the_days_(IA_goodthingsethica00good).pdf",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AGood_things%3B_ethical_recipes_for_feast_days_and_other_days%2C_with_graces_for_all_the_days_(IA_goodthingsethica00good).pdf",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f8/Good_things%3B_ethical_recipes_for_feast_days_and_other_days%2C_with_graces_for_all_the_days_%28IA_goodthingsethica00good%29.pdf?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 1387
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Goodhue, Isabel. [from old catalog]\nKatherine Golden Bitting Collection on Gastronomy (Library of Congress) DLC [from old catalog]",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Grandma's Recipe Box: Preserving Heirlooms and Oral Histories"
+    "sourceDescriptionMatch": "Authentic visual supporting Heirloom Handwritten Recipe Journal"
   },
   {
     "lessonId": "lesson-50-grandmas-recipe-box",
     "mediaId": "media-l50-secondary",
-    "commonsFileTitle": "File:Family cooking.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ACollection_of_wooden_utensils.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ACollection_of_wooden_utensils.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/5/55/Collection_of_wooden_utensils.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 748
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Graeme Bartlett",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Grandma's Recipe Box: Preserving Heirlooms and Oral Histories"
+    "sourceDescriptionMatch": "Authentic visual supporting Traditional Wooden Kitchen Tools"
   },
   {
     "lessonId": "lesson-51-family-heritage-wall",
     "mediaId": "media-l51-primary",
-    "commonsFileTitle": "File:Kamayan feast.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AVintage_family_from_england.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AVintage_family_from_england.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/8/86/Vintage_family_from_england.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 1524
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "freeparking",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting The Family Heritage Wall: Culinary Roots and Generational Stories"
+    "sourceDescriptionMatch": "Authentic visual supporting Generational Filipino Family Heritage"
   },
   {
     "lessonId": "lesson-51-family-heritage-wall",
     "mediaId": "media-l51-secondary",
-    "commonsFileTitle": "File:Spoon and fork setting.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3A9568Marinated_chunks_of_rabbit_in_the_Philippines_03.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3A9568Marinated_chunks_of_rabbit_in_the_Philippines_03.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/8/89/9568Marinated_chunks_of_rabbit_in_the_Philippines_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 750
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "JFVelasquez Floro",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting The Family Heritage Wall: Culinary Roots and Generational Stories"
+    "sourceDescriptionMatch": "Authentic visual supporting Regional Culinary Geography Map"
   },
   {
     "lessonId": "lesson-52-november-showcase",
     "mediaId": "media-l52-primary",
-    "commonsFileTitle": "File:Filipino food spread.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ALechon_Baboy_(47769441072).jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ALechon_Baboy_(47769441072).jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f2/Lechon_Baboy_%2847769441072%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 1333
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "David Stanley from Nanaimo, Canada",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting The Grand November Culinary Showcase: A Feast of Family Heritage"
+    "sourceDescriptionMatch": "Authentic visual supporting Grand Culinary Feast and Banquet"
   },
   {
     "lessonId": "lesson-52-november-showcase",
     "mediaId": "media-l52-secondary",
-    "commonsFileTitle": "File:Palayok clay pot.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ABoodle_fight_at_Banate's_Kasag_Festival.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ABoodle_fight_at_Banate's_Kasag_Festival.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/e/eb/Boodle_fight_at_Banate%27s_Kasag_Festival.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 717
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Dandy1022",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting The Grand November Culinary Showcase: A Feast of Family Heritage"
+    "sourceDescriptionMatch": "Authentic visual supporting Kamayan Celebration Table"
   },
   {
     "lessonId": "lesson-53-geography-championship",
     "mediaId": "media-l53-primary",
-    "commonsFileTitle": "File:Ph physical plain.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "mimeType": "image/jpeg",
+    "commonsFileTitle": "File%3APhilippines_relief_location_map_(square).svg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3APhilippines_relief_location_map_(square).svg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/1/11/Philippines_relief_location_map_%28square%29.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "mimeType": "image/webp",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 1000
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Hellerick",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting The Grand Philippine Geography Championship: Archipelagic Mastery"
+    "sourceDescriptionMatch": "Authentic visual supporting Topographic Map of the Philippines"
   },
   {
     "lessonId": "lesson-53-geography-championship",
     "mediaId": "media-l53-secondary",
-    "commonsFileTitle": "File:Philippines satellite.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ACoron_Kayangan_Lake_Entrance_(73005283).jpeg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ACoron_Kayangan_Lake_Entrance_(73005283).jpeg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/c/ca/Coron_Kayangan_Lake_Entrance_%2873005283%29.jpeg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 601
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Myles Kadusale",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting The Grand Philippine Geography Championship: Archipelagic Mastery"
+    "sourceDescriptionMatch": "Authentic visual supporting Kayangan Lake in Coron, Palawan"
   },
   {
     "lessonId": "lesson-54-cultural-game-show",
     "mediaId": "media-l54-primary",
-    "commonsFileTitle": "File:Philippine culture.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ASungka_lo_631x165.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ASungka_lo_631x165.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/e/eb/Sungka_lo_631x165.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 261
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Roel Cantada",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting The Great Archipelago Cultural Game Show: Language, Traditions, and Da"
+    "sourceDescriptionMatch": "Authentic visual supporting Traditional Carved Sungka Board"
   },
   {
     "lessonId": "lesson-54-cultural-game-show",
     "mediaId": "media-l54-secondary",
-    "commonsFileTitle": "File:Filipino greeting.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AKulintang_08.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AKulintang_08.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/1/1b/Kulintang_08.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 1335
     },
-    "artistCreator": "Unknown",
+    "artistCreator": "Philip Dominguez Mercurio (PhilipDM)",
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting The Great Archipelago Cultural Game Show: Language, Traditions, and Da"
+    "sourceDescriptionMatch": "Authentic visual supporting Kulintang Ensemble Instruments"
   },
   {
     "lessonId": "lesson-55-family-recipe-showcase",
     "mediaId": "media-l55-primary",
-    "commonsFileTitle": "File:Array of Cooked Filipino Dishes.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "mimeType": "image/jpeg",
+    "commonsFileTitle": "File%3AEight_girls_and_teacher_in_a_cooking_class_in_a_Washington%2C_D.C.%2C_high_school.png",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AEight_girls_and_teacher_in_a_cooking_class_in_a_Washington%2C_D.C.%2C_high_school.png",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6c/Eight_girls_and_teacher_in_a_cooking_class_in_a_Washington%2C_D.C.%2C_high_school.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "mimeType": "image/png",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 768
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Johnston, Frances Benjamin, 1864-1952, photographer.",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Family Recipe Showcase Preparation: The Junior Master Chef Feast"
+    "sourceDescriptionMatch": "Authentic visual supporting Junior Chefs in the Culinary Lab"
   },
   {
     "lessonId": "lesson-55-family-recipe-showcase",
     "mediaId": "media-l55-secondary",
-    "commonsFileTitle": "File:Child cooking.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AFresh_Ingredients_(Unsplash).jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AFresh_Ingredients_(Unsplash).jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e4/Fresh_Ingredients_%28Unsplash%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 667
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Syd Wachs videmusart",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Family Recipe Showcase Preparation: The Junior Master Chef Feast"
+    "sourceDescriptionMatch": "Authentic visual supporting Fresh Ingredients for Showcase Meal"
   },
   {
     "lessonId": "lesson-56-gratitude-journal",
     "mediaId": "media-l56-primary",
-    "commonsFileTitle": "File:Reflection journal.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AThe_Swiss_Family_Robinson_-_1851.djvu",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AThe_Swiss_Family_Robinson_-_1851.djvu",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/5/58/The_Swiss_Family_Robinson_-_1851.djvu?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 1625
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Johann David Wyss",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting A Year of Gratitude: Reflecting on God's Blessings, Family, and Growth"
+    "sourceDescriptionMatch": "Authentic visual supporting Family Prayer and Thanksgiving"
   },
   {
     "lessonId": "lesson-56-gratitude-journal",
     "mediaId": "media-l56-secondary",
-    "commonsFileTitle": "File:Sunrise over sea Philippines.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ASunrise_in_Pieniny%2C_Poland_02.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ASunrise_in_Pieniny%2C_Poland_02.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/5/50/Sunrise_in_Pieniny%2C_Poland_02.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 614
     },
-    "artistCreator": "Unknown",
+    "artistCreator": "Pudelek",
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting A Year of Gratitude: Reflecting on God's Blessings, Family, and Growth"
+    "sourceDescriptionMatch": "Authentic visual supporting Serene Sunrise over Philippine Mountains"
   },
   {
     "lessonId": "lesson-57-biblical-stewardship",
     "mediaId": "media-l57-primary",
-    "commonsFileTitle": "File:Philippine nature.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AChelonia_mydas_swimming%2C_Hawaii.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AChelonia_mydas_swimming%2C_Hawaii.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6e/Chelonia_mydas_swimming%2C_Hawaii.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 750
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Dominik Keller",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Biblical Stewardship of Creation: Caring for the Islands, Seas, and Li"
+    "sourceDescriptionMatch": "Authentic visual supporting Marine Turtle in Protected Sanctuary"
   },
   {
     "lessonId": "lesson-57-biblical-stewardship",
     "mediaId": "media-l57-secondary",
-    "commonsFileTitle": "File:Tree planting Philippines.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ACrooked_River-Oregon.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ACrooked_River-Oregon.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/7/75/Crooked_River-Oregon.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 858
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Pacific NW Station",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Biblical Stewardship of Creation: Caring for the Islands, Seas, and Li"
+    "sourceDescriptionMatch": "Authentic visual supporting Pristine River and Forest Ecosystem"
   },
   {
     "lessonId": "lesson-58-bayanihan-review",
     "mediaId": "media-l58-primary",
-    "commonsFileTitle": "File:Bayanihan house moving.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AHistory_of_companies_I_and_E%2C_Sixth_Regt.%2C_Illinois_Volunteer_Infantry_from_Whiteside_County._Containing_a_detailed_account_of_their_experiences_while_serving_as_volunteers_in_the_Porto_Rican_campaign_(14781894494).jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AHistory_of_companies_I_and_E%2C_Sixth_Regt.%2C_Illinois_Volunteer_Infantry_from_Whiteside_County._Containing_a_detailed_account_of_their_experiences_while_serving_as_volunteers_in_the_Porto_Rican_campaign_(14781894494).jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/4/45/History_of_companies_I_and_E%2C_Sixth_Regt.%2C_Illinois_Volunteer_Infantry_from_Whiteside_County._Containing_a_detailed_account_of_their_experiences_while_serving_as_volunteers_in_the_Porto_Rican_campaign_%2814781894494%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 1155
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Internet Archive Book Images",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Bayanihan in Action: Community Kindness, Cooperation, and Filipino Val"
+    "sourceDescriptionMatch": "Authentic visual supporting Community Volunteers Packing Relief Goods"
   },
   {
     "lessonId": "lesson-58-bayanihan-review",
     "mediaId": "media-l58-secondary",
-    "commonsFileTitle": "File:Community pantry Philippines.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AScotswood_Community_Garden_-_geograph.org.uk_-_1463431.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AScotswood_Community_Garden_-_geograph.org.uk_-_1463431.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/7/79/Scotswood_Community_Garden_-_geograph.org.uk_-_1463431.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 669
     },
-    "artistCreator": "Unknown",
+    "artistCreator": "hayley green",
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Bayanihan in Action: Community Kindness, Cooperation, and Filipino Val"
+    "sourceDescriptionMatch": "Authentic visual supporting Community Garden Cooperation"
   },
   {
     "lessonId": "lesson-59-faith-and-heroes",
     "mediaId": "media-l59-primary",
-    "commonsFileTitle": "File:Rizal and Bonifacio.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3A20161015_Titopao_Gomburza_Martyrdom_Site.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3A20161015_Titopao_Gomburza_Martyrdom_Site.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/d/df/20161015_Titopao_Gomburza_Martyrdom_Site.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 1500
     },
-    "artistCreator": "Unknown",
-    "license": "Public Domain",
-    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+    "artistCreator": "Titopao",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Convictions, Faith, and Service in the Lives of Filipino Heroes"
+    "sourceDescriptionMatch": "Authentic visual supporting Gomburza Historical Monument"
   },
   {
     "lessonId": "lesson-59-faith-and-heroes",
     "mediaId": "media-l59-secondary",
-    "commonsFileTitle": "File:Melchora Aquino.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ATandang_Sora.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ATandang_Sora.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Tandang_Sora.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 1000
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Philippine Cultural & Heritage Collection",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Convictions, Faith, and Service in the Lives of Filipino Heroes"
+    "sourceDescriptionMatch": "Authentic visual supporting Melchora Aquino (Tandang Sora) Heroism"
   },
   {
     "lessonId": "lesson-60-christmas-traditions",
     "mediaId": "media-l60-primary",
-    "commonsFileTitle": "File:Parol lantern.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AGLFjf1503_02.JPG",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AGLFjf1503_02.JPG",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/7/78/GLFjf1503_02.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 750
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Ramon FVelasquez",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting The Parol and Filipino Heritage Traditions: The Star of Hope and Joy"
+    "sourceDescriptionMatch": "Authentic visual supporting Giant Lantern Festival Parol of Pampanga"
   },
   {
     "lessonId": "lesson-60-christmas-traditions",
     "mediaId": "media-l60-secondary",
-    "commonsFileTitle": "File:Parol lantern.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3A%C3%9Apln%C3%A1_u%C4%8Debnice_mezin%C3%A1rodn%C3%AD_%C5%99e%C4%8Di_dra._Esperanta_001.pdf",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3A%C3%9Apln%C3%A1_u%C4%8Debnice_mezin%C3%A1rodn%C3%AD_%C5%99e%C4%8Di_dra._Esperanta_001.pdf",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f4/%C3%9Apln%C3%A1_u%C4%8Debnice_mezin%C3%A1rodn%C3%AD_%C5%99e%C4%8Di_dra._Esperanta_001.pdf?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 1416
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "František Lorenz",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting The Parol and Filipino Heritage Traditions: The Star of Hope and Joy"
+    "sourceDescriptionMatch": "Authentic visual supporting Traditional Handcrafted Star Parol"
   },
   {
     "lessonId": "lesson-61-simbang-gabi",
     "mediaId": "media-l61-primary",
-    "commonsFileTitle": "File:Paoay Church dawn.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ASimbang_Gabi_sa_Binondo_Church.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ASimbang_Gabi_sa_Binondo_Church.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/0/08/Simbang_Gabi_sa_Binondo_Church.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 667
     },
-    "artistCreator": "Unknown",
+    "artistCreator": "Richmond Chi",
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Simbang Gabi: History, Agricultural Heritage, and Community Traditions"
+    "sourceDescriptionMatch": "Authentic visual supporting Simbang Gabi Dawn Mass Celebration"
   },
   {
     "lessonId": "lesson-61-simbang-gabi",
     "mediaId": "media-l61-secondary",
-    "commonsFileTitle": "File:Puto bumbong.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ANight_street_food_vendors_selling_siomai_outside_a_church_in_Lipa%2C_Batangas%2C_Philippines_(2025)..jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ANight_street_food_vendors_selling_siomai_outside_a_church_in_Lipa%2C_Batangas%2C_Philippines_(2025)..jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/0/09/Night_street_food_vendors_selling_siomai_outside_a_church_in_Lipa%2C_Batangas%2C_Philippines_%282025%29..jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 668
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Fiszi37",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Simbang Gabi: History, Agricultural Heritage, and Community Traditions"
+    "sourceDescriptionMatch": "Authentic visual supporting Traditional Warm Bibingka Stall"
   },
   {
     "lessonId": "lesson-62-showcase-prep",
     "mediaId": "media-l62-primary",
-    "commonsFileTitle": "File:Student portfolio.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AStudent_presentation_for_IASL.pdf",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AStudent_presentation_for_IASL.pdf",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/d/d7/Student_presentation_for_IASL.pdf?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 773
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "GorillaWarfare",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Year-End Showcase Preparation: Assembling Portfolios and Rehearsing Pr"
+    "sourceDescriptionMatch": "Authentic visual supporting Student Presenting Portfolio to Class"
   },
   {
     "lessonId": "lesson-62-showcase-prep",
     "mediaId": "media-l62-secondary",
-    "commonsFileTitle": "File:Student presentation.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AA_Flipped_Classroom_for_Quantitative_Methods_in_Social_Science_ESSTED_PIPS_Video_3.webm",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AA_Flipped_Classroom_for_Quantitative_Methods_in_Social_Science_ESSTED_PIPS_Video_3.webm",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/2/24/A_Flipped_Classroom_for_Quantitative_Methods_in_Social_Science_ESSTED_PIPS_Video_3.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 640,
+      "height": 360
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "https://www.youtube.com/user/_1_hUZeajpyjT0mNnqWDBA",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Year-End Showcase Preparation: Assembling Portfolios and Rehearsing Pr"
+    "sourceDescriptionMatch": "Authentic visual supporting Curated Learning Exhibition Showcase"
   },
   {
     "lessonId": "lesson-63-the-nativity",
     "mediaId": "media-l63-primary",
-    "commonsFileTitle": "File:Nativity.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3ACandon_Church_Christmas_2009.JPG",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ACandon_Church_Christmas_2009.JPG",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/b/be/Candon_Church_Christmas_2009.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 1333
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Danny b11",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting The Birth of Jesus: The Biblical Accounts in Matthew and Luke"
+    "sourceDescriptionMatch": "Authentic visual supporting Traditional Belen Nativity Scene"
   },
   {
     "lessonId": "lesson-63-the-nativity",
     "mediaId": "media-l63-secondary",
-    "commonsFileTitle": "File:Nativity.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AGiorgione_-_Adoration_of_the_Shepherds_-_National_Gallery_of_Art.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AGiorgione_-_Adoration_of_the_Shepherds_-_National_Gallery_of_Art.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/e/ea/Giorgione_-_Adoration_of_the_Shepherds_-_National_Gallery_of_Art.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 818
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Giorgione",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting The Birth of Jesus: The Biblical Accounts in Matthew and Luke"
+    "sourceDescriptionMatch": "Authentic visual supporting Classical Painting of the Nativity"
   },
   {
     "lessonId": "lesson-64-looking-forward",
     "mediaId": "media-l64-primary",
-    "commonsFileTitle": "File:Fireworks Manila Bay.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AAll_the_Year_Round_-_Series_2_-_Volume_11.pdf",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AAll_the_Year_Round_-_Series_2_-_Volume_11.pdf",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f1/All_the_Year_Round_-_Series_2_-_Volume_11.pdf?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 1571
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "Various",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Looking Forward to the New Year: Hope, Goals, and Walking with God"
+    "sourceDescriptionMatch": "Authentic visual supporting New Year Celebration and 12 Round Fruits"
   },
   {
     "lessonId": "lesson-64-looking-forward",
     "mediaId": "media-l64-secondary",
-    "commonsFileTitle": "File:New year goals.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AFireworks_at_Manila_Bay.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AFireworks_at_Manila_Bay.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/b/bc/Fireworks_at_Manila_Bay.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 764
     },
-    "artistCreator": "Unknown",
+    "artistCreator": "Bobbet21",
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting Looking Forward to the New Year: Hope, Goals, and Walking with God"
+    "sourceDescriptionMatch": "Authentic visual supporting Celebration of Hope and New Beginnings"
   },
   {
     "lessonId": "lesson-65-year-end-showcase",
     "mediaId": "media-l65-primary",
-    "commonsFileTitle": "File:Learning celebration.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AUniversity_of_Hull_graduates_and_Blade.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AUniversity_of_Hull_graduates_and_Blade.jpg",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/e/ed/University_of_Hull_graduates_and_Blade.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1280,
-      "height": 853
+      "width": 1000,
+      "height": 563
     },
-    "artistCreator": "Unknown",
+    "artistCreator": "Kim Dent-Brown",
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting The Grand Wonder Journey Year-End Adventure Showcase: A Celebration of"
+    "sourceDescriptionMatch": "Authentic visual supporting Celebrating Wonder Journey Graduation"
   },
   {
     "lessonId": "lesson-65-year-end-showcase",
     "mediaId": "media-l65-secondary",
-    "commonsFileTitle": "File:Family celebration.jpg",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
-    "directFileUrl": "https://commons.wikimedia.org/wiki/File:Ph_physical_plain.jpg",
+    "commonsFileTitle": "File%3AChildren's_Artwork_Calendar_2018.pdf",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AChildren's_Artwork_Calendar_2018.pdf",
+    "directFileUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6e/Children%27s_Artwork_Calendar_2018.pdf?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     "mimeType": "image/jpeg",
     "dimensions": {
-      "width": 1024,
-      "height": 768
+      "width": 1000,
+      "height": 773
     },
-    "artistCreator": "Unknown",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "artistCreator": "NASA/Commercial Crew Program",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "onlineVerified": true,
-    "sourceDescriptionMatch": "Educational visual supporting The Grand Wonder Journey Year-End Adventure Showcase: A Celebration of"
+    "sourceDescriptionMatch": "Authentic visual supporting Grand Adventure Learning Showcase"
   }
 ]

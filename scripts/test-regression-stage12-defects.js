@@ -24,7 +24,7 @@ function assert(condition, name, details = "") {
 
 // ── Defect 1 & 2 & 3: 130 Unique Files and SHA-256 Hashes ──────
 const mediaDir = path.join(__dirname, "../public/media/curriculum");
-const files = fs.readdirSync(mediaDir).filter((f) => f.endsWith(".svg") || f.endsWith(".jpg") || f.endsWith(".png") || f.endsWith(".gif"));
+const files = fs.readdirSync(mediaDir).filter((f) => f.endsWith(".svg") || f.endsWith(".jpg") || f.endsWith(".png") || f.endsWith(".gif") || f.endsWith(".webp"));
 const hashes = new Set();
 for (const file of files) {
   const content = fs.readFileSync(path.join(mediaDir, file));

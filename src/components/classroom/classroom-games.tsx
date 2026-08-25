@@ -19,10 +19,21 @@ async function evaluateGameAttemptViaApi(
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ lessonId, gameType, attemptData }),
     });
-    if (!res.ok) throw new Error("Evaluation API error");
+    if (!res.ok) {
+      const errData = await res.json().catch(() => ({}));
+      return {
+        result: "try_again",
+        score: 0,
+        feedback: errData.feedback || "Evaluation rejected by server. Subukan muli!",
+      };
+    }
     return await res.json();
   } catch {
-    return { result: "correct", score: 100, feedback: "Magaling! Activity submitted!" };
+    return {
+      result: "try_again",
+      score: 0,
+      feedback: "Error connecting to evaluator. Please try again.",
+    };
   }
 }
 
@@ -63,9 +74,21 @@ export function ClassroomGames({
     generateLearnerSafeGame(lessonId, lessonTitle)
   );
 
-  // Re-generate lesson games when lessonId changes
+  // Fetch fresh randomized learner DTO from server endpoint when lessonId changes
   useEffect(() => {
-    setGameDTO(generateLearnerSafeGame(lessonId, lessonTitle));
+    let isCancelled = false;
+    async function loadDTO() {
+      try {
+        const res = await fetch(`/api/game/dto?lessonId=${encodeURIComponent(lessonId)}&lessonTitle=${encodeURIComponent(lessonTitle)}`);
+        if (res.ok && !isCancelled) {
+          const data = await res.json();
+          setGameDTO(data);
+        }
+      } catch {
+        // Fallback to initial blank structure
+      }
+    }
+    loadDTO();
     setSortedPlacements({});
     setMatchedPairs([]);
     setSelectedLeft(null);
@@ -77,6 +100,9 @@ export function ClassroomGames({
     setSequenceOrder(null);
     setSelectedHotspot(null);
     setHotspotFeedback(null);
+    return () => {
+      isCancelled = true;
+    };
   }, [lessonId, lessonTitle]);
 
   // ── Feedback & Score State ──

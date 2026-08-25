@@ -33,18 +33,6 @@ export async function middleware(request: NextRequest) {
 
   const pathname = request.nextUrl.pathname
 
-  // Support E2E test suite authentication via secure role cookie
-  const e2eAuthRole = request.cookies.get('wj_e2e_auth')?.value
-  if (e2eAuthRole === 'teacher' || e2eAuthRole === 'family') {
-    const isTeacherOnlyRoute = pathname.startsWith('/teacher') || pathname.startsWith('/prep-email')
-    if (isTeacherOnlyRoute && e2eAuthRole !== 'teacher') {
-      const url = request.nextUrl.clone()
-      url.pathname = '/family'
-      return NextResponse.redirect(url)
-    }
-    return supabaseResponse
-  }
-
   // Public paths — accessible without authentication
   const isPublicPath =
     pathname === '/' ||

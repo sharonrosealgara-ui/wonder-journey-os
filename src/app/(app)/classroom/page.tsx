@@ -135,6 +135,12 @@ function Lobby({
 }) {
   const cam = useLocalCamera();
   const [level, setLevel] = useState(0);
+  const [showMediaModal, setShowMediaModal] = useState(false);
+
+  const mediaList = useMemo(() => {
+    if (!lesson) return [];
+    return getMediaForLesson(lesson.id);
+  }, [lesson]);
 
   useEffect(() => {
     if (!cam.streamRef.current || !cam.micOn) {
@@ -165,12 +171,21 @@ function Lobby({
 
   return (
     <div className="mx-auto max-w-4xl space-y-6 py-6 px-4">
-      <div className="text-center">
+      <div className="text-center relative">
         <div className="mb-2 text-4xl">🎥🌴</div>
         <h1 className="wj-outline font-display text-3xl sm:text-4xl">Live Adventure Classroom</h1>
         <p className="font-hand mt-1 text-lg text-ink-soft">
           Mabuhay, {role === "teacher" ? teacherName : familyName}! Ready to learn together? 💙
         </p>
+        <div className="mt-2 flex justify-center">
+          <button
+            type="button"
+            onClick={() => setShowMediaModal(true)}
+            className="rounded-full bg-sand px-3.5 py-1 text-xs font-semibold text-ocean border border-ocean/20 hover:bg-ocean hover:text-white transition-colors cursor-pointer"
+          >
+            ℹ️ Media Credits ({mediaList.length})
+          </button>
+        </div>
       </div>
 
       <div className="grid gap-6 md:grid-cols-[1.3fr_1fr]">
@@ -278,9 +293,17 @@ function Lobby({
           </button>
         </div>
       </div>
+
+      <MediaCreditsModal
+        isOpen={showMediaModal}
+        onClose={() => setShowMediaModal(false)}
+        mediaList={mediaList}
+        lessonTitle={lesson?.title || "Lesson Media"}
+      />
     </div>
   );
 }
+
 
 /* ── LiveKit Connected Classroom ────────────────────────────── */
 function ConnectedRoom({

@@ -49,16 +49,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       try {
         const { data: { session: s } } = await supabase.auth.getSession();
         if (!s?.user) {
-          const localRole = typeof window !== "undefined" ? (window.localStorage.getItem("wj_user_role") as AuthRole | null) : null;
-          if (localRole === "teacher" || localRole === "family") {
-            setRole(localRole);
-            setProfile({
-              id: `local-${localRole}`,
-              role: localRole,
-              display_name: localRole === "teacher" ? "Teacher Sharon" : "Wonder Family",
-              family_id: "family-workspace-001",
-            });
-          }
           setLoading(false);
           return;
         }

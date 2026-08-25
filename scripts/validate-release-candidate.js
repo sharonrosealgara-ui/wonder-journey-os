@@ -33,7 +33,7 @@ const GATES = [
   { name: "24. Comprehensive Security & Answer Safety Suite", cmd: "npx tsx scripts/test-classroom-security-comprehensive.js" },
   { name: "25. Local Production Server Smoke Tests", cmd: "node scripts/test-production-server.js" },
   { name: "26. Client-Bundle Answer & Key Leak Gate", cmd: "node scripts/test-client-bundle-leak.js" },
-  { name: "27. Stage 12.1R.3 Negative Test Suite", cmd: "node scripts/test-negative-cases.js" }
+  { name: "27. Stage 12.1R.3 Negative Test Suite", cmd: "npx tsx scripts/test-negative-cases.js" }
 ];
 
 let results = [];
@@ -66,6 +66,6 @@ if (!overallSuccess) {
   console.error("\nFAIL: Stage 12.1R Release Candidate verification failed. Resolve blockers before release.\n");
   process.exit(1);
 } else {
-  console.log("\nPASS: ALL 26 RELEASE CANDIDATE GATES PASSED! APPLICATION IS 100% HARDENED AND VERIFIED.\n");
+  console.log(`\nPASS: ALL ${GATES.length} RELEASE CANDIDATE GATES PASSED! APPLICATION IS 100% HARDENED AND VERIFIED.\n`);
   process.exit(0);
 }

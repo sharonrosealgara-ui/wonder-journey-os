@@ -208,22 +208,26 @@ function validateRegistry(registry) {
   });
 
   // Check lesson coverage across 65 lessons
+  const lessonKeys = Array.from(lessonMediaMap.keys());
   for (let l = 1; l <= 65; l++) {
-    const lessonKey = `lesson-${l}`;
-    const items = lessonMediaMap.get(lessonKey) || [];
+    const prefix = `lesson-${l}-`;
+    const exact = `lesson-${l}`;
+    const matchedKey = lessonKeys.find((k) => k === exact || k.startsWith(prefix));
+    const items = matchedKey ? (lessonMediaMap.get(matchedKey) || []) : [];
 
+    const keyName = matchedKey || exact;
     if (items.length < 2) {
-      errors.push(`Lesson #${l} (${lessonKey}) has ${items.length} media assets (minimum 2 required).`);
+      errors.push(`Lesson #${l} (${keyName}) has ${items.length} media assets (minimum 2 required).`);
     } else {
       // Check that at least one asset is authentic photograph/map/artifact/artwork/scan
       const hasAuthentic = items.some((item) => AUTHENTIC_TYPES.includes(item.classification));
       if (!hasAuthentic) {
-        errors.push(`Lesson #${l} (${lessonKey}) missing authentic primary source (photo, map, artifact, artwork, or scan).`);
+        errors.push(`Lesson #${l} (${keyName}) missing authentic primary source (photo, map, artifact, artwork, or scan).`);
       }
 
       // Check that assets in the same lesson are distinct
       if (items.length >= 2 && items[0].sha256Checksum === items[1].sha256Checksum) {
-        errors.push(`Lesson #${l} (${lessonKey}) uses identical assets for both slots.`);
+        errors.push(`Lesson #${l} (${keyName}) uses identical assets for both slots.`);
       }
     }
   }

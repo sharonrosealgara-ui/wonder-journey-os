@@ -1,0 +1,899 @@
+[
+  {
+    "order": 1,
+    "id": "lesson-1-world-map",
+    "title": "Our Place in the World",
+    "unit": "Unit 1: The Philippine Archipelago",
+    "topic": "World Geography & The Philippines",
+    "learningObjectives": [
+      "Locate the Philippines on a world map in relation to the Equator, Asia, and Southeast Asia.",
+      "Understand that the Earth consists of continents and oceans, with Asia being the largest continent.",
+      "Identify the Philippines as a tropical archipelago of about 7,641 islands in the western Pacific Ocean."
+    ],
+    "factualBackground": "The Philippines is an archipelagic nation of about 7,641 islands located in Southeast Asia, in the western Pacific Ocean. Situated just north of the Equator in the Northern Hemisphere, it features a tropical maritime climate characterized by two major national seasons (rainy and dry) alongside regional rainfall variations classified into four climate types by PAGASA."
+  },
+  {
+    "order": 2,
+    "id": "lesson-2-archipelago",
+    "title": "The Philippine Archipelago",
+    "unit": "Unit 1: The Philippine Archipelago",
+    "topic": "Philippine Islands and Surrounding Waters",
+    "learningObjectives": [
+      "Define the term 'archipelago' and understand why the Philippines is classified as an archipelagic state.",
+      "Identify the major bodies of water surrounding the Philippine archipelago (Philippine Sea, South China Sea / West Philippine Sea, Celebes Sea, and Luzon Strait).",
+      "Explain how living on an archipelago influences maritime transportation, fishing, and community connections across islands."
+    ],
+    "factualBackground": "The Philippines is one of the world's largest archipelagic states, comprising approximately 7,641 islands and an extensive coastline measuring about 36,289 kilometers according to official records from the Philippine Statistics Authority (PSA) and the National Mapping and Resource Information Authority (NAMRIA). The archipelago is bounded by the Philippine Sea to the east, the South China Sea (West Philippine Sea) to the west, the Celebes Sea to the south, and the Luzon Strait to the north. The legal principle of the Archipelagic Doctrine recognizes all waters connecting the islands as integral parts of national territory."
+  },
+  {
+    "order": 3,
+    "id": "lesson-3-luzon-visayas-mindanao",
+    "title": "Luzon, Visayas, and Mindanao: Three Island Groups",
+    "unit": "Unit 1: The Philippine Archipelago",
+    "topic": "The Three Major Island Groups of the Philippines",
+    "learningObjectives": [
+      "Identify the three major island groups of the Philippines: Luzon in the north, Visayas in the center, and Mindanao in the south.",
+      "Distinguish clearly between major island groups (geographic clusters of islands) and administrative regions (governmental units).",
+      "Explain the historical symbolism of the three golden stars on the Philippine national flag representing the three principal island groups."
+    ],
+    "factualBackground": "Geographically, the Philippine archipelago is organized into three major island groups: Luzon (the largest northern group encompassing mainland Luzon, Palawan, Mindoro, Marinduque, and Batanes), Visayas (the central island group featuring Panay, Negros, Cebu, Bohol, Leyte, and Samar), and Mindanao (the southern group including mainland Mindanao, the Sulu Archipelago, Basilan, and Tawi-Tawi). These three divisions represent geographical island groupings rather than administrative regions. On the Philippine national flag, the three golden stars represent these three principal island divisions as recognized by the National Historical Commission of the Philippines (NHCP)."
+  },
+  {
+    "order": 4,
+    "id": "lesson-4-region",
+    "title": "Understanding Our Administrative Regions",
+    "unit": "Unit 1: The Philippine Archipelago",
+    "topic": "The 18 Administrative Regions of the Philippines",
+    "learningObjectives": [
+      "Identify that the Philippines is officially organized into 18 administrative regions to facilitate public governance and service delivery.",
+      "Recognize the latest administrative geography updates, including the establishment of the Negros Island Region (NIR) under Republic Act No. 12000.",
+      "Distinguish between geographic island groups (3) and administrative regions (18) and identify regional government centers."
+    ],
+    "factualBackground": "As of 2026, the Philippines is divided into 18 administrative regions according to the Philippine Statistics Authority (PSA) and the Department of the Interior and Local Government (DILG). These include the National Capital Region (NCR), Cordillera Administrative Region (CAR), 14 numbered regions (Regions I to XIII and MIMAROPA), the Bangsamoro Autonomous Region in Muslim Mindanao (BARMM), and the newly established Negros Island Region (NIR, created under Republic Act No. 12000). Administrative regions group adjacent provinces and cities to coordinate national government programs, regional hospitals, emergency response, and economic planning."
+  },
+  {
+    "order": 5,
+    "id": "lesson-5-province",
+    "title": "Provinces: The Heartlands of the Archipelago",
+    "unit": "Unit 2: Local Geography and Governance",
+    "topic": "The 82 Provinces and Provincial Governance",
+    "learningObjectives": [
+      "Identify that the Philippines is divided into 82 distinct provinces, each with its own provincial capital and local identity.",
+      "Understand the role of the provincial government (headed by the Governor and Sangguniang Panlalawigan) in building roads, hospitals, and schools.",
+      "Locate their home province on a map and identify its provincial capital (kapitolyo) and key geographical features."
+    ],
+    "factualBackground": "The Republic of the Philippines is officially organized into 82 provinces across its 18 administrative regions according to the Philippine Statistics Authority (PSA). Each province is a primary political and corporate unit of local government under the Local Government Code of 1991 (Republic Act No. 7160). A province is governed by an elected Provincial Governor and a legislative body called the Sangguniang Panlalawigan. The administrative seat of provincial leadership is the provincial capital, where the historic provincial capitol building (kapitolyo) is located."
+  },
+  {
+    "order": 6,
+    "id": "lesson-6-city",
+    "title": "Cities, Municipalities, and Barangays",
+    "unit": "Unit 2: Local Geography and Governance",
+    "topic": "Local Community Governance in the Philippines",
+    "learningObjectives": [
+      "Understand the hierarchy of local governance in the Philippines: Highly Urbanized Cities (HUCs), Component Cities, Municipalities (Bayan), and Barangays.",
+      "Explain the historical origin of the 'barangay' from the ancient seafaring balangay boats that carried early communities.",
+      "Identify the roles of the Mayor, Vice Mayor, Sangguniang Bayan/Panlungsod, and Barangay Captain (Punong Barangay) in keeping local communities safe, clean, and organized."
+    ],
+    "factualBackground": "Under the Philippine Local Government Code of 1991 (Republic Act No. 7160), local government units (LGUs) are organized into cities, municipalities, and barangays. Cities are classified as Highly Urbanized Cities (HUCs, which are independent of provinces), Independent Component Cities (ICCs), or Component Cities (under provincial supervision). Municipalities (bayan) are subdivided into barangays. The barangay is the basic political unit of the Philippines, historically derived from the ancient Austronesian balangay boats that brought family clans together across the seas."
+  },
+  {
+    "order": 7,
+    "id": "lesson-7-national-symbols",
+    "title": "Symbols of Our Nation",
+    "unit": "Unit 3: National Identity and Heritage",
+    "topic": "Official National Symbols of the Philippines",
+    "learningObjectives": [
+      "Identify official national symbols of the Philippines established under Republic Act No. 8491 and executive proclamations (National Flag, Anthem, Sampaguita, Narra, Philippine Eagle, Philippine Pearl, and Arnis).",
+      "Explain the historical meaning and heraldic rules of the Philippine flag, including the 8 rays of the sun and the 3 stars.",
+      "Demonstrate proper respect when singing the national anthem (Lupang Hinirang) and reciting the patriotic pledge (Panatang Makabayan)."
+    ],
+    "factualBackground": "Official national symbols of the Philippines are defined by Republic Act No. 8491 (The Flag and Heraldic Code of the Philippines) and presidential proclamations. The National Flag features royal blue (peace/justice), scarlet red (courage/patriotism), a white triangle (equality/Katipunan), a golden sun with 8 rays (representing the first 8 provinces that revolted against Spanish rule), and 3 golden stars (Luzon, Visayas, Mindanao). Other official symbols include Lupang Hinirang (National Anthem, composed by Julián Felipe with lyrics by José Palma), Sampaguita (National Flower, Proclamation No. 652), Narra (National Tree, Proclamation No. 652), Philippine Eagle (National Bird, Proclamation No. 615), Philippine Pearl (National Gem, Proclamation No. 905), and Arnis (National Martial Art and Sport, Republic Act No. 9850)."
+  },
+  {
+    "order": 8,
+    "id": "lesson-8-mountains",
+    "title": "Mountains, Volcanoes, and the Ring of Fire",
+    "unit": "Unit 4: Natural Wonders and Biodiversity",
+    "topic": "Philippine Mountains, Volcanoes, and Geology",
+    "learningObjectives": [
+      "Explain why the Philippines has numerous active volcanoes and mountain ranges due to its location along the Pacific Ring of Fire.",
+      "Identify major mountain ranges (Sierra Madre, Cordillera Central) and famous volcanic peaks (Mayon Volcano, Taal Volcano, Mount Pinatubo, Mount Apo).",
+      "Describe the benefits of volcanic landscapes, including fertile agricultural soils and renewable geothermal energy, alongside safety monitoring by PHIVOLCS."
+    ],
+    "factualBackground": "The Philippine archipelago lies along the Pacific Ring of Fire—a major zone in the basin of the Pacific Ocean where tectonic plate subduction causes frequent volcanic activity and seismic movement. The country features prominent mountain ranges including the Sierra Madre (the longest mountain range, spanning over 500 kilometers and acting as a natural shield against Pacific typhoons) and the Cordillera Central in Luzon, as well as the Kitanglad and Apo-Talomo ranges in Mindanao. Mount Apo, located in Mindanao, is the highest peak in the Philippines standing at 2,954 meters above sea level. The Philippine Institute of Volcanology and Seismology (PHIVOLCS-DOST) actively monitors 24 active volcanoes across the archipelago, including Mayon Volcano (famous for its near-perfect cone) and Taal Volcano. Volcanic soils provide rich nutrients for farming, and geothermal energy supplies clean electrical power to the nation."
+  },
+  {
+    "order": 9,
+    "id": "lesson-9-rivers-beaches",
+    "title": "Rivers, Lakes, and Coastal Waters",
+    "unit": "Unit 4: Natural Wonders and Biodiversity",
+    "topic": "Philippine Freshwater Systems and Marine Coastlines",
+    "learningObjectives": [
+      "Identify major Philippine river systems (Cagayan River, Rio Grande de Mindanao, Pasig River) and major freshwater lakes (Laguna de Bay, Lake Taal, Lake Lanao).",
+      "Describe the unique subterranean and coastal wonders of the Philippines, including the Puerto Princesa Underground River, mangrove forests, and coral reefs.",
+      "Explain the importance of watershed protection and marine conservation in keeping our drinking water clean and coastal fish populations abundant."
+    ],
+    "factualBackground": "The Philippines possesses extensive freshwater resources managed across 18 major river basins by the Department of Environment and Natural Resources River Basin Control Office (DENR-RBCO). The Cagayan River (Rio Grande de Cagayan) in northern Luzon is the longest and largest river in the country (~505 km), while the Rio Grande de Mindanao is the second largest. Major freshwater lakes include Laguna de Bay (the largest lake, ~911 sq km), Lake Lanao in Mindanao (an ancient tectonic lake supporting hydroelectric power), and Lake Taal in Batangas. The Puerto Princesa Subterranean River National Park in Palawan is a UNESCO World Heritage site featuring an 8.2-kilometer navigable underground river flowing directly into the sea. Coastal waters support rich mangrove forests and coral reef ecosystems that protect shorelines and nurture marine fisheries."
+  },
+  {
+    "order": 10,
+    "id": "lesson-10-animals",
+    "title": "Philippine Wildlife and Endemic Species",
+    "unit": "Unit 4: Natural Wonders and Biodiversity",
+    "topic": "Endemic Animals and Biodiversity Conservation",
+    "learningObjectives": [
+      "Identify famous endemic animal species that live only in the Philippines (Philippine Eagle, Tamaraw, Philippine Tarsier, Pilandok).",
+      "Explain what it means for a species to be 'endemic' (found naturally nowhere else in the world) and why Philippine rainforests and seas are global biodiversity hotspots.",
+      "Describe active wildlife conservation efforts, habitat protection, and responsible stewardship to protect endangered wildlife from extinction."
+    ],
+    "factualBackground": "The Philippines is recognized globally as one of only 17 megadiverse countries and a premier biodiversity hotspot according to the Biodiversity Management Bureau of the Department of Environment and Natural Resources (DENR-BMB). Because our islands have been separated from continental landmasses for millions of years, an extraordinarily high percentage of Philippine wildlife is endemic—meaning these species exist naturally nowhere else on Earth. Iconic endemic species include the critically endangered Philippine Eagle (*Pithecophaga jefferyi*, one of the world's largest and most powerful eagles), the Tamaraw (*Bubalus mindorensis*, a dwarf wild buffalo endemic to Mindoro), the Philippine Tarsier (*Carlito syrichta*, one of the smallest primates in Bohol and Mindanao), the Philippine Mouse-Deer or Pilandok (*Tragulus nigricans* in Balabac), and gentle marine giants like the Whale Shark (*Rhincodon typus*, locally known as Butanding). Habitat preservation under the National Integrated Protected Areas System (NIPAS Act) is vital to preventing their extinction."
+  },
+  {
+    "order": 11,
+    "id": "lesson-11-plants",
+    "title": "Philippine Flora: Trees, Flowers, and Fruits",
+    "unit": "Unit 4: Natural Wonders and Biodiversity",
+    "topic": "Philippine Plant Biodiversity, Native Trees, and Tropical Fruits",
+    "learningObjectives": [
+      "Identify famous native trees, flowers, and fruits of the Philippines (Narra tree, Sampaguita, Waling-Waling orchid, Coconut 'Tree of Life', and Carabao Mango).",
+      "Understand why the coconut palm is called the 'Tree of Life' due to its comprehensive uses for food, drink, building materials, and medicine.",
+      "Describe the ecological importance of native trees in preventing soil erosion, purifying air, and sustaining pollinator insects and birds."
+    ],
+    "factualBackground": "The Philippines boasts one of the richest botanical floras in the world, cataloged by the Ecosystems Research and Development Bureau of the Department of Environment and Natural Resources (DENR-ERDB) and the Department of Agriculture (DA-BPI). Native trees such as the sturdy Narra (*Pterocarpus indicus*, the National Tree) anchor forest soils and produce valuable hardwood. The fragrant white Sampaguita (*Jasminum sambac*, the National Flower) is woven into welcoming garlands. The magnificent Waling-Waling orchid (*Vanda sanderiana* / *Euanthe sanderiana*), endemic to the rainforests of Mindanao, is celebrated as the 'Queen of Philippine Orchids'. The Coconut Palm (*Cocos nucifera*) is known across the archipelago as the 'Tree of Life' because every part of the tree—from roots and trunk to leaves, husk, water, and meat—provides food, lumber, oil, and useful materials. The world-famous Philippine Carabao Mango (celebrated in Guimaras and Zambales) is recognized globally for its extraordinary sweetness and quality."
+  },
+  {
+    "order": 12,
+    "id": "lesson-12-language",
+    "title": "Voices of the Archipelago: Languages and Cultural Heritage",
+    "unit": "Unit 5: Cultural Harmony and Review",
+    "topic": "Philippine Linguistic Diversity and Cultural Values",
+    "learningObjectives": [
+      "Identify that the Philippines is home to over 120-180 distinct native languages belonging to the Austronesian language family, with Filipino as the national language alongside official English.",
+      "Recognize major regional mother tongues spoken across Luzon, Visayas, and Mindanao (such as Cebuano, Ilocano, Hiligaynon, Bikol, Waray, Kapampangan, and Pangasinan).",
+      "Practice respectful Filipino cultural expressions and values, including polite honorifics ('po', 'opo', 'mano po') and the spirit of community cooperation ('bayanihan')."
+    ],
+    "factualBackground": "The Philippines is one of the most linguistically diverse nations on Earth, with between 120 to 180 living indigenous languages documented by the Komisyon sa Wikang Filipino (KWF) and linguistic scholars. All native Philippine languages belong to the Malayo-Polynesian branch of the vast Austronesian language family. Under Article XIV of the 1987 Philippine Constitution, Filipino (developed primarily from Tagalog and enriched by other Philippine languages) is the National Language, while both Filipino and English are official languages for communication and education. Major regional languages with millions of native speakers include Cebuano (Sinugbuanon), Ilocano, Hiligaynon (Ilonggo), Bikol, Waray, Kapampangan, Pangasinan, Maranao, Maguindanaon, and Tausug. Across all these language groups, Filipino culture shares core values of respect for elders (expressed through 'po', 'opo', and 'pagmamano') and mutual neighborhood cooperation ('bayanihan')."
+  },
+  {
+    "order": 13,
+    "id": "lesson-13-august-review",
+    "title": "The Great August Showcase: Celebrating Our Archipelago",
+    "unit": "Unit 5: Cultural Harmony and Review",
+    "topic": "Culminating August Showcase and Geographic Synthesis",
+    "learningObjectives": [
+      "Synthesize all August geography and heritage learning: world location, ~7,641 islands, 3 major island groups, 18 administrative regions, 82 provinces, and barangays.",
+      "Demonstrate mastery of Philippine national symbols, mountains, volcanic wonders, rivers, lakes, endemic wildlife, native flora, and linguistic diversity.",
+      "Present a student-curated 'Master Explorer Portfolio' to family members, celebrating personal growth, cultural appreciation, and national pride."
+    ],
+    "factualBackground": "This culminating review integrates all essential geographical, environmental, and civic competencies mastered across August: global positioning (Southeast Asia, north of Equator), the archipelagic framework (~7,641 islands, ~36,289 km of coastline), the 3 major island groups (Luzon, Visayas, Mindanao), the 18 administrative regions (including NIR under RA 12000), the 82 provinces and frontline barangays, official national symbols under RA 8491, geological landforms (Pacific Ring of Fire, Sierra Madre, Mount Apo, Mayon), aquatic ecosystems (Cagayan River, Laguna de Bay, Puerto Princesa Underground River, coral reefs), endemic wildlife (Philippine Eagle, Tamaraw, Tarsier), native flora (Narra, Sampaguita, Waling-Waling, Coconut), and linguistic heritage (over 120 languages, Filipino, respectful values, and Bayanihan)."
+  },
+  {
+    "order": 14,
+    "id": "lesson-14-greetings",
+    "title": "Kumusta? Greetings and Introductions",
+    "unit": "Language, Family, and Daily Life",
+    "topic": "Language and Culture",
+    "learningObjectives": [
+      "Say hello, ask how someone is, and introduce oneself warmly using conversational Tagalog.",
+      "Distinguish and apply time-of-day greetings including Magandang umaga, Magandang tanghali, Magandang hapon, and Magandang gabi.",
+      "Understand the historical etymology of Kumusta from the Spanish phrase como esta during the colonial era.",
+      "Demonstrate hospitable Filipino greeting customs with respectful tone and warm body language."
+    ],
+    "factualBackground": "The standard Filipino greeting Kumusta is derived from the Spanish greeting como esta (how are you), reflecting centuries of cultural and linguistic exchange during the Spanish colonial period (1565–1898). According to the Komisyon sa Wikang Filipino (KWF), Kumusta is the recognized standard informal greeting in contemporary Filipino. Time-based greetings follow a systematic morphological pattern combining the root adjective maganda (beautiful) with temporal nouns: umaga (morning), tanghali (high noon), hapon (afternoon), and gabi (evening). Filipino greeting customs emphasize relational warmth (pakikipagkapwa) and immediate hospitality."
+  },
+  {
+    "order": 15,
+    "id": "lesson-15-respectful-gestures",
+    "title": "Po, Opo, and Mano Po: Respecting Our Elders",
+    "unit": "Language, Family, and Daily Life",
+    "topic": "Language and Culture",
+    "learningObjectives": [
+      "Identify and apply the honorific respect particles 'po' and 'opo' in spoken Filipino conversation.",
+      "Understand the cultural meaning, step-by-step etiquette, and blessing tradition of the 'mano po' gesture.",
+      "Explain how the core cultural value of 'paggalang' (respect) shapes family harmony and intergenerational bonds.",
+      "Demonstrate appropriate verbal deference and courteous physical posture when communicating with parents, grandparents, and community leaders."
+    ],
+    "factualBackground": "In the Filipino language, 'po' and 'opo' are honorific particles used systematically to convey deference, reverence, and politeness when addressing elders, teachers, or authority figures. 'Po' serves as an enclitic particle inserted into phrases and sentences (e.g., 'Salamat po', 'Magandang araw po'), while 'opo' functions as the respectful equivalent of 'oo' (yes). The physical gesture of 'mano' or 'pagmamano' (often accompanied by the verbal request 'Mano po') involves taking the back of an elder's right hand and gently pressing it to one's forehead. This gesture represents both an act of filial respect and a request for the elder's spiritual blessing (e.g., 'Kaawaan ka ng Diyos' / 'God bless you'). These practices embody 'paggalang' (respect), a foundational value in Philippine culture documented by the National Commission for Culture and the Arts (NCCA)."
+  },
+  {
+    "order": 16,
+    "id": "lesson-16-family",
+    "title": "Ang Aking Pamilya: Filipino Family Ties",
+    "unit": "Language, Family, and Daily Life",
+    "topic": "Language and Culture",
+    "learningObjectives": [
+      "Identify, pronounce, and use core Filipino kinship terms including Nanay, Tatay, Ate, Kuya, Lolo, Lola, and Bunso.",
+      "Understand the structure and cultural significance of the extended Filipino family household (pamilya).",
+      "Explain the leadership and caregiving responsibilities associated with older sibling titles (Ate and Kuya).",
+      "Create an illustrated family tree poster celebrating family roles, mutual support, and intergenerational love."
+    ],
+    "factualBackground": "The family (pamilya) is the foundational institution of Philippine society, protected under Article XV of the 1987 Philippine Constitution as the basic autonomous social institution. Filipino families are characterized by strong kinship networks and extended household structures where grandparents (Lolo/Lola), parents (Tatay/Nanay), aunts/uncles (Tito/Tita), and cousins (pinsan) frequently live under one roof or in close residential compounds. Tagalog kinship terminology reflects strict age-grade hierarchies: older siblings are addressed with respectful titles derived from Chinese loanwords—'Kuya' (older brother, from Hokkien 哥仔 ko-á) and 'Ate' (older sister, from Hokkien 阿姊 a-chí). The youngest child is termed 'bunso'. According to the Philippine Statistics Authority (PSA), Filipino households demonstrate high intergenerational co-residence and strong mutual economic and emotional support systems."
+  },
+  {
+    "order": 17,
+    "id": "lesson-17-body-parts",
+    "title": "Mga Bahagi ng Katawan: Parts of the Body and Active Play",
+    "unit": "Language, Family, and Daily Life",
+    "topic": "Language and Culture",
+    "learningObjectives": [
+      "Identify, pronounce, and label primary body parts in Tagalog including ulo (head), mata (eyes), ilong (nose), bibig (mouth), kamay (hand), and paa (foot).",
+      "Sing and perform traditional Filipino action songs like 'Paa, Tuhod, Balikat, Ulo' to build kinetic body awareness.",
+      "Understand the anatomical and cultural significance of sensory organs in communication and daily hygiene (kalinisan).",
+      "Express gratitude to God for creating the human body with wonder, purpose, and health."
+    ],
+    "factualBackground": "The Tagalog vocabulary for human anatomy (mga bahagi ng katawan) forms a central component of early childhood language acquisition and public health education administered by the Department of Health (DOH) and the Department of Education (DepEd). Key anatomical terms have ancient Proto-Austronesian roots (e.g., 'mata' for eye is shared across Indonesian, Malay, and Hawaiian). In Philippine educational pedagogy, kinesthetic learning through traditional action rhymes—such as 'Paa, Tuhod, Balikat, Ulo' (the Tagalog adaptation of 'Head, Shoulders, Knees, and Toes')—is widely utilized in primary grades to develop bilateral motor coordination, spatial orientation, and anatomical vocabulary. The National Commission for Culture and the Arts (NCCA) notes that traditional Filipino games (Laro ng Lahi) also incorporate anatomical commands to teach agility and reflexes."
+  },
+  {
+    "order": 18,
+    "id": "lesson-18-food",
+    "title": "Kain Tayo! Filipino Food and Mealtime Hospitality",
+    "unit": "Language, Family, and Daily Life",
+    "topic": "Language and Culture",
+    "learningObjectives": [
+      "Identify, pronounce, and use essential Filipino food vocabulary including kanin (rice), ulam (dish/viand), isda (fish), gulay (vegetables), and prutas (fruits).",
+      "Explain the cultural significance of the ubiquitous welcoming phrase 'Kain tayo!' (Let's eat!) as an expression of unconditional hospitality.",
+      "Understand the agricultural and culinary centrality of rice (palay, bigas, kanin) in Philippine daily life.",
+      "Design an illustrated Filipino banquet plate balancing carbohydrates, proteins, and colorful vegetables."
+    ],
+    "factualBackground": "In Philippine culture, food and commensality (eating together) represent the primary medium of hospitality and social bonding. The invitation 'Kain tayo!' (literally 'Let us eat!') is spoken to anyone who enters a home or passes by during mealtime, regardless of familiarity or prior notice, reflecting the deep-seated value of 'kusang-loob' (spontaneous generosity). The staple core of every traditional Filipino meal is rice, which is linguistically distinguished into three distinct stages in Tagalog: 'palay' (unhusked grain on the stalk), 'bigas' (milled raw grains), and 'kanin' (cooked steaming rice). Meals are structured around the dynamic pairing of 'kanin' with 'ulam' (the accompanying savory viand, typically meat, fish, or vegetable dishes seasoned with garlic, vinegar, ginger, and soy sauce). The Food and Nutrition Research Institute (FNRI) of the DOST establishes the 'Pinggang Pinoy' dietary guide emphasizing balanced portions of Go, Grow, and Glow foods centered on local agricultural staples."
+  },
+  {
+    "order": 19,
+    "id": "lesson-19-emotions",
+    "title": "Masaya Ako: Expressing Feelings and Pakikiramdam",
+    "unit": "Language, Family, and Daily Life",
+    "topic": "Language and Culture",
+    "learningObjectives": [
+      "Identify, pronounce, and express core emotion words in Tagalog including masaya (happy), malungkot (sad), galit (angry), takot (afraid), and pagod (tired).",
+      "Construct simple declarative feeling sentences using the first-person structure 'Masaya ako' and 'Nalulungkot ako'.",
+      "Understand the deep Filipino psychological concept of 'pakikiramdam' (shared sensitivity, empathy, and intuitive awareness of others' emotions).",
+      "Demonstrate healthy emotional regulation, empathetic listening, and comforting words when peers or family members experience difficult feelings."
+    ],
+    "factualBackground": "In Philippine psychology (Sikolohiyang Pilipino), pioneered by Dr. Virgilio Enriquez, 'pakikiramdam' is identified as the pivotal core value linking self-awareness with social connection (kapwa). It is defined as a heightened emotional awareness, sensitivity, and intuitive empathy that allows a person to perceive and respond to another's unspoken feelings. Tagalog provides a rich affective vocabulary describing emotional states: 'masaya' (joyful/happy), 'malungkot' (sorrowful/sad), 'galit' (angry), 'takot' (fearful), 'pagod' (weary/tired), and 'payapa' (peaceful). In educational and counseling frameworks endorsed by the Department of Education (DepEd), socio-emotional learning (SEL) integrates 'pakikiramdam' to cultivate conflict resolution, compassion, and supportive school environments."
+  },
+  {
+    "order": 20,
+    "id": "lesson-20-homes",
+    "title": "Ang Bahay Kubo: Traditional and Modern Filipino Homes",
+    "unit": "Language, Family, and Daily Life",
+    "topic": "Language and Culture",
+    "learningObjectives": [
+      "Identify, pronounce, and use architectural and household vocabulary in Tagalog including bahay (house), bahay kubo (nipa hut), kawayan (bamboo), pinto (door), bintana (window), and bubong (roof).",
+      "Explain how the traditional architectural design of the bahay kubo adapts ingeniously to the tropical climate through elevation on stilts, bamboo slat flooring (sahig), and steep thatched roofs.",
+      "Describe the historic community tradition of 'bayanihan' where neighbors literally carry a whole bahay kubo on their shoulders to help a family relocate.",
+      "Construct an architectural model of a traditional bahay kubo using sustainable craft materials."
+    ],
+    "factualBackground": "The 'bahay kubo' (also known as the nipa hut or Kamalig) is the indigenous vernacular architecture of lowland Philippines, evolved over centuries to withstand tropical heat, high humidity, monsoons, and earthquakes. Constructed primarily from sustainable organic materials—such as bamboo ('kawayan'), nipa palm thatch ('nipa/pawid'), cogon grass, and hardwood posts ('haligi')—it features an elevated living area on stilts ('tukod') that provides ventilation, flood protection, and defense against ground pests. The open-slat bamboo floor ('lantay/sahig') allows cool breezes to circulate upward, while wide awning windows ('bintana/dungawan') prop open to capture crosswinds. The steep thatched roof ('bubong') sheds heavy monsoon rainwater rapidly. The National Museum of the Philippines and the NCCA recognize the bahay kubo as an architectural masterwork and the cultural icon of 'bayanihan' (the communal practice of lifting and relocating an entire house)."
+  },
+  {
+    "order": 21,
+    "id": "lesson-21-schools",
+    "title": "Sa Paaralan: Classroom Life and the Filipino School Day",
+    "unit": "Language, Family, and Daily Life",
+    "topic": "Language and Culture",
+    "learningObjectives": [
+      "Identify, pronounce, and use school and classroom vocabulary in Tagalog including paaralan (school), guro (teacher), mag-aaral (student), aklat (book), lapis (pencil), and silid-aralan (classroom).",
+      "Describe the ceremonial and communal structure of a Philippine school day, including the morning flag ceremony (Flag Ceremony and Lupang Hinirang), classroom duties, and recess (meryenda).",
+      "Explain the profound respect, honor, and gratitude accorded to educators ('guro' / 'maestra') in Philippine society.",
+      "Create an illustrated 'My Dream Classroom' blueprint in Tagalog celebrating knowledge, friendship, and shared learning."
+    ],
+    "factualBackground": "The Philippine basic education system, administered by the Department of Education (DepEd), serves over 27 million students across more than 47,000 public and private elementary and secondary schools. In accordance with Republic Act No. 8491 (The Flag and Heraldic Code of the Philippines), every school day begins with a mandatory morning assembly featuring the singing of the Philippine National Anthem ('Lupang Hinirang'), the recitation of the Patriotic Oath ('Panatang Makabayan'), and school pledges. Filipino classroom culture emphasizes strong student-teacher rapport where teachers ('guro') are revered as second parents ('pangalawang magulang'). Tagalog school vocabulary combines native terms ('paaralan' from 'aral' - study; 'guro' from Sanskrit guru - teacher) with Spanish loanwords ('lapis' from lápiz, 'papel' from papel, 'silid-aralan' from silid + aral)."
+  },
+  {
+    "order": 22,
+    "id": "lesson-22-markets",
+    "title": "Sa Palengke: Community Commerce and Daily Markets",
+    "unit": "Language, Family, and Daily Life",
+    "topic": "Language and Culture",
+    "learningObjectives": [
+      "Identify, pronounce, and use marketplace and commercial vocabulary in Tagalog including palengke (wet market), tindahan (store/stall), tindero/tindera (vendor), magkano (how much), piso (peso), and sariwa (fresh).",
+      "Navigate the specialized sections of a traditional Philippine public market: the wet fish section (isdaan), meat stalls (karnehan), vegetable stands (gulayan), and rice depot (bigasan).",
+      "Demonstrate polite bargaining etiquette (tawad), asking prices respectfully with 'Magkano po ito?', and calculating simple currency transactions in Philippine Pesos (PHP).",
+      "Create a miniature market stall diorama with labeled fresh goods and play currency."
+    ],
+    "factualBackground": "The public market ('palengke', derived from the Spanish palenque meaning stockade/enclosure) is the traditional socio-economic hub of Philippine municipal commerce. Regulated by Local Government Units (LGUs) and the Department of Trade and Industry (DTI), the palengke is organized into specialized sections: 'isdaan' (fresh fish/seafood), 'karnehan' (meat/poultry), 'gulayan at prutasan' (produce), and 'bigasan' (rice). In Filipino market culture, transactions are characterized by personal relationship building ('suki' system) and polite price inquiries ('Magkano po ito?') with occasional courteous bargaining for discounts ('tawad') or bonus additions ('dagdag'). Transactions are conducted using the national currency, the Philippine Peso (PHP), managed by the Bangko Sentral ng Pilipinas (BSP)."
+  },
+  {
+    "order": 23,
+    "id": "lesson-23-transportation",
+    "title": "Sakay Na! Jeepneys, Tricycles, and Island Transport",
+    "unit": "Language, Family, and Daily Life",
+    "topic": "Language and Culture",
+    "learningObjectives": [
+      "Identify, pronounce, and use Philippine transportation vocabulary in Tagalog including jeepney, tricycle (traysikel), bangka (outrigger boat), sasakyan (vehicle), bayad po (here is my fare), and para po (please stop).",
+      "Describe the post-WWII history, folk art aesthetics, and cultural significance of the Philippine Jeepney as the 'King of the Road' (Hari ng Kalsada).",
+      "Explain the cooperative communal etiquette of commuting in public transit, including passing fare hand-to-hand ('abot-bayad') and signaling stops with 'Para po!'.",
+      "Design and decorate an illustrated cardboard or paper model of a colorful, customized Philippine jeepney."
+    ],
+    "factualBackground": "The Philippine public transportation system features unique indigenous and adapted vehicles designed for archipelagic topography and dense urban corridors. The iconic 'jeepney' originated after World War II when Filipinos modified surplus Willys military jeeps left by American armed forces, lengthening the chassis, adding two long parallel bench seats, and decorating the metal exterior with vibrant folk art, chrome horses, and regional slogans. Operating under routes regulated by the Land Transportation Franchising and Regulatory Board (LTFRB), jeepneys rely on the cooperative 'abot-bayad' custom where passengers pass coins hand-to-hand to the driver. In residential neighborhoods, motorized 'tricycles' (motorcycles with passenger sidecars) navigate narrow lanes. In coastal and inter-island transit, motorized outrigger boats ('bangka') with double bamboo outriggers ('katig') navigate archipelagic waters. The National Museum and the NCCA recognize the jeepney as a quintessential symbol of Filipino popular culture and post-war creative resilience."
+  },
+  {
+    "order": 24,
+    "id": "lesson-24-carabao",
+    "title": "Ang Kalabaw: Agriculture and Rural Farm Life",
+    "unit": "Language, Family, and Daily Life",
+    "topic": "Language and Culture",
+    "learningObjectives": [
+      "Identify, pronounce, and use agricultural and rural vocabulary in Tagalog including kalabaw (carabao / water buffalo), magsasaka (farmer), bukid (farm), palayan (rice field), araro (plow), and masipag (hardworking).",
+      "Explain why the carabao (Bubalus bubalis carabanesis) is revered as the national animal of the Philippines and the 'best friend of the Filipino farmer' (katulong ng magsasaka).",
+      "Describe the biological adaptations of the carabao, including mud wallowing ('paglublob sa putik') for thermoregulation, immense draft strength, and gentle temperament.",
+      "Model an agricultural rice-farming diorama featuring a sculpted carabao, plow, and flooded paddy field."
+    ],
+    "factualBackground": "The carabao (Bubalus bubalis carabanesis) is the indigenous domesticated swamp-type water buffalo of the Philippines. Recognized culturally as the national animal and legally supported under Republic Act No. 7307 (The Philippine Carabao Act of 1992, creating the Philippine Carabao Center under the Department of Agriculture), the carabao is indispensable to smallholder agriculture. It provides draft power for pulling plows ('araro') and harrows ('suyod') through flooded muddy rice paddies ('palayan'), transports harvested crops on carts ('kareta'), and supplies rich dairy milk (used for native delicacies like 'pastillas de leche' and 'kesong puti'). Biologically, carabaos possess very few sweat glands, requiring frequent wallowing in water or mud pools ('lubluban') to regulate their core body temperature in tropical heat. The carabao embodies 'kasipagan' (industry), 'tiyaga' (patience), and faithful partnership with Filipino farmers ('magsasaka')."
+  },
+  {
+    "order": 25,
+    "id": "lesson-25-community-helpers",
+    "title": "Mga Katulong sa Pamayanan: Community Helpers and Bayanihan",
+    "unit": "Language, Family, and Daily Life",
+    "topic": "Language and Culture",
+    "learningObjectives": [
+      "Identify, pronounce, and describe community helper professions in Tagalog including doktor (doctor), nars (nurse), pulis (police officer), bombero (firefighter), magsasaka (farmer), and mangingisda (fisherman).",
+      "Explain how the barangay governance system organizes public health, safety, sanitation, and mutual aid across local Philippine neighborhoods.",
+      "Demonstrate civic appreciation and respect for essential community workers through expressions of gratitude like 'Salamat po sa inyong serbisyo'.",
+      "Design an illustrated 'Community Hero Medal' and presentation card honoring a local service worker."
+    ],
+    "factualBackground": "In the Philippines, the primary unit of civic community and local administration is the 'barangay', constitutionally mandated under Republic Act No. 7160 (The Local Government Code of 1991). Essential community workers ('mga katulong sa pamayanan') ensure the delivery of basic services: Barangay Health Workers (BHWs), doctors and nurses in public health centers, Philippine National Police (PNP) officers maintaining peace, Bureau of Fire Protection (BFP) firefighters protecting life and property, agricultural farmers ('magsasaka'), and coastal fishermen ('mangingisda'). Tagalog professional vocabulary incorporates Spanish loanwords ('doktor' from doctor, 'pulis' from policía, 'bombero' from bombero) alongside native occupational terms ('magsasaka' from saka, 'mangingisda' from isda). These professions represent the modern embodiment of 'bayanihan' (collective mutual aid) in civic society."
+  },
+  {
+    "order": 26,
+    "id": "lesson-26-september-review",
+    "title": "The Great September Showcase: Language and Daily Life Celebration",
+    "unit": "Language, Family, and Daily Life",
+    "topic": "Language and Culture",
+    "learningObjectives": [
+      "Synthesize and apply core September Tagalog vocabulary across language, family, body parts, food, emotions, homes, schools, markets, transportation, agriculture, and community helpers.",
+      "Demonstrate conversational fluency in Filipino cultural etiquette including greetings (Kumusta, Magandang umaga), respect particles (Po, Opo, Mano po), kinship honor (Ate, Kuya), and mealtime hospitality (Kain tayo!).",
+      "Analyze the central cultural values of 'paggalang' (respect), 'pakikiramdam' (empathy), and 'bayanihan' (communal solidarity) in daily Philippine society.",
+      "Curate, present, and celebrate a comprehensive 'September Language and Life Portfolio' showcasing all student artifacts and projects."
+    ],
+    "factualBackground": "This capstone lesson serves as the comprehensive summative synthesis for Stage 4 (Lessons 14–26), consolidating the thematic domain of 'Language, Family, and Daily Life'. Spanning linguistic morphology (greetings, loanwords, time markers), kinship terminology (pamilya, Kuya, Ate, Bunso), socio-cultural values (paggalang, mano po, pakikiramdam, bayanihan), indigenous architecture (bahay kubo), public institutions (paaralan, palengke, barangay), iconic transit (jeepney, tricycle, bangka), and agricultural heritage (kalabaw, magsasaka), this curriculum aligns with DepEd Mother Tongue-Based Multilingual Education (MTB-MLE), Araling Panlipunan, and Edukasyon sa Pagpapakatao standards, backed by research from the Komisyon sa Wikang Filipino (KWF), National Commission for Culture and the Arts (NCCA), and Philippine Statistics Authority (PSA)."
+  },
+  {
+    "order": 27,
+    "id": "lesson-27-bayanihan",
+    "title": "Bayanihan Spirit: Community Cooperation and Unity",
+    "unit": "History, Heroes, Nature, and Science",
+    "topic": "Culture and Values",
+    "learningObjectives": [
+      "Explain the historical origin and cultural meaning of 'Bayanihan' derived from the root word 'bayan' (town, nation, community).",
+      "Describe traditional and contemporary expressions of bayanihan, from communal house-lifting to modern community pantries and disaster relief.",
+      "Demonstrate collaborative teamwork, mutual aid, and active citizenship in classroom and neighborhood group projects.",
+      "Connect the principle of bayanihan to biblical teachings on bearing one another's burdens (Galatians 6:2)."
+    ],
+    "factualBackground": "The cultural concept of 'Bayanihan' is derived from the Tagalog root word 'bayan' (nation, town, or community) and refers to the indigenous Filipino tradition of communal cooperation, mutual aid, and selfless solidarity without monetary compensation. Historically manifested in rural agrarian communities where neighbors collectively hoisted an entire wooden-and-bamboo house ('bahay kubo') on carrying poles to relocate a family, bayanihan has evolved into the definitive ethos of Philippine civil society. According to the National Commission for Culture and the Arts (NCCA) and the Department of Social Welfare and Development (DSWD), contemporary bayanihan is demonstrated during disaster response, community soup kitchens, volunteer rescue missions, and neighborhood development programs. It exemplifies 'damayan' (compassionate solidarity) and 'kusang-loob' (spontaneous initiative)."
+  },
+  {
+    "order": 28,
+    "id": "lesson-28-jose-rizal",
+    "title": "José Rizal: Writer, Doctor, and National Hero",
+    "unit": "History, Heroes, Nature, and Science",
+    "topic": "History and Heroes",
+    "learningObjectives": [
+      "Identify Dr. José Protacio Rizal Mercado y Alonso Realonda (1861–1896) as the foremost national hero of the Philippines.",
+      "Describe Rizal's extraordinary talents as an ophthalmic surgeon, polyglot speaking over 20 languages, sculptor, educator, and author of 'Noli Me Tángere' and 'El Filibusterismo'.",
+      "Explain how Rizal championed peaceful social reform through education, literature, scientific inquiry, and love of country rather than violent warfare.",
+      "Create an illustrated 'Quill & Inkwell Hero Scroll' featuring Rizal's famous proverb: 'Ang hindi marunong magmahal sa sariling wika ay higit pa sa hayop at malansang isda'."
+    ],
+    "factualBackground": "Dr. José Rizal (June 19, 1861 – December 30, 1896) is widely honored as the greatest national hero of the Philippines. Born in Calamba, Laguna, to Francisco Mercado and Teodora Alonso, Rizal was a polymath who mastered medicine (specializing in ophthalmology at the University of Santo Tomas, Universidad Central de Madrid, and clinics in Paris and Heidelberg to cure his mother's failing eyesight), sculpture, painting, natural science, engineering, and over twenty languages. Through his landmark novels 'Noli Me Tángere' (1887, Berlin) and 'El Filibusterismo' (1891, Ghent), as well as his civic organization 'La Liga Filipina' (1892), Rizal exposed colonial injustices and inspired the awakening of Filipino national consciousness (nasyonalismo). Exiled to Dapitan, Zamboanga del Norte (1892–1896), he established a school for boys, built a clean town waterworks system, discovered new animal species (e.g., Draco rizali), and planted agricultural orchards. Executed by firing squad at Bagumbayan (now Rizal Park / Luneta) on December 30, 1896, his martyrdom ignited the Philippine Revolution. The National Historical Commission of the Philippines (NHCP) oversees the preservation of Rizal shrines nationwide."
+  },
+  {
+    "order": 29,
+    "id": "lesson-29-andres-bonifacio",
+    "title": "Andrés Bonifacio and the Katipunan",
+    "unit": "History, Heroes, Nature, and Science",
+    "topic": "History and Heroes",
+    "learningObjectives": [
+      "Identify Andrés Bonifacio (1863–1897) as the 'Supremo' and founder of the Katipunan (KKK) and the 'Father of the Philippine Revolution' (Ama ng Himagsikan).",
+      "Describe the founding of the Katipunan on July 7, 1892, in Tondo, Manila, and its moral code of brotherhood and selflessness outlined in the 'Kartilya ng Katipunan'.",
+      "Explain the historic significance of the 'Cry of Pugad Lawin' (August 1896), where Katipuneros tore their residence tax certificates (cedulas) as a declaration of freedom.",
+      "Design an illustrated 'Katipunan Banner of Brotherhood' featuring the red field, white sun, and ancient Baybayin 'Ka' symbol."
+    ],
+    "factualBackground": "Andrés Bonifacio (November 30, 1863 – May 10, 1897) is revered as the 'Father of the Philippine Revolution' and the 'Supremo' of the Kataas-taasang, Kagalang-galangang Katipunan ng mga Anak ng Bayan (KKK). Born in Tondo, Manila, to Santiago Bonifacio and Catalina de Castro, he was orphaned as a youth and supported his younger siblings by crafting walking canes, paper fans, and working as a warehouse clerk while self-educating through books on history, law, and revolutions. On July 7, 1892, following José Rizal's arrest, Bonifacio founded the Katipunan at 72 Calle Azcárraga (now Claro M. Recto Avenue), establishing a secret revolutionary brotherhood with three core objectives: political liberation, moral righteousness, and mutual civic aid. Guided by the 'Kartilya ng Katipunan' written by his young confidant Emilio Jacinto, the society emphasized brotherly love, defense of the oppressed, and moral integrity. In August 1896, the 'Cry of Pugad Lawin' (tearing of the colonial cedula personal) formally launched the national uprising against Spanish rule. The National Historical Commission of the Philippines (NHCP) maintains the Bonifacio National Monument in Caloocan, sculpted by National Artist Guillermo Tolentino."
+  },
+  {
+    "order": 30,
+    "id": "lesson-30-indigenous-peoples",
+    "title": "Indigenous Peoples and Living Cultures of the Philippines",
+    "unit": "History, Heroes, Nature, and Science",
+    "topic": "History and Culture",
+    "learningObjectives": [
+      "Recognize that the Philippines is home to over 110 distinct ethnolinguistic Indigenous Peoples (Katutubo) living across Luzon, Visayas, and Mindanao.",
+      "Describe the cultural traditions, living arts, and ecological wisdom of prominent groups including the Ifugao and Kalinga of the Cordilleras, the Mangyan of Mindoro, the Aeta of Central Luzon, and the T'boli and Badjao of Mindanao and Sulu.",
+      "Explain the legal protection and rights of indigenous communities under Republic Act No. 8371 (The Indigenous Peoples' Rights Act of 1997 / IPRA) and the role of the National Commission on Indigenous Peoples (NCIP).",
+      "Weave a colorful paper or yarn 'T'nalak-Inspired Dream Pattern' celebrating the indigenous artistic heritage of Philippine master weavers."
+    ],
+    "factualBackground": "The Philippines is home to an estimated 14 to 17 million Indigenous Peoples (IPs) belonging to more than 110 distinct ethnolinguistic groups, officially recognized and protected under Republic Act No. 8371 (The Indigenous Peoples' Rights Act of 1997, or IPRA) administered by the National Commission on Indigenous Peoples (NCIP). By Presidential Proclamation No. 1906 (s. 2009), the month of October is commemorated nationwide as National Indigenous Peoples Month. Major cultural clusters include the Igorot peoples of the Cordillera Mountain Range (Ifugao, Kalinga, Bontoc, Ibaloi) renowned for stone rice terraces and batok tattoo arts; the Mangyan groups of Mindoro famed for Surat Mangyan Hanunoo script written on bamboo; the Aeta and Ati indigenous forest keepers; the Lumad indigenous peoples of Mindanao (including the T'boli celebrated for sacred abaca T'nalak dreamweaving and the Manobo); and maritime Sama-Bajau boat dwellers of the Sulu archipelago. The National Museum of the Philippines and the NCCA recognize these living traditions as invaluable intangible cultural heritage."
+  },
+  {
+    "order": 31,
+    "id": "lesson-31-history-timeline",
+    "title": "A Child-Friendly Philippine History Timeline",
+    "unit": "History, Heroes, Nature, and Science",
+    "topic": "History and Heritage",
+    "learningObjectives": [
+      "Chronologically order the five major eras of Philippine history: Pre-Colonial Era, Spanish Era (1565–1898), Revolutionary Era & Independence (1898), American & WWII Era, and the Modern Democratic Republic.",
+      "Identify key turning points including pre-colonial maritime trade (balangay boats), the declaration of Philippine Independence in Kawit, Cavite on June 12, 1898, and post-war reconstruction.",
+      "Explain how each historical era contributed unique language, architecture, food, and democratic institutions to modern Filipino culture.",
+      "Construct an accordion-folded 'Philippine History Time-Traveler Ribbon' charting major milestones with illustrations and dates."
+    ],
+    "factualBackground": "Philippine history spans thousands of years of human civilization: (1) The Pre-Colonial Era, characterized by autonomous maritime barangay polities led by Datus, sophisticated gold metallurgy, Baybayin writing, and extensive maritime trade across Southeast Asia and China aboard 'balangay' vessels; (2) The Spanish Colonial Period (1565–1898), initiated by Miguel López de Legazpi, which introduced Christianity, urban grid planning (poblacion/plaza complex), and Spanish linguistic and culinary influences; (3) The Philippine Revolution and First Philippine Republic, culminating in the proclamation of national independence by General Emilio Aguinaldo in Kawit, Cavite, on June 12, 1898; (4) The American Period (1898–1946) and World War II occupation (1942–1945), which established the public school system ('Thomasites'), English medium instruction, and democratic civic institutions; and (5) The Modern Democratic Republic from 1946 to the present under the 1987 Philippine Constitution. The National Historical Commission of the Philippines (NHCP) serves as the primary government authority on Philippine historical chronologies."
+  },
+  {
+    "order": 32,
+    "id": "lesson-32-mayon-volcano",
+    "title": "Mayon Volcano: The World's Most Perfect Cone",
+    "unit": "History, Heroes, Nature, and Science",
+    "topic": "Nature and Geography",
+    "learningObjectives": [
+      "Identify Mayon Volcano (Bulkang Mayon) in Albay, Bicol, as an active stratovolcano world-renowned for its nearly perfect symmetrical conical shape.",
+      "Explain the geological structure of a stratovolcano (composite volcano), including magma chambers, central vents, alternating layers of hardened lava and pyroclastic ash, and the role of the Philippine Institute of Volcanology and Seismology (PHIVOLCS) in 24/7 monitoring.",
+      "Describe how volcanic activity enriches surrounding agricultural soil for pili nuts and abaca, and explore the cultural legend of 'Daragang Magayon'.",
+      "Construct a working volcanic eruption model demonstrating chemical gas expansion using safe household effervescence."
+    ],
+    "factualBackground": "Mayon Volcano (2,463 meters / 8,081 feet) is an active stratovolcano situated in the province of Albay in the Bicol Region of southeastern Luzon. Celebrated worldwide for its almost geometrically perfect symmetrical cone, Mayon is the most active volcano in the Philippines, having erupted over 50 times in recorded history since 1616. Its most destructive historical eruption occurred on February 1, 1814, burying the town of Cagsawa and leaving only the historic church bell tower (Cagsawa Ruins). Monitored continuously by the Philippine Institute of Volcanology and Seismology (DOST-PHIVOLCS) using seismic sensors, tiltmeters, thermal cameras, and sulfur dioxide gas emission spectrometers, Mayon operates under a standardized 5-level volcanic alert scale. Volcanic ash deposits have enriched Albay's soil, fostering world-leading production of abaca and pili nuts (Canarium ovatum). In Bikolano folklore, the volcano's name is derived from 'Daragang Magayon' (Beautiful Maiden)."
+  },
+  {
+    "order": 33,
+    "id": "lesson-33-weather-climate",
+    "title": "Tropical Weather, Monsoons, and Typhoons",
+    "unit": "History, Heroes, Nature, and Science",
+    "topic": "Science and Nature",
+    "learningObjectives": [
+      "Differentiate the two primary seasonal monsoons in the Philippines: the Southwest Monsoon (Habagat, warm/rainy from May to October) and the Northeast Monsoon (Amihan, cool/dry from November to April).",
+      "Explain the meteorological formation of tropical cyclones (bagyo) over warm ocean waters, the Philippine Area of Responsibility (PAR), and the Tropical Cyclone Wind Signal (TCWS) system 1 to 5 administered by PAGASA.",
+      "Develop a practical family emergency preparedness plan and assemble a checklist for a disaster survival 'Go Bag'.",
+      "Construct an operational handheld meteorological anemometer measuring wind speed using paper cups and dowels."
+    ],
+    "factualBackground": "The Philippine climate is classified primarily as tropical maritime, characterized by high temperatures, abundant rainfall, and high humidity, governed by the seasonal reversal of prevailing wind systems (monsoons). The Philippine Atmospheric, Geophysical and Astronomical Services Administration (DOST-PAGASA) monitors weather across the Philippine Area of Responsibility (PAR). The two dominant seasons are: (1) 'Habagat' (Southwest Monsoon), prevailing from May to October, bringing warm, moisture-laden air from the Indian Ocean resulting in heavy rains; and (2) 'Amihan' (Northeast Monsoon), prevailing from November to April, bringing cool, dry air masses from Siberia and the northern Pacific. The Philippines experiences an average of 20 tropical cyclones ('bagyo') annually, categorized from Tropical Depression to Super Typhoon and tracked using the modernized Tropical Cyclone Wind Signal (TCWS) scale (Signals 1 to 5). Disaster risk reduction protocols are coordinated nationally by the NDRRMC."
+  },
+  {
+    "order": 34,
+    "id": "lesson-34-tropical-forests",
+    "title": "Philippine Rainforests: Layers of Life and Biodiversity",
+    "unit": "History, Heroes, Nature, and Science",
+    "topic": "Science and Ecology",
+    "learningObjectives": [
+      "Identify the four ecological vertical layers of a tropical rainforest: Forest Floor (Sahig ng Gubat), Understory, Canopy (Kulandong), and Emergent Layer (Matatayog na Puno).",
+      "Describe iconic endemic flora and fauna residing in Philippine dipterocarp and montane rainforests, including dipterocarp trees (lauan, yakal, narra), Philippine tarsiers, flying lemurs (kagwang), and hornbills (kalaw).",
+      "Explain the critical ecological services provided by rainforests as national watersheds, carbon sinks, oxygen producers, and natural flood barriers.",
+      "Construct a multi-layered 3D 'Rainforest in a Box' diorama representing all four vertical strata and their resident wildlife."
+    ],
+    "factualBackground": "The Philippine tropical rainforest biome is classified among the world's most ecologically significant megadiverse ecosystems and primary biodiversity hotspots. Administered by the Department of Environment and Natural Resources (DENR) through the Biodiversity Management Bureau (DENR-BMB), Philippine rainforests are dominated by the Dipterocarpaceae family (hardwood trees such as Shorea and Dipterocarpus species). Ecologically, the rainforest is structured into four distinct vertical strata: (1) The Forest Floor, receiving <2% sunlight, decomposing organic leaf litter; (2) The Understory (middle layer of broad-leaved shrubs, ferns, young palms, and the Philippine tarsier); (3) The Canopy (continuous leafy roof 20–40 meters high housing 70–90% of forest biodiversity including hornbills, fruit bats, and orchids); and (4) The Emergent Layer (towering giant trees exceeding 45–60 meters where the Philippine eagle nests). Rainforests serve as crucial watersheds under the National Integrated Protected Areas System (NIPAS / RA 7586, amended by ENIPAS / RA 11038)."
+  },
+  {
+    "order": 35,
+    "id": "lesson-35-coral-reefs",
+    "title": "Coral Reefs: The Underwater Rainforests of the Coral Triangle",
+    "unit": "History, Heroes, Nature, and Science",
+    "topic": "Marine Science and Nature",
+    "learningObjectives": [
+      "Identify the Philippines as the global apex and epicenter of marine shorefish biodiversity within the 'Coral Triangle'.",
+      "Explain that coral reefs are living biological colonies formed by tiny coral polyps in symbiotic partnership with photosynthetic zooxanthellae microalgae, producing calcium carbonate limestone skeletons.",
+      "Describe landmark Philippine marine protected areas including Tubbataha Reefs Natural Park (UNESCO World Heritage Site in the Sulu Sea) and Apo Reef Natural Park in Occidental Mindoro.",
+      "Sculpt a vibrant 3D 'Coral Reef Sanctuary' model using colorful clay, egg cartons, and recycled marine life figures."
+    ],
+    "factualBackground": "The Philippine archipelago lies at the apex of the global Coral Triangle, recognized internationally by marine scientists as the global epicenter of marine biodiversity (housing nearly 500 of the world's 800 known coral species and over 2,000 species of reef fish). Administered by the Department of Agriculture Bureau of Fisheries and Aquatic Resources (DA-BFAR) and DENR-BMB under the Philippine Fisheries Code (RA 8550 as amended by RA 10654), coral reefs are dynamic biogenic ecosystems constructed by colonial marine invertebrates known as coral polyps. Polyps maintain an obligate mutualistic symbiosis with microscopic dinoflagellate algae called zooxanthellae, which provide photosynthetic nutrients and vivid pigmentation while secreting calcium carbonate (CaCO3) limestone frameworks. Premier marine sanctuaries include Tubbataha Reefs Natural Park (a 97,030-hectare UNESCO World Heritage site in the Sulu Sea, Palawan) and Apo Reef Natural Park (the second-largest contiguous coral reef system in the world). Coral reefs provide coastal storm surge protection, fish nurseries, and vital food security for millions."
+  },
+  {
+    "order": 36,
+    "id": "lesson-36-philippine-eagle",
+    "title": "The Philippine Eagle: The Mighty King of Birds (Agila)",
+    "unit": "History, Heroes, Nature, and Science",
+    "topic": "Wildlife and Conservation",
+    "learningObjectives": [
+      "Identify the Philippine Eagle (Pithecophaga jefferyi / Agila ng Pilipinas) as the official National Bird of the Philippines (declared under Proclamation No. 615, 1995) and the largest eagle in the world by length and wing surface area.",
+      "Describe the eagle's remarkable physical adaptations: a 2-meter (7-foot) wingspan, shaggy crest of golden-brown crown feathers, massive high-arched bluish-gray beak, sharp hunting talons, and monogamous lifelong mating.",
+      "Explain its critical ecological role as an apex predator indicating healthy forest ecosystems, and examine conservation breeding initiatives led by the Philippine Eagle Foundation (PEF) in Malagos, Davao City.",
+      "Construct a majestic 'Royal Agila Wings & Crown Mask' with textured feathers and a golden emblem."
+    ],
+    "factualBackground": "The Philippine Eagle (Pithecophaga jefferyi), also known as the Great Philippine Eagle or Monkey-eating Eagle (Haribon), is officially designated as the National Bird of the Philippines by Presidential Proclamation No. 615 (s. 1995). Endemic to the primary dipterocarp rainforests of Luzon, Samar, Leyte, and Mindanao, it is the longest eagle species in the world (measuring 86 to 102 cm) and boasts a wingspan reaching up to 2.2 meters (over 7 feet). As an apex predator, it hunts flying lemurs (kagwang), palm civets, monkeys, snakes, and monitor lizards, maintaining ecological balance in forest canopies. Philippine Eagles are strictly monogamous, mating for life, and a single breeding pair requires an expansive territory of 25 to 50 square miles (6,500 to 13,000 hectares) of pristine forest to raise a single chick every two years. Critically Endangered on the IUCN Red List with fewer than 400 pairs surviving in the wild, the species is protected under the Wildlife Resources Conservation and Protection Act (RA 9147), with pioneering captive breeding, rescue, and rehabilitation spearheaded by the Philippine Eagle Foundation (PEF) in Davao."
+  },
+  {
+    "order": 37,
+    "id": "lesson-37-environmental-stewardship",
+    "title": "Caring for God's Creation: Environmental Stewardship",
+    "unit": "History, Heroes, Nature, and Science",
+    "topic": "Values and Ecology",
+    "learningObjectives": [
+      "Explain the biblical and civic principle of environmental stewardship ('Pangangalaga sa Kalikasan') based on Genesis 2:15 and Psalm 24:1.",
+      "Describe key Philippine environmental laws promoting clean air, water, and waste reduction: The Ecological Solid Waste Management Act (RA 9003) and the Clean Air Act (RA 8749).",
+      "Practice the practical '5Rs of Conservation' (Reduce, Reuse, Recycle, Refuse, Rot/Compost) and design a community mangrove or tree-planting plan.",
+      "Construct a self-watering 'Recycled Plastic Bottle Eco-Planter' growing a native Philippine herbal or vegetable seedling."
+    ],
+    "factualBackground": "Environmental stewardship in the Philippines integrates constitutional mandates (Article II, Section 16 of the 1987 Philippine Constitution guaranteeing the right of the people to 'a balanced and healthful ecology in accord with the rhythm and harmony of nature') with statutory frameworks administered by the Department of Environment and Natural Resources (DENR) and the Climate Change Commission (CCC). Foundational legislation includes Republic Act No. 9003 (Ecological Solid Waste Management Act of 2000), mandating waste segregation at source, materials recovery facilities (MRF), and composting; Republic Act No. 8749 (Philippine Clean Air Act of 1999); and Republic Act No. 9275 (Philippine Clean Water Act of 2004). From a Christian theological perspective, stewardship ('katiwala') is rooted in Genesis 2:15 ('The Lord God took the man and put him in the garden of Eden to work it and keep it') and Psalm 24:1 ('The earth is the Lord's, and everything in it'). Active citizen engagement through mangrove reforestation, coastal cleanups, and renewable energy adoption directly mitigates climate vulnerability."
+  },
+  {
+    "order": 38,
+    "id": "lesson-38-october-review",
+    "title": "The Great October Quest: History, Heroes, and Nature Synthesis",
+    "unit": "History, Heroes, Nature, and Science",
+    "topic": "Integrated Review",
+    "learningObjectives": [
+      "Synthesize comprehensive learning across the October unit: Bayanihan cooperation, national heroes (Rizal and Bonifacio), 110+ indigenous cultures, Philippine historical timeline, Mayon Volcano geology, monsoon weather science, 4-layer rainforest ecosystems, the Philippine Eagle, and environmental stewardship.",
+      "Demonstrate integrated mastery of core Tagalog and Hiligaynon vocabulary across historical, ecological, and cultural domains.",
+      "Formulate multi-disciplinary connections between national heritage, scientific understanding, and personal character responsibility.",
+      "Assemble a 3D multi-tiered 'October Heritage & Science Hexagonal Prism' showcasing student work from each major topic."
+    ],
+    "factualBackground": "The October curriculum unit 'History, Heroes, Nature, and Science' integrates social studies, Philippine history, earth science, ecology, and character education across Lessons 27 through 37. As documented by the National Historical Commission of the Philippines (NHCP), National Commission for Culture and the Arts (NCCA), Department of Environment and Natural Resources (DENR), Philippine Institute of Volcanology and Seismology (DOST-PHIVOLCS), and PAGASA, the curriculum establishes a holistic, multi-disciplinary understanding of Philippine national identity. Key synthesis anchors include: (1) The communal spirit of Bayanihan; (2) The dual legacy of Dr. José Rizal's intellectual reform and Andrés Bonifacio's revolutionary courage; (3) The cultural resilience of 110+ indigenous ethnolinguistic groups under RA 8371; (4) The 5-era historical timeline culminating in modern constitutional democracy; (5) The geological physics of active stratovolcanoes (Mount Mayon) and seasonal monsoons (Habagat/Amihan); and (6) The mega-biodiversity of 4-layer dipterocarp rainforests, the critically endangered Philippine Eagle (Pithecophaga jefferyi), Coral Triangle reefs, and creation stewardship (Genesis 2:15 / RA 9003)."
+  },
+  {
+    "order": 39,
+    "id": "lesson-39-october-showcase",
+    "title": "The Grand October Showcase: Celebrating Heroes and Heritage",
+    "unit": "History, Heroes, Nature, and Science",
+    "topic": "Showcase and Celebration",
+    "learningObjectives": [
+      "Present a comprehensive personal learning portfolio exhibition synthesizing artifacts, models, and written discoveries from October: Bayanihan dioramas, Hero scrolls, Katipunan banners, T'nalak weaves, History ribbons, Erupting Mayon models, Cup anemometers, Rainforest boxes, Coral reefs, Agila masks, and Eco-planters.",
+      "Deliver a dynamic oral presentation in Tagalog and English demonstrating fluency in cultural heritage, geological science, and ecological stewardship.",
+      "Reflect on personal character growth, academic milestones, and collaborative teamwork throughout the unit.",
+      "Award the official 'Order of the Grand October Scholar-Steward' certificate and progress badges during a celebratory community and family presentation."
+    ],
+    "factualBackground": "The culminating showcase of the Wonder Journey OS October curriculum ('History, Heroes, Nature, and Science') serves as an authentic summative performance task and family celebration. Grounded in educational assessment research on portfolio-based learning and multi-modal exhibitions, the Grand October Showcase integrates 13 lessons of student-created artifacts: (1) Cultural Heritage & History (Bayanihan diorama, Rizal quill scroll, Katipunan banner, T'nalak weaving, History accordion timeline); (2) Earth & Climate Science (Clay Mayon Volcano model, working cup anemometer); (3) Living Biodiversity & Ecology (Rainforest-in-a-Box, 3D Coral Reef sanctuary, Royal Agila crown mask, Recycled bottle eco-planter); and (4) Integrated Synthesis (Hexagonal learning prism). The showcase adheres to National Commission for Culture and the Arts (NCCA) and DepEd cultural education standards, fostering public speaking, bilingual fluency (Tagalog/English), family engagement, and joyful recognition of academic excellence."
+  },
+  {
+    "order": 40,
+    "id": "lesson-40-kitchen-safety",
+    "title": "Kitchen Safety and Hygiene: Junior Chef Foundations",
+    "unit": "Filipino Cooking and Family Heritage",
+    "topic": "Culinary Safety and Basics",
+    "learningObjectives": [
+      "Demonstrate essential kitchen hygiene rules: the 20-second warm water handwashing technique with soap, tying back long hair, wearing clean aprons, and keeping food prep surfaces sanitized.",
+      "Classify kitchen tasks into 'Child-Safe Junior Chef Actions' (washing vegetables, tearing herbs, stirring cold bowls, measuring dry ingredients) versus 'Adult-Only Hot/Sharp Zones' (operating gas stoves, handling sharp chef knives, deep frying in hot oil, taking hot pans out of ovens).",
+      "Explain food safety protocols to prevent cross-contamination: using separate cutting boards for raw meats and fresh vegetables, safe refrigeration temperatures below 4°C, and allergy awareness.",
+      "Construct a colorful, illustrated 'Junior Chef Kitchen Safety Shield & Rule Board' for display at home."
+    ],
+    "factualBackground": "Food safety and kitchen sanitation represent fundamental life skills governed by the Department of Health (DOH), the Food and Drug Administration (FDA Philippines), and the Food and Nutrition Research Institute (FNRI-DOST). Proper kitchen sanitation prevents foodborne illnesses caused by pathogenic bacteria such as Salmonella, Escherichia coli, and Staphylococcus aureus. Key foundational practices include: (1) The World Health Organization (WHO) and DOH 'Five Keys to Safer Food' (Keep clean, Separate raw and cooked, Cook thoroughly, Keep food at safe temperatures, and Use safe water and raw materials); (2) Proper handwashing with soap for a minimum of 20 seconds before touching food; (3) Strict segregation of cutting boards (color-coded green for vegetables and red for raw meat) to prevent cross-contamination; (4) Clear developmental boundary differentiation between junior assistant tasks and adult-supervised high-temperature/sharp-edge operations; and (5) Food allergy consciousness to protect vulnerable family members from severe immunological reactions."
+  },
+  {
+    "order": 41,
+    "id": "lesson-41-measurements",
+    "title": "Culinary Measurements and Tools: The Science of Precision",
+    "unit": "Filipino Cooking and Family Heritage",
+    "topic": "Culinary Safety and Basics",
+    "learningObjectives": [
+      "Distinguish between dry measuring cups (for flour, sugar, uncooked rice) and liquid measuring cups with spouts (for water, coconut milk, vinegar, broth).",
+      "Identify standard measuring spoon volumes: tablespoon (kutsara / Tbsp / 15 mL) and teaspoon (kutsarita / tsp / 5 mL), recognizing that 3 teaspoons equal 1 tablespoon.",
+      "Explain the scientific principle of 'leveling off' dry ingredients with a straight edge rather than packing or heaping, ensuring recipe consistency.",
+      "Perform a hands-on 'Culinary Measure & Balance Lab' comparing volumes of safe ingredients (water, uncooked rice, dry beans)."
+    ],
+    "factualBackground": "Culinary measurement bridges applied mathematics, volume metrics, and chemistry. In culinary science, precise ratios between dry ingredients (solids) and wet ingredients (liquids) determine viscosity, hydration, and chemical leavening reactions. The International System of Units (metric) and traditional culinary equivalents standardized by the Food and Nutrition Research Institute (FNRI-DOST) establish: (1) 1 Metric Cup = 250 mL (or 240 mL standard US cup); (2) 1 Tablespoon (Tbsp / kutsara) = 15 mL; (3) 1 Teaspoon (tsp / kutsarita) = 5 mL (where 3 tsp = 1 Tbsp); (4) Liquid measuring vessels feature transparent walls with graduated markings and pour spouts, read at the bottom of the liquid meniscus at eye level; (5) Dry measuring cups are filled to overflowing and swept level with a straight spatula to prevent compression errors."
+  },
+  {
+    "order": 42,
+    "id": "lesson-42-nutrition",
+    "title": "Pinggang Pinoy and Nourishing Filipino Ingredients",
+    "unit": "Filipino Cooking and Family Heritage",
+    "topic": "Nutrition and Culinary Heritage",
+    "learningObjectives": [
+      "Explain the three functional food groups of the Department of Health (DOH) & FNRI 'Pinggang Pinoy' model: Go Foods (energy-giving carbohydrates), Grow Foods (muscle-building proteins), and Glow Foods (vitamin- and mineral-rich vegetables and fruits).",
+      "Identify native, nutrient-dense Filipino super-ingredients including malunggay (Moringa oleifera), kangkong (water spinach), sitaw (long beans), kalabasa (squash), and fresh local fish (bangus, tilapia).",
+      "Calculate balanced plate proportions using the Pinggang Pinoy visual guide: 1/2 of the plate for Glow vegetables and fruits, 1/4 for Go energy grains, and 1/4 for Grow proteins, accompanied by a glass of clean water.",
+      "Design and assemble an interactive 'My Balanced Pinggang Pinoy Plate Craft' with colorful food models."
+    ],
+    "factualBackground": "The Food and Nutrition Research Institute (FNRI-DOST), in collaboration with the Department of Health (DOH) and the World Health Organization (WHO), developed the 'Pinggang Pinoy' (Filipino Food Plate) as a visual, food-based dietary guide for Filipinos. It translates the Nutritional Guidelines for Filipinos into plate-based proportions for different age groups: (1) Go Foods (Energy) — rice, corn, root crops (kamote, gabi), bread, constituting approximately 1/4 to 1/3 of the plate; (2) Grow Foods (Building) — fish, poultry, lean meat, eggs, beans, and legumes, rich in protein, iron, and calcium, constituting 1/4 of the plate; (3) Glow Foods (Protection) — leafy greens and colorful fruits rich in Vitamin A, Vitamin C, potassium, and dietary fiber, occupying 1/2 of the plate; (4) Native powerhouse botanical ingredients such as Malunggay (Moringa oleifera), dubbed the Philippine 'Miracle Tree', packed with calcium, iron, and Vitamin C, and indigenous crops like kalabasa and kangkong; (5) Proper hydration with 8 or more glasses of potable water daily."
+  },
+  {
+    "order": 43,
+    "id": "lesson-43-rice-basics",
+    "title": "Ang Bigas at Kanin: Rice Culture and Staple Heritage",
+    "unit": "Filipino Cooking and Family Heritage",
+    "topic": "Culinary Heritage and Staple Foods",
+    "learningObjectives": [
+      "Differentiate the four linguistic and agricultural stages of rice in Filipino culture: palay (unhusked grain on the stalk), bigas (milled uncooked white or brown grains), kanin (freshly steamed hot rice), and bahaw (leftover cold rice transformed into savory sinangag garlic rice).",
+      "Explain the traditional 1-to-1 water-to-rice volumetric ratio and the cultural 'knuckle method' (pagsukat gamit ang daliri) for measuring water in rice cooking pots.",
+      "Describe the agricultural heritage of Filipino rice farming, honoring the hard work of farmers (magsasaka) and practicing gratitude by leaving zero wasted grains on one's plate.",
+      "Assemble an illustrated 'Journey of Rice: From Palay to Sinangag' accordion flow diagram with real rice grain textures."
+    ],
+    "factualBackground": "Rice (Oryza sativa) is the primary dietary staple of over 110 million Filipinos, providing over 40% of daily caloric intake and serving as the cultural anchor of Philippine meal architecture. The Philippine Rice Research Institute (DA-PhilRice) and the International Rice Research Institute (IRRI), headquartered in Los Baños, Laguna, serve as global centers of rice science and conservation of over 130,000 rice varieties (including indigenous heirlooms such as Cordillera Tinawon and Ifugao black/red rice). Filipino language possesses distinct, precise terminology for each developmental stage of rice: (1) 'Palay' — unhusked grain still attached to the panicle; (2) 'Bigas' — milled, uncooked grains; (3) 'Kanin' — cooked steamed rice; (4) 'Bahaw' — cooled leftover cooked rice; (5) 'Sinangag' — garlic fried rice made from bahaw; (6) 'Tutong' — golden, crispy toasted rice at the bottom of the pot; (7) 'Lugaw' / 'Arroz Caldo' — comforting rice porridge. Culturally, rice represents divine blessing, hospitality, and communal sustenance, reflected in the national virtue of never wasting a single grain."
+  },
+  {
+    "order": 44,
+    "id": "lesson-44-adobo-history",
+    "title": "Adobo Across the Archipelago: Regional Vinegar Heritage",
+    "unit": "Filipino Cooking and Family Heritage",
+    "topic": "Culinary History and Regional Diversity",
+    "learningObjectives": [
+      "Explain the indigenous Philippine origin of adobo as an ancient vinegar-and-salt preservation method (inabraw / pina-asim) that existed long before Spanish colonial contact.",
+      "Map four regional styles of adobo across the archipelago: Classic Soy-Vinegar Adobo (Luzon), Adobong Puti (clear vinegar and sea salt without soy sauce), Adobo sa Gata (Southern Tagalog & Bicol with rich coconut milk and green chilies), and Adobong Dilaw (Batangas & Visayas with golden turmeric / luyang dilaw).",
+      "Identify native Philippine artisanal vinegars: Sukang Paombong (nipa palm vinegar), Sukang Iloko (sugarcane vinegar), Sukang Tuba (coconut sap vinegar), and Sukang Kaong (sugar palm vinegar).",
+      "Create a colorful 'Philippine Regional Adobo Flavor Map' showing regional ingredients, vinegars, and spices."
+    ],
+    "factualBackground": "Philippine adobo is widely celebrated as the unofficial national dish of the Philippines, representing an indigenous cooking technique rather than a single rigid recipe. Historians and anthropologists (including Doreen Gamboa Fernandez and Ambeth Ocampo) document that pre-colonial Filipinos stewed meats and seafood in natural fruit and palm vinegars with sea salt and garlic to preserve food in tropical heat long before European arrival. When Spanish chronicler Pedro de San Buenaventura compiled the first Tagalog dictionary (Vocabulario de la Lengua Tagala, 1613), he observed this native stewing method and labeled it 'adobo de los naturales' (native adobo) by analogy with the Spanish marinating technique 'adobar'. Key regional variations include: (1) Classic Brown Adobo (using soy sauce introduced via Chinese maritime trade); (2) Adobong Puti (traditional pre-colonial white adobo with vinegar, sea salt, garlic, bay leaves, and peppercorns); (3) Adobo sa Gata (Bicol and Southern Luzon, enriched with coconut milk); (4) Adobong Dilaw (Batangas/Iloilo, tinted golden with fresh turmeric); and (5) Adobong Pula (tinted reddish-orange with annatto / achuete seeds). Four primary native vinegars provide distinct terroir: Sukang Tuba (coconut sap), Sukang Paombong (nipa palm), Sukang Iloko (fermented sugarcane), and Sukang Kaong (sugar palm)."
+  },
+  {
+    "order": 45,
+    "id": "lesson-45-sinigang-flavors",
+    "title": "Sinigang and Native Souring Agents: The Art of Asim",
+    "unit": "Filipino Cooking and Family Heritage",
+    "topic": "Culinary Heritage and Botanical Souring Agents",
+    "learningObjectives": [
+      "Identify the botanical diversity of traditional Philippine souring agents (pampaasim) across the archipelago: Sampalok (tamarind), Kamias (bilimbi), Batuan (Garcinia morella / binucao from Western Visayas), Bayabas (ripe guava), Calamansi, Santol, and Manggang Hilaw (green mango).",
+      "Explain the cultural philosophy of 'asim' (refreshing sourness) as an indigenous climatic adaptation that stimulates appetite, cools the body, and highlights fresh seafood and vegetables.",
+      "Describe the anatomy of a complete Sinigang pot: the clear sour broth, protein foundation (bangus, shrimp, or pork), and crisp native vegetables (kangkong, sitaw, talong, labanos, okra, and green finger peppers / siling haba).",
+      "Construct an illustrated 'Sinigang Souring Agent Botanical Wheel & Clay Pot Craft' with color-coded botanical models."
+    ],
+    "factualBackground": "Sinigang is an ancient, indigenous Philippine soup characterized by its refreshing sour and savory broth (asim). Renowned food culturalist Doreen Gamboa Fernandez described sinigang as the dish most authentically reflective of Filipino taste and geography: light, cooling, unmasked by heavy spices, and harmonious with the tropical landscape. Unlike foreign soups that rely on heavy stocks or creams, sinigang utilizes natural organic acids (citric, tartaric, oxalic, and ascorbic acids) derived directly from indigenous wild and cultivated fruits: (1) 'Sampalok' (Tamarindus indica) — the most widespread souring agent in Luzon; (2) 'Batuan' / 'Binucao' (Garcinia morella / Garcinia binucao) — the indigenous round green sour fruit native to Panay and Negros (Western Visayas); (3) 'Kamias' / 'Iba' (Averrhoa bilimbi) — cylindrical, high-acidity tree fruit; (4) 'Bayabas' (Psidium guajava) — sweet-sour ripe guava used for Sinigang sa Bayabas; (5) 'Santol' (Sandoricum koetjape); (6) 'Calamansi' (Citrofortunella microcarpa); (7) 'Alibangbang' leaves (Bauhinia malabarica). Sinigang is nutritionally dense, packed with water-soluble vitamins, potassium, and antioxidants from fresh leafy greens (kangkong), radish (labanos), okra, and eggplant (talong)."
+  },
+  {
+    "order": 46,
+    "id": "lesson-46-pancit-celebration",
+    "title": "Pancit Traditions: Long Noodles, Blessings, and Celebrations",
+    "unit": "Filipino Cooking and Family Heritage",
+    "topic": "Culinary Heritage and Festive Traditions",
+    "learningObjectives": [
+      "Trace the cultural and historical evolution of pancit from Hokkien Chinese maritime trade ('pian-e-sit' / convenient food) to an essential Filipino festive tradition symbolizing long life, health, and family blessings (haba ng buhay).",
+      "Identify major regional varieties of pancit and their distinct noodle types: Pancit Bihon (thin rice vermicelli), Pancit Canton (egg noodles), Pancit Malabon / Palabok (thick rice noodles in savory shrimp-annatto sauce with crushed chicharon and tinapa flakes), and Pancit Habhab of Lucban (served on banana leaves and eaten without utensils).",
+      "Describe the culinary etiquette and superstition of never cutting pancit noodles while cooking or serving to preserve the cultural wish for longevity.",
+      "Construct an illustrated 'Festive Pancit Bilao Tray Craft' featuring textured yarn noodles, colorful vegetable slivers, and calamansi wedges."
+    ],
+    "factualBackground": "Pancit is an integral pillar of Philippine festive gastronomy, introduced centuries ago by Hokkien Chinese traders and settlers in Binondo, Manila (established in 1594 as the world's oldest Chinatown). The term 'pancit' derives from the Hokkien Chinese phrase 'pian-e-sit' (便食), meaning 'something conveniently cooked' or 'ready-to-eat food'. Over centuries, Filipinos indigenized noodle dishes using local ingredients (calamansi, patis, achuete, tinapa smoked fish flakes, chicharon, and native vegetables). Major regional variations include: (1) Pancit Guisado (sauteed bihon or canton with shredded cabbage, carrots, pork, and chicken); (2) Pancit Palabok / Pancit Malabon (steamed rice noodles coated in golden shrimp-annatto sauce, topped with flaked tinapa, hard-boiled eggs, toasted garlic, and crushed chicharon); (3) Pancit Habhab / Lucban (dried flour noodles sauteed with vegetables and eaten directly from a fresh banana leaf without utensils); (4) Pancit Molo (dumpling soup from Iloilo); (5) Pancit Batil Patung (Tuguegarao, served with poached egg and carabeef broth). Culturally, pancit is obligatory at birthdays and milestone celebrations to symbolize 'haba ng buhay' (long life), accompanied by the folk custom of keeping noodle strands unbroken."
+  },
+  {
+    "order": 47,
+    "id": "lesson-47-halo-halo",
+    "title": "Halo-Halo: Layered Sweet Harmony and Shaved Ice Artistry",
+    "unit": "Filipino Cooking and Family Heritage",
+    "topic": "Culinary Heritage and Shaved Ice Treats",
+    "learningObjectives": [
+      "Trace the cultural history of halo-halo from the pre-war Japanese shaved-ice dessert 'kakigori' / 'mongo-ya' in Quiapo, Manila, to the ultimate multi-layered Filipino national dessert.",
+      "Identify the traditional sweet layers in a classic tall glass of halo-halo: sweetened beans (munggo, red kidney beans), sweet preserves (kaong, nata de coco, macapuno, langka, saba bananas, ube halaya), fine shaved ice (yelong kinaskas), evaporated milk (gatas), leche flan crown, and ube/sorbetes ice cream.",
+      "Explain the cultural philosophy of 'halo' (to mix together): how diverse, distinct individual ingredients unite into one harmonious, delicious whole when stirred with a long spoon.",
+      "Construct a 3D translucent 'My Royal Towering Halo-Halo Glass Craft' with layered colorful craft textures."
+    ],
+    "factualBackground": "Halo-halo (Tagalog for 'mix-mix') is the quintessential Philippine cold dessert, renowned globally for its complex layering of textures, colors, and flavors. Historical research (including documentation by food historians Doreen Fernandez and Felice Prudente Sta. Maria) traces its roots to the early 20th-century American colonial period following the opening of the Insular Ice Plant in Manila (1902). Japanese immigrants popularized a simple shaved ice and sweet red mung bean dessert called 'kakigori' or 'mitsumame' in Quiapo and San Miguel markets, known locally as 'mongo-ya'. After World War II, enterprising Filipino vendors expanded the dessert with native Philippine agricultural bounty: (1) 'Nata de coco' (fermented coconut water cellulose cubes, invented in Laguna in 1949); (2) 'Macapuno' (mutant soft jelly-like coconut meat); (3) 'Kaong' (sweetened sugar palm fruit); (4) 'Saging na Saba' (sweetened cardaba plantain); (5) 'Kamote' (sweet potato); (6) 'Ube Halaya' (sweet purple yam jam); (7) 'Langka' (aromatic jackfruit strips); (8) 'Leche Flan' (rich caramel egg custard crown); (9) 'Pinipig' (toasted pounded young glutinous rice flakes); and (10) Drizzle of evaporated milk over crystalline shaved ice ('yelong kinaskas'). The dessert embodies the culinary concept of 'haluin'—stirring distinct ingredients into unity."
+  },
+  {
+    "order": 48,
+    "id": "lesson-48-mango-float",
+    "title": "Mango Float: The Beloved No-Bake Family Heritage Dessert",
+    "unit": "Filipino Cooking and Family Heritage",
+    "topic": "Family Desserts and No-Bake Culinary Skills",
+    "learningObjectives": [
+      "Explain the history and culinary science of Mango Float (also known as Mango Royale or Crema de Mangga), an indigenous Philippine adaptation of the European icebox cake / tiramisu utilizing sweet Carabao mangoes, Graham crackers, and whipped sweet cream.",
+      "Describe the four simple, child-safe layers in making Mango Float: the Graham cracker base, the sweetened whipped cream-condensed milk mixture, succulent sliced ripe mangoes, and a crunchy crushed Graham crumb topping.",
+      "Explain the physical process of refrigeration setting (cooling to <4°C for at least 4 to 6 hours or freezing overnight) which softens the dry crackers into a soft, cake-like sponge through moisture absorption without requiring an oven.",
+      "Construct a multi-layered 'My No-Bake Mango Float Dessert Box Craft' with realistic tactile cracker, cream, and mango models."
+    ],
+    "factualBackground": "Mango Float (also known historically as Crema de Mangga or Mango Royale) is a modern classic of Philippine family celebratory cuisine. Originating as a tropical adaptation of the 19th-century American 'icebox cake' and European layered trifles, Mango Float became ubiquitous across Filipino households with the widespread domestic availability of commercial refrigeration in the 1970s and 1980s. The dessert requires zero baking heat, making it an ideal entry point for junior chefs and family collaboration. Key culinary components include: (1) Sweet Philippine Carabao Mangoes (Mangifera indica cv. 'Carabao'), globally renowned for their exceptional sweetness, smooth fiberless flesh, and high Brix sugar ratings (often exceeding 18-20° Brix); (2) Crisp honey-cinnamon Graham crackers; (3) A 1:1 or 2:1 whipped emulsion of chilled all-purpose cream (table cream) and sweetened condensed milk; (4) Crushed Graham cracker crumbs for the decorative top crust. Through the physical chemistry of starch hydration, the dry, brittle crackers absorb ambient moisture and milk fat from the cream over 4-6 hours of refrigeration, transforming into a tender, sliceable cake texture without baking."
+  },
+  {
+    "order": 49,
+    "id": "lesson-49-kakanin",
+    "title": "Kakanin Heritage: Sticky Rice Delicacies and Coconut Traditions",
+    "unit": "Filipino Cooking and Family Heritage",
+    "topic": "Culinary Heritage and Indigenous Sweets",
+    "learningObjectives": [
+      "Trace the indigenous Philippine heritage of 'kakanin' (traditional glutinous rice delicacies derived from the root word 'kain' / to eat and 'kanin' / rice) as pre-colonial harvest offerings and sacred hospitality foods.",
+      "Identify four iconic regional kakanin varieties, their botanical ingredients, and traditional preparation vessels: Bibingka (clay pot baked over and under live coals with salted egg), Puto Bumbong (purple pirurutong rice steamed in bamboo tubes), Biko / Kalamay (sticky rice braised in dark muscovado latik caramel), and Suman (glutinous rice wrapped in folded banana or palm leaves).",
+      "Describe the culinary synergy of Philippine coconut products: Gata (rich coconut milk), Kakang Gata (first-press thick coconut cream), Niyog (freshly grated coconut meat), and Latik (toasted, golden caramelized coconut curd curds).",
+      "Construct an illustrated 'Philippine Kakanin Bilao Sampler Craft' with banana leaf lining and textured craft models of bibingka, puto bumbong, and suman."
+    ],
+    "factualBackground": "Kakanin (derived from 'kain', to eat, and 'kanin', rice) constitutes the quintessential category of indigenous Philippine confectionery and ritual foods. Long before Spanish colonization, pre-colonial Filipinos prepared glutinous rice (malagkit) mixed with coconut milk (gata) and unrefined cane sugar (panutsa/muscovado) as sacred offerings (pag-aalay) during rice harvest festivals and communal celebrations. The National Commission for Culture and the Arts (NCCA) and culinary ethnographers document hundreds of regional kakanin varieties across Luzon, Visayas, and Mindanao. Core traditional preparations include: (1) 'Bibingka' — ground fermented rice batter (galapong) cooked in banana leaf-lined clay ovens with live charcoal placed both below and above on a tin sheet; (2) 'Puto Bumbong' — traditional heirloom purple glutinous rice ('pirurutong') packed into slender bamboo cylinders (bumbong), steamed over boiling water vats, and slathered with butter, grated coconut, and muscovado sugar; (3) 'Suman' — glutinous rice cooked with coconut milk and salt, wrapped in wilted banana leaves (suman sa ibos uses woven young palm leaves) and boiled until firm; (4) 'Biko' / 'Kalamay' — sweet sticky rice topped with 'latik' (toasted caramelized coconut cream curds produced by reducing coconut milk until the oil separates and solids brown). The stickiness ('lapot') of malagkit culturally symbolizes tight-knit family unity ('pagkakabuklod-buklod')."
+  },
+  {
+    "order": 50,
+    "id": "lesson-50-grandmas-recipe-box",
+    "title": "Grandma's Recipe Box: Preserving Heirlooms and Oral Histories",
+    "unit": "Filipino Cooking and Family Heritage",
+    "topic": "Family Heritage and Culinary Storytelling",
+    "learningObjectives": [
+      "Explain the cultural role of oral culinary traditions ('pamana sa kusina') where secret family recipes, sensory timing ('tantya'), and heritage techniques are passed down across generations without written cookbooks.",
+      "Formulate structured culinary interview questions to record an elder's (Lola, Lolo, Nanay, Tatay, Aunt, Uncle) signature recipe, historical memories, and cooking advice.",
+      "Document a complete family heirloom recipe card detailing title, family story/origin, measured ingredients, safety notes, and step-by-step instructions.",
+      "Construct and decorate a personalized 'Family Heirloom Recipe Keepsake Box' with regional motif patterns."
+    ],
+    "factualBackground": "In Philippine cultural anthropology, culinary traditions represent intangible cultural heritage (ICH) transmitted predominantly through oral history, apprenticeship, and shared family practice. The National Commission for Culture and the Arts (NCCA) and UNESCO recognize oral culinary traditions as critical vehicles of family identity, regional memory, and intergenerational continuity. Historically, many traditional Filipino cooks did not rely on standardized printed cookbooks; instead, recipes were preserved through 'pamana' (living inheritance) and experiential mastery known as 'tantya' (intuitive sensory measurement). Preserving these heirloom recipes in written and visual formats bridges generational divides, validates ancestral culinary knowledge, and safeguards family foodways from cultural erasure in the modern digital age. Key oral history methodology includes: (1) Active listening and empathetic questioning; (2) Recording sensory cues (aroma changes, color shifts, bubbling sound descriptors); (3) Documenting the emotional and historical context (who taught the recipe, when it was first cooked, what family events it accompanied); (4) Standardizing intuitive measurements (cups, spoons, grams) alongside traditional descriptions."
+  },
+  {
+    "order": 51,
+    "id": "lesson-51-family-heritage-wall",
+    "title": "The Family Heritage Wall: Culinary Roots and Generational Stories",
+    "unit": "Filipino Cooking and Family Heritage",
+    "topic": "Family Heritage and Culinary Geography",
+    "learningObjectives": [
+      "Map ancestral geographic roots across the Philippine archipelago (Luzon, Visayas, Mindanao) to identify provincial culinary traditions represented in one's own family lineage.",
+      "Explain how internal and global migration shapes a family's unique culinary heritage, blending traditional provincial dishes with modern ingredients and cross-cultural adaptations.",
+      "Construct a visual 'Family Tree of Food & Flavors' connecting grandparents, parents, and children with their signature provincial dishes and heritage memories.",
+      "Assemble a multimedia 'Family Heritage Wall Display' combining family photos, regional maps, recipe cards, and personal reflections."
+    ],
+    "factualBackground": "Philippine social structure is fundamentally anchored in the extended bilateral family system ('pamilya') and deep geographic ties to ancestral hometowns ('probinsya'). Throughout the 20th and 21st centuries, domestic rural-to-urban migration (e.g., to Metro Manila) and international diaspora migration created dynamic culinary tapestries within individual Filipino households. When families migrate, they carry regional foodways—such as Ilocano pinakbet, Kapampangan sisig, Bicolano laing, Ilonggo batchoy, and Waray moron—transplanting agricultural memories into new kitchens. The National Commission for Culture and the Arts (NCCA) and the National Museum of the Philippines document that family culinary heritage acts as a powerful anchor of psychosocial well-being, regional language retention, and intergenerational bonding. Creating a 'Family Heritage Wall' integrates genealogical mapping with food anthropology: (1) Tracing maternal and paternal provincial origins; (2) Identifying signature heirloom dishes linked to specific island bioregions; (3) Preserving multi-dialect food vocabulary; (4) Fostering profound gratitude for ancestral resilience."
+  },
+  {
+    "order": 52,
+    "id": "lesson-52-november-showcase",
+    "title": "The Grand November Culinary Showcase: A Feast of Family Heritage",
+    "unit": "Filipino Cooking and Family Heritage",
+    "topic": "Culinary Synthesis and Family Celebration",
+    "learningObjectives": [
+      "Synthesize comprehensive learning from the entire November Culinary Heritage Unit: kitchen safety protocols, measurement precision, Pinggang Pinoy nutrition, the lifecycle of rice, regional adobo, sour sinigang botany, celebratory pancit, halo-halo artistry, no-bake mango float, and kakanin traditions.",
+      "Present a student-curated 'Junior Master Chef Portfolio' incorporating their Kitchen Safety Shield, Measurement Wand, Balanced Plate Model, Recipe Keepsake Box, and Family Heritage Wall.",
+      "Demonstrate cultural gratitude and respectful family meal service ('paghahanda ng hapag-kainan') using traditional table blessings, hospitality etiquette, and clean-up responsibility.",
+      "Participate in the interactive 'Grand November Culinary Heritage Quest & Family Banquet'."
+    ],
+    "factualBackground": "The November Culinary Heritage Showcase serves as the culminating capstone synthesis for Stage 11E. In developmental pedagogy and Philippine cultural anthropology, celebratory showcases transform cognitive knowledge into embodied social practice. Throughout November, learners have investigated: (1) Kitchen hygiene (20s handwashing, cross-contamination prevention, DOH standards); (2) Volumetric measurement and precision chemistry; (3) Balanced nutrition via the DOH/FNRI 'Pinggang Pinoy' framework; (4) Agricultural ethnobotany of Philippine staple crops (rice lifecycle from palay to sinangag); (5) Culinary regionalism and terroir (adobo vinegars, sinigang wild souring agents, kakanin coconut traditions); (6) Intergenerational oral history and heirloom recipe preservation. The capstone celebration integrates the Filipino cultural value of 'salo-salo' (communal feast) and 'bayanihan' (communal cooperation), fostering deep gratitude to agricultural food producers, family elders, and God."
+  },
+  {
+    "order": 53,
+    "id": "lesson-53-geography-championship",
+    "title": "The Grand Philippine Geography Championship: Archipelagic Mastery",
+    "unit": "Review, Faith, Gratitude, and Showcase",
+    "topic": "National Geography Synthesis and Archipelagic Cartography",
+    "learningObjectives": [
+      "Synthesize comprehensive geographic knowledge from August, locating and differentiating the three major island groups (Luzon, Visayas, Mindanao), key water bodies (Pacific Ocean, West Philippine Sea, Celebes Sea), and major topographic landforms (Mount Apo, Mayon Volcano, Sierra Madre, Chocolate Hills).",
+      "Apply cardinal (Hilaga, Timog, Silangan, Kanluran) and intermediate directional compass skills in both Tagalog and Hiligaynon to navigate a complex archipelagic nautical map.",
+      "Analyze how regional geography and island topography shape local climate, agriculture, biodiversity, and community livelihoods across Philippine provinces.",
+      "Compete collaboratively in the interactive 'Archipelago Geography Championship Quest' using tactile map navigation."
+    ],
+    "factualBackground": "The Philippine archipelago consists of 7,641 islands situated in Southeast Asia along the Pacific Ring of Fire and the Coral Triangle (NAMRIA official geographic data). The nation is divided into three primary island divisions: Luzon (the largest northern island group, characterized by the Cordillera and Sierra Madre mountain ranges and the central agricultural plains), Visayas (the central maritime archipelagic cluster with rich marine straits and island bioregions like Panay, Negros, Cebu, Bohol, Leyte, and Samar), and Mindanao (the large southern landmass featuring Mount Apo, the highest peak at 2,954 meters, extensive river basins, and rich volcanic plateaus). Surrounding waters include the Philippine Sea/Pacific Ocean to the east, the West Philippine Sea/South China Sea to the west, the Celebes Sea to the south, and the Luzon Strait to the north. Synthesizing geographical literacy fosters spatial reasoning, environmental awareness, and a deep appreciation for the country's unique ecological zones and natural heritage."
+  },
+  {
+    "order": 54,
+    "id": "lesson-54-cultural-game-show",
+    "title": "The Great Archipelago Cultural Game Show: Language, Traditions, and Daily Life",
+    "unit": "Review, Faith, Gratitude, and Showcase",
+    "topic": "Cultural Synthesis, Linguistic Review, and Daily Life Heritage",
+    "learningObjectives": [
+      "Synthesize comprehensive cultural knowledge from September: respectful gestures ('mano po', 'po at opo'), kinship terms (Nanay, Tatay, Lola, Lolo, Tito, Tita, Ate, Kuya), Filipino home spaces ('bahay kubo', 'sala', 'kusina'), and community helpers.",
+      "Demonstrate bilingual fluency in Tagalog and Hiligaynon greetings, polite expressions, and daily life vocabulary across diverse interactive scenarios.",
+      "Explain how core Filipino values—including 'galang' (respect), 'malasakit' (compassion), 'bayanihan' (community cooperation), and 'pagkalinga' (loving care)—shape healthy relationships at home, at school, and in the neighborhood.",
+      "Compete collaboratively in 'The Great Archipelago Cultural Game Show' buzzer quiz tournament."
+    ],
+    "factualBackground": "Philippine cultural values and social dynamics emphasize relational harmony ('pakikipagkapwa-tao'), filial respect ('paggalang sa nakatatanda'), and communal solidarity ('bayanihan'). The linguistic markers 'po' and 'opo', alongside the physical gesture of 'pagmamano' (placing an elder's hand on one's forehead), represent ancient socio-cultural mechanisms for affirming intergenerational dignity, blessing, and communal continuity. The Komisyon sa Wikang Filipino (KWF) and the National Commission for Culture and the Arts (NCCA) document that Philippine indigenous and regional languages (including Tagalog, Hiligaynon, Cebuano, Ilocano, and Bikol) embed rich philosophical concepts of mutual aid, hospitality ('pagtanggap'), and family loyalty ('pagmamahal sa pamilya'). Synthesizing September's foundational lessons through gamified cultural inquiry deepens social-emotional learning, reinforces positive communication habits, and strengthens cultural identity."
+  },
+  {
+    "order": 55,
+    "id": "lesson-55-family-recipe-showcase",
+    "title": "Family Recipe Showcase Preparation: The Junior Master Chef Feast",
+    "unit": "Review, Faith, Gratitude, and Showcase",
+    "topic": "Culinary Synthesis, Kitchen Mastery, and Showcase Curation",
+    "learningObjectives": [
+      "Synthesize key culinary principles from November: kitchen hygiene protocols (20-second handwashing, preventing cross-contamination), volumetric measurement conversions, Pinggang Pinoy nutritional balance, and heirloom recipe preservation.",
+      "Curate a personalized 'Junior Master Chef Showcase Display' featuring one signature family recipe card, a nutrition breakdown chart, and a step-by-step culinary photo or drawing sequence.",
+      "Demonstrate table etiquette, Filipino hospitality ('pagpapatuloy sa bisita'), and mealtime prayers of thanksgiving.",
+      "Participate in the interactive 'Kitchen Master Speed Conversion & Safety Relay'."
+    ],
+    "factualBackground": "Culinary pedagogy integrates applied chemistry, volumetric mathematics, nutritional biology, and ethnocultural traditions. The November culinary curriculum established foundational competencies in: (1) Food safety and sanitation (DOH/WHO standards for hand hygiene and foodborne illness prevention); (2) Mathematical precision in wet and dry measurement conversions; (3) Balanced dietary planning using the Department of Health (DOH) and Food and Nutrition Research Institute (FNRI) 'Pinggang Pinoy' guidelines; (4) Ethnobotanical understanding of Philippine staples (rice cultivation, fermented cane vinegars, native souring fruits like sampalok and batuan, coconut processing); (5) Intergenerational oral history documentation. Preparing a Family Recipe Showcase synthesizes these multi-disciplinary domains into an authentic, child-led presentation that builds self-efficacy, cultural pride, and domestic responsibility."
+  },
+  {
+    "order": 56,
+    "id": "lesson-56-gratitude-journal",
+    "title": "A Year of Gratitude: Reflecting on God's Blessings, Family, and Growth",
+    "unit": "Review, Faith, Gratitude, and Showcase",
+    "topic": "Spiritual Reflection, Gratitude Ethnography, and Personal Growth",
+    "learningObjectives": [
+      "Synthesize the spiritual and emotional discipline of gratitude ('pasasalamat'), examining how giving thanks transforms cognitive outlook, emotional resilience, and family harmony.",
+      "Formulate a structured 'Gratitude Inventory' identifying specific blessings across five key life domains: Faith & God's Provision, Family & Heritage, Learning & Intellectual Growth, Health & Creation, and Community Friendship.",
+      "Construct and personalize a handcrafted 'Aklat ng Pasasalamat' (Family Gratitude Keepsake Journal) using low-cost household materials.",
+      "Participate in the interactive 'Pass the Gratitude Lantern' reflection circle."
+    ],
+    "factualBackground": "In developmental psychology and Christian theology, gratitude ('pasasalamat') is a transformative cognitive and spiritual practice. Psychological research demonstrates that deliberate gratitude practices enhance emotional well-being, increase prosocial empathy, reduce anxiety, and foster resilient family attachments. In the Philippine cultural context, 'pasasalamat' is deeply intertwined with 'utang na loob' (a profound relational debt of gratitude and mutual honor) and communal thanksgiving rituals. The Holy Scriptures consistently present thanksgiving not as an optional feeling dependent on favorable circumstances, but as a foundational spiritual discipline that reorients human hearts toward God's faithfulness (1 Thessalonians 5:18, Psalm 107:1, Colossians 3:15). Creating a structured Family Gratitude Journal provides learners with a safe, reflective space to document personal milestones, acknowledge family sacrifices, and celebrate spiritual growth across the entire learning year."
+  },
+  {
+    "order": 57,
+    "id": "lesson-57-biblical-stewardship",
+    "title": "Biblical Stewardship of Creation: Caring for the Islands, Seas, and Living Creatures",
+    "unit": "Review, Faith, Gratitude, and Showcase",
+    "topic": "Environmental Stewardship, Creation Care, and Biodiversity Ethics",
+    "learningObjectives": [
+      "Synthesize comprehensive environmental science and biodiversity knowledge from October: endemic wildlife (Philippine Eagle, Tamaraw, Tarsier), fragile tropical ecosystems (coral reefs of Tubbataha, mangrove forests, Sierra Madre rainforests), and climate resilience.",
+      "Examine the biblical theology of stewardship ('katiwala ng Diyos'), demonstrating that humanity is called by God to lovingly care for, protect, and restore the Earth as responsible trustees (Genesis 1:28, Genesis 2:15, Psalm 24:1).",
+      "Formulate practical household and community environmental stewardship commitments (water conservation, zero-waste plastic reduction, tree planting, wildlife habitat respect).",
+      "Construct and decorate a personalized 'Creation Care Stewardship Pledge Shield'."
+    ],
+    "factualBackground": "The Philippines is recognized globally as one of 18 mega-biodiverse nations and one of the world's most critical biodiversity hotspots, harboring thousands of endemic flora and fauna species found nowhere else on Earth (DENR-BMB official statistics). Key ecosystems include: (1) Tropical Rainforests (providing carbon sequestration and typhoon buffering through the Sierra Madre and Cordillera mountain corridors); (2) Marine Biomes (the Coral Triangle, harboring over 500 coral species and 2,000 fish species in regions like the Tubbataha Reefs Natural Park); (3) Mangrove and Wetland Buffers (protecting coastal communities from storm surges and serving as fish nurseries). From a biblical and theological perspective, human dominion (Genesis 1:26-28) is defined not as destructive exploitation, but as servant stewardship ('shamar' and 'abad' in Genesis 2:15—to serve and protect God's garden). Environmental degradation directly harms vulnerable human communities, making creation care a vital expression of Christian love, justice, and intergenerational responsibility."
+  },
+  {
+    "order": 58,
+    "id": "lesson-58-bayanihan-review",
+    "title": "Bayanihan in Action: Community Kindness, Cooperation, and Filipino Values",
+    "unit": "Review, Faith, Gratitude, and Showcase",
+    "topic": "Bayanihan Synthesis, Community Cooperation, and Servant Leadership",
+    "learningObjectives": [
+      "Synthesize the historical and cultural evolution of 'Bayanihan' from traditional whole-house lifting ('pagbuhat ng bahay kubo') to contemporary disaster relief, community pantries, and everyday neighborhood kindness.",
+      "Examine the biblical foundation of communal burden-bearing and mutual love ('magtulungan at magbuhat ng pasanin'), connecting Galatians 6:2 and Philippians 2:4 to active Filipino citizenship.",
+      "Formulate a practical 'Classroom and Family Bayanihan Action Blueprint' detailing specific roles, collaborative steps, and shared goals for serving neighbors in need.",
+      "Construct and assemble a miniature 3D 'Bayanihan Kubo Community Mobile' demonstrating teamwork and mutual uplift."
+    ],
+    "factualBackground": "The cultural concept of 'Bayanihan'—derived from the root word 'bayan' (nation, town, or community of people)—represents the apex of Philippine communal solidarity, mutual assistance, and collective action. Historically manifested in rural agricultural cooperative labor and the communal relocation of bamboo-and-nipa houses ('bahay kubo') carried on the shoulders of volunteer neighbors, Bayanihan evolved into modern civic responses to typhoons, volcanic eruptions, community food pantries, and grassroots social initiatives. The National Commission for Culture and the Arts (NCCA) and the National Historical Commission of the Philippines (NHCP) recognize Bayanihan as an intangible cultural heritage embodying selfless service ('kusang-loob'), egalitarian cooperation, and deep communal empathy ('damayan'). Theologically, Bayanihan mirrors the New Testament body of Christ (1 Corinthians 12:26) and the apostle Paul's command in Galatians 6:2: 'Carry each other's burdens, and in this way you will fulfill the law of Christ.'"
+  },
+  {
+    "order": 59,
+    "id": "lesson-59-faith-and-heroes",
+    "title": "Convictions, Faith, and Service in the Lives of Filipino Heroes",
+    "unit": "Review, Faith, Gratitude, and Showcase",
+    "topic": "Historical Heroism, Moral Convictions, and Patriotic Service",
+    "learningObjectives": [
+      "Synthesize the historical lives, core convictions, and sacrificial service of prominent Filipino national heroes from October: Dr. Jose Rizal, Andres Bonifacio, Melchora Aquino ('Tandang Sora'), and Gabriela Silang.",
+      "Analyze how moral integrity, faith in God, intellectual excellence, and selfless love for one's fellow citizens guided these historical figures during times of national struggle.",
+      "Evaluate what true everyday heroism ('kabayanihan') means today, demonstrating that character, truthfulness, defense of the weak, and service to God form the essence of a noble life (Micah 6:8, Proverbs 3:5-6).",
+      "Construct and illustrate a personalized 'Aklat ng mga Bayani' (Heroic Virtues Medal & Profile Card)."
+    ],
+    "factualBackground": "The history of Philippine nationhood is defined by courageous men and women who stood with profound moral conviction, intellectual brilliance, and sacrificial devotion for freedom and justice. The National Historical Commission of the Philippines (NHCP) and the National Commission for Culture and the Arts (NCCA) document the foundational contributions of key historical figures: (1) Dr. Jose Rizal (1861–1896), the polymath physician, linguist, and author whose novels (*Noli Me Tangere* and *El Filibusterismo*) awakened national consciousness through moral reform and education; (2) Andres Bonifacio (1863–1897), the passionate founder of the Katipunan whose *Dekalogo* established love of God, love of country, and mutual brotherhood as the foundation of national dignity; (3) Melchora Aquino / Tandang Sora (1812–1919), the 'Mother of the Revolution' who at age 84 opened her home, food granaries, and medical care to wounded freedom fighters; (4) Gabriela Silang (1731–1763), the courageous Ilocana commander who fought valiantly for regional freedom. Theologically, true greatness is defined through humble servant leadership (Mark 10:43-45) and doing justice with humility (Micah 6:8)."
+  },
+  {
+    "order": 60,
+    "id": "lesson-60-christmas-traditions",
+    "title": "The Parol and Filipino Heritage Traditions: The Star of Hope and Joy",
+    "unit": "Review, Faith, Gratitude, and Showcase",
+    "topic": "Cultural Iconography, Archival Folk Arts, and Seasonal Heritage",
+    "learningObjectives": [
+      "Explain the cultural history and artisan craftsmanship of the Filipino 'Parol' (five-pointed star lantern), tracing its origin from traditional bamboo-and-papel-de-japon lanterns to modern capiz shell artistry.",
+      "Analyze the symbolic meaning of the Parol as a cultural representation of the Star of Bethlehem that guided the Wise Men (Matthew 2:1-12) to the infant Jesus, symbolizing divine light, hope ('pag-asa'), and guidance through dark seasons.",
+      "Differentiate regional Philippine holiday folk traditions—such as the Giant Lantern Festival of San Fernando, Pampanga, and indigenous capiz shell harvesting in the Western Visayas.",
+      "Construct and illuminate a personalized, eco-friendly 'Bituin ng Pag-asa' (Star of Hope Paper Parol)."
+    ],
+    "factualBackground": "The 'Parol' (derived from the Spanish word *farol*, meaning lantern) is the quintessential visual emblem of Philippine seasonal cultural heritage. Originating during the Spanish colonial era as simple bamboo frames wrapped in Japanese translucent paper (*papel de japon*) to light the dawn path of rural farmers and fishermen attending *Misa de Gallo*, the craft developed into a celebrated Philippine folk art form. The city of San Fernando in Pampanga is recognized as the 'Christmas Capital of the Philippines' for its centuries-old tradition of Giant Lantern festivals (*Ligligan Parul*), featuring intricate geometric kaleidoscope mechanics. In coastal regions such as Capiz and Iloilo, natural translucent windowpane oyster shells (*Placuna placenta*, known locally as *kapis*) are handcrafted into durable, radiant luminous lanterns. Biblically, the star lantern reflects the Star of Bethlehem described in the Gospel of Matthew (Matthew 2:2, 9-10) and Jesus' declaration in John 8:12: 'I am the light of the world. Whoever follows me will never walk in darkness, but will have the light of life.'"
+  },
+  {
+    "order": 61,
+    "id": "lesson-61-simbang-gabi",
+    "title": "Simbang Gabi: History, Agricultural Heritage, and Community Traditions",
+    "unit": "Review, Faith, Gratitude, and Showcase",
+    "topic": "Agricultural History, Sacred Traditions, and Community Heritage",
+    "learningObjectives": [
+      "Explain the historical origin and agricultural heritage of 'Simbang Gabi' (Misa de Gallo / Dawn Mass), analyzing how this 17th-century tradition was established to accommodate the planting schedules of Filipino rice farmers and fishermen before sunrise.",
+      "Examine the cultural and culinary traditions accompanying Simbang Gabi, specifically traditional post-service warm breakfast delicacies (*bibingka* baked in clay pots with banana leaves, *puto bumbong* steamed in bamboo tubes, hot *tsokolate* made from tablea cacao, and ginger *salabat*).",
+      "Analyze the spiritual significance of pre-dawn devotion, communal prayer, and anticipation of the Savior's birth (Psalm 63:1, Luke 1:78-79).",
+      "Construct and illustrate a miniature 'Kainan sa Simbahan' (Traditional Clay Oven Bibingka & Puto Bumbong Craft Display)."
+    ],
+    "factualBackground": "In Philippine ecclesiastical and cultural history, 'Simbang Gabi' (literally 'Night/Dawn Worship', also known as *Misa de Gallo* or 'Mass of the Rooster' and *Misa de Aguinaldo*) is a novena of nine dawn services held from December 16 to December 24. Introduced by Spanish friars in the late 17th century (formalized under Pope Sixtus V and later adapted locally), the services were specifically scheduled at 4:00 AM to allow agrarian Filipino farmers (*magsasaka*) and coastal artisanal fishermen (*mangingisda*) to worship together and pray for abundant agricultural harvests before beginning heavy field labor at dawn. The tradition developed a distinct community foodway: open-air market stalls outside church plazas serving fresh rice delicacies cooked over charcoal braziers—*bibingka* (galapong rice cakes baked between hot coals and banana leaves) and *puto bumbong* (steamed pirurutong purple rice in bamboo stalks, served with fresh grated coconut and muscovado sugar)—paired with *tsokolate de batirol* (traditional frothy cacao) and *salabat* (warm ginger tea). Theologically, the dawn gathering symbolizes spiritual alertness, watchful waiting, and the rising of Christ as the 'Dayspring from on high' (Luke 1:78-79)."
+  },
+  {
+    "order": 62,
+    "id": "lesson-62-showcase-prep",
+    "title": "Year-End Showcase Preparation: Assembling Portfolios and Rehearsing Presentations",
+    "unit": "Review, Faith, Gratitude, and Showcase",
+    "topic": "Portfolio Curation, Public Speaking, and Rehearsal Protocols",
+    "learningObjectives": [
+      "Synthesize and organize major physical and digital artifacts produced across the entire August–December Wonder Journey curriculum: 3D Archipelagic Map, Respect Kindness Wheel, Creation Care Shield, Bayanihan Mobile, Hero Medal, Star Parol, Recipe Keepsake Box, and Gratitude Journal.",
+      "Structure an engaging 3-minute oral showcase presentation with a clear introduction, 3 major learning highlights, a cultural demonstration (Tagalog/Hiligaynon), and a heartfelt closing blessing.",
+      "Practice professional public speaking techniques: posture, eye contact, vocal clarity, pacing, and polite audience engagement.",
+      "Participate in the interactive 'Master Speaker Rehearsal Circle & Peer Feedback Studio'."
+    ],
+    "factualBackground": "In developmental pedagogy and authentic assessment frameworks, a culminating showcase serves as an integrative capstone that consolidates five months of interdisciplinary inquiry into demonstrable competencies. Effective portfolio curation involves: (1) Artifact selection and thematic categorization (Geography & Mapping, Language & Culture, History & Heroism, Culinary Science & Nutrition, Environmental Stewardship, Faith & Character); (2) Evidence-based self-evaluation and reflection; (3) Multi-modal communication combining visual aids, bilingual spoken language (Tagalog/Hiligaynon/English), and physical craftsmanship; (4) Child privacy protocols (ensuring no sensitive personal identifiers, full names, addresses, or private family records are exposed outside the immediate domestic setting). Structuring oral presentation rehearsals builds executive functioning, expressive eloquence, and emotional self-confidence."
+  },
+  {
+    "order": 63,
+    "id": "lesson-63-the-nativity",
+    "title": "The Birth of Jesus: The Biblical Accounts in Matthew and Luke",
+    "unit": "Review, Faith, Gratitude, and Showcase",
+    "topic": "Biblical Exegesis, Nativity Narrative, and Christological Meaning",
+    "learningObjectives": [
+      "Examine and synthesize the biblical accounts of the Nativity of Jesus Christ from the Gospel of Luke (Luke 1:26-38, 2:1-20: Annunciation, Census, Journey to Bethlehem, Manger Birth, Angelic Proclamation to Shepherds) and the Gospel of Matthew (Matthew 1:18-25, 2:1-12: Joseph's Obedience, Star of Bethlehem, Visit of the Magi).",
+      "Analyze the profound theological meaning of the Incarnation ('Emmanuel — Diyos na Kasama Natin'): God coming to humanity in humility, peace, and sacrificial love rather than earthly grandeur (Philippians 2:6-8, John 3:16).",
+      "Differentiate authentic biblical Scripture from cultural folk additions, understanding the historical geography of Nazareth, Judea, and Bethlehem.",
+      "Construct and illuminate an authentic 'Belen ng Kapayapaan' (Nativity Manger Shadow-Box Silhouette Scene)."
+    ],
+    "factualBackground": "The Nativity narrative forms the theological cornerstone of the Christian doctrine of the Incarnation—the belief that God took on human flesh in the person of Jesus of Nazareth. The two canonical Gospel accounts provide complementary historical perspectives: (1) The Gospel of Luke (written from a Gentile-historical and Mary-centered perspective) records the historical Roman census under Caesar Augustus and Quirinius, the 90-mile journey of Joseph and Mary from Nazareth in Galilee to Bethlehem in Judea (the ancestral city of David, fulfilling Micah 5:2), the birth in a feeding trough (*phatnē* / manger) due to overcrowded guest quarters (*katalyma*), and the first announcement made to marginalized nocturnal shepherds; (2) The Gospel of Matthew (written from a Jewish-messianic and Joseph-centered perspective) details Joseph's righteous obedience to angelic revelation, the fulfillment of Isaiah 7:14 (*Emmanuel*, 'God with us'), and the celestial Star guiding the Persian/Arabian Magi (*Wise Men*) bearing symbolic royal and priestly gifts: Gold (Kingship), Frankincense (Deity and Priesthood), and Myrrh (Sacrificial Mortality). In Philippine cultural heritage, the Nativity is celebrated through the traditional 'Belen' (Nativity diorama), embodying humility, family devotion, and heavenly joy."
+  },
+  {
+    "order": 64,
+    "id": "lesson-64-looking-forward",
+    "title": "Looking Forward to the New Year: Hope, Goals, and Walking with God",
+    "unit": "Review, Faith, Gratitude, and Showcase",
+    "topic": "Goal-Setting, Character Formation, and Future Vision",
+    "learningObjectives": [
+      "Formulate a structured 'Bagong Taon, Bagong Pag-asa' (New Year Vision Plan) across four core developmental domains: Spiritual Growth & Prayer, Academic & Creative Curiosity, Domestic Helpfulness & Family Honor, and Physical Health & Stewardship.",
+      "Examine biblical principles of wisdom, planning, and trusting God's sovereign guidance for the future (Proverbs 3:5-6, Jeremiah 29:11, James 4:13-15).",
+      "Analyze traditional Filipino New Year cultural traditions—such as family reunions, sharing round fruits (*labindalawang bilog na prutas*) symbolizing year-round agricultural abundance, and noisy celebrations to welcome blessings—distinguishing positive cultural practices from mere superstitions.",
+      "Construct and seal a personal 'Baul ng mga Pangarap' (New Year Time Capsule & Vision Scroll)."
+    ],
+    "factualBackground": "In developmental psychology and Christian life formation, transitional milestones (such as the threshold between calendar years) offer prime pedagogical moments for metacognitive reflection and intentional goal-setting. Goal-setting theory establishes that specific, meaningful, and values-aligned objectives enhance self-regulation, motivation, and character development in children. In Philippine cultural anthropology, the transition to the New Year (*Bagong Taon*) is marked by deep family unity (*reunion*), forgiveness of past grievances (*pagpapatawad*), and cultural customs such as displaying 12 round fruits (representing prosperity and full harvest throughout all twelve calendar months). Biblically, goal-setting is balanced with humble trust in divine providence: 'Trust in the Lord with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight' (Proverbs 3:5-6). Establishing a 'New Year Time Capsule' provides learners with an embodied framework to commit their future dreams to God."
+  },
+  {
+    "order": 65,
+    "id": "lesson-65-year-end-showcase",
+    "title": "The Grand Wonder Journey Year-End Adventure Showcase: A Celebration of Learning",
+    "unit": "Review, Faith, Gratitude, and Showcase",
+    "topic": "Culminating Capstone Exhibition and Grand Graduation Celebration",
+    "learningObjectives": [
+      "Synthesize comprehensive learning across the entire 65-lesson Wonder Journey curriculum: August Philippine Geography, September Language & Daily Life, October History & Biodiversity, November Culinary Science & Family Heritage, and December Faith & Character.",
+      "Present a student-led 'Master Explorer Capstone Exhibition' to family and guests, demonstrating eloquence, bilingual mastery (Tagalog, Hiligaynon, English), and artifact walkthroughs.",
+      "Participate in the formal 'Wonder Journey Grand Commissioning Ceremony', receiving the Master Explorer Gold Seal Certificate of Completion and the Compass of Leadership.",
+      "Lead a heartfelt family meal blessing and prayer of dedication for the coming year."
+    ],
+    "factualBackground": "The Year-End Adventure Showcase serves as the grand culminating capstone celebration for the entire Wonder Journey OS curriculum (July–December 2026, comprising 65 scheduled lessons). In pedagogical theory and developmental cognitive science, culminating exhibitions consolidate multi-disciplinary knowledge into permanent episodic memory and foster deep self-efficacy. Throughout the five-month journey, learners have investigated: (1) Archipelagic cartography (7,641 islands, three island groups, tectonic biomes, Mount Apo); (2) Ethnolinguistic heritage (Tagalog, Hiligaynon, honorifics, kinship, daily life systems); (3) National history and hero biographies (Propaganda movement, Katipunan, Tandang Sora, Rizal, environmental stewardship); (4) Culinary science and nutrition (food sanitation, measurement physics, Pinggang Pinoy, ancestral fermentation, heirloom recipes); (5) Moral character, faith integration, and creation care (biblical stewardship, Bayanihan community action, gratitude habits, the Nativity narrative). The commissioning ceremony honors student perseverance, strengthens intergenerational family bonds, and inspires lifelong service to God and humanity."
+  }
+]

@@ -1,0 +1,326 @@
+[2026-08-21T21:31:11.694Z] ══════════════════════════════════════════════════════════════════════
+[2026-08-21T21:31:11.732Z] STARTING COMPLETE MEDIA ACQUISITION FOR 45 SLOTS
+[2026-08-21T21:31:11.752Z] ══════════════════════════════════════════════════════════════════════
+
+[2026-08-21T21:31:11.772Z] 
+[1/45] Target: l03-philippine-sun-stars (lesson-3)
+[2026-08-21T21:31:11.793Z]   Querying Wikimedia: "Flag of the Philippines"
+[2026-08-21T21:31:12.507Z]   Found 12 candidates
+[2026-08-21T21:31:12.850Z]     Downloading candidate: File:War Flag of the Philippines.svg (image/svg+xml, 1200x600)
+[2026-08-21T21:31:13.423Z]     Downloading candidate: File:Flag of the Philippines.svg (image/svg+xml, 1200x600)
+[2026-08-21T21:31:13.831Z]     Downloading candidate: File:History of the Philippine Flag.png (image/png, 1000x1560)
+[2026-08-21T21:31:14.239Z]     ✓ Saved: l03-philippine-sun-stars.png (216923 bytes, image/png)
+[2026-08-21T21:31:14.254Z]     ✓ SHA-256: a7b0934433a605184f0a7546eb169e73117b84fd61b3836eaaf6a5d5b8872ae6
+[2026-08-21T21:31:14.430Z] 
+[2/45] Target: l06-coral-triangle-biodiversity (lesson-6)
+[2026-08-21T21:31:14.451Z]   Querying Wikimedia: "Coral Triangle"
+[2026-08-21T21:31:15.458Z]   Found 12 candidates
+[2026-08-21T21:31:15.821Z]     Downloading candidate: File:Anemone purple anemonefish.jpg (image/jpeg, 1803x2254)
+[2026-08-21T21:31:18.394Z]     ✓ Saved: l06-coral-triangle-biodiversity.jpg (454078 bytes, image/jpeg)
+[2026-08-21T21:31:18.410Z]     ✓ SHA-256: 3619e9c50bb0adf00839cde3dea2c9631f30c083707bffcb7490980b776da3a3
+[2026-08-21T21:31:18.594Z] 
+[3/45] Target: l08-tubbataha-reef (lesson-8)
+[2026-08-21T21:31:18.609Z]   Querying Wikimedia: "Tubbataha"
+[2026-08-21T21:31:19.307Z]   Found 12 candidates
+[2026-08-21T21:31:19.673Z]     Downloading candidate: File:Tubbataha Shark.jpg (image/jpeg, 800x530)
+[2026-08-21T21:31:19.877Z]     ✓ Saved: l08-tubbataha-reef.jpg (108676 bytes, image/jpeg)
+[2026-08-21T21:31:19.892Z]     ✓ SHA-256: 32f9c154042219f852cd62fafffa30f25d5a5cc86f663371444ba8bc0c7eb2aa
+[2026-08-21T21:31:20.077Z] 
+[4/45] Target: l09-palengke-market (lesson-9)
+[2026-08-21T21:31:20.098Z]   Querying Wikimedia: "wet market Philippines"
+[2026-08-21T21:31:20.907Z]   Found 12 candidates
+[2026-08-21T21:31:21.253Z]     Downloading candidate: File:Baler Wet Market in Aurora province.jpg (image/jpeg, 3264x2448)
+[2026-08-21T21:31:23.084Z]     ✓ Saved: l09-palengke-market.jpg (263115 bytes, image/jpeg)
+[2026-08-21T21:31:23.100Z]     ✓ SHA-256: fa23fddd236250e4ef5e886e6f2e4082c412439bcaa30ab7e07b85335a4410d5
+[2026-08-21T21:31:23.277Z] 
+[5/45] Target: l10-jeepney (lesson-10)
+[2026-08-21T21:31:23.299Z]   Querying Wikimedia: "Jeepney Manila"
+[2026-08-21T21:31:23.766Z]   Found 12 candidates
+[2026-08-21T21:31:24.138Z]     Downloading candidate: File:Jeepney in Metro Manila 2025 02.jpg (image/jpeg, 4032x3024)
+[2026-08-21T21:31:27.633Z]     ✓ Saved: l10-jeepney.jpg (583139 bytes, image/jpeg)
+[2026-08-21T21:31:27.648Z]     ✓ SHA-256: fb819ac14f4fe15facdf20bd5ac6c3c3585a4a6080277628a761ea7ea6268b3f
+[2026-08-21T21:31:27.825Z] 
+[6/45] Target: l11-sungka-board (lesson-11)
+[2026-08-21T21:31:27.846Z]   Querying Wikimedia: "Sungka"
+[2026-08-21T21:31:28.867Z]   Found 12 candidates
+[2026-08-21T21:31:29.233Z]     Downloading candidate: File:Sungka from Bukidnon, Philippines.jpg (image/jpeg, 4032x2268)
+[2026-08-21T21:31:30.903Z]     ✓ Saved: l11-sungka-board.jpg (341017 bytes, image/jpeg)
+[2026-08-21T21:31:30.918Z]     ✓ SHA-256: beee51e093162212f032e55c345f5d5296e7b4539b6c2a82a7caf58dc0893ebd
+[2026-08-21T21:31:31.091Z] 
+[7/45] Target: l12-kudyapi (lesson-12)
+[2026-08-21T21:31:31.111Z]   Querying Wikimedia: "Kutiyapi"
+[2026-08-21T21:31:31.809Z]   Found 12 candidates
+[2026-08-21T21:31:32.187Z]     Downloading candidate: File:Lute (kutyapi), Mindanao, wood, Honolulu Museum of Art.jpg (image/jpeg, 5131x1295)
+[2026-08-21T21:31:32.844Z]     ✓ Saved: l12-kudyapi.jpg (148407 bytes, image/jpeg)
+[2026-08-21T21:31:32.859Z]     ✓ SHA-256: e1cfba84cc366f2f99e26f6e329e30f6667ee712dfe14f019bcfb452e4ccfeff
+[2026-08-21T21:31:33.053Z] 
+[8/45] Target: l13-buwan-ng-wika (lesson-13)
+[2026-08-21T21:31:33.074Z]   Querying Wikimedia: "Buwan ng Wika"
+[2026-08-21T21:31:33.831Z]   Found 12 candidates
+[2026-08-21T21:31:34.440Z]     Downloading candidate: File:Buwan ng Wika at the Alubijid National Comprehensive High School Covered Court.jpg (image/jpeg, 4608x3456)
+[2026-08-21T21:31:37.374Z]     ✓ Saved: l13-buwan-ng-wika.jpg (454004 bytes, image/jpeg)
+[2026-08-21T21:31:37.389Z]     ✓ SHA-256: 3376f12ccc392d6c21e2e51664492227c2a7d43ffc7ff2980456806417231c94
+[2026-08-21T21:31:37.571Z] 
+[9/45] Target: l18-lagundi (lesson-18)
+[2026-08-21T21:31:37.592Z]   Querying Wikimedia: "Vitex negundo"
+[2026-08-21T21:31:38.755Z]   Found 12 candidates
+[2026-08-21T21:31:39.108Z]     Downloading candidate: File:Vitex negundo leaves.jpg (image/jpeg, 794x600)
+[2026-08-21T21:31:39.252Z]     ✓ Saved: l18-lagundi.jpg (80224 bytes, image/jpeg)
+[2026-08-21T21:31:39.268Z]     ✓ SHA-256: 95cce910d03ba31ee2d71891c5115b987a9f0ff5519295b29446d8eda894ab71
+[2026-08-21T21:31:39.443Z] 
+[10/45] Target: l19-filipiniana-dress (lesson-19)
+[2026-08-21T21:31:39.460Z]   Querying Wikimedia: "Filipiniana dress"
+[2026-08-21T21:31:40.463Z]   Found 12 candidates
+[2026-08-21T21:31:40.828Z]     Downloading candidate: File:Filipiniana Dress.jpg (image/jpeg, 1365x2048)
+[2026-08-21T21:31:41.696Z]     ✓ Saved: l19-filipiniana-dress.jpg (1756941 bytes, image/jpeg)
+[2026-08-21T21:31:41.712Z]     ✓ SHA-256: db7ef7f81b5f93fbae3782ca707012ef98b3801a85e09a87547031ae4b035fc5
+[2026-08-21T21:31:41.887Z] 
+[11/45] Target: l21-coat-of-arms (lesson-21)
+[2026-08-21T21:31:41.908Z]   Querying Wikimedia: "Coat of arms of the Philippines"
+[2026-08-21T21:31:42.679Z]   Found 12 candidates
+[2026-08-21T21:31:43.048Z]     Downloading candidate: File:Coat of arms of the Philippines (1943–1945).svg (image/svg+xml, 746x871)
+[2026-08-21T21:31:43.173Z]     ✓ Saved: l21-coat-of-arms.svg (10668 bytes, image/svg+xml)
+[2026-08-21T21:31:43.188Z]     ✓ SHA-256: 142d80c8e8b85ec9b525ba04ba552a3fd3891aa0cfdb759f7c51714f03eb9ac2
+[2026-08-21T21:31:43.365Z] 
+[12/45] Target: l22-flag-ceremony (lesson-22)
+[2026-08-21T21:31:43.386Z]   Querying Wikimedia: "Flag ceremony Philippines"
+[2026-08-21T21:31:44.087Z]   Found 12 candidates
+[2026-08-21T21:31:44.454Z]     Downloading candidate: File:Flag-raising ceremony at the Embassy of the Philippines in Baghdad, Iraq.jpg (image/jpeg, 960x720)
+[2026-08-21T21:31:45.275Z]     ✓ Saved: l22-flag-ceremony.jpg (115881 bytes, image/jpeg)
+[2026-08-21T21:31:45.292Z]     ✓ SHA-256: e71a5501f8246dc8511ae7401cb524d6b5b7a1dd50385d27dfcef123857237e4
+[2026-08-21T21:31:45.472Z] 
+[13/45] Target: l25-carabao (lesson-25)
+[2026-08-21T21:31:45.493Z]   Querying Wikimedia: "Carabao Philippines"
+[2026-08-21T21:31:46.328Z]   Found 12 candidates
+[2026-08-21T21:31:46.720Z]     Downloading candidate: File:Mango Carabao Asit ftg.jpg (image/jpeg, 2560x1920)
+[2026-08-21T21:31:47.737Z]     ✓ Saved: l25-carabao.jpg (242890 bytes, image/jpeg)
+[2026-08-21T21:31:47.753Z]     ✓ SHA-256: 1b85db0b0a2505e620be9bf74975b88d508d9abdc5f894f118d4391b66df588b
+[2026-08-21T21:31:47.934Z] 
+[14/45] Target: l25-carabao-festival (lesson-25)
+[2026-08-21T21:31:47.955Z]   Querying Wikimedia: "Carabao festival"
+[2026-08-21T21:31:48.705Z]   Found 12 candidates
+[2026-08-21T21:31:49.066Z]     Downloading candidate: File:Carabao Racing Festival in Baliwag Bulacan 36.jpg (image/jpeg, 5184x3888)
+[2026-08-21T21:31:50.088Z]     ✓ Saved: l25-carabao-festival.jpg (421497 bytes, image/jpeg)
+[2026-08-21T21:31:50.104Z]     ✓ SHA-256: 99f47b9ebc9bd81efd9a8105b677aeb9fcc5d05e6710e660b05752a7897bc9db
+[2026-08-21T21:31:50.284Z] 
+[15/45] Target: l26-laguna-copperplate (lesson-26)
+[2026-08-21T21:31:50.310Z]   Querying Wikimedia: "Laguna Copperplate"
+[2026-08-21T21:31:51.058Z]   Found 12 candidates
+[2026-08-21T21:31:51.459Z]     Downloading candidate: File:Laguna Copperplate Inscription.gif (image/gif, 600x355)
+[2026-08-21T21:31:53.023Z]     ✓ Saved: l26-laguna-copperplate.gif (186037 bytes, image/gif)
+[2026-08-21T21:31:53.040Z]     ✓ SHA-256: 3180eff75dbca492b632d2ec2e1ca40f0bf4c5b1c9b81df95927f3ffa4eb9dc9
+[2026-08-21T21:31:53.216Z] 
+[16/45] Target: l27-tnalak-textile (lesson-27)
+[2026-08-21T21:31:53.230Z]   Querying Wikimedia: "T'nalak"
+[2026-08-21T21:31:53.919Z]   Found 12 candidates
+[2026-08-21T21:31:54.265Z]     Downloading candidate: File:T'nalak weaving Tboli.jpg (image/jpeg, 1912x1500)
+[2026-08-21T21:31:56.136Z]     ✓ Saved: l27-tnalak-textile.jpg (274603 bytes, image/jpeg)
+[2026-08-21T21:31:56.152Z]     ✓ SHA-256: 05b47bdad9480da3767deb27789c1594dd5ad8cdf71abe810c426ccd8778a253
+[2026-08-21T21:31:56.331Z] 
+[17/45] Target: l34-pandanggo (lesson-34)
+[2026-08-21T21:31:56.353Z]   Querying Wikimedia: "Pandanggo sa Ilaw"
+[2026-08-21T21:31:57.225Z]   Found 7 candidates
+[2026-08-21T21:31:57.677Z]     Downloading candidate: File:Pandanggo sa Ilaw.jpg (image/jpeg, 1040x1535)
+[2026-08-21T21:31:58.600Z]     ✓ Saved: l34-pandanggo.jpg (579882 bytes, image/jpeg)
+[2026-08-21T21:31:58.616Z]     ✓ SHA-256: f4f3c067dde73ff52aa6a30c3760d0bcea65abe3aeabfadb2334fd5c4893b7ae
+[2026-08-21T21:31:58.798Z] 
+[18/45] Target: l35-parol (lesson-35)
+[2026-08-21T21:31:58.818Z]   Querying Wikimedia: "Parol Philippines"
+[2026-08-21T21:31:59.589Z]   Found 12 candidates
+[2026-08-21T21:31:59.975Z]     Downloading candidate: File:Parol lanterns in Consunji Street, San Fernando Pampanga (26 December 1904, Luther Parker Collection, National Library of the Philippines) 01.jpg (image/jpeg, 590x642)
+[2026-08-21T21:32:01.338Z]     ✓ Saved: l35-parol.jpg (416115 bytes, image/jpeg)
+[2026-08-21T21:32:01.354Z]     ✓ SHA-256: 3fa501c2212ac0cc49b39ecdce2e5b0e53e67fbb9f219ef0ec20c94cad427d12
+[2026-08-21T21:32:01.530Z] 
+[19/45] Target: l36-ibong-adarna (lesson-36)
+[2026-08-21T21:32:01.551Z]   Querying Wikimedia: "Florante at Laura"
+[2026-08-21T21:32:02.924Z]   Found 12 candidates
+[2026-08-21T21:32:03.283Z]     Downloading candidate: File:Florante at Laura 1913 cover.png (image/png, 128x184)
+[2026-08-21T21:32:03.393Z]     ✓ Saved: l36-ibong-adarna.png (5662 bytes, image/png)
+[2026-08-21T21:32:03.408Z]     ✓ SHA-256: 41cdbda82fef17f58b681591ae472394ffdbe24c64871c19ab62ceab6f3da435
+[2026-08-21T21:32:04.703Z] 
+[20/45] Target: l39-bathala (lesson-39)
+[2026-08-21T21:32:04.724Z]   Querying Wikimedia: "Philippine mythology art"
+[2026-08-21T21:32:05.427Z]   Found 12 candidates
+[2026-08-21T21:32:07.840Z]     Downloading candidate: File:The Mythology of All Races Vol 9 (Oceanic).djvu (image/vnd.djvu, 2460x3770)
+[2026-08-21T21:32:08.723Z]     ✓ Saved: l39-bathala.jpg (291811 bytes, image/jpeg)
+[2026-08-21T21:32:08.739Z]     ✓ SHA-256: ea4b98b09e5febe0235290da923acb150b225f70243c485b0376413388a0d5cb
+[2026-08-21T21:32:08.911Z] 
+[21/45] Target: l39-bakunawa (lesson-39)
+[2026-08-21T21:32:08.932Z]   Querying Wikimedia: "Bakunawa"
+[2026-08-21T21:32:09.648Z]   Found 12 candidates
+[2026-08-21T21:32:10.029Z]     Downloading candidate: File:DSV Bakunawa on deck.jpg (image/jpeg, 9504x6336)
+[2026-08-21T21:32:11.278Z]     ✓ Saved: l39-bakunawa.jpg (274428 bytes, image/jpeg)
+[2026-08-21T21:32:11.293Z]     ✓ SHA-256: 37037307606d90738250283cf924ce3ffc563cbb2d19274178f71074ac744220
+[2026-08-21T21:32:11.474Z] 
+[22/45] Target: l40-arnis (lesson-40)
+[2026-08-21T21:32:11.751Z]   Querying Wikimedia: "Arnis martial art"
+[2026-08-21T21:32:12.512Z]   Found 12 candidates
+[2026-08-21T21:32:13.215Z]     Downloading candidate: File:Eskrima Kombat.jpg (image/jpeg, 4000x3000)
+[2026-08-21T21:32:14.365Z]     ✓ Saved: l40-arnis.jpg (193419 bytes, image/jpeg)
+[2026-08-21T21:32:14.380Z]     ✓ SHA-256: 20e203428c4acf83eb5bc45f7d66a61266738ca8e68b59c19086a65015eb7113
+[2026-08-21T21:32:14.560Z] 
+[23/45] Target: l40-sipa (lesson-40)
+[2026-08-21T21:32:14.580Z]   Querying Wikimedia: "Sepak takraw ball"
+[2026-08-21T21:32:15.341Z]   Found 12 candidates
+[2026-08-21T21:32:15.707Z]     Downloading candidate: File:Sepak Takraw.jpg (image/jpeg, 785x615)
+[2026-08-21T21:32:15.871Z]     ✓ Saved: l40-sipa.jpg (67334 bytes, image/jpeg)
+[2026-08-21T21:32:15.886Z]     ✓ SHA-256: 9ee09887c14e09edc5354078e8a7f7f3e5fc5bb47a4298b11445a817bd5ccc05
+[2026-08-21T21:32:16.060Z] 
+[24/45] Target: l41-provinces-map (lesson-41)
+[2026-08-21T21:32:16.085Z]   Querying Wikimedia: "Provinces of the Philippines map"
+[2026-08-21T21:32:17.018Z]   Found 12 candidates
+[2026-08-21T21:32:17.379Z]     Downloading candidate: File:Provinces of the Philippines.svg (image/svg+xml, 840x1221)
+[2026-08-21T21:32:19.731Z]     ✓ Saved: l41-provinces-map.svg (2010654 bytes, image/svg+xml)
+[2026-08-21T21:32:19.746Z]     ✓ SHA-256: 66582fadc7cb2e01f5eba0d34b9a056f559f48e00713f3de9d7418fafe43d7e6
+[2026-08-21T21:32:19.925Z] 
+[25/45] Target: l42-giant-lantern (lesson-42)
+[2026-08-21T21:32:19.945Z]   Querying Wikimedia: "Giant Lantern Festival"
+[2026-08-21T21:32:20.731Z]   Found 12 candidates
+[2026-08-21T21:32:21.118Z]     Downloading candidate: File:GLFjf1503 02.JPG (image/jpeg, 4608x3456)
+[2026-08-21T21:32:21.659Z]     ✓ Saved: l42-giant-lantern.jpg (217417 bytes, image/jpeg)
+[2026-08-21T21:32:21.675Z]     ✓ SHA-256: 521fe47ed9d77667ea2bc68f160b8c73990e4aa4da126aeb68544740021a58de
+[2026-08-21T21:32:21.859Z] 
+[26/45] Target: l44-bonifacio (lesson-44)
+[2026-08-21T21:32:21.879Z]   Querying Wikimedia: "Andres Bonifacio"
+[2026-08-21T21:32:23.275Z]   Found 12 candidates
+[2026-08-21T21:32:23.621Z]     Downloading candidate: File:Andrés Bonifacio photo (cropped).jpg (image/jpeg, 1420x1792)
+[2026-08-21T21:32:24.448Z]     ✓ Saved: l44-bonifacio.jpg (698868 bytes, image/jpeg)
+[2026-08-21T21:32:24.466Z]     ✓ SHA-256: ef470ea2360f43a5d8466f3a5c98c5e8dfc5e7fe10a943bf3aeca4a292746f8a
+[2026-08-21T21:32:24.641Z] 
+[27/45] Target: l46-bangus (lesson-46)
+[2026-08-21T21:32:24.661Z]   Querying Wikimedia: "Milkfish Chanos chanos"
+[2026-08-21T21:32:25.677Z]   Found 12 candidates
+[2026-08-21T21:32:26.032Z]     Downloading candidate: File:Chanidae - Chanos chanos.JPG (image/jpeg, 640x481)
+[2026-08-21T21:32:26.198Z]     ✓ Saved: l46-bangus.jpg (129045 bytes, image/jpeg)
+[2026-08-21T21:32:26.213Z]     ✓ SHA-256: c783e9ec491d1c0993495ea260e1d3b157dc2c25bef18ada72f4a2f0506052ad
+[2026-08-21T21:32:26.389Z] 
+[28/45] Target: l46-seafood-market (lesson-46)
+[2026-08-21T21:32:26.409Z]   Querying Wikimedia: "Fish market Philippines"
+[2026-08-21T21:32:27.142Z]   Found 12 candidates
+[2026-08-21T21:32:27.529Z]     Downloading candidate: File:Taboan Dried Fish Market, Cebu City,Philippines 5.jpg (image/jpeg, 4032x3024)
+[2026-08-21T21:32:30.806Z]     ✓ Saved: l46-seafood-market.jpg (493368 bytes, image/jpeg)
+[2026-08-21T21:32:30.821Z]     ✓ SHA-256: 9f403a395e49e51b59405d2f98a5d2b8b31848e280121d434aff00139453cb34
+[2026-08-21T21:32:30.991Z] 
+[29/45] Target: l47-santos (lesson-47)
+[2026-08-21T21:32:31.012Z]   Querying Wikimedia: "Santos wood carving Philippines"
+[2026-08-21T21:32:31.941Z]   Found 12 candidates
+[2026-08-21T21:32:32.324Z]     Downloading candidate: File:TernateChurch,Cavitejf5873 15.JPG (image/jpeg, 3456x4608)
+[2026-08-21T21:32:33.965Z]     ✓ Saved: l47-santos.jpg (612635 bytes, image/jpeg)
+[2026-08-21T21:32:33.980Z]     ✓ SHA-256: 13b5675cf556777fd5db5704d4121599faa083465a306bc56899a58432ce41ff
+[2026-08-21T21:32:34.154Z] 
+[30/45] Target: l47-capiz-shells (lesson-47)
+[2026-08-21T21:32:34.175Z]   Querying Wikimedia: "Capiz shell"
+[2026-08-21T21:32:34.903Z]   Found 12 candidates
+[2026-08-21T21:32:35.270Z]     Downloading candidate: File:Placuna placenta (MNHN-IM-2009-2413).jpeg (image/jpeg, 2371x1066)
+[2026-08-21T21:32:36.178Z]     ✓ Saved: l47-capiz-shells.jpg (191939 bytes, image/jpeg)
+[2026-08-21T21:32:36.193Z]     ✓ SHA-256: c81a7341ec2cc7048ef380219b8727b7abf500c4e546b4bab4894ce021d81332
+[2026-08-21T21:32:36.367Z] 
+[31/45] Target: l48-bayanihan (lesson-48)
+[2026-08-21T21:32:36.389Z]   Querying Wikimedia: "Bayanihan"
+[2026-08-21T21:32:37.349Z]   Found 12 candidates
+[2026-08-21T21:32:37.744Z]     Downloading candidate: File:Talkoot Ylimuonio.JPG (image/jpeg, 2592x1944)
+[2026-08-21T21:32:39.552Z]     ✓ Saved: l48-bayanihan.jpg (471295 bytes, image/jpeg)
+[2026-08-21T21:32:39.568Z]     ✓ SHA-256: 1bdd759b3a1cd2c3a028da348c8aafa6ada955e637dba1ffe3e68c27c30da042
+[2026-08-21T21:32:39.753Z] 
+[32/45] Target: l49-fe-del-mundo (lesson-49)
+[2026-08-21T21:32:39.774Z]   Querying Wikimedia: "Fe del Mundo"
+[2026-08-21T21:32:40.801Z]   Found 12 candidates
+[2026-08-21T21:32:41.302Z]     Downloading candidate: File:Fe Villanueva del Mundo Libingan ng mga BayaniCNE 03.jpg (image/jpeg, 4096x2833)
+[2026-08-21T21:32:42.328Z]     ✓ Saved: l49-fe-del-mundo.jpg (431552 bytes, image/jpeg)
+[2026-08-21T21:32:42.343Z]     ✓ SHA-256: 9ef12269a50eb63fdb691f30e01324d705849033835687cf68cc0a764cccd2c8
+[2026-08-21T21:32:42.518Z] 
+[33/45] Target: l52-kamayan (lesson-52)
+[2026-08-21T21:32:42.544Z]   Querying Wikimedia: "Kamayan feast"
+[2026-08-21T21:32:43.221Z]   Found 2 candidates
+[2026-08-21T21:32:43.603Z]     Downloading candidate: File:Boodle fight at Banate's Kasag Festival.jpg (image/jpeg, 3666x2629)
+[2026-08-21T21:32:44.613Z]     ✓ Saved: l52-kamayan.jpg (528883 bytes, image/jpeg)
+[2026-08-21T21:32:44.630Z]     ✓ SHA-256: b0e4dbd344b084f7543dbb1f22051879979f82e6d56e81a56384096c91d577c5
+[2026-08-21T21:32:44.801Z] 
+[34/45] Target: l54-callao-cave (lesson-54)
+[2026-08-21T21:32:44.822Z]   Querying Wikimedia: "Callao Cave"
+[2026-08-21T21:32:45.556Z]   Found 12 candidates
+[2026-08-21T21:32:45.907Z]     Downloading candidate: File:Callao Cave.jpg (image/jpeg, 4000x3000)
+[2026-08-21T21:32:47.205Z]     ✓ Saved: l54-callao-cave.jpg (255959 bytes, image/jpeg)
+[2026-08-21T21:32:47.256Z]     ✓ SHA-256: 616c6f044feb877553e649f2487b80415aa7aca61deb8895c9d47aec443d19d1
+[2026-08-21T21:32:47.433Z] 
+[35/45] Target: l56-rondalla (lesson-56)
+[2026-08-21T21:32:47.454Z]   Querying Wikimedia: "Rondalla Philippines"
+[2026-08-21T21:32:48.203Z]   Found 12 candidates
+[2026-08-21T21:32:48.595Z]     Downloading candidate: File:Rondalla cropped.jpg (image/jpeg, 95x254)
+[2026-08-21T21:32:48.983Z]     ✓ Saved: l56-rondalla.jpg (8090 bytes, image/jpeg)
+[2026-08-21T21:32:48.997Z]     ✓ SHA-256: 32d0e06c688abf36f2e2d2dcb92d84a3bf5ad1b68809681c4de005ef8a0d0921
+[2026-08-21T21:32:49.180Z] 
+[36/45] Target: l57-balangay (lesson-57)
+[2026-08-21T21:32:49.201Z]   Querying Wikimedia: "Balangay"
+[2026-08-21T21:32:50.165Z]   Found 12 candidates
+[2026-08-21T21:32:50.555Z]     Downloading candidate: File:Balangay Boat Building Site Butuan City II.jpg (image/jpeg, 2848x2134)
+[2026-08-21T21:32:51.535Z]     ✓ Saved: l57-balangay.jpg (285411 bytes, image/jpeg)
+[2026-08-21T21:32:51.550Z]     ✓ SHA-256: 9016a11653f68cb0437f04320050392eacc4c17d6c820ceb32cf0ff38f7b2c89
+[2026-08-21T21:32:51.727Z] 
+[37/45] Target: l58-school-building (lesson-58)
+[2026-08-21T21:32:51.748Z]   Querying Wikimedia: "Gabaldon school building"
+[2026-08-21T21:32:52.526Z]   Found 12 candidates
+[2026-08-21T21:32:52.874Z]     Downloading candidate: File:Gabaldon School Building of Arorogan Elementary School.jpg (image/jpeg, 4624x3468)
+[2026-08-21T21:32:56.153Z]     ✓ Saved: l58-school-building.jpg (488565 bytes, image/jpeg)
+[2026-08-21T21:32:56.169Z]     ✓ SHA-256: 20f04376e16261c94ff68d98d6bebf7aba472d84c3eeebcd38622f92c6c176ef
+[2026-08-21T21:32:56.343Z] 
+[38/45] Target: l59-mango (lesson-59)
+[2026-08-21T21:32:56.365Z]   Querying Wikimedia: "Carabao mango"
+[2026-08-21T21:32:57.175Z]   Found 12 candidates
+[2026-08-21T21:32:57.544Z]     Downloading candidate: File:Mango Carabao Asit ftg.jpg (image/jpeg, 2560x1920)
+[2026-08-21T21:32:58.065Z]     ✓ Saved: l59-mango.jpg (242890 bytes, image/jpeg)
+[2026-08-21T21:32:58.078Z]     ✓ SHA-256: 1b85db0b0a2505e620be9bf74975b88d508d9abdc5f894f118d4391b66df588b
+[2026-08-21T21:32:58.262Z] 
+[39/45] Target: l60-folklore (lesson-60)
+[2026-08-21T21:32:58.282Z]   Querying Wikimedia: "Tikbalang"
+[2026-08-21T21:32:59.011Z]   Found 8 candidates
+[2026-08-21T21:32:59.353Z]     Downloading candidate: File:Tikbalang The Philippine Demon Horse Commons.jpg (image/jpeg, 2800x3669)
+[2026-08-21T21:33:01.853Z]     ✓ Saved: l60-folklore.jpg (910999 bytes, image/jpeg)
+[2026-08-21T21:33:01.869Z]     ✓ SHA-256: d783d75d53ebb6e7cc7071b501908a6270ac1c698edd6aed12a1c9e4a64e42df
+[2026-08-21T21:33:02.041Z] 
+[40/45] Target: l60-diwata (lesson-60)
+[2026-08-21T21:33:02.063Z]   Querying Wikimedia: "Maria Makiling"
+[2026-08-21T21:33:02.873Z]   Found 12 candidates
+[2026-08-21T21:33:03.251Z]     Downloading candidate: File:Mariang Makiling statue at the University of the Philippines in Los Baños.jpg (image/jpeg, 955x1193)
+[2026-08-21T21:33:03.804Z]     ✓ Saved: l60-diwata.jpg (511058 bytes, image/jpeg)
+[2026-08-21T21:33:03.819Z]     ✓ SHA-256: 83d287b0b33f63ca813b2f1cad3e714344c3b8947df9c6bdf92c600db935d56f
+[2026-08-21T21:33:03.991Z] 
+[41/45] Target: l61-edsa-revolution (lesson-61)
+[2026-08-21T21:33:04.011Z]   Querying Wikimedia: "People Power Revolution 1986"
+[2026-08-21T21:33:04.971Z]   Found 12 candidates
+[2026-08-21T21:33:05.360Z]     Downloading candidate: File:People Power Revolution Article.png (image/png, 1322x882)
+[2026-08-21T21:33:05.872Z]     ✓ Saved: l61-edsa-revolution.png (1004266 bytes, image/png)
+[2026-08-21T21:33:05.887Z]     ✓ SHA-256: be4addc4224c6934d3f5dc4092972879b4af33c50caaa195d8fc47c38546c7e5
+[2026-08-21T21:33:06.062Z] 
+[42/45] Target: l62-coral-reef (lesson-62)
+[2026-08-21T21:33:06.082Z]   Querying Wikimedia: "Apo Island coral reef"
+[2026-08-21T21:33:06.778Z]   Found 12 candidates
+[2026-08-21T21:33:07.148Z]     Downloading candidate: File:Apo Island Over-Under.jpg (image/jpeg, 3408x5120)
+[2026-08-21T21:33:08.093Z]     ✓ Saved: l62-coral-reef.jpg (731054 bytes, image/jpeg)
+[2026-08-21T21:33:08.110Z]     ✓ SHA-256: 116b75ad19dbf192665c6507c6e1b7ce43e923ee4e2daf2b7819267ce8eba3fe
+[2026-08-21T21:33:08.292Z] 
+[43/45] Target: l63-jeepney-factory (lesson-63)
+[2026-08-21T21:33:08.312Z]   Querying Wikimedia: "Sarao Motors"
+[2026-08-21T21:33:09.007Z]   Found 12 candidates
+[2026-08-21T21:33:09.377Z]     Downloading candidate: File:Sarao Motors jeepney 1988.jpg (image/jpeg, 2787x1934)
+[2026-08-21T21:33:10.673Z]     ✓ Saved: l63-jeepney-factory.jpg (256873 bytes, image/jpeg)
+[2026-08-21T21:33:10.688Z]     ✓ SHA-256: 2294233f643471bacf697b09ef122fcbb81b62132b53d3408e5166177cc332b8
+[2026-08-21T21:33:10.859Z] 
+[44/45] Target: l63-innovation (lesson-63)
+[2026-08-21T21:33:10.876Z]   Querying Wikimedia: "Solar power Philippines"
+[2026-08-21T21:33:11.683Z]   Found 12 candidates
+[2026-08-21T21:33:12.035Z]     Downloading candidate: File:Philippines PVOUT Photovoltaic-power-potential-map GlobalSolarAtlas World-Bank-Esmap-Solargis.png (image/png, 1842x2605)
+[2026-08-21T21:33:14.609Z]     ✓ Saved: l63-innovation.png (803833 bytes, image/png)
+[2026-08-21T21:33:14.624Z]     ✓ SHA-256: f071bd653f4988db1c38bb6957c6a16471b12be8e610f89b7f6bb566564f95a4
+[2026-08-21T21:33:14.796Z] 
+[45/45] Target: l65-manila-skyline (lesson-65)
+[2026-08-21T21:33:14.817Z]   Querying Wikimedia: "Bonifacio Global City skyline"
+[2026-08-21T21:33:15.682Z]   Found 12 candidates
+[2026-08-21T21:33:16.031Z]     Downloading candidate: File:Bonifacio Global City - skyline shot from BSA Twin Towers Ortigas.jpg (image/jpeg, 3648x2736)
+[2026-08-21T21:33:17.065Z]     ✓ Saved: l65-manila-skyline.jpg (297632 bytes, image/jpeg)
+[2026-08-21T21:33:17.081Z]     ✓ SHA-256: 40279f2ada685580d32f9ca394abb643dd742fe66b6b95e3f86b4e1d41feb89a
+[2026-08-21T21:33:17.261Z] 
+══════════════════════════════════════════════════════════════════════
+[2026-08-21T21:33:17.282Z] SUMMARY: Acquired 45/45, Failed: 0
+[2026-08-21T21:33:17.302Z] ══════════════════════════════════════════════════════════════════════
+[2026-08-21T21:33:17.375Z] Saved records to D:\wonder-journey-os-integration\completed-media-records.json

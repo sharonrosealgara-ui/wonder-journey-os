@@ -1,0 +1,949 @@
+[2026-08-21T21:12:30.866Z] ═══════════════════════════════════════════════════════════════════
+[2026-08-21T21:12:30.920Z] WONDER JOURNEY OS — TRUTHFUL MEDIA ACQUISITION ENGINE
+[2026-08-21T21:12:30.940Z] ═══════════════════════════════════════════════════════════════════
+
+[2026-08-21T21:12:30.961Z] 
+[1/130] l01-philippine-archipelago-map
+[2026-08-21T21:12:30.981Z]   Searching: "Philippine archipelago map"
+[2026-08-21T21:12:31.999Z]   Checking: File:The Philippine Islands. A political, Geographical, ethnographical, social and commercial history of the Philippine Archipelago and its political dependencies (IA philippineislan00fore).pdf
+[2026-08-21T21:12:32.339Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/a/ab/The_Philippine_Islands._A_political%2C_Geographical%2C_ethnographical%2C_social_and_commercial_history_of_the_Philippine_Archipelago_and_its_political_dependencies_%28IA_philippineislan00fore%29.pdf?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:13:04.886Z]   ✓ Saved: l01-philippine-archipelago-map.jpg (57261370 bytes, unknown)
+[2026-08-21T21:13:04.901Z]   ✓ SHA-256: 72b5c5b9e1e583ac9d1004ae40ef5822e095e3544a726e064ebe92e22b28f063
+[2026-08-21T21:13:05.080Z] 
+[2/130] l01-philippines-satellite
+[2026-08-21T21:13:05.094Z]   Searching: "Philippines satellite NASA"
+[2026-08-21T21:13:06.156Z]   Checking: File:Satellite image of Philippines in March 2002.jpg
+[2026-08-21T21:13:06.502Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/5/54/Satellite_image_of_Philippines_in_March_2002.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:13:06.855Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Satellite_image_of_Philippines_in_March_2002.jpg/1280px-Satellite_image_of_Philippines_in_March_2002.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:13:08.126Z]   ✓ Saved: l01-philippines-satellite.jpg (640745 bytes, image/jpeg)
+[2026-08-21T21:13:08.143Z]   ✓ SHA-256: f12f55ff790b4162ec2fd20c326b086b2a74077c39fc4c46de03031dc8435177
+[2026-08-21T21:13:08.314Z] 
+[3/130] l02-el-nido-palawan
+[2026-08-21T21:13:08.334Z]   Searching: "El Nido Palawan Philippines"
+[2026-08-21T21:13:09.214Z]   Checking: File:El Nido Bay, Desert tropical island, Coastline, Palawan Island, Philippines.jpg
+[2026-08-21T21:13:09.629Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/4/4e/El_Nido_Bay%2C_Desert_tropical_island%2C_Coastline%2C_Palawan_Island%2C_Philippines.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:13:09.980Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/El_Nido_Bay%2C_Desert_tropical_island%2C_Coastline%2C_Palawan_Island%2C_Philippines.jpg/1280px-El_Nido_Bay%2C_Desert_tropical_island%2C_Coastline%2C_Palawan_Island%2C_Philippines.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:13:11.212Z]   ✓ Saved: l02-el-nido-palawan.jpg (453040 bytes, image/jpeg)
+[2026-08-21T21:13:11.228Z]   ✓ SHA-256: dca66ddf1017048c15bb8f9e61568a374e8495b1ece396d0c986cbb2ee83471b
+[2026-08-21T21:13:11.412Z] 
+[4/130] l02-philippine-seas-map
+[2026-08-21T21:13:11.433Z]   Searching: "Philippine Sea map"
+[2026-08-21T21:13:12.130Z]   Checking: File:Cloudscape Over the Philippine Sea.jpg
+[2026-08-21T21:13:12.504Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/3/35/Cloudscape_Over_the_Philippine_Sea.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:13:12.823Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Cloudscape_Over_the_Philippine_Sea.jpg/1280px-Cloudscape_Over_the_Philippine_Sea.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:13:14.038Z]   ✓ Saved: l02-philippine-seas-map.jpg (290208 bytes, image/jpeg)
+[2026-08-21T21:13:14.053Z]   ✓ SHA-256: cdd173d8b2a5bb7d0b729f9ce1dc7b3e4c249b3394a36c04f2b26c9c5b59487f
+[2026-08-21T21:13:14.229Z] 
+[5/130] l03-island-groups-map
+[2026-08-21T21:13:14.250Z]   Searching: "Luzon Visayas Mindanao map island groups Philippines"
+[2026-08-21T21:13:15.346Z]   Checking: File:TribalPhilippinesTraditionalRange.png
+[2026-08-21T21:13:15.693Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/2/22/TribalPhilippinesTraditionalRange.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:13:16.031Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/TribalPhilippinesTraditionalRange.png/1280px-TribalPhilippinesTraditionalRange.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:13:16.270Z]   ✓ Saved: l03-island-groups-map.png (427946 bytes, image/png)
+[2026-08-21T21:13:16.286Z]   ✓ SHA-256: 876bdcec92c5e2682349074c5b8685db2ad6e973ed83d801196ea5d8578efda9
+[2026-08-21T21:13:16.463Z] 
+[6/130] l03-philippine-flag
+[2026-08-21T21:13:16.484Z]   Searching: "Flag Philippines official"
+[2026-08-21T21:13:17.189Z]   Checking: File:Flag of the Philippines.svg
+[2026-08-21T21:13:17.530Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/9/99/Flag_of_the_Philippines.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:13:17.651Z]   ✓ Saved: l03-philippine-flag.svg (892 bytes, image/svg+xml)
+[2026-08-21T21:13:17.672Z]   ✓ SHA-256: b0010e0b5f5945506e98b76f3469faf964c1ce30de75673186d303f9112b5454
+[2026-08-21T21:13:17.845Z] 
+[7/130] l04-filipino-family
+[2026-08-21T21:13:17.867Z]   Searching: "Filipino family Philippines"
+[2026-08-21T21:13:18.863Z]   Checking: File:Native Filipino family 1800's.jpg
+[2026-08-21T21:13:19.201Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/a/a8/Native_Filipino_family_1800%27s.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:13:19.496Z]   ✓ Saved: l04-filipino-family.jpg (508400 bytes, image/jpeg)
+[2026-08-21T21:13:19.512Z]   ✓ SHA-256: 3fad49805c9b809cc71ceacff48c015912de76d22ebf927ca686a864ca7f653f
+[2026-08-21T21:13:19.697Z] 
+[8/130] l04-bahay-kubo
+[2026-08-21T21:13:19.718Z]   Searching: "bahay kubo nipa hut Philippines"
+[2026-08-21T21:13:20.453Z]   Checking: File:Bahay kubo.jpg
+[2026-08-21T21:13:20.799Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/d/df/Bahay_kubo.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:13:21.174Z]   ✓ Saved: l04-bahay-kubo.jpg (176162 bytes, image/jpeg)
+[2026-08-21T21:13:21.190Z]   ✓ SHA-256: 711b03bff130451a1816a07f60265d39ee28192fdafc4a6ef782e27e7ba07249
+[2026-08-21T21:13:21.362Z] 
+[9/130] l05-philippine-eagle
+[2026-08-21T21:13:21.384Z]   Searching: "Philippine Eagle Pithecophaga jefferyi"
+[2026-08-21T21:13:21.965Z]   Checking: File:Pithecophaga jefferyi.jpg
+[2026-08-21T21:13:22.320Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/3/30/Pithecophaga_jefferyi.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:13:22.468Z]   ✓ Saved: l05-philippine-eagle.jpg (87243 bytes, image/jpeg)
+[2026-08-21T21:13:22.485Z]   ✓ SHA-256: fe44e67b4b46f67a3ce818e4c416268df4d172bd1babb42148bbbe7cbaec992e
+[2026-08-21T21:13:22.660Z] 
+[10/130] l05-sampaguita
+[2026-08-21T21:13:22.681Z]   Searching: "Sampaguita Jasminum sambac Philippines national flower"
+[2026-08-21T21:13:23.482Z]   Checking: File:Sampaguita (Jasminum sambac) bridal bouquet.jpg
+[2026-08-21T21:13:23.820Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/b/b1/Sampaguita_%28Jasminum_sambac%29_bridal_bouquet.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:13:24.565Z]   ✓ Saved: l05-sampaguita.jpg (1020717 bytes, image/jpeg)
+[2026-08-21T21:13:24.581Z]   ✓ SHA-256: 608455598abfd6b65cba2519d4200ae74397db78740f4b8fb377d6eaed2546d6
+[2026-08-21T21:13:24.778Z] 
+[11/130] l06-apo-reef
+[2026-08-21T21:13:25.054Z]   Searching: "Apo Reef Philippines coral"
+[2026-08-21T21:13:25.879Z]   Checking: File:Apo Reef corals.jpg
+[2026-08-21T21:13:26.227Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/a/ab/Apo_Reef_corals.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:13:26.636Z]   ✓ Saved: l06-apo-reef.jpg (131791 bytes, image/jpeg)
+[2026-08-21T21:13:26.653Z]   ✓ SHA-256: a4c592439a9addc26d87cb5448f44085f4a138b6cb3a082c614b09f0c31fccd0
+[2026-08-21T21:13:26.825Z] 
+[12/130] l06-coral-triangle-map
+[2026-08-21T21:13:26.847Z]   Searching: "Coral Triangle map biodiversity"
+[2026-08-21T21:13:27.790Z]   Checking: File:Beyond the Coral Triangle - high genetic diversity and near panmixia in Singapore's populations of the broadcast spawning sea star Protoreaster nodosus.pdf
+[2026-08-21T21:13:28.156Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/c/c6/Beyond_the_Coral_Triangle_-_high_genetic_diversity_and_near_panmixia_in_Singapore%27s_populations_of_the_broadcast_spawning_sea_star_Protoreaster_nodosus.pdf?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:13:31.009Z]   ✓ Saved: l06-coral-triangle-map.jpg (911439 bytes, unknown)
+[2026-08-21T21:13:31.034Z]   ✓ SHA-256: 647c038bb6ab70c038a6e362ba9cadf1c7cd55b7c2c79a4a32e11c809c26c5d6
+[2026-08-21T21:13:31.212Z] 
+[13/130] l07-jose-rizal
+[2026-08-21T21:13:31.227Z]   Searching: "Jose Rizal portrait photograph"
+[2026-08-21T21:13:31.962Z]   Checking: File:Jose Rizal full.jpg
+[2026-08-21T21:13:32.304Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/c/c9/Jose_Rizal_full.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:13:32.524Z]   ✓ Saved: l07-jose-rizal.jpg (374622 bytes, image/jpeg)
+[2026-08-21T21:13:32.540Z]   ✓ SHA-256: e4d2ca76f59d844ec0be1bdb892b2d89ec97b743cbd4e0e3b1ed6f336b97145f
+[2026-08-21T21:13:32.711Z] 
+[14/130] l07-rizal-monument
+[2026-08-21T21:13:32.732Z]   Searching: "Rizal Monument Luneta Park Manila"
+[2026-08-21T21:13:33.946Z]   Checking: File:2011 The Rizal Monument, Luneta Park , Manila, Philippines.jpg
+[2026-08-21T21:13:34.319Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/a/ad/2011_The_Rizal_Monument%2C_Luneta_Park_%2C_Manila%2C_Philippines.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:13:35.230Z]   ✓ Saved: l07-rizal-monument.jpg (392338 bytes, image/jpeg)
+[2026-08-21T21:13:35.245Z]   ✓ SHA-256: 462d50cbb46875f9601fb83cee17ed795f0d1dca718f8cea8025c0ab85e7ae3a
+[2026-08-21T21:13:35.427Z] 
+[15/130] l08-tubbataha-reef
+[2026-08-21T21:13:35.449Z]   Searching: "Tubbataha Reef coral Philippines UNESCO"
+[2026-08-21T21:13:36.156Z]   No results for "Tubbataha Reef coral Philippines UNESCO"
+[2026-08-21T21:13:36.177Z]   ✗ FAILED: No usable media for l08-tubbataha-reef
+[2026-08-21T21:13:36.198Z] 
+[16/130] l08-whale-shark
+[2026-08-21T21:13:36.219Z]   Searching: "whale shark Rhincodon typus Philippines Donsol"
+[2026-08-21T21:13:36.948Z]   Checking: File:Butanding Whale Shark (Donsol, Sorsogon) (794278440).jpg
+[2026-08-21T21:13:37.304Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/0/04/Butanding_Whale_Shark_%28Donsol%2C_Sorsogon%29_%28794278440%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:13:37.718Z]   ✓ Saved: l08-whale-shark.jpg (93894 bytes, image/jpeg)
+[2026-08-21T21:13:37.733Z]   ✓ SHA-256: 790fbf6358c966b45e6e00a68811fd1108ba5e5b302af3112fbb4ec41b068af8
+[2026-08-21T21:13:37.908Z] 
+[17/130] l09-palengke-market
+[2026-08-21T21:13:37.928Z]   Searching: "Philippine wet market palengke fresh produce"
+[2026-08-21T21:13:38.689Z]   No results for "Philippine wet market palengke fresh produce"
+[2026-08-21T21:13:38.709Z]   ✗ FAILED: No usable media for l09-palengke-market
+[2026-08-21T21:13:38.729Z] 
+[18/130] l09-peso-currency
+[2026-08-21T21:13:38.751Z]   Searching: "Philippine peso currency banknote"
+[2026-08-21T21:13:39.537Z]   Checking: File:PHI-106-Japanese Government (Philippines)-1 Peso (1942).jpg
+[2026-08-21T21:13:39.888Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/3/35/PHI-106-Japanese_Government_%28Philippines%29-1_Peso_%281942%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:13:40.234Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/PHI-106-Japanese_Government_%28Philippines%29-1_Peso_%281942%29.jpg/1280px-PHI-106-Japanese_Government_%28Philippines%29-1_Peso_%281942%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:13:42.050Z]   ✓ Saved: l09-peso-currency.jpg (649453 bytes, image/jpeg)
+[2026-08-21T21:13:42.064Z]   ✓ SHA-256: d3add1a8eee6be16b4130122b6967b5df09877c62b6a3ce1a7d82f86035bcb2d
+[2026-08-21T21:13:42.242Z] 
+[19/130] l10-jeepney
+[2026-08-21T21:13:42.256Z]   Searching: "jeepney Philippines colorful transport"
+[2026-08-21T21:13:43.254Z]   Checking: File:USNS Mercy 27 February - 13 July 1987 (IA USNSMercy27February13July1987).pdf
+[2026-08-21T21:13:43.592Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/1/10/USNS_Mercy_27_February_-_13_July_1987_%28IA_USNSMercy27February13July1987%29.pdf?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:13:49.833Z]   ✓ Saved: l10-jeepney.jpg (10060274 bytes, unknown)
+[2026-08-21T21:13:49.848Z]   ✓ SHA-256: 96e660ed30359b321b4f95e46b9cf475e89cc9d498b77164ac4150e7e9a56cef
+[2026-08-21T21:13:50.021Z] 
+[20/130] l10-tricycle
+[2026-08-21T21:13:50.042Z]   Searching: "tricycle Philippines transport motorized"
+[2026-08-21T21:13:51.170Z]   Checking: File:Motorized tricycles, Philippines (51141724598).jpg
+[2026-08-21T21:13:51.526Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/7/7f/Motorized_tricycles%2C_Philippines_%2851141724598%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:13:51.862Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Motorized_tricycles%2C_Philippines_%2851141724598%29.jpg/1280px-Motorized_tricycles%2C_Philippines_%2851141724598%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:13:52.453Z]   ✓ Saved: l10-tricycle.jpg (533792 bytes, image/jpeg)
+[2026-08-21T21:13:52.468Z]   ✓ SHA-256: ff26540302eeeea5a7918efe42558e3da4a122c44f01add03fc42bf36cb4cdb0
+[2026-08-21T21:13:52.638Z] 
+[21/130] l11-sungka-board
+[2026-08-21T21:13:52.654Z]   Searching: "sungka board game Philippines traditional mancala"
+[2026-08-21T21:13:53.428Z]   No results for "sungka board game Philippines traditional mancala"
+[2026-08-21T21:13:53.448Z]   ✗ FAILED: No usable media for l11-sungka-board
+[2026-08-21T21:13:53.469Z] 
+[22/130] l11-tinikling
+[2026-08-21T21:13:53.489Z]   Searching: "tinikling dance Philippines bamboo"
+[2026-08-21T21:13:54.326Z]   Checking: File:The National Dance of The Philippines with Bamboo Poles.jpg
+[2026-08-21T21:13:54.690Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/8/80/The_National_Dance_of_The_Philippines_with_Bamboo_Poles.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:13:55.026Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/The_National_Dance_of_The_Philippines_with_Bamboo_Poles.jpg/1280px-The_National_Dance_of_The_Philippines_with_Bamboo_Poles.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:13:56.365Z]   ✓ Saved: l11-tinikling.jpg (356796 bytes, image/jpeg)
+[2026-08-21T21:13:56.382Z]   ✓ SHA-256: 0f7cb8b18c5001d43d47d505585a91cfc0ecc8027258d9ba9292c926ea57e0a0
+[2026-08-21T21:13:56.552Z] 
+[23/130] l12-kulintang
+[2026-08-21T21:13:56.574Z]   Searching: "kulintang gong Philippines Mindanao instrument"
+[2026-08-21T21:13:57.326Z]   Checking: File:Philippines gong chimes, Musical Instrument Museum, Phoenix, Arizona.jpg
+[2026-08-21T21:13:57.762Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/3/38/Philippines_gong_chimes%2C_Musical_Instrument_Museum%2C_Phoenix%2C_Arizona.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:13:58.098Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Philippines_gong_chimes%2C_Musical_Instrument_Museum%2C_Phoenix%2C_Arizona.jpg/1280px-Philippines_gong_chimes%2C_Musical_Instrument_Museum%2C_Phoenix%2C_Arizona.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:14:00.560Z]   ✓ Saved: l12-kulintang.jpg (271972 bytes, image/jpeg)
+[2026-08-21T21:14:00.575Z]   ✓ SHA-256: f14cd84edf11a5d6db8dad935fcda51a891fc1f4bf9f49c6cb87cd6bfbb140f5
+[2026-08-21T21:14:00.752Z] 
+[24/130] l12-kudyapi
+[2026-08-21T21:14:00.774Z]   Searching: "kudyapi kutiyapi lute Philippines instrument"
+[2026-08-21T21:14:01.510Z]   No results for "kudyapi kutiyapi lute Philippines instrument"
+[2026-08-21T21:14:01.532Z]   ✗ FAILED: No usable media for l12-kudyapi
+[2026-08-21T21:14:01.553Z] 
+[25/130] l13-buwan-ng-wika
+[2026-08-21T21:14:01.573Z]   Searching: "Buwan ng Wika Philippines language month celebration"
+[2026-08-21T21:14:02.298Z]   No results for "Buwan ng Wika Philippines language month celebration"
+[2026-08-21T21:14:02.321Z]   ✗ FAILED: No usable media for l13-buwan-ng-wika
+[2026-08-21T21:14:02.343Z] 
+[26/130] l13-languages-map
+[2026-08-21T21:14:02.363Z]   Searching: "Philippine languages ethnolinguistic map"
+[2026-08-21T21:14:03.100Z]   Checking: File:Countering the lingering threat of the Abu Sayyaf group (IA counteringlinger109453332).pdf
+[2026-08-21T21:14:03.687Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/5/5f/Countering_the_lingering_threat_of_the_Abu_Sayyaf_group_%28IA_counteringlinger109453332%29.pdf?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:14:05.772Z]   ✓ Saved: l13-languages-map.jpg (1074845 bytes, unknown)
+[2026-08-21T21:14:05.788Z]   ✓ SHA-256: 24b0126601baddfe5e8cd4f29a416989e124de68a6aa45783e4d04669bfa9fec
+[2026-08-21T21:14:05.966Z] 
+[27/130] l14-banaue-terraces
+[2026-08-21T21:14:05.988Z]   Searching: "Banaue rice terraces Ifugao Philippines"
+[2026-08-21T21:14:06.800Z]   Checking: File:Banaue Philippines Ifugao-Tribesman-01.jpg
+[2026-08-21T21:14:07.137Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/b/b2/Banaue_Philippines_Ifugao-Tribesman-01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:14:07.474Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Banaue_Philippines_Ifugao-Tribesman-01.jpg/1280px-Banaue_Philippines_Ifugao-Tribesman-01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:14:08.371Z]   ✓ Saved: l14-banaue-terraces.jpg (371493 bytes, image/jpeg)
+[2026-08-21T21:14:08.389Z]   ✓ SHA-256: b8edd20bd41087743115e672d62b4496bc36d7518a16f60786e220d9fd50fe12
+[2026-08-21T21:14:08.566Z] 
+[28/130] l14-batad-terraces
+[2026-08-21T21:14:08.587Z]   Searching: "Batad rice terraces amphitheater Ifugao"
+[2026-08-21T21:14:09.768Z]   Checking: File:Batad rice terraces in Ifugao.jpg
+[2026-08-21T21:14:10.114Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/d/d6/Batad_rice_terraces_in_Ifugao.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:14:10.451Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Batad_rice_terraces_in_Ifugao.jpg/1280px-Batad_rice_terraces_in_Ifugao.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:14:11.000Z]   ✓ Saved: l14-batad-terraces.jpg (434172 bytes, image/jpeg)
+[2026-08-21T21:14:11.016Z]   ✓ SHA-256: 40750e8ad2f9288fa88dad6f19e6c3dd83a8c5836ca56c8aa8fe9b45aa1b0193
+[2026-08-21T21:14:11.198Z] 
+[29/130] l15-mayon-volcano
+[2026-08-21T21:14:11.218Z]   Searching: "Mayon Volcano Philippines cone Albay"
+[2026-08-21T21:14:11.944Z]   Checking: File:Mayon Volcano eruption at Daraga Church.jpg
+[2026-08-21T21:14:12.281Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/a/a4/Mayon_Volcano_eruption_at_Daraga_Church.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:14:12.645Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Mayon_Volcano_eruption_at_Daraga_Church.jpg/1280px-Mayon_Volcano_eruption_at_Daraga_Church.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:14:13.096Z]   ✓ Saved: l15-mayon-volcano.jpg (163359 bytes, image/jpeg)
+[2026-08-21T21:14:13.111Z]   ✓ SHA-256: 871fa2b2fc3acf589e2b5591a093042aca4eb3fbd401edfaccb8bf2086b92b7d
+[2026-08-21T21:14:13.296Z] 
+[30/130] l15-cagsawa-ruins
+[2026-08-21T21:14:13.316Z]   Searching: "Cagsawa church ruins Mayon Volcano"
+[2026-08-21T21:14:14.067Z]   Checking: File:Mayon Volcano & Cagsawa Church, Daraga, Albay, Dec 2025 (1).jpg
+[2026-08-21T21:14:14.439Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/b/b8/Mayon_Volcano_%26_Cagsawa_Church%2C_Daraga%2C_Albay%2C_Dec_2025_%281%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:14:14.784Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Mayon_Volcano_%26_Cagsawa_Church%2C_Daraga%2C_Albay%2C_Dec_2025_%281%29.jpg/1280px-Mayon_Volcano_%26_Cagsawa_Church%2C_Daraga%2C_Albay%2C_Dec_2025_%281%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:14:16.100Z]   ✓ Saved: l15-cagsawa-ruins.jpg (387998 bytes, image/jpeg)
+[2026-08-21T21:14:16.116Z]   ✓ SHA-256: 88c07bbe63f63abf0478c14168c458c737d14eee0fba19d389731d0861b62544
+[2026-08-21T21:14:16.296Z] 
+[31/130] l16-fort-santiago
+[2026-08-21T21:14:16.317Z]   Searching: "Fort Santiago gate Intramuros Manila"
+[2026-08-21T21:14:17.053Z]   Checking: File:Manila, Fort Santiago, Walled city of Intramuros, Philippines.jpg
+[2026-08-21T21:14:17.407Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/3/39/Manila%2C_Fort_Santiago%2C_Walled_city_of_Intramuros%2C_Philippines.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:14:17.763Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Manila%2C_Fort_Santiago%2C_Walled_city_of_Intramuros%2C_Philippines.jpg/1280px-Manila%2C_Fort_Santiago%2C_Walled_city_of_Intramuros%2C_Philippines.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:14:19.153Z]   ✓ Saved: l16-fort-santiago.jpg (295251 bytes, image/jpeg)
+[2026-08-21T21:14:19.168Z]   ✓ SHA-256: 35d3e901d76cad9f04a34a53910ec25d896766428f1af5e01d0df1a73f2fc45c
+[2026-08-21T21:14:19.345Z] 
+[32/130] l16-intramuros
+[2026-08-21T21:14:19.368Z]   Searching: "Intramuros Manila aerial walled city"
+[2026-08-21T21:14:20.124Z]   Checking: File:"Intramuros After the War" Exhibit Photo, Fort Santiago, Intramuros.jpg
+[2026-08-21T21:14:20.668Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/2/2c/%22Intramuros_After_the_War%22_Exhibit_Photo%2C_Fort_Santiago%2C_Intramuros.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:14:21.003Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/%22Intramuros_After_the_War%22_Exhibit_Photo%2C_Fort_Santiago%2C_Intramuros.jpg/1280px-%22Intramuros_After_the_War%22_Exhibit_Photo%2C_Fort_Santiago%2C_Intramuros.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:14:22.735Z]   ✓ Saved: l16-intramuros.jpg (523117 bytes, image/jpeg)
+[2026-08-21T21:14:22.751Z]   ✓ SHA-256: 8c75bf7b1288aff029fb6277961cab75f8cf2c9d5ee67ce25963001cb5bc4519
+[2026-08-21T21:14:22.927Z] 
+[33/130] l17-noli-me-tangere
+[2026-08-21T21:14:22.947Z]   Searching: "Noli Me Tangere Jose Rizal novel book"
+[2026-08-21T21:14:23.696Z]   Checking: File:Noli Me Tangere.jpg
+[2026-08-21T21:14:24.030Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/f/f1/Noli_Me_Tangere.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:14:25.855Z]   ✓ Saved: l17-noli-me-tangere.jpg (33281 bytes, image/jpeg)
+[2026-08-21T21:14:25.873Z]   ✓ SHA-256: 21ac9ca91acaa1e2730d1b2e96c41f1e879d82248bd63148c3584d2866258d5b
+[2026-08-21T21:14:26.059Z] 
+[34/130] l17-rizal-photo
+[2026-08-21T21:14:26.080Z]   Searching: "Jose Rizal photograph 1890 portrait"
+[2026-08-21T21:14:26.871Z]   Checking: File:Lineage, life and labors of Jose Rizal, Philippine patriot- a study of the growth of free ideas in the trans Pacific American territory (IA ahz9295.0001.001.umich.edu).pdf
+[2026-08-21T21:14:27.528Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/2/28/Lineage%2C_life_and_labors_of_Jose_Rizal%2C_Philippine_patriot-_a_study_of_the_growth_of_free_ideas_in_the_trans_Pacific_American_territory_%28IA_ahz9295.0001.001.umich.edu%29.pdf?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:14:49.625Z]   ✓ Saved: l17-rizal-photo.jpg (38067071 bytes, unknown)
+[2026-08-21T21:14:49.640Z]   ✓ SHA-256: a51085706471a3ace3b4a6ea350e25e69f8bbcc77dacc5c2c2bf9e05d0076c57
+[2026-08-21T21:14:49.825Z] 
+[35/130] l18-lagundi
+[2026-08-21T21:14:50.093Z]   Searching: "Vitex negundo lagundi plant Philippines medicinal"
+[2026-08-21T21:14:51.080Z]   No results for "Vitex negundo lagundi plant Philippines medicinal"
+[2026-08-21T21:14:51.103Z]   ✗ FAILED: No usable media for l18-lagundi
+[2026-08-21T21:14:51.124Z] 
+[36/130] l18-herbal-medicine
+[2026-08-21T21:14:51.145Z]   Searching: "Philippine herbal medicine traditional plant"
+[2026-08-21T21:14:52.020Z]   Checking: File:Probe - newsletter for the USDA Plant Genome Research Program (IA CAT91962362009).pdf
+[2026-08-21T21:14:52.364Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/6/69/Probe_-_newsletter_for_the_USDA_Plant_Genome_Research_Program_%28IA_CAT91962362009%29.pdf?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:14:55.880Z]   ✓ Saved: l18-herbal-medicine.jpg (1871098 bytes, unknown)
+[2026-08-21T21:14:55.896Z]   ✓ SHA-256: 44d89248202a6cce96df3eb6a31077b373084fb745a79c17c7301a2d4801bb1f
+[2026-08-21T21:14:56.066Z] 
+[37/130] l19-barong-tagalog
+[2026-08-21T21:14:56.080Z]   Searching: "Barong Tagalog embroidered Philippines formal"
+[2026-08-21T21:14:56.979Z]   Checking: File:Barong Tagalog.png
+[2026-08-21T21:14:57.345Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/2/2b/Barong_Tagalog.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:14:57.693Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Barong_Tagalog.png/1280px-Barong_Tagalog.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:14:58.613Z]   ✓ Saved: l19-barong-tagalog.png (1000726 bytes, image/png)
+[2026-08-21T21:14:58.629Z]   ✓ SHA-256: 61f473227a2154741a3f289e3e843bfc0629a20c7bd0aa22190cdaf454a509f8
+[2026-08-21T21:14:58.811Z] 
+[38/130] l19-filipiniana-dress
+[2026-08-21T21:14:58.832Z]   Searching: "Filipiniana Maria Clara dress baro't saya Philippines"
+[2026-08-21T21:14:59.603Z]   No results for "Filipiniana Maria Clara dress baro't saya Philippines"
+[2026-08-21T21:14:59.623Z]   ✗ FAILED: No usable media for l19-filipiniana-dress
+[2026-08-21T21:14:59.643Z] 
+[39/130] l20-sampaguita
+[2026-08-21T21:14:59.663Z]   Searching: "Sampaguita Jasminum sambac white flower Philippines"
+[2026-08-21T21:15:00.454Z]   Checking: File:Jasmine (Jasminum sambac) 1.jpg
+[2026-08-21T21:15:00.794Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/0/09/Jasmine_%28Jasminum_sambac%29_1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:15:01.156Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Jasmine_%28Jasminum_sambac%29_1.jpg/1280px-Jasmine_%28Jasminum_sambac%29_1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:15:04.501Z]   ✓ Saved: l20-sampaguita.jpg (198203 bytes, image/jpeg)
+[2026-08-21T21:15:04.516Z]   ✓ SHA-256: f3c28b91d8df3fc616202251d56d83153d4e615bc9fbdebb7f6341eb2df9601a
+[2026-08-21T21:15:04.702Z] 
+[40/130] l20-narra-tree
+[2026-08-21T21:15:04.723Z]   Searching: "Narra tree Pterocarpus indicus Philippines"
+[2026-08-21T21:15:05.542Z]   Checking: File:Pterocarpus indicus Narra Friendship tree bark.jpg
+[2026-08-21T21:15:05.902Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/8/89/Pterocarpus_indicus_Narra_Friendship_tree_bark.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:15:06.253Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Pterocarpus_indicus_Narra_Friendship_tree_bark.jpg/1280px-Pterocarpus_indicus_Narra_Friendship_tree_bark.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:15:10.158Z]   ✓ Saved: l20-narra-tree.jpg (589050 bytes, image/jpeg)
+[2026-08-21T21:15:10.176Z]   ✓ SHA-256: 1b45316d2c549b973c9f08b683d152b3b0af0771a0e98310bfb8c97832c2683a
+[2026-08-21T21:15:10.348Z] 
+[41/130] l21-malacanang
+[2026-08-21T21:15:10.369Z]   Searching: "Malacanang Palace Philippines president residence"
+[2026-08-21T21:15:11.263Z]   Checking: File:Malacanang Palace facade 1910.jpg
+[2026-08-21T21:15:11.616Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/3/37/Malacanang_Palace_facade_1910.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:15:11.968Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Malacanang_Palace_facade_1910.jpg/1280px-Malacanang_Palace_facade_1910.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:15:12.176Z]   ✓ Saved: l21-malacanang.jpg (175984 bytes, image/jpeg)
+[2026-08-21T21:15:12.192Z]   ✓ SHA-256: 4d5cb8c6d064f29dda724205b69bd9c83f0fb5657b095697f321b01c2e546e6e
+[2026-08-21T21:15:12.368Z] 
+[42/130] l21-coat-of-arms
+[2026-08-21T21:15:12.389Z]   Searching: "Coat of arms Philippines seal official"
+[2026-08-21T21:15:13.107Z]   Checking: File:Coat of arms of the Philippines (1943–1945).svg
+[2026-08-21T21:15:13.451Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/d/d7/Coat_of_arms_of_the_Philippines_%281943%E2%80%931945%29.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:15:13.950Z]   ✓ Saved: l21-coat-of-arms.svg (10668 bytes, image/svg+xml)
+[2026-08-21T21:15:13.967Z]   ✓ SHA-256: 142d80c8e8b85ec9b525ba04ba552a3fd3891aa0cfdb759f7c51714f03eb9ac2
+[2026-08-21T21:15:14.148Z] 
+[43/130] l22-students-classroom
+[2026-08-21T21:15:14.169Z]   Searching: "Filipino students classroom Philippines school"
+[2026-08-21T21:15:14.944Z]   Checking: File:Students at San Juan National High School (Philippines) showing Reading Wikipedia in the Classroom booklet (Bikol version).jpg
+[2026-08-21T21:15:15.304Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/6/65/Students_at_San_Juan_National_High_School_%28Philippines%29_showing_Reading_Wikipedia_in_the_Classroom_booklet_%28Bikol_version%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:15:15.929Z]   ✓ Saved: l22-students-classroom.jpg (91240 bytes, image/jpeg)
+[2026-08-21T21:15:15.945Z]   ✓ SHA-256: 6501f4f21829e99455f1910d2ea3969dfe3210f4fee553cdcc616e6df3dcd433
+[2026-08-21T21:15:16.118Z] 
+[44/130] l22-flag-ceremony
+[2026-08-21T21:15:16.140Z]   Searching: "Philippine flag ceremony school students morning"
+[2026-08-21T21:15:16.996Z]   Checking: File:Philippine magazine (IA acd5869.0028.001.umich.edu).pdf
+[2026-08-21T21:15:17.339Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/a/a3/Philippine_magazine_%28IA_acd5869.0028.001.umich.edu%29.pdf?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:16:08.499Z]   ✓ Saved: l22-flag-ceremony.jpg (96713890 bytes, unknown)
+[2026-08-21T21:16:08.514Z]   ✓ SHA-256: c118829414390413e33bd7b793062cba592956d3a9cd5e22fd1d7fb8b4a08f00
+[2026-08-21T21:16:08.725Z] 
+[45/130] l23-sari-sari-store
+[2026-08-21T21:16:08.740Z]   Searching: "sari-sari store Philippines neighborhood shop"
+[2026-08-21T21:16:09.699Z]   Checking: File:Sari-Sari Store Cavite.jpg
+[2026-08-21T21:16:10.059Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/8/86/Sari-Sari_Store_Cavite.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:16:11.509Z]   ✓ Saved: l23-sari-sari-store.jpg (404683 bytes, image/jpeg)
+[2026-08-21T21:16:11.525Z]   ✓ SHA-256: d3c520f406de559a4742f2e434486e0962204a69c66453c8dab759e641ff2082
+[2026-08-21T21:16:11.708Z] 
+[46/130] l23-peso-banknotes
+[2026-08-21T21:16:11.729Z]   Searching: "Philippine peso banknote money currency"
+[2026-08-21T21:16:12.469Z]   Checking: File:PHI-106-Japanese Government (Philippines)-1 Peso (1942).jpg
+[2026-08-21T21:16:12.813Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/3/35/PHI-106-Japanese_Government_%28Philippines%29-1_Peso_%281942%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:16:13.172Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/PHI-106-Japanese_Government_%28Philippines%29-1_Peso_%281942%29.jpg/1280px-PHI-106-Japanese_Government_%28Philippines%29-1_Peso_%281942%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:16:13.499Z]   ✓ Saved: l23-peso-banknotes.jpg (649453 bytes, image/jpeg)
+[2026-08-21T21:16:13.514Z]   ✓ SHA-256: d3add1a8eee6be16b4130122b6967b5df09877c62b6a3ce1a7d82f86035bcb2d
+[2026-08-21T21:16:13.691Z] 
+[47/130] l24-typhoon-satellite
+[2026-08-21T21:16:13.712Z]   Searching: "Typhoon satellite Philippines Pacific NASA"
+[2026-08-21T21:16:14.507Z]   Checking: File:Typhoon Khanun (MODIS).jpg
+[2026-08-21T21:16:14.858Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/c/c6/Typhoon_Khanun_%28MODIS%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:16:15.226Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Typhoon_Khanun_%28MODIS%29.jpg/1280px-Typhoon_Khanun_%28MODIS%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:16:16.298Z]   ✓ Saved: l24-typhoon-satellite.jpg (300226 bytes, image/jpeg)
+[2026-08-21T21:16:16.314Z]   ✓ SHA-256: 096634ef61b779907bb090d15867acc6f5b666b7702bd8208391b478d66721d1
+[2026-08-21T21:16:16.490Z] 
+[48/130] l24-climate-map
+[2026-08-21T21:16:16.511Z]   Searching: "Philippines climate map Koppen classification"
+[2026-08-21T21:16:17.317Z]   Checking: File:Philippines map of Köppen climate classification.svg
+[2026-08-21T21:16:17.715Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/d/d3/Philippines_map_of_K%C3%B6ppen_climate_classification.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:16:19.380Z]   ✓ Saved: l24-climate-map.svg (182607 bytes, image/svg+xml)
+[2026-08-21T21:16:19.396Z]   ✓ SHA-256: 63007d3df5d8c103fe729fd1b7fd7472755601d137ed5368164bb8c4aed43783
+[2026-08-21T21:16:19.576Z] 
+[49/130] l25-carabao
+[2026-08-21T21:16:19.597Z]   Searching: "Carabao water buffalo Philippines rice paddy"
+[2026-08-21T21:16:20.363Z]   Checking: File:The Philippines - a geographical reader (IA abj0362.0001.001.umich.edu).pdf
+[2026-08-21T21:16:20.941Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/6/6c/The_Philippines_-_a_geographical_reader_%28IA_abj0362.0001.001.umich.edu%29.pdf?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:16:31.892Z]   ✓ Saved: l25-carabao.jpg (10116754 bytes, unknown)
+[2026-08-21T21:16:31.907Z]   ✓ SHA-256: 3ee39ad4e22a0da34d88800cc9e8db0e0efa9850b5683b4d2bed92d64ff25bcb
+[2026-08-21T21:16:32.082Z] 
+[50/130] l25-carabao-festival
+[2026-08-21T21:16:32.103Z]   Searching: "Carabao Festival Pulilan Philippines decorated"
+[2026-08-21T21:16:33.052Z]   No results for "Carabao Festival Pulilan Philippines decorated"
+[2026-08-21T21:16:34.625Z]   ✗ FAILED: No usable media for l25-carabao-festival
+[2026-08-21T21:16:34.649Z] 
+[51/130] l26-manunggul-jar
+[2026-08-21T21:16:34.670Z]   Searching: "Manunggul Jar burial Philippines National Museum"
+[2026-08-21T21:16:35.540Z]   Checking: File:Manunggul jar detail.jpg
+[2026-08-21T21:16:35.893Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/6/6c/Manunggul_jar_detail.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:16:36.352Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Manunggul_jar_detail.jpg/1280px-Manunggul_jar_detail.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:16:39.184Z]   ✓ Saved: l26-manunggul-jar.jpg (106960 bytes, image/jpeg)
+[2026-08-21T21:16:39.201Z]   ✓ SHA-256: e8f227fdaf86f350c57f4801d747f849cd3ce0f09e16c771ef5e525a21d18fa9
+[2026-08-21T21:16:39.388Z] 
+[52/130] l26-laguna-copperplate
+[2026-08-21T21:16:39.409Z]   Searching: "Laguna Copperplate Inscription Philippines ancient"
+[2026-08-21T21:16:40.245Z]   Checking: File:Laguna Copperplate Inscription.gif
+[2026-08-21T21:16:40.588Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/1/15/Laguna_Copperplate_Inscription.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:16:40.898Z]   ✓ Saved: l26-laguna-copperplate.gif (186037 bytes, image/gif)
+[2026-08-21T21:16:40.913Z]   ✓ SHA-256: 3180eff75dbca492b632d2ec2e1ca40f0bf4c5b1c9b81df95927f3ffa4eb9dc9
+[2026-08-21T21:16:41.096Z] 
+[53/130] l27-tnalak-textile
+[2026-08-21T21:16:41.117Z]   Searching: "T'nalak weaving T'boli Mindanao Philippines textile"
+[2026-08-21T21:16:41.866Z]   No results for "T'nalak weaving T'boli Mindanao Philippines textile"
+[2026-08-21T21:16:41.888Z]   ✗ FAILED: No usable media for l27-tnalak-textile
+[2026-08-21T21:16:41.908Z] 
+[54/130] l27-pina-cloth
+[2026-08-21T21:16:41.929Z]   Searching: "pina cloth piña fiber Philippines weaving"
+[2026-08-21T21:16:42.940Z]   Checking: File:Piña-Seda- Pineapple and Silk Cloths from the Philippines 13.jpg
+[2026-08-21T21:16:43.317Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/8/84/Pi%C3%B1a-Seda-_Pineapple_and_Silk_Cloths_from_the_Philippines_13.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:16:43.648Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Pi%C3%B1a-Seda-_Pineapple_and_Silk_Cloths_from_the_Philippines_13.jpg/1280px-Pi%C3%B1a-Seda-_Pineapple_and_Silk_Cloths_from_the_Philippines_13.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:16:44.098Z]   ✓ Saved: l27-pina-cloth.jpg (132865 bytes, image/jpeg)
+[2026-08-21T21:16:44.114Z]   ✓ SHA-256: 849c6242a2a6af5fc066b75b5dfc5c51370d001a8485ec2b6c5fd075e29e4ca0
+[2026-08-21T21:16:44.297Z] 
+[55/130] l28-sinulog
+[2026-08-21T21:16:44.319Z]   Searching: "Sinulog Festival Cebu Philippines dancers"
+[2026-08-21T21:16:45.325Z]   Checking: File:Sinulog Festival Cebu 2011.jpg
+[2026-08-21T21:16:45.670Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/1/1b/Sinulog_Festival_Cebu_2011.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:16:46.023Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Sinulog_Festival_Cebu_2011.jpg/1280px-Sinulog_Festival_Cebu_2011.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:16:47.503Z]   ✓ Saved: l28-sinulog.jpg (833688 bytes, image/jpeg)
+[2026-08-21T21:16:47.518Z]   ✓ SHA-256: 5ba626c0266547ca22f758122dad134e0c8cd8526a57b68c1d1bad7c6c090e34
+[2026-08-21T21:16:47.713Z] 
+[56/130] l28-ati-atihan
+[2026-08-21T21:16:47.735Z]   Searching: "Ati-Atihan Festival Kalibo Aklan Philippines"
+[2026-08-21T21:16:48.788Z]   Checking: File:Santo Niño Ati-Atihan Festival Kalibo Aklan 2024.jpg
+[2026-08-21T21:16:49.158Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/9/97/Santo_Ni%C3%B1o_Ati-Atihan_Festival_Kalibo_Aklan_2024.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:16:49.615Z]   ✓ Saved: l28-ati-atihan.jpg (98093 bytes, image/jpeg)
+[2026-08-21T21:16:49.633Z]   ✓ SHA-256: a9a741947622b2db1d23e93fcd6507ee7c7397619b964bdcbb333d71fff2bc9e
+[2026-08-21T21:16:49.812Z] 
+[57/130] l29-chicken-adobo
+[2026-08-21T21:16:49.834Z]   Searching: "adobo chicken Filipino dish cuisine Philippines"
+[2026-08-21T21:16:50.670Z]   Checking: File:Chicken Adobo with Coconut Milk.jpg
+[2026-08-21T21:16:51.032Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/a/a4/Chicken_Adobo_with_Coconut_Milk.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:16:52.797Z]   ✓ Saved: l29-chicken-adobo.jpg (270816 bytes, image/jpeg)
+[2026-08-21T21:16:52.813Z]   ✓ SHA-256: 6162768e770a00bf9bc24a662a72c49c8b5aa9c2fbe419cad510308474212d87
+[2026-08-21T21:16:52.996Z] 
+[58/130] l29-sinigang
+[2026-08-21T21:16:53.012Z]   Searching: "sinigang soup pork Filipino Philippines"
+[2026-08-21T21:16:53.798Z]   Checking: File:Pork sinigang.JPG
+[2026-08-21T21:16:54.184Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/f/f3/Pork_sinigang.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:16:54.549Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Pork_sinigang.JPG/1280px-Pork_sinigang.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:16:57.162Z]   ✓ Saved: l29-sinigang.jpg (320511 bytes, image/jpeg)
+[2026-08-21T21:16:57.180Z]   ✓ SHA-256: 06b525dce8d01e50db64ba6275f13bae969098bfc2ff3302ed590681492ddcaf
+[2026-08-21T21:16:57.609Z] 
+[59/130] l30-taal-volcano
+[2026-08-21T21:16:57.630Z]   Searching: "Taal Volcano crater lake Batangas Philippines"
+[2026-08-21T21:16:58.534Z]   Checking: File:Crater lake 02.jpg
+[2026-08-21T21:16:58.890Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/d/db/Crater_lake_02.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:16:59.235Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Crater_lake_02.jpg/1280px-Crater_lake_02.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:17:01.115Z]   ✓ Saved: l30-taal-volcano.jpg (147354 bytes, image/jpeg)
+[2026-08-21T21:17:01.131Z]   ✓ SHA-256: 2e4c8bf9707a55eb15bee284fb1479a0cef2f5a246deef38a9f37b93af6a1268
+[2026-08-21T21:17:01.326Z] 
+[60/130] l30-pinatubo
+[2026-08-21T21:17:01.348Z]   Searching: "Mount Pinatubo eruption 1991 Philippines USGS"
+[2026-08-21T21:17:02.153Z]   Checking: File:Pinatubo early eruption 1991.jpg
+[2026-08-21T21:17:02.512Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/9/9c/Pinatubo_early_eruption_1991.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:17:02.808Z]   ✓ Saved: l30-pinatubo.jpg (612326 bytes, image/jpeg)
+[2026-08-21T21:17:02.823Z]   ✓ SHA-256: 9ddf9ac65b938ff92425053c50828bde37c946ddea68e56a376dffad88372fab
+[2026-08-21T21:17:03.006Z] 
+[61/130] l31-underground-river
+[2026-08-21T21:17:03.028Z]   Searching: "Puerto Princesa Underground River Palawan Philippines"
+[2026-08-21T21:17:03.891Z]   Checking: File:Inside the Underground River in Puerto Princesa, Palawan Philippines.jpg
+[2026-08-21T21:17:04.222Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/0/0c/Inside_the_Underground_River_in_Puerto_Princesa%2C_Palawan_Philippines.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:17:04.562Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Inside_the_Underground_River_in_Puerto_Princesa%2C_Palawan_Philippines.jpg/1280px-Inside_the_Underground_River_in_Puerto_Princesa%2C_Palawan_Philippines.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:17:05.613Z]   ✓ Saved: l31-underground-river.jpg (414929 bytes, image/jpeg)
+[2026-08-21T21:17:06.436Z]   ✓ SHA-256: 5c2eee2ccb978a090431c817ea983ea0a755647e1086efd795204f1e01b822c4
+[2026-08-21T21:17:06.623Z] 
+[62/130] l31-laguna-de-bay
+[2026-08-21T21:17:06.644Z]   Searching: "Laguna de Bay lake Philippines largest"
+[2026-08-21T21:17:07.526Z]   Checking: File:Laguna de Bay zoom.jpg
+[2026-08-21T21:17:07.868Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/a/a2/Laguna_de_Bay_zoom.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:17:08.311Z]   ✓ Saved: l31-laguna-de-bay.jpg (83055 bytes, image/jpeg)
+[2026-08-21T21:17:08.327Z]   ✓ SHA-256: fa2fa77521d22447b067fd32a05bb07fbb0b6010957c6c7d108f6b1e4afa536a
+[2026-08-21T21:17:08.514Z] 
+[63/130] l32-palawan-pheasant
+[2026-08-21T21:17:08.535Z]   Searching: "Palawan peacock pheasant Philippines bird endemic"
+[2026-08-21T21:17:09.346Z]   Checking: File:Palawan Peacock-Pheasant.png
+[2026-08-21T21:17:09.721Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/2/26/Palawan_Peacock-Pheasant.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:17:10.086Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Palawan_Peacock-Pheasant.png/1280px-Palawan_Peacock-Pheasant.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:17:18.547Z]   ✓ Saved: l32-palawan-pheasant.png (2076268 bytes, image/png)
+[2026-08-21T21:17:18.561Z]   ✓ SHA-256: d06741a264ea1f196b895867f6b3a335a57f219e48ce0196fc99df24e71f5957
+[2026-08-21T21:17:18.740Z] 
+[64/130] l32-hornbill
+[2026-08-21T21:17:18.755Z]   Searching: "Philippine hornbill tarictic Visayan bird"
+[2026-08-21T21:17:19.697Z]   Checking: File:Visayan Tarictic Hornbill.jpg
+[2026-08-21T21:17:20.042Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/6/6b/Visayan_Tarictic_Hornbill.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:17:20.380Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Visayan_Tarictic_Hornbill.jpg/1280px-Visayan_Tarictic_Hornbill.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:17:24.202Z]   ✓ Saved: l32-hornbill.jpg (431924 bytes, image/jpeg)
+[2026-08-21T21:17:24.216Z]   ✓ SHA-256: c418864aee0acbd3cb468728a838899b240493f04a34c858729a5c1821541e0d
+[2026-08-21T21:17:24.392Z] 
+[65/130] l33-chocolate-hills
+[2026-08-21T21:17:24.406Z]   Searching: "Chocolate Hills Bohol Philippines geological"
+[2026-08-21T21:17:25.224Z]   Checking: File:Chocolate Hills - edit.jpg
+[2026-08-21T21:17:25.572Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/9/9b/Chocolate_Hills_-_edit.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:17:37.659Z]   ✓ Saved: l33-chocolate-hills.jpg (724076 bytes, image/jpeg)
+[2026-08-21T21:17:37.674Z]   ✓ SHA-256: c4e07042cc0a2ec7147abfd5c3cada74779c3334d1e65ac30a642b38228b84d3
+[2026-08-21T21:17:37.850Z] 
+[66/130] l33-tarsier
+[2026-08-21T21:17:37.862Z]   Searching: "Philippine tarsier Bohol primate Carlito syrichta"
+[2026-08-21T21:17:38.831Z]   Checking: File:Philippine tarsier (Carlito syrichta fraterculus) Bohol 2.jpg
+[2026-08-21T21:17:39.183Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/4/40/Philippine_tarsier_%28Carlito_syrichta_fraterculus%29_Bohol_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:17:39.534Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Philippine_tarsier_%28Carlito_syrichta_fraterculus%29_Bohol_2.jpg/1280px-Philippine_tarsier_%28Carlito_syrichta_fraterculus%29_Bohol_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:17:48.186Z]   ✓ Saved: l33-tarsier.jpg (360735 bytes, image/jpeg)
+[2026-08-21T21:17:48.199Z]   ✓ SHA-256: 9c49a1d7127ae9ef4cdef260da28173e9ee7249151ee863aac6440677a57d7ca
+[2026-08-21T21:17:48.380Z] 
+[67/130] l34-tinikling
+[2026-08-21T21:17:48.909Z]   Searching: "tinikling dance bamboo Philippines national"
+[2026-08-21T21:17:49.779Z]   Checking: File:The National Dance of The Philippines with Bamboo Poles.jpg
+[2026-08-21T21:17:50.132Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/8/80/The_National_Dance_of_The_Philippines_with_Bamboo_Poles.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:17:50.467Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/The_National_Dance_of_The_Philippines_with_Bamboo_Poles.jpg/1280px-The_National_Dance_of_The_Philippines_with_Bamboo_Poles.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:17:52.180Z]   ✓ Saved: l34-tinikling.jpg (356796 bytes, image/jpeg)
+[2026-08-21T21:17:52.196Z]   ✓ SHA-256: 0f7cb8b18c5001d43d47d505585a91cfc0ecc8027258d9ba9292c926ea57e0a0
+[2026-08-21T21:17:52.378Z] 
+[68/130] l34-pandanggo
+[2026-08-21T21:17:52.399Z]   Searching: "Pandanggo sa Ilaw dance Philippines oil lamp"
+[2026-08-21T21:17:53.537Z]   No results for "Pandanggo sa Ilaw dance Philippines oil lamp"
+[2026-08-21T21:17:53.561Z]   ✗ FAILED: No usable media for l34-pandanggo
+[2026-08-21T21:17:53.583Z] 
+[69/130] l35-parol
+[2026-08-21T21:17:53.604Z]   Searching: "parol lantern star Philippines Christmas"
+[2026-08-21T21:17:54.313Z]   No results for "parol lantern star Philippines Christmas"
+[2026-08-21T21:17:54.335Z]   ✗ FAILED: No usable media for l35-parol
+[2026-08-21T21:17:54.358Z] 
+[70/130] l35-banig
+[2026-08-21T21:17:54.379Z]   Searching: "banig woven mat Philippines handicraft"
+[2026-08-21T21:17:55.292Z]   Checking: File:Rattan and Nito.jpg
+[2026-08-21T21:17:55.671Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/b/b6/Rattan_and_Nito.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:17:56.023Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Rattan_and_Nito.jpg/1280px-Rattan_and_Nito.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:17:57.255Z]   ✓ Saved: l35-banig.jpg (180038 bytes, image/jpeg)
+[2026-08-21T21:17:57.270Z]   ✓ SHA-256: e2ce5f9d01808d1293537158714b80a1a043fe2abcfab472f9525d5fa3174fb1
+[2026-08-21T21:17:57.451Z] 
+[71/130] l36-ibong-adarna
+[2026-08-21T21:17:57.474Z]   Searching: "Ibong Adarna Philippine literature epic bird"
+[2026-08-21T21:17:58.224Z]   No results for "Ibong Adarna Philippine literature epic bird"
+[2026-08-21T21:17:58.245Z]   ✗ FAILED: No usable media for l36-ibong-adarna
+[2026-08-21T21:17:58.266Z] 
+[72/130] l36-florante-laura
+[2026-08-21T21:17:58.288Z]   Searching: "Francisco Balagtas Florante Laura Philippines"
+[2026-08-21T21:17:59.071Z]   Checking: File:Florante at Laura 1913 cover.png
+[2026-08-21T21:17:59.399Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/3/3a/Florante_at_Laura_1913_cover.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:17:59.517Z]   ✓ Saved: l36-florante-laura.png (5662 bytes, image/png)
+[2026-08-21T21:17:59.532Z]   ✓ SHA-256: 41cdbda82fef17f58b681591ae472394ffdbe24c64871c19ab62ceab6f3da435
+[2026-08-21T21:17:59.717Z] 
+[73/130] l37-san-agustin
+[2026-08-21T21:17:59.738Z]   Searching: "San Agustin Church Manila Philippines oldest stone"
+[2026-08-21T21:18:00.474Z]   Checking: File:Museo de la iglesia de San Agustín, Manila, Filipinas, 2023-08-27, DD 91-93 HDR.jpg
+[2026-08-21T21:18:00.834Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/0/08/Museo_de_la_iglesia_de_San_Agust%C3%ADn%2C_Manila%2C_Filipinas%2C_2023-08-27%2C_DD_91-93_HDR.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:18:01.194Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Museo_de_la_iglesia_de_San_Agust%C3%ADn%2C_Manila%2C_Filipinas%2C_2023-08-27%2C_DD_91-93_HDR.jpg/1280px-Museo_de_la_iglesia_de_San_Agust%C3%ADn%2C_Manila%2C_Filipinas%2C_2023-08-27%2C_DD_91-93_HDR.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:18:03.426Z]   ✓ Saved: l37-san-agustin.jpg (433707 bytes, image/jpeg)
+[2026-08-21T21:18:03.440Z]   ✓ SHA-256: ac9caf7816209c6d1210be1b0f845c3a3c6c233797012fbfc4a65df9ef8539af
+[2026-08-21T21:18:03.613Z] 
+[74/130] l37-vigan
+[2026-08-21T21:18:03.634Z]   Searching: "Vigan heritage houses Calle Crisologo Ilocos Sur"
+[2026-08-21T21:18:04.386Z]   Checking: File:Vigan heritage village Calle Crisologo-Encarnacion, old houses (Vigan, Ilocos Sur; 11-15-2022).jpg
+[2026-08-21T21:18:04.755Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/8/8a/Vigan_heritage_village_Calle_Crisologo-Encarnacion%2C_old_houses_%28Vigan%2C_Ilocos_Sur%3B_11-15-2022%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:18:05.106Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Vigan_heritage_village_Calle_Crisologo-Encarnacion%2C_old_houses_%28Vigan%2C_Ilocos_Sur%3B_11-15-2022%29.jpg/1280px-Vigan_heritage_village_Calle_Crisologo-Encarnacion%2C_old_houses_%28Vigan%2C_Ilocos_Sur%3B_11-15-2022%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:18:05.794Z]   ✓ Saved: l37-vigan.jpg (399860 bytes, image/jpeg)
+[2026-08-21T21:18:05.810Z]   ✓ SHA-256: 1900180354fd012f50897bd2d3096a6ab19f00c0927add082f837d45bfadbad5
+[2026-08-21T21:18:05.981Z] 
+[75/130] l38-coconut-palm
+[2026-08-21T21:18:06.003Z]   Searching: "coconut palm tree Philippines beach tropical"
+[2026-08-21T21:18:06.841Z]   Checking: File:Malapascua (island), White sand beach and coconut palm trees, Philippines.jpg
+[2026-08-21T21:18:07.194Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/1/1c/Malapascua_%28island%29%2C_White_sand_beach_and_coconut_palm_trees%2C_Philippines.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:18:07.537Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Malapascua_%28island%29%2C_White_sand_beach_and_coconut_palm_trees%2C_Philippines.jpg/1280px-Malapascua_%28island%29%2C_White_sand_beach_and_coconut_palm_trees%2C_Philippines.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:18:08.608Z]   ✓ Saved: l38-coconut-palm.jpg (295773 bytes, image/jpeg)
+[2026-08-21T21:18:08.623Z]   ✓ SHA-256: f04633db5821a444121860b219e77d4105b45ed457db9984d524d4110812f733
+[2026-08-21T21:18:08.799Z] 
+[76/130] l38-rice-paddies
+[2026-08-21T21:18:08.820Z]   Searching: "rice paddies Philippines green field agriculture"
+[2026-08-21T21:18:09.599Z]   Checking: File:Rice Field in Merced, Banate, Iloilo.jpg
+[2026-08-21T21:18:09.934Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/c/cf/Rice_Field_in_Merced%2C_Banate%2C_Iloilo.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:18:10.279Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Rice_Field_in_Merced%2C_Banate%2C_Iloilo.jpg/1280px-Rice_Field_in_Merced%2C_Banate%2C_Iloilo.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:18:11.367Z]   ✓ Saved: l38-rice-paddies.jpg (565899 bytes, image/jpeg)
+[2026-08-21T21:18:11.382Z]   ✓ SHA-256: 900bfb6f94ba38f222458e68b4b3c484ac4a428cfac16a4e77ba7778527aebff
+[2026-08-21T21:18:11.564Z] 
+[77/130] l39-bathala
+[2026-08-21T21:18:11.586Z]   Searching: "Philippine mythology Bathala supreme deity art"
+[2026-08-21T21:18:12.379Z]   No results for "Philippine mythology Bathala supreme deity art"
+[2026-08-21T21:18:12.408Z]   ✗ FAILED: No usable media for l39-bathala
+[2026-08-21T21:18:12.422Z] 
+[78/130] l39-bakunawa
+[2026-08-21T21:18:12.443Z]   Searching: "Bakunawa dragon serpent Philippine mythology"
+[2026-08-21T21:18:13.560Z]   No results for "Bakunawa dragon serpent Philippine mythology"
+[2026-08-21T21:18:13.582Z]   ✗ FAILED: No usable media for l39-bakunawa
+[2026-08-21T21:18:13.603Z] 
+[79/130] l40-arnis
+[2026-08-21T21:18:13.623Z]   Searching: "arnis eskrima kali Philippine martial art stick"
+[2026-08-21T21:18:14.912Z]   No results for "arnis eskrima kali Philippine martial art stick"
+[2026-08-21T21:18:14.926Z]   ✗ FAILED: No usable media for l40-arnis
+[2026-08-21T21:18:14.947Z] 
+[80/130] l40-sipa
+[2026-08-21T21:18:14.968Z]   Searching: "sipa kick rattan ball Philippines traditional sport"
+[2026-08-21T21:18:15.943Z]   No results for "sipa kick rattan ball Philippines traditional sport"
+[2026-08-21T21:18:15.964Z]   ✗ FAILED: No usable media for l40-sipa
+[2026-08-21T21:18:15.985Z] 
+[81/130] l41-provinces-map
+[2026-08-21T21:18:16.006Z]   Searching: "Philippines provinces political map administrative"
+[2026-08-21T21:18:17.040Z]   Checking: File:PH Administrative Map.svg
+[2026-08-21T21:18:17.411Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/4/43/PH_Administrative_Map.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:18:20.173Z]   ✓ Saved: l41-provinces-map.svg (2308834 bytes, image/svg+xml)
+[2026-08-21T21:18:20.188Z]   ✓ SHA-256: 9b1d9e2cef9db28ac09196509f622aba0cc1c722c819923dd535eec7efaebc3d
+[2026-08-21T21:18:20.361Z] 
+[82/130] l41-boracay
+[2026-08-21T21:18:20.377Z]   Searching: "Boracay beach white sand Philippines Aklan"
+[2026-08-21T21:18:21.139Z]   Checking: File:White Beach, Boracay.jpg
+[2026-08-21T21:18:21.551Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/6/61/White_Beach%2C_Boracay.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:18:21.890Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/White_Beach%2C_Boracay.jpg/1280px-White_Beach%2C_Boracay.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:18:22.294Z]   ✓ Saved: l41-boracay.jpg (219571 bytes, image/jpeg)
+[2026-08-21T21:18:22.309Z]   ✓ SHA-256: f13e2f3d640ba90a18bbec82d1b04cef0aa2193610a80f6dc377969cdedb19c7
+[2026-08-21T21:18:22.494Z] 
+[83/130] l42-simbang-gabi
+[2026-08-21T21:18:22.515Z]   Searching: "Simbang Gabi mass church Philippines Christmas"
+[2026-08-21T21:18:23.245Z]   Checking: File:Simbang Gabi Baclaran Church Dec 16 2018.jpg
+[2026-08-21T21:18:23.620Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/1/13/Simbang_Gabi_Baclaran_Church_Dec_16_2018.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:18:24.039Z]   ✓ Saved: l42-simbang-gabi.jpg (224745 bytes, image/jpeg)
+[2026-08-21T21:18:24.053Z]   ✓ SHA-256: eb511a8daa24639c2faf9809705de54f5f5c63438fa830b24f64c96958970d58
+[2026-08-21T21:18:24.226Z] 
+[84/130] l42-giant-lantern
+[2026-08-21T21:18:24.496Z]   Searching: "Giant lantern festival San Fernando Pampanga Philippines"
+[2026-08-21T21:18:25.248Z]   No results for "Giant lantern festival San Fernando Pampanga Philippines"
+[2026-08-21T21:18:25.269Z]   ✗ FAILED: No usable media for l42-giant-lantern
+[2026-08-21T21:18:25.295Z] 
+[85/130] l43-mangrove
+[2026-08-21T21:18:25.310Z]   Searching: "Philippines mangrove forest ecosystem coastal"
+[2026-08-21T21:18:26.207Z]   Checking: File:Mangrove forest ecosystem.jpg
+[2026-08-21T21:18:26.585Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/e/e1/Mangrove_forest_ecosystem.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:18:26.917Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Mangrove_forest_ecosystem.jpg/1280px-Mangrove_forest_ecosystem.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:18:27.792Z]   ✓ Saved: l43-mangrove.jpg (374628 bytes, image/jpeg)
+[2026-08-21T21:18:27.807Z]   ✓ SHA-256: bcee6f640b72619ef158904b27c61e84c965f3962eea4e01d072b9b73119f96a
+[2026-08-21T21:18:27.992Z] 
+[86/130] l43-mount-apo
+[2026-08-21T21:18:28.013Z]   Searching: "Mount Apo highest Philippines Mindanao mountain"
+[2026-08-21T21:18:28.867Z]   Checking: File:The Ring of Mt. Apo.jpg
+[2026-08-21T21:18:29.237Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/1/1d/The_Ring_of_Mt._Apo.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:18:30.263Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/The_Ring_of_Mt._Apo.jpg/1280px-The_Ring_of_Mt._Apo.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:18:30.676Z]   ✓ Saved: l43-mount-apo.jpg (205102 bytes, image/jpeg)
+[2026-08-21T21:18:30.691Z]   ✓ SHA-256: 8b36eaa79bbedb977edd0713092a395ba868b187629534cbb434fcb33859a5f6
+[2026-08-21T21:18:30.864Z] 
+[87/130] l44-bonifacio
+[2026-08-21T21:18:30.885Z]   Searching: "Andres Bonifacio portrait Philippines hero Katipunan"
+[2026-08-21T21:18:31.715Z]   Checking: File:Report of the eighteenth annual meeting (IA reportofeighteen00harv).pdf
+[2026-08-21T21:18:32.355Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/9/98/Report_of_the_eighteenth_annual_meeting_%28IA_reportofeighteen00harv%29.pdf?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:18:35.969Z]   ✓ Saved: l44-bonifacio.jpg (5830136 bytes, unknown)
+[2026-08-21T21:18:35.984Z]   ✓ SHA-256: 81c1e0f1568f0d52ad58519c42541e87f8d2fb0f5f17315179c3e048f9ed9ac1
+[2026-08-21T21:18:36.157Z] 
+[88/130] l44-mabini
+[2026-08-21T21:18:36.177Z]   Searching: "Apolinario Mabini portrait Philippines revolutionary"
+[2026-08-21T21:18:36.952Z]   Checking: File:Apolinario Mabini.jpg
+[2026-08-21T21:18:37.283Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/f/f5/Apolinario_Mabini.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:18:37.428Z]   ✓ Saved: l44-mabini.jpg (52467 bytes, image/jpeg)
+[2026-08-21T21:18:37.444Z]   ✓ SHA-256: a99a3ed9d2443b273547793d664e75eec20128fd615d923325d8a4ab06fce0e6
+[2026-08-21T21:18:37.623Z] 
+[89/130] l45-baybayin
+[2026-08-21T21:18:37.643Z]   Searching: "Baybayin script Philippines writing system ancient"
+[2026-08-21T21:18:38.650Z]   Checking: File:Baybayin sample.svg
+[2026-08-21T21:18:39.022Z]     Skipping SVG for primary_source_scan
+[2026-08-21T21:18:39.043Z]   Checking: File:Baybayin Card v1.png
+[2026-08-21T21:18:39.388Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/e/ed/Baybayin_Card_v1.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:18:39.571Z]   ✓ Saved: l45-baybayin.png (171622 bytes, image/png)
+[2026-08-21T21:18:39.586Z]   ✓ SHA-256: 5b04e9768e76522080344ed344c8b7c819ffec8b87276577659cb8cc3c540dff
+[2026-08-21T21:18:39.772Z] 
+[90/130] l45-doctrina-christiana
+[2026-08-21T21:18:39.795Z]   Searching: "Doctrina Christiana 1593 Philippines first book printed"
+[2026-08-21T21:18:40.695Z]   Checking: File:Doctrina Christiana en lengua española y tagala.pdf
+[2026-08-21T21:18:41.063Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/5/5a/Doctrina_Christiana_en_lengua_espa%C3%B1ola_y_tagala.pdf?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:19:02.078Z]   ✓ Saved: l45-doctrina-christiana.jpg (31894557 bytes, unknown)
+[2026-08-21T21:19:02.092Z]   ✓ SHA-256: 10307f17b430aecdb323812865829ecceb3ccd0783f154b5c9a827675bd6933b
+[2026-08-21T21:19:02.266Z] 
+[91/130] l46-bangus
+[2026-08-21T21:19:02.280Z]   Searching: "bangus milkfish Philippines national fish food"
+[2026-08-21T21:19:03.363Z]   Checking: File:2017 2 - Philippines General Appropriations Act (Budget).pdf
+[2026-08-21T21:19:03.705Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/c/c5/2017_2_-_Philippines_General_Appropriations_Act_%28Budget%29.pdf?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:22:37.407Z]   ✓ Saved: l46-bangus.jpg (314909947 bytes, unknown)
+[2026-08-21T21:22:37.421Z]   ✓ SHA-256: 300beff256e776625fdc0a6dd6090a13fb4a73a7e206ebbd1aea626889fdb146
+[2026-08-21T21:22:37.601Z] 
+[92/130] l46-seafood-market
+[2026-08-21T21:22:37.623Z]   Searching: "Philippines seafood market fish fresh dampa"
+[2026-08-21T21:22:38.782Z]   No results for "Philippines seafood market fish fresh dampa"
+[2026-08-21T21:22:38.952Z]   ✗ FAILED: No usable media for l46-seafood-market
+[2026-08-21T21:22:38.973Z] 
+[93/130] l47-santos
+[2026-08-21T21:22:38.995Z]   Searching: "santos wooden carving Philippines religious art"
+[2026-08-21T21:22:40.132Z]   Checking: File:An army officer on leave in Japan; (IA armyofficeron00mausiala).pdf
+[2026-08-21T21:22:40.474Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/f/f3/An_army_officer_on_leave_in_Japan%3B_%28IA_armyofficeron00mausiala%29.pdf?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:22:53.991Z]   ✓ Saved: l47-santos.jpg (23037989 bytes, unknown)
+[2026-08-21T21:22:54.005Z]   ✓ SHA-256: 60ec3bac578c074abe3cf1852702104df897130acfba8c1287e6ae59078c67ed
+[2026-08-21T21:22:54.181Z] 
+[94/130] l47-capiz-shells
+[2026-08-21T21:22:54.196Z]   Searching: "capiz shell craft Philippines Placuna"
+[2026-08-21T21:22:55.198Z]   No results for "capiz shell craft Philippines Placuna"
+[2026-08-21T21:22:55.219Z]   ✗ FAILED: No usable media for l47-capiz-shells
+[2026-08-21T21:22:55.242Z] 
+[95/130] l48-bayanihan
+[2026-08-21T21:22:55.263Z]   Searching: "bayanihan Philippines community carry house nipa"
+[2026-08-21T21:22:56.379Z]   No results for "bayanihan Philippines community carry house nipa"
+[2026-08-21T21:22:56.400Z]   ✗ FAILED: No usable media for l48-bayanihan
+[2026-08-21T21:22:56.421Z] 
+[96/130] l48-pahiyas
+[2026-08-21T21:22:56.442Z]   Searching: "Pahiyas Festival Lucban Quezon Philippines harvest"
+[2026-08-21T21:22:57.260Z]   Checking: File:Lucban's Pahiyas Festival 2016.jpg
+[2026-08-21T21:22:57.672Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/e/e0/Lucban%27s_Pahiyas_Festival_2016.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:22:58.012Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Lucban%27s_Pahiyas_Festival_2016.jpg/1280px-Lucban%27s_Pahiyas_Festival_2016.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:23:03.813Z]   ✓ Saved: l48-pahiyas.jpg (663015 bytes, image/jpeg)
+[2026-08-21T21:23:03.828Z]   ✓ SHA-256: 0fc7babf4ba797e3327f86d10c5ce43974d4a91b5b35692864f6fc916e93c770
+[2026-08-21T21:23:04.012Z] 
+[97/130] l49-salt-making
+[2026-08-21T21:23:04.034Z]   Searching: "Philippine salt making traditional artisan Pangasinan"
+[2026-08-21T21:23:05.064Z]   No results for "Philippine salt making traditional artisan Pangasinan"
+[2026-08-21T21:23:05.079Z]   ✗ FAILED: No usable media for l49-salt-making
+[2026-08-21T21:23:05.099Z] 
+[98/130] l49-fe-del-mundo
+[2026-08-21T21:23:05.119Z]   Searching: "Fe del Mundo Philippines pediatrician pioneer doctor"
+[2026-08-21T21:23:05.880Z]   No results for "Fe del Mundo Philippines pediatrician pioneer doctor"
+[2026-08-21T21:23:05.901Z]   ✗ FAILED: No usable media for l49-fe-del-mundo
+[2026-08-21T21:23:05.921Z] 
+[99/130] l50-coron-palawan
+[2026-08-21T21:23:05.941Z]   Searching: "Coron Island Palawan Philippines lagoon kayangan"
+[2026-08-21T21:23:06.692Z]   Checking: File:Pier of Kayangan lagoon, Coron, Palawan - panoramio.jpg
+[2026-08-21T21:23:07.057Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/d/dc/Pier_of_Kayangan_lagoon%2C_Coron%2C_Palawan_-_panoramio.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:23:07.401Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Pier_of_Kayangan_lagoon%2C_Coron%2C_Palawan_-_panoramio.jpg/1280px-Pier_of_Kayangan_lagoon%2C_Coron%2C_Palawan_-_panoramio.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:23:08.010Z]   ✓ Saved: l50-coron-palawan.jpg (315815 bytes, image/jpeg)
+[2026-08-21T21:23:08.026Z]   ✓ SHA-256: 09b753356a2125a19c772c1bdb0d29057ee941ae7b399ab4b0af7a17ee46532e
+[2026-08-21T21:23:08.208Z] 
+[100/130] l50-hundred-islands
+[2026-08-21T21:23:08.229Z]   Searching: "Hundred Islands Pangasinan Philippines national park"
+[2026-08-21T21:23:08.983Z]   Checking: File:Hundred Islands National Park, Philippines (181768801).jpg
+[2026-08-21T21:23:10.237Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/c/c1/Hundred_Islands_National_Park%2C_Philippines_%28181768801%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:23:10.625Z]   ✓ Saved: l50-hundred-islands.jpg (131064 bytes, image/jpeg)
+[2026-08-21T21:23:10.645Z]   ✓ SHA-256: d5a222cc50c6e3e1894041f6279cc577f485e46c19eddb47eccc959003500c3b
+[2026-08-21T21:23:10.825Z] 
+[101/130] l51-independence
+[2026-08-21T21:23:10.846Z]   Searching: "Philippine independence declaration 1898 Kawit Cavite"
+[2026-08-21T21:23:11.679Z]   Checking: File:Aguinaldo Mansion in Kawit Cavite.jpg
+[2026-08-21T21:23:12.077Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/2/29/Aguinaldo_Mansion_in_Kawit_Cavite.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:23:12.429Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Aguinaldo_Mansion_in_Kawit_Cavite.jpg/1280px-Aguinaldo_Mansion_in_Kawit_Cavite.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:23:14.051Z]   ✓ Saved: l51-independence.jpg (244289 bytes, image/jpeg)
+[2026-08-21T21:23:14.066Z]   ✓ SHA-256: 4c3714de67d818168290f664fe917603e8a5e154fe4010b61f563c1623f71fa1
+[2026-08-21T21:23:14.241Z] 
+[102/130] l51-aguinaldo
+[2026-08-21T21:23:14.263Z]   Searching: "Emilio Aguinaldo portrait president Philippines first"
+[2026-08-21T21:23:15.408Z]   Checking: File:Emilio Aguinaldo ca. 1919 (Restored).jpg
+[2026-08-21T21:23:15.768Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/4/45/Emilio_Aguinaldo_ca._1919_%28Restored%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:23:16.107Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Emilio_Aguinaldo_ca._1919_%28Restored%29.jpg/1280px-Emilio_Aguinaldo_ca._1919_%28Restored%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:23:16.585Z]   ✓ Saved: l51-aguinaldo.jpg (461663 bytes, image/jpeg)
+[2026-08-21T21:23:16.600Z]   ✓ SHA-256: 0e7add85a6b57f065d99611159bcf02c595d0d9ea728468cc328716d550af8e9
+[2026-08-21T21:23:16.775Z] 
+[103/130] l52-kamayan
+[2026-08-21T21:23:16.796Z]   Searching: "kamayan feast Philippines eating hands banana leaf"
+[2026-08-21T21:23:17.895Z]   No results for "kamayan feast Philippines eating hands banana leaf"
+[2026-08-21T21:23:17.916Z]   ✗ FAILED: No usable media for l52-kamayan
+[2026-08-21T21:23:17.937Z] 
+[104/130] l52-boodle-fight
+[2026-08-21T21:23:17.957Z]   Searching: "boodle fight Philippines communal meal military"
+[2026-08-21T21:23:18.789Z]   Checking: File:Boodle Fight (Baler, Aurora).jpg
+[2026-08-21T21:23:19.160Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/e/e4/Boodle_Fight_%28Baler%2C_Aurora%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:23:19.508Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Boodle_Fight_%28Baler%2C_Aurora%29.jpg/1280px-Boodle_Fight_%28Baler%2C_Aurora%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:23:21.106Z]   ✓ Saved: l52-boodle-fight.jpg (799315 bytes, image/jpeg)
+[2026-08-21T21:23:21.122Z]   ✓ SHA-256: 7d5fa289119c2d16bd3bd1a475e6339e5a8d242b5ed1516414ac1c8a15129b66
+[2026-08-21T21:23:21.305Z] 
+[105/130] l53-tamaraw
+[2026-08-21T21:23:21.328Z]   Searching: "tamaraw buffalo Mindoro Philippines Bubalus mindorensis"
+[2026-08-21T21:23:22.943Z]   Checking: File:Bubalus mindorensis by Gregg Yan 01.jpg
+[2026-08-21T21:23:23.286Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/0/0b/Bubalus_mindorensis_by_Gregg_Yan_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:23:23.772Z]   ✓ Saved: l53-tamaraw.jpg (991368 bytes, image/jpeg)
+[2026-08-21T21:23:23.788Z]   ✓ SHA-256: 774cdf1b118f13f734f7d44d4637184a443938ea070c921d7881585edb3a5343
+[2026-08-21T21:23:24.120Z] 
+[106/130] l53-philippine-crocodile
+[2026-08-21T21:23:24.145Z]   Searching: "Philippine crocodile Crocodylus mindorensis endangered"
+[2026-08-21T21:23:25.114Z]   Checking: File:Philippine Crocodile (Crocodylus mindorensis).jpg
+[2026-08-21T21:23:25.471Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/a/a4/Philippine_Crocodile_%28Crocodylus_mindorensis%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:23:25.802Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Philippine_Crocodile_%28Crocodylus_mindorensis%29.jpg/1280px-Philippine_Crocodile_%28Crocodylus_mindorensis%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:23:27.198Z]   ✓ Saved: l53-philippine-crocodile.jpg (515899 bytes, image/jpeg)
+[2026-08-21T21:23:27.213Z]   ✓ SHA-256: c5dad6959c20be7338f8da66e35a9819182f0de0d0f1e0f4c7dd715286e340f9
+[2026-08-21T21:23:27.391Z] 
+[107/130] l54-callao-cave
+[2026-08-21T21:23:27.412Z]   Searching: "Callao Cave Cagayan Philippines chapel Homo luzonensis"
+[2026-08-21T21:23:28.450Z]   No results for "Callao Cave Cagayan Philippines chapel Homo luzonensis"
+[2026-08-21T21:23:28.472Z]   ✗ FAILED: No usable media for l54-callao-cave
+[2026-08-21T21:23:28.494Z] 
+[108/130] l54-hanging-coffins
+[2026-08-21T21:23:28.516Z]   Searching: "Sagada hanging coffins Mountain Province Philippines"
+[2026-08-21T21:23:29.335Z]   Checking: File:Sagada Hanging Coffin.jpg
+[2026-08-21T21:23:29.696Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/1/14/Sagada_Hanging_Coffin.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:23:30.043Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Sagada_Hanging_Coffin.jpg/1280px-Sagada_Hanging_Coffin.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:23:32.063Z]   ✓ Saved: l54-hanging-coffins.jpg (1238720 bytes, image/jpeg)
+[2026-08-21T21:23:32.078Z]   ✓ SHA-256: 2f21ed2041f61fd21155c05a42a74ed3dc8d6ab0a64c78b8667234eaee6c901d
+[2026-08-21T21:23:32.268Z] 
+[109/130] l55-spoliarium
+[2026-08-21T21:23:32.283Z]   Searching: "Spoliarium Juan Luna painting Philippines 1884"
+[2026-08-21T21:23:33.062Z]   Checking: File:Spoliarium by Juan Luna — National Museum of Fine Arts, Manila.jpg
+[2026-08-21T21:23:33.442Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/4/41/Spoliarium_by_Juan_Luna_%E2%80%94_National_Museum_of_Fine_Arts%2C_Manila.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:23:34.050Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Spoliarium_by_Juan_Luna_%E2%80%94_National_Museum_of_Fine_Arts%2C_Manila.jpg/1280px-Spoliarium_by_Juan_Luna_%E2%80%94_National_Museum_of_Fine_Arts%2C_Manila.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:23:38.183Z]   ✓ Saved: l55-spoliarium.jpg (366271 bytes, image/jpeg)
+[2026-08-21T21:23:38.198Z]   ✓ SHA-256: 57758865d82ee658f83512f2a8dd14d47dc7fc91a9877b9df2dd62acac077258
+[2026-08-21T21:23:38.382Z] 
+[110/130] l55-amorsolo
+[2026-08-21T21:23:38.404Z]   Searching: "Fernando Amorsolo painting Philippines national artist"
+[2026-08-21T21:23:39.257Z]   Checking: File:Unfinished Painting by Fernando Armosolo.jpg
+[2026-08-21T21:23:39.636Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/7/7e/Unfinished_Painting_by_Fernando_Armosolo.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:23:39.970Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Unfinished_Painting_by_Fernando_Armosolo.jpg/1280px-Unfinished_Painting_by_Fernando_Armosolo.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:23:40.139Z]   ✓ Saved: l55-amorsolo.jpg (172501 bytes, image/jpeg)
+[2026-08-21T21:23:40.152Z]   ✓ SHA-256: 5fec131ffa62fc782afb4320f85cb4ab2de65f44147f282fd720ed6252989cc1
+[2026-08-21T21:23:41.881Z] 
+[111/130] l56-rondalla
+[2026-08-21T21:23:41.903Z]   Searching: "rondalla string ensemble Philippines bandurria"
+[2026-08-21T21:23:43.000Z]   No results for "rondalla string ensemble Philippines bandurria"
+[2026-08-21T21:23:43.014Z]   ✗ FAILED: No usable media for l56-rondalla
+[2026-08-21T21:23:43.034Z] 
+[112/130] l56-bamboo-organ
+[2026-08-21T21:23:43.055Z]   Searching: "bamboo organ Las Piñas Philippines 1824 church"
+[2026-08-21T21:23:43.868Z]   Checking: File:Church of Las Piñas historical marker - 2.jpg
+[2026-08-21T21:23:44.248Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/1/16/Church_of_Las_Pi%C3%B1as_historical_marker_-_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:23:44.595Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Church_of_Las_Pi%C3%B1as_historical_marker_-_2.jpg/1280px-Church_of_Las_Pi%C3%B1as_historical_marker_-_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:23:47.468Z]   ✓ Saved: l56-bamboo-organ.jpg (430163 bytes, image/jpeg)
+[2026-08-21T21:23:47.483Z]   ✓ SHA-256: 0bb4c67441af14f0b6c57d8d9e217d1139d780b8793a40e3eb6e24abdf8e4e6e
+[2026-08-21T21:23:47.662Z] 
+[113/130] l57-balangay
+[2026-08-21T21:23:47.686Z]   Searching: "balangay boat Philippines pre-colonial seafaring Butuan"
+[2026-08-21T21:23:48.655Z]   No results for "balangay boat Philippines pre-colonial seafaring Butuan"
+[2026-08-21T21:23:48.669Z]   ✗ FAILED: No usable media for l57-balangay
+[2026-08-21T21:23:48.690Z] 
+[114/130] l57-bangka
+[2026-08-21T21:23:48.711Z]   Searching: "bangka outrigger boat Philippines traditional fishing"
+[2026-08-21T21:23:49.668Z]   Checking: File:Native Fishing Craft 1942 (Bangka, Philippines).jpg
+[2026-08-21T21:23:50.066Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/9/91/Native_Fishing_Craft_1942_%28Bangka%2C_Philippines%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:23:50.411Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Native_Fishing_Craft_1942_%28Bangka%2C_Philippines%29.jpg/1280px-Native_Fishing_Craft_1942_%28Bangka%2C_Philippines%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:23:51.829Z]   ✓ Saved: l57-bangka.jpg (346895 bytes, image/jpeg)
+[2026-08-21T21:23:51.846Z]   ✓ SHA-256: daf1333294debbb768fe765a5072a3bed4d9964c63df91e76e1854944ae3aee9
+[2026-08-21T21:23:52.028Z] 
+[115/130] l58-ust
+[2026-08-21T21:23:52.049Z]   Searching: "University Santo Tomas Manila Philippines oldest Asia"
+[2026-08-21T21:23:52.864Z]   Checking: File:Acta Fundacion de Santo Tomas, 1611.JPG
+[2026-08-21T21:23:53.245Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/8/88/Acta_Fundacion_de_Santo_Tomas%2C_1611.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:23:53.573Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Acta_Fundacion_de_Santo_Tomas%2C_1611.JPG/1280px-Acta_Fundacion_de_Santo_Tomas%2C_1611.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:23:54.009Z]   ✓ Saved: l58-ust.jpg (239936 bytes, image/jpeg)
+[2026-08-21T21:23:54.025Z]   ✓ SHA-256: 0fb2787bf6a099128330967b3a1ee19046f008e009ae122ea14693e582b0be3d
+[2026-08-21T21:23:54.198Z] 
+[116/130] l58-school-building
+[2026-08-21T21:23:54.220Z]   Searching: "Philippine school building education students"
+[2026-08-21T21:23:55.129Z]   Checking: File:Emotional tolls of physical education teacher education students (PETE) toward physical education - An extensive analysis, Journal of Physical Education (72828).pdf
+[2026-08-21T21:23:55.465Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/d/d5/Emotional_tolls_of_physical_education_teacher_education_students_%28PETE%29_toward_physical_education_-_An_extensive_analysis%2C_Journal_of_Physical_Education_%2872828%29.pdf?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:24:00.076Z]   ✓ Saved: l58-school-building.jpg (505150 bytes, unknown)
+[2026-08-21T21:24:00.092Z]   ✓ SHA-256: 776b0f26c86d434259d065f0bbbb2d70e344ff0fc8e3b4c098f40d1bcb9a4bec
+[2026-08-21T21:24:00.275Z] 
+[117/130] l59-mango
+[2026-08-21T21:24:00.295Z]   Searching: "Philippine mango carabao mango Mangifera indica"
+[2026-08-21T21:24:01.192Z]   Checking: File:Mangifera indica L. - mango, Anacardiaceae, cashew family (IA CAT11136345).pdf
+[2026-08-21T21:24:01.558Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/0/0e/Mangifera_indica_L._-_mango%2C_Anacardiaceae%2C_cashew_family_%28IA_CAT11136345%29.pdf?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:24:03.093Z]   ✓ Saved: l59-mango.jpg (540879 bytes, unknown)
+[2026-08-21T21:24:03.109Z]   ✓ SHA-256: fbab0bb399d9b5d86d610772afc1bdea6e420d47ba4a55f8d86b790c3eec8d94
+[2026-08-21T21:24:03.291Z] 
+[118/130] l59-durian
+[2026-08-21T21:24:03.311Z]   Searching: "durian fruit Davao Philippines tropical king"
+[2026-08-21T21:24:04.090Z]   No results for "durian fruit Davao Philippines tropical king"
+[2026-08-21T21:24:04.105Z]   ✗ FAILED: No usable media for l59-durian
+[2026-08-21T21:24:04.117Z] 
+[119/130] l60-folklore
+[2026-08-21T21:24:04.132Z]   Searching: "Philippine mythology creature folklore art"
+[2026-08-21T21:24:04.929Z]   Checking: File:A child's guide mythology (IA childsguidemytho00clar).pdf
+[2026-08-21T21:24:05.274Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/5/59/A_child%27s_guide_mythology_%28IA_childsguidemytho00clar%29.pdf?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:24:20.077Z]   ✓ Saved: l60-folklore.jpg (20805745 bytes, unknown)
+[2026-08-21T21:24:20.092Z]   ✓ SHA-256: 04695324cc007e744f53cbe486648a72e0ead6b8323dcde0a715da2db72ae482
+[2026-08-21T21:24:20.268Z] 
+[120/130] l60-diwata
+[2026-08-21T21:24:20.285Z]   Searching: "diwata nature spirit Philippines mythology enchantress"
+[2026-08-21T21:24:21.207Z]   No results for "diwata nature spirit Philippines mythology enchantress"
+[2026-08-21T21:24:21.230Z]   ✗ FAILED: No usable media for l60-diwata
+[2026-08-21T21:24:21.252Z] 
+[121/130] l61-edsa-revolution
+[2026-08-21T21:24:21.275Z]   Searching: "EDSA People Power Revolution 1986 Philippines crowd"
+[2026-08-21T21:24:22.012Z]   No results for "EDSA People Power Revolution 1986 Philippines crowd"
+[2026-08-21T21:24:22.034Z]   ✗ FAILED: No usable media for l61-edsa-revolution
+[2026-08-21T21:24:22.054Z] 
+[122/130] l61-cory-aquino
+[2026-08-21T21:24:22.075Z]   Searching: "Corazon Aquino president Philippines portrait"
+[2026-08-21T21:24:22.878Z]   Checking: File:Benigno S. Aquino III greets Corazon Malanyaon (cropped).jpg
+[2026-08-21T21:24:23.262Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/5/52/Benigno_S._Aquino_III_greets_Corazon_Malanyaon_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:24:23.860Z]   ✓ Saved: l61-cory-aquino.jpg (26809 bytes, image/jpeg)
+[2026-08-21T21:24:23.875Z]   ✓ SHA-256: ce77f47c869bc99b7b6c96c8fcaa5d448847b4a4e19a173f41d142e6023de000
+[2026-08-21T21:24:24.051Z] 
+[123/130] l62-coral-reef
+[2026-08-21T21:24:24.072Z]   Searching: "Philippines coral reef underwater diving marine"
+[2026-08-21T21:24:24.849Z]   Checking: File:Three new species of Chromis (Teleostei, Pomacentridae) from mesophotic coral ecosystems of the Philippines.pdf
+[2026-08-21T21:24:25.246Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/7/7a/Three_new_species_of_Chromis_%28Teleostei%2C_Pomacentridae%29_from_mesophotic_coral_ecosystems_of_the_Philippines.pdf?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:24:28.435Z]   ✓ Saved: l62-coral-reef.jpg (2529448 bytes, unknown)
+[2026-08-21T21:24:28.450Z]   ✓ SHA-256: 0c5e3e5890ba24e1a099c7237dc0b04cae5e55094912d84de62b2c48ba0c240c
+[2026-08-21T21:24:28.732Z] 
+[124/130] l62-rainforest
+[2026-08-21T21:24:30.217Z]   Searching: "Philippine rainforest tropical forest Sierra Madre"
+[2026-08-21T21:24:31.035Z]   Checking: File:01316jfHilltop San Mateo Sitio Bitbit Lorenzo River Bridge Norzagaray Bulacan villagesfvf 18.JPG
+[2026-08-21T21:24:31.436Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/5/55/01316jfHilltop_San_Mateo_Sitio_Bitbit_Lorenzo_River_Bridge_Norzagaray_Bulacan_villagesfvf_18.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:24:32.226Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/01316jfHilltop_San_Mateo_Sitio_Bitbit_Lorenzo_River_Bridge_Norzagaray_Bulacan_villagesfvf_18.JPG/1280px-01316jfHilltop_San_Mateo_Sitio_Bitbit_Lorenzo_River_Bridge_Norzagaray_Bulacan_villagesfvf_18.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:24:34.628Z]   ✓ Saved: l62-rainforest.jpg (454522 bytes, image/jpeg)
+[2026-08-21T21:24:34.644Z]   ✓ SHA-256: 10b4ca45db1beaf6e796b54e77e4cabac92bddd16cdc41dd456720a25bfa9829
+[2026-08-21T21:24:34.830Z] 
+[125/130] l63-jeepney-factory
+[2026-08-21T21:24:34.851Z]   Searching: "jeepney manufacturing Philippines factory art"
+[2026-08-21T21:24:35.616Z]   No results for "jeepney manufacturing Philippines factory art"
+[2026-08-21T21:24:35.636Z]   ✗ FAILED: No usable media for l63-jeepney-factory
+[2026-08-21T21:24:35.657Z] 
+[126/130] l63-innovation
+[2026-08-21T21:24:35.677Z]   Searching: "Filipino invention innovation technology Philippines"
+[2026-08-21T21:24:36.454Z]   Checking: File:The Center for Building Technology - a perspective (IA centerforbuildin439nati).pdf
+[2026-08-21T21:24:36.804Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/2/29/The_Center_for_Building_Technology_-_a_perspective_%28IA_centerforbuildin439nati%29.pdf?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:24:38.331Z]   ✓ Saved: l63-innovation.jpg (2310148 bytes, unknown)
+[2026-08-21T21:24:38.346Z]   ✓ SHA-256: b6447d7140db5be1b5c6fe2fca8875fa03a78c158d3e16c9a058c3d15d78c031
+[2026-08-21T21:24:38.525Z] 
+[127/130] l64-masskara
+[2026-08-21T21:24:38.547Z]   Searching: "MassKara Festival Bacolod Philippines mask smiling"
+[2026-08-21T21:24:39.368Z]   Checking: File:Masskara Festival of Bacolod City.jpg
+[2026-08-21T21:24:39.746Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/6/65/Masskara_Festival_of_Bacolod_City.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:24:40.080Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Masskara_Festival_of_Bacolod_City.jpg/1280px-Masskara_Festival_of_Bacolod_City.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:24:40.737Z]   ✓ Saved: l64-masskara.jpg (525003 bytes, image/jpeg)
+[2026-08-21T21:24:40.754Z]   ✓ SHA-256: e001feff37ffffebe42be41b7b6533a9e60b854102635466288bb13208965838
+[2026-08-21T21:24:40.938Z] 
+[128/130] l64-panagbenga
+[2026-08-21T21:24:40.958Z]   Searching: "Panagbenga Flower Festival Baguio Philippines float"
+[2026-08-21T21:24:42.380Z]   Checking: File:Panagbengga Festival of Baguio.jpg
+[2026-08-21T21:24:42.759Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/2/26/Panagbengga_Festival_of_Baguio.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:24:43.093Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Panagbengga_Festival_of_Baguio.jpg/1280px-Panagbengga_Festival_of_Baguio.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:24:44.198Z]   ✓ Saved: l64-panagbenga.jpg (363470 bytes, image/jpeg)
+[2026-08-21T21:24:44.214Z]   ✓ SHA-256: 635c8e2559e899cd4670294d23a807872db003ec095133ae307844a99907806f
+[2026-08-21T21:24:44.390Z] 
+[129/130] l65-manila-skyline
+[2026-08-21T21:24:44.412Z]   Searching: "Manila skyline Philippines cityscape modern BGC"
+[2026-08-21T21:24:45.126Z]   No results for "Manila skyline Philippines cityscape modern BGC"
+[2026-08-21T21:24:45.297Z]   ✗ FAILED: No usable media for l65-manila-skyline
+[2026-08-21T21:24:45.318Z] 
+[130/130] l65-filipino-children
+[2026-08-21T21:24:45.338Z]   Searching: "Filipino children school happy smiling Philippines"
+[2026-08-21T21:24:46.233Z]   Checking: File:Happy faces! (5816523821).jpg
+[2026-08-21T21:24:46.606Z]   Downloading: https://upload.wikimedia.org/wikipedia/commons/f/fa/Happy_faces%21_%285816523821%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original
+[2026-08-21T21:24:46.944Z]   Using thumb: https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Happy_faces%21_%285816523821%29.jpg/1280px-Happy_faces%21_%285816523821%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail
+[2026-08-21T21:24:48.462Z]   ✓ Saved: l65-filipino-children.jpg (243843 bytes, image/jpeg)
+[2026-08-21T21:24:48.479Z]   ✓ SHA-256: 751649abd8a7499807ac6dda69a72aa09d43d6372451b94045e6ae30819bdb17
+[2026-08-21T21:24:48.673Z] 
+═══════════════════════════════════════════════════════════════════
+[2026-08-21T21:24:48.693Z] ACQUISITION COMPLETE
+[2026-08-21T21:24:48.714Z] ═══════════════════════════════════════════════════════════════════
+[2026-08-21T21:24:48.735Z] Downloaded: 99/130
+[2026-08-21T21:24:48.755Z] Failed: 31
+[2026-08-21T21:24:48.777Z] 
+Failed items:
+[2026-08-21T21:24:48.798Z]   - l08-tubbataha-reef: No usable media found after all searches
+[2026-08-21T21:24:48.819Z]   - l09-palengke-market: No usable media found after all searches
+[2026-08-21T21:24:48.840Z]   - l11-sungka-board: No usable media found after all searches
+[2026-08-21T21:24:48.862Z]   - l12-kudyapi: No usable media found after all searches
+[2026-08-21T21:24:48.884Z]   - l13-buwan-ng-wika: No usable media found after all searches
+[2026-08-21T21:24:48.906Z]   - l18-lagundi: No usable media found after all searches
+[2026-08-21T21:24:48.927Z]   - l19-filipiniana-dress: No usable media found after all searches
+[2026-08-21T21:24:48.950Z]   - l25-carabao-festival: No usable media found after all searches
+[2026-08-21T21:24:48.972Z]   - l27-tnalak-textile: No usable media found after all searches
+[2026-08-21T21:24:49.014Z]   - l34-pandanggo: No usable media found after all searches
+[2026-08-21T21:24:49.036Z]   - l35-parol: No usable media found after all searches
+[2026-08-21T21:24:49.057Z]   - l36-ibong-adarna: No usable media found after all searches
+[2026-08-21T21:24:49.079Z]   - l39-bathala: No usable media found after all searches
+[2026-08-21T21:24:49.100Z]   - l39-bakunawa: No usable media found after all searches
+[2026-08-21T21:24:49.122Z]   - l40-arnis: No usable media found after all searches
+[2026-08-21T21:24:49.144Z]   - l40-sipa: No usable media found after all searches
+[2026-08-21T21:24:49.165Z]   - l42-giant-lantern: No usable media found after all searches
+[2026-08-21T21:24:49.187Z]   - l46-seafood-market: No usable media found after all searches
+[2026-08-21T21:24:49.209Z]   - l47-capiz-shells: No usable media found after all searches
+[2026-08-21T21:24:49.230Z]   - l48-bayanihan: No usable media found after all searches
+[2026-08-21T21:24:49.250Z]   - l49-salt-making: No usable media found after all searches
+[2026-08-21T21:24:49.520Z]   - l49-fe-del-mundo: No usable media found after all searches
+[2026-08-21T21:24:49.540Z]   - l52-kamayan: No usable media found after all searches
+[2026-08-21T21:24:49.561Z]   - l54-callao-cave: No usable media found after all searches
+[2026-08-21T21:24:49.582Z]   - l56-rondalla: No usable media found after all searches
+[2026-08-21T21:24:49.603Z]   - l57-balangay: No usable media found after all searches
+[2026-08-21T21:24:49.624Z]   - l59-durian: No usable media found after all searches
+[2026-08-21T21:24:49.645Z]   - l60-diwata: No usable media found after all searches
+[2026-08-21T21:24:50.313Z]   - l61-edsa-revolution: No usable media found after all searches
+[2026-08-21T21:24:50.338Z]   - l63-jeepney-factory: No usable media found after all searches
+[2026-08-21T21:24:50.360Z]   - l65-manila-skyline: No usable media found after all searches
+[2026-08-21T21:24:50.522Z] 
+Results: D:\wonder-journey-os-integration\media-acquisition-results.json

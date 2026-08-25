@@ -107,6 +107,7 @@ export default function ClassroomPage() {
       joining={joining || call.status === "connecting"}
       joinError={joinError}
       onJoin={join}
+      onEnterSolo={() => call.enterSolo(name)}
       role={role ?? "family"}
     />
   );
@@ -120,6 +121,7 @@ function Lobby({
   joining,
   joinError,
   onJoin,
+  onEnterSolo,
   role,
 }: {
   name: string;
@@ -128,6 +130,7 @@ function Lobby({
   joining: boolean;
   joinError: string | null;
   onJoin: (d: { camId: string; micId: string; camOn: boolean; micOn: boolean }) => void;
+  onEnterSolo?: () => void;
   role: string;
 }) {
   const cam = useLocalCamera();
@@ -264,6 +267,14 @@ function Lobby({
             disabled={joining}
           >
             {joining ? "Connecting… 🌐" : "🚀 Enter Classroom"}
+          </button>
+          <button
+            id="solo-classroom-btn"
+            type="button"
+            className="wj-btn wj-btn-ghost w-full text-sm font-bold mt-2"
+            onClick={() => onEnterSolo?.()}
+          >
+            🎮 Preview Adventure Classroom (Solo / Stage Mode)
           </button>
         </div>
       </div>

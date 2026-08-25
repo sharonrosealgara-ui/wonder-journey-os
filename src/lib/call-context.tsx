@@ -78,6 +78,7 @@ type CallCtx = {
   camOn: boolean;
   sharing: boolean;
   join: (opts: JoinOptions) => Promise<JoinResult>;
+  enterSolo: (name?: string) => void;
   endCall: () => void;
   toggleMic: () => void;
   toggleCam: () => void;
@@ -249,6 +250,13 @@ export function CallProvider({ children }: { children: React.ReactNode }) {
     [bump]
   );
 
+  const enterSolo = useCallback((customName?: string) => {
+    roomRef.current?.disconnect();
+    roomRef.current = null;
+    if (customName) setName(customName);
+    setStatus("solo");
+  }, []);
+
   const endCall = useCallback(() => {
     roomRef.current?.disconnect();
     roomRef.current = null;
@@ -327,7 +335,7 @@ export function CallProvider({ children }: { children: React.ReactNode }) {
       value={{
         status, connState, name, isTeacher, room, soloStream, version, participants,
         chat, hands, micOn, camOn, sharing,
-        join, endCall, toggleMic, toggleCam, toggleShare, toggleHand, myHand, sendChat,
+        join, enterSolo, endCall, toggleMic, toggleCam, toggleShare, toggleHand, myHand, sendChat,
       }}
     >
       {children}

@@ -1,0 +1,1042 @@
+[
+  {
+    "lessonId": "lesson-1-world-map",
+    "canonicalLessonTitle": "Our Place in the World",
+    "learningObjectiveSupported": "Locate the Philippines on a world map in relation to the Equator, Asia, and Southeast Asia.",
+    "mediaTitle": "Our Place in the World Visual I",
+    "sourceSubject": "World Geography & The Philippines",
+    "educationalJustification": "Provides direct visual context for Our Place in the World, specifically illustrating World Geography & The Philippines for young explorers."
+  },
+  {
+    "lessonId": "lesson-1-world-map",
+    "canonicalLessonTitle": "Our Place in the World",
+    "learningObjectiveSupported": "Locate the Philippines on a world map in relation to the Equator, Asia, and Southeast Asia.",
+    "mediaTitle": "Our Place in the World Visual II",
+    "sourceSubject": "World Geography & The Philippines",
+    "educationalJustification": "Provides direct visual context for Our Place in the World, specifically illustrating World Geography & The Philippines for young explorers."
+  },
+  {
+    "lessonId": "lesson-2-archipelago",
+    "canonicalLessonTitle": "The Philippine Archipelago",
+    "learningObjectiveSupported": "Define the term 'archipelago' and understand why the Philippines is classified as an archipelagic state.",
+    "mediaTitle": "The Philippine Archipelago Visual I",
+    "sourceSubject": "Philippine Islands and Surrounding Waters",
+    "educationalJustification": "Provides direct visual context for The Philippine Archipelago, specifically illustrating Philippine Islands and Surrounding Waters for young explorers."
+  },
+  {
+    "lessonId": "lesson-2-archipelago",
+    "canonicalLessonTitle": "The Philippine Archipelago",
+    "learningObjectiveSupported": "Define the term 'archipelago' and understand why the Philippines is classified as an archipelagic state.",
+    "mediaTitle": "The Philippine Archipelago Visual II",
+    "sourceSubject": "Philippine Islands and Surrounding Waters",
+    "educationalJustification": "Provides direct visual context for The Philippine Archipelago, specifically illustrating Philippine Islands and Surrounding Waters for young explorers."
+  },
+  {
+    "lessonId": "lesson-3-luzon-visayas-mindanao",
+    "canonicalLessonTitle": "Luzon, Visayas, and Mindanao: Three Island Groups",
+    "learningObjectiveSupported": "Identify the three major island groups of the Philippines: Luzon in the north, Visayas in the center, and Mindanao in the south.",
+    "mediaTitle": "Luzon, Visayas, and Mindanao Visual I",
+    "sourceSubject": "The Three Major Island Groups of the Philippines",
+    "educationalJustification": "Provides direct visual context for Luzon, Visayas, and Mindanao, specifically illustrating The Three Major Island Groups of the Philippines for young explorers."
+  },
+  {
+    "lessonId": "lesson-3-luzon-visayas-mindanao",
+    "canonicalLessonTitle": "Luzon, Visayas, and Mindanao: Three Island Groups",
+    "learningObjectiveSupported": "Identify the three major island groups of the Philippines: Luzon in the north, Visayas in the center, and Mindanao in the south.",
+    "mediaTitle": "Luzon, Visayas, and Mindanao Visual II",
+    "sourceSubject": "The Three Major Island Groups of the Philippines",
+    "educationalJustification": "Provides direct visual context for Luzon, Visayas, and Mindanao, specifically illustrating The Three Major Island Groups of the Philippines for young explorers."
+  },
+  {
+    "lessonId": "lesson-4-region",
+    "canonicalLessonTitle": "Understanding Our Administrative Regions",
+    "learningObjectiveSupported": "Identify that the Philippines is officially organized into 18 administrative regions to facilitate public governance and service delivery.",
+    "mediaTitle": "Understanding Our Administrative Regions Visual I",
+    "sourceSubject": "The 18 Administrative Regions of the Philippines",
+    "educationalJustification": "Provides direct visual context for Understanding Our Administrative Regions, specifically illustrating The 18 Administrative Regions of the Philippines for young explorers."
+  },
+  {
+    "lessonId": "lesson-4-region",
+    "canonicalLessonTitle": "Understanding Our Administrative Regions",
+    "learningObjectiveSupported": "Identify that the Philippines is officially organized into 18 administrative regions to facilitate public governance and service delivery.",
+    "mediaTitle": "Understanding Our Administrative Regions Visual II",
+    "sourceSubject": "The 18 Administrative Regions of the Philippines",
+    "educationalJustification": "Provides direct visual context for Understanding Our Administrative Regions, specifically illustrating The 18 Administrative Regions of the Philippines for young explorers."
+  },
+  {
+    "lessonId": "lesson-5-province",
+    "canonicalLessonTitle": "Provinces: The Heartlands of the Archipelago",
+    "learningObjectiveSupported": "Identify that the Philippines is divided into 82 distinct provinces, each with its own provincial capital and local identity.",
+    "mediaTitle": "Provinces Visual I",
+    "sourceSubject": "The 82 Provinces and Provincial Governance",
+    "educationalJustification": "Provides direct visual context for Provinces, specifically illustrating The 82 Provinces and Provincial Governance for young explorers."
+  },
+  {
+    "lessonId": "lesson-5-province",
+    "canonicalLessonTitle": "Provinces: The Heartlands of the Archipelago",
+    "learningObjectiveSupported": "Identify that the Philippines is divided into 82 distinct provinces, each with its own provincial capital and local identity.",
+    "mediaTitle": "Provinces Visual II",
+    "sourceSubject": "The 82 Provinces and Provincial Governance",
+    "educationalJustification": "Provides direct visual context for Provinces, specifically illustrating The 82 Provinces and Provincial Governance for young explorers."
+  },
+  {
+    "lessonId": "lesson-6-city",
+    "canonicalLessonTitle": "Cities, Municipalities, and Barangays",
+    "learningObjectiveSupported": "Understand the hierarchy of local governance in the Philippines: Highly Urbanized Cities (HUCs), Component Cities, Municipalities (Bayan), and Barangays.",
+    "mediaTitle": "Cities, Municipalities, and Barangays Visual I",
+    "sourceSubject": "Local Community Governance in the Philippines",
+    "educationalJustification": "Provides direct visual context for Cities, Municipalities, and Barangays, specifically illustrating Local Community Governance in the Philippines for young explorers."
+  },
+  {
+    "lessonId": "lesson-6-city",
+    "canonicalLessonTitle": "Cities, Municipalities, and Barangays",
+    "learningObjectiveSupported": "Understand the hierarchy of local governance in the Philippines: Highly Urbanized Cities (HUCs), Component Cities, Municipalities (Bayan), and Barangays.",
+    "mediaTitle": "Cities, Municipalities, and Barangays Visual II",
+    "sourceSubject": "Local Community Governance in the Philippines",
+    "educationalJustification": "Provides direct visual context for Cities, Municipalities, and Barangays, specifically illustrating Local Community Governance in the Philippines for young explorers."
+  },
+  {
+    "lessonId": "lesson-7-national-symbols",
+    "canonicalLessonTitle": "Symbols of Our Nation",
+    "learningObjectiveSupported": "Identify official national symbols of the Philippines established under Republic Act No. 8491 and executive proclamations (National Flag, Anthem, Sampaguita, Narra, Philippine Eagle, Philippine Pearl, and Arnis).",
+    "mediaTitle": "Symbols of Our Nation Visual I",
+    "sourceSubject": "Official National Symbols of the Philippines",
+    "educationalJustification": "Provides direct visual context for Symbols of Our Nation, specifically illustrating Official National Symbols of the Philippines for young explorers."
+  },
+  {
+    "lessonId": "lesson-7-national-symbols",
+    "canonicalLessonTitle": "Symbols of Our Nation",
+    "learningObjectiveSupported": "Identify official national symbols of the Philippines established under Republic Act No. 8491 and executive proclamations (National Flag, Anthem, Sampaguita, Narra, Philippine Eagle, Philippine Pearl, and Arnis).",
+    "mediaTitle": "Symbols of Our Nation Visual II",
+    "sourceSubject": "Official National Symbols of the Philippines",
+    "educationalJustification": "Provides direct visual context for Symbols of Our Nation, specifically illustrating Official National Symbols of the Philippines for young explorers."
+  },
+  {
+    "lessonId": "lesson-8-mountains",
+    "canonicalLessonTitle": "Mountains, Volcanoes, and the Ring of Fire",
+    "learningObjectiveSupported": "Explain why the Philippines has numerous active volcanoes and mountain ranges due to its location along the Pacific Ring of Fire.",
+    "mediaTitle": "Mountains, Volcanoes, and the Ring of Fire Visual I",
+    "sourceSubject": "Philippine Mountains, Volcanoes, and Geology",
+    "educationalJustification": "Provides direct visual context for Mountains, Volcanoes, and the Ring of Fire, specifically illustrating Philippine Mountains, Volcanoes, and Geology for young explorers."
+  },
+  {
+    "lessonId": "lesson-8-mountains",
+    "canonicalLessonTitle": "Mountains, Volcanoes, and the Ring of Fire",
+    "learningObjectiveSupported": "Explain why the Philippines has numerous active volcanoes and mountain ranges due to its location along the Pacific Ring of Fire.",
+    "mediaTitle": "Mountains, Volcanoes, and the Ring of Fire Visual II",
+    "sourceSubject": "Philippine Mountains, Volcanoes, and Geology",
+    "educationalJustification": "Provides direct visual context for Mountains, Volcanoes, and the Ring of Fire, specifically illustrating Philippine Mountains, Volcanoes, and Geology for young explorers."
+  },
+  {
+    "lessonId": "lesson-9-rivers-beaches",
+    "canonicalLessonTitle": "Rivers, Lakes, and Coastal Waters",
+    "learningObjectiveSupported": "Identify major Philippine river systems (Cagayan River, Rio Grande de Mindanao, Pasig River) and major freshwater lakes (Laguna de Bay, Lake Taal, Lake Lanao).",
+    "mediaTitle": "Rivers, Lakes, and Coastal Waters Visual I",
+    "sourceSubject": "Philippine Freshwater Systems and Marine Coastlines",
+    "educationalJustification": "Provides direct visual context for Rivers, Lakes, and Coastal Waters, specifically illustrating Philippine Freshwater Systems and Marine Coastlines for young explorers."
+  },
+  {
+    "lessonId": "lesson-9-rivers-beaches",
+    "canonicalLessonTitle": "Rivers, Lakes, and Coastal Waters",
+    "learningObjectiveSupported": "Identify major Philippine river systems (Cagayan River, Rio Grande de Mindanao, Pasig River) and major freshwater lakes (Laguna de Bay, Lake Taal, Lake Lanao).",
+    "mediaTitle": "Rivers, Lakes, and Coastal Waters Visual II",
+    "sourceSubject": "Philippine Freshwater Systems and Marine Coastlines",
+    "educationalJustification": "Provides direct visual context for Rivers, Lakes, and Coastal Waters, specifically illustrating Philippine Freshwater Systems and Marine Coastlines for young explorers."
+  },
+  {
+    "lessonId": "lesson-10-animals",
+    "canonicalLessonTitle": "Philippine Wildlife and Endemic Species",
+    "learningObjectiveSupported": "Identify famous endemic animal species that live only in the Philippines (Philippine Eagle, Tamaraw, Philippine Tarsier, Pilandok).",
+    "mediaTitle": "Philippine Wildlife and Endemic Species Visual I",
+    "sourceSubject": "Endemic Animals and Biodiversity Conservation",
+    "educationalJustification": "Provides direct visual context for Philippine Wildlife and Endemic Species, specifically illustrating Endemic Animals and Biodiversity Conservation for young explorers."
+  },
+  {
+    "lessonId": "lesson-10-animals",
+    "canonicalLessonTitle": "Philippine Wildlife and Endemic Species",
+    "learningObjectiveSupported": "Identify famous endemic animal species that live only in the Philippines (Philippine Eagle, Tamaraw, Philippine Tarsier, Pilandok).",
+    "mediaTitle": "Philippine Wildlife and Endemic Species Visual II",
+    "sourceSubject": "Endemic Animals and Biodiversity Conservation",
+    "educationalJustification": "Provides direct visual context for Philippine Wildlife and Endemic Species, specifically illustrating Endemic Animals and Biodiversity Conservation for young explorers."
+  },
+  {
+    "lessonId": "lesson-11-plants",
+    "canonicalLessonTitle": "Philippine Flora: Trees, Flowers, and Fruits",
+    "learningObjectiveSupported": "Identify famous native trees, flowers, and fruits of the Philippines (Narra tree, Sampaguita, Waling-Waling orchid, Coconut 'Tree of Life', and Carabao Mango).",
+    "mediaTitle": "Philippine Flora Visual I",
+    "sourceSubject": "Philippine Plant Biodiversity, Native Trees, and Tropical Fruits",
+    "educationalJustification": "Provides direct visual context for Philippine Flora, specifically illustrating Philippine Plant Biodiversity, Native Trees, and Tropical Fruits for young explorers."
+  },
+  {
+    "lessonId": "lesson-11-plants",
+    "canonicalLessonTitle": "Philippine Flora: Trees, Flowers, and Fruits",
+    "learningObjectiveSupported": "Identify famous native trees, flowers, and fruits of the Philippines (Narra tree, Sampaguita, Waling-Waling orchid, Coconut 'Tree of Life', and Carabao Mango).",
+    "mediaTitle": "Philippine Flora Visual II",
+    "sourceSubject": "Philippine Plant Biodiversity, Native Trees, and Tropical Fruits",
+    "educationalJustification": "Provides direct visual context for Philippine Flora, specifically illustrating Philippine Plant Biodiversity, Native Trees, and Tropical Fruits for young explorers."
+  },
+  {
+    "lessonId": "lesson-12-language",
+    "canonicalLessonTitle": "Voices of the Archipelago: Languages and Cultural Heritage",
+    "learningObjectiveSupported": "Identify that the Philippines is home to over 120-180 distinct native languages belonging to the Austronesian language family, with Filipino as the national language alongside official English.",
+    "mediaTitle": "Voices of the Archipelago Visual I",
+    "sourceSubject": "Philippine Linguistic Diversity and Cultural Values",
+    "educationalJustification": "Provides direct visual context for Voices of the Archipelago, specifically illustrating Philippine Linguistic Diversity and Cultural Values for young explorers."
+  },
+  {
+    "lessonId": "lesson-12-language",
+    "canonicalLessonTitle": "Voices of the Archipelago: Languages and Cultural Heritage",
+    "learningObjectiveSupported": "Identify that the Philippines is home to over 120-180 distinct native languages belonging to the Austronesian language family, with Filipino as the national language alongside official English.",
+    "mediaTitle": "Voices of the Archipelago Visual II",
+    "sourceSubject": "Philippine Linguistic Diversity and Cultural Values",
+    "educationalJustification": "Provides direct visual context for Voices of the Archipelago, specifically illustrating Philippine Linguistic Diversity and Cultural Values for young explorers."
+  },
+  {
+    "lessonId": "lesson-13-august-review",
+    "canonicalLessonTitle": "The Great August Showcase: Celebrating Our Archipelago",
+    "learningObjectiveSupported": "Synthesize all August geography and heritage learning: world location, ~7,641 islands, 3 major island groups, 18 administrative regions, 82 provinces, and barangays.",
+    "mediaTitle": "The Great August Showcase Visual I",
+    "sourceSubject": "Culminating August Showcase and Geographic Synthesis",
+    "educationalJustification": "Provides direct visual context for The Great August Showcase, specifically illustrating Culminating August Showcase and Geographic Synthesis for young explorers."
+  },
+  {
+    "lessonId": "lesson-13-august-review",
+    "canonicalLessonTitle": "The Great August Showcase: Celebrating Our Archipelago",
+    "learningObjectiveSupported": "Synthesize all August geography and heritage learning: world location, ~7,641 islands, 3 major island groups, 18 administrative regions, 82 provinces, and barangays.",
+    "mediaTitle": "The Great August Showcase Visual II",
+    "sourceSubject": "Culminating August Showcase and Geographic Synthesis",
+    "educationalJustification": "Provides direct visual context for The Great August Showcase, specifically illustrating Culminating August Showcase and Geographic Synthesis for young explorers."
+  },
+  {
+    "lessonId": "lesson-14-greetings",
+    "canonicalLessonTitle": "Kumusta? Greetings and Introductions",
+    "learningObjectiveSupported": "Say hello, ask how someone is, and introduce oneself warmly using conversational Tagalog.",
+    "mediaTitle": "Kumusta? Greetings and Introductions Visual I",
+    "sourceSubject": "Language and Culture",
+    "educationalJustification": "Provides direct visual context for Kumusta? Greetings and Introductions, specifically illustrating Language and Culture for young explorers."
+  },
+  {
+    "lessonId": "lesson-14-greetings",
+    "canonicalLessonTitle": "Kumusta? Greetings and Introductions",
+    "learningObjectiveSupported": "Say hello, ask how someone is, and introduce oneself warmly using conversational Tagalog.",
+    "mediaTitle": "Kumusta? Greetings and Introductions Visual II",
+    "sourceSubject": "Language and Culture",
+    "educationalJustification": "Provides direct visual context for Kumusta? Greetings and Introductions, specifically illustrating Language and Culture for young explorers."
+  },
+  {
+    "lessonId": "lesson-15-respectful-gestures",
+    "canonicalLessonTitle": "Po, Opo, and Mano Po: Respecting Our Elders",
+    "learningObjectiveSupported": "Identify and apply the honorific respect particles 'po' and 'opo' in spoken Filipino conversation.",
+    "mediaTitle": "Po, Opo, and Mano Po Visual I",
+    "sourceSubject": "Language and Culture",
+    "educationalJustification": "Provides direct visual context for Po, Opo, and Mano Po, specifically illustrating Language and Culture for young explorers."
+  },
+  {
+    "lessonId": "lesson-15-respectful-gestures",
+    "canonicalLessonTitle": "Po, Opo, and Mano Po: Respecting Our Elders",
+    "learningObjectiveSupported": "Identify and apply the honorific respect particles 'po' and 'opo' in spoken Filipino conversation.",
+    "mediaTitle": "Po, Opo, and Mano Po Visual II",
+    "sourceSubject": "Language and Culture",
+    "educationalJustification": "Provides direct visual context for Po, Opo, and Mano Po, specifically illustrating Language and Culture for young explorers."
+  },
+  {
+    "lessonId": "lesson-16-family",
+    "canonicalLessonTitle": "Ang Aking Pamilya: Filipino Family Ties",
+    "learningObjectiveSupported": "Identify, pronounce, and use core Filipino kinship terms including Nanay, Tatay, Ate, Kuya, Lolo, Lola, and Bunso.",
+    "mediaTitle": "Ang Aking Pamilya Visual I",
+    "sourceSubject": "Language and Culture",
+    "educationalJustification": "Provides direct visual context for Ang Aking Pamilya, specifically illustrating Language and Culture for young explorers."
+  },
+  {
+    "lessonId": "lesson-16-family",
+    "canonicalLessonTitle": "Ang Aking Pamilya: Filipino Family Ties",
+    "learningObjectiveSupported": "Identify, pronounce, and use core Filipino kinship terms including Nanay, Tatay, Ate, Kuya, Lolo, Lola, and Bunso.",
+    "mediaTitle": "Ang Aking Pamilya Visual II",
+    "sourceSubject": "Language and Culture",
+    "educationalJustification": "Provides direct visual context for Ang Aking Pamilya, specifically illustrating Language and Culture for young explorers."
+  },
+  {
+    "lessonId": "lesson-17-body-parts",
+    "canonicalLessonTitle": "Mga Bahagi ng Katawan: Parts of the Body and Active Play",
+    "learningObjectiveSupported": "Identify, pronounce, and label primary body parts in Tagalog including ulo (head), mata (eyes), ilong (nose), bibig (mouth), kamay (hand), and paa (foot).",
+    "mediaTitle": "Mga Bahagi ng Katawan Visual I",
+    "sourceSubject": "Language and Culture",
+    "educationalJustification": "Provides direct visual context for Mga Bahagi ng Katawan, specifically illustrating Language and Culture for young explorers."
+  },
+  {
+    "lessonId": "lesson-17-body-parts",
+    "canonicalLessonTitle": "Mga Bahagi ng Katawan: Parts of the Body and Active Play",
+    "learningObjectiveSupported": "Identify, pronounce, and label primary body parts in Tagalog including ulo (head), mata (eyes), ilong (nose), bibig (mouth), kamay (hand), and paa (foot).",
+    "mediaTitle": "Mga Bahagi ng Katawan Visual II",
+    "sourceSubject": "Language and Culture",
+    "educationalJustification": "Provides direct visual context for Mga Bahagi ng Katawan, specifically illustrating Language and Culture for young explorers."
+  },
+  {
+    "lessonId": "lesson-18-food",
+    "canonicalLessonTitle": "Kain Tayo! Filipino Food and Mealtime Hospitality",
+    "learningObjectiveSupported": "Identify, pronounce, and use essential Filipino food vocabulary including kanin (rice), ulam (dish/viand), isda (fish), gulay (vegetables), and prutas (fruits).",
+    "mediaTitle": "Kain Tayo! Filipino Food and Mealtime Hospitality Visual I",
+    "sourceSubject": "Language and Culture",
+    "educationalJustification": "Provides direct visual context for Kain Tayo! Filipino Food and Mealtime Hospitality, specifically illustrating Language and Culture for young explorers."
+  },
+  {
+    "lessonId": "lesson-18-food",
+    "canonicalLessonTitle": "Kain Tayo! Filipino Food and Mealtime Hospitality",
+    "learningObjectiveSupported": "Identify, pronounce, and use essential Filipino food vocabulary including kanin (rice), ulam (dish/viand), isda (fish), gulay (vegetables), and prutas (fruits).",
+    "mediaTitle": "Kain Tayo! Filipino Food and Mealtime Hospitality Visual II",
+    "sourceSubject": "Language and Culture",
+    "educationalJustification": "Provides direct visual context for Kain Tayo! Filipino Food and Mealtime Hospitality, specifically illustrating Language and Culture for young explorers."
+  },
+  {
+    "lessonId": "lesson-19-emotions",
+    "canonicalLessonTitle": "Masaya Ako: Expressing Feelings and Pakikiramdam",
+    "learningObjectiveSupported": "Identify, pronounce, and express core emotion words in Tagalog including masaya (happy), malungkot (sad), galit (angry), takot (afraid), and pagod (tired).",
+    "mediaTitle": "Masaya Ako Visual I",
+    "sourceSubject": "Language and Culture",
+    "educationalJustification": "Provides direct visual context for Masaya Ako, specifically illustrating Language and Culture for young explorers."
+  },
+  {
+    "lessonId": "lesson-19-emotions",
+    "canonicalLessonTitle": "Masaya Ako: Expressing Feelings and Pakikiramdam",
+    "learningObjectiveSupported": "Identify, pronounce, and express core emotion words in Tagalog including masaya (happy), malungkot (sad), galit (angry), takot (afraid), and pagod (tired).",
+    "mediaTitle": "Masaya Ako Visual II",
+    "sourceSubject": "Language and Culture",
+    "educationalJustification": "Provides direct visual context for Masaya Ako, specifically illustrating Language and Culture for young explorers."
+  },
+  {
+    "lessonId": "lesson-20-homes",
+    "canonicalLessonTitle": "Ang Bahay Kubo: Traditional and Modern Filipino Homes",
+    "learningObjectiveSupported": "Identify, pronounce, and use architectural and household vocabulary in Tagalog including bahay (house), bahay kubo (nipa hut), kawayan (bamboo), pinto (door), bintana (window), and bubong (roof).",
+    "mediaTitle": "Ang Bahay Kubo Visual I",
+    "sourceSubject": "Language and Culture",
+    "educationalJustification": "Provides direct visual context for Ang Bahay Kubo, specifically illustrating Language and Culture for young explorers."
+  },
+  {
+    "lessonId": "lesson-20-homes",
+    "canonicalLessonTitle": "Ang Bahay Kubo: Traditional and Modern Filipino Homes",
+    "learningObjectiveSupported": "Identify, pronounce, and use architectural and household vocabulary in Tagalog including bahay (house), bahay kubo (nipa hut), kawayan (bamboo), pinto (door), bintana (window), and bubong (roof).",
+    "mediaTitle": "Ang Bahay Kubo Visual II",
+    "sourceSubject": "Language and Culture",
+    "educationalJustification": "Provides direct visual context for Ang Bahay Kubo, specifically illustrating Language and Culture for young explorers."
+  },
+  {
+    "lessonId": "lesson-21-schools",
+    "canonicalLessonTitle": "Sa Paaralan: Classroom Life and the Filipino School Day",
+    "learningObjectiveSupported": "Identify, pronounce, and use school and classroom vocabulary in Tagalog including paaralan (school), guro (teacher), mag-aaral (student), aklat (book), lapis (pencil), and silid-aralan (classroom).",
+    "mediaTitle": "Sa Paaralan Visual I",
+    "sourceSubject": "Language and Culture",
+    "educationalJustification": "Provides direct visual context for Sa Paaralan, specifically illustrating Language and Culture for young explorers."
+  },
+  {
+    "lessonId": "lesson-21-schools",
+    "canonicalLessonTitle": "Sa Paaralan: Classroom Life and the Filipino School Day",
+    "learningObjectiveSupported": "Identify, pronounce, and use school and classroom vocabulary in Tagalog including paaralan (school), guro (teacher), mag-aaral (student), aklat (book), lapis (pencil), and silid-aralan (classroom).",
+    "mediaTitle": "Sa Paaralan Visual II",
+    "sourceSubject": "Language and Culture",
+    "educationalJustification": "Provides direct visual context for Sa Paaralan, specifically illustrating Language and Culture for young explorers."
+  },
+  {
+    "lessonId": "lesson-22-markets",
+    "canonicalLessonTitle": "Sa Palengke: Community Commerce and Daily Markets",
+    "learningObjectiveSupported": "Identify, pronounce, and use marketplace and commercial vocabulary in Tagalog including palengke (wet market), tindahan (store/stall), tindero/tindera (vendor), magkano (how much), piso (peso), and sariwa (fresh).",
+    "mediaTitle": "Sa Palengke Visual I",
+    "sourceSubject": "Language and Culture",
+    "educationalJustification": "Provides direct visual context for Sa Palengke, specifically illustrating Language and Culture for young explorers."
+  },
+  {
+    "lessonId": "lesson-22-markets",
+    "canonicalLessonTitle": "Sa Palengke: Community Commerce and Daily Markets",
+    "learningObjectiveSupported": "Identify, pronounce, and use marketplace and commercial vocabulary in Tagalog including palengke (wet market), tindahan (store/stall), tindero/tindera (vendor), magkano (how much), piso (peso), and sariwa (fresh).",
+    "mediaTitle": "Sa Palengke Visual II",
+    "sourceSubject": "Language and Culture",
+    "educationalJustification": "Provides direct visual context for Sa Palengke, specifically illustrating Language and Culture for young explorers."
+  },
+  {
+    "lessonId": "lesson-23-transportation",
+    "canonicalLessonTitle": "Sakay Na! Jeepneys, Tricycles, and Island Transport",
+    "learningObjectiveSupported": "Identify, pronounce, and use Philippine transportation vocabulary in Tagalog including jeepney, tricycle (traysikel), bangka (outrigger boat), sasakyan (vehicle), bayad po (here is my fare), and para po (please stop).",
+    "mediaTitle": "Sakay Na! Jeepneys, Tricycles, and Island Transport Visual I",
+    "sourceSubject": "Language and Culture",
+    "educationalJustification": "Provides direct visual context for Sakay Na! Jeepneys, Tricycles, and Island Transport, specifically illustrating Language and Culture for young explorers."
+  },
+  {
+    "lessonId": "lesson-23-transportation",
+    "canonicalLessonTitle": "Sakay Na! Jeepneys, Tricycles, and Island Transport",
+    "learningObjectiveSupported": "Identify, pronounce, and use Philippine transportation vocabulary in Tagalog including jeepney, tricycle (traysikel), bangka (outrigger boat), sasakyan (vehicle), bayad po (here is my fare), and para po (please stop).",
+    "mediaTitle": "Sakay Na! Jeepneys, Tricycles, and Island Transport Visual II",
+    "sourceSubject": "Language and Culture",
+    "educationalJustification": "Provides direct visual context for Sakay Na! Jeepneys, Tricycles, and Island Transport, specifically illustrating Language and Culture for young explorers."
+  },
+  {
+    "lessonId": "lesson-24-carabao",
+    "canonicalLessonTitle": "Ang Kalabaw: Agriculture and Rural Farm Life",
+    "learningObjectiveSupported": "Identify, pronounce, and use agricultural and rural vocabulary in Tagalog including kalabaw (carabao / water buffalo), magsasaka (farmer), bukid (farm), palayan (rice field), araro (plow), and masipag (hardworking).",
+    "mediaTitle": "Ang Kalabaw Visual I",
+    "sourceSubject": "Language and Culture",
+    "educationalJustification": "Provides direct visual context for Ang Kalabaw, specifically illustrating Language and Culture for young explorers."
+  },
+  {
+    "lessonId": "lesson-24-carabao",
+    "canonicalLessonTitle": "Ang Kalabaw: Agriculture and Rural Farm Life",
+    "learningObjectiveSupported": "Identify, pronounce, and use agricultural and rural vocabulary in Tagalog including kalabaw (carabao / water buffalo), magsasaka (farmer), bukid (farm), palayan (rice field), araro (plow), and masipag (hardworking).",
+    "mediaTitle": "Ang Kalabaw Visual II",
+    "sourceSubject": "Language and Culture",
+    "educationalJustification": "Provides direct visual context for Ang Kalabaw, specifically illustrating Language and Culture for young explorers."
+  },
+  {
+    "lessonId": "lesson-25-community-helpers",
+    "canonicalLessonTitle": "Mga Katulong sa Pamayanan: Community Helpers and Bayanihan",
+    "learningObjectiveSupported": "Identify, pronounce, and describe community helper professions in Tagalog including doktor (doctor), nars (nurse), pulis (police officer), bombero (firefighter), magsasaka (farmer), and mangingisda (fisherman).",
+    "mediaTitle": "Mga Katulong sa Pamayanan Visual I",
+    "sourceSubject": "Language and Culture",
+    "educationalJustification": "Provides direct visual context for Mga Katulong sa Pamayanan, specifically illustrating Language and Culture for young explorers."
+  },
+  {
+    "lessonId": "lesson-25-community-helpers",
+    "canonicalLessonTitle": "Mga Katulong sa Pamayanan: Community Helpers and Bayanihan",
+    "learningObjectiveSupported": "Identify, pronounce, and describe community helper professions in Tagalog including doktor (doctor), nars (nurse), pulis (police officer), bombero (firefighter), magsasaka (farmer), and mangingisda (fisherman).",
+    "mediaTitle": "Mga Katulong sa Pamayanan Visual II",
+    "sourceSubject": "Language and Culture",
+    "educationalJustification": "Provides direct visual context for Mga Katulong sa Pamayanan, specifically illustrating Language and Culture for young explorers."
+  },
+  {
+    "lessonId": "lesson-26-september-review",
+    "canonicalLessonTitle": "The Great September Showcase: Language and Daily Life Celebration",
+    "learningObjectiveSupported": "Synthesize and apply core September Tagalog vocabulary across language, family, body parts, food, emotions, homes, schools, markets, transportation, agriculture, and community helpers.",
+    "mediaTitle": "The Great September Showcase Visual I",
+    "sourceSubject": "Language and Culture",
+    "educationalJustification": "Provides direct visual context for The Great September Showcase, specifically illustrating Language and Culture for young explorers."
+  },
+  {
+    "lessonId": "lesson-26-september-review",
+    "canonicalLessonTitle": "The Great September Showcase: Language and Daily Life Celebration",
+    "learningObjectiveSupported": "Synthesize and apply core September Tagalog vocabulary across language, family, body parts, food, emotions, homes, schools, markets, transportation, agriculture, and community helpers.",
+    "mediaTitle": "The Great September Showcase Visual II",
+    "sourceSubject": "Language and Culture",
+    "educationalJustification": "Provides direct visual context for The Great September Showcase, specifically illustrating Language and Culture for young explorers."
+  },
+  {
+    "lessonId": "lesson-27-bayanihan",
+    "canonicalLessonTitle": "Bayanihan Spirit: Community Cooperation and Unity",
+    "learningObjectiveSupported": "Explain the historical origin and cultural meaning of 'Bayanihan' derived from the root word 'bayan' (town, nation, community).",
+    "mediaTitle": "Bayanihan Spirit Visual I",
+    "sourceSubject": "Culture and Values",
+    "educationalJustification": "Provides direct visual context for Bayanihan Spirit, specifically illustrating Culture and Values for young explorers."
+  },
+  {
+    "lessonId": "lesson-27-bayanihan",
+    "canonicalLessonTitle": "Bayanihan Spirit: Community Cooperation and Unity",
+    "learningObjectiveSupported": "Explain the historical origin and cultural meaning of 'Bayanihan' derived from the root word 'bayan' (town, nation, community).",
+    "mediaTitle": "Bayanihan Spirit Visual II",
+    "sourceSubject": "Culture and Values",
+    "educationalJustification": "Provides direct visual context for Bayanihan Spirit, specifically illustrating Culture and Values for young explorers."
+  },
+  {
+    "lessonId": "lesson-28-jose-rizal",
+    "canonicalLessonTitle": "José Rizal: Writer, Doctor, and National Hero",
+    "learningObjectiveSupported": "Identify Dr. José Protacio Rizal Mercado y Alonso Realonda (1861–1896) as the foremost national hero of the Philippines.",
+    "mediaTitle": "José Rizal Visual I",
+    "sourceSubject": "History and Heroes",
+    "educationalJustification": "Provides direct visual context for José Rizal, specifically illustrating History and Heroes for young explorers."
+  },
+  {
+    "lessonId": "lesson-28-jose-rizal",
+    "canonicalLessonTitle": "José Rizal: Writer, Doctor, and National Hero",
+    "learningObjectiveSupported": "Identify Dr. José Protacio Rizal Mercado y Alonso Realonda (1861–1896) as the foremost national hero of the Philippines.",
+    "mediaTitle": "José Rizal Visual II",
+    "sourceSubject": "History and Heroes",
+    "educationalJustification": "Provides direct visual context for José Rizal, specifically illustrating History and Heroes for young explorers."
+  },
+  {
+    "lessonId": "lesson-29-andres-bonifacio",
+    "canonicalLessonTitle": "Andrés Bonifacio and the Katipunan",
+    "learningObjectiveSupported": "Identify Andrés Bonifacio (1863–1897) as the 'Supremo' and founder of the Katipunan (KKK) and the 'Father of the Philippine Revolution' (Ama ng Himagsikan).",
+    "mediaTitle": "Andrés Bonifacio and the Katipunan Visual I",
+    "sourceSubject": "History and Heroes",
+    "educationalJustification": "Provides direct visual context for Andrés Bonifacio and the Katipunan, specifically illustrating History and Heroes for young explorers."
+  },
+  {
+    "lessonId": "lesson-29-andres-bonifacio",
+    "canonicalLessonTitle": "Andrés Bonifacio and the Katipunan",
+    "learningObjectiveSupported": "Identify Andrés Bonifacio (1863–1897) as the 'Supremo' and founder of the Katipunan (KKK) and the 'Father of the Philippine Revolution' (Ama ng Himagsikan).",
+    "mediaTitle": "Andrés Bonifacio and the Katipunan Visual II",
+    "sourceSubject": "History and Heroes",
+    "educationalJustification": "Provides direct visual context for Andrés Bonifacio and the Katipunan, specifically illustrating History and Heroes for young explorers."
+  },
+  {
+    "lessonId": "lesson-30-indigenous-peoples",
+    "canonicalLessonTitle": "Indigenous Peoples and Living Cultures of the Philippines",
+    "learningObjectiveSupported": "Recognize that the Philippines is home to over 110 distinct ethnolinguistic Indigenous Peoples (Katutubo) living across Luzon, Visayas, and Mindanao.",
+    "mediaTitle": "Indigenous Peoples and Living Cultures of the Philippines Visual I",
+    "sourceSubject": "History and Culture",
+    "educationalJustification": "Provides direct visual context for Indigenous Peoples and Living Cultures of the Philippines, specifically illustrating History and Culture for young explorers."
+  },
+  {
+    "lessonId": "lesson-30-indigenous-peoples",
+    "canonicalLessonTitle": "Indigenous Peoples and Living Cultures of the Philippines",
+    "learningObjectiveSupported": "Recognize that the Philippines is home to over 110 distinct ethnolinguistic Indigenous Peoples (Katutubo) living across Luzon, Visayas, and Mindanao.",
+    "mediaTitle": "Indigenous Peoples and Living Cultures of the Philippines Visual II",
+    "sourceSubject": "History and Culture",
+    "educationalJustification": "Provides direct visual context for Indigenous Peoples and Living Cultures of the Philippines, specifically illustrating History and Culture for young explorers."
+  },
+  {
+    "lessonId": "lesson-31-history-timeline",
+    "canonicalLessonTitle": "A Child-Friendly Philippine History Timeline",
+    "learningObjectiveSupported": "Chronologically order the five major eras of Philippine history: Pre-Colonial Era, Spanish Era (1565–1898), Revolutionary Era & Independence (1898), American & WWII Era, and the Modern Democratic Republic.",
+    "mediaTitle": "A Child-Friendly Philippine History Timeline Visual I",
+    "sourceSubject": "History and Heritage",
+    "educationalJustification": "Provides direct visual context for A Child-Friendly Philippine History Timeline, specifically illustrating History and Heritage for young explorers."
+  },
+  {
+    "lessonId": "lesson-31-history-timeline",
+    "canonicalLessonTitle": "A Child-Friendly Philippine History Timeline",
+    "learningObjectiveSupported": "Chronologically order the five major eras of Philippine history: Pre-Colonial Era, Spanish Era (1565–1898), Revolutionary Era & Independence (1898), American & WWII Era, and the Modern Democratic Republic.",
+    "mediaTitle": "A Child-Friendly Philippine History Timeline Visual II",
+    "sourceSubject": "History and Heritage",
+    "educationalJustification": "Provides direct visual context for A Child-Friendly Philippine History Timeline, specifically illustrating History and Heritage for young explorers."
+  },
+  {
+    "lessonId": "lesson-32-mayon-volcano",
+    "canonicalLessonTitle": "Mayon Volcano: The World's Most Perfect Cone",
+    "learningObjectiveSupported": "Identify Mayon Volcano (Bulkang Mayon) in Albay, Bicol, as an active stratovolcano world-renowned for its nearly perfect symmetrical conical shape.",
+    "mediaTitle": "Mayon Volcano Visual I",
+    "sourceSubject": "Nature and Geography",
+    "educationalJustification": "Provides direct visual context for Mayon Volcano, specifically illustrating Nature and Geography for young explorers."
+  },
+  {
+    "lessonId": "lesson-32-mayon-volcano",
+    "canonicalLessonTitle": "Mayon Volcano: The World's Most Perfect Cone",
+    "learningObjectiveSupported": "Identify Mayon Volcano (Bulkang Mayon) in Albay, Bicol, as an active stratovolcano world-renowned for its nearly perfect symmetrical conical shape.",
+    "mediaTitle": "Mayon Volcano Visual II",
+    "sourceSubject": "Nature and Geography",
+    "educationalJustification": "Provides direct visual context for Mayon Volcano, specifically illustrating Nature and Geography for young explorers."
+  },
+  {
+    "lessonId": "lesson-33-weather-climate",
+    "canonicalLessonTitle": "Tropical Weather, Monsoons, and Typhoons",
+    "learningObjectiveSupported": "Differentiate the two primary seasonal monsoons in the Philippines: the Southwest Monsoon (Habagat, warm/rainy from May to October) and the Northeast Monsoon (Amihan, cool/dry from November to April).",
+    "mediaTitle": "Tropical Weather, Monsoons, and Typhoons Visual I",
+    "sourceSubject": "Science and Nature",
+    "educationalJustification": "Provides direct visual context for Tropical Weather, Monsoons, and Typhoons, specifically illustrating Science and Nature for young explorers."
+  },
+  {
+    "lessonId": "lesson-33-weather-climate",
+    "canonicalLessonTitle": "Tropical Weather, Monsoons, and Typhoons",
+    "learningObjectiveSupported": "Differentiate the two primary seasonal monsoons in the Philippines: the Southwest Monsoon (Habagat, warm/rainy from May to October) and the Northeast Monsoon (Amihan, cool/dry from November to April).",
+    "mediaTitle": "Tropical Weather, Monsoons, and Typhoons Visual II",
+    "sourceSubject": "Science and Nature",
+    "educationalJustification": "Provides direct visual context for Tropical Weather, Monsoons, and Typhoons, specifically illustrating Science and Nature for young explorers."
+  },
+  {
+    "lessonId": "lesson-34-tropical-forests",
+    "canonicalLessonTitle": "Philippine Rainforests: Layers of Life and Biodiversity",
+    "learningObjectiveSupported": "Identify the four ecological vertical layers of a tropical rainforest: Forest Floor (Sahig ng Gubat), Understory, Canopy (Kulandong), and Emergent Layer (Matatayog na Puno).",
+    "mediaTitle": "Philippine Rainforests Visual I",
+    "sourceSubject": "Science and Ecology",
+    "educationalJustification": "Provides direct visual context for Philippine Rainforests, specifically illustrating Science and Ecology for young explorers."
+  },
+  {
+    "lessonId": "lesson-34-tropical-forests",
+    "canonicalLessonTitle": "Philippine Rainforests: Layers of Life and Biodiversity",
+    "learningObjectiveSupported": "Identify the four ecological vertical layers of a tropical rainforest: Forest Floor (Sahig ng Gubat), Understory, Canopy (Kulandong), and Emergent Layer (Matatayog na Puno).",
+    "mediaTitle": "Philippine Rainforests Visual II",
+    "sourceSubject": "Science and Ecology",
+    "educationalJustification": "Provides direct visual context for Philippine Rainforests, specifically illustrating Science and Ecology for young explorers."
+  },
+  {
+    "lessonId": "lesson-35-coral-reefs",
+    "canonicalLessonTitle": "Coral Reefs: The Underwater Rainforests of the Coral Triangle",
+    "learningObjectiveSupported": "Identify the Philippines as the global apex and epicenter of marine shorefish biodiversity within the 'Coral Triangle'.",
+    "mediaTitle": "Coral Reefs Visual I",
+    "sourceSubject": "Marine Science and Nature",
+    "educationalJustification": "Provides direct visual context for Coral Reefs, specifically illustrating Marine Science and Nature for young explorers."
+  },
+  {
+    "lessonId": "lesson-35-coral-reefs",
+    "canonicalLessonTitle": "Coral Reefs: The Underwater Rainforests of the Coral Triangle",
+    "learningObjectiveSupported": "Identify the Philippines as the global apex and epicenter of marine shorefish biodiversity within the 'Coral Triangle'.",
+    "mediaTitle": "Coral Reefs Visual II",
+    "sourceSubject": "Marine Science and Nature",
+    "educationalJustification": "Provides direct visual context for Coral Reefs, specifically illustrating Marine Science and Nature for young explorers."
+  },
+  {
+    "lessonId": "lesson-36-philippine-eagle",
+    "canonicalLessonTitle": "The Philippine Eagle: The Mighty King of Birds (Agila)",
+    "learningObjectiveSupported": "Identify the Philippine Eagle (Pithecophaga jefferyi / Agila ng Pilipinas) as the official National Bird of the Philippines (declared under Proclamation No. 615, 1995) and the largest eagle in the world by length and wing surface area.",
+    "mediaTitle": "The Philippine Eagle Visual I",
+    "sourceSubject": "Wildlife and Conservation",
+    "educationalJustification": "Provides direct visual context for The Philippine Eagle, specifically illustrating Wildlife and Conservation for young explorers."
+  },
+  {
+    "lessonId": "lesson-36-philippine-eagle",
+    "canonicalLessonTitle": "The Philippine Eagle: The Mighty King of Birds (Agila)",
+    "learningObjectiveSupported": "Identify the Philippine Eagle (Pithecophaga jefferyi / Agila ng Pilipinas) as the official National Bird of the Philippines (declared under Proclamation No. 615, 1995) and the largest eagle in the world by length and wing surface area.",
+    "mediaTitle": "The Philippine Eagle Visual II",
+    "sourceSubject": "Wildlife and Conservation",
+    "educationalJustification": "Provides direct visual context for The Philippine Eagle, specifically illustrating Wildlife and Conservation for young explorers."
+  },
+  {
+    "lessonId": "lesson-37-environmental-stewardship",
+    "canonicalLessonTitle": "Caring for God's Creation: Environmental Stewardship",
+    "learningObjectiveSupported": "Explain the biblical and civic principle of environmental stewardship ('Pangangalaga sa Kalikasan') based on Genesis 2:15 and Psalm 24:1.",
+    "mediaTitle": "Caring for God's Creation Visual I",
+    "sourceSubject": "Values and Ecology",
+    "educationalJustification": "Provides direct visual context for Caring for God's Creation, specifically illustrating Values and Ecology for young explorers."
+  },
+  {
+    "lessonId": "lesson-37-environmental-stewardship",
+    "canonicalLessonTitle": "Caring for God's Creation: Environmental Stewardship",
+    "learningObjectiveSupported": "Explain the biblical and civic principle of environmental stewardship ('Pangangalaga sa Kalikasan') based on Genesis 2:15 and Psalm 24:1.",
+    "mediaTitle": "Caring for God's Creation Visual II",
+    "sourceSubject": "Values and Ecology",
+    "educationalJustification": "Provides direct visual context for Caring for God's Creation, specifically illustrating Values and Ecology for young explorers."
+  },
+  {
+    "lessonId": "lesson-38-october-review",
+    "canonicalLessonTitle": "The Great October Quest: History, Heroes, and Nature Synthesis",
+    "learningObjectiveSupported": "Synthesize comprehensive learning across the October unit: Bayanihan cooperation, national heroes (Rizal and Bonifacio), 110+ indigenous cultures, Philippine historical timeline, Mayon Volcano geology, monsoon weather science, 4-layer rainforest ecosystems, the Philippine Eagle, and environmental stewardship.",
+    "mediaTitle": "The Great October Quest Visual I",
+    "sourceSubject": "Integrated Review",
+    "educationalJustification": "Provides direct visual context for The Great October Quest, specifically illustrating Integrated Review for young explorers."
+  },
+  {
+    "lessonId": "lesson-38-october-review",
+    "canonicalLessonTitle": "The Great October Quest: History, Heroes, and Nature Synthesis",
+    "learningObjectiveSupported": "Synthesize comprehensive learning across the October unit: Bayanihan cooperation, national heroes (Rizal and Bonifacio), 110+ indigenous cultures, Philippine historical timeline, Mayon Volcano geology, monsoon weather science, 4-layer rainforest ecosystems, the Philippine Eagle, and environmental stewardship.",
+    "mediaTitle": "The Great October Quest Visual II",
+    "sourceSubject": "Integrated Review",
+    "educationalJustification": "Provides direct visual context for The Great October Quest, specifically illustrating Integrated Review for young explorers."
+  },
+  {
+    "lessonId": "lesson-39-october-showcase",
+    "canonicalLessonTitle": "The Grand October Showcase: Celebrating Heroes and Heritage",
+    "learningObjectiveSupported": "Present a comprehensive personal learning portfolio exhibition synthesizing artifacts, models, and written discoveries from October: Bayanihan dioramas, Hero scrolls, Katipunan banners, T'nalak weaves, History ribbons, Erupting Mayon models, Cup anemometers, Rainforest boxes, Coral reefs, Agila masks, and Eco-planters.",
+    "mediaTitle": "The Grand October Showcase Visual I",
+    "sourceSubject": "Showcase and Celebration",
+    "educationalJustification": "Provides direct visual context for The Grand October Showcase, specifically illustrating Showcase and Celebration for young explorers."
+  },
+  {
+    "lessonId": "lesson-39-october-showcase",
+    "canonicalLessonTitle": "The Grand October Showcase: Celebrating Heroes and Heritage",
+    "learningObjectiveSupported": "Present a comprehensive personal learning portfolio exhibition synthesizing artifacts, models, and written discoveries from October: Bayanihan dioramas, Hero scrolls, Katipunan banners, T'nalak weaves, History ribbons, Erupting Mayon models, Cup anemometers, Rainforest boxes, Coral reefs, Agila masks, and Eco-planters.",
+    "mediaTitle": "The Grand October Showcase Visual II",
+    "sourceSubject": "Showcase and Celebration",
+    "educationalJustification": "Provides direct visual context for The Grand October Showcase, specifically illustrating Showcase and Celebration for young explorers."
+  },
+  {
+    "lessonId": "lesson-40-kitchen-safety",
+    "canonicalLessonTitle": "Kitchen Safety and Hygiene: Junior Chef Foundations",
+    "learningObjectiveSupported": "Demonstrate essential kitchen hygiene rules: the 20-second warm water handwashing technique with soap, tying back long hair, wearing clean aprons, and keeping food prep surfaces sanitized.",
+    "mediaTitle": "Kitchen Safety and Hygiene Visual I",
+    "sourceSubject": "Culinary Safety and Basics",
+    "educationalJustification": "Provides direct visual context for Kitchen Safety and Hygiene, specifically illustrating Culinary Safety and Basics for young explorers."
+  },
+  {
+    "lessonId": "lesson-40-kitchen-safety",
+    "canonicalLessonTitle": "Kitchen Safety and Hygiene: Junior Chef Foundations",
+    "learningObjectiveSupported": "Demonstrate essential kitchen hygiene rules: the 20-second warm water handwashing technique with soap, tying back long hair, wearing clean aprons, and keeping food prep surfaces sanitized.",
+    "mediaTitle": "Kitchen Safety and Hygiene Visual II",
+    "sourceSubject": "Culinary Safety and Basics",
+    "educationalJustification": "Provides direct visual context for Kitchen Safety and Hygiene, specifically illustrating Culinary Safety and Basics for young explorers."
+  },
+  {
+    "lessonId": "lesson-41-measurements",
+    "canonicalLessonTitle": "Culinary Measurements and Tools: The Science of Precision",
+    "learningObjectiveSupported": "Distinguish between dry measuring cups (for flour, sugar, uncooked rice) and liquid measuring cups with spouts (for water, coconut milk, vinegar, broth).",
+    "mediaTitle": "Culinary Measurements and Tools Visual I",
+    "sourceSubject": "Culinary Safety and Basics",
+    "educationalJustification": "Provides direct visual context for Culinary Measurements and Tools, specifically illustrating Culinary Safety and Basics for young explorers."
+  },
+  {
+    "lessonId": "lesson-41-measurements",
+    "canonicalLessonTitle": "Culinary Measurements and Tools: The Science of Precision",
+    "learningObjectiveSupported": "Distinguish between dry measuring cups (for flour, sugar, uncooked rice) and liquid measuring cups with spouts (for water, coconut milk, vinegar, broth).",
+    "mediaTitle": "Culinary Measurements and Tools Visual II",
+    "sourceSubject": "Culinary Safety and Basics",
+    "educationalJustification": "Provides direct visual context for Culinary Measurements and Tools, specifically illustrating Culinary Safety and Basics for young explorers."
+  },
+  {
+    "lessonId": "lesson-42-nutrition",
+    "canonicalLessonTitle": "Pinggang Pinoy and Nourishing Filipino Ingredients",
+    "learningObjectiveSupported": "Explain the three functional food groups of the Department of Health (DOH) & FNRI 'Pinggang Pinoy' model: Go Foods (energy-giving carbohydrates), Grow Foods (muscle-building proteins), and Glow Foods (vitamin- and mineral-rich vegetables and fruits).",
+    "mediaTitle": "Pinggang Pinoy and Nourishing Filipino Ingredients Visual I",
+    "sourceSubject": "Nutrition and Culinary Heritage",
+    "educationalJustification": "Provides direct visual context for Pinggang Pinoy and Nourishing Filipino Ingredients, specifically illustrating Nutrition and Culinary Heritage for young explorers."
+  },
+  {
+    "lessonId": "lesson-42-nutrition",
+    "canonicalLessonTitle": "Pinggang Pinoy and Nourishing Filipino Ingredients",
+    "learningObjectiveSupported": "Explain the three functional food groups of the Department of Health (DOH) & FNRI 'Pinggang Pinoy' model: Go Foods (energy-giving carbohydrates), Grow Foods (muscle-building proteins), and Glow Foods (vitamin- and mineral-rich vegetables and fruits).",
+    "mediaTitle": "Pinggang Pinoy and Nourishing Filipino Ingredients Visual II",
+    "sourceSubject": "Nutrition and Culinary Heritage",
+    "educationalJustification": "Provides direct visual context for Pinggang Pinoy and Nourishing Filipino Ingredients, specifically illustrating Nutrition and Culinary Heritage for young explorers."
+  },
+  {
+    "lessonId": "lesson-43-rice-basics",
+    "canonicalLessonTitle": "Ang Bigas at Kanin: Rice Culture and Staple Heritage",
+    "learningObjectiveSupported": "Differentiate the four linguistic and agricultural stages of rice in Filipino culture: palay (unhusked grain on the stalk), bigas (milled uncooked white or brown grains), kanin (freshly steamed hot rice), and bahaw (leftover cold rice transformed into savory sinangag garlic rice).",
+    "mediaTitle": "Ang Bigas at Kanin Visual I",
+    "sourceSubject": "Culinary Heritage and Staple Foods",
+    "educationalJustification": "Provides direct visual context for Ang Bigas at Kanin, specifically illustrating Culinary Heritage and Staple Foods for young explorers."
+  },
+  {
+    "lessonId": "lesson-43-rice-basics",
+    "canonicalLessonTitle": "Ang Bigas at Kanin: Rice Culture and Staple Heritage",
+    "learningObjectiveSupported": "Differentiate the four linguistic and agricultural stages of rice in Filipino culture: palay (unhusked grain on the stalk), bigas (milled uncooked white or brown grains), kanin (freshly steamed hot rice), and bahaw (leftover cold rice transformed into savory sinangag garlic rice).",
+    "mediaTitle": "Ang Bigas at Kanin Visual II",
+    "sourceSubject": "Culinary Heritage and Staple Foods",
+    "educationalJustification": "Provides direct visual context for Ang Bigas at Kanin, specifically illustrating Culinary Heritage and Staple Foods for young explorers."
+  },
+  {
+    "lessonId": "lesson-44-adobo-history",
+    "canonicalLessonTitle": "Adobo Across the Archipelago: Regional Vinegar Heritage",
+    "learningObjectiveSupported": "Explain the indigenous Philippine origin of adobo as an ancient vinegar-and-salt preservation method (inabraw / pina-asim) that existed long before Spanish colonial contact.",
+    "mediaTitle": "Adobo Across the Archipelago Visual I",
+    "sourceSubject": "Culinary History and Regional Diversity",
+    "educationalJustification": "Provides direct visual context for Adobo Across the Archipelago, specifically illustrating Culinary History and Regional Diversity for young explorers."
+  },
+  {
+    "lessonId": "lesson-44-adobo-history",
+    "canonicalLessonTitle": "Adobo Across the Archipelago: Regional Vinegar Heritage",
+    "learningObjectiveSupported": "Explain the indigenous Philippine origin of adobo as an ancient vinegar-and-salt preservation method (inabraw / pina-asim) that existed long before Spanish colonial contact.",
+    "mediaTitle": "Adobo Across the Archipelago Visual II",
+    "sourceSubject": "Culinary History and Regional Diversity",
+    "educationalJustification": "Provides direct visual context for Adobo Across the Archipelago, specifically illustrating Culinary History and Regional Diversity for young explorers."
+  },
+  {
+    "lessonId": "lesson-45-sinigang-flavors",
+    "canonicalLessonTitle": "Sinigang and Native Souring Agents: The Art of Asim",
+    "learningObjectiveSupported": "Identify the botanical diversity of traditional Philippine souring agents (pampaasim) across the archipelago: Sampalok (tamarind), Kamias (bilimbi), Batuan (Garcinia morella / binucao from Western Visayas), Bayabas (ripe guava), Calamansi, Santol, and Manggang Hilaw (green mango).",
+    "mediaTitle": "Sinigang and Native Souring Agents Visual I",
+    "sourceSubject": "Culinary Heritage and Botanical Souring Agents",
+    "educationalJustification": "Provides direct visual context for Sinigang and Native Souring Agents, specifically illustrating Culinary Heritage and Botanical Souring Agents for young explorers."
+  },
+  {
+    "lessonId": "lesson-45-sinigang-flavors",
+    "canonicalLessonTitle": "Sinigang and Native Souring Agents: The Art of Asim",
+    "learningObjectiveSupported": "Identify the botanical diversity of traditional Philippine souring agents (pampaasim) across the archipelago: Sampalok (tamarind), Kamias (bilimbi), Batuan (Garcinia morella / binucao from Western Visayas), Bayabas (ripe guava), Calamansi, Santol, and Manggang Hilaw (green mango).",
+    "mediaTitle": "Sinigang and Native Souring Agents Visual II",
+    "sourceSubject": "Culinary Heritage and Botanical Souring Agents",
+    "educationalJustification": "Provides direct visual context for Sinigang and Native Souring Agents, specifically illustrating Culinary Heritage and Botanical Souring Agents for young explorers."
+  },
+  {
+    "lessonId": "lesson-46-pancit-celebration",
+    "canonicalLessonTitle": "Pancit Traditions: Long Noodles, Blessings, and Celebrations",
+    "learningObjectiveSupported": "Trace the cultural and historical evolution of pancit from Hokkien Chinese maritime trade ('pian-e-sit' / convenient food) to an essential Filipino festive tradition symbolizing long life, health, and family blessings (haba ng buhay).",
+    "mediaTitle": "Pancit Traditions Visual I",
+    "sourceSubject": "Culinary Heritage and Festive Traditions",
+    "educationalJustification": "Provides direct visual context for Pancit Traditions, specifically illustrating Culinary Heritage and Festive Traditions for young explorers."
+  },
+  {
+    "lessonId": "lesson-46-pancit-celebration",
+    "canonicalLessonTitle": "Pancit Traditions: Long Noodles, Blessings, and Celebrations",
+    "learningObjectiveSupported": "Trace the cultural and historical evolution of pancit from Hokkien Chinese maritime trade ('pian-e-sit' / convenient food) to an essential Filipino festive tradition symbolizing long life, health, and family blessings (haba ng buhay).",
+    "mediaTitle": "Pancit Traditions Visual II",
+    "sourceSubject": "Culinary Heritage and Festive Traditions",
+    "educationalJustification": "Provides direct visual context for Pancit Traditions, specifically illustrating Culinary Heritage and Festive Traditions for young explorers."
+  },
+  {
+    "lessonId": "lesson-47-halo-halo",
+    "canonicalLessonTitle": "Halo-Halo: Layered Sweet Harmony and Shaved Ice Artistry",
+    "learningObjectiveSupported": "Trace the cultural history of halo-halo from the pre-war Japanese shaved-ice dessert 'kakigori' / 'mongo-ya' in Quiapo, Manila, to the ultimate multi-layered Filipino national dessert.",
+    "mediaTitle": "Halo-Halo Visual I",
+    "sourceSubject": "Culinary Heritage and Shaved Ice Treats",
+    "educationalJustification": "Provides direct visual context for Halo-Halo, specifically illustrating Culinary Heritage and Shaved Ice Treats for young explorers."
+  },
+  {
+    "lessonId": "lesson-47-halo-halo",
+    "canonicalLessonTitle": "Halo-Halo: Layered Sweet Harmony and Shaved Ice Artistry",
+    "learningObjectiveSupported": "Trace the cultural history of halo-halo from the pre-war Japanese shaved-ice dessert 'kakigori' / 'mongo-ya' in Quiapo, Manila, to the ultimate multi-layered Filipino national dessert.",
+    "mediaTitle": "Halo-Halo Visual II",
+    "sourceSubject": "Culinary Heritage and Shaved Ice Treats",
+    "educationalJustification": "Provides direct visual context for Halo-Halo, specifically illustrating Culinary Heritage and Shaved Ice Treats for young explorers."
+  },
+  {
+    "lessonId": "lesson-48-mango-float",
+    "canonicalLessonTitle": "Mango Float: The Beloved No-Bake Family Heritage Dessert",
+    "learningObjectiveSupported": "Explain the history and culinary science of Mango Float (also known as Mango Royale or Crema de Mangga), an indigenous Philippine adaptation of the European icebox cake / tiramisu utilizing sweet Carabao mangoes, Graham crackers, and whipped sweet cream.",
+    "mediaTitle": "Mango Float Visual I",
+    "sourceSubject": "Family Desserts and No-Bake Culinary Skills",
+    "educationalJustification": "Provides direct visual context for Mango Float, specifically illustrating Family Desserts and No-Bake Culinary Skills for young explorers."
+  },
+  {
+    "lessonId": "lesson-48-mango-float",
+    "canonicalLessonTitle": "Mango Float: The Beloved No-Bake Family Heritage Dessert",
+    "learningObjectiveSupported": "Explain the history and culinary science of Mango Float (also known as Mango Royale or Crema de Mangga), an indigenous Philippine adaptation of the European icebox cake / tiramisu utilizing sweet Carabao mangoes, Graham crackers, and whipped sweet cream.",
+    "mediaTitle": "Mango Float Visual II",
+    "sourceSubject": "Family Desserts and No-Bake Culinary Skills",
+    "educationalJustification": "Provides direct visual context for Mango Float, specifically illustrating Family Desserts and No-Bake Culinary Skills for young explorers."
+  },
+  {
+    "lessonId": "lesson-49-kakanin",
+    "canonicalLessonTitle": "Kakanin Heritage: Sticky Rice Delicacies and Coconut Traditions",
+    "learningObjectiveSupported": "Trace the indigenous Philippine heritage of 'kakanin' (traditional glutinous rice delicacies derived from the root word 'kain' / to eat and 'kanin' / rice) as pre-colonial harvest offerings and sacred hospitality foods.",
+    "mediaTitle": "Kakanin Heritage Visual I",
+    "sourceSubject": "Culinary Heritage and Indigenous Sweets",
+    "educationalJustification": "Provides direct visual context for Kakanin Heritage, specifically illustrating Culinary Heritage and Indigenous Sweets for young explorers."
+  },
+  {
+    "lessonId": "lesson-49-kakanin",
+    "canonicalLessonTitle": "Kakanin Heritage: Sticky Rice Delicacies and Coconut Traditions",
+    "learningObjectiveSupported": "Trace the indigenous Philippine heritage of 'kakanin' (traditional glutinous rice delicacies derived from the root word 'kain' / to eat and 'kanin' / rice) as pre-colonial harvest offerings and sacred hospitality foods.",
+    "mediaTitle": "Kakanin Heritage Visual II",
+    "sourceSubject": "Culinary Heritage and Indigenous Sweets",
+    "educationalJustification": "Provides direct visual context for Kakanin Heritage, specifically illustrating Culinary Heritage and Indigenous Sweets for young explorers."
+  },
+  {
+    "lessonId": "lesson-50-grandmas-recipe-box",
+    "canonicalLessonTitle": "Grandma's Recipe Box: Preserving Heirlooms and Oral Histories",
+    "learningObjectiveSupported": "Explain the cultural role of oral culinary traditions ('pamana sa kusina') where secret family recipes, sensory timing ('tantya'), and heritage techniques are passed down across generations without written cookbooks.",
+    "mediaTitle": "Grandma's Recipe Box Visual I",
+    "sourceSubject": "Family Heritage and Culinary Storytelling",
+    "educationalJustification": "Provides direct visual context for Grandma's Recipe Box, specifically illustrating Family Heritage and Culinary Storytelling for young explorers."
+  },
+  {
+    "lessonId": "lesson-50-grandmas-recipe-box",
+    "canonicalLessonTitle": "Grandma's Recipe Box: Preserving Heirlooms and Oral Histories",
+    "learningObjectiveSupported": "Explain the cultural role of oral culinary traditions ('pamana sa kusina') where secret family recipes, sensory timing ('tantya'), and heritage techniques are passed down across generations without written cookbooks.",
+    "mediaTitle": "Grandma's Recipe Box Visual II",
+    "sourceSubject": "Family Heritage and Culinary Storytelling",
+    "educationalJustification": "Provides direct visual context for Grandma's Recipe Box, specifically illustrating Family Heritage and Culinary Storytelling for young explorers."
+  },
+  {
+    "lessonId": "lesson-51-family-heritage-wall",
+    "canonicalLessonTitle": "The Family Heritage Wall: Culinary Roots and Generational Stories",
+    "learningObjectiveSupported": "Map ancestral geographic roots across the Philippine archipelago (Luzon, Visayas, Mindanao) to identify provincial culinary traditions represented in one's own family lineage.",
+    "mediaTitle": "The Family Heritage Wall Visual I",
+    "sourceSubject": "Family Heritage and Culinary Geography",
+    "educationalJustification": "Provides direct visual context for The Family Heritage Wall, specifically illustrating Family Heritage and Culinary Geography for young explorers."
+  },
+  {
+    "lessonId": "lesson-51-family-heritage-wall",
+    "canonicalLessonTitle": "The Family Heritage Wall: Culinary Roots and Generational Stories",
+    "learningObjectiveSupported": "Map ancestral geographic roots across the Philippine archipelago (Luzon, Visayas, Mindanao) to identify provincial culinary traditions represented in one's own family lineage.",
+    "mediaTitle": "The Family Heritage Wall Visual II",
+    "sourceSubject": "Family Heritage and Culinary Geography",
+    "educationalJustification": "Provides direct visual context for The Family Heritage Wall, specifically illustrating Family Heritage and Culinary Geography for young explorers."
+  },
+  {
+    "lessonId": "lesson-52-november-showcase",
+    "canonicalLessonTitle": "The Grand November Culinary Showcase: A Feast of Family Heritage",
+    "learningObjectiveSupported": "Synthesize comprehensive learning from the entire November Culinary Heritage Unit: kitchen safety protocols, measurement precision, Pinggang Pinoy nutrition, the lifecycle of rice, regional adobo, sour sinigang botany, celebratory pancit, halo-halo artistry, no-bake mango float, and kakanin traditions.",
+    "mediaTitle": "The Grand November Culinary Showcase Visual I",
+    "sourceSubject": "Culinary Synthesis and Family Celebration",
+    "educationalJustification": "Provides direct visual context for The Grand November Culinary Showcase, specifically illustrating Culinary Synthesis and Family Celebration for young explorers."
+  },
+  {
+    "lessonId": "lesson-52-november-showcase",
+    "canonicalLessonTitle": "The Grand November Culinary Showcase: A Feast of Family Heritage",
+    "learningObjectiveSupported": "Synthesize comprehensive learning from the entire November Culinary Heritage Unit: kitchen safety protocols, measurement precision, Pinggang Pinoy nutrition, the lifecycle of rice, regional adobo, sour sinigang botany, celebratory pancit, halo-halo artistry, no-bake mango float, and kakanin traditions.",
+    "mediaTitle": "The Grand November Culinary Showcase Visual II",
+    "sourceSubject": "Culinary Synthesis and Family Celebration",
+    "educationalJustification": "Provides direct visual context for The Grand November Culinary Showcase, specifically illustrating Culinary Synthesis and Family Celebration for young explorers."
+  },
+  {
+    "lessonId": "lesson-53-geography-championship",
+    "canonicalLessonTitle": "The Grand Philippine Geography Championship: Archipelagic Mastery",
+    "learningObjectiveSupported": "Synthesize comprehensive geographic knowledge from August, locating and differentiating the three major island groups (Luzon, Visayas, Mindanao), key water bodies (Pacific Ocean, West Philippine Sea, Celebes Sea), and major topographic landforms (Mount Apo, Mayon Volcano, Sierra Madre, Chocolate Hills).",
+    "mediaTitle": "The Grand Philippine Geography Championship Visual I",
+    "sourceSubject": "National Geography Synthesis and Archipelagic Cartography",
+    "educationalJustification": "Provides direct visual context for The Grand Philippine Geography Championship, specifically illustrating National Geography Synthesis and Archipelagic Cartography for young explorers."
+  },
+  {
+    "lessonId": "lesson-53-geography-championship",
+    "canonicalLessonTitle": "The Grand Philippine Geography Championship: Archipelagic Mastery",
+    "learningObjectiveSupported": "Synthesize comprehensive geographic knowledge from August, locating and differentiating the three major island groups (Luzon, Visayas, Mindanao), key water bodies (Pacific Ocean, West Philippine Sea, Celebes Sea), and major topographic landforms (Mount Apo, Mayon Volcano, Sierra Madre, Chocolate Hills).",
+    "mediaTitle": "The Grand Philippine Geography Championship Visual II",
+    "sourceSubject": "National Geography Synthesis and Archipelagic Cartography",
+    "educationalJustification": "Provides direct visual context for The Grand Philippine Geography Championship, specifically illustrating National Geography Synthesis and Archipelagic Cartography for young explorers."
+  },
+  {
+    "lessonId": "lesson-54-cultural-game-show",
+    "canonicalLessonTitle": "The Great Archipelago Cultural Game Show: Language, Traditions, and Daily Life",
+    "learningObjectiveSupported": "Synthesize comprehensive cultural knowledge from September: respectful gestures ('mano po', 'po at opo'), kinship terms (Nanay, Tatay, Lola, Lolo, Tito, Tita, Ate, Kuya), Filipino home spaces ('bahay kubo', 'sala', 'kusina'), and community helpers.",
+    "mediaTitle": "The Great Archipelago Cultural Game Show Visual I",
+    "sourceSubject": "Cultural Synthesis, Linguistic Review, and Daily Life Heritage",
+    "educationalJustification": "Provides direct visual context for The Great Archipelago Cultural Game Show, specifically illustrating Cultural Synthesis, Linguistic Review, and Daily Life Heritage for young explorers."
+  },
+  {
+    "lessonId": "lesson-54-cultural-game-show",
+    "canonicalLessonTitle": "The Great Archipelago Cultural Game Show: Language, Traditions, and Daily Life",
+    "learningObjectiveSupported": "Synthesize comprehensive cultural knowledge from September: respectful gestures ('mano po', 'po at opo'), kinship terms (Nanay, Tatay, Lola, Lolo, Tito, Tita, Ate, Kuya), Filipino home spaces ('bahay kubo', 'sala', 'kusina'), and community helpers.",
+    "mediaTitle": "The Great Archipelago Cultural Game Show Visual II",
+    "sourceSubject": "Cultural Synthesis, Linguistic Review, and Daily Life Heritage",
+    "educationalJustification": "Provides direct visual context for The Great Archipelago Cultural Game Show, specifically illustrating Cultural Synthesis, Linguistic Review, and Daily Life Heritage for young explorers."
+  },
+  {
+    "lessonId": "lesson-55-family-recipe-showcase",
+    "canonicalLessonTitle": "Family Recipe Showcase Preparation: The Junior Master Chef Feast",
+    "learningObjectiveSupported": "Synthesize key culinary principles from November: kitchen hygiene protocols (20-second handwashing, preventing cross-contamination), volumetric measurement conversions, Pinggang Pinoy nutritional balance, and heirloom recipe preservation.",
+    "mediaTitle": "Family Recipe Showcase Preparation Visual I",
+    "sourceSubject": "Culinary Synthesis, Kitchen Mastery, and Showcase Curation",
+    "educationalJustification": "Provides direct visual context for Family Recipe Showcase Preparation, specifically illustrating Culinary Synthesis, Kitchen Mastery, and Showcase Curation for young explorers."
+  },
+  {
+    "lessonId": "lesson-55-family-recipe-showcase",
+    "canonicalLessonTitle": "Family Recipe Showcase Preparation: The Junior Master Chef Feast",
+    "learningObjectiveSupported": "Synthesize key culinary principles from November: kitchen hygiene protocols (20-second handwashing, preventing cross-contamination), volumetric measurement conversions, Pinggang Pinoy nutritional balance, and heirloom recipe preservation.",
+    "mediaTitle": "Family Recipe Showcase Preparation Visual II",
+    "sourceSubject": "Culinary Synthesis, Kitchen Mastery, and Showcase Curation",
+    "educationalJustification": "Provides direct visual context for Family Recipe Showcase Preparation, specifically illustrating Culinary Synthesis, Kitchen Mastery, and Showcase Curation for young explorers."
+  },
+  {
+    "lessonId": "lesson-56-gratitude-journal",
+    "canonicalLessonTitle": "A Year of Gratitude: Reflecting on God's Blessings, Family, and Growth",
+    "learningObjectiveSupported": "Synthesize the spiritual and emotional discipline of gratitude ('pasasalamat'), examining how giving thanks transforms cognitive outlook, emotional resilience, and family harmony.",
+    "mediaTitle": "A Year of Gratitude Visual I",
+    "sourceSubject": "Spiritual Reflection, Gratitude Ethnography, and Personal Growth",
+    "educationalJustification": "Provides direct visual context for A Year of Gratitude, specifically illustrating Spiritual Reflection, Gratitude Ethnography, and Personal Growth for young explorers."
+  },
+  {
+    "lessonId": "lesson-56-gratitude-journal",
+    "canonicalLessonTitle": "A Year of Gratitude: Reflecting on God's Blessings, Family, and Growth",
+    "learningObjectiveSupported": "Synthesize the spiritual and emotional discipline of gratitude ('pasasalamat'), examining how giving thanks transforms cognitive outlook, emotional resilience, and family harmony.",
+    "mediaTitle": "A Year of Gratitude Visual II",
+    "sourceSubject": "Spiritual Reflection, Gratitude Ethnography, and Personal Growth",
+    "educationalJustification": "Provides direct visual context for A Year of Gratitude, specifically illustrating Spiritual Reflection, Gratitude Ethnography, and Personal Growth for young explorers."
+  },
+  {
+    "lessonId": "lesson-57-biblical-stewardship",
+    "canonicalLessonTitle": "Biblical Stewardship of Creation: Caring for the Islands, Seas, and Living Creatures",
+    "learningObjectiveSupported": "Synthesize comprehensive environmental science and biodiversity knowledge from October: endemic wildlife (Philippine Eagle, Tamaraw, Tarsier), fragile tropical ecosystems (coral reefs of Tubbataha, mangrove forests, Sierra Madre rainforests), and climate resilience.",
+    "mediaTitle": "Biblical Stewardship of Creation Visual I",
+    "sourceSubject": "Environmental Stewardship, Creation Care, and Biodiversity Ethics",
+    "educationalJustification": "Provides direct visual context for Biblical Stewardship of Creation, specifically illustrating Environmental Stewardship, Creation Care, and Biodiversity Ethics for young explorers."
+  },
+  {
+    "lessonId": "lesson-57-biblical-stewardship",
+    "canonicalLessonTitle": "Biblical Stewardship of Creation: Caring for the Islands, Seas, and Living Creatures",
+    "learningObjectiveSupported": "Synthesize comprehensive environmental science and biodiversity knowledge from October: endemic wildlife (Philippine Eagle, Tamaraw, Tarsier), fragile tropical ecosystems (coral reefs of Tubbataha, mangrove forests, Sierra Madre rainforests), and climate resilience.",
+    "mediaTitle": "Biblical Stewardship of Creation Visual II",
+    "sourceSubject": "Environmental Stewardship, Creation Care, and Biodiversity Ethics",
+    "educationalJustification": "Provides direct visual context for Biblical Stewardship of Creation, specifically illustrating Environmental Stewardship, Creation Care, and Biodiversity Ethics for young explorers."
+  },
+  {
+    "lessonId": "lesson-58-bayanihan-review",
+    "canonicalLessonTitle": "Bayanihan in Action: Community Kindness, Cooperation, and Filipino Values",
+    "learningObjectiveSupported": "Synthesize the historical and cultural evolution of 'Bayanihan' from traditional whole-house lifting ('pagbuhat ng bahay kubo') to contemporary disaster relief, community pantries, and everyday neighborhood kindness.",
+    "mediaTitle": "Bayanihan in Action Visual I",
+    "sourceSubject": "Bayanihan Synthesis, Community Cooperation, and Servant Leadership",
+    "educationalJustification": "Provides direct visual context for Bayanihan in Action, specifically illustrating Bayanihan Synthesis, Community Cooperation, and Servant Leadership for young explorers."
+  },
+  {
+    "lessonId": "lesson-58-bayanihan-review",
+    "canonicalLessonTitle": "Bayanihan in Action: Community Kindness, Cooperation, and Filipino Values",
+    "learningObjectiveSupported": "Synthesize the historical and cultural evolution of 'Bayanihan' from traditional whole-house lifting ('pagbuhat ng bahay kubo') to contemporary disaster relief, community pantries, and everyday neighborhood kindness.",
+    "mediaTitle": "Bayanihan in Action Visual II",
+    "sourceSubject": "Bayanihan Synthesis, Community Cooperation, and Servant Leadership",
+    "educationalJustification": "Provides direct visual context for Bayanihan in Action, specifically illustrating Bayanihan Synthesis, Community Cooperation, and Servant Leadership for young explorers."
+  },
+  {
+    "lessonId": "lesson-59-faith-and-heroes",
+    "canonicalLessonTitle": "Convictions, Faith, and Service in the Lives of Filipino Heroes",
+    "learningObjectiveSupported": "Synthesize the historical lives, core convictions, and sacrificial service of prominent Filipino national heroes from October: Dr. Jose Rizal, Andres Bonifacio, Melchora Aquino ('Tandang Sora'), and Gabriela Silang.",
+    "mediaTitle": "Convictions, Faith, and Service in the Lives of Filipino Heroes Visual I",
+    "sourceSubject": "Historical Heroism, Moral Convictions, and Patriotic Service",
+    "educationalJustification": "Provides direct visual context for Convictions, Faith, and Service in the Lives of Filipino Heroes, specifically illustrating Historical Heroism, Moral Convictions, and Patriotic Service for young explorers."
+  },
+  {
+    "lessonId": "lesson-59-faith-and-heroes",
+    "canonicalLessonTitle": "Convictions, Faith, and Service in the Lives of Filipino Heroes",
+    "learningObjectiveSupported": "Synthesize the historical lives, core convictions, and sacrificial service of prominent Filipino national heroes from October: Dr. Jose Rizal, Andres Bonifacio, Melchora Aquino ('Tandang Sora'), and Gabriela Silang.",
+    "mediaTitle": "Convictions, Faith, and Service in the Lives of Filipino Heroes Visual II",
+    "sourceSubject": "Historical Heroism, Moral Convictions, and Patriotic Service",
+    "educationalJustification": "Provides direct visual context for Convictions, Faith, and Service in the Lives of Filipino Heroes, specifically illustrating Historical Heroism, Moral Convictions, and Patriotic Service for young explorers."
+  },
+  {
+    "lessonId": "lesson-60-christmas-traditions",
+    "canonicalLessonTitle": "The Parol and Filipino Heritage Traditions: The Star of Hope and Joy",
+    "learningObjectiveSupported": "Explain the cultural history and artisan craftsmanship of the Filipino 'Parol' (five-pointed star lantern), tracing its origin from traditional bamboo-and-papel-de-japon lanterns to modern capiz shell artistry.",
+    "mediaTitle": "The Parol and Filipino Heritage Traditions Visual I",
+    "sourceSubject": "Cultural Iconography, Archival Folk Arts, and Seasonal Heritage",
+    "educationalJustification": "Provides direct visual context for The Parol and Filipino Heritage Traditions, specifically illustrating Cultural Iconography, Archival Folk Arts, and Seasonal Heritage for young explorers."
+  },
+  {
+    "lessonId": "lesson-60-christmas-traditions",
+    "canonicalLessonTitle": "The Parol and Filipino Heritage Traditions: The Star of Hope and Joy",
+    "learningObjectiveSupported": "Explain the cultural history and artisan craftsmanship of the Filipino 'Parol' (five-pointed star lantern), tracing its origin from traditional bamboo-and-papel-de-japon lanterns to modern capiz shell artistry.",
+    "mediaTitle": "The Parol and Filipino Heritage Traditions Visual II",
+    "sourceSubject": "Cultural Iconography, Archival Folk Arts, and Seasonal Heritage",
+    "educationalJustification": "Provides direct visual context for The Parol and Filipino Heritage Traditions, specifically illustrating Cultural Iconography, Archival Folk Arts, and Seasonal Heritage for young explorers."
+  },
+  {
+    "lessonId": "lesson-61-simbang-gabi",
+    "canonicalLessonTitle": "Simbang Gabi: History, Agricultural Heritage, and Community Traditions",
+    "learningObjectiveSupported": "Explain the historical origin and agricultural heritage of 'Simbang Gabi' (Misa de Gallo / Dawn Mass), analyzing how this 17th-century tradition was established to accommodate the planting schedules of Filipino rice farmers and fishermen before sunrise.",
+    "mediaTitle": "Simbang Gabi Visual I",
+    "sourceSubject": "Agricultural History, Sacred Traditions, and Community Heritage",
+    "educationalJustification": "Provides direct visual context for Simbang Gabi, specifically illustrating Agricultural History, Sacred Traditions, and Community Heritage for young explorers."
+  },
+  {
+    "lessonId": "lesson-61-simbang-gabi",
+    "canonicalLessonTitle": "Simbang Gabi: History, Agricultural Heritage, and Community Traditions",
+    "learningObjectiveSupported": "Explain the historical origin and agricultural heritage of 'Simbang Gabi' (Misa de Gallo / Dawn Mass), analyzing how this 17th-century tradition was established to accommodate the planting schedules of Filipino rice farmers and fishermen before sunrise.",
+    "mediaTitle": "Simbang Gabi Visual II",
+    "sourceSubject": "Agricultural History, Sacred Traditions, and Community Heritage",
+    "educationalJustification": "Provides direct visual context for Simbang Gabi, specifically illustrating Agricultural History, Sacred Traditions, and Community Heritage for young explorers."
+  },
+  {
+    "lessonId": "lesson-62-showcase-prep",
+    "canonicalLessonTitle": "Year-End Showcase Preparation: Assembling Portfolios and Rehearsing Presentations",
+    "learningObjectiveSupported": "Synthesize and organize major physical and digital artifacts produced across the entire August–December Wonder Journey curriculum: 3D Archipelagic Map, Respect Kindness Wheel, Creation Care Shield, Bayanihan Mobile, Hero Medal, Star Parol, Recipe Keepsake Box, and Gratitude Journal.",
+    "mediaTitle": "Year-End Showcase Preparation Visual I",
+    "sourceSubject": "Portfolio Curation, Public Speaking, and Rehearsal Protocols",
+    "educationalJustification": "Provides direct visual context for Year-End Showcase Preparation, specifically illustrating Portfolio Curation, Public Speaking, and Rehearsal Protocols for young explorers."
+  },
+  {
+    "lessonId": "lesson-62-showcase-prep",
+    "canonicalLessonTitle": "Year-End Showcase Preparation: Assembling Portfolios and Rehearsing Presentations",
+    "learningObjectiveSupported": "Synthesize and organize major physical and digital artifacts produced across the entire August–December Wonder Journey curriculum: 3D Archipelagic Map, Respect Kindness Wheel, Creation Care Shield, Bayanihan Mobile, Hero Medal, Star Parol, Recipe Keepsake Box, and Gratitude Journal.",
+    "mediaTitle": "Year-End Showcase Preparation Visual II",
+    "sourceSubject": "Portfolio Curation, Public Speaking, and Rehearsal Protocols",
+    "educationalJustification": "Provides direct visual context for Year-End Showcase Preparation, specifically illustrating Portfolio Curation, Public Speaking, and Rehearsal Protocols for young explorers."
+  },
+  {
+    "lessonId": "lesson-63-the-nativity",
+    "canonicalLessonTitle": "The Birth of Jesus: The Biblical Accounts in Matthew and Luke",
+    "learningObjectiveSupported": "Examine and synthesize the biblical accounts of the Nativity of Jesus Christ from the Gospel of Luke (Luke 1:26-38, 2:1-20: Annunciation, Census, Journey to Bethlehem, Manger Birth, Angelic Proclamation to Shepherds) and the Gospel of Matthew (Matthew 1:18-25, 2:1-12: Joseph's Obedience, Star of Bethlehem, Visit of the Magi).",
+    "mediaTitle": "The Birth of Jesus Visual I",
+    "sourceSubject": "Biblical Exegesis, Nativity Narrative, and Christological Meaning",
+    "educationalJustification": "Provides direct visual context for The Birth of Jesus, specifically illustrating Biblical Exegesis, Nativity Narrative, and Christological Meaning for young explorers."
+  },
+  {
+    "lessonId": "lesson-63-the-nativity",
+    "canonicalLessonTitle": "The Birth of Jesus: The Biblical Accounts in Matthew and Luke",
+    "learningObjectiveSupported": "Examine and synthesize the biblical accounts of the Nativity of Jesus Christ from the Gospel of Luke (Luke 1:26-38, 2:1-20: Annunciation, Census, Journey to Bethlehem, Manger Birth, Angelic Proclamation to Shepherds) and the Gospel of Matthew (Matthew 1:18-25, 2:1-12: Joseph's Obedience, Star of Bethlehem, Visit of the Magi).",
+    "mediaTitle": "The Birth of Jesus Visual II",
+    "sourceSubject": "Biblical Exegesis, Nativity Narrative, and Christological Meaning",
+    "educationalJustification": "Provides direct visual context for The Birth of Jesus, specifically illustrating Biblical Exegesis, Nativity Narrative, and Christological Meaning for young explorers."
+  },
+  {
+    "lessonId": "lesson-64-looking-forward",
+    "canonicalLessonTitle": "Looking Forward to the New Year: Hope, Goals, and Walking with God",
+    "learningObjectiveSupported": "Formulate a structured 'Bagong Taon, Bagong Pag-asa' (New Year Vision Plan) across four core developmental domains: Spiritual Growth & Prayer, Academic & Creative Curiosity, Domestic Helpfulness & Family Honor, and Physical Health & Stewardship.",
+    "mediaTitle": "Looking Forward to the New Year Visual I",
+    "sourceSubject": "Goal-Setting, Character Formation, and Future Vision",
+    "educationalJustification": "Provides direct visual context for Looking Forward to the New Year, specifically illustrating Goal-Setting, Character Formation, and Future Vision for young explorers."
+  },
+  {
+    "lessonId": "lesson-64-looking-forward",
+    "canonicalLessonTitle": "Looking Forward to the New Year: Hope, Goals, and Walking with God",
+    "learningObjectiveSupported": "Formulate a structured 'Bagong Taon, Bagong Pag-asa' (New Year Vision Plan) across four core developmental domains: Spiritual Growth & Prayer, Academic & Creative Curiosity, Domestic Helpfulness & Family Honor, and Physical Health & Stewardship.",
+    "mediaTitle": "Looking Forward to the New Year Visual II",
+    "sourceSubject": "Goal-Setting, Character Formation, and Future Vision",
+    "educationalJustification": "Provides direct visual context for Looking Forward to the New Year, specifically illustrating Goal-Setting, Character Formation, and Future Vision for young explorers."
+  },
+  {
+    "lessonId": "lesson-65-year-end-showcase",
+    "canonicalLessonTitle": "The Grand Wonder Journey Year-End Adventure Showcase: A Celebration of Learning",
+    "learningObjectiveSupported": "Synthesize comprehensive learning across the entire 65-lesson Wonder Journey curriculum: August Philippine Geography, September Language & Daily Life, October History & Biodiversity, November Culinary Science & Family Heritage, and December Faith & Character.",
+    "mediaTitle": "The Grand Wonder Journey Year-End Adventure Showcase Visual I",
+    "sourceSubject": "Culminating Capstone Exhibition and Grand Graduation Celebration",
+    "educationalJustification": "Provides direct visual context for The Grand Wonder Journey Year-End Adventure Showcase, specifically illustrating Culminating Capstone Exhibition and Grand Graduation Celebration for young explorers."
+  },
+  {
+    "lessonId": "lesson-65-year-end-showcase",
+    "canonicalLessonTitle": "The Grand Wonder Journey Year-End Adventure Showcase: A Celebration of Learning",
+    "learningObjectiveSupported": "Synthesize comprehensive learning across the entire 65-lesson Wonder Journey curriculum: August Philippine Geography, September Language & Daily Life, October History & Biodiversity, November Culinary Science & Family Heritage, and December Faith & Character.",
+    "mediaTitle": "The Grand Wonder Journey Year-End Adventure Showcase Visual II",
+    "sourceSubject": "Culminating Capstone Exhibition and Grand Graduation Celebration",
+    "educationalJustification": "Provides direct visual context for The Grand Wonder Journey Year-End Adventure Showcase, specifically illustrating Culminating Capstone Exhibition and Grand Graduation Celebration for young explorers."
+  }
+]

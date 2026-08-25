@@ -26,13 +26,14 @@ const GATES = [
   { name: "18. Real Media 130 SHA-256 Verified Asset Production Gate", cmd: "node scripts/validate-real-media-production.js" },
   { name: "18b. Real Media Validator Negative Test Suite", cmd: "node scripts/test-validator-negative-cases.js" },
   { name: "19. Stage 12.1R 16-Defect Regression Prevention Suite", cmd: "node scripts/test-regression-stage12-defects.js" },
-  { name: "20. Real Browser Two-Context Classroom E2E Suite (Playwright)", cmd: "node scripts/run-playwright-e2e.js" },
-  { name: "21. Comprehensive Security & Answer Safety Suite", cmd: "npx tsx scripts/test-classroom-security-comprehensive.js" },
-  { name: "22. ESLint Static Code Analysis", cmd: "npm run lint" },
-  { name: "23. TypeScript Full Typecheck", cmd: "npx tsc --noEmit" },
-  { name: "24. Production Next.js Build", cmd: "npm run build" },
+  { name: "20. ESLint Static Code Analysis", cmd: "npm run lint" },
+  { name: "21. TypeScript Full Typecheck", cmd: "npx tsc --noEmit" },
+  { name: "22. Production Next.js Build", cmd: "npm run build" },
+  { name: "23. Real Browser Two-Context Classroom E2E Suite (Playwright)", cmd: "node scripts/run-playwright-e2e.js" },
+  { name: "24. Comprehensive Security & Answer Safety Suite", cmd: "npx tsx scripts/test-classroom-security-comprehensive.js" },
   { name: "25. Local Production Server Smoke Tests", cmd: "node scripts/test-production-server.js" },
-  { name: "26. Client-Bundle Answer & Key Leak Gate", cmd: "node scripts/test-client-bundle-leak.js" }
+  { name: "26. Client-Bundle Answer & Key Leak Gate", cmd: "node scripts/test-client-bundle-leak.js" },
+  { name: "27. Stage 12.1R.3 Negative Test Suite", cmd: "node scripts/test-negative-cases.js" }
 ];
 
 let results = [];

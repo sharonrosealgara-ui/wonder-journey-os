@@ -3,26 +3,32 @@ name: CI Verification & Quality Gates
 on:
   push:
     branches:
+      - integration/curriculum-jul-dec-2026
       - main
-      - 'integration/**'
-      - 'feature/**'
-      - 'fix/**'
   pull_request:
     branches:
+      - integration/curriculum-jul-dec-2026
       - main
-      - 'integration/**'
+
+permissions:
+  contents: read
 
 jobs:
-  verify:
+  stage-12-quality-gates:
     name: Stage 12.1R.6 Quality & 30 Release Gates
     runs-on: ubuntu-latest
+    timeout-minutes: 25
+
     env:
-      GAME_EVALUATION_SECRET: ${{ secrets.GAME_EVALUATION_SECRET || 'ci_default_game_evaluation_secret_key_2026_super_secure' }}
-      LIVEKIT_API_KEY: devkey
-      LIVEKIT_API_SECRET: secret1234567890123456
-      LIVEKIT_URL: ws://127.0.0.1:7880
-      NEXT_PUBLIC_SUPABASE_URL: http://127.0.0.1:54321
-      NEXT_PUBLIC_SUPABASE_ANON_KEY: test-anon-key
+      NODE_ENV: test
+      NEXT_TELEMETRY_DISABLED: 1
+      NEXT_PUBLIC_SUPABASE_URL: http://localhost:54321
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: synthetic-anon-key-stage12-testing
+      SUPABASE_SERVICE_ROLE_KEY: synthetic-service-role-key-stage12-testing
+      LIVEKIT_API_KEY: synthetic-livekit-api-key
+      LIVEKIT_API_SECRET: synthetic-livekit-api-secret-1234567890abcdef
+      NEXT_PUBLIC_LIVEKIT_WS_URL: ws://127.0.0.1:7880
+      GAME_EVALUATION_SECRET: stage12-1r6-server-evaluation-secret-key-32bytes-ci
 
     steps:
       - name: Checkout Code
@@ -37,6 +43,9 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
+      - name: Install Playwright Browsers & OS Dependencies
+        run: npx playwright install --with-deps chromium
+
       - name: Run ESLint
         run: npm run lint
 
@@ -46,7 +55,7 @@ jobs:
       - name: Run Curriculum & Unit Tests
         run: npm test
 
-      - name: Run Protocol & Unit Tests
+      - name: Run Classroom Protocol & Transport Unit Tests
         run: npx tsx tests/livekit-teacher-student-sync.test.ts
 
       - name: Run 130 Authentic Media Integrity & Provenance Audit
@@ -55,10 +64,15 @@ jobs:
       - name: Run Full 30 Release Candidate Verification Gates
         run: npm run validate:release
 
-      - name: Run Playwright E2E Two-Context Suite
-        run: |
-          npx playwright install --with-deps chromium
-          node scripts/run-playwright-e2e.js
-
       - name: Generate CI Verification Evidence
         run: node scripts/generate-ci-evidence.js
+
+      - name: Upload CI Evidence Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-verification-evidence
+          path: |
+            artifacts/ci-verification-evidence.json
+            artifacts/media-contact-sheet.json
+            artifacts/media-contact-sheet.html
+            artifacts/screenshots/

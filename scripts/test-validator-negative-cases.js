@@ -32,7 +32,7 @@ function createValidRecord(id, lessonId = "lesson-1") {
     dimensions: { width: 1200, height: 800 },
     modifications: "Optimized for display",
     storedAssetPath: "/media/curriculum/l01-visual-a.jpg",
-    sha256Checksum: "793f7ae80e5aa66d2ed7390427ee57b923fb7d70bdc8eb9500d8617db61a3ae8",
+    sha256Checksum: "f12f55ff790b4162ec2fd20c326b086b2a74077c39fc4c46de03031dc8435177",
     altText: "Valid descriptive alt text for testing purposes",
     caption: "Valid caption for testing",
   };
@@ -77,7 +77,7 @@ test2Record.originalSourceUrl = "https://wonderjourney.app/fake-image.jpg";
 assertFails(
   "Fabricated host URL",
   [test2Record],
-  "Forbidden or fabricated host in originalSourceUrl"
+  "Forbidden or fabricated host in source URL"
 );
 
 // 3. Negative Test: Mismatched MIME

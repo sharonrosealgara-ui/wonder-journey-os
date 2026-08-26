@@ -1,4 +1,4 @@
-﻿node_modules
+node_modules
 .next
 out
 build
@@ -10,3 +10,7 @@ next-env.d.ts
 
 # deploy artifact
 wonder-journey-site.zip
+
+# local binaries and temp folders
+bin/
+temp-sync-gen/

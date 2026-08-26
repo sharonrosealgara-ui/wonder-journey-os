@@ -1,4 +1,4 @@
-﻿const fs = require("fs");
+const fs = require("fs");
 const path = require("path");
 const { execSync } = require("child_process");
 
@@ -123,7 +123,11 @@ stages.forEach((s) => {
   });
 });
 
-fs.rmSync(path.join(__dirname, "../temp-sync-gen"), { recursive: true, force: true });
+try {
+  fs.rmSync(path.join(__dirname, "../temp-sync-gen"), { recursive: true, force: true, maxRetries: 3, retryDelay: 100 });
+} catch {
+  // Gracefully handle Windows file system temp directory locks
+}
 
 if (errors.length > 0) {
   console.error("FAIL: Family projection sync test detected errors:");

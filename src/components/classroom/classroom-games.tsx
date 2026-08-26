@@ -13,14 +13,13 @@ async function evaluateGameAttemptViaApi(
   gameType: string,
   attemptData: Record<string, unknown>,
   gameToken?: string,
-  sessionId?: string,
-  targetWorkspaceId?: string
+  sessionId?: string
 ): Promise<{ result: "correct" | "try_again"; score: number; feedback: string }> {
   try {
     const res = await fetch("/api/game/evaluate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ lessonId, gameType, attemptData, gameToken, sessionId, targetWorkspaceId }),
+      body: JSON.stringify({ lessonId, gameType, attemptData, gameToken, sessionId }),
     });
     if (!res.ok) {
       const errData = await res.json().catch(() => ({}));
@@ -230,8 +229,7 @@ export function ClassroomGames({
         "sorting",
         { placements: newPlacements },
         gameDTO.gameToken,
-        sessionId,
-        workspaceId
+        sessionId
       );
       setGameFeedback(evalRes.feedback);
       setGameScore(evalRes.score);
@@ -263,8 +261,7 @@ export function ClassroomGames({
           "sorting",
           { placements: newPlacements },
           gameDTO.gameToken,
-          sessionId,
-          workspaceId
+          sessionId
         );
         setGameFeedback(evalRes.feedback);
         setGameScore(evalRes.score);
@@ -296,8 +293,7 @@ export function ClassroomGames({
       "matching",
       { pair: { leftId, rightId } },
       gameDTO.gameToken,
-      sessionId,
-      workspaceId
+      sessionId
     );
     if (evalRes.result === "correct") {
       setMatchedPairs((prev) => [...prev, leftId]);
@@ -329,8 +325,7 @@ export function ClassroomGames({
       "sequencing",
       { order: current },
       gameDTO.gameToken,
-      sessionId,
-      workspaceId
+      sessionId
     );
     if (evalRes.result === "correct") {
       setGameFeedback("Tumpak! Perfect sequence!");
@@ -348,8 +343,7 @@ export function ClassroomGames({
       "quiz",
       { selectedOptionId: optId },
       gameDTO.gameToken,
-      sessionId,
-      workspaceId
+      sessionId
     );
     setQuizFeedback(evalRes.feedback);
     setGameScore(evalRes.score);
@@ -374,8 +368,7 @@ export function ClassroomGames({
         "memory_flip",
         { cardIds: [firstId, secondId] },
         gameDTO.gameToken,
-        sessionId,
-        workspaceId
+        sessionId
       );
       if (evalRes.result === "correct") {
         setSolvedMemoryCards((prev) => [...prev, firstId, secondId]);
@@ -398,8 +391,7 @@ export function ClassroomGames({
       "hotspot",
       { targetId },
       gameDTO.gameToken,
-      sessionId,
-      workspaceId
+      sessionId
     );
     setHotspotFeedback(evalRes.feedback);
     emitGame("tap_hotspot", { targetId, isCorrect: evalRes.result === "correct" });

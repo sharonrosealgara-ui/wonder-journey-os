@@ -132,7 +132,18 @@ function createLocalSupabaseMockServer(port = 54321) {
     });
   });
 
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
+    server.once("error", (err) => {
+      if (err.code === "EADDRINUSE") {
+        // Mock server is already running on this port; reuse it
+        resolve({
+          close: (cb) => { if (cb) cb(); },
+          isReused: true
+        });
+      } else {
+        reject(err);
+      }
+    });
     server.listen(port, () => {
       resolve(server);
     });

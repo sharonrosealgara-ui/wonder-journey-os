@@ -6,7 +6,7 @@ process.env.GAME_EVALUATION_SECRET =
   process.env.GAME_EVALUATION_SECRET || "release_validation_game_evaluation_secret_key_2026_super_secure";
 
 console.log("================================================================================");
-console.log("WONDER JOURNEY OS — STAGE 12.1R.6 RELEASE CANDIDATE VERIFICATION (30 GATES)");
+console.log("WONDER JOURNEY OS — STAGE 12.1R.7 RELEASE CANDIDATE VERIFICATION (30 GATES)");
 console.log("================================================================================\n");
 
 const GATES = [
@@ -23,14 +23,14 @@ const GATES = [
   { name: "11. October Curriculum Premium Gate", cmd: "npx tsx scripts/validate-premium-october.js" },
   { name: "12. November Curriculum Premium Gate", cmd: "npx tsx scripts/validate-premium-november.js" },
   { name: "13. December Curriculum Premium Gate", cmd: "npx tsx scripts/validate-premium-december.js" },
-  { name: "14. DTO Leak & Projection Sync Gate", cmd: "node scripts/test-dto-leak.js && node scripts/test-family-projection-sync.js" },
+  { name: "14. DTO Leak & Projection Sync Gate", cmd: "npx tsx scripts/test-dto-leak.ts && npx tsx scripts/test-family-projection-sync.ts" },
   { name: "15. 65-Lesson Render Safety (4,908 slides)", cmd: "node scripts/test-lesson-render-safety.js" },
   { name: "16. Assessment Response State Model", cmd: "node scripts/test-assessment-response-model.js" },
   { name: "17. Curriculum Schema & Uniqueness Tests", cmd: "npx tsx src/__tests__/curriculum.test.ts" },
   { name: "18. Real Media 130 SHA-256 Verified Asset Production Gate", cmd: "node scripts/validate-real-media-production.js" },
   { name: "19. Real Media Validator Negative Test Suite", cmd: "node scripts/test-validator-negative-cases.js" },
-  { name: "20. 130 Media Exact Duplicate & Near-Duplicate Detection Gate", cmd: "node scripts/detect-media-duplicates.js" },
-  { name: "21. 130 Authentic Media Provenance & Subject Audit Gate", cmd: "npx tsx scripts/audit-all-130-media.js" },
+  { name: "20. 130 Media Exact Duplicate & Perceptual Near-Duplicate Gate", cmd: "node scripts/detect-media-duplicates.js && node scripts/detect-perceptual-duplicates.js" },
+  { name: "21. 130 Authentic Media Provenance & Subject Audit Gate", cmd: "node scripts/audit-all-130-media.js" },
   { name: "22. Stage 12.1R 16-Defect Regression Prevention Suite", cmd: "node scripts/test-regression-stage12-defects.js" },
   { name: "23. ESLint Static Code Analysis", cmd: "npm run lint" },
   { name: "24. TypeScript Full Typecheck", cmd: "npx tsc --noEmit" },
@@ -39,7 +39,7 @@ const GATES = [
   { name: "27. Comprehensive Security & Answer Safety Suite", cmd: "npx tsx scripts/test-classroom-security-comprehensive.js" },
   { name: "28. Local Production Server Smoke Tests", cmd: "node scripts/test-production-server.js" },
   { name: "29. Client-Bundle Answer & Key Leak Gate", cmd: "node scripts/test-client-bundle-leak.js" },
-  { name: "30. Stage 12.1R.6 Sealed Token & Negative Security Test Suite", cmd: "npx tsx scripts/test-negative-cases.js" }
+  { name: "30. Stage 12.1R.7 Sealed Token & Negative Security Test Suite", cmd: "npx tsx scripts/test-negative-cases.js" }
 ];
 
 let results = [];
@@ -64,12 +64,12 @@ for (const gate of GATES) {
 }
 
 console.log("\n================================================================================");
-console.log("STAGE 12.1R.6 RELEASE CANDIDATE ORCHESTRATION SUMMARY");
+console.log("STAGE 12.1R.7 RELEASE CANDIDATE ORCHESTRATION SUMMARY");
 console.log("================================================================================\n");
 console.table(results);
 
 if (!overallSuccess) {
-  console.error("\nFAIL: Stage 12.1R.6 Release Candidate verification failed. Resolve blockers before release.\n");
+  console.error("\nFAIL: Stage 12.1R.7 Release Candidate verification failed. Resolve blockers before release.\n");
   process.exit(1);
 } else {
   console.log(`\nPASS: ALL ${GATES.length} RELEASE CANDIDATE GATES PASSED! APPLICATION IS 100% HARDENED AND VERIFIED.\n`);

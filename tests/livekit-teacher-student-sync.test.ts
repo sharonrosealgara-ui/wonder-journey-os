@@ -1,3 +1,5 @@
+process.env.GAME_EVALUATION_SECRET = process.env.GAME_EVALUATION_SECRET || "sync_test_game_evaluation_secret_key_2026_super_secure";
+
 import {
   isClassroomEvent,
   validateParticipantAction,
@@ -127,7 +129,13 @@ assert(
 );
 
 // 5. Student Submits Interactive Game Event -> Teacher Observes Progress
-const gameDTO = generateServerLearnerGame("lesson-1-world-map");
+const testContext = {
+  userId: studentParticipant.identity,
+  workspaceId: "ws-del-rosario",
+  sessionId: "wj-room-del-rosario",
+};
+
+const gameDTO = generateServerLearnerGame("lesson-1-world-map", "Lesson 1", testContext);
 assert(
   "Server generates sealed LearnerSafeGameDTO with gameToken",
   !!gameDTO && !!gameDTO.gameToken && !("sortingMap" in gameDTO)
@@ -214,7 +222,8 @@ if (gameDTO && gameDTO.gameToken) {
     "lesson-1-world-map",
     "quiz",
     { selectedOptionId: gameDTO.quiz.options[0].id },
-    gameDTO.gameToken
+    gameDTO.gameToken,
+    testContext
   );
   assert(
     "Server-side evaluation validates sealed instance gameToken successfully",
@@ -227,7 +236,8 @@ if (gameDTO && gameDTO.gameToken) {
     "lesson-1-world-map",
     "quiz",
     { selectedOptionId: "opt_fake" },
-    "invalid.tampered.token"
+    "invalid.tampered.token",
+    testContext
   );
   assert(
     "Tampered gameToken fails closed safely",
@@ -239,7 +249,9 @@ if (gameDTO && gameDTO.gameToken) {
 const unknownLessonResult = evaluateGameAttemptOnServer(
   "unknown-lesson-999",
   "quiz",
-  { selectedOptionId: "opt-1" }
+  { selectedOptionId: "opt-1" },
+  "fake_token",
+  testContext
 );
 assert(
   "Unknown lessonId strictly rejected by evaluator",

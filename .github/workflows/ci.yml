@@ -15,7 +15,7 @@ permissions:
 
 jobs:
   stage-12-quality-gates:
-    name: Stage 12.1R.6 Quality & 30 Release Gates
+    name: Stage 12.1R.7 Quality & 30 Release Gates
     runs-on: ubuntu-latest
     timeout-minutes: 25
 
@@ -28,7 +28,7 @@ jobs:
       LIVEKIT_API_KEY: synthetic-livekit-api-key
       LIVEKIT_API_SECRET: synthetic-livekit-api-secret-1234567890abcdef
       NEXT_PUBLIC_LIVEKIT_WS_URL: ws://127.0.0.1:7880
-      GAME_EVALUATION_SECRET: stage12-1r6-server-evaluation-secret-key-32bytes-ci
+      GAME_EVALUATION_SECRET: stage12-1r7-server-evaluation-secret-key-32bytes-ci
 
     steps:
       - name: Checkout Code
@@ -46,6 +46,9 @@ jobs:
       - name: Install Playwright Browsers & OS Dependencies
         run: npx playwright install --with-deps chromium
 
+      - name: Download & Setup Official LiveKit Server
+        run: node scripts/setup-livekit-server.js &
+
       - name: Run ESLint
         run: npm run lint
 
@@ -59,7 +62,7 @@ jobs:
         run: npx tsx tests/livekit-teacher-student-sync.test.ts
 
       - name: Run 130 Authentic Media Integrity & Provenance Audit
-        run: npx tsx scripts/audit-all-130-media.js
+        run: node scripts/audit-all-130-media.js
 
       - name: Run Full 30 Release Candidate Verification Gates
         run: npm run validate:release
@@ -75,4 +78,5 @@ jobs:
             artifacts/ci-verification-evidence.json
             artifacts/media-contact-sheet.json
             artifacts/media-contact-sheet.html
+            artifacts/media-visual-review.json
             artifacts/screenshots/

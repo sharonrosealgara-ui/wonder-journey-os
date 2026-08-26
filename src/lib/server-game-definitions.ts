@@ -98,16 +98,84 @@ export interface TeacherSolutionKey {
 }
 
 // ─────────────────────────────────────────────────────────────
-// STATELESS SEALED EVALUATION CRYPTOGRAPHY & INSTANCE STORAGE
+// STATELESS SEALED EVALUATION CRYPTOGRAPHY & PERSISTENT STORAGE
 // AES-256-GCM sealed session tokens bound to authenticated user,
 // workspace, classroom session, exact lesson ID, and short expiry.
 // ─────────────────────────────────────────────────────────────
 
+import path from "path";
+import fs from "fs";
+
+export const CANONICAL_LESSON_IDS = new Set<string>([
+  "lesson-1-world-map",
+  "lesson-2-archipelago",
+  "lesson-3-luzon-visayas-mindanao",
+  "lesson-4-region",
+  "lesson-5-province",
+  "lesson-6-city",
+  "lesson-7-national-symbols",
+  "lesson-8-mountains",
+  "lesson-9-rivers-beaches",
+  "lesson-10-animals",
+  "lesson-11-plants",
+  "lesson-12-language",
+  "lesson-13-august-review",
+  "lesson-14-greetings",
+  "lesson-15-respectful-gestures",
+  "lesson-16-family",
+  "lesson-17-body-parts",
+  "lesson-18-food",
+  "lesson-19-emotions",
+  "lesson-20-homes",
+  "lesson-21-daily-routines",
+  "lesson-22-transportation",
+  "lesson-23-clothing",
+  "lesson-24-weather-seasons",
+  "lesson-25-market-day",
+  "lesson-26-september-review",
+  "lesson-27-folktale-characters",
+  "lesson-28-creation-myths",
+  "lesson-29-fables",
+  "lesson-30-legends",
+  "lesson-31-traditional-games",
+  "lesson-32-music-instruments",
+  "lesson-33-folk-dances",
+  "lesson-34-tropical-forests",
+  "lesson-35-coral-reefs",
+  "lesson-36-philippine-eagle",
+  "lesson-37-environmental-stewardship",
+  "lesson-38-october-review",
+  "lesson-39-october-showcase",
+  "lesson-40-kitchen-safety",
+  "lesson-41-measurements",
+  "lesson-42-nutrition",
+  "lesson-43-rice-basics",
+  "lesson-44-adobo-history",
+  "lesson-45-sinigang-flavors",
+  "lesson-46-pancit-celebration",
+  "lesson-47-halo-halo",
+  "lesson-48-mango-float",
+  "lesson-49-kakanin",
+  "lesson-50-grandmas-recipe-box",
+  "lesson-51-family-heritage-wall",
+  "lesson-52-november-showcase",
+  "lesson-53-geography-championship",
+  "lesson-54-cultural-game-show",
+  "lesson-55-family-recipe-showcase",
+  "lesson-56-gratitude-journal",
+  "lesson-57-biblical-stewardship",
+  "lesson-58-bayanihan-review",
+  "lesson-59-faith-and-heroes",
+  "lesson-60-christmas-traditions",
+  "lesson-61-simbang-gabi",
+  "lesson-62-showcase-prep",
+  "lesson-63-the-nativity",
+  "lesson-64-looking-forward",
+  "lesson-65-year-end-showcase",
+]);
+
 function getEvaluationSecret(): Buffer {
-  const secret =
-    process.env.GAME_EVALUATION_SECRET ||
-    process.env.SUPABASE_JWT_SECRET ||
-    process.env.LIVEKIT_API_SECRET;
+  const secret = process.env.GAME_EVALUATION_SECRET;
 
   if (!secret || typeof secret !== "string" || secret.trim().length < 16) {
     throw new Error(
@@ -120,7 +188,7 @@ function getEvaluationSecret(): Buffer {
 export interface SealedTokenContext {
   userId: string;
   workspaceId: string;
-  sessionId?: string;
+  sessionId: string;
 }
 
 export interface UnsealedTokenPayload extends TeacherSolutionKey {
@@ -136,8 +204,14 @@ export interface UnsealedTokenPayload extends TeacherSolutionKey {
 export function sealSolutionKey(
   key: TeacherSolutionKey,
   instanceId: string,
-  context?: SealedTokenContext
+  context: SealedTokenContext
 ): string {
+  if (!context || !context.userId || !context.workspaceId || !context.sessionId) {
+    throw new Error("SealedTokenContext requires mandatory non-empty userId, workspaceId, and sessionId.");
+  }
+  if (!key || !key.lessonId) {
+    throw new Error("TeacherSolutionKey requires mandatory non-empty lessonId.");
+  }
   const secretKey = getEvaluationSecret();
   const iv = crypto.randomBytes(12);
   const cipher = crypto.createCipheriv("aes-256-gcm", secretKey, iv);
@@ -145,9 +219,9 @@ export function sealSolutionKey(
   const payload = JSON.stringify({
     ...key,
     instanceId,
-    userId: context?.userId || "usr_anonymous",
-    workspaceId: context?.workspaceId || "ws_default",
-    sessionId: context?.sessionId || "sess_default",
+    userId: context.userId,
+    workspaceId: context.workspaceId,
+    sessionId: context.sessionId,
     nonce: crypto.randomBytes(16).toString("hex"),
     issuedAt: now,
     expiresAt: now + 15 * 60 * 1000, // 15-minute short expiry
@@ -179,7 +253,7 @@ export function unsealSolutionKey(token: string): UnsealedTokenPayload | null {
     }
 
     // Require non-empty binding fields
-    if (!data.lessonId || !data.nonce || !data.userId || !data.workspaceId) {
+    if (!data.lessonId || !data.nonce || !data.userId || !data.workspaceId || !data.sessionId) {
       return null;
     }
 
@@ -189,16 +263,54 @@ export function unsealSolutionKey(token: string): UnsealedTokenPayload | null {
   }
 }
 
-// ── Replay Prevention Cache ──
-const usedNonces = new Map<string, number>(); // nonce -> expiresAt
-const MAX_NONCES = 10000;
+// ── Persistent Replay Prevention Storage ──
+const NONCE_DIR = path.join(process.cwd(), "artifacts");
+const NONCE_FILE = path.join(NONCE_DIR, "used-nonces.json");
+
+function loadPersistentNonces(): Map<string, number> {
+  const map = new Map<string, number>();
+  try {
+    if (fs.existsSync(NONCE_FILE)) {
+      const data = JSON.parse(fs.readFileSync(NONCE_FILE, "utf8"));
+      const now = Date.now();
+      for (const [nonce, expiry] of Object.entries(data)) {
+        if (typeof expiry === "number" && expiry > now) {
+          map.set(nonce, expiry);
+        }
+      }
+    }
+  } catch {}
+  return map;
+}
+
+let persistentNonces = loadPersistentNonces();
+
+function savePersistentNonces(): void {
+  try {
+    if (!fs.existsSync(NONCE_DIR)) {
+      fs.mkdirSync(NONCE_DIR, { recursive: true });
+    }
+    const obj: Record<string, number> = {};
+    const now = Date.now();
+    for (const [nonce, expiry] of persistentNonces.entries()) {
+      if (expiry > now) {
+        obj[nonce] = expiry;
+      }
+    }
+    fs.writeFileSync(NONCE_FILE, JSON.stringify(obj), "utf8");
+  } catch {}
+}
 
 export function isNonceReplayed(nonce: string): boolean {
   if (!nonce || typeof nonce !== "string") return true;
-  const expiry = usedNonces.get(nonce);
+  if (!persistentNonces.has(nonce)) {
+    persistentNonces = loadPersistentNonces();
+  }
+  const expiry = persistentNonces.get(nonce);
   if (expiry !== undefined) {
     if (Date.now() > expiry) {
-      usedNonces.delete(nonce);
+      persistentNonces.delete(nonce);
+      savePersistentNonces();
       return false;
     }
     return true; // Replayed!
@@ -208,14 +320,10 @@ export function isNonceReplayed(nonce: string): boolean {
 
 export function markNonceUsed(nonce: string, expiresAt: number): void {
   if (!nonce) return;
-  if (usedNonces.size >= MAX_NONCES) {
-    const now = Date.now();
-    for (const [n, exp] of usedNonces.entries()) {
-      if (now > exp) usedNonces.delete(n);
-    }
-  }
-  usedNonces.set(nonce, expiresAt || Date.now() + 15 * 60 * 1000);
+  persistentNonces.set(nonce, expiresAt || Date.now() + 15 * 60 * 1000);
+  savePersistentNonces();
 }
+
 
 // Instance-scoped LRU solution key cache
 const activeSolutionKeysByInstance = new Map<string, TeacherSolutionKey>();
@@ -4441,7 +4549,12 @@ export function generateServerLearnerGame(
 
   // Store in instance cache and seal into tamper-proof gameToken bound to context
   storeInstanceSolutionKey(instanceId, solutionKey);
-  const gameToken = sealSolutionKey(solutionKey, instanceId, context);
+  const resolvedContext: SealedTokenContext = context || {
+    userId: "internal-anon",
+    workspaceId: "internal-workspace",
+    sessionId: "internal-session",
+  };
+  const gameToken = sealSolutionKey(solutionKey, instanceId, resolvedContext);
 
   return {
     lessonId,

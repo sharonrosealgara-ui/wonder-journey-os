@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { generateServerLearnerGame } from "@/lib/server-game-definitions";
+import {
+  generateServerLearnerGame,
+  CANONICAL_LESSON_IDS,
+} from "@/lib/server-game-definitions";
 import { createClient } from "@/lib/supabase/server";
 
 export async function GET(request: NextRequest) {
@@ -15,40 +18,52 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // 2. Query user profile and workspace authorization
-    let workspaceId = "ws-ph-001";
-    let role = "student";
-    try {
-      const { data: profile } = await supabase
-        .from("profiles")
-        .select("role, family_id")
-        .eq("id", user.id)
-        .single();
-      if (profile) {
-        role = profile.role || role;
-        if (profile.family_id) {
-          workspaceId = `ws-${profile.family_id}`;
-        }
-      }
-    } catch {
-      // Use authenticated user fallback defaults
+    // 2. Query trusted user profile and workspace membership from database
+    const { data: profile, error: profileError } = await supabase
+      .from("profiles")
+      .select("id, role, family_id")
+      .eq("id", user.id)
+      .single();
+
+    if (profileError || !profile || !profile.family_id) {
+      return NextResponse.json(
+        { error: "Forbidden: user lacks active profile or workspace membership" },
+        { status: 403 }
+      );
     }
 
-    // 3. Parse and validate query parameters
+    const workspaceId = `ws-${profile.family_id}`;
+
+    // 3. Parse query parameters
     const { searchParams } = new URL(request.url);
     const lessonId = searchParams.get("lessonId");
     const lessonTitle = searchParams.get("lessonTitle") || undefined;
-    const sessionId = searchParams.get("sessionId") || undefined;
+    const requestedSessionId = searchParams.get("sessionId");
 
-    if (!lessonId || lessonId.length > 80) {
+    if (!lessonId || typeof lessonId !== "string" || lessonId.length > 80) {
       return NextResponse.json({ error: "Missing or invalid lessonId" }, { status: 400 });
     }
 
+    // 4. Validate exact canonical lesson ID from allowlist
+    if (!CANONICAL_LESSON_IDS.has(lessonId)) {
+      return NextResponse.json(
+        { error: `Unknown lessonId: "${lessonId}"` },
+        { status: 404 }
+      );
+    }
+
+    // 5. Trusted session ID
+    const sessionId = requestedSessionId && requestedSessionId.startsWith("sess-")
+      ? requestedSessionId
+      : `sess-${profile.family_id}-main`;
+
+    // 6. Generate sealed game DTO with cryptographically bound context
     const dto = generateServerLearnerGame(lessonId, lessonTitle, {
       userId: user.id,
       workspaceId,
       sessionId,
     });
+
     if (!dto) {
       return NextResponse.json(
         { error: `Unknown lessonId: "${lessonId}"` },
@@ -67,4 +82,3 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: msg }, { status: 500 });
   }
 }
-

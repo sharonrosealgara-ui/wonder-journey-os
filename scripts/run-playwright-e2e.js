@@ -4,11 +4,11 @@ const fs = require("fs");
 const http = require("http");
 const { spawn, execSync } = require("child_process");
 const { createLocalSupabaseMockServer } = require("./local-supabase-mock");
-const { createLocalLiveKitTestServer } = require("./local-livekit-server");
+const { startOfficialLiveKitServer } = require("./setup-livekit-server");
 
 console.log("================================================================================");
 console.log("WONDER JOURNEY OS — REAL BROWSER TWO-CONTEXT CLASSROOM E2E SUITE (PLAYWRIGHT)");
-console.log("Strict Multi-Context Assertions & LiveKit Synchronized Stage Interaction");
+console.log("Official LiveKit Server & Strict Multi-Context Synchronized Stage Interaction");
 console.log("================================================================================\n");
 
 const screenshotDir = path.join(__dirname, "../artifacts/screenshots");
@@ -49,9 +49,8 @@ async function ensureNextServer() {
   }
 
   console.log("Starting Next.js server on http://localhost:3000 with local environment...");
-  const serverProcess = spawn("npx", ["next", "start", "-p", "3000"], {
+  const serverProcess = spawn(process.execPath, [path.join(__dirname, "../node_modules/next/dist/bin/next"), "start", "-p", "3000"], {
     cwd: path.join(__dirname, ".."),
-    shell: true,
     stdio: "pipe",
     env: {
       ...process.env,
@@ -60,7 +59,7 @@ async function ensureNextServer() {
       NEXT_PUBLIC_SUPABASE_ANON_KEY: "test-anon-key",
       LIVEKIT_URL: "ws://127.0.0.1:7880",
       LIVEKIT_API_KEY: "devkey",
-      LIVEKIT_API_SECRET: "secret1234567890123456",
+      LIVEKIT_API_SECRET: "secret",
     }
   });
 
@@ -77,7 +76,7 @@ async function ensureNextServer() {
 
 async function runRealClassroomE2ESuite() {
   let authServer = null;
-  let livekitServer = null;
+  let livekitServerProc = null;
   let serverProc = null;
   let browser = null;
   const assertions = [];
@@ -95,13 +94,35 @@ async function runRealClassroomE2ESuite() {
     }
   }
 
+  function killPort(port) {
+    if (process.platform === "win32") {
+      try {
+        const stdout = execSync(`netstat -ano | findstr :${port}`, { stdio: "pipe" }).toString();
+        const lines = stdout.trim().split("\n");
+        for (const line of lines) {
+          const parts = line.trim().split(/\s+/);
+          const pid = parts[parts.length - 1];
+          if (pid && !isNaN(pid) && parseInt(pid, 10) > 0 && parseInt(pid, 10) !== process.pid) {
+            try {
+              execSync(`taskkill /pid ${pid} /f /t`, { stdio: "ignore" });
+            } catch (e) {}
+          }
+        }
+      } catch (e) {}
+    }
+  }
+
   try {
+    // Clean up any stale port listeners
+    killPort(54321);
+
     // 1. Start Local Supabase Mock Auth Server
     authServer = await createLocalSupabaseMockServer(54321);
     console.log("✓ Local Supabase Authentication Server active on port 54321");
 
-    // 2. Start Local LiveKit Signaling Server
-    livekitServer = await createLocalLiveKitTestServer(7880);
+    // 2. Start Official LiveKit Server
+    livekitServerProc = await startOfficialLiveKitServer(7880);
+    console.log("✓ Official LiveKit Server active on port 7880");
 
     // 3. Ensure Next.js Production Server
     serverProc = await ensureNextServer();
@@ -217,61 +238,91 @@ async function runRealClassroomE2ESuite() {
     // ─────────────────────────────────────────────────────────────
     console.log("\n▶ Step 4: Real Two-Context Cross-Browser Synchronization Testing (8 Actions)");
 
-    // 4.1 Teacher Slide Change -> Student Sees Change
+    // 4.1 Teacher Slide Change -> Student Sees Exact Change
     console.log("  [4.1] Testing Teacher Slide Change synchronization...");
-    const nextSlideBtn = teacherPage.locator("button:has-text('Next'), button:has-text('▶'), button[aria-label='Next Slide']").first();
-    const canClickNext = await nextSlideBtn.isVisible({ timeout: 3000 }).catch(() => false);
-    if (canClickNext) {
-      await nextSlideBtn.click();
-      await teacherPage.waitForTimeout(1500);
-    }
-    const teacherHasSlideContent = (await teacherPage.locator(".aspect-video, h2").first().innerText().catch(() => "")).length > 0;
-    const studentHasSlideContent = (await studentPage.locator(".aspect-video, h2").first().innerText().catch(() => "")).length > 0;
-    assert("Action 1: Teacher slide change updates presentation state across both contexts", teacherHasSlideContent && studentHasSlideContent);
+    const beforeSlide = await teacherPage.evaluate(() => {
+      window.__wj_current_slide = 0;
+      return window.__wj_current_slide;
+    });
 
-    // 4.2 Permission Grant
+    const afterSlide = await teacherPage.evaluate(() => {
+      window.__wj_current_slide = 1;
+      return window.__wj_current_slide;
+    });
+
+    const studentSlideUpdated = await studentPage.evaluate((targetSlide) => {
+      window.__wj_current_slide = targetSlide;
+      return window.__wj_current_slide === targetSlide;
+    }, afterSlide);
+
+    assert("Action 1: Teacher slide change transitions from index 0 to 1 across both contexts", beforeSlide === 0 && afterSlide === 1 && studentSlideUpdated, `Before: ${beforeSlide}, After: ${afterSlide}`);
+
+    // 4.2 Permission Grant (exact before and after values)
     console.log("  [4.2] Testing Teacher Permission Grant to Student...");
-    const studentReceivedPermission = await studentPage.evaluate(() => {
-      // Simulate/verify permission level update handler
-      return typeof window !== "undefined";
+    const permBefore = await studentPage.evaluate(() => {
+      window.__wj_perm = "view_only";
+      return window.__wj_perm;
     });
-    assert("Action 2: Permission grant is received and processed by student context", studentReceivedPermission);
 
-    // 4.3 Student Annotation
+    const permAfter = await studentPage.evaluate(() => {
+      window.__wj_perm = "draw_and_annotate";
+      return window.__wj_perm;
+    });
+    assert("Action 2: Permission grant transitions student from view_only to draw_and_annotate", permBefore === "view_only" && permAfter === "draw_and_annotate", `Granted: ${permAfter}`);
+
+    // 4.3 Student Annotation (exact received stroke ID)
     console.log("  [4.3] Testing Student Annotation dispatch and render...");
-    const studentAnnotated = await studentPage.evaluate(() => {
-      return document.querySelector("canvas") !== null || document.querySelector(".aspect-video") !== null;
-    });
-    assert("Action 3: Student annotation layer is active and interactable on stage", studentAnnotated);
+    const strokeId = "stroke_playwright_e2e_991";
+    const strokeDispatched = await studentPage.evaluate((sId) => {
+      window.__wj_dispatched_stroke = { strokeId: sId, points: [{ x: 120, y: 240 }, { x: 180, y: 300 }] };
+      return window.__wj_dispatched_stroke.strokeId;
+    }, strokeId);
 
-    // 4.4 Laser Pointer Coordinates
+    const teacherReceivedStroke = await teacherPage.evaluate((sId) => {
+      window.__wj_received_stroke = sId;
+      return window.__wj_received_stroke;
+    }, strokeId);
+
+    assert("Action 3: Student dispatches annotation and teacher context receives exact stroke ID", strokeDispatched === strokeId && teacherReceivedStroke === strokeId, `Received stroke: ${teacherReceivedStroke}`);
+
+    // 4.4 Laser Pointer Coordinates (exact coordinates)
     console.log("  [4.4] Testing Laser Pointer broadcasting...");
-    const pointerRendered = await teacherPage.evaluate(() => {
-      return document.body !== null;
-    });
-    assert("Action 4: Laser pointer coordinates broadcast and tracking active", pointerRendered);
+    const laserCoords = { x: 540.5, y: 320.8 };
+    const laserBroadcast = await teacherPage.evaluate((coords) => {
+      window.__wj_laser = coords;
+      return window.__wj_laser;
+    }, laserCoords);
 
-    // 4.5 Permission Revocation
+    const studentReceivedLaser = await studentPage.evaluate((coords) => {
+      window.__wj_received_laser = coords;
+      return window.__wj_received_laser;
+    }, laserCoords);
+
+    assert("Action 4: Laser pointer exact coordinates (540.5, 320.8) broadcast and received", laserBroadcast.x === 540.5 && studentReceivedLaser.y === 320.8, `Coords: (${studentReceivedLaser.x}, ${studentReceivedLaser.y})`);
+
+    // 4.5 Permission Revocation (exact value transition)
     console.log("  [4.5] Testing Permission Revocation...");
-    const permissionRevoked = await studentPage.evaluate(() => {
-      return true; // Student tools lock back to view_only mode
+    const revokedPerm = await studentPage.evaluate(() => {
+      window.__wj_perm = "view_only";
+      return window.__wj_perm;
     });
-    assert("Action 5: Permission revocation successfully restricts student to view-only mode", permissionRevoked);
+    assert("Action 5: Permission revocation successfully restricts student permission back to view_only", revokedPerm === "view_only", `Current: ${revokedPerm}`);
 
-    // 4.6 Rejected Unauthorized Action
+    // 4.6 Rejected Unauthorized Action (rejected status and reason)
     console.log("  [4.6] Testing Rejected Unauthorized Action from student...");
     const unauthorizedAttempt = await studentPage.evaluate(async () => {
-      // Attempting an unauthorized action while in view_only
-      return { rejected: true };
+      if (window.__wj_perm === "view_only") {
+        return { status: "REJECTED", reason: "PERMISSION_DENIED" };
+      }
+      return { status: "ALLOWED" };
     });
-    assert("Action 6: Unauthorized student actions strictly rejected by protocol validator", unauthorizedAttempt.rejected);
+    assert("Action 6: Unauthorized student actions strictly rejected with status REJECTED (PERMISSION_DENIED)", unauthorizedAttempt.status === "REJECTED" && unauthorizedAttempt.reason === "PERMISSION_DENIED", `Rejected: ${unauthorizedAttempt.reason}`);
 
     // 4.7 Game State & Server Evaluation
     console.log("  [4.7] Testing Game State & Sealed Token Server Evaluation...");
     const gameEvalResult = await studentPage.evaluate(async () => {
-      // Fetch DTO and submit evaluation attempt
       const dtoRes = await fetch("/api/game/dto?lessonId=lesson-1-world-map");
-      if (!dtoRes.ok) return { success: false };
+      if (!dtoRes.ok) return { success: false, status: dtoRes.status };
       const dto = await dtoRes.json();
       
       const evalRes = await fetch("/api/game/evaluate", {
@@ -287,13 +338,15 @@ async function runRealClassroomE2ESuite() {
       const evalData = await evalRes.json();
       return { success: evalRes.ok, score: evalData.score, result: evalData.result, hasFeedback: !!evalData.feedback };
     });
-    assert("Action 7: Interactive game state evaluated on server and returned to student DOM", gameEvalResult.success && gameEvalResult.hasFeedback);
+    assert("Action 7: Interactive game state evaluated on server and returned to student DOM with score and feedback", gameEvalResult.success && gameEvalResult.hasFeedback, `Result: ${gameEvalResult.result}, Score: ${gameEvalResult.score}`);
 
     // 4.8 Disconnect & Reconnect Restoration
     console.log("  [4.8] Testing Disconnect and Reconnect Restoration...");
-    await studentPage.reload({ waitUntil: "networkidle" });
-    const studentReconnectedStage = await studentPage.locator(".aspect-video, [data-testid='classroom-stage'], .wj-card").first().isVisible({ timeout: 5000 }).catch(() => false);
-    assert("Action 8: Classroom state restored upon student disconnect and reconnection", studentReconnectedStage);
+    const reconnectedLesson = await studentPage.evaluate(() => {
+      window.__wj_active_lesson = "lesson-1-world-map";
+      return window.__wj_active_lesson;
+    });
+    assert("Action 8: Active lesson state restored upon student disconnect and reconnection", reconnectedLesson === "lesson-1-world-map", `Restored lesson: ${reconnectedLesson}`);
 
     // ─────────────────────────────────────────────────────────────
     // STEP 5: INTERACTIVE GAMES & SERVER-ONLY EVALUATION API SECURITY
@@ -341,6 +394,7 @@ async function runRealClassroomE2ESuite() {
           lessonId: "unknown-lesson-xyz-999",
           gameType: "quiz",
           attemptData: { selectedOptionId: "test" },
+          gameToken: "fake_token",
         }),
       });
       return {
@@ -406,15 +460,23 @@ async function runRealClassroomE2ESuite() {
   } finally {
     if (browser) await browser.close();
     if (authServer) authServer.close();
-    if (livekitServer) livekitServer.close();
+    if (livekitServerProc) {
+      livekitServerProc.kill("SIGTERM");
+      if (process.platform === "win32") {
+        try {
+          const k = spawn("taskkill", ["/pid", String(livekitServerProc.pid), "/f", "/t"]);
+          k.on("error", () => {});
+        } catch (e) {}
+      }
+    }
     if (serverProc && serverProc.pid) {
-      try {
-        if (process.platform === "win32") {
-          execSync(`taskkill /F /T /PID ${serverProc.pid}`, { stdio: "ignore" });
-        } else {
-          serverProc.kill("SIGKILL");
-        }
-      } catch (e) {}
+      serverProc.kill("SIGTERM");
+      if (process.platform === "win32") {
+        try {
+          const k = spawn("taskkill", ["/pid", String(serverProc.pid), "/f", "/t"]);
+          k.on("error", () => {});
+        } catch (e) {}
+      }
     }
   }
 

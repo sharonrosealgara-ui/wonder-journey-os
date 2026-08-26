@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { evaluateGameAttemptOnServer } from "@/lib/server-game-evaluator";
+import { CANONICAL_LESSON_IDS } from "@/lib/server-game-definitions";
 import { createClient } from "@/lib/supabase/server";
 
-// In-memory rate limiting map: ipOrUser -> timestamp[]
+// In-memory rate limiting map: userId -> timestamp[]
 const rateLimitMap = new Map<string, number[]>();
 const RATE_LIMIT_WINDOW_MS = 60 * 1000;
 const MAX_REQUESTS_PER_WINDOW = 40;
@@ -35,24 +36,21 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 2. Query user profile and workspace authorization
-    let workspaceId = "ws-ph-001";
-    let role = "student";
-    try {
-      const { data: profile } = await supabase
-        .from("profiles")
-        .select("role, family_id")
-        .eq("id", user.id)
-        .single();
-      if (profile) {
-        role = profile.role || role;
-        if (profile.family_id) {
-          workspaceId = `ws-${profile.family_id}`;
-        }
-      }
-    } catch {
-      // Default to authenticated user context
+    // 2. Query trusted user profile and workspace membership from database
+    const { data: profile, error: profileError } = await supabase
+      .from("profiles")
+      .select("id, role, family_id")
+      .eq("id", user.id)
+      .single();
+
+    if (profileError || !profile || !profile.family_id) {
+      return NextResponse.json(
+        { success: false, result: "try_again", score: 0, error: "Forbidden: user lacks active profile or workspace membership" },
+        { status: 403 }
+      );
     }
+
+    const workspaceId = `ws-${profile.family_id}`;
 
     // 3. Payload size check
     const contentLength = request.headers.get("content-length");
@@ -64,8 +62,7 @@ export async function POST(request: NextRequest) {
     }
 
     // 4. Rate limiting check (keyed by authenticated user ID)
-    const rateLimitKey = user.id || request.headers.get("x-forwarded-for") || "client";
-    if (!checkRateLimit(rateLimitKey)) {
+    if (!checkRateLimit(user.id)) {
       return NextResponse.json(
         { success: false, result: "try_again", score: 0, error: "Rate limit exceeded. Please wait a moment." },
         { status: 429 }
@@ -83,9 +80,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { lessonId, gameType, attemptData, gameToken, sessionId, targetWorkspaceId } = body || {};
+    const { lessonId, gameType, attemptData, gameToken, sessionId } = body || {};
 
-    // 6. Strict schema validation
+    // 6. Strict schema & mandatory gameToken validation
+    if (!gameToken || typeof gameToken !== "string") {
+      return NextResponse.json(
+        { success: false, result: "try_again", score: 0, error: "Missing gameToken: gameToken is strictly required for evaluation" },
+        { status: 400 }
+      );
+    }
+
     if (!lessonId || typeof lessonId !== "string" || lessonId.length > 80) {
       return NextResponse.json(
         { success: false, result: "try_again", score: 0, error: "Missing or invalid lessonId" },
@@ -93,10 +97,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check if lessonId is valid 1..65
-    const numMatch = lessonId.match(/\d+/);
-    const num = numMatch ? parseInt(numMatch[0], 10) : NaN;
-    if (isNaN(num) || num < 1 || num > 65) {
+    // Canonical lesson ID validation from allowlist
+    if (!CANONICAL_LESSON_IDS.has(lessonId)) {
       return NextResponse.json(
         { success: false, result: "try_again", score: 0, error: `Unknown lessonId: "${lessonId}"` },
         { status: 404 }
@@ -130,12 +132,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 7. Evaluate attempt strictly on server using unsealed gameToken bound to user context
-    const finalWorkspaceId = targetWorkspaceId || workspaceId;
+    // 7. Session ID resolution (database-trusted, never body-tampered workspace)
+    const effectiveSessionId = sessionId && typeof sessionId === "string" && sessionId.startsWith("sess-")
+      ? sessionId
+      : `sess-${profile.family_id}-main`;
+
+    // 8. Evaluate attempt strictly on server using unsealed gameToken bound to verified database context
     const evaluation = evaluateGameAttemptOnServer(lessonId, gameType, attemptData, gameToken, {
       userId: user.id,
-      workspaceId: finalWorkspaceId,
-      sessionId,
+      workspaceId,
+      sessionId: effectiveSessionId,
     });
 
     if (!evaluation.success && evaluation.error) {
@@ -152,4 +158,3 @@ export async function POST(request: NextRequest) {
     );
   }
 }
-

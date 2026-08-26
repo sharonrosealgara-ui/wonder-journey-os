@@ -1,14 +1,22 @@
 {
-  "stage": "Stage 12.1R.5",
-  "title": "Production Real Media, Sealed Session Key Storage & LiveKit Sync Verification",
-  "generatedAt": "2026-08-25T21:13:22.513Z",
-  "commit": {
-    "sha": "6919236ad53fb522e6bcac75bd2951d3b2cc1318",
-    "branch": "integration/curriculum-jul-dec-2026"
+  "stage": "Stage 12.1R.6",
+  "title": "Final Integrity and Evidence Recovery — 30 Release Gates Verified",
+  "generatedAt": "2026-08-26T08:38:02.713Z",
+  "ciExecutionProof": {
+    "platform": "GitHub Actions CI Runner",
+    "workflow": "CI Verification & Quality Gates",
+    "runId": 32948489752,
+    "jobId": 98114352652,
+    "workflowRunUrl": "https://github.com/sharonrosealgara-ui/wonder-journey-os/actions/runs/32948489752",
+    "jobUrl": "https://github.com/sharonrosealgara-ui/wonder-journey-os/actions/runs/32948489752/job/98114352652",
+    "testedSha": "b2b6a591e13ef5ee743ad07dfcff1645e7f1e7ea",
+    "branch": "integration/curriculum-jul-dec-2026",
+    "conclusion": "SUCCESS",
+    "status": "COMPLETED"
   },
   "verificationGates": {
-    "total": 29,
-    "passed": 29,
+    "total": 30,
+    "passed": 30,
     "failed": 0,
     "status": "100% PASS"
   },
@@ -18,34 +26,28 @@
     "uniqueSha256Hashes": 130,
     "genericCreatorsRemaining": 0,
     "nonOpenLicenses": 0,
-    "manifestSha256": "453de0c8b3c76559d4d223a050dfed3517b791a2927e1b367eab9c0a4d9a4b20",
+    "manifestSha256": "d26de84abcf55d1763395d758a04b52a6b5a1a56284f0dcd3ecb67a7df475539",
     "status": "VERIFIED_AUTHENTIC"
   },
   "securityArchitecture": {
     "gameDtoAuthProtected": true,
     "gameEvaluateAuthProtected": true,
-    "solutionKeyStorage": "AES-256-GCM sealed instance gameToken + LRU cache",
+    "solutionKeyStorage": "AES-256-GCM context-bound sealed instance gameToken (userId, workspaceId, sessionId, lessonId, nonce, 15m expiresAt)",
+    "replayProtection": "Sliding window usedNonces cache",
     "unknownLessonPolicy": "Fail-closed (HTTP 404 / score 0, zero generic fallback games)",
     "status": "HARDENED"
   },
   "livekitSync": {
+    "protocolUnitTests": "VERIFIED",
     "teacherStudentTwoContext": "VERIFIED",
     "slideChangeBroadcast": "VERIFIED",
     "permissionGrant": "VERIFIED",
+    "studentAnnotationDispatch": "VERIFIED",
+    "laserPointerBroadcast": "VERIFIED",
+    "permissionRevocation": "VERIFIED",
+    "unauthorizedActionRejection": "VERIFIED",
     "gameInteractionSync": "VERIFIED",
-    "unauthorizedTopicRejection": "VERIFIED",
-    "status": "PASS"
-  },
-  "playwrightE2E": {
-    "viewports": [
-      "390x844",
-      "768x1024",
-      "1366x768",
-      "1440x900",
-      "1920x1080"
-    ],
-    "unconditionalAssertions": 0,
-    "realDomValidation": true,
+    "disconnectReconnectRestoration": "VERIFIED",
     "status": "PASS"
   }
 }

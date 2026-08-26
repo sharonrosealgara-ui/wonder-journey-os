@@ -11,8 +11,8 @@ import { generateServerLearnerGame } from "../src/lib/server-game-definitions";
 import { evaluateGameAttemptOnServer } from "../src/lib/server-game-evaluator";
 
 console.log("================================================================================");
-console.log("WONDER JOURNEY OS — REAL LIVEKIT TEACHER-STUDENT SYNCHRONIZATION TEST SUITE");
-console.log("Deterministic Two-Context Teacher-Student Room & Data Channel Sync Verification");
+console.log("WONDER JOURNEY OS — CLASSROOM INTERACTION PROTOCOL & TRANSPORT UNIT TESTS");
+console.log("Deterministic Two-Context Protocol State Machine & Validation Unit Tests");
 console.log("================================================================================\n");
 
 let passed = 0;

@@ -12,13 +12,15 @@ async function evaluateGameAttemptViaApi(
   lessonId: string,
   gameType: string,
   attemptData: Record<string, unknown>,
-  gameToken?: string
+  gameToken?: string,
+  sessionId?: string,
+  targetWorkspaceId?: string
 ): Promise<{ result: "correct" | "try_again"; score: number; feedback: string }> {
   try {
     const res = await fetch("/api/game/evaluate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ lessonId, gameType, attemptData, gameToken }),
+      body: JSON.stringify({ lessonId, gameType, attemptData, gameToken, sessionId, targetWorkspaceId }),
     });
     if (!res.ok) {
       const errData = await res.json().catch(() => ({}));
@@ -52,6 +54,8 @@ export interface ClassroomGamesProps {
   lessonTitle: string;
   role: "teacher" | "family" | "student";
   permissionLevel: PermissionLevel;
+  sessionId?: string;
+  workspaceId?: string;
   onEmitGameEvent?: (event: Partial<ClassroomGameEvent>) => void;
   incomingGameEvent?: ClassroomGameEvent | null;
 }
@@ -61,6 +65,8 @@ export function ClassroomGames({
   lessonTitle,
   role,
   permissionLevel,
+  sessionId,
+  workspaceId,
   onEmitGameEvent,
   incomingGameEvent,
 }: ClassroomGamesProps) {
@@ -80,7 +86,9 @@ export function ClassroomGames({
     let isCancelled = false;
     async function loadDTO() {
       try {
-        const res = await fetch(`/api/game/dto?lessonId=${encodeURIComponent(lessonId)}&lessonTitle=${encodeURIComponent(lessonTitle)}`);
+        const sessionParam = sessionId ? `&sessionId=${encodeURIComponent(sessionId)}` : "";
+        const wsParam = workspaceId ? `&targetWorkspaceId=${encodeURIComponent(workspaceId)}` : "";
+        const res = await fetch(`/api/game/dto?lessonId=${encodeURIComponent(lessonId)}&lessonTitle=${encodeURIComponent(lessonTitle)}${sessionParam}${wsParam}`);
         if (res.ok && !isCancelled) {
           const data = await res.json();
           setGameDTO(data);
@@ -221,7 +229,9 @@ export function ClassroomGames({
         lessonId,
         "sorting",
         { placements: newPlacements },
-        gameDTO.gameToken
+        gameDTO.gameToken,
+        sessionId,
+        workspaceId
       );
       setGameFeedback(evalRes.feedback);
       setGameScore(evalRes.score);
@@ -252,7 +262,9 @@ export function ClassroomGames({
           lessonId,
           "sorting",
           { placements: newPlacements },
-          gameDTO.gameToken
+          gameDTO.gameToken,
+          sessionId,
+          workspaceId
         );
         setGameFeedback(evalRes.feedback);
         setGameScore(evalRes.score);
@@ -283,7 +295,9 @@ export function ClassroomGames({
       lessonId,
       "matching",
       { pair: { leftId, rightId } },
-      gameDTO.gameToken
+      gameDTO.gameToken,
+      sessionId,
+      workspaceId
     );
     if (evalRes.result === "correct") {
       setMatchedPairs((prev) => [...prev, leftId]);
@@ -314,7 +328,9 @@ export function ClassroomGames({
       lessonId,
       "sequencing",
       { order: current },
-      gameDTO.gameToken
+      gameDTO.gameToken,
+      sessionId,
+      workspaceId
     );
     if (evalRes.result === "correct") {
       setGameFeedback("Tumpak! Perfect sequence!");
@@ -331,7 +347,9 @@ export function ClassroomGames({
       lessonId,
       "quiz",
       { selectedOptionId: optId },
-      gameDTO.gameToken
+      gameDTO.gameToken,
+      sessionId,
+      workspaceId
     );
     setQuizFeedback(evalRes.feedback);
     setGameScore(evalRes.score);
@@ -355,7 +373,9 @@ export function ClassroomGames({
         lessonId,
         "memory_flip",
         { cardIds: [firstId, secondId] },
-        gameDTO.gameToken
+        gameDTO.gameToken,
+        sessionId,
+        workspaceId
       );
       if (evalRes.result === "correct") {
         setSolvedMemoryCards((prev) => [...prev, firstId, secondId]);
@@ -377,7 +397,9 @@ export function ClassroomGames({
       lessonId,
       "hotspot",
       { targetId },
-      gameDTO.gameToken
+      gameDTO.gameToken,
+      sessionId,
+      workspaceId
     );
     setHotspotFeedback(evalRes.feedback);
     emitGame("tap_hotspot", { targetId, isCorrect: evalRes.result === "correct" });

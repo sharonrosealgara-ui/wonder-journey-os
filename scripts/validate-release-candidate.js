@@ -1,8 +1,12 @@
 const { execSync } = require("child_process");
 const path = require("path");
 
+// Set test secret for full suite execution
+process.env.GAME_EVALUATION_SECRET =
+  process.env.GAME_EVALUATION_SECRET || "release_validation_game_evaluation_secret_key_2026_super_secure";
+
 console.log("================================================================================");
-console.log("WONDER JOURNEY OS — STAGE 12.1R RELEASE CANDIDATE VERIFICATION ORCHESTRATOR");
+console.log("WONDER JOURNEY OS — STAGE 12.1R.6 RELEASE CANDIDATE VERIFICATION (30 GATES)");
 console.log("================================================================================\n");
 
 const GATES = [
@@ -24,18 +28,18 @@ const GATES = [
   { name: "16. Assessment Response State Model", cmd: "node scripts/test-assessment-response-model.js" },
   { name: "17. Curriculum Schema & Uniqueness Tests", cmd: "npx tsx src/__tests__/curriculum.test.ts" },
   { name: "18. Real Media 130 SHA-256 Verified Asset Production Gate", cmd: "node scripts/validate-real-media-production.js" },
-  { name: "18b. Real Media Validator Negative Test Suite", cmd: "node scripts/test-validator-negative-cases.js" },
-  { name: "19. Stage 12.1R 16-Defect Regression Prevention Suite", cmd: "node scripts/test-regression-stage12-defects.js" },
-  { name: "20. ESLint Static Code Analysis", cmd: "npm run lint" },
-  { name: "21. TypeScript Full Typecheck", cmd: "npx tsc --noEmit" },
-  { name: "22. Production Next.js Build", cmd: "npm run build" },
-  { name: "23. Real Browser Two-Context Classroom E2E Suite (Playwright)", cmd: "node scripts/run-playwright-e2e.js" },
-  { name: "24. Comprehensive Security & Answer Safety Suite", cmd: "npx tsx scripts/test-classroom-security-comprehensive.js" },
-  { name: "25. Local Production Server Smoke Tests", cmd: "node scripts/test-production-server.js" },
-  { name: "26. Client-Bundle Answer & Key Leak Gate", cmd: "node scripts/test-client-bundle-leak.js" },
-  { name: "27. Stage 12.1R.3 Negative Test Suite", cmd: "npx tsx scripts/test-negative-cases.js" },
-  { name: "28. Real LiveKit Teacher-Student Synchronization Test Suite", cmd: "npx tsx tests/livekit-teacher-student-sync.test.ts" },
-  { name: "29. 130 Authentic Media Provenance & Subject Audit Gate", cmd: "npx tsx scripts/audit-all-130-media.js" }
+  { name: "19. Real Media Validator Negative Test Suite", cmd: "node scripts/test-validator-negative-cases.js" },
+  { name: "20. 130 Media Exact Duplicate & Near-Duplicate Detection Gate", cmd: "node scripts/detect-media-duplicates.js" },
+  { name: "21. 130 Authentic Media Provenance & Subject Audit Gate", cmd: "npx tsx scripts/audit-all-130-media.js" },
+  { name: "22. Stage 12.1R 16-Defect Regression Prevention Suite", cmd: "node scripts/test-regression-stage12-defects.js" },
+  { name: "23. ESLint Static Code Analysis", cmd: "npm run lint" },
+  { name: "24. TypeScript Full Typecheck", cmd: "npx tsc --noEmit" },
+  { name: "25. Production Next.js Build", cmd: "npm run build" },
+  { name: "26. Real Browser Two-Context Classroom E2E Suite (Playwright)", cmd: "node scripts/run-playwright-e2e.js" },
+  { name: "27. Comprehensive Security & Answer Safety Suite", cmd: "npx tsx scripts/test-classroom-security-comprehensive.js" },
+  { name: "28. Local Production Server Smoke Tests", cmd: "node scripts/test-production-server.js" },
+  { name: "29. Client-Bundle Answer & Key Leak Gate", cmd: "node scripts/test-client-bundle-leak.js" },
+  { name: "30. Stage 12.1R.6 Sealed Token & Negative Security Test Suite", cmd: "npx tsx scripts/test-negative-cases.js" }
 ];
 
 let results = [];
@@ -45,7 +49,7 @@ for (const gate of GATES) {
   const start = Date.now();
   process.stdout.write(`Executing ${gate.name}... `);
   try {
-    execSync(gate.cmd, { stdio: "pipe", encoding: "utf8" });
+    execSync(gate.cmd, { stdio: "pipe", encoding: "utf8", env: process.env });
     const duration = ((Date.now() - start) / 1000).toFixed(1);
     console.log(`[PASS] (${duration}s)`);
     results.push({ Gate: gate.name, Status: "PASSED", Duration: `${duration}s` });
@@ -60,12 +64,12 @@ for (const gate of GATES) {
 }
 
 console.log("\n================================================================================");
-console.log("STAGE 12.1R RELEASE CANDIDATE ORCHESTRATION SUMMARY");
+console.log("STAGE 12.1R.6 RELEASE CANDIDATE ORCHESTRATION SUMMARY");
 console.log("================================================================================\n");
 console.table(results);
 
 if (!overallSuccess) {
-  console.error("\nFAIL: Stage 12.1R Release Candidate verification failed. Resolve blockers before release.\n");
+  console.error("\nFAIL: Stage 12.1R.6 Release Candidate verification failed. Resolve blockers before release.\n");
   process.exit(1);
 } else {
   console.log(`\nPASS: ALL ${GATES.length} RELEASE CANDIDATE GATES PASSED! APPLICATION IS 100% HARDENED AND VERIFIED.\n`);

@@ -14,8 +14,15 @@ on:
 
 jobs:
   verify:
-    name: Stage 12.1R.5 Quality & Release Gates
+    name: Stage 12.1R.6 Quality & 30 Release Gates
     runs-on: ubuntu-latest
+    env:
+      GAME_EVALUATION_SECRET: ${{ secrets.GAME_EVALUATION_SECRET || 'ci_default_game_evaluation_secret_key_2026_super_secure' }}
+      LIVEKIT_API_KEY: devkey
+      LIVEKIT_API_SECRET: secret1234567890123456
+      LIVEKIT_URL: ws://127.0.0.1:7880
+      NEXT_PUBLIC_SUPABASE_URL: http://127.0.0.1:54321
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: test-anon-key
 
     steps:
       - name: Checkout Code
@@ -39,13 +46,13 @@ jobs:
       - name: Run Curriculum & Unit Tests
         run: npm test
 
-      - name: Run LiveKit Teacher-Student Sync Tests
+      - name: Run Protocol & Unit Tests
         run: npx tsx tests/livekit-teacher-student-sync.test.ts
 
       - name: Run 130 Authentic Media Integrity & Provenance Audit
         run: npx tsx scripts/audit-all-130-media.js
 
-      - name: Run Full Release Candidate Verification Gates
+      - name: Run Full 30 Release Candidate Verification Gates
         run: npm run validate:release
 
       - name: Run Playwright E2E Two-Context Suite

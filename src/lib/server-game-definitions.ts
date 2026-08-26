@@ -99,24 +99,58 @@ export interface TeacherSolutionKey {
 
 // ─────────────────────────────────────────────────────────────
 // STATELESS SEALED EVALUATION CRYPTOGRAPHY & INSTANCE STORAGE
-// Replaces process-local lessonId-only map with tamper-proof
-// AES-256-GCM sealed session tokens + instance-indexed LRU store.
+// AES-256-GCM sealed session tokens bound to authenticated user,
+// workspace, classroom session, exact lesson ID, and short expiry.
 // ─────────────────────────────────────────────────────────────
 
-const EVAL_SECRET =
-  process.env.GAME_EVALUATION_SECRET ||
-  process.env.SUPABASE_JWT_SECRET ||
-  process.env.LIVEKIT_API_SECRET ||
-  "wj_production_sealed_game_evaluation_secret_key_2026_secure";
-const SECRET_KEY = crypto.createHash("sha256").update(EVAL_SECRET).digest(); // 32 bytes
+function getEvaluationSecret(): Buffer {
+  const secret =
+    process.env.GAME_EVALUATION_SECRET ||
+    process.env.SUPABASE_JWT_SECRET ||
+    process.env.LIVEKIT_API_SECRET;
 
-export function sealSolutionKey(key: TeacherSolutionKey, instanceId: string): string {
+  if (!secret || typeof secret !== "string" || secret.trim().length < 16) {
+    throw new Error(
+      "GAME_EVALUATION_SECRET is required and must be configured with at least 16 characters. Server evaluation cannot proceed without a valid key."
+    );
+  }
+  return crypto.createHash("sha256").update(secret.trim()).digest(); // 32 bytes
+}
+
+export interface SealedTokenContext {
+  userId: string;
+  workspaceId: string;
+  sessionId?: string;
+}
+
+export interface UnsealedTokenPayload extends TeacherSolutionKey {
+  instanceId: string;
+  userId: string;
+  workspaceId: string;
+  sessionId: string;
+  nonce: string;
+  issuedAt: number;
+  expiresAt: number;
+}
+
+export function sealSolutionKey(
+  key: TeacherSolutionKey,
+  instanceId: string,
+  context?: SealedTokenContext
+): string {
+  const secretKey = getEvaluationSecret();
   const iv = crypto.randomBytes(12);
-  const cipher = crypto.createCipheriv("aes-256-gcm", SECRET_KEY, iv);
+  const cipher = crypto.createCipheriv("aes-256-gcm", secretKey, iv);
+  const now = Date.now();
   const payload = JSON.stringify({
     ...key,
     instanceId,
-    timestamp: Date.now(),
+    userId: context?.userId || "usr_anonymous",
+    workspaceId: context?.workspaceId || "ws_default",
+    sessionId: context?.sessionId || "sess_default",
+    nonce: crypto.randomBytes(16).toString("hex"),
+    issuedAt: now,
+    expiresAt: now + 15 * 60 * 1000, // 15-minute short expiry
   });
   let encrypted = cipher.update(payload, "utf8", "base64");
   encrypted += cipher.final("base64");
@@ -124,28 +158,63 @@ export function sealSolutionKey(key: TeacherSolutionKey, instanceId: string): st
   return `${iv.toString("base64")}.${authTag}.${encrypted}`;
 }
 
-export function unsealSolutionKey(
-  token: string
-): (TeacherSolutionKey & { instanceId: string; timestamp: number }) | null {
+export function unsealSolutionKey(token: string): UnsealedTokenPayload | null {
   try {
+    if (!token || typeof token !== "string") return null;
     const parts = token.split(".");
     if (parts.length !== 3) return null;
     const [ivB64, tagB64, encB64] = parts;
     const iv = Buffer.from(ivB64, "base64");
     const authTag = Buffer.from(tagB64, "base64");
-    const decipher = crypto.createDecipheriv("aes-256-gcm", SECRET_KEY, iv);
+    const secretKey = getEvaluationSecret();
+    const decipher = crypto.createDecipheriv("aes-256-gcm", secretKey, iv);
     decipher.setAuthTag(authTag);
     let decrypted = decipher.update(encB64, "base64", "utf8");
     decrypted += decipher.final("utf8");
-    const data = JSON.parse(decrypted);
-    // Expiry limit: 24 hours
-    if (Date.now() - data.timestamp > 24 * 60 * 60 * 1000) {
+    const data = JSON.parse(decrypted) as UnsealedTokenPayload;
+
+    // Reject if expired (15-minute expiry)
+    if (!data.expiresAt || Date.now() > data.expiresAt) {
       return null;
     }
+
+    // Require non-empty binding fields
+    if (!data.lessonId || !data.nonce || !data.userId || !data.workspaceId) {
+      return null;
+    }
+
     return data;
   } catch {
     return null;
   }
+}
+
+// ── Replay Prevention Cache ──
+const usedNonces = new Map<string, number>(); // nonce -> expiresAt
+const MAX_NONCES = 10000;
+
+export function isNonceReplayed(nonce: string): boolean {
+  if (!nonce || typeof nonce !== "string") return true;
+  const expiry = usedNonces.get(nonce);
+  if (expiry !== undefined) {
+    if (Date.now() > expiry) {
+      usedNonces.delete(nonce);
+      return false;
+    }
+    return true; // Replayed!
+  }
+  return false;
+}
+
+export function markNonceUsed(nonce: string, expiresAt: number): void {
+  if (!nonce) return;
+  if (usedNonces.size >= MAX_NONCES) {
+    const now = Date.now();
+    for (const [n, exp] of usedNonces.entries()) {
+      if (now > exp) usedNonces.delete(n);
+    }
+  }
+  usedNonces.set(nonce, expiresAt || Date.now() + 15 * 60 * 1000);
 }
 
 // Instance-scoped LRU solution key cache
@@ -4272,7 +4341,11 @@ function getLessonTheme(lessonId: string, lessonTitle: string) {
   }
 }
 
-export function generateServerLearnerGame(lessonId: string, lessonTitle?: string): LearnerSafeGameDTO | null {
+export function generateServerLearnerGame(
+  lessonId: string,
+  lessonTitle?: string,
+  context?: SealedTokenContext
+): LearnerSafeGameDTO | null {
   if (!lessonId || typeof lessonId !== "string" || lessonId.length > 80) {
     return null;
   }
@@ -4366,9 +4439,9 @@ export function generateServerLearnerGame(lessonId: string, lessonTitle?: string
     memoryPairs,
   };
 
-  // Store in instance cache and seal into tamper-proof gameToken
+  // Store in instance cache and seal into tamper-proof gameToken bound to context
   storeInstanceSolutionKey(instanceId, solutionKey);
-  const gameToken = sealSolutionKey(solutionKey, instanceId);
+  const gameToken = sealSolutionKey(solutionKey, instanceId, context);
 
   return {
     lessonId,

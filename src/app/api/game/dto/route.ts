@@ -15,16 +15,40 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // 2. Parse and validate query parameters
+    // 2. Query user profile and workspace authorization
+    let workspaceId = "ws-ph-001";
+    let role = "student";
+    try {
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("role, family_id")
+        .eq("id", user.id)
+        .single();
+      if (profile) {
+        role = profile.role || role;
+        if (profile.family_id) {
+          workspaceId = `ws-${profile.family_id}`;
+        }
+      }
+    } catch {
+      // Use authenticated user fallback defaults
+    }
+
+    // 3. Parse and validate query parameters
     const { searchParams } = new URL(request.url);
     const lessonId = searchParams.get("lessonId");
     const lessonTitle = searchParams.get("lessonTitle") || undefined;
+    const sessionId = searchParams.get("sessionId") || undefined;
 
     if (!lessonId || lessonId.length > 80) {
       return NextResponse.json({ error: "Missing or invalid lessonId" }, { status: 400 });
     }
 
-    const dto = generateServerLearnerGame(lessonId, lessonTitle);
+    const dto = generateServerLearnerGame(lessonId, lessonTitle, {
+      userId: user.id,
+      workspaceId,
+      sessionId,
+    });
     if (!dto) {
       return NextResponse.json(
         { error: `Unknown lessonId: "${lessonId}"` },

@@ -1,10 +1,10 @@
-if (typeof window !== "undefined") {
-  throw new Error("This module is server-only and cannot be executed in browser context.");
-}
 import {
   getActiveTeacherSolutionKey,
   TeacherSolutionKey,
   unsealSolutionKey,
+  isNonceReplayed,
+  markNonceUsed,
+  SealedTokenContext,
 } from "./server-game-definitions";
 
 // ─────────────────────────────────────────────────────────────
@@ -25,7 +25,8 @@ export function evaluateGameAttemptOnServer(
   lessonId: string,
   gameType: string,
   attemptData: Record<string, unknown>,
-  gameToken?: string
+  gameToken?: string,
+  evalContext?: Partial<SealedTokenContext>
 ): EvaluationResult {
   if (
     !lessonId ||
@@ -48,12 +49,92 @@ export function evaluateGameAttemptOnServer(
   let key: TeacherSolutionKey | null = null;
   if (gameToken && typeof gameToken === "string") {
     const unsealed = unsealSolutionKey(gameToken);
-    if (unsealed && (unsealed.lessonId === lessonId || lessonId.startsWith(unsealed.lessonId))) {
-      key = unsealed;
+    if (!unsealed) {
+      return {
+        success: false,
+        result: "try_again",
+        score: 0,
+        feedback: "Tampered, malformed, or expired game token rejected.",
+        error: "Invalid or expired game token",
+      };
     }
+
+    // Require EXACT lesson-ID equality (no prefix matching)
+    if (unsealed.lessonId !== lessonId) {
+      return {
+        success: false,
+        result: "try_again",
+        score: 0,
+        feedback: "Cross-lesson game token rejected.",
+        error: "Cross-lesson token",
+      };
+    }
+
+    // Replay check
+    if (isNonceReplayed(unsealed.nonce)) {
+      return {
+        success: false,
+        result: "try_again",
+        score: 0,
+        feedback: "Replayed game token rejected.",
+        error: "Replayed game token",
+      };
+    }
+
+    // User binding check
+    if (
+      evalContext?.userId &&
+      unsealed.userId &&
+      unsealed.userId !== "usr_anonymous" &&
+      unsealed.userId !== evalContext.userId
+    ) {
+      return {
+        success: false,
+        result: "try_again",
+        score: 0,
+        feedback: "Cross-user game token rejected.",
+        error: "Cross-user token",
+      };
+    }
+
+    // Workspace binding check
+    if (
+      evalContext?.workspaceId &&
+      unsealed.workspaceId &&
+      unsealed.workspaceId !== "ws_default" &&
+      unsealed.workspaceId !== evalContext.workspaceId
+    ) {
+      return {
+        success: false,
+        result: "try_again",
+        score: 0,
+        feedback: "Cross-workspace game token rejected.",
+        error: "Cross-workspace token",
+      };
+    }
+
+    // Session binding check
+    if (
+      evalContext?.sessionId &&
+      unsealed.sessionId &&
+      unsealed.sessionId !== "sess_default" &&
+      unsealed.sessionId !== evalContext.sessionId
+    ) {
+      return {
+        success: false,
+        result: "try_again",
+        score: 0,
+        feedback: "Cross-session game token rejected.",
+        error: "Cross-session token",
+      };
+    }
+
+    // Mark nonce as used
+    markNonceUsed(unsealed.nonce, unsealed.expiresAt);
+    key = unsealed;
   }
 
-  // 2. Fallback to instance store / canonical lesson key
+  // 2. Fallback to instance store / canonical lesson key if token was not provided
   if (!key) {
     key = getActiveTeacherSolutionKey(lessonId);
   }

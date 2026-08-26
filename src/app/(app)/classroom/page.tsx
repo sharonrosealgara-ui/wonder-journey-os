@@ -830,6 +830,8 @@ function ConnectedRoom({
                     lessonTitle={stageLesson?.title || "Classroom Adventure"}
                     role={isTeacher ? "teacher" : "student"}
                     permissionLevel={myPermission}
+                    sessionId={room.name || "wj-room-del-rosario"}
+                    workspaceId="ws-ph-001"
                     onEmitGameEvent={handleEmitGameEvent}
                     incomingGameEvent={incomingGameEvent}
                   />

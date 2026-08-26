@@ -35,7 +35,26 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 2. Payload size check
+    // 2. Query user profile and workspace authorization
+    let workspaceId = "ws-ph-001";
+    let role = "student";
+    try {
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("role, family_id")
+        .eq("id", user.id)
+        .single();
+      if (profile) {
+        role = profile.role || role;
+        if (profile.family_id) {
+          workspaceId = `ws-${profile.family_id}`;
+        }
+      }
+    } catch {
+      // Default to authenticated user context
+    }
+
+    // 3. Payload size check
     const contentLength = request.headers.get("content-length");
     if (contentLength && parseInt(contentLength, 10) > MAX_PAYLOAD_BYTES) {
       return NextResponse.json(
@@ -44,7 +63,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 3. Rate limiting check (keyed by authenticated user ID)
+    // 4. Rate limiting check (keyed by authenticated user ID)
     const rateLimitKey = user.id || request.headers.get("x-forwarded-for") || "client";
     if (!checkRateLimit(rateLimitKey)) {
       return NextResponse.json(
@@ -53,7 +72,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 4. Parse JSON body
+    // 5. Parse JSON body
     let body: any;
     try {
       body = await request.json();
@@ -64,9 +83,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { lessonId, gameType, attemptData, gameToken } = body || {};
+    const { lessonId, gameType, attemptData, gameToken, sessionId, targetWorkspaceId } = body || {};
 
-    // 5. Strict schema validation
+    // 6. Strict schema validation
     if (!lessonId || typeof lessonId !== "string" || lessonId.length > 80) {
       return NextResponse.json(
         { success: false, result: "try_again", score: 0, error: "Missing or invalid lessonId" },
@@ -111,8 +130,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 6. Evaluate attempt strictly on server using unsealed gameToken or instance key
-    const evaluation = evaluateGameAttemptOnServer(lessonId, gameType, attemptData, gameToken);
+    // 7. Evaluate attempt strictly on server using unsealed gameToken bound to user context
+    const finalWorkspaceId = targetWorkspaceId || workspaceId;
+    const evaluation = evaluateGameAttemptOnServer(lessonId, gameType, attemptData, gameToken, {
+      userId: user.id,
+      workspaceId: finalWorkspaceId,
+      sessionId,
+    });
 
     if (!evaluation.success && evaluation.error) {
       const status = evaluation.error.includes("Unknown lessonId") ? 404 : 400;

@@ -133,12 +133,8 @@ async function main() {
     env: { ...process.env, PORT: String(PORT), NODE_ENV: "production" }
   });
 
-  serverProcess.stdout.on("data", d => {
-    // console.log(`[Next.js stdout] ${d}`);
-  });
-  serverProcess.stderr.on("data", d => {
-    // console.error(`[Next.js stderr] ${d}`);
-  });
+  serverProcess.stdout.on("data", () => {});
+  serverProcess.stderr.on("data", () => {});
 
   try {
     await waitForServer(`${BASE_URL}/`);
@@ -154,9 +150,12 @@ async function main() {
   } finally {
     console.log("Shutting down local production server...");
     serverProcess.kill("SIGTERM");
-    try {
-      spawn("taskkill", ["/pid", String(serverProcess.pid), "/f", "/t"]);
-    } catch (e) {}
+    if (process.platform === "win32") {
+      try {
+        const killer = spawn("taskkill", ["/pid", String(serverProcess.pid), "/f", "/t"]);
+        killer.on("error", () => {});
+      } catch (e) {}
+    }
   }
 }
 

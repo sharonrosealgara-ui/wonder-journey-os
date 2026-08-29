@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { evaluateGameAttemptOnServer } from "@/lib/server-game-evaluator";
+import { evaluateGameAttemptOnServerAsync } from "@/lib/server-game-evaluator";
 import { CANONICAL_LESSON_IDS } from "@/lib/server-game-definitions";
 import { createClient } from "@/lib/supabase/server";
 
@@ -132,17 +132,52 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 7. Session ID resolution (database-trusted, never body-tampered workspace)
-    const effectiveSessionId = sessionId && typeof sessionId === "string" && sessionId.startsWith("sess-")
-      ? sessionId
-      : `sess-${profile.family_id}-main`;
+    // 7. Active Session Authorization from Database (Never treat startsWith('sess-') as authorization)
+    const effectiveSessionId = (typeof sessionId === "string" && sessionId.trim()) || `sess-${profile.family_id}-main`;
 
-    // 8. Evaluate attempt strictly on server using unsealed gameToken bound to verified database context
-    const evaluation = evaluateGameAttemptOnServer(lessonId, gameType, attemptData, gameToken, {
-      userId: user.id,
-      workspaceId,
-      sessionId: effectiveSessionId,
-    });
+    const { data: sessionData, error: sessionError } = await supabase
+      .from("classroom_sessions")
+      .select("id, workspace_id, lesson_id, status")
+      .eq("id", effectiveSessionId)
+      .eq("workspace_id", workspaceId)
+      .eq("status", "active")
+      .single();
+
+    if (sessionError || !sessionData || sessionData.lesson_id !== lessonId) {
+      return NextResponse.json(
+        { success: false, result: "try_again", score: 0, error: "Forbidden: no active authorized classroom session found for this lesson" },
+        { status: 403 }
+      );
+    }
+
+    // Query classroom participant membership from database
+    const { data: participantData, error: participantError } = await supabase
+      .from("classroom_participants")
+      .select("id, session_id, user_id, role")
+      .eq("session_id", sessionData.id)
+      .eq("user_id", user.id)
+      .single();
+
+    if (participantError || !participantData) {
+      return NextResponse.json(
+        { success: false, result: "try_again", score: 0, error: "Forbidden: user is not an authorized participant in this classroom session" },
+        { status: 403 }
+      );
+    }
+
+    // 8. Evaluate attempt strictly on server with atomic database nonce consumption
+    const evaluation = await evaluateGameAttemptOnServerAsync(
+      lessonId,
+      gameType,
+      attemptData,
+      gameToken,
+      {
+        userId: user.id,
+        workspaceId,
+        sessionId: sessionData.id,
+      },
+      supabase
+    );
 
     if (!evaluation.success && evaluation.error) {
       const status = evaluation.error.includes("Unknown lessonId") ? 404 : 400;

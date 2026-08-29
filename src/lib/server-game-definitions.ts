@@ -263,54 +263,15 @@ export function unsealSolutionKey(token: string): UnsealedTokenPayload | null {
   }
 }
 
-// ── Persistent Replay Prevention Storage ──
-const NONCE_DIR = path.join(process.cwd(), "artifacts");
-const NONCE_FILE = path.join(NONCE_DIR, "used-nonces.json");
-
-function loadPersistentNonces(): Map<string, number> {
-  const map = new Map<string, number>();
-  try {
-    if (fs.existsSync(NONCE_FILE)) {
-      const data = JSON.parse(fs.readFileSync(NONCE_FILE, "utf8"));
-      const now = Date.now();
-      for (const [nonce, expiry] of Object.entries(data)) {
-        if (typeof expiry === "number" && expiry > now) {
-          map.set(nonce, expiry);
-        }
-      }
-    }
-  } catch {}
-  return map;
-}
-
-let persistentNonces = loadPersistentNonces();
-
-function savePersistentNonces(): void {
-  try {
-    if (!fs.existsSync(NONCE_DIR)) {
-      fs.mkdirSync(NONCE_DIR, { recursive: true });
-    }
-    const obj: Record<string, number> = {};
-    const now = Date.now();
-    for (const [nonce, expiry] of persistentNonces.entries()) {
-      if (expiry > now) {
-        obj[nonce] = expiry;
-      }
-    }
-    fs.writeFileSync(NONCE_FILE, JSON.stringify(obj), "utf8");
-  } catch {}
-}
+// ── In-Memory Replay Prevention (Database is primary in production) ──
+const memoryNonces = new Map<string, number>();
 
 export function isNonceReplayed(nonce: string): boolean {
   if (!nonce || typeof nonce !== "string") return true;
-  if (!persistentNonces.has(nonce)) {
-    persistentNonces = loadPersistentNonces();
-  }
-  const expiry = persistentNonces.get(nonce);
+  const expiry = memoryNonces.get(nonce);
   if (expiry !== undefined) {
     if (Date.now() > expiry) {
-      persistentNonces.delete(nonce);
-      savePersistentNonces();
+      memoryNonces.delete(nonce);
       return false;
     }
     return true; // Replayed!
@@ -320,8 +281,7 @@ export function isNonceReplayed(nonce: string): boolean {
 
 export function markNonceUsed(nonce: string, expiresAt: number): void {
   if (!nonce) return;
-  persistentNonces.set(nonce, expiresAt || Date.now() + 15 * 60 * 1000);
-  savePersistentNonces();
+  memoryNonces.set(nonce, expiresAt || Date.now() + 15 * 60 * 1000);
 }
 
 

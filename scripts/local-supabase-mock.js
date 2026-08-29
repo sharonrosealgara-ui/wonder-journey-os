@@ -126,6 +126,122 @@ function createLocalSupabaseMockServer(port = 54321) {
         return;
       }
 
+      // 4. Classroom Sessions REST Query
+      if (url.pathname.includes("/rest/v1/classroom_sessions")) {
+        const idFilter = url.searchParams.get("id");
+        const workspaceFilter = url.searchParams.get("workspace_id");
+        const lessonFilter = url.searchParams.get("lesson_id");
+        const statusFilter = url.searchParams.get("status");
+
+        const targetId = idFilter ? idFilter.replace("eq.", "") : "sess-fam_del_rosario-main";
+        const targetWorkspace = workspaceFilter ? workspaceFilter.replace("eq.", "") : "ws-fam_del_rosario";
+        const targetLesson = lessonFilter ? lessonFilter.replace("eq.", "") : "lesson-1-world-map";
+        const targetStatus = statusFilter ? statusFilter.replace("eq.", "") : "active";
+
+        // Rejection for non-existent session IDs or cross-workspace mismatches
+        if (targetId.includes("fake") || targetId.includes("invalid") || targetId.includes("forged") || targetWorkspace.includes("other") || targetStatus === "completed") {
+          res.writeHead(200, { "Content-Type": "application/json" });
+          res.end(JSON.stringify([]));
+          return;
+        }
+
+        const sessionRow = {
+          id: targetId,
+          workspace_id: targetWorkspace,
+          lesson_id: targetLesson,
+          room_name: `room-${targetId}`,
+          teacher_user_id: "usr_teacher_001",
+          status: "active",
+          slide_index: 0,
+          is_locked: false,
+          created_at: new Date().toISOString()
+        };
+
+        res.writeHead(200, {
+          "Content-Type": "application/json",
+          "Content-Range": "0-0/1"
+        });
+        res.end(JSON.stringify(req.headers["accept"]?.includes("vnd.pgrst.object+json") ? sessionRow : [sessionRow]));
+        return;
+      }
+
+      // 5. Classroom Participants REST Query
+      if (url.pathname.includes("/rest/v1/classroom_participants")) {
+        const sessionFilter = url.searchParams.get("session_id");
+        const userFilter = url.searchParams.get("user_id");
+
+        const targetSessionId = sessionFilter ? sessionFilter.replace("eq.", "") : "";
+        const targetUserId = userFilter ? userFilter.replace("eq.", "") : "";
+
+        if (targetSessionId.includes("fake") || targetUserId.includes("fake") || targetUserId.includes("unauthorized") || targetUserId.includes("intruder")) {
+          res.writeHead(200, { "Content-Type": "application/json" });
+          res.end(JSON.stringify([]));
+          return;
+        }
+
+        const participantRow = {
+          id: `part-${targetSessionId}-${targetUserId || "usr_family_002"}`,
+          session_id: targetSessionId,
+          workspace_id: "ws-fam_del_rosario",
+          user_id: targetUserId || "usr_family_002",
+          role: targetUserId === "usr_teacher_001" ? "teacher" : "student",
+          permission_level: "full_interactive",
+          is_online: true,
+          joined_at: new Date().toISOString()
+        };
+
+        res.writeHead(200, {
+          "Content-Type": "application/json",
+          "Content-Range": "0-0/1"
+        });
+        res.end(JSON.stringify(req.headers["accept"]?.includes("vnd.pgrst.object+json") ? participantRow : [participantRow]));
+        return;
+      }
+
+      // 6. Game Evaluation Nonces (Atomic Unique Consumption)
+      if (url.pathname.includes("/rest/v1/game_evaluation_nonces")) {
+        if (!global.__MOCK_CONSUMED_NONCES__) {
+          global.__MOCK_CONSUMED_NONCES__ = new Set();
+        }
+
+        if (req.method === "POST") {
+          try {
+            const parsed = JSON.parse(body || "{}");
+            const nonce = parsed.nonce;
+            if (!nonce || typeof nonce !== "string") {
+              res.writeHead(400, { "Content-Type": "application/json" });
+              res.end(JSON.stringify({ message: "Missing nonce in insert" }));
+              return;
+            }
+
+            if (global.__MOCK_CONSUMED_NONCES__.has(nonce)) {
+              // 409 Conflict: duplicate key value violates unique constraint "game_evaluation_nonces_pkey"
+              res.writeHead(409, { "Content-Type": "application/json" });
+              res.end(JSON.stringify({
+                code: "23505",
+                details: `Key (nonce)=(${nonce}) already exists.`,
+                hint: null,
+                message: 'duplicate key value violates unique constraint "game_evaluation_nonces_pkey"'
+              }));
+              return;
+            }
+
+            global.__MOCK_CONSUMED_NONCES__.add(nonce);
+            res.writeHead(201, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ ...parsed, consumed_at: new Date().toISOString() }));
+            return;
+          } catch (e) {
+            res.writeHead(400, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ message: "Invalid JSON" }));
+            return;
+          }
+        }
+
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify([]));
+        return;
+      }
+
       // Default fallback
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({ status: "ok" }));

@@ -19,15 +19,15 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // Get true role from profiles table
+    // Get true role and workspace from profiles table
     const { data: profile } = await supabase
       .from("profiles")
-      .select("role")
+      .select("role, family_id")
       .eq("id", user.id)
       .single();
 
-    if (!profile) {
-      return NextResponse.json({ error: "Profile not found" }, { status: 401 });
+    if (!profile || !profile.family_id) {
+      return NextResponse.json({ error: "Forbidden: Profile or workspace not found" }, { status: 403 });
     }
 
     const trueRole = profile.role;

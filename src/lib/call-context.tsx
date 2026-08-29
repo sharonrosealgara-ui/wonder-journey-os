@@ -236,6 +236,9 @@ export function CallProvider({ children }: { children: React.ReactNode }) {
         );
         void room.startAudio();
         roomRef.current = room;
+        if (typeof window !== "undefined") {
+          (window as any).__wj_active_room = room;
+        }
         setStatus("connected");
         bump();
         return "connected";

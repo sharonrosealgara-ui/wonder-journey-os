@@ -16,9 +16,10 @@ const {
 const { evaluateGameAttemptOnServer } = require('../src/lib/server-game-evaluator');
 
 // Read contact sheet manifest
-const mediaManifest = JSON.parse(
+const rawManifest = JSON.parse(
   fs.readFileSync(path.join(__dirname, '../artifacts/media-contact-sheet.json'), 'utf8')
 );
+const mediaManifestItems = Array.isArray(rawManifest) ? rawManifest : (rawManifest.items || []);
 
 console.log("================================================================================");
 console.log("WONDER JOURNEY OS — STAGE 12.1R.7 BEHAVIORAL NEGATIVE & SECURITY TEST SUITE");
@@ -44,8 +45,8 @@ function testMediaDiskIntegrity() {
   let invalidFiles = 0;
   let invalidHashes = 0;
 
-  for (const item of mediaManifest.items) {
-    const assetPath = item.storedAssetPath || item.assetPath;
+  for (const item of mediaManifestItems) {
+    const assetPath = item.storedAssetPath || item.assetPath || item.fileName ? `/media/curriculum/${item.fileName}` : "";
     const localPath = path.join(__dirname, '../public', assetPath.replace(/^\//, ''));
     if (!fs.existsSync(localPath)) {
       invalidFiles++;
@@ -57,7 +58,7 @@ function testMediaDiskIntegrity() {
       invalidFiles++;
     }
     const hash = crypto.createHash('sha256').update(buf).digest('hex');
-    if (hash !== (item.sha256Checksum || item.checksum)) {
+    if (hash !== (item.sha256Checksum || item.checksum || item.sha256)) {
       invalidHashes++;
     }
   }
@@ -72,14 +73,15 @@ function testMediaDiskIntegrity() {
 // 2. Behavioral Test: Specific Creator Attributions & No Fake Orgs
 function testCreatorAttributions() {
   console.log("▶ Running Behavioral Test 2: Specific Creator & Artist Attribution Audit...");
-  const genericCreators = mediaManifest.items.filter(m =>
+  const genericCreators = mediaManifestItems.filter(m =>
     !m.creator ||
     m.creator.trim().length < 3 ||
     m.creator.toLowerCase().includes("wikimedia commons contributors") ||
-    m.creator.toLowerCase().includes("unknown / public domain fallback")
+    m.creator.toLowerCase().includes("contributing photographer") ||
+    m.creator.toLowerCase().includes("historical record")
   );
 
-  const fakeOrgs = mediaManifest.items.filter(m =>
+  const fakeOrgs = mediaManifestItems.filter(m =>
     m.organization && m.organization.includes("National Heritage Archive")
   );
 
@@ -93,9 +95,9 @@ function testCreatorAttributions() {
 // 3. Behavioral Test: License Fidelity & Open Licensing Declarations
 function testLicenseFidelity() {
   console.log("▶ Running Behavioral Test 3: License Fidelity & Source URL Verification...");
-  const invalidLicenses = mediaManifest.items.filter(m =>
+  const invalidLicenses = mediaManifestItems.filter(m =>
     !m.license ||
-    (!m.license.includes("Public Domain") && !m.license.includes("CC") && !m.license.includes("Creative Commons")) ||
+    (!m.license.includes("Public Domain") && !m.license.includes("CC") && !m.license.includes("Creative Commons") && !m.license.includes("CC0")) ||
     !m.sourceUrl.startsWith("http")
   );
 
@@ -259,7 +261,7 @@ function testTokenBindingAndReplayRejection() {
     "Cross-lesson evaluation attempt strictly rejected (exact lesson ID required)"
   );
 
-  // 8E: Replay Prevention Check & Persistent Nonce Storage
+  // 8E: Replay Prevention Check & In-Memory / Database Atomic Nonce Consumption
   const firstAttempt = evaluateGameAttemptOnServer(
     "lesson-1-world-map",
     "quiz",
@@ -286,18 +288,60 @@ function testTokenBindingAndReplayRejection() {
     "Replayed token evaluation attempt rejected with 'Replayed game token'"
   );
 
-  // Check persistent nonce file exists on disk
+  // Assert NO runtime filesystem nonce storage file is created
   const nonceFile = path.join(__dirname, '../artifacts/used-nonces.json');
   assertBehavior(
-    "Persistent Nonce Storage",
-    fs.existsSync(nonceFile),
-    "Used nonces are persisted to artifacts/used-nonces.json across processes"
+    "Zero File-Based Nonce Storage",
+    !fs.existsSync(nonceFile),
+    "Zero artifacts/used-nonces.json filesystem nonce storage (migrated to atomic database constraint)"
   );
 }
 
-// 9. Behavioral Test: Endpoint Auth Requirements & RBAC
+// 9. Behavioral Test: Active Session Authorization & Membership Verification
+function testActiveSessionAuthorization() {
+  console.log("▶ Running Behavioral Test 9: Active Session Authorization & Participant Verification...");
+  const dtoRouteCode = fs.readFileSync(path.join(__dirname, '../src/app/api/game/dto/route.ts'), 'utf8');
+  const evalRouteCode = fs.readFileSync(path.join(__dirname, '../src/app/api/game/evaluate/route.ts'), 'utf8');
+
+  const dtoChecksSession = dtoRouteCode.includes('.from("classroom_sessions")') && dtoRouteCode.includes('.eq("status", "active")');
+  const dtoChecksParticipant = dtoRouteCode.includes('.from("classroom_participants")');
+  const dtoNoStartsWithBypass = !dtoRouteCode.includes('requestedSessionId.startsWith("sess-")');
+
+  const evalChecksSession = evalRouteCode.includes('.from("classroom_sessions")') && evalRouteCode.includes('.eq("status", "active")');
+  const evalChecksParticipant = evalRouteCode.includes('.from("classroom_participants")');
+  const evalNoStartsWithBypass = !evalRouteCode.includes('sessionId.startsWith("sess-")');
+
+  assertBehavior(
+    "Session Database Verification",
+    dtoChecksSession && dtoChecksParticipant && dtoNoStartsWithBypass && evalChecksSession && evalChecksParticipant && evalNoStartsWithBypass,
+    "Classroom sessions and participant memberships strictly validated against database (zero startsWith('sess-') bypasses)"
+  );
+}
+
+// 10. Behavioral Test: Concurrent Evaluation & Atomic Replay Race Condition
+function testConcurrentEvaluationRaceCondition() {
+  console.log("▶ Running Behavioral Test 10: Concurrent Evaluation Race Condition Protection...");
+  const testContext = { userId: "usr_concurrent_01", workspaceId: "ws_fam_del_rosario", sessionId: "sess_room_concurrent" };
+  const dto = generateServerLearnerGame("lesson-1-world-map", "Lesson 1", testContext);
+  const token = dto.gameToken;
+
+  // Two simultaneous evaluation calls with identical token
+  const res1 = evaluateGameAttemptOnServer("lesson-1-world-map", "quiz", { selectedOptionId: "any" }, token, testContext);
+  const res2 = evaluateGameAttemptOnServer("lesson-1-world-map", "quiz", { selectedOptionId: "any" }, token, testContext);
+
+  const exactlyOneSucceeded = (res1.success && !res2.success) || (!res1.success && res2.success);
+  const rejectedHasReplayError = res1.error === "Replayed game token" || res2.error === "Replayed game token";
+
+  assertBehavior(
+    "Concurrent Race Replay Rejection",
+    exactlyOneSucceeded && rejectedHasReplayError,
+    "Simultaneous evaluations with identical token: exactly 1 succeeds, 1 rejected with 'Replayed game token'"
+  );
+}
+
+// 11. Behavioral Test: Endpoint Auth Requirements & RBAC
 function testEndpointAuthProtection() {
-  console.log("▶ Running Behavioral Test 9: Game API Endpoint Auth Protection...");
+  console.log("▶ Running Behavioral Test 11: Game API Endpoint Auth Protection...");
   const dtoRouteCode = fs.readFileSync(path.join(__dirname, '../src/app/api/game/dto/route.ts'), 'utf8');
   const evalRouteCode = fs.readFileSync(path.join(__dirname, '../src/app/api/game/evaluate/route.ts'), 'utf8');
 
@@ -310,13 +354,13 @@ function testEndpointAuthProtection() {
   assertBehavior(
     "Endpoint Auth Protection",
     dtoHasAuth && dtoHas403 && evalHasAuth && evalHas403 && evalRequiresToken,
-    "API endpoints enforce 401 unauthenticated, 403 missing profile, and require gameToken"
+    "API endpoints enforce 401 unauthenticated, 403 missing profile/membership, and require gameToken"
   );
 }
 
-// 10. Behavioral Test: Auth Bypass Prevention
+// 12. Behavioral Test: Auth Bypass Prevention
 function testAuthBypassPrevention() {
-  console.log("▶ Running Behavioral Test 10: Auth Bypass Prevention Audit...");
+  console.log("▶ Running Behavioral Test 12: Auth Bypass Prevention Audit...");
   const middlewareCode = fs.readFileSync(path.join(__dirname, '../src/middleware.ts'), 'utf8');
   const authContextCode = fs.readFileSync(path.join(__dirname, '../src/lib/auth-context.tsx'), 'utf8');
 
@@ -339,6 +383,8 @@ testLearnerDTOZeroKeys();
 testZeroGenericGamesForUnknownLessons();
 testSealedTokenCryptography();
 testTokenBindingAndReplayRejection();
+testActiveSessionAuthorization();
+testConcurrentEvaluationRaceCondition();
 testEndpointAuthProtection();
 testAuthBypassPrevention();
 

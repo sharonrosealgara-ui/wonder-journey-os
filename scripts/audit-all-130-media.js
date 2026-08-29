@@ -83,16 +83,16 @@ mediaRegistry.forEach((m, idx) => {
   }
 
   // 2. Attribution & Rights Fidelity
-  if (!m.creator || m.creator.trim().length < 3) {
-    defects.push(`Record ${num} (${m.id}): Missing or too short creator string`);
+  if (!m.creator || m.creator.trim().length < 3 || m.creator.includes("Contributing Photographer") || m.creator.includes("Historical Record") || m.creator === "Wikimedia Commons") {
+    defects.push(`Record ${num} (${m.id}): Missing or fallback creator string "${m.creator}"`);
   }
-  if (!m.license || (!m.license.includes('Public Domain') && !m.license.includes('CC') && !m.license.includes('CC0'))) {
+  if (!m.license || (!m.license.includes('Public Domain') && !m.license.includes('CC') && !m.license.includes('CC0') && !m.license.includes('Public domain'))) {
     defects.push(`Record ${num} (${m.id}): Invalid open license "${m.license}"`);
   }
   if (!m.sourceUrl || !m.sourceUrl.startsWith('http')) {
     defects.push(`Record ${num} (${m.id}): Missing or non-http sourceUrl "${m.sourceUrl}"`);
   }
-  if (m.organization && m.organization.includes("National Heritage Archive")) {
+  if (!m.organization || m.organization.includes("National Heritage Archive") || m.organization === "Wikimedia Commons / National Heritage Archive") {
     defects.push(`Record ${num} (${m.id}): Unverified/fake organization "${m.organization}"`);
   }
 });

@@ -52,16 +52,44 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // 5. Trusted session ID
-    const sessionId = requestedSessionId && requestedSessionId.startsWith("sess-")
-      ? requestedSessionId
-      : `sess-${profile.family_id}-main`;
+    // 5. Query active classroom session from database (Never treat startsWith('sess-') as authorization)
+    const effectiveSessionId = requestedSessionId || `sess-${profile.family_id}-main`;
 
-    // 6. Generate sealed game DTO with cryptographically bound context
+    const { data: sessionData, error: sessionError } = await supabase
+      .from("classroom_sessions")
+      .select("id, workspace_id, lesson_id, status")
+      .eq("id", effectiveSessionId)
+      .eq("workspace_id", workspaceId)
+      .eq("status", "active")
+      .single();
+
+    if (sessionError || !sessionData || sessionData.lesson_id !== lessonId) {
+      return NextResponse.json(
+        { error: "Forbidden: no active authorized classroom session found for this lesson" },
+        { status: 403 }
+      );
+    }
+
+    // 6. Query classroom participant membership from database
+    const { data: participantData, error: participantError } = await supabase
+      .from("classroom_participants")
+      .select("id, session_id, user_id, role")
+      .eq("session_id", sessionData.id)
+      .eq("user_id", user.id)
+      .single();
+
+    if (participantError || !participantData) {
+      return NextResponse.json(
+        { error: "Forbidden: user is not an authorized participant in this classroom session" },
+        { status: 403 }
+      );
+    }
+
+    // 7. Generate sealed game DTO with cryptographically bound context
     const dto = generateServerLearnerGame(lessonId, lessonTitle, {
       userId: user.id,
       workspaceId,
-      sessionId,
+      sessionId: sessionData.id,
     });
 
     if (!dto) {

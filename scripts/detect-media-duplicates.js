@@ -13,7 +13,7 @@ if (!fs.existsSync(manifestPath)) {
 }
 
 const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
-const mediaItems = manifest.items || [];
+const mediaItems = Array.isArray(manifest) ? manifest : (manifest.items || []);
 
 const MEDIA_DIR = path.join(__dirname, '../public/media/curriculum');
 const hashes = new Map();
@@ -26,8 +26,8 @@ if (mediaItems.length !== 130) {
 }
 
 mediaItems.forEach((m) => {
-  const assetPath = m.storedAssetPath || m.assetPath;
-  const checksum = m.sha256Checksum || m.checksum;
+  const assetPath = m.storedAssetPath || m.assetPath || (m.fileName ? `/media/curriculum/${m.fileName}` : "");
+  const checksum = m.sha256Checksum || m.checksum || m.sha256;
 
   if (!assetPath) {
     duplicates.push(`Missing assetPath in manifest for item ${m.id}`);

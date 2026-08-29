@@ -253,3 +253,155 @@ export function evaluateGameAttemptOnServer(
       };
   }
 }
+
+export async function evaluateGameAttemptOnServerAsync(
+  lessonId: string,
+  gameType: string,
+  attemptData: Record<string, unknown>,
+  gameToken?: string,
+  evalContext?: SealedTokenContext,
+  supabaseClient?: any
+): Promise<EvaluationResult> {
+  if (
+    !lessonId ||
+    typeof lessonId !== "string" ||
+    !gameType ||
+    typeof gameType !== "string" ||
+    !attemptData ||
+    typeof attemptData !== "object"
+  ) {
+    return {
+      success: false,
+      result: "try_again",
+      score: 0,
+      feedback: "Invalid payload parameters submitted.",
+      error: "Malformed request payload",
+    };
+  }
+
+  // Canonical lesson validation
+  if (!CANONICAL_LESSON_IDS.has(lessonId)) {
+    return {
+      success: false,
+      result: "try_again",
+      score: 0,
+      feedback: "Unknown or non-canonical lesson ID.",
+      error: `Unknown lessonId: "${lessonId}"`,
+    };
+  }
+
+  // 1. gameToken is strictly required for evaluation (No anonymous/unsealed fallback)
+  if (!gameToken || typeof gameToken !== "string") {
+    return {
+      success: false,
+      result: "try_again",
+      score: 0,
+      feedback: "gameToken is strictly required for server evaluation.",
+      error: "Missing gameToken",
+    };
+  }
+
+  const unsealed = unsealSolutionKey(gameToken);
+  if (!unsealed) {
+    return {
+      success: false,
+      result: "try_again",
+      score: 0,
+      feedback: "Tampered, malformed, or expired game token rejected.",
+      error: "Invalid or expired game token",
+    };
+  }
+
+  // Require EXACT lesson-ID equality (no prefix matching)
+  if (unsealed.lessonId !== lessonId) {
+    return {
+      success: false,
+      result: "try_again",
+      score: 0,
+      feedback: "Cross-lesson game token rejected.",
+      error: "Cross-lesson token",
+    };
+  }
+
+  // Mandatory context check
+  if (!evalContext || !evalContext.userId || !evalContext.workspaceId || !evalContext.sessionId) {
+    return {
+      success: false,
+      result: "try_again",
+      score: 0,
+      feedback: "Missing mandatory evaluation context.",
+      error: "Missing evaluation context",
+    };
+  }
+
+  // User binding check
+  if (unsealed.userId !== evalContext.userId) {
+    return {
+      success: false,
+      result: "try_again",
+      score: 0,
+      feedback: "Cross-user game token rejected.",
+      error: "Cross-user token",
+    };
+  }
+
+  // Workspace binding check
+  if (unsealed.workspaceId !== evalContext.workspaceId) {
+    return {
+      success: false,
+      result: "try_again",
+      score: 0,
+      feedback: "Cross-workspace game token rejected.",
+      error: "Cross-workspace token",
+    };
+  }
+
+  // Session binding check
+  if (unsealed.sessionId !== evalContext.sessionId) {
+    return {
+      success: false,
+      result: "try_again",
+      score: 0,
+      feedback: "Cross-session game token rejected.",
+      error: "Cross-session token",
+    };
+  }
+
+  // Atomically consume nonce in persistent database (or memory fallback for tests without db)
+  if (supabaseClient) {
+    const { error: nonceError } = await supabaseClient
+      .from("game_evaluation_nonces")
+      .insert({
+        nonce: unsealed.nonce,
+        user_id: evalContext.userId,
+        workspace_id: evalContext.workspaceId,
+        session_id: evalContext.sessionId,
+        lesson_id: lessonId,
+        expires_at: new Date(unsealed.expiresAt).toISOString(),
+      });
+
+    if (nonceError) {
+      return {
+        success: false,
+        result: "try_again",
+        score: 0,
+        feedback: "Replayed or already consumed game token rejected.",
+        error: "Replayed game token",
+      };
+    }
+  } else {
+    if (isNonceReplayed(unsealed.nonce)) {
+      return {
+        success: false,
+        result: "try_again",
+        score: 0,
+        feedback: "Replayed game token rejected.",
+        error: "Replayed game token",
+      };
+    }
+    markNonceUsed(unsealed.nonce, unsealed.expiresAt);
+  }
+
+  return evaluateGameAttemptOnServer(lessonId, gameType, attemptData, gameToken, evalContext);
+}
+

@@ -24,7 +24,7 @@ export type PhotoMap = {
 
 const EMPTY: PhotoMap = { lesson: {}, destination: {}, recipe: {} };
 
-const conventionPath: Record<PhotoKind, (id: string) => string> = {
+const conventionPath: Record<PhotoKind, (id: string) => string | undefined> = {
   lesson: lessonPhoto,
   destination: destinationPhoto,
   recipe: recipePhoto,
@@ -56,7 +56,7 @@ export function clearPhoto(setMap: (u: (p: PhotoMap) => PhotoMap) => void, kind:
 /** The best available src for a photo: runtime override → /public path. */
 export function useSmartSrc(kind: PhotoKind, id: string): string {
   const [photos] = usePhotos();
-  return photos[kind][id] || conventionPath[kind](id);
+  return photos[kind][id] || conventionPath[kind](id) || "";
 }
 
 // ── image helpers ────────────────────────────────────────────

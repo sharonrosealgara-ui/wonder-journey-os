@@ -12,6 +12,8 @@ const VALID_LICENSES = {
   "CC BY 4.0": ["https://creativecommons.org/licenses/by/4.0/", "https://creativecommons.org/licenses/by/4.0/deed.en", "https://commons.wikimedia.org/wiki/Public_domain"],
   "CC BY-SA 3.0": ["https://creativecommons.org/licenses/by-sa/3.0/", "https://creativecommons.org/licenses/by-sa/3.0/deed.en", "https://commons.wikimedia.org/wiki/Public_domain"],
   "CC BY 3.0": ["https://creativecommons.org/licenses/by/3.0/", "https://creativecommons.org/licenses/by/3.0/deed.en", "https://commons.wikimedia.org/wiki/Public_domain"],
+  "CC BY-SA 2.5": ["https://creativecommons.org/licenses/by-sa/2.5/", "https://creativecommons.org/licenses/by-sa/2.5/deed.en", "https://commons.wikimedia.org/wiki/Public_domain"],
+  "CC BY 2.5": ["https://creativecommons.org/licenses/by/2.5/", "https://creativecommons.org/licenses/by/2.5/deed.en", "https://commons.wikimedia.org/wiki/Public_domain"],
   "CC BY-SA 2.0": ["https://creativecommons.org/licenses/by-sa/2.0/", "https://creativecommons.org/licenses/by-sa/2.0/deed.en", "https://commons.wikimedia.org/wiki/Public_domain"],
   "CC BY 2.0": ["https://creativecommons.org/licenses/by/2.0/", "https://creativecommons.org/licenses/by/2.0/deed.en", "https://commons.wikimedia.org/wiki/Public_domain"],
   "CC0 1.0": ["https://creativecommons.org/publicdomain/zero/1.0/", "https://creativecommons.org/publicdomain/zero/1.0/deed.en", "https://commons.wikimedia.org/wiki/Public_domain"],

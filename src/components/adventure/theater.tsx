@@ -30,13 +30,30 @@ export function AdventureTheater({
   lesson,
   embedded = false,
   onExit,
+  slideIndex,
+  onSlideChange,
 }: {
   lesson: Lesson;
   embedded?: boolean;
   onExit?: () => void;
+  slideIndex?: number;
+  onSlideChange?: (newIndex: number) => void;
 }) {
   const slides = useMemo(() => buildSlides(lesson), [lesson]);
-  const [index, setIndex] = useState(0);
+  const [internalIndex, setInternalIndex] = useState(0);
+  const index = typeof slideIndex === "number" ? slideIndex : internalIndex;
+
+  const setIndex = useCallback(
+    (updater: number | ((prev: number) => number)) => {
+      const nextIdx = typeof updater === "function" ? updater(index) : updater;
+      if (typeof slideIndex !== "number") {
+        setInternalIndex(nextIdx);
+      }
+      onSlideChange?.(nextIdx);
+    },
+    [index, slideIndex, onSlideChange]
+  );
+
   const [showChapters, setShowChapters] = useState(false);
   const [showPanel, setShowPanel] = useState(false);
   const [quizResult, setQuizResult] = useState<{ score: number; total: number } | null>(null);
@@ -67,17 +84,16 @@ export function AdventureTheater({
   const slide = slides[index];
 
   const next = useCallback(() => {
-    setIndex((i) => {
-      if (i < slides.length - 1) sfx.next();
-      return Math.min(i + 1, slides.length - 1);
-    });
-  }, [slides.length]);
+    const nextIdx = Math.min(index + 1, slides.length - 1);
+    if (index < slides.length - 1) sfx.next();
+    setIndex(nextIdx);
+  }, [index, slides.length, setIndex]);
+
   const prev = useCallback(() => {
-    setIndex((i) => {
-      if (i > 0) sfx.back();
-      return Math.max(i - 1, 0);
-    });
-  }, []);
+    const prevIdx = Math.max(index - 1, 0);
+    if (index > 0) sfx.back();
+    setIndex(prevIdx);
+  }, [index, setIndex]);
 
   function toggleMute() {
     setMutedState((m) => {
@@ -283,7 +299,12 @@ export function AdventureTheater({
 
       {/* ── Bottom controls ───────────────────────────────────── */}
       <footer className="relative z-20 flex items-center gap-3 border-t-2 border-sand-deep bg-paper/90 px-4 py-2.5 backdrop-blur">
-        <button className="wj-btn wj-btn-ghost !px-4 !py-1.5 text-sm" onClick={prev} disabled={index === 0}>
+        <button
+          data-testid="theater-prev-btn"
+          className="wj-btn wj-btn-ghost !px-4 !py-1.5 text-sm"
+          onClick={prev}
+          disabled={index === 0}
+        >
           ← Back
         </button>
         <div className="flex flex-1 items-center gap-1.5 overflow-hidden">
@@ -298,10 +319,11 @@ export function AdventureTheater({
             />
           ))}
         </div>
-        <span className="wj-chip hidden sm:inline-flex">
+        <span data-testid="theater-slide-indicator" data-slide-index={index} className="wj-chip hidden sm:inline-flex">
           {index + 1} / {slides.length}
         </span>
         <button
+          data-testid="theater-next-btn"
           className="wj-btn !px-5 !py-1.5 text-sm"
           onClick={next}
           disabled={index === slides.length - 1}

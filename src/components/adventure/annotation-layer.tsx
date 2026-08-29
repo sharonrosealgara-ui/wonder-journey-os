@@ -273,12 +273,20 @@ export function AnnotationLayer({
   return (
     <div
       ref={wrapRef}
+      data-testid="annotation-layer-wrap"
+      data-permission={permission}
+      data-is-interactive={isInteractive ? "true" : "false"}
       className="absolute inset-0 z-30 touch-none select-none pointer-events-auto"
       style={{ cursor: tool === "laser" ? "crosshair" : tool === "pointer" ? "default" : "crosshair" }}
     >
       {/* Canvas */}
       <canvas
         ref={canvasRef}
+        data-testid="annotation-canvas"
+        data-remote-strokes-count={remoteStrokes.length}
+        data-remote-pointers-count={remotePointers.length}
+        data-permission-level={permission}
+        data-active-tool={tool}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}

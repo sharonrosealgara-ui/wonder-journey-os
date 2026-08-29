@@ -19,6 +19,7 @@ export interface EvaluationResult {
   score: number;
   feedback: string;
   error?: string;
+  statusCode?: number;
 }
 
 export function evaluateGameAttemptOnServer(
@@ -367,39 +368,55 @@ export async function evaluateGameAttemptOnServerAsync(
     };
   }
 
-  // Atomically consume nonce in persistent database (or memory fallback for tests without db)
-  if (supabaseClient) {
-    const { error: nonceError } = await supabaseClient
-      .from("game_evaluation_nonces")
-      .insert({
-        nonce: unsealed.nonce,
-        user_id: evalContext.userId,
-        workspace_id: evalContext.workspaceId,
-        session_id: evalContext.sessionId,
-        lesson_id: lessonId,
-        expires_at: new Date(unsealed.expiresAt).toISOString(),
-      });
+  // Atomically consume nonce in persistent database (Never allow in-memory fallback in secure async evaluation)
+  if (!supabaseClient) {
+    return {
+      success: false,
+      result: "try_again",
+      score: 0,
+      feedback: "Database client required for secure evaluation.",
+      error: "Database client required",
+      statusCode: 500,
+    };
+  }
 
-    if (nonceError) {
+  const { error: nonceError } = await supabaseClient
+    .from("game_evaluation_nonces")
+    .insert({
+      nonce: unsealed.nonce,
+      user_id: evalContext.userId,
+      workspace_id: evalContext.workspaceId,
+      session_id: evalContext.sessionId,
+      lesson_id: lessonId,
+      expires_at: new Date(unsealed.expiresAt).toISOString(),
+    });
+
+  if (nonceError) {
+    if (
+      nonceError.code === "23505" ||
+      nonceError.message?.includes("unique constraint") ||
+      nonceError.details?.includes("already exists") ||
+      nonceError.message?.includes("duplicate key")
+    ) {
       return {
         success: false,
         result: "try_again",
         score: 0,
         feedback: "Replayed or already consumed game token rejected.",
         error: "Replayed game token",
+        statusCode: 409,
       };
     }
-  } else {
-    if (isNonceReplayed(unsealed.nonce)) {
-      return {
-        success: false,
-        result: "try_again",
-        score: 0,
-        feedback: "Replayed game token rejected.",
-        error: "Replayed game token",
-      };
-    }
-    markNonceUsed(unsealed.nonce, unsealed.expiresAt);
+
+    // Other database failures fail closed
+    return {
+      success: false,
+      result: "try_again",
+      score: 0,
+      feedback: "Database error during nonce validation.",
+      error: `Database failure: ${nonceError.message || "Nonce insertion failed"}`,
+      statusCode: 500,
+    };
   }
 
   return evaluateGameAttemptOnServer(lessonId, gameType, attemptData, gameToken, evalContext);

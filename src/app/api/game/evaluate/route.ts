@@ -180,7 +180,9 @@ export async function POST(request: NextRequest) {
     );
 
     if (!evaluation.success && evaluation.error) {
-      const status = evaluation.error.includes("Unknown lessonId") ? 404 : 400;
+      const status =
+        evaluation.statusCode ||
+        (evaluation.error.includes("Unknown lessonId") ? 404 : 400);
       return NextResponse.json(evaluation, { status });
     }
 

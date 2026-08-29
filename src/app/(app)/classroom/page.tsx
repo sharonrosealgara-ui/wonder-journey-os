@@ -692,6 +692,8 @@ function ConnectedRoom({
         <div className="flex items-center gap-2">
           {/* Permission Status Pill */}
           <span
+            data-testid="permission-status-pill"
+            data-permission-level={isTeacher ? "full_interactive" : myPermission}
             className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold shadow-sm ${
               isTeacher
                 ? "bg-mango/20 text-mango-deep border border-mango/30"
@@ -784,6 +786,8 @@ function ConnectedRoom({
           <div
             className="relative w-full max-w-[1280px] aspect-[16/9] max-h-[calc(100vh-140px)] rounded-3xl overflow-hidden shadow-2xl bg-paper border-4 border-white flex flex-col justify-between"
             id="classroom-lesson-stage"
+            data-testid="classroom-stage"
+            data-current-slide={slideIndex}
           >
             {/* Screen Share Overlay */}
             {screenShare && (
@@ -795,7 +799,13 @@ function ConnectedRoom({
             {/* Lesson Theater Content */}
             {stageLesson ? (
               <div className="h-full w-full overflow-y-auto">
-                <AdventureTheater lesson={stageLesson} embedded onExit={() => setStageLesson(null)} />
+                <AdventureTheater
+                  lesson={stageLesson}
+                  embedded
+                  slideIndex={slideIndex}
+                  onSlideChange={handleSlideChange}
+                  onExit={() => setStageLesson(null)}
+                />
               </div>
             ) : (
               <div className="flex h-full w-full flex-col items-center justify-center gap-4 p-8 text-center bg-sand/30">
@@ -926,24 +936,28 @@ function ConnectedRoom({
 
                   <div className="grid grid-cols-2 gap-1.5 text-[11px]">
                     <button
+                      data-testid="perm-lock-btn"
                       onClick={() => setGlobalPermission("view_only")}
                       className="rounded-lg bg-white p-1.5 font-semibold text-ink-soft hover:bg-sand-deep border border-sand-deep cursor-pointer"
                     >
                       🔒 Lock All (View)
                     </button>
                     <button
+                      data-testid="perm-pointer-btn"
                       onClick={() => setGlobalPermission("pointer_only")}
                       className="rounded-lg bg-white p-1.5 font-semibold text-ocean hover:bg-sand-deep border border-sand-deep cursor-pointer"
                     >
                       👆 Pointer Only
                     </button>
                     <button
+                      data-testid="perm-draw-btn"
                       onClick={() => setGlobalPermission("annotate")}
                       className="rounded-lg bg-white p-1.5 font-semibold text-palm hover:bg-sand-deep border border-sand-deep cursor-pointer"
                     >
                       ✏️ Enable Drawing
                     </button>
                     <button
+                      data-testid="perm-game-btn"
                       onClick={() => setGlobalPermission("game_interactive")}
                       className="rounded-lg bg-white p-1.5 font-semibold text-mango-deep hover:bg-sand-deep border border-sand-deep cursor-pointer"
                     >
@@ -1045,6 +1059,7 @@ function ConnectedRoom({
 
         {/* Whiteboard / Annotation Toggle */}
         <button
+          data-testid="classroom-draw-toggle-btn"
           onClick={() => setDrawingActive((d) => !d)}
           className={`flex items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-bold transition-all cursor-pointer ${
             drawingActive

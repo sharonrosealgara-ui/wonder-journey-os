@@ -4,39 +4,79 @@ import { createClient } from "@/lib/supabase/server";
 
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
-    const { name, room, role: clientRole, code } = body;
+    const body = await req.json().catch(() => ({}));
+    const { sessionId, room: requestedRoom, roomName, code } = body;
 
-    if (!name || !room) {
-      return NextResponse.json({ error: "Missing name or room" }, { status: 400 });
-    }
-
-    // Authenticate user
+    // 1. Authenticate user
     const supabase = await createClient();
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
 
     if (authError || !user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // Get true role and workspace from profiles table
-    const { data: profile } = await supabase
+    // 2. Query trusted user profile and workspace membership from database
+    const { data: profile, error: profileError } = await supabase
       .from("profiles")
-      .select("role, family_id")
+      .select("id, role, display_name, family_id")
       .eq("id", user.id)
       .single();
 
-    if (!profile || !profile.family_id) {
-      return NextResponse.json({ error: "Forbidden: Profile or workspace not found" }, { status: 403 });
+    if (profileError || !profile || !profile.family_id) {
+      return NextResponse.json(
+        { error: "Forbidden: user lacks active profile or workspace membership" },
+        { status: 403 }
+      );
     }
 
-    const trueRole = profile.role;
+    const workspaceId = `ws-${profile.family_id}`;
 
-    // Preserve class code only as room-access protection
+    // 3. Class code verification if configured
     const validCode = process.env.WJ_CLASS_CODE || process.env.CLASSROOM_CODE;
     if (validCode && code !== validCode) {
       return NextResponse.json({ error: "Invalid class code" }, { status: 401 });
     }
+
+    // 4. Session identifier lookup (Never allow arbitrary client-provided room names)
+    const lookupKey = sessionId || roomName || requestedRoom || `sess-${profile.family_id}-main`;
+
+    const { data: sessionData, error: sessionError } = await supabase
+      .from("classroom_sessions")
+      .select("id, workspace_id, room_name, status, lesson_id")
+      .eq("id", lookupKey)
+      .eq("workspace_id", workspaceId)
+      .eq("status", "active")
+      .single();
+
+    if (sessionError || !sessionData) {
+      return NextResponse.json(
+        { error: "Forbidden: no active authorized classroom session found for this workspace" },
+        { status: 403 }
+      );
+    }
+
+    // 5. Query classroom participant membership from database
+    const { data: participantData, error: participantError } = await supabase
+      .from("classroom_participants")
+      .select("id, session_id, user_id, role, permission_level")
+      .eq("session_id", sessionData.id)
+      .eq("user_id", user.id)
+      .single();
+
+    if (participantError || !participantData) {
+      return NextResponse.json(
+        { error: "Forbidden: user is not an authorized participant in this classroom session" },
+        { status: 403 }
+      );
+    }
+
+    // 6. Derive room name, role, and identity strictly from database records
+    const derivedRoom = sessionData.room_name || sessionData.id;
+    const derivedRole = participantData.role || profile.role || "student";
+    const derivedName = profile.display_name || user.user_metadata?.name || user.email || "Explorer";
 
     const apiKey = process.env.LIVEKIT_API_KEY;
     const apiSecret = process.env.LIVEKIT_API_SECRET;
@@ -47,18 +87,18 @@ export async function POST(req: Request) {
     }
 
     const at = new AccessToken(apiKey, apiSecret, {
-      identity: `${trueRole}-${user.id}`, // Ensure unique identity
-      name: name,
-      metadata: JSON.stringify({ role: trueRole })
+      identity: `${derivedRole}-${user.id}`,
+      name: derivedName,
+      metadata: JSON.stringify({ role: derivedRole, sessionId: sessionData.id }),
     });
 
-    // Grant room access
+    // Grant room access strictly to authorized derived room
     at.addGrant({
       roomJoin: true,
-      room: room,
+      room: derivedRoom,
       canPublish: true,
       canSubscribe: true,
-      roomAdmin: trueRole === "teacher" // Only teachers get roomAdmin
+      roomAdmin: derivedRole === "teacher",
     });
 
     const token = await at.toJwt();
@@ -66,11 +106,12 @@ export async function POST(req: Request) {
     return NextResponse.json({
       token,
       url: wsUrl,
-      role: trueRole
+      role: derivedRole,
+      room: derivedRoom,
+      sessionId: sessionData.id,
     });
-
   } catch (error) {
-    console.error("LiveKit token error:", error);
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+    const msg = error instanceof Error ? error.message : "Internal Server Error";
+    return NextResponse.json({ error: msg }, { status: 500 });
   }
 }

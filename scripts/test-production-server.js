@@ -92,13 +92,13 @@ async function runTests() {
   const notFoundRes = await fetch(`${BASE_URL}/non-existent-public-asset.png`, { redirect: "manual" });
   assert(notFoundRes.status === 404, `GET /non-existent-public-asset.png returned HTTP ${notFoundRes.status} (expected 404)`);
 
-  // 13. POST /api/livekit-token (Empty body -> 400 Bad Request)
+  // 13. POST /api/livekit-token (Empty body / unauthenticated -> 400 or 401)
   const lkEmptyRes = await fetch(`${BASE_URL}/api/livekit-token`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({})
   });
-  assert(lkEmptyRes.status === 400, `POST /api/livekit-token empty body returned HTTP ${lkEmptyRes.status} (expected 400)`);
+  assert([400, 401].includes(lkEmptyRes.status), `POST /api/livekit-token empty body returned HTTP ${lkEmptyRes.status} (expected 400 or 401)`);
 
   // 14. POST /api/livekit-token (Valid body but unauthenticated -> 401 Unauthorized)
   const lkUnauthRes = await fetch(`${BASE_URL}/api/livekit-token`, {

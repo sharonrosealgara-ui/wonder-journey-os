@@ -27,6 +27,10 @@ CREATE TABLE IF NOT EXISTS public.family_media (
 -------------------------------------------------------------------------------
 -- 2. JOURNAL ENTRIES
 -------------------------------------------------------------------------------
+ALTER TABLE public.journal_entries ADD COLUMN IF NOT EXISTS workspace_id UUID REFERENCES public.workspaces(id) ON DELETE CASCADE;
+ALTER TABLE public.gratitude_entries ADD COLUMN IF NOT EXISTS workspace_id UUID REFERENCES public.workspaces(id) ON DELETE CASCADE;
+ALTER TABLE public.awards ADD COLUMN IF NOT EXISTS workspace_id UUID REFERENCES public.workspaces(id) ON DELETE CASCADE;
+
 CREATE TABLE IF NOT EXISTS public.journal_entries (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     workspace_id UUID NOT NULL REFERENCES public.workspaces(id) ON DELETE CASCADE,

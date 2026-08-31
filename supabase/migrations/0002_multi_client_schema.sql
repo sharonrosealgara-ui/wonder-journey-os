@@ -72,7 +72,7 @@ ALTER TABLE public.workspace_members ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.inquiries ENABLE ROW LEVEL SECURITY;
 
 -- Utility function to check membership
-CREATE OR REPLACE FUNCTION auth.is_workspace_member(check_workspace_id uuid) RETURNS boolean AS $$
+CREATE OR REPLACE FUNCTION public.is_workspace_member(check_workspace_id uuid) RETURNS boolean AS $$
   SELECT EXISTS (
     SELECT 1 FROM public.workspace_members 
     WHERE user_id = auth.uid() 
@@ -84,13 +84,13 @@ $$ LANGUAGE sql SECURITY DEFINER;
 -- RLS for Workspaces
 CREATE POLICY "Users can read workspaces they belong to" ON public.workspaces
     FOR SELECT USING (
-        auth.is_workspace_member(id)
+        public.is_workspace_member(id)
     );
 
 -- RLS for Workspace Members
 CREATE POLICY "Users can read members of their workspace" ON public.workspace_members
     FOR SELECT USING (
-        auth.is_workspace_member(workspace_id)
+        public.is_workspace_member(workspace_id)
     );
 
 -- RLS for Inquiries

@@ -55,10 +55,27 @@ const SEED_DATA = {
   },
 };
 
+if (typeof global.WebSocket === "undefined") {
+  global.WebSocket = class DummyWebSocket {
+    constructor() {}
+    close() {}
+    send() {}
+    addEventListener() {}
+    removeEventListener() {}
+  };
+}
+
 async function seedLocalDatabase() {
   console.log(`Seeding database at ${SUPABASE_URL}...`);
   const supabase = createClient(SUPABASE_URL, SERVICE_KEY, {
     auth: { autoRefreshToken: false, persistSession: false },
+    realtime: {
+      createClient: () => ({
+        connect: () => {},
+        disconnect: () => {},
+        channel: () => ({ subscribe: () => {} }),
+      }),
+    },
   });
 
   // 1. Create or ensure Auth Users

@@ -38,6 +38,7 @@ const SEED_DATA = {
   activeSession: {
     id: "c8b1d977-9b2f-4e94-8bf4-6ef26e5a0100",
     workspace_id: "a8b1d977-9b2f-4e94-8bf4-6ef26e5a0010",
+    teacher_user_id: "e8b1d977-9b2f-4e94-8bf4-6ef26e5a0001",
     lesson_id: "lesson-1-world-map",
     slide_index: 0,
     room_name: "room-c8b1d977-9b2f-4e94-8bf4-6ef26e5a0100",
@@ -46,6 +47,7 @@ const SEED_DATA = {
   inactiveSession: {
     id: "c8b1d977-9b2f-4e94-8bf4-6ef26e5a0101",
     workspace_id: "a8b1d977-9b2f-4e94-8bf4-6ef26e5a0010",
+    teacher_user_id: "e8b1d977-9b2f-4e94-8bf4-6ef26e5a0001",
     lesson_id: "lesson-1-world-map",
     slide_index: 0,
     room_name: "room-c8b1d977-9b2f-4e94-8bf4-6ef26e5a0101",
@@ -88,20 +90,27 @@ async function seedLocalDatabase() {
     else console.log(`  ✓ Workspace ${ws.slug} (${ws.id})`);
   }
 
-  // 3. Ensure Profiles
+  // 3. Ensure Families
+  const familyRow = {
+    id: "e8b1d977-9b2f-4e94-8bf4-6ef26e5a0050",
+    name: "Del Rosario Family",
+    workspace_id: SEED_DATA.workspace.id,
+  };
+  await supabase.from("families").upsert(familyRow, { onConflict: "id" });
+
+  // 4. Ensure Profiles
   for (const userSpec of [SEED_DATA.teacher, SEED_DATA.family]) {
     const { error } = await supabase.from("profiles").upsert({
       id: userSpec.id,
-      email: userSpec.email,
       role: userSpec.role,
       display_name: userSpec.display_name,
-      family_id: "fam_del_rosario",
+      family_id: familyRow.id,
     }, { onConflict: "id" });
     if (error) console.warn(`  ! Profile upsert note: ${error.message}`);
     else console.log(`  ✓ Profile for ${userSpec.email}`);
   }
 
-  // 4. Ensure Workspace Members
+  // 5. Ensure Workspace Members
   const memberships = [
     {
       workspace_id: SEED_DATA.workspace.id,
@@ -123,36 +132,42 @@ async function seedLocalDatabase() {
     else console.log(`  ✓ Membership user ${m.user_id} in workspace ${m.workspace_id}`);
   }
 
-  // 5. Ensure Classroom Sessions
+  // 6. Ensure Classroom Sessions
   for (const sess of [SEED_DATA.activeSession, SEED_DATA.inactiveSession]) {
     const { error } = await supabase.from("classroom_sessions").upsert(sess, { onConflict: "id" });
     if (error) console.warn(`  ! Session upsert note: ${error.message}`);
     else console.log(`  ✓ Classroom session ${sess.id} (${sess.status})`);
   }
 
-  // 6. Ensure Classroom Participants
+  // 7. Ensure Classroom Participants
   const participants = [
     {
+      id: "p1",
       session_id: SEED_DATA.activeSession.id,
+      workspace_id: SEED_DATA.workspace.id,
       user_id: SEED_DATA.teacher.id,
+      display_name: "Teacher Sharon",
       role: "teacher",
       permission_level: "full_interactive",
     },
     {
+      id: "p2",
       session_id: SEED_DATA.activeSession.id,
+      workspace_id: SEED_DATA.workspace.id,
       user_id: SEED_DATA.family.id,
+      display_name: "David Del Rosario",
       role: "family",
       permission_level: "view_only",
     },
   ];
 
   for (const p of participants) {
-    const { error } = await supabase.from("classroom_participants").upsert(p, { onConflict: "session_id,user_id" });
+    const { error } = await supabase.from("classroom_participants").upsert(p, { onConflict: "id" });
     if (error) console.warn(`  ! Participant upsert note: ${error.message}`);
     else console.log(`  ✓ Participant ${p.user_id} in session ${p.session_id}`);
   }
 
-  console.log("✓ Database seeding complete.\n");
+  console.log("Database seeded successfully!");
 }
 
 module.exports = {

@@ -1,9 +1,20 @@
 -- 0004_storage_buckets.sql
 -- Setting up family-media storage bucket
 
-INSERT INTO storage.buckets (id, name, public)
-VALUES ('family-media', 'family-media', false)
-ON CONFLICT (id) DO NOTHING;
+DO $$
+BEGIN
+    INSERT INTO storage.buckets (id, name, "public")
+    VALUES ('family-media', 'family-media', false)
+    ON CONFLICT (id) DO NOTHING;
+EXCEPTION WHEN OTHERS THEN
+    BEGIN
+        INSERT INTO storage.buckets (id, name)
+        VALUES ('family-media', 'family-media')
+        ON CONFLICT (id) DO NOTHING;
+    EXCEPTION WHEN OTHERS THEN
+        NULL;
+    END;
+END $$;
 
 -- RLS on storage.objects
 

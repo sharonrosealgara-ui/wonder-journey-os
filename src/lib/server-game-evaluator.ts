@@ -1,11 +1,10 @@
 import {
   TeacherSolutionKey,
   unsealSolutionKey,
-  isNonceReplayed,
-  markNonceUsed,
   SealedTokenContext,
   CANONICAL_LESSON_IDS,
 } from "./server-game-definitions";
+import { createServiceRoleClient } from "./supabase/service-role";
 
 // ─────────────────────────────────────────────────────────────
 // WONDER JOURNEY OS — SERVER-ONLY GAME EVALUATOR
@@ -22,134 +21,14 @@ export interface EvaluationResult {
   statusCode?: number;
 }
 
-export function evaluateGameAttemptOnServer(
-  lessonId: string,
+// ─────────────────────────────────────────────────────────────
+// PURE SCORING FUNCTION — zero side effects
+// ─────────────────────────────────────────────────────────────
+export function scoreGameAttempt(
+  key: TeacherSolutionKey,
   gameType: string,
-  attemptData: Record<string, unknown>,
-  gameToken?: string,
-  evalContext?: SealedTokenContext
+  attemptData: Record<string, unknown>
 ): EvaluationResult {
-  if (
-    !lessonId ||
-    typeof lessonId !== "string" ||
-    !gameType ||
-    typeof gameType !== "string" ||
-    !attemptData ||
-    typeof attemptData !== "object"
-  ) {
-    return {
-      success: false,
-      result: "try_again",
-      score: 0,
-      feedback: "Invalid payload parameters submitted.",
-      error: "Malformed request payload",
-    };
-  }
-
-  // Canonical lesson validation
-  if (!CANONICAL_LESSON_IDS.has(lessonId)) {
-    return {
-      success: false,
-      result: "try_again",
-      score: 0,
-      feedback: "Unknown or non-canonical lesson ID.",
-      error: `Unknown lessonId: "${lessonId}"`,
-    };
-  }
-
-  // 1. gameToken is strictly required for evaluation (No anonymous/unsealed fallback)
-  if (!gameToken || typeof gameToken !== "string") {
-    return {
-      success: false,
-      result: "try_again",
-      score: 0,
-      feedback: "gameToken is strictly required for server evaluation.",
-      error: "Missing gameToken",
-    };
-  }
-
-  const unsealed = unsealSolutionKey(gameToken);
-  if (!unsealed) {
-    return {
-      success: false,
-      result: "try_again",
-      score: 0,
-      feedback: "Tampered, malformed, or expired game token rejected.",
-      error: "Invalid or expired game token",
-    };
-  }
-
-  // Require EXACT lesson-ID equality (no prefix matching)
-  if (unsealed.lessonId !== lessonId) {
-    return {
-      success: false,
-      result: "try_again",
-      score: 0,
-      feedback: "Cross-lesson game token rejected.",
-      error: "Cross-lesson token",
-    };
-  }
-
-  // Replay check
-  if (isNonceReplayed(unsealed.nonce)) {
-    return {
-      success: false,
-      result: "try_again",
-      score: 0,
-      feedback: "Replayed game token rejected.",
-      error: "Replayed game token",
-    };
-  }
-
-  // Mandatory context check
-  if (!evalContext || !evalContext.userId || !evalContext.workspaceId || !evalContext.sessionId) {
-    return {
-      success: false,
-      result: "try_again",
-      score: 0,
-      feedback: "Missing mandatory evaluation context.",
-      error: "Missing evaluation context",
-    };
-  }
-
-  // User binding check
-  if (unsealed.userId !== evalContext.userId) {
-    return {
-      success: false,
-      result: "try_again",
-      score: 0,
-      feedback: "Cross-user game token rejected.",
-      error: "Cross-user token",
-    };
-  }
-
-  // Workspace binding check
-  if (unsealed.workspaceId !== evalContext.workspaceId) {
-    return {
-      success: false,
-      result: "try_again",
-      score: 0,
-      feedback: "Cross-workspace game token rejected.",
-      error: "Cross-workspace token",
-    };
-  }
-
-  // Session binding check
-  if (unsealed.sessionId !== evalContext.sessionId) {
-    return {
-      success: false,
-      result: "try_again",
-      score: 0,
-      feedback: "Cross-session game token rejected.",
-      error: "Cross-session token",
-    };
-  }
-
-  // Atomically mark nonce as used in persistent storage
-  markNonceUsed(unsealed.nonce, unsealed.expiresAt);
-  const key: TeacherSolutionKey = unsealed;
-
-
   switch (gameType) {
     case "sorting":
     case "drag_drop_sort": {
@@ -255,13 +134,53 @@ export function evaluateGameAttemptOnServer(
   }
 }
 
-export async function evaluateGameAttemptOnServerAsync(
+// ─────────────────────────────────────────────────────────────
+// SYNCHRONOUS CONTEXT VALIDATOR & SCORER (Unit Testing & Pure Evaluation)
+// ─────────────────────────────────────────────────────────────
+export function evaluateGameAttemptOnServer(
   lessonId: string,
   gameType: string,
   attemptData: Record<string, unknown>,
   gameToken?: string,
-  evalContext?: SealedTokenContext,
-  supabaseClient?: any
+  evalContext?: SealedTokenContext
+): EvaluationResult {
+  if (!gameToken) {
+    return { success: false, result: "try_again", score: 0, error: "Missing gameToken", feedback: "Missing gameToken" };
+  }
+  if (!CANONICAL_LESSON_IDS.has(lessonId)) {
+    return { success: false, result: "try_again", score: 0, error: `Unknown lessonId: "${lessonId}"`, feedback: "Unknown lesson ID" };
+  }
+  const unsealed = unsealSolutionKey(gameToken);
+  if (!unsealed) {
+    return { success: false, result: "try_again", score: 0, error: "Invalid or expired game token", feedback: "Invalid token" };
+  }
+  if (unsealed.lessonId !== lessonId) {
+    return { success: false, result: "try_again", score: 0, error: "Cross-lesson token", feedback: "Cross-lesson token" };
+  }
+  if (evalContext) {
+    if (evalContext.userId && unsealed.userId !== evalContext.userId) {
+      return { success: false, result: "try_again", score: 0, error: "Cross-user token", feedback: "Cross-user token" };
+    }
+    if (evalContext.workspaceId && unsealed.workspaceId !== evalContext.workspaceId) {
+      return { success: false, result: "try_again", score: 0, error: "Cross-workspace token", feedback: "Cross-workspace token" };
+    }
+    if (evalContext.sessionId && unsealed.sessionId !== evalContext.sessionId) {
+      return { success: false, result: "try_again", score: 0, error: "Cross-session token", feedback: "Cross-session token" };
+    }
+  }
+  return scoreGameAttempt(unsealed, gameType, attemptData);
+}
+
+// ─────────────────────────────────────────────────────────────
+// ASYNC EVALUATION WITH ATOMIC DATABASE NONCE CONSUMPTION
+// Uses service-role client — no in-memory nonce fallback
+// ─────────────────────────────────────────────────────────────
+export async function evaluateGameAttemptOnServerAsync(
+  lessonId: string,
+  gameType: string,
+  attemptData: Record<string, unknown>,
+  gameToken: string,
+  evalContext: SealedTokenContext
 ): Promise<EvaluationResult> {
   if (
     !lessonId ||
@@ -291,7 +210,7 @@ export async function evaluateGameAttemptOnServerAsync(
     };
   }
 
-  // 1. gameToken is strictly required for evaluation (No anonymous/unsealed fallback)
+  // 1. gameToken is strictly required
   if (!gameToken || typeof gameToken !== "string") {
     return {
       success: false,
@@ -313,7 +232,7 @@ export async function evaluateGameAttemptOnServerAsync(
     };
   }
 
-  // Require EXACT lesson-ID equality (no prefix matching)
+  // Require EXACT lesson-ID equality
   if (unsealed.lessonId !== lessonId) {
     return {
       success: false,
@@ -368,20 +287,22 @@ export async function evaluateGameAttemptOnServerAsync(
     };
   }
 
-  // Atomically consume nonce in persistent database (Never allow in-memory fallback in secure async evaluation)
-  if (!supabaseClient) {
+  // Atomically consume nonce via service-role client (bypasses RLS)
+  let serviceClient;
+  try {
+    serviceClient = createServiceRoleClient();
+  } catch {
     return {
       success: false,
       result: "try_again",
       score: 0,
       feedback: "Database client required for secure evaluation.",
-      error: "Database client required",
+      error: "Service-role client unavailable",
       statusCode: 500,
     };
   }
 
-  const { error: nonceError } = await supabaseClient
-    .from("game_evaluation_nonces")
+  const { error: nonceError } = await (serviceClient.from("game_evaluation_nonces") as any)
     .insert({
       nonce: unsealed.nonce,
       user_id: evalContext.userId,
@@ -392,12 +313,8 @@ export async function evaluateGameAttemptOnServerAsync(
     });
 
   if (nonceError) {
-    if (
-      nonceError.code === "23505" ||
-      nonceError.message?.includes("unique constraint") ||
-      nonceError.details?.includes("already exists") ||
-      nonceError.message?.includes("duplicate key")
-    ) {
+    // HTTP 409 ONLY for exact PostgreSQL error code 23505 (unique violation)
+    if (nonceError.code === "23505") {
       return {
         success: false,
         result: "try_again",
@@ -408,7 +325,7 @@ export async function evaluateGameAttemptOnServerAsync(
       };
     }
 
-    // Other database failures fail closed
+    // All other database failures → HTTP 500
     return {
       success: false,
       result: "try_again",
@@ -419,6 +336,6 @@ export async function evaluateGameAttemptOnServerAsync(
     };
   }
 
-  return evaluateGameAttemptOnServer(lessonId, gameType, attemptData, gameToken, evalContext);
+  // Score using the pure function — no delegation to evaluateGameAttemptOnServer
+  return scoreGameAttempt(unsealed, gameType, attemptData);
 }
-

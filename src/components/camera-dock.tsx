@@ -42,24 +42,24 @@ export function CameraDock() {
 
   useEffect(() => setReady(true), []);
 
-  const startCall = useCallback(() => {
-    const role = auth.role ?? "family";
-    const name = auth.profile?.display_name ?? (role === "teacher" ? "Teacher" : "Family");
-    
-    void call
-      .join({
-        name,
-        code: "", // handled server-side now
-        role,
-        roomName: `wj-room`, // stable room name, managed securely via token
+  const startCall = useCallback(async () => {
+    try {
+      const res = await fetch("/api/classroom/active-session");
+      if (!res.ok) return;
+      const data = await res.json();
+      if (!data.sessionId) return;
+      
+      void call.join({
+        sessionId: data.sessionId,
         camId: "",
         micId: "",
         camOn: true,
         micOn: true,
-        silent: true,
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [auth.role, auth.profile?.display_name]);
+    } catch {
+      // ignore
+    }
+  }, [call]);
 
   // auto-start removed (camera privacy requirement)
 

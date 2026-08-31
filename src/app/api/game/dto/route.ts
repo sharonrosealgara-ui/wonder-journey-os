@@ -5,6 +5,9 @@ import {
 } from "@/lib/server-game-definitions";
 import { createClient } from "@/lib/supabase/server";
 
+// UUID v4 validation
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
 export async function GET(request: NextRequest) {
   try {
     // 1. Authenticate user session
@@ -18,21 +21,23 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // 2. Query trusted user profile and workspace membership from database
-    const { data: profile, error: profileError } = await supabase
-      .from("profiles")
-      .select("id, role, family_id")
-      .eq("id", user.id)
+    // 2. Resolve real workspace UUID from workspace_members
+    const { data: membership, error: memberError } = await supabase
+      .from("workspace_members")
+      .select("workspace_id")
+      .eq("user_id", user.id)
+      .eq("status", "active")
+      .limit(1)
       .single();
 
-    if (profileError || !profile || !profile.family_id) {
+    if (memberError || !membership?.workspace_id) {
       return NextResponse.json(
-        { error: "Forbidden: user lacks active profile or workspace membership" },
+        { error: "Forbidden: user lacks active workspace membership" },
         { status: 403 }
       );
     }
 
-    const workspaceId = `ws-${profile.family_id}`;
+    const workspaceId = membership.workspace_id;
 
     // 3. Parse query parameters
     const { searchParams } = new URL(request.url);
@@ -52,13 +57,19 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // 5. Query active classroom session from database (Never treat startsWith('sess-') as authorization)
-    const effectiveSessionId = requestedSessionId || `sess-${profile.family_id}-main`;
+    // 5. Require sessionId and validate as UUID
+    if (!requestedSessionId || !UUID_RE.test(requestedSessionId)) {
+      return NextResponse.json(
+        { error: "Bad Request: sessionId is required and must be a valid UUID" },
+        { status: 400 }
+      );
+    }
 
+    // 6. Query active classroom session from database
     const { data: sessionData, error: sessionError } = await supabase
       .from("classroom_sessions")
       .select("id, workspace_id, lesson_id, status")
-      .eq("id", effectiveSessionId)
+      .eq("id", requestedSessionId)
       .eq("workspace_id", workspaceId)
       .eq("status", "active")
       .single();
@@ -70,7 +81,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // 6. Query classroom participant membership from database
+    // 7. Query classroom participant membership from database
     const { data: participantData, error: participantError } = await supabase
       .from("classroom_participants")
       .select("id, session_id, user_id, role")
@@ -85,7 +96,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // 7. Generate sealed game DTO with cryptographically bound context
+    // 8. Generate sealed game DTO with cryptographically bound context
     const dto = generateServerLearnerGame(lessonId, lessonTitle, {
       userId: user.id,
       workspaceId,

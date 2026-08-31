@@ -81,6 +81,7 @@ export function AnnotationLayer({
   const [width, setWidth] = useState(WIDTHS[1]);
   const [undoStack, setUndoStack] = useState<SynchronizedStroke[]>([]);
   const [redoStack, setRedoStack] = useState<SynchronizedStroke[]>([]);
+  const [permissionDenied, setPermissionDenied] = useState(false);
 
   const isInteractive = isTeacher || permission === "annotate" || permission === "full_interactive";
   const isPointerOnly = !isTeacher && permission === "pointer_only";
@@ -165,7 +166,11 @@ export function AnnotationLayer({
   // Pointer Down / Start Drawing
   const handlePointerDown = (e: React.PointerEvent<HTMLCanvasElement>) => {
     if (!wrapRef.current) return;
-    if (!isInteractive && !isPointerOnly) return;
+    if (!isInteractive && !isPointerOnly) {
+      setPermissionDenied(true);
+      setTimeout(() => setPermissionDenied(false), 2000);
+      return;
+    }
 
     const rect = wrapRef.current.getBoundingClientRect();
     const normPt = normalizeStageCoordinates(e.clientX, e.clientY, rect);
@@ -177,7 +182,11 @@ export function AnnotationLayer({
       return;
     }
 
-    if (!isInteractive) return;
+    if (!isInteractive) {
+      setPermissionDenied(true);
+      setTimeout(() => setPermissionDenied(false), 2000);
+      return;
+    }
 
     isDrawingRef.current = true;
     draftPointsRef.current = [normPt];
@@ -279,13 +288,27 @@ export function AnnotationLayer({
       className="absolute inset-0 z-30 touch-none select-none pointer-events-auto"
       style={{ cursor: tool === "laser" ? "crosshair" : tool === "pointer" ? "default" : "crosshair" }}
     >
+      {/* Permission Denied Feedback */}
+      {permissionDenied && (
+        <div
+          data-testid="permission-denied-pill"
+          className="absolute top-20 left-1/2 -translate-x-1/2 rounded-full bg-sunset px-4 py-2 text-xs font-bold text-white shadow-xl z-50 animate-bounce"
+        >
+          🔒 Drawing Disabled (Teacher has locked interactions)
+        </div>
+      )}
+
       {/* Canvas */}
       <canvas
         ref={canvasRef}
         data-testid="annotation-canvas"
         data-remote-strokes-count={remoteStrokes.length}
         data-remote-pointers-count={remotePointers.length}
+        data-last-remote-stroke-id={remoteStrokes[remoteStrokes.length - 1]?.id || ""}
+        data-last-remote-pointer-x={remotePointers[remotePointers.length - 1]?.point?.x ?? ""}
+        data-last-remote-pointer-y={remotePointers[remotePointers.length - 1]?.point?.y ?? ""}
         data-permission-level={permission}
+        data-permission-denied={permissionDenied ? "true" : "false"}
         data-active-tool={tool}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}

@@ -132,6 +132,16 @@ assertFails(
   "missing authentic primary source"
 );
 
+// 8. Negative Test: Cross-lesson checksum / placement mismatch
+const test8Record1 = createValidRecord("test8a", "lesson-1");
+test8Record1.storedAssetPath = "/media/curriculum/l01-visual-a.jpg";
+test8Record1.sha256Checksum = "0000000000000000000000000000000000000000000000000000000000000000"; // Mismatched checksum
+assertFails(
+  "Cross-lesson checksum / placement mismatch",
+  [test8Record1],
+  "Checksum mismatch!"
+);
+
 // Clean up temp SVG
 if (fs.existsSync(tempSvgPath)) fs.unlinkSync(tempSvgPath);
 

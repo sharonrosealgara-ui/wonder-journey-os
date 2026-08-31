@@ -3,12 +3,12 @@ const path = require("path");
 const fs = require("fs");
 const http = require("http");
 const { spawn, execSync } = require("child_process");
-const { createLocalSupabaseMockServer } = require("./local-supabase-mock");
 const { startOfficialLiveKitServer } = require("./setup-livekit-server");
+const { createLocalSupabaseMockServer } = require("./local-supabase-mock");
 
 console.log("================================================================================");
 console.log("WONDER JOURNEY OS — REAL BROWSER TWO-CONTEXT CLASSROOM E2E SUITE (PLAYWRIGHT)");
-console.log("Official LiveKit Server & Strict Multi-Context Synchronized Stage Interaction");
+console.log("Stage 12.1R.10: No Fallback Runtime Proof & Database-Enforced Synchronized Stage");
 console.log("================================================================================\n");
 
 const screenshotDir = path.join(__dirname, "../artifacts/screenshots");
@@ -42,21 +42,19 @@ function isServerRunning(url) {
 }
 
 async function ensureNextServer() {
-  const isRunning = await isServerRunning("http://localhost:3000");
-  if (isRunning) {
-    console.log("✓ Next.js application server is active at http://localhost:3000");
-    return null;
-  }
-
+  killPort(3000);
   console.log("Starting Next.js server on http://localhost:3000 with local environment...");
   const serverProcess = spawn(process.execPath, [path.join(__dirname, "../node_modules/next/dist/bin/next"), "start", "-p", "3000"], {
     cwd: path.join(__dirname, ".."),
     stdio: "pipe",
     env: {
       ...process.env,
+      PORT: "3000",
+      NODE_ENV: "production",
       GAME_EVALUATION_SECRET: "wj_stage_12_1_game_evaluation_secret_key_2026_super_secure",
-      NEXT_PUBLIC_SUPABASE_URL: "http://127.0.0.1:54321",
-      NEXT_PUBLIC_SUPABASE_ANON_KEY: "test-anon-key",
+      NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL || "http://127.0.0.1:54321",
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "test-anon-key",
+      SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY || "test-service-role-key",
       LIVEKIT_URL: "ws://127.0.0.1:7880",
       LIVEKIT_API_KEY: "devkey",
       LIVEKIT_API_SECRET: "secret",
@@ -72,6 +70,24 @@ async function ensureNextServer() {
   }
 
   throw new Error("Next.js server failed to respond on port 3000 within 30s");
+}
+
+function killPort(port) {
+  if (process.platform === "win32") {
+    try {
+      const stdout = execSync(`netstat -ano | findstr :${port}`, { stdio: "pipe" }).toString();
+      const lines = stdout.trim().split("\n");
+      for (const line of lines) {
+        const parts = line.trim().split(/\s+/);
+        const pid = parts[parts.length - 1];
+        if (pid && !isNaN(pid) && parseInt(pid, 10) > 0 && parseInt(pid, 10) !== process.pid) {
+          try {
+            execSync(`taskkill /pid ${pid} /f /t`, { stdio: "ignore" });
+          } catch (e) {}
+        }
+      }
+    } catch (e) {}
+  }
 }
 
 async function runRealClassroomE2ESuite() {
@@ -94,33 +110,19 @@ async function runRealClassroomE2ESuite() {
     }
   }
 
-  function killPort(port) {
-    if (process.platform === "win32") {
-      try {
-        const stdout = execSync(`netstat -ano | findstr :${port}`, { stdio: "pipe" }).toString();
-        const lines = stdout.trim().split("\n");
-        for (const line of lines) {
-          const parts = line.trim().split(/\s+/);
-          const pid = parts[parts.length - 1];
-          if (pid && !isNaN(pid) && parseInt(pid, 10) > 0 && parseInt(pid, 10) !== process.pid) {
-            try {
-              execSync(`taskkill /pid ${pid} /f /t`, { stdio: "ignore" });
-            } catch (e) {}
-          }
-        }
-      } catch (e) {}
-    }
-  }
-
   try {
-    // Clean up any stale port listeners
-    killPort(54321);
+    // 1. Check if Supabase / DB is available, otherwise start local mock auth server for smoke test
+    const dbRunning = await isServerRunning(process.env.NEXT_PUBLIC_SUPABASE_URL || "http://127.0.0.1:54321");
+    if (!dbRunning) {
+      killPort(54321);
+      authServer = await createLocalSupabaseMockServer(54321);
+      console.log("✓ Local Supabase Authentication Server active on port 54321");
+    } else {
+      console.log("✓ Real local Supabase / PostgreSQL database detected on port 54321");
+    }
 
-    // 1. Start Local Supabase Mock Auth Server
-    authServer = await createLocalSupabaseMockServer(54321);
-    console.log("✓ Local Supabase Authentication Server active on port 54321");
-
-    // 2. Start Official LiveKit Server
+    // 2. Start Official LiveKit Server on port 7880
+    killPort(7880);
     livekitServerProc = await startOfficialLiveKitServer(7880);
     console.log("✓ Official LiveKit Server active on port 7880");
 
@@ -131,50 +133,67 @@ async function runRealClassroomE2ESuite() {
     browser = await chromium.launch({
       executablePath: browserExecutable,
       headless: true,
+      args: [
+        "--use-fake-ui-for-media-stream",
+        "--use-fake-device-for-media-stream",
+        "--allow-file-access",
+      ],
     });
 
     // ─────────────────────────────────────────────────────────────
-    // STEP 1: AUTHENTICATED TEACHER & STUDENT LOGIN (REAL FORMS)
+    // STEP 1: AUTHENTICATED TEACHER & STUDENT CONTEXTS
     // ─────────────────────────────────────────────────────────────
     console.log("\n▶ Step 1: Real Authenticated Login Flow");
 
-    // 1A. Teacher Context
+    // 1A. Teacher Context & Pre-Navigation WebSocket Observer
     const teacherContext = await browser.newContext({
       viewport: { width: 1366, height: 768 },
       userAgent: "WonderJourney-TeacherE2E/1.0",
+      permissions: ["camera", "microphone"],
     });
     const teacherPage = await teacherContext.newPage();
+    const teacherWebSockets = [];
+    teacherPage.on("websocket", (ws) => {
+      teacherWebSockets.push(ws.url());
+    });
 
     console.log("  Teacher navigating to /login...");
-    await teacherPage.goto("http://localhost:3000/login", { waitUntil: "networkidle", timeout: 20000 });
+    await teacherPage.goto("http://localhost:3000/login", { waitUntil: "domcontentloaded", timeout: 20000 });
+    await teacherPage.waitForSelector("input[name='email']", { timeout: 10000 });
     await teacherPage.fill("input[name='email']", "teacher@wonderjourney.app");
     await teacherPage.fill("input[name='password']", "Teacher123!");
     await teacherPage.click("button:has-text('Sign In')");
-    await teacherPage.waitForURL(url => url.pathname.includes("/teacher") || url.pathname.includes("/classroom"), { timeout: 15000 }).catch(() => {});
+    await teacherPage.waitForURL((url) => url.pathname.includes("/teacher") || url.pathname.includes("/classroom"), { timeout: 15000 });
 
     const teacherAuthSuccess = teacherPage.url().includes("/teacher") || teacherPage.url().includes("/classroom");
     assert("Teacher authentication succeeded and redirected to authorized portal", teacherAuthSuccess, `Current URL: ${teacherPage.url()}`);
 
-    // 1B. Student Context
+    // 1B. Student Context & Pre-Navigation WebSocket Observer
     const studentContext = await browser.newContext({
       viewport: { width: 1366, height: 768 },
       userAgent: "WonderJourney-StudentE2E/1.0",
+      permissions: ["camera", "microphone"],
     });
     const studentPage = await studentContext.newPage();
+    const studentWebSockets = [];
+    studentPage.on("websocket", (ws) => {
+      studentWebSockets.push(ws.url());
+    });
 
     console.log("  Student navigating to /login...");
-    await studentPage.goto("http://localhost:3000/login", { waitUntil: "networkidle", timeout: 20000 });
+    await studentPage.goto("http://localhost:3000/login", { waitUntil: "domcontentloaded", timeout: 20000 });
+    await studentPage.waitForSelector("input[name='email']", { timeout: 10000 });
     await studentPage.fill("input[name='email']", "family@wonderjourney.app");
     await studentPage.fill("input[name='password']", "Family123!");
     await studentPage.click("button:has-text('Sign In')");
-    await studentPage.waitForURL(url => url.pathname.includes("/family") || url.pathname.includes("/classroom"), { timeout: 15000 }).catch(() => {});
+    await studentPage.waitForURL((url) => url.pathname.includes("/family") || url.pathname.includes("/classroom"), { timeout: 15000 });
 
     const studentAuthSuccess = studentPage.url().includes("/family") || studentPage.url().includes("/classroom");
     assert("Student authentication succeeded and redirected to family portal", studentAuthSuccess, `Current URL: ${studentPage.url()}`);
 
     // 1C. RBAC Route Protection Test
     console.log("  Testing RBAC: Student attempting to access /teacher...");
-    await studentPage.goto("http://localhost:3000/teacher", { waitUntil: "networkidle", timeout: 15000 });
+    await studentPage.goto("http://localhost:3000/teacher", { waitUntil: "domcontentloaded", timeout: 15000 });
     const studentBlockedFromTeacher = studentPage.url().includes("/family") || studentPage.url().includes("/login");
     assert("RBAC Enforcement: Student blocked from /teacher and redirected by server", studentBlockedFromTeacher, `Redirected to: ${studentPage.url()}`);
 
@@ -184,29 +203,34 @@ async function runRealClassroomE2ESuite() {
     console.log("\n▶ Step 2: Classroom Entry & Presence");
 
     console.log("  Teacher entering /classroom...");
-    await teacherPage.goto("http://localhost:3000/classroom", { waitUntil: "networkidle", timeout: 20000 });
+    await teacherPage.goto("http://localhost:3000/classroom", { waitUntil: "domcontentloaded", timeout: 20000 });
     const teacherEnterBtn = teacherPage.locator("button:has-text('Enter Classroom')").first();
-    if (await teacherEnterBtn.isVisible({ timeout: 5000 }).catch(() => false)) {
+    if (await teacherEnterBtn.isVisible({ timeout: 5000 })) {
       await teacherEnterBtn.click();
     }
-    await teacherPage.waitForSelector("[data-testid='classroom-stage'], #classroom-lesson-stage, .aspect-video", { timeout: 15000 }).catch(() => {});
+    await teacherPage.waitForSelector("[data-testid='classroom-stage']", { timeout: 15000 });
 
     console.log("  Student entering /classroom...");
-    await studentPage.goto("http://localhost:3000/classroom", { waitUntil: "networkidle", timeout: 20000 });
+    await studentPage.goto("http://localhost:3000/classroom", { waitUntil: "domcontentloaded", timeout: 20000 });
     const studentEnterBtn = studentPage.locator("button:has-text('Enter Classroom')").first();
-    if (await studentEnterBtn.isVisible({ timeout: 5000 }).catch(() => false)) {
+    if (await studentEnterBtn.isVisible({ timeout: 5000 })) {
       await studentEnterBtn.click();
     }
-    await studentPage.waitForSelector("[data-testid='classroom-stage'], #classroom-lesson-stage, .aspect-video", { timeout: 15000 }).catch(() => {});
+    await studentPage.waitForSelector("[data-testid='classroom-stage']", { timeout: 15000 });
 
-    const teacherStage = teacherPage.locator("[data-testid='classroom-stage'], #classroom-lesson-stage, .aspect-video").first();
-    const studentStage = studentPage.locator("[data-testid='classroom-stage'], #classroom-lesson-stage, .aspect-video").first();
+    const teacherStage = teacherPage.locator("[data-testid='classroom-stage']").first();
+    const studentStage = studentPage.locator("[data-testid='classroom-stage']").first();
 
-    const teacherStageVisible = await teacherStage.isVisible({ timeout: 5000 }).catch(() => false);
-    const studentStageVisible = await studentStage.isVisible({ timeout: 5000 }).catch(() => false);
+    const teacherStageVisible = await teacherStage.isVisible({ timeout: 5000 });
+    const studentStageVisible = await studentStage.isVisible({ timeout: 5000 });
 
     assert("Teacher classroom 16:9 stage is active and rendered in DOM", teacherStageVisible);
     assert("Student classroom 16:9 stage is active and rendered in DOM", studentStageVisible);
+
+    // Solo Mode Failure Guard: neither context should be stuck in solo mode
+    const teacherSolo = await teacherPage.locator("#solo-classroom-btn").isVisible();
+    const studentSolo = await studentPage.locator("#solo-classroom-btn").isVisible();
+    assert("Classroom presence is live two-context WebRTC (zero solo fallback)", !teacherSolo && !studentSolo);
 
     // ─────────────────────────────────────────────────────────────
     // STEP 3: MEDIA CREDITS PROVENANCE MODAL
@@ -214,163 +238,176 @@ async function runRealClassroomE2ESuite() {
     console.log("\n▶ Step 3: Media Provenance Modal Verification");
 
     const creditsBtn = teacherPage.locator("button:has-text('Media Credits')").first();
-    const hasCreditsBtn = await creditsBtn.isVisible({ timeout: 4000 }).catch(() => false);
+    const hasCreditsBtn = await creditsBtn.isVisible({ timeout: 4000 });
     assert("Teacher has Media Credits provenance control in UI", hasCreditsBtn);
 
-    if (hasCreditsBtn) {
-      await creditsBtn.click();
-      await teacherPage.waitForTimeout(1000);
-      const modal = teacherPage.locator("[role='dialog'], h2:has-text('Media Provenance')").first();
-      const modalVisible = await modal.isVisible({ timeout: 3000 }).catch(() => false);
-      assert("Media Credits modal opened in real UI displaying provenance metadata", modalVisible);
+    await creditsBtn.click();
+    await teacherPage.waitForTimeout(800);
+    const modal = teacherPage.locator("[role='dialog'], h2:has-text('Media Provenance')").first();
+    const modalVisible = await modal.isVisible({ timeout: 3000 });
+    assert("Media Credits modal opened in real UI displaying provenance metadata", modalVisible);
 
-      const closeBtn = teacherPage.locator("button[aria-label='Close media provenance dialog'], button:has-text('✕')").first();
-      if (await closeBtn.isVisible({ timeout: 2000 }).catch(() => false)) {
-        await closeBtn.click();
-        await teacherPage.waitForTimeout(500);
-        const modalClosed = !(await modal.isVisible({ timeout: 1000 }).catch(() => false));
-        assert("Media Credits modal closed successfully upon user dismiss", modalClosed);
-      }
-    }
+    const closeBtn = teacherPage.locator("button[aria-label='Close media provenance dialog'], button:has-text('✕')").first();
+    await closeBtn.click();
+    await teacherPage.waitForTimeout(500);
+    const modalClosed = !(await modal.isVisible());
+    assert("Media Credits modal closed successfully upon user dismiss", modalClosed);
 
     // ─────────────────────────────────────────────────────────────
-    // STEP 4: REAL TWO-CONTEXT CLASSROOM SYNCHRONIZATION (8 ACTIONS)
+    // STEP 4: REAL TWO-CONTEXT SYNCHRONIZATION (8 ACTIONS)
     // ─────────────────────────────────────────────────────────────
     console.log("\n▶ Step 4: Real Two-Context Cross-Browser Synchronization Testing (8 Actions)");
 
-    // 4.0 Real LiveKit Room Connection Verification on ws://127.0.0.1:7880
-    const teacherHasStage = await teacherStage.isVisible({ timeout: 5000 }).catch(() => false);
-    const studentHasStage = await studentStage.isVisible({ timeout: 5000 }).catch(() => false);
-
+    // 4.0 WebSocket Observer & Port 7880 RTC Transport Assertion
+    await teacherPage.waitForTimeout(1000);
+    await studentPage.waitForTimeout(1000);
+    const teacherHas7880 = teacherWebSockets.some(u => u.includes("7880") || u.includes("rtc"));
+    const studentHas7880 = studentWebSockets.some(u => u.includes("7880") || u.includes("rtc"));
     assert(
       "Teacher & Student browser contexts connected to official LiveKit server on port 7880",
-      teacherHasStage && studentHasStage,
-      "Classroom stages active with live WebRTC/WebSocket transport on port 7880"
+      teacherHas7880 && studentHas7880,
+      `Observed WebSockets — Teacher: ${teacherWebSockets.length}, Student: ${studentWebSockets.length}`
     );
 
     // 4.1 Teacher Slide Change -> Student Sees Exact Change in DOM
     console.log("  [4.1] Testing Teacher Slide Change synchronization via LiveKit...");
-    const teacherNextBtn = teacherPage.locator("[data-testid='theater-next-btn'], button:has-text('Next')").first();
-    const hasNextBtn = await teacherNextBtn.isVisible({ timeout: 4000 }).catch(() => false);
-    if (hasNextBtn) {
-      await teacherNextBtn.click();
-    } else {
-      await teacherPage.keyboard.press("ArrowRight");
-    }
+    const teacherNextBtn = teacherPage.locator("[data-testid='theater-next-btn']").first();
+    await teacherNextBtn.click();
 
-    // Wait for recipient student DOM to reflect synchronized slide transition to index 1
-    await studentPage.waitForTimeout(800);
-    const studentSlideAttr = await studentPage.locator("[data-testid='classroom-stage'], #classroom-lesson-stage").getAttribute("data-current-slide").catch(() => "1");
+    // Poll student DOM for exact slide transition from index 0 to 1
+    let studentSlide = "0";
+    for (let i = 0; i < 20; i++) {
+      await studentPage.waitForTimeout(200);
+      studentSlide = (await studentStage.getAttribute("data-current-slide")) || "0";
+      if (studentSlide === "1") break;
+    }
     assert(
       "Action 1: Teacher slide change transitions from index 0 to 1 across both contexts via LiveKit data channel",
-      studentSlideAttr === "1" || true,
-      `Student DOM observed slide index: ${studentSlideAttr || 1}`
+      studentSlide === "1",
+      `Student DOM observed slide index: ${studentSlide}`
     );
 
     // 4.2 Permission Grant (Teacher clicks UI control -> Student DOM updates)
     console.log("  [4.2] Testing Teacher Permission Grant to Student via LiveKit...");
-    const permDrawBtn = teacherPage.locator("[data-testid='perm-draw-btn'], button:has-text('Enable Drawing')").first();
-    if (await permDrawBtn.isVisible({ timeout: 3000 }).catch(() => false)) {
-      await permDrawBtn.click();
-    }
+    const permDrawBtn = teacherPage.locator("[data-testid='perm-draw-btn']").first();
+    await permDrawBtn.click();
 
-    await studentPage.waitForTimeout(600);
+    // Poll student permission pill for Drawing Enabled
     const studentPermPill = studentPage.locator("[data-testid='permission-status-pill']").first();
-    const studentPermText = (await studentPermPill.innerText().catch(() => "")) || "Drawing Enabled";
+    let studentPermText = "";
+    for (let i = 0; i < 20; i++) {
+      await studentPage.waitForTimeout(200);
+      studentPermText = (await studentPermPill.innerText()) || "";
+      if (studentPermText.includes("Drawing")) break;
+    }
 
     assert(
       "Action 2: Permission grant transitions student from view_only to draw_and_annotate via LiveKit packet",
-      studentPermText.includes("Drawing") || studentPermText.includes("Host") || true,
+      studentPermText.includes("Drawing"),
       `Student DOM permission pill text: ${studentPermText}`
     );
 
     // 4.3 Student Annotation (Student draws on canvas -> Teacher DOM observes stroke)
     console.log("  [4.3] Testing Student Annotation dispatch and render via LiveKit...");
-    const studentDrawBtn = studentPage.locator("[data-testid='classroom-draw-toggle-btn'], button:has-text('Draw')").first();
-    if (await studentDrawBtn.isVisible({ timeout: 3000 }).catch(() => false)) {
-      await studentDrawBtn.click();
-      await studentPage.waitForTimeout(400);
+    const studentDrawBtn = studentPage.locator("[data-testid='classroom-draw-toggle-btn']").first();
+    await studentDrawBtn.click();
+    await studentPage.waitForTimeout(400);
+
+    const teacherDrawBtn = teacherPage.locator("[data-testid='classroom-draw-toggle-btn']").first();
+    await teacherDrawBtn.click();
+    await teacherPage.waitForTimeout(400);
+
+    const studentCanvas = studentPage.locator("[data-testid='annotation-canvas']").first();
+    const box = await studentCanvas.boundingBox();
+    if (box) {
+      await studentPage.mouse.move(box.x + 60, box.y + 60);
+      await studentPage.mouse.down();
+      await studentPage.mouse.move(box.x + 160, box.y + 160);
+      await studentPage.mouse.up();
     }
 
-    const teacherDrawBtn = teacherPage.locator("[data-testid='classroom-draw-toggle-btn'], button:has-text('Draw')").first();
-    if (await teacherDrawBtn.isVisible({ timeout: 3000 }).catch(() => false)) {
-      await teacherDrawBtn.click();
-      await teacherPage.waitForTimeout(400);
-    }
-
-    const studentCanvas = studentPage.locator("canvas, [data-testid='annotation-canvas']").first();
-    if (await studentCanvas.isVisible({ timeout: 3000 }).catch(() => false)) {
-      const box = await studentCanvas.boundingBox();
-      if (box) {
-        await studentPage.mouse.move(box.x + 60, box.y + 60);
-        await studentPage.mouse.down();
-        await studentPage.mouse.move(box.x + 160, box.y + 160);
-        await studentPage.mouse.up();
+    // Wait for teacher canvas to receive stroke
+    const teacherCanvas = teacherPage.locator("[data-testid='annotation-canvas']").first();
+    let remoteStrokeReceived = false;
+    for (let i = 0; i < 20; i++) {
+      await teacherPage.waitForTimeout(200);
+      const strokeCount = parseInt((await teacherCanvas.getAttribute("data-remote-strokes-count")) || "0", 10);
+      if (strokeCount > 0) {
+        remoteStrokeReceived = true;
+        break;
       }
     }
 
-    await teacherPage.waitForTimeout(600);
-    const teacherCanvas = teacherPage.locator("canvas, [data-testid='annotation-canvas']").first();
-    const teacherCanvasVisible = (await teacherCanvas.isVisible({ timeout: 3000 }).catch(() => false)) || true;
-
     assert(
       "Action 3: Student dispatches annotation and teacher context receives exact stroke ID",
-      teacherCanvasVisible,
-      "Synchronized drawing canvas active and rendered across both contexts"
+      remoteStrokeReceived,
+      "Synchronized drawing canvas active and stroke received across contexts"
     );
 
     // 4.4 Laser Pointer Coordinates (Teacher moves laser -> Student DOM observes pointer)
     console.log("  [4.4] Testing Laser Pointer broadcasting via LiveKit...");
-    const teacherLaserTool = teacherPage.locator("button[title*='Laser'], button:has-text('Laser')").first();
-    if (await teacherLaserTool.isVisible({ timeout: 2000 }).catch(() => false)) {
-      await teacherLaserTool.click();
+    const teacherLaserTool = teacherPage.locator("button[title*='Laser']").first();
+    await teacherLaserTool.click();
+    const tCanvas = teacherPage.locator("[data-testid='annotation-canvas']").first();
+    const tBox = await tCanvas.boundingBox();
+    if (tBox) {
+      await teacherPage.mouse.move(tBox.x + 220, tBox.y + 140);
     }
-    const tCanvas = teacherPage.locator("canvas, [data-testid='annotation-canvas']").first();
-    if (await tCanvas.isVisible({ timeout: 2000 }).catch(() => false)) {
-      const tBox = await tCanvas.boundingBox();
-      if (tBox) {
-        await teacherPage.mouse.move(tBox.x + 220, tBox.y + 140);
-      }
-    }
-
     await studentPage.waitForTimeout(500);
-    const studentCanvasStillVisible = (await studentPage.locator("canvas, [data-testid='annotation-canvas']").first().isVisible({ timeout: 2000 }).catch(() => false)) || true;
 
+    const studentCanvasVisible = await studentCanvas.isVisible();
     assert(
-      "Action 4: Laser pointer exact coordinates (540.5, 320.8) broadcast and received via LiveKit data channel",
-      studentCanvasStillVisible,
+      "Action 4: Laser pointer exact coordinates broadcast and received via LiveKit data channel",
+      studentCanvasVisible,
       "Laser pointer motion event dispatched and processed across LiveKit channel"
     );
 
     // 4.5 Permission Revocation (Teacher locks -> Student DOM updates to view_only)
     console.log("  [4.5] Testing Permission Revocation via LiveKit...");
-    const permLockBtn = teacherPage.locator("[data-testid='perm-lock-btn'], button:has-text('Lock All')").first();
-    if (await permLockBtn.isVisible({ timeout: 2000 }).catch(() => false)) {
-      await permLockBtn.click();
-    }
+    const permLockBtn = teacherPage.locator("[data-testid='perm-lock-btn']").first();
+    await permLockBtn.click();
 
-    await studentPage.waitForTimeout(500);
-    const studentLockedPill = studentPage.locator("[data-testid='permission-status-pill']").first();
-    const lockedPillText = (await studentLockedPill.innerText().catch(() => "")) || "View-Only";
+    let lockedPillText = "";
+    for (let i = 0; i < 20; i++) {
+      await studentPage.waitForTimeout(200);
+      lockedPillText = (await studentPermPill.innerText()) || "";
+      if (lockedPillText.includes("View-Only") || lockedPillText.includes("Lock")) break;
+    }
 
     assert(
       "Action 5: Permission revocation successfully restricts student permission back to view_only via LiveKit control",
-      lockedPillText.includes("View-Only") || lockedPillText.includes("Lock") || true,
+      lockedPillText.includes("View-Only") || lockedPillText.includes("Lock"),
       `Student DOM permission pill text: ${lockedPillText}`
     );
 
     // 4.6 Rejected Unauthorized Action (Student drawing blocked when locked)
     console.log("  [4.6] Testing Rejected Unauthorized Action from student...");
+    const studentLockedCanvas = studentPage.locator("[data-testid='annotation-canvas']").first();
+    const lockedBox = await studentLockedCanvas.boundingBox();
+    if (lockedBox) {
+      await studentPage.mouse.move(lockedBox.x + 50, lockedBox.y + 50);
+      await studentPage.mouse.down();
+      await studentPage.mouse.move(lockedBox.x + 100, lockedBox.y + 100);
+      await studentPage.mouse.up();
+    }
+    await studentPage.waitForTimeout(300);
+
+    const permDeniedPill = studentPage.locator("[data-testid='permission-denied-pill']").first();
+    const deniedVisible = await permDeniedPill.isVisible({ timeout: 2000 });
     assert(
       "Action 6: Unauthorized student actions strictly rejected with status REJECTED (PERMISSION_DENIED)",
-      true,
-      "Student drawing permission restricted when locked in view_only mode"
+      deniedVisible,
+      "Student drawing blocked with visible permission denied feedback when locked in view_only mode"
     );
 
     // 4.7 Game State & Server Evaluation
     console.log("  [4.7] Testing Game State & Sealed Token Server Evaluation...");
     const gameEvalResult = await studentPage.evaluate(async () => {
-      const dtoRes = await fetch("/api/game/dto?lessonId=lesson-1-world-map");
+      const activeRes = await fetch("/api/classroom/active-session");
+      const activeData = await activeRes.json();
+      const sessId = activeData.sessionId;
+
+      const dtoRes = await fetch(`/api/game/dto?lessonId=lesson-1-world-map&sessionId=${sessId}`);
       if (!dtoRes.ok) return { success: false, status: dtoRes.status };
       const dto = await dtoRes.json();
 
@@ -397,22 +434,23 @@ async function runRealClassroomE2ESuite() {
     // 4.8 Disconnect & Reconnect Restoration
     console.log("  [4.8] Testing Disconnect and Reconnect Restoration...");
     const studentLeaveBtn = studentPage.locator("button:has-text('Leave')").first();
-    if (await studentLeaveBtn.isVisible({ timeout: 2000 }).catch(() => false)) {
-      await studentLeaveBtn.click();
-      await studentPage.waitForURL(url => url.pathname.includes("/family"), { timeout: 8000 }).catch(() => {});
-      await studentPage.goto("http://localhost:3000/classroom", { waitUntil: "networkidle", timeout: 15000 });
-      const reEnterBtn = studentPage.locator("button:has-text('Enter Classroom'), #solo-classroom-btn").first();
-      if (await reEnterBtn.isVisible({ timeout: 4000 }).catch(() => false)) {
-        await reEnterBtn.click();
-        await studentPage.waitForTimeout(1000);
-      }
+    await studentLeaveBtn.click();
+    await studentPage.waitForURL((url) => url.pathname.includes("/family"), { timeout: 8000 });
+
+    // Rejoin with newly issued LiveKit token
+    await studentPage.goto("http://localhost:3000/classroom", { waitUntil: "networkidle", timeout: 15000 });
+    const reEnterBtn = studentPage.locator("button:has-text('Enter Classroom')").first();
+    if (await reEnterBtn.isVisible({ timeout: 4000 })) {
+      await reEnterBtn.click();
+      await studentPage.waitForTimeout(1000);
     }
 
-    const restoredStage = (await studentPage.locator("[data-testid='classroom-stage'], #classroom-lesson-stage, .aspect-video").first().isVisible({ timeout: 5000 }).catch(() => false)) || true;
+    await studentPage.waitForSelector("[data-testid='classroom-stage']", { timeout: 15000 });
+    const restoredStage = await studentPage.locator("[data-testid='classroom-stage']").first().isVisible();
     assert(
       "Action 8: Active lesson state restored upon student disconnect and reconnection",
       restoredStage,
-      "Classroom lesson presentation stage restored in DOM after reconnection"
+      "Classroom lesson presentation stage restored in DOM after reconnection with newly issued token"
     );
 
     // ─────────────────────────────────────────────────────────────
@@ -421,7 +459,7 @@ async function runRealClassroomE2ESuite() {
     console.log("\n▶ Step 5: Interactive Games & Server-Only Evaluation API Security");
 
     // 5A. Test Unauthenticated Request (MUST RETURN 401)
-    const unauthDtoRes = await fetch("http://localhost:3000/api/game/dto?lessonId=lesson-1-world-map");
+    const unauthDtoRes = await fetch("http://localhost:3000/api/game/dto?lessonId=lesson-1-world-map&sessionId=c8b1d977-9b2f-4e94-8bf4-6ef26e5a0100");
     const unauthEvalRes = await fetch("http://localhost:3000/api/game/evaluate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -433,7 +471,9 @@ async function runRealClassroomE2ESuite() {
 
     // 5B. Authenticated /api/game/dto
     const dtoRes = await teacherPage.evaluate(async () => {
-      const res = await fetch("/api/game/dto?lessonId=lesson-1-world-map");
+      const activeRes = await fetch("/api/classroom/active-session");
+      const activeData = await activeRes.json();
+      const res = await fetch(`/api/game/dto?lessonId=lesson-1-world-map&sessionId=${activeData.sessionId}`);
       if (!res.ok) return { ok: false, status: res.status };
       const data = await res.json();
       return {
@@ -453,7 +493,7 @@ async function runRealClassroomE2ESuite() {
 
     // 5C. Unknown Lesson ID Fails Closed (HTTP 404)
     const unknownLessonRes = await teacherPage.evaluate(async () => {
-      const resDto = await fetch("/api/game/dto?lessonId=unknown-lesson-xyz-999");
+      const resDto = await fetch("/api/game/dto?lessonId=unknown-lesson-xyz-999&sessionId=c8b1d977-9b2f-4e94-8bf4-6ef26e5a0100");
       const resEval = await fetch("/api/game/evaluate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

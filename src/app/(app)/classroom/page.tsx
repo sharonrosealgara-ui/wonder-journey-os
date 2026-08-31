@@ -25,6 +25,7 @@ import {
 import { ClassroomGames } from "@/components/classroom/classroom-games";
 import { MediaCreditsModal } from "@/components/classroom/media-credits-modal";
 import { getMediaForLesson, FactualMedia } from "@/config/media-registry";
+import { createClient as createBrowserSupabaseClient } from "@/lib/supabase/client";
 
 // 🎥 LIVE ADVENTURE CLASSROOM — STAGE 12.1
 // Full 16:9 wide classroom with synchronized teacher-controlled student interaction,
@@ -55,16 +56,61 @@ export default function ClassroomPage() {
     }
   }, [student, role]);
 
-  const roomName = `wj-room-${familySlug}`;
+  const [activeSessionId, setActiveSessionId] = useState<string | null>(null);
+  const [sessionInfo, setSessionInfo] = useState<{
+    sessionId: string;
+    lessonId: string;
+    slideIndex: number;
+    roomName: string;
+    role: string;
+    permissionLevel: PermissionLevel;
+  } | null>(null);
+
+  useEffect(() => {
+    async function loadActiveSession() {
+      try {
+        const res = await fetch("/api/classroom/active-session");
+        if (res.ok) {
+          const data = await res.json();
+          if (data.sessionId) {
+            setActiveSessionId(data.sessionId);
+            setSessionInfo(data);
+            const l = allLessons.find((les) => les.id === data.lessonId);
+            if (l) setLesson(l);
+          }
+        }
+      } catch {
+        // ignore
+      }
+    }
+    loadActiveSession();
+  }, []);
 
   async function join(devices: { camId: string; micId: string; camOn: boolean; micOn: boolean }) {
     setJoinError(null);
     setJoining(true);
+
+    let sessId = activeSessionId;
+    if (!sessId) {
+      try {
+        const res = await fetch("/api/classroom/active-session");
+        if (res.ok) {
+          const data = await res.json();
+          sessId = data.sessionId;
+          setActiveSessionId(sessId);
+          setSessionInfo(data);
+        }
+      } catch {}
+    }
+
+    if (!sessId) {
+      setJoining(false);
+      setJoinError("No active classroom session found for your workspace. 💙");
+      return;
+    }
+
     const result = await call.join({
-      name,
-      code: classCode,
-      role: role === "teacher" ? "teacher" : "family",
-      roomName,
+      sessionId: sessId,
       ...devices,
     });
     setJoining(false);
@@ -73,21 +119,30 @@ export default function ClassroomPage() {
       return;
     }
     if (result === "error") {
-      setJoinError("We couldn't reach your camera. Please allow camera & microphone access and try again.");
+      setJoinError("We couldn't reach your camera or classroom session. Please check permissions and try again.");
       return;
     }
     initCloudSync();
-    if (result === "connected") sendEvent("class.joined", { who: name, room: roomName });
+    if (result === "connected") sendEvent("class.joined", { who: name, sessionId: sessId });
   }
 
   function endCall() {
-    if (call.status === "connected") sendEvent("class.ended", { who: name, room: roomName });
+    if (call.status === "connected" && activeSessionId) sendEvent("class.ended", { who: name, sessionId: activeSessionId });
     call.endCall();
     router.push("/family");
   }
 
   if (call.status === "connected" && call.room) {
-    return <ConnectedRoom lesson={lesson} onLeave={endCall} currentUserName={name} />;
+    return (
+      <ConnectedRoom
+        lesson={lesson}
+        sessionId={activeSessionId || call.room.name}
+        initialSlideIndex={sessionInfo?.slideIndex ?? 0}
+        initialPermission={sessionInfo?.permissionLevel ?? "view_only"}
+        onLeave={endCall}
+        currentUserName={name}
+      />
+    );
   }
   if (call.status === "solo") {
     return (
@@ -308,10 +363,16 @@ function Lobby({
 /* ── LiveKit Connected Classroom ────────────────────────────── */
 function ConnectedRoom({
   lesson,
+  sessionId,
+  initialSlideIndex = 0,
+  initialPermission = "view_only",
   onLeave,
   currentUserName,
 }: {
   lesson: Lesson | null;
+  sessionId: string;
+  initialSlideIndex?: number;
+  initialPermission?: PermissionLevel;
   onLeave: () => void;
   currentUserName: string;
 }) {
@@ -319,11 +380,12 @@ function ConnectedRoom({
   const room = call.room!;
   const isTeacher = call.isTeacher;
   const router = useRouter();
+  const supabase = useMemo(() => createBrowserSupabaseClient(), []);
 
   // Classroom States
   const [selectedLesson, setSelectedLesson] = useState<Lesson | null>(lesson);
   const [stageLesson, setStageLesson] = useState<Lesson | null>(lesson);
-  const [slideIndex, setSlideIndex] = useState(0);
+  const [slideIndex, setSlideIndex] = useState(initialSlideIndex);
   const [isSlideLocked, setIsSlideLocked] = useState(false);
   const [drawingActive, setDrawingActive] = useState(false);
   const [fullscreenStage, setFullscreenStage] = useState(false);
@@ -339,12 +401,64 @@ function ConnectedRoom({
   // Student Permissions State
   const [studentPermissions, setStudentPermissions] = useState<Record<string, PermissionLevel>>({});
   const [myPermission, setMyPermission] = useState<PermissionLevel>(
-    isTeacher ? "full_interactive" : "view_only"
+    isTeacher ? "full_interactive" : initialPermission
   );
 
   // Synchronized Interaction Data
   const [remoteStrokes, setRemoteStrokes] = useState<SynchronizedStroke[]>([]);
   const [remotePointers, setRemotePointers] = useState<Record<string, RemotePointer>>({});
+
+  // ── Authoritative PostgreSQL Reconnection State Loading ──
+  useEffect(() => {
+    if (!sessionId) return;
+    async function loadAuthoritativeState() {
+      try {
+        // 1. Authoritative slide index from classroom_sessions
+        const { data: sessRow } = await supabase
+          .from("classroom_sessions")
+          .select("slide_index, lesson_id")
+          .eq("id", sessionId)
+          .single();
+        if (sessRow && typeof sessRow.slide_index === "number") {
+          setSlideIndex(sessRow.slide_index);
+          if (sessRow.lesson_id) {
+            const l = allLessons.find((les) => les.id === sessRow.lesson_id);
+            if (l) setStageLesson(l);
+          }
+        }
+
+        // 2. Authoritative participant permission from classroom_participants
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+        if (user) {
+          const { data: partRow } = await supabase
+            .from("classroom_participants")
+            .select("permission_level")
+            .eq("session_id", sessionId)
+            .eq("user_id", user.id)
+            .single();
+          if (partRow?.permission_level && !isTeacher) {
+            setMyPermission(partRow.permission_level as PermissionLevel);
+          }
+        }
+
+        // 3. Authoritative board snapshots from classroom_board_snapshots
+        const { data: snapshotRows } = await supabase
+          .from("classroom_board_snapshots")
+          .select("strokes_data")
+          .eq("session_id", sessionId)
+          .order("created_at", { ascending: false })
+          .limit(1);
+        if (snapshotRows && snapshotRows.length > 0 && Array.isArray(snapshotRows[0].strokes_data)) {
+          setRemoteStrokes(snapshotRows[0].strokes_data as SynchronizedStroke[]);
+        }
+      } catch (err) {
+        console.warn("Could not load authoritative PostgreSQL state:", err);
+      }
+    }
+    loadAuthoritativeState();
+  }, [sessionId, isTeacher, supabase]);
 
   const stageMediaList = useMemo(() => {
     if (!stageLesson) return [];
@@ -513,15 +627,28 @@ function ConnectedRoom({
   }, [room, myPermission, studentPermissions]);
 
   // Teacher Permission Controls
-  const setPermissionForStudent = (studentIdentity: string, level: PermissionLevel) => {
+  const setPermissionForStudent = async (studentIdentity: string, level: PermissionLevel) => {
     if (!isTeacher) return;
     setStudentPermissions((prev) => ({ ...prev, [studentIdentity]: level }));
+    if (sessionId) {
+      try {
+        const parts = studentIdentity.split("-");
+        const targetUserId = parts.length > 1 ? parts.slice(1).join("-") : studentIdentity;
+        await supabase
+          .from("classroom_participants")
+          .update({ permission_level: level })
+          .eq("session_id", sessionId)
+          .eq("user_id", targetUserId);
+      } catch (e) {
+        console.warn("Could not persist permission to PostgreSQL:", e);
+      }
+    }
     broadcastClassroomEvent({
       topic: "classroom.permission",
       version: 1,
       eventId: `perm-${Date.now()}`,
       sessionId: room.name,
-      workspaceId: familySlug,
+      workspaceId: "default-workspace",
       senderId: room.localParticipant.identity,
       role: "teacher",
       timestamp: Date.now(),
@@ -532,15 +659,25 @@ function ConnectedRoom({
     });
   };
 
-  const setGlobalPermission = (level: PermissionLevel) => {
+  const setGlobalPermission = async (level: PermissionLevel) => {
     if (!isTeacher) return;
     setStudentPermissions({});
+    if (sessionId) {
+      try {
+        await supabase
+          .from("classroom_participants")
+          .update({ permission_level: level })
+          .eq("session_id", sessionId);
+      } catch (e) {
+        console.warn("Could not persist global permission to PostgreSQL:", e);
+      }
+    }
     broadcastClassroomEvent({
       topic: "classroom.permission",
       version: 1,
       eventId: `perm-global-${Date.now()}`,
       sessionId: room.name,
-      workspaceId: familySlug,
+      workspaceId: "default-workspace",
       senderId: room.localParticipant.identity,
       role: "teacher",
       timestamp: Date.now(),
@@ -552,9 +689,19 @@ function ConnectedRoom({
   };
 
   // Synchronized Slide Navigation
-  const handleSlideChange = (newIndex: number) => {
+  const handleSlideChange = async (newIndex: number) => {
     setSlideIndex(newIndex);
     if (isTeacher && stageLesson) {
+      if (sessionId) {
+        try {
+          await supabase
+            .from("classroom_sessions")
+            .update({ slide_index: newIndex })
+            .eq("id", sessionId);
+        } catch (e) {
+          console.warn("Could not persist slide index to PostgreSQL:", e);
+        }
+      }
       broadcastClassroomEvent({
         topic: "classroom.slide",
         version: 1,
@@ -628,8 +775,23 @@ function ConnectedRoom({
     });
   };
 
-  const handleSaveBoardSnapshot = () => {
+  const handleSaveBoardSnapshot = async () => {
     if (!isTeacher || !stageLesson) return;
+    if (sessionId) {
+      try {
+        await supabase
+          .from("classroom_board_snapshots")
+          .insert({
+            session_id: sessionId,
+            slide_id: `${stageLesson.id}-slide-${slideIndex}`,
+            slide_index: slideIndex,
+            strokes_data: remoteStrokes,
+            captured_by: room.localParticipant.identity,
+          });
+      } catch (e) {
+        console.warn("Could not persist board snapshot to PostgreSQL:", e);
+      }
+    }
     broadcastClassroomEvent({
       topic: "classroom.snapshot",
       version: 1,
@@ -713,6 +875,22 @@ function ConnectedRoom({
               : "🎮 Interactive Game"}
           </span>
 
+          {/* Whiteboard / Draw Toggle */}
+          <button
+            type="button"
+            data-testid="classroom-draw-toggle-btn"
+            onClick={() => setDrawingActive((d) => !d)}
+            aria-label="Toggle drawing whiteboard"
+            className={`flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold transition-all cursor-pointer shadow-sm ${
+              drawingActive
+                ? "bg-palm text-white ring-2 ring-palm-light"
+                : "bg-sand text-ink hover:bg-sand-deep border border-sand-deep"
+            }`}
+          >
+            <span>🎨</span>
+            <span>{drawingActive ? "Close Whiteboard" : "Draw & Annotate"}</span>
+          </button>
+
           {/* Interactive Games Toggle */}
           <button
             type="button"
@@ -788,6 +966,10 @@ function ConnectedRoom({
             id="classroom-lesson-stage"
             data-testid="classroom-stage"
             data-current-slide={slideIndex}
+            data-permission-level={isTeacher ? "full_interactive" : myPermission}
+            data-remote-strokes-count={remoteStrokes.length}
+            data-last-remote-stroke-id={remoteStrokes[remoteStrokes.length - 1]?.id || ""}
+            data-session-id={sessionId}
           >
             {/* Screen Share Overlay */}
             {screenShare && (
@@ -840,8 +1022,8 @@ function ConnectedRoom({
                     lessonTitle={stageLesson?.title || "Classroom Adventure"}
                     role={isTeacher ? "teacher" : "student"}
                     permissionLevel={myPermission}
-                    sessionId={room.name || "wj-room-del-rosario"}
-                    workspaceId="ws-ph-001"
+                    sessionId={sessionId}
+                    workspaceId="default-workspace"
                     onEmitGameEvent={handleEmitGameEvent}
                     incomingGameEvent={incomingGameEvent}
                   />

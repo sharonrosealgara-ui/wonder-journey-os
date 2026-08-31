@@ -14,3 +14,5 @@ wonder-journey-site.zip
 # local binaries and temp folders
 bin/
 temp-sync-gen/
+.temp/
+supabase/.temp/

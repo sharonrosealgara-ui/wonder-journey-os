@@ -100,11 +100,11 @@ async function runTests() {
   });
   assert([400, 401].includes(lkEmptyRes.status), `POST /api/livekit-token empty body returned HTTP ${lkEmptyRes.status} (expected 400 or 401)`);
 
-  // 14. POST /api/livekit-token (Valid body but unauthenticated -> 401 Unauthorized)
+  // 14. POST /api/livekit-token (Valid session body but unauthenticated -> 401 Unauthorized)
   const lkUnauthRes = await fetch(`${BASE_URL}/api/livekit-token`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name: "Student", room: "classroom-1" })
+    body: JSON.stringify({ sessionId: "c8b1d977-9b2f-4e94-8bf4-6ef26e5a0100" })
   });
   assert(lkUnauthRes.status === 401, `POST /api/livekit-token unauthenticated returned HTTP ${lkUnauthRes.status} (expected 401)`);
 

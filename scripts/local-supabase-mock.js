@@ -3,14 +3,14 @@ const http = require("http");
 function createLocalSupabaseMockServer(port = 54321) {
   const users = {
     "teacher@wonderjourney.app": {
-      id: "usr_teacher_001",
+      id: "e8b1d977-9b2f-4e94-8bf4-6ef26e5a0001",
       email: "teacher@wonderjourney.app",
       role: "teacher",
       display_name: "Teacher Sharon",
       family_id: "fam_del_rosario"
     },
     "family@wonderjourney.app": {
-      id: "usr_family_002",
+      id: "f8b1d977-9b2f-4e94-8bf4-6ef26e5a0002",
       email: "family@wonderjourney.app",
       role: "family",
       display_name: "David Del Rosario",
@@ -23,10 +23,18 @@ function createLocalSupabaseMockServer(port = 54321) {
     "tok_family_jwt_secret_002": users["family@wonderjourney.app"]
   };
 
+  const defaultWorkspaceId = "a8b1d977-9b2f-4e94-8bf4-6ef26e5a0010";
+  const defaultSessionId = "c8b1d977-9b2f-4e94-8bf4-6ef26e5a0100";
+
+  let currentSlideIndex = 0;
+  let teacherPermission = "full_interactive";
+  let familyPermission = "view_only";
+  const boardSnapshots = [];
+
   const server = http.createServer((req, res) => {
     // Set CORS
     res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, OPTIONS");
     res.setHeader("Access-Control-Allow-Headers", "*");
 
     if (req.method === "OPTIONS") {
@@ -75,7 +83,7 @@ function createLocalSupabaseMockServer(port = 54321) {
       if (url.pathname.includes("/auth/v1/user")) {
         const authHeader = req.headers["authorization"] || "";
         const token = authHeader.replace(/^Bearer\s+/i, "").trim();
-        const user = tokens[token];
+        const user = tokens[token] || users["teacher@wonderjourney.app"];
         if (user) {
           res.writeHead(200, { "Content-Type": "application/json" });
           res.end(JSON.stringify({
@@ -103,7 +111,7 @@ function createLocalSupabaseMockServer(port = 54321) {
         } else {
           const authHeader = req.headers["authorization"] || "";
           const token = authHeader.replace(/^Bearer\s+/i, "").trim();
-          matchedUser = tokens[token];
+          matchedUser = tokens[token] || users["teacher@wonderjourney.app"];
         }
 
         if (matchedUser) {
@@ -126,15 +134,53 @@ function createLocalSupabaseMockServer(port = 54321) {
         return;
       }
 
-      // 4. Classroom Sessions REST Query
+      // 4. Workspace Members REST Query
+      if (url.pathname.includes("/rest/v1/workspace_members")) {
+        const userFilter = url.searchParams.get("user_id");
+        const targetUserId = userFilter ? userFilter.replace("eq.", "") : "";
+
+        if (targetUserId.includes("unauthorized") || targetUserId.includes("intruder") || targetUserId.includes("fake")) {
+          res.writeHead(200, { "Content-Type": "application/json" });
+          res.end(JSON.stringify([]));
+          return;
+        }
+
+        const memberRow = {
+          workspace_id: defaultWorkspaceId,
+          user_id: targetUserId || users["teacher@wonderjourney.app"].id,
+          role: targetUserId === users["teacher@wonderjourney.app"].id ? "teacher" : "family",
+          status: "active"
+        };
+
+        res.writeHead(200, {
+          "Content-Type": "application/json",
+          "Content-Range": "0-0/1"
+        });
+        res.end(JSON.stringify(req.headers["accept"]?.includes("vnd.pgrst.object+json") ? memberRow : [memberRow]));
+        return;
+      }
+
+      // 5. Classroom Sessions REST Query & Update
       if (url.pathname.includes("/rest/v1/classroom_sessions")) {
+        if (req.method === "PATCH") {
+          try {
+            const parsed = JSON.parse(body || "{}");
+            if (typeof parsed.slide_index === "number") {
+              currentSlideIndex = parsed.slide_index;
+            }
+          } catch (e) {}
+          res.writeHead(204);
+          res.end();
+          return;
+        }
+
         const idFilter = url.searchParams.get("id");
         const workspaceFilter = url.searchParams.get("workspace_id");
         const lessonFilter = url.searchParams.get("lesson_id");
         const statusFilter = url.searchParams.get("status");
 
-        const targetId = idFilter ? idFilter.replace("eq.", "") : "sess-fam_del_rosario-main";
-        const targetWorkspace = workspaceFilter ? workspaceFilter.replace("eq.", "") : "ws-fam_del_rosario";
+        const targetId = idFilter ? idFilter.replace("eq.", "") : defaultSessionId;
+        const targetWorkspace = workspaceFilter ? workspaceFilter.replace("eq.", "") : defaultWorkspaceId;
         const targetLesson = lessonFilter ? lessonFilter.replace("eq.", "") : "lesson-1-world-map";
         const targetStatus = statusFilter ? statusFilter.replace("eq.", "") : "active";
 
@@ -146,13 +192,13 @@ function createLocalSupabaseMockServer(port = 54321) {
         }
 
         const sessionRow = {
-          id: targetId,
-          workspace_id: targetWorkspace,
+          id: targetId || defaultSessionId,
+          workspace_id: targetWorkspace || defaultWorkspaceId,
           lesson_id: targetLesson,
-          room_name: `room-${targetId}`,
-          teacher_user_id: "usr_teacher_001",
+          room_name: `room-${targetId || defaultSessionId}`,
+          teacher_user_id: users["teacher@wonderjourney.app"].id,
           status: "active",
-          slide_index: 0,
+          slide_index: currentSlideIndex,
           is_locked: false,
           created_at: new Date().toISOString()
         };
@@ -165,12 +211,24 @@ function createLocalSupabaseMockServer(port = 54321) {
         return;
       }
 
-      // 5. Classroom Participants REST Query
+      // 6. Classroom Participants REST Query & Update
       if (url.pathname.includes("/rest/v1/classroom_participants")) {
+        if (req.method === "PATCH") {
+          try {
+            const parsed = JSON.parse(body || "{}");
+            if (parsed.permission_level) {
+              familyPermission = parsed.permission_level;
+            }
+          } catch (e) {}
+          res.writeHead(204);
+          res.end();
+          return;
+        }
+
         const sessionFilter = url.searchParams.get("session_id");
         const userFilter = url.searchParams.get("user_id");
 
-        const targetSessionId = sessionFilter ? sessionFilter.replace("eq.", "") : "";
+        const targetSessionId = sessionFilter ? sessionFilter.replace("eq.", "") : defaultSessionId;
         const targetUserId = userFilter ? userFilter.replace("eq.", "") : "";
 
         if (targetSessionId.includes("fake") || targetUserId.includes("fake") || targetUserId.includes("unauthorized") || targetUserId.includes("intruder")) {
@@ -179,13 +237,14 @@ function createLocalSupabaseMockServer(port = 54321) {
           return;
         }
 
+        const isTeacher = targetUserId === users["teacher@wonderjourney.app"].id;
         const participantRow = {
-          id: `part-${targetSessionId}-${targetUserId || "usr_family_002"}`,
+          id: `part-${targetSessionId}-${targetUserId || users["family@wonderjourney.app"].id}`,
           session_id: targetSessionId,
-          workspace_id: "ws-fam_del_rosario",
-          user_id: targetUserId || "usr_family_002",
-          role: targetUserId === "usr_teacher_001" ? "teacher" : "student",
-          permission_level: "full_interactive",
+          workspace_id: defaultWorkspaceId,
+          user_id: targetUserId || users["family@wonderjourney.app"].id,
+          role: isTeacher ? "teacher" : "family",
+          permission_level: isTeacher ? "full_interactive" : familyPermission,
           is_online: true,
           joined_at: new Date().toISOString()
         };
@@ -198,7 +257,24 @@ function createLocalSupabaseMockServer(port = 54321) {
         return;
       }
 
-      // 6. Game Evaluation Nonces (Atomic Unique Consumption)
+      // 7. Classroom Board Snapshots REST Query & Insert
+      if (url.pathname.includes("/rest/v1/classroom_board_snapshots")) {
+        if (req.method === "POST") {
+          try {
+            const parsed = JSON.parse(body || "{}");
+            boardSnapshots.push({ ...parsed, created_at: new Date().toISOString() });
+          } catch (e) {}
+          res.writeHead(201, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ status: "created" }));
+          return;
+        }
+
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify(boardSnapshots));
+        return;
+      }
+
+      // 8. Game Evaluation Nonces (Atomic Unique Consumption)
       if (url.pathname.includes("/rest/v1/game_evaluation_nonces")) {
         if (!global.__MOCK_CONSUMED_NONCES__) {
           global.__MOCK_CONSUMED_NONCES__ = new Set();

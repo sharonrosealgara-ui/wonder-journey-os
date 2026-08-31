@@ -2,12 +2,44 @@ import { NextResponse } from "next/server";
 import { AccessToken } from "livekit-server-sdk";
 import { createClient } from "@/lib/supabase/server";
 
+// UUID v4 validation
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+// Legacy/trusted-context fields that MUST NOT appear in the request body
+const FORBIDDEN_FIELDS = ["room", "roomName", "identity", "name", "role", "code"];
+
 export async function POST(req: Request) {
   try {
     const body = await req.json().catch(() => ({}));
-    const { sessionId, room: requestedRoom, roomName, code } = body;
 
-    // 1. Authenticate user
+    // 1. Reject legacy trusted-context fields with HTTP 400
+    for (const field of FORBIDDEN_FIELDS) {
+      if (field in body && body[field] !== undefined) {
+        return NextResponse.json(
+          { error: `Bad Request: legacy field "${field}" is not accepted. Send only { sessionId }.` },
+          { status: 400 }
+        );
+      }
+    }
+
+    // 2. Require mandatory sessionId
+    const { sessionId } = body;
+    if (!sessionId || typeof sessionId !== "string") {
+      return NextResponse.json(
+        { error: "Bad Request: sessionId is required" },
+        { status: 400 }
+      );
+    }
+
+    // 3. Validate sessionId as UUID
+    if (!UUID_RE.test(sessionId)) {
+      return NextResponse.json(
+        { error: "Bad Request: sessionId must be a valid UUID" },
+        { status: 400 }
+      );
+    }
+
+    // 4. Authenticate user
     const supabase = await createClient();
     const {
       data: { user },
@@ -18,47 +50,41 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // 2. Query trusted user profile and workspace membership from database
-    const { data: profile, error: profileError } = await supabase
-      .from("profiles")
-      .select("id, role, display_name, family_id")
-      .eq("id", user.id)
+    // 5. Resolve real workspace UUID from workspace_members
+    const { data: membership, error: memberError } = await supabase
+      .from("workspace_members")
+      .select("workspace_id")
+      .eq("user_id", user.id)
+      .eq("status", "active")
+      .limit(1)
       .single();
 
-    if (profileError || !profile || !profile.family_id) {
+    if (memberError || !membership?.workspace_id) {
       return NextResponse.json(
-        { error: "Forbidden: user lacks active profile or workspace membership" },
+        { error: "Forbidden: user has no active workspace membership" },
         { status: 403 }
       );
     }
 
-    const workspaceId = `ws-${profile.family_id}`;
+    const workspaceId = membership.workspace_id;
 
-    // 3. Class code verification if configured
-    const validCode = process.env.WJ_CLASS_CODE || process.env.CLASSROOM_CODE;
-    if (validCode && code !== validCode) {
-      return NextResponse.json({ error: "Invalid class code" }, { status: 401 });
-    }
-
-    // 4. Session identifier lookup (Never allow arbitrary client-provided room names)
-    const lookupKey = sessionId || roomName || requestedRoom || `sess-${profile.family_id}-main`;
-
+    // 6. Require active classroom_sessions row with exact UUID and workspace
     const { data: sessionData, error: sessionError } = await supabase
       .from("classroom_sessions")
       .select("id, workspace_id, room_name, status, lesson_id")
-      .eq("id", lookupKey)
+      .eq("id", sessionId)
       .eq("workspace_id", workspaceId)
       .eq("status", "active")
       .single();
 
     if (sessionError || !sessionData) {
       return NextResponse.json(
-        { error: "Forbidden: no active authorized classroom session found for this workspace" },
+        { error: "Forbidden: no active authorized classroom session found" },
         { status: 403 }
       );
     }
 
-    // 5. Query classroom participant membership from database
+    // 7. Require matching classroom_participants row
     const { data: participantData, error: participantError } = await supabase
       .from("classroom_participants")
       .select("id, session_id, user_id, role, permission_level")
@@ -73,10 +99,23 @@ export async function POST(req: Request) {
       );
     }
 
-    // 6. Derive room name, role, and identity strictly from database records
-    const derivedRoom = sessionData.room_name || sessionData.id;
-    const derivedRole = participantData.role || profile.role || "student";
-    const derivedName = profile.display_name || user.user_metadata?.name || user.email || "Explorer";
+    // 8. Require valid participant role — no fallback chain
+    const derivedRole = participantData.role;
+    if (!derivedRole || !["teacher", "family", "student"].includes(derivedRole)) {
+      return NextResponse.json(
+        { error: "Forbidden: participant has no valid role assignment" },
+        { status: 403 }
+      );
+    }
+
+    // 9. Derive room and identity strictly from database records
+    const derivedRoom = sessionData.room_name;
+    if (!derivedRoom) {
+      return NextResponse.json(
+        { error: "Internal: session has no room_name" },
+        { status: 500 }
+      );
+    }
 
     const apiKey = process.env.LIVEKIT_API_KEY;
     const apiSecret = process.env.LIVEKIT_API_SECRET;
@@ -88,11 +127,9 @@ export async function POST(req: Request) {
 
     const at = new AccessToken(apiKey, apiSecret, {
       identity: `${derivedRole}-${user.id}`,
-      name: derivedName,
       metadata: JSON.stringify({ role: derivedRole, sessionId: sessionData.id }),
     });
 
-    // Grant room access strictly to authorized derived room
     at.addGrant({
       roomJoin: true,
       room: derivedRoom,

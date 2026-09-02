@@ -1,9 +1,14 @@
 const { execSync } = require("child_process");
 const path = require("path");
 
-// Set test secret for full suite execution
-process.env.GAME_EVALUATION_SECRET =
-  process.env.GAME_EVALUATION_SECRET || "release_validation_game_evaluation_secret_key_2026_super_secure";
+if (!process.env.GAME_EVALUATION_SECRET || process.env.GAME_EVALUATION_SECRET.trim().length === 0) {
+  console.error("FAIL: GAME_EVALUATION_SECRET environment variable is required.");
+  process.exit(1);
+}
+
+process.env.LIVEKIT_URL = process.env.LIVEKIT_URL || "ws://127.0.0.1:7880";
+process.env.NEXT_PUBLIC_LIVEKIT_WS_URL = process.env.NEXT_PUBLIC_LIVEKIT_WS_URL || "ws://127.0.0.1:7880";
+
 
 console.log("================================================================================");
 console.log("WONDER JOURNEY OS — STAGE 12.1R.10 RELEASE CANDIDATE VERIFICATION (30 GATES)");

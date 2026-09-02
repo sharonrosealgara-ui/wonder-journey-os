@@ -22,14 +22,8 @@ jobs:
     env:
       NODE_ENV: test
       NEXT_TELEMETRY_DISABLED: 1
-      NEXT_PUBLIC_SUPABASE_URL: http://127.0.0.1:54321
-      NEXT_PUBLIC_SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4NzY4MDB9.CR-demo-anon-key-for-local-development
-      SUPABASE_SERVICE_ROLE_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImV4cCI6MTk4Mzg3NjgwMH0.EG-demo-service-role-key-for-local-development
-      LIVEKIT_API_KEY: devkey
-      LIVEKIT_API_SECRET: secret
       LIVEKIT_URL: ws://127.0.0.1:7880
       NEXT_PUBLIC_LIVEKIT_WS_URL: ws://127.0.0.1:7880
-      GAME_EVALUATION_SECRET: stage12-1r10-server-evaluation-secret-key-32bytes-ci
 
     steps:
       - name: Checkout Code
@@ -44,14 +38,54 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
+      - name: Generate Ephemeral Masked Credentials
+        run: |
+          node -e '
+            const crypto = require("crypto");
+            const tPass = "Tchr_" + crypto.randomBytes(12).toString("hex") + "!9A";
+            const fPass = "Fmly_" + crypto.randomBytes(12).toString("hex") + "!9A";
+            const lkKey = "lk_key_" + crypto.randomBytes(8).toString("hex");
+            const lkSec = "lk_sec_" + crypto.randomBytes(24).toString("hex");
+            const gameSec = "game_sec_" + crypto.randomBytes(24).toString("hex");
+
+            console.log("::add-mask::" + tPass);
+            console.log("::add-mask::" + fPass);
+            console.log("::add-mask::" + lkKey);
+            console.log("::add-mask::" + lkSec);
+            console.log("::add-mask::" + gameSec);
+
+            const fs = require("fs");
+            const envFile = process.env.GITHUB_ENV;
+            fs.appendFileSync(envFile, `E2E_TEACHER_PASSWORD=${tPass}\n`);
+            fs.appendFileSync(envFile, `E2E_FAMILY_PASSWORD=${fPass}\n`);
+            fs.appendFileSync(envFile, `LIVEKIT_API_KEY=${lkKey}\n`);
+            fs.appendFileSync(envFile, `LIVEKIT_API_SECRET=${lkSec}\n`);
+            fs.appendFileSync(envFile, `GAME_EVALUATION_SECRET=${gameSec}\n`);
+          '
+
       - name: Setup Supabase CLI
         uses: supabase/setup-cli@v1
         with:
           version: 2.116.0
 
-      - name: Start Real Local Supabase Stack & Apply Migrations
+      - name: Start Real Local Supabase Stack & Seed Database
         run: |
           supabase start
+          STATUS_JSON=$(supabase status -o json)
+          SUPABASE_URL=$(echo "$STATUS_JSON" | jq -r '.API_URL')
+          ANON_KEY=$(echo "$STATUS_JSON" | jq -r '.ANON_KEY')
+          SERVICE_KEY=$(echo "$STATUS_JSON" | jq -r '.SERVICE_ROLE_KEY')
+
+          echo "::add-mask::$ANON_KEY"
+          echo "::add-mask::$SERVICE_KEY"
+
+          echo "NEXT_PUBLIC_SUPABASE_URL=$SUPABASE_URL" >> $GITHUB_ENV
+          echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=$ANON_KEY" >> $GITHUB_ENV
+          echo "SUPABASE_SERVICE_ROLE_KEY=$SERVICE_KEY" >> $GITHUB_ENV
+
+          NEXT_PUBLIC_SUPABASE_URL="$SUPABASE_URL" \
+          NEXT_PUBLIC_SUPABASE_ANON_KEY="$ANON_KEY" \
+          SUPABASE_SERVICE_ROLE_KEY="$SERVICE_KEY" \
           node scripts/seed-local-database.js
 
       - name: Install Playwright Browsers & OS Dependencies
@@ -59,6 +93,12 @@ jobs:
 
       - name: Download & Setup Official LiveKit Server
         run: node scripts/setup-livekit-server.js &
+
+      - name: Run Secret Audit Negative Test Harness
+        run: node scripts/test-secret-audit-negative.js
+
+      - name: Run Tracked-File Secret & Environment Security Audit
+        run: node scripts/test-secret-env-audit.js
 
       - name: Run ESLint
         run: npm run lint

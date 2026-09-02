@@ -1,4 +1,6 @@
-process.env.GAME_EVALUATION_SECRET = process.env.GAME_EVALUATION_SECRET || "sync_test_game_evaluation_secret_key_2026_super_secure";
+if (!process.env.GAME_EVALUATION_SECRET || process.env.GAME_EVALUATION_SECRET.trim().length === 0) {
+  throw new Error("GAME_EVALUATION_SECRET environment variable is required.");
+}
 
 import {
   isClassroomEvent,

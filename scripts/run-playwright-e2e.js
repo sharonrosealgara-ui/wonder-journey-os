@@ -3,13 +3,39 @@ const path = require("path");
 const fs = require("fs");
 const http = require("http");
 const { spawn, execSync } = require("child_process");
+const { createClient } = require("@supabase/supabase-js");
 const { startOfficialLiveKitServer } = require("./setup-livekit-server");
-const { createLocalSupabaseMockServer } = require("./local-supabase-mock");
+const { requireE2ECredentials } = require("./e2e-credentials-helper");
 
 console.log("================================================================================");
 console.log("WONDER JOURNEY OS — REAL BROWSER TWO-CONTEXT CLASSROOM E2E SUITE (PLAYWRIGHT)");
 console.log("Stage 12.1R.10: No Fallback Runtime Proof & Database-Enforced Synchronized Stage");
 console.log("================================================================================\n");
+
+// Require all necessary credentials fail-closed with zero hardcoded fallbacks
+const { teacherPassword, familyPassword } = requireE2ECredentials();
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const livekitApiKey = process.env.LIVEKIT_API_KEY;
+const livekitApiSecret = process.env.LIVEKIT_API_SECRET;
+const gameEvaluationSecret = process.env.GAME_EVALUATION_SECRET;
+const livekitUrl = process.env.LIVEKIT_URL || "ws://127.0.0.1:7880";
+const livekitWsUrl = process.env.NEXT_PUBLIC_LIVEKIT_WS_URL || "ws://127.0.0.1:7880";
+
+process.env.LIVEKIT_URL = livekitUrl;
+process.env.NEXT_PUBLIC_LIVEKIT_WS_URL = livekitWsUrl;
+
+if (!supabaseUrl || !supabaseAnonKey || !supabaseServiceRoleKey) {
+  console.error("FAIL: Supabase URL, anon key, and service-role key are strictly required.");
+  process.exit(1);
+}
+
+if (!livekitApiKey || !livekitApiSecret || !gameEvaluationSecret) {
+  console.error("FAIL: LiveKit API key/secret and GAME_EVALUATION_SECRET are strictly required.");
+  process.exit(1);
+}
 
 const screenshotDir = path.join(__dirname, "../artifacts/screenshots");
 if (!fs.existsSync(screenshotDir)) {
@@ -30,36 +56,45 @@ const VIEWPORTS = [
 
 function isServerRunning(url) {
   return new Promise((resolve) => {
-    const req = http.get(url, (res) => {
-      resolve(res.statusCode >= 200 && res.statusCode < 500);
-    });
-    req.on("error", () => resolve(false));
-    req.setTimeout(2000, () => {
-      req.destroy();
+    try {
+      const parsedUrl = new URL(url);
+      const req = http.get(url, (res) => {
+        resolve(res.statusCode >= 200 && res.statusCode < 500);
+      });
+      req.on("error", () => resolve(false));
+      req.setTimeout(2000, () => {
+        req.destroy();
+        resolve(false);
+      });
+    } catch (e) {
       resolve(false);
-    });
+    }
   });
 }
 
 async function ensureNextServer() {
   killPort(3000);
-  console.log("Starting Next.js server on http://localhost:3000 with local environment...");
-  const serverProcess = spawn(process.execPath, [path.join(__dirname, "../node_modules/next/dist/bin/next"), "start", "-p", "3000"], {
-    cwd: path.join(__dirname, ".."),
-    stdio: "pipe",
-    env: {
-      ...process.env,
-      PORT: "3000",
-      NODE_ENV: "production",
-      GAME_EVALUATION_SECRET: "wj_stage_12_1_game_evaluation_secret_key_2026_super_secure",
-      NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL || "http://127.0.0.1:54321",
-      NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "test-anon-key",
-      SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY || "test-service-role-key",
-      LIVEKIT_URL: "ws://127.0.0.1:7880",
-      LIVEKIT_API_KEY: "devkey",
-      LIVEKIT_API_SECRET: "secret",
+  console.log("Starting Next.js server on http://localhost:3000 with isolated child-process environment...");
+
+  // Strict child-process environment isolation: remove E2E passwords from Next.js process
+  const nextEnv = { ...process.env };
+  delete nextEnv.E2E_TEACHER_PASSWORD;
+  delete nextEnv.E2E_FAMILY_PASSWORD;
+  nextEnv.PORT = "3000";
+  nextEnv.NODE_ENV = "production";
+  nextEnv.NEXT_TELEMETRY_DISABLED = "1";
+  nextEnv.LIVEKIT_URL = livekitUrl;
+  nextEnv.NEXT_PUBLIC_LIVEKIT_WS_URL = livekitWsUrl;
+
+  const serverProcess = spawn(
+    process.execPath,
+    [path.join(__dirname, "../node_modules/next/dist/bin/next"), "start", "-p", "3000"],
+    {
+      cwd: path.join(__dirname, ".."),
+      stdio: "pipe",
+      env: nextEnv,
     }
-  });
+  );
 
   for (let i = 0; i < 30; i++) {
     await new Promise((r) => setTimeout(r, 1000));
@@ -91,7 +126,6 @@ function killPort(port) {
 }
 
 async function runRealClassroomE2ESuite() {
-  let authServer = null;
   let livekitServerProc = null;
   let serverProc = null;
   let browser = null;
@@ -111,15 +145,35 @@ async function runRealClassroomE2ESuite() {
   }
 
   try {
-    // 1. Check if Supabase / DB is available, otherwise start local mock auth server for smoke test
-    const dbRunning = await isServerRunning(process.env.NEXT_PUBLIC_SUPABASE_URL || "http://127.0.0.1:54321");
+    // 1. Verify Real Local Supabase Database & Seeded Credentials Preflight (Fail-Closed)
+    console.log("Checking real local Supabase database accessibility...");
+    const dbRunning = await isServerRunning(supabaseUrl);
     if (!dbRunning) {
-      killPort(54321);
-      authServer = await createLocalSupabaseMockServer(54321);
-      console.log("✓ Local Supabase Authentication Server active on port 54321");
-    } else {
-      console.log("✓ Real local Supabase / PostgreSQL database detected on port 54321");
+      throw new Error(`Real local Supabase database is not accessible at ${supabaseUrl}. Gate 26 requires real Supabase stack (no mocks).`);
     }
+    console.log(`✓ Real local Supabase database detected and responsive at ${supabaseUrl}`);
+
+    console.log("Running Gate 26 authentication preflight check against seeded Supabase auth...");
+    const preflightClient = createClient(supabaseUrl, supabaseAnonKey, {
+      auth: { autoRefreshToken: false, persistSession: false },
+    });
+
+    const { data: tAuth, error: tErr } = await preflightClient.auth.signInWithPassword({
+      email: "teacher@wonderjourney.app",
+      password: teacherPassword,
+    });
+    if (tErr || !tAuth?.session) {
+      throw new Error(`Gate 26 preflight authentication failed for teacher: ${tErr ? tErr.message : "No session"}`);
+    }
+
+    const { data: fAuth, error: fErr } = await preflightClient.auth.signInWithPassword({
+      email: "family@wonderjourney.app",
+      password: familyPassword,
+    });
+    if (fErr || !fAuth?.session) {
+      throw new Error(`Gate 26 preflight authentication failed for family: ${fErr ? fErr.message : "No session"}`);
+    }
+    console.log("✓ Gate 26 preflight verified: Teacher and family credentials valid in real Supabase");
 
     // 2. Start Official LiveKit Server on port 7880
     killPort(7880);
@@ -161,7 +215,7 @@ async function runRealClassroomE2ESuite() {
     await teacherPage.goto("http://localhost:3000/login", { waitUntil: "domcontentloaded", timeout: 20000 });
     await teacherPage.waitForSelector("input[name='email']", { timeout: 10000 });
     await teacherPage.fill("input[name='email']", "teacher@wonderjourney.app");
-    await teacherPage.fill("input[name='password']", "Teacher123!");
+    await teacherPage.fill("input[name='password']", teacherPassword);
     await teacherPage.click("button:has-text('Sign In')");
     await teacherPage.waitForURL((url) => url.pathname.includes("/teacher") || url.pathname.includes("/classroom"), { timeout: 15000 });
 
@@ -184,7 +238,7 @@ async function runRealClassroomE2ESuite() {
     await studentPage.goto("http://localhost:3000/login", { waitUntil: "domcontentloaded", timeout: 20000 });
     await studentPage.waitForSelector("input[name='email']", { timeout: 10000 });
     await studentPage.fill("input[name='email']", "family@wonderjourney.app");
-    await studentPage.fill("input[name='password']", "Family123!");
+    await studentPage.fill("input[name='password']", familyPassword);
     await studentPage.click("button:has-text('Sign In')");
     await studentPage.waitForURL((url) => url.pathname.includes("/family") || url.pathname.includes("/classroom"), { timeout: 15000 });
 
@@ -566,7 +620,6 @@ async function runRealClassroomE2ESuite() {
     errors.push(err.message);
   } finally {
     if (browser) await browser.close();
-    if (authServer) authServer.close();
     if (livekitServerProc) {
       livekitServerProc.kill("SIGTERM");
       if (process.platform === "win32") {

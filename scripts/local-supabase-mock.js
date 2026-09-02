@@ -1,26 +1,31 @@
 const http = require("http");
 
 function createLocalSupabaseMockServer(port = 54321) {
+  const teacherPassword = process.env.E2E_TEACHER_PASSWORD || "";
+  const familyPassword = process.env.E2E_FAMILY_PASSWORD || "";
+
   const users = {
     "teacher@wonderjourney.app": {
       id: "e8b1d977-9b2f-4e94-8bf4-6ef26e5a0001",
       email: "teacher@wonderjourney.app",
       role: "teacher",
       display_name: "Teacher Sharon",
-      family_id: "fam_del_rosario"
+      family_id: "fam_del_rosario",
+      password: teacherPassword,
     },
     "family@wonderjourney.app": {
       id: "f8b1d977-9b2f-4e94-8bf4-6ef26e5a0002",
       email: "family@wonderjourney.app",
       role: "family",
       display_name: "David Del Rosario",
-      family_id: "fam_del_rosario"
+      family_id: "fam_del_rosario",
+      password: familyPassword,
     }
   };
 
   const tokens = {
-    "tok_teacher_jwt_secret_001": users["teacher@wonderjourney.app"],
-    "tok_family_jwt_secret_002": users["family@wonderjourney.app"]
+    "tok_teacher_jwt_mock_001": users["teacher@wonderjourney.app"],
+    "tok_family_jwt_mock_002": users["family@wonderjourney.app"]
   };
 
   const defaultWorkspaceId = "a8b1d977-9b2f-4e94-8bf4-6ef26e5a0010";
@@ -32,7 +37,6 @@ function createLocalSupabaseMockServer(port = 54321) {
   const boardSnapshots = [];
 
   const server = http.createServer((req, res) => {
-    // Set CORS
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, OPTIONS");
     res.setHeader("Access-Control-Allow-Headers", "*");
@@ -52,8 +56,8 @@ function createLocalSupabaseMockServer(port = 54321) {
         try {
           const parsed = JSON.parse(body || "{}");
           const user = users[parsed.email];
-          if (user && (parsed.password === "Teacher123!" || parsed.password === "Family123!" || parsed.password.length >= 6)) {
-            const token = user.role === "teacher" ? "tok_teacher_jwt_secret_001" : "tok_family_jwt_secret_002";
+          if (user && user.password && parsed.password === user.password) {
+            const token = user.role === "teacher" ? "tok_teacher_jwt_mock_001" : "tok_family_jwt_mock_002";
             res.writeHead(200, { "Content-Type": "application/json" });
             res.end(JSON.stringify({
               access_token: token,
@@ -184,7 +188,6 @@ function createLocalSupabaseMockServer(port = 54321) {
         const targetLesson = lessonFilter ? lessonFilter.replace("eq.", "") : "lesson-1-world-map";
         const targetStatus = statusFilter ? statusFilter.replace("eq.", "") : "active";
 
-        // Rejection for non-existent session IDs or cross-workspace mismatches
         if (targetId.includes("fake") || targetId.includes("invalid") || targetId.includes("forged") || targetWorkspace.includes("other") || targetStatus === "completed") {
           res.writeHead(200, { "Content-Type": "application/json" });
           res.end(JSON.stringify([]));
@@ -291,7 +294,6 @@ function createLocalSupabaseMockServer(port = 54321) {
             }
 
             if (global.__MOCK_CONSUMED_NONCES__.has(nonce)) {
-              // 409 Conflict: duplicate key value violates unique constraint "game_evaluation_nonces_pkey"
               res.writeHead(409, { "Content-Type": "application/json" });
               res.end(JSON.stringify({
                 code: "23505",
@@ -327,7 +329,6 @@ function createLocalSupabaseMockServer(port = 54321) {
   return new Promise((resolve, reject) => {
     server.once("error", (err) => {
       if (err.code === "EADDRINUSE") {
-        // Mock server is already running on this port; reuse it
         resolve({
           close: (cb) => { if (cb) cb(); },
           isReused: true

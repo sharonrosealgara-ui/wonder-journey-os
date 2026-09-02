@@ -62,6 +62,13 @@ async function downloadBinary() {
 }
 
 async function startOfficialLiveKitServer(port = 7880) {
+  const apiKey = process.env.LIVEKIT_API_KEY;
+  const apiSecret = process.env.LIVEKIT_API_SECRET;
+
+  if (!apiKey || !apiSecret) {
+    throw new Error("LIVEKIT_API_KEY and LIVEKIT_API_SECRET environment variables are required to start LiveKit server.");
+  }
+
   try {
     const res = await fetch(`http://127.0.0.1:${port}/`);
     if (res.status === 200 || res.status === 404 || res.status === 400) {
@@ -71,9 +78,9 @@ async function startOfficialLiveKitServer(port = 7880) {
   } catch (e) {}
 
   const binary = await downloadBinary();
-  console.log(`[LIVEKIT] Launching official LiveKit server in dev mode on port ${port}...`);
+  console.log(`[LIVEKIT] Launching official LiveKit server on port ${port}...`);
 
-  // Write a dedicated livekit dev config to bind port and keys
+  // Write a dedicated livekit dev config to bind port and dynamic ephemeral keys
   const configPath = path.join(binDir, 'livekit-dev-config.yaml');
   const yamlContent = `port: ${port}
 bind_addresses:
@@ -84,8 +91,7 @@ rtc:
   port_range_end: 50050
   use_external_ip: false
 keys:
-  synthetic-livekit-api-key: synthetic-livekit-api-secret-1234567890abcdef
-  devkey: secret
+  ${apiKey}: ${apiSecret}
 logging:
   level: info
 `;
@@ -136,7 +142,7 @@ if (require.main === module) {
   startOfficialLiveKitServer().then((proc) => {
     console.log(`LiveKit Server running with PID ${proc.pid}. Press Ctrl+C to stop.`);
   }).catch((err) => {
-    console.error('Failed to start LiveKit server:', err);
+    console.error('Failed to start LiveKit server:', err.message);
     process.exit(1);
   });
 }

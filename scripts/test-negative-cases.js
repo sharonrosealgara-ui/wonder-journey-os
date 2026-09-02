@@ -2,8 +2,10 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 
-// Set required secret for evaluation test suite
-process.env.GAME_EVALUATION_SECRET = process.env.GAME_EVALUATION_SECRET || "test_secret_key_for_evaluation_2026_secure";
+if (!process.env.GAME_EVALUATION_SECRET || process.env.GAME_EVALUATION_SECRET.trim().length === 0) {
+  console.error("FAIL: GAME_EVALUATION_SECRET environment variable is required.");
+  process.exit(1);
+}
 
 const {
   generateServerLearnerGame,

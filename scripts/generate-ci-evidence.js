@@ -27,8 +27,8 @@ const serverUrl = process.env.GITHUB_SERVER_URL || "https://github.com";
 const workflowRunUrl = `${serverUrl}/${repo}/actions/runs/${runId}`;
 
 const evidence = {
-  stage: "Stage 12.1R.7",
-  title: "No Self-Attestation Final Correction — CI Evidence",
+  stage: "Stage 12.1R.10",
+  title: "Stage 12.1R.10 Exact-SHA CI Verification Evidence",
   generatedAt: new Date().toISOString(),
   runnerContext: {
     platform: process.env.CI ? "GitHub Actions CI Runner" : "Local Environment",

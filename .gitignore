@@ -16,3 +16,6 @@ bin/
 temp-sync-gen/
 .temp/
 supabase/.temp/
+
+# generated exact-SHA CI evidence
+artifacts/ci-verification-evidence.json

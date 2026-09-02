@@ -257,26 +257,28 @@ async function runRealClassroomE2ESuite() {
     console.log("\n▶ Step 2: Classroom Entry & Presence");
 
     console.log("  Teacher entering /classroom...");
-    await teacherPage.goto("http://localhost:3000/classroom", { waitUntil: "domcontentloaded", timeout: 20000 });
+    await teacherPage.goto("http://localhost:3000/classroom", { waitUntil: "networkidle", timeout: 20000 }).catch(async () => {
+      await teacherPage.goto("http://localhost:3000/classroom", { waitUntil: "domcontentloaded", timeout: 20000 });
+    });
     const teacherEnterBtn = teacherPage.locator("button:has-text('Enter Classroom')").first();
-    if (await teacherEnterBtn.isVisible({ timeout: 5000 })) {
-      await teacherEnterBtn.click();
-    }
-    await teacherPage.waitForSelector("[data-testid='classroom-stage']", { timeout: 15000 });
+    await teacherEnterBtn.waitFor({ state: "visible", timeout: 15000 });
+    await teacherEnterBtn.click();
+    await teacherPage.waitForSelector("[data-testid='classroom-stage']", { timeout: 20000 });
 
     console.log("  Student entering /classroom...");
-    await studentPage.goto("http://localhost:3000/classroom", { waitUntil: "domcontentloaded", timeout: 20000 });
+    await studentPage.goto("http://localhost:3000/classroom", { waitUntil: "networkidle", timeout: 20000 }).catch(async () => {
+      await studentPage.goto("http://localhost:3000/classroom", { waitUntil: "domcontentloaded", timeout: 20000 });
+    });
     const studentEnterBtn = studentPage.locator("button:has-text('Enter Classroom')").first();
-    if (await studentEnterBtn.isVisible({ timeout: 5000 })) {
-      await studentEnterBtn.click();
-    }
-    await studentPage.waitForSelector("[data-testid='classroom-stage']", { timeout: 15000 });
+    await studentEnterBtn.waitFor({ state: "visible", timeout: 15000 });
+    await studentEnterBtn.click();
+    await studentPage.waitForSelector("[data-testid='classroom-stage']", { timeout: 20000 });
 
     const teacherStage = teacherPage.locator("[data-testid='classroom-stage']").first();
     const studentStage = studentPage.locator("[data-testid='classroom-stage']").first();
 
-    const teacherStageVisible = await teacherStage.isVisible({ timeout: 5000 });
-    const studentStageVisible = await studentStage.isVisible({ timeout: 5000 });
+    const teacherStageVisible = await teacherStage.isVisible();
+    const studentStageVisible = await studentStage.isVisible();
 
     assert("Teacher classroom 16:9 stage is active and rendered in DOM", teacherStageVisible);
     assert("Student classroom 16:9 stage is active and rendered in DOM", studentStageVisible);
@@ -292,13 +294,15 @@ async function runRealClassroomE2ESuite() {
     console.log("\n▶ Step 3: Media Provenance Modal Verification");
 
     const creditsBtn = teacherPage.locator("button:has-text('Media Credits')").first();
-    const hasCreditsBtn = await creditsBtn.isVisible({ timeout: 4000 });
+    await creditsBtn.waitFor({ state: "visible", timeout: 10000 });
+    const hasCreditsBtn = await creditsBtn.isVisible();
     assert("Teacher has Media Credits provenance control in UI", hasCreditsBtn);
 
     await creditsBtn.click();
     await teacherPage.waitForTimeout(800);
     const modal = teacherPage.locator("[role='dialog'], h2:has-text('Media Provenance')").first();
-    const modalVisible = await modal.isVisible({ timeout: 3000 });
+    await modal.waitFor({ state: "visible", timeout: 5000 });
+    const modalVisible = await modal.isVisible();
     assert("Media Credits modal opened in real UI displaying provenance metadata", modalVisible);
 
     const closeBtn = teacherPage.locator("button[aria-label='Close media provenance dialog'], button:has-text('✕')").first();
@@ -492,14 +496,14 @@ async function runRealClassroomE2ESuite() {
     await studentPage.waitForURL((url) => url.pathname.includes("/family"), { timeout: 8000 });
 
     // Rejoin with newly issued LiveKit token
-    await studentPage.goto("http://localhost:3000/classroom", { waitUntil: "networkidle", timeout: 15000 });
+    await studentPage.goto("http://localhost:3000/classroom", { waitUntil: "networkidle", timeout: 20000 }).catch(async () => {
+      await studentPage.goto("http://localhost:3000/classroom", { waitUntil: "domcontentloaded", timeout: 20000 });
+    });
     const reEnterBtn = studentPage.locator("button:has-text('Enter Classroom')").first();
-    if (await reEnterBtn.isVisible({ timeout: 4000 })) {
-      await reEnterBtn.click();
-      await studentPage.waitForTimeout(1000);
-    }
+    await reEnterBtn.waitFor({ state: "visible", timeout: 15000 });
+    await reEnterBtn.click();
 
-    await studentPage.waitForSelector("[data-testid='classroom-stage']", { timeout: 15000 });
+    await studentPage.waitForSelector("[data-testid='classroom-stage']", { timeout: 20000 });
     const restoredStage = await studentPage.locator("[data-testid='classroom-stage']").first().isVisible();
     assert(
       "Action 8: Active lesson state restored upon student disconnect and reconnection",

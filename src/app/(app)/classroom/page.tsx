@@ -38,7 +38,6 @@ export default function ClassroomPage() {
   const [activeStudentId] = useStored<string | null>(KEYS.activeStudent, null);
   const student = getStudent(activeStudentId);
   const [name, setName] = useState("");
-  const [classCode] = useStored<string>("classCode", "");
   const [lesson, setLesson] = useState<Lesson | null>(null);
   const [joinError, setJoinError] = useState<string | null>(null);
   const [joining, setJoining] = useState(false);

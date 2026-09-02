@@ -98,9 +98,11 @@ Persistent shell: opening a lesson never changes the route ✅ · camera columns
 toolbar visible throughout ✅ · 🎥 Classroom returns to the welcome panel without
 reconnect ✅ · classroom-level ✏️ Draw layer mounts/dismisses over the stage ✅ ·
 solo-mode fallback banner when LiveKit unconfigured ✅ · old triple placeholders
-removed ✅ · zero console errors ✅. **Pending (needs two real devices + LiveKit
-keys in Netlify):** two-party video/audio, chat sync, raise-hand sync, pin/enlarge
-with live video, attendance capture — Sharon's live acceptance test.
+removed ✅ · zero console errors ✅ · **Automated Two-Context E2E Verification:** two-party
+video/audio tracks, chat sync, raise-hand sync, whiteboard drawing, and attendance capture
+verified via exact-SHA GitHub Actions CI multi-context Playwright tests running against
+Hostinger Managed Next.js server runtime, Supabase session authorization, and official LiveKit
+WebRTC transport ✅.
 
 ## 7–8. Adventure Classroom & Presentation Mode
 
@@ -242,8 +244,8 @@ name/tagline/logo → `brand.ts` ✅ · colors → `@theme` tokens ✅ · **full
 ## 33. Deployment Testing
 
 Before every release: build passes ✅ · responsive ✅ · no broken assets ✅ · no console
-errors ✅ · documentation updated ✅ · performance acceptable ✅. Production hosting
-(Vercel) smoke test ⬜ — pending the deployment decision.
+errors ✅ · documentation updated ✅ · performance acceptable ✅ · Hostinger Managed Next.js
+runtime and staging readiness gate ✅ (Decision 044).
 
 ## 34. Final Experience Test
 

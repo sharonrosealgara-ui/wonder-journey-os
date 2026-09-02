@@ -126,7 +126,42 @@ const legacyFilesAbsent =
   !fs.existsSync("functions");
 assert(legacyFilesAbsent, "Legacy Cloudflare functions and Netlify files are completely absent and untracked");
 
-// 12. Deployment Runbook Documentation
+// 12. Production Source Cleanliness & Legacy Residue Scanner
+function checkLegacyResidue(dir) {
+  let issues = 0;
+  const files = fs.readdirSync(dir);
+  for (const f of files) {
+    const full = path.join(dir, f);
+    if (f === "node_modules" || f === ".next" || f === ".git" || f === "temp-render-test") continue;
+    if (fs.statSync(full).isDirectory()) {
+      issues += checkLegacyResidue(full);
+    } else if (/\.(ts|tsx|js|jsx)$/.test(f)) {
+      const content = fs.readFileSync(full, "utf8");
+      const forbiddenPatterns = [
+        /\bAccessGate\b/,
+        /\bWJ_CLASS_CODE\b/,
+        /\bCLASSROOM_CODE\b/,
+        /class-code authorization/i,
+        /shared classroom code/i,
+        /export for Netlify/i,
+        /deploy to Netlify/i,
+        /deploy to Cloudflare/i,
+        /Cloudflare Pages Function/i,
+      ];
+      for (const pattern of forbiddenPatterns) {
+        if (pattern.test(content)) {
+          console.error(`Forbidden legacy operational reference found matching ${pattern} in ${full}`);
+          issues++;
+        }
+      }
+    }
+  }
+  return issues;
+}
+const legacyResidueIssues = checkLegacyResidue("src");
+assert(legacyResidueIssues === 0, "Tracked production source in src/ contains zero stale references to AccessGate, class-code authorization, or Netlify/Cloudflare deployments");
+
+// 13. Deployment Runbook Documentation
 const docPath = "docs/deployment/HOSTINGER_DEPLOYMENT.md";
 assert(fs.existsSync(docPath), `${docPath} exists`);
 if (fs.existsSync(docPath)) {

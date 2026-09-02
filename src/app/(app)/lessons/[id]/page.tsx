@@ -1,8 +1,8 @@
-﻿import Link from "next/link";
+import Link from "next/link";
 import { getLesson, lessons } from "@/config/lessons";
 import { LessonView } from "./lesson-view";
 
-// Pre-render one static page per lesson (static export for Netlify).
+// Pre-render lesson routes for efficient Hostinger Managed Next.js delivery.
 export function generateStaticParams() {
   return lessons.map((l) => ({ id: l.id }));
 }

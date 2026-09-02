@@ -14,8 +14,9 @@ import { useStored } from "@/lib/storage";
 // and only "End" turns them off. Hidden on /classroom, which shows the
 // full-size room instead.
 //
-// The class code is handled once at the front door (AccessGate), so
-// there is never a code prompt here.
+// LiveKit access and permissions are authorized via Supabase authentication,
+// active classroom-session records, workspace participant records, and
+// server-derived roles.
 
 type DockPref = "on" | "min" | "off";
 
@@ -84,7 +85,7 @@ export function CameraDock() {
   }
 
   // EXACTLY TWO CAMERAS: one Family, one Teacher — each picked by the
-  // role the SERVER assigned from the code. Never a doubled tile.
+  // role the SERVER derived from Supabase session and workspace records. Never a doubled tile.
   const familyP = call.participants.find((p) => participantRole(p) === "family") ?? null;
   const teacherP = call.participants.find((p) => participantRole(p) === "teacher") ?? null;
   const localP = call.room?.localParticipant ?? null;

@@ -55,7 +55,7 @@ export type JoinOptions = {
   micOn: boolean;
 };
 
-export type JoinResult = "connected" | "solo" | "wrong_code" | "error";
+export type JoinResult = "connected" | "solo" | "unauthorized" | "error";
 
 type CallCtx = {
   status: CallStatus;
@@ -149,7 +149,7 @@ export function CallProvider({ children }: { children: React.ReactNode }) {
         });
         if (res.status === 401) {
           setStatus("idle");
-          return "wrong_code";
+          return "unauthorized";
         }
         if (res.status === 400) {
           setStatus("idle");

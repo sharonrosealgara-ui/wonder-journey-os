@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { celebrations, daysUntil, type Celebration } from "@/config/celebrations";
 import { familyMembers, teacherMember, type FamilyMember } from "@/config/family";
 import { KEYS, todayISO, type VoiceGift } from "@/lib/app-state";
-import { sendEvent } from "@/lib/cloud-sync";
 import { newId, useStored } from "@/lib/storage";
 
 // 🎙️ BIRTHDAY VOICE GIFTS
@@ -119,7 +118,6 @@ export function VoiceGifts() {
       audio: preview.audio,
     };
     setGifts((g) => [gift, ...g].slice(0, KEEP_MOST_RECENT));
-    sendEvent("voice.gift", { from: sender.name, to: celeb.name });
     setPreview(null);
     setRec("idle");
     setSent(true);

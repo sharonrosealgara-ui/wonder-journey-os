@@ -437,7 +437,23 @@ Decisions 001–028 are the founding product decisions (ratified at project ince
 
 ---
 
-IDs 044+ are reserved. Log a new entry for: new dependencies, data-model changes,
+## Decision 044 — Hostinger Managed Next.js as the Sole Approved Application Runtime
+**Date:** 2026-09-02 · **Status:** Active
+- **Context:** Previous staging and prototyping iterations tested Cloudflare Pages (with static export and edge functions) and Netlify Functions (with @netlify/blobs). Next.js 15 App Router dynamic server features, Supabase Auth SSR session cookies, and Server Actions required a unified, robust Node.js runtime.
+- **Decision:** Ratified **Hostinger Managed Next.js** (running Node.js 22.x LTS) as the sole approved application runtime for production and staging deployments.
+- **Implementation:**
+  1. Deprecated and removed legacy edge runtimes (`functions/`, `netlify/`, `netlify.toml`, `@netlify/blobs`).
+  2. Next.js App Router runs in standard dynamic server mode (`next start`), utilizing hybrid static generation for content pages and dynamic server handling for authenticated API endpoints and Server Actions.
+  3. Supabase SSR auth with secure HTTP-only cookies and Row-Level Security (RLS) policies serves as the single source of truth for identity and data persistence.
+  4. LiveKit WebRTC token minting runs via secure server route handlers (`/api/livekit-token`) with database authorization.
+- **Reasoning:** Eliminates fragmentation across conflicting hosting providers, delivers full Next.js 15 feature parity, ensures strict zero-secret browser safety, and provides a predictable, cost-effective production deployment environment.
+- **Alternatives considered:** Cloudflare Pages (rejected due to static export limitations and edge runtime constraints); Netlify (rejected to consolidate operations under Hostinger).
+- **Benefits:** Single unified deployment workflow, full SSR support, simplified CI validation pipeline, robust security governance.
+- **Future review:** Maintain Hostinger deployment runbook in `docs/deployment/HOSTINGER_DEPLOYMENT.md` and enforce via automated Hostinger readiness validation gate.
+
+---
+
+IDs 045+ are reserved. Log a new entry for: new dependencies, data-model changes,
 schedule/curriculum shape changes, backend migration steps, and anything a future
 developer would ask "why is it like this?" about. Never delete; supersede.
 

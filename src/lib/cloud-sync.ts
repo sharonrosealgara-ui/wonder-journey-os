@@ -1,22 +1,18 @@
 "use client";
 
 // ─────────────────────────────────────────────────────────────
-// CLOUD SYNC (Phase: real front-end + back-end)
+// CLOUD SYNC
 // localStorage stays the fast local cache; this layer mirrors the
-// family's precious records to the Netlify backend (Netlify Blobs
-// via /api/family-data) and emits typed events to /api/events so
-// Make.com automations can react to real family activity.
+// family's records to authenticated Supabase database actions.
 //
 // Design rules honored:
 //  • Prayer content is synced only as part of the family's own
 //    journal records — never scored, counted, or gamified.
-//  • The class code is the family's shared secret: no code, no sync.
-//  • Offline-first: every failure is silent; the app never breaks
-//    when the backend is unreachable.
+//  • Authenticated Supabase session required.
+//  • Offline-first: errors handled gracefully without breaking UI.
 // ─────────────────────────────────────────────────────────────
 
 import { readStored, writeStored } from "@/lib/storage";
-import { familySlug } from "@/config/family";
 import { pullFromSupabaseAction, pushToSupabaseAction } from "./supabase-actions";
 
 // Records that matter across devices. (Photos/memories can be large;
@@ -36,15 +32,10 @@ const SYNC_KEYS = [
 
 const EVENT = "wjos-storage"; // fired by lib/storage on every write
 const PUSH_DEBOUNCE_MS = 4000;
-const MAX_PAYLOAD = 900_000; // stay well under function limits
 
 let started = false;
 let pushTimer: ReturnType<typeof setTimeout> | null = null;
 const dirty = new Set<string>();
-
-function code(): string {
-  return readStored<string>("classCode", "");
-}
 
 /** Merge two arrays of records by `id` — union, local edits win. */
 function mergeById(local: unknown, remote: unknown): unknown {
@@ -107,25 +98,6 @@ export async function pushCloud(keys?: string[]): Promise<boolean> {
   }
 }
 
-/** Fire a typed event for Make.com automations. Fire-and-forget. */
-export function sendEvent(type: string, detail: Record<string, unknown> = {}): void {
-  const c = code();
-  if (!c) return;
-  try {
-    void fetch("/api/events", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-family-code": c,
-        "x-family": familySlug,
-      },
-      body: JSON.stringify({ type, family: familySlug, at: new Date().toISOString(), ...detail }),
-    }).catch(() => {});
-  } catch {
-    /* offline — fine */
-  }
-}
-
 /**
  * Start cloud sync: pull once, then watch local writes and push
  * changes (debounced). Safe to call many times — runs once.
@@ -144,9 +116,7 @@ export function initCloudSync(): void {
     pushTimer = setTimeout(() => {
       const keys = [...dirty];
       dirty.clear();
-      void pushCloud(keys).then((ok) => {
-        if (ok) sendEvent("data.updated", { keys });
-      });
+      void pushCloud(keys);
     }, PUSH_DEBOUNCE_MS);
   });
 

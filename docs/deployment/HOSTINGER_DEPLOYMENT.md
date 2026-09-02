@@ -111,12 +111,13 @@ Configure the following environment variables in hPanel under **Web Apps → Env
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | `NEXT_PUBLIC_SUPABASE_URL` | Public (Client) | **YES** | Supabase Staging Project URL | Supabase Production Project URL | Build & Runtime | **YES** |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Public (Client) | **YES** | Supabase Staging `anon` public key | Supabase Production `anon` public key | Build & Runtime | **YES** |
+| `SUPABASE_SERVICE_ROLE_KEY` | Server-Only (Secret)| **YES** | Supabase Staging `service_role` secret | Supabase Production `service_role` secret | Runtime | NO |
 | `NEXT_PUBLIC_SITE_URL` | Public (Client) | **YES** | `https://staging.YOUR-DOMAIN.com` | `https://YOUR-DOMAIN.com` | Build & Runtime | **YES** |
 | `NEXT_PUBLIC_IS_STAGING` | Public (Client) | Optional | `true` | `false` | Build & Runtime | **YES** |
-| `WJ_CLASS_CODE` | Server-Only | Optional | Custom Classroom Code | Custom Classroom Code | Runtime | NO |
 | `LIVEKIT_URL` | Server-Only | Optional | LiveKit Cloud WebSocket URL | LiveKit Cloud WebSocket URL | Runtime | NO |
 | `LIVEKIT_API_KEY` | Server-Only (Secret)| Optional | LiveKit Cloud API Key | LiveKit Cloud API Key | Runtime | NO |
 | `LIVEKIT_API_SECRET` | Server-Only (Secret)| Optional | LiveKit Cloud API Secret | LiveKit Cloud API Secret | Runtime | NO |
+| `GAME_EVALUATION_SECRET` | Server-Only (Secret)| **YES** | 32-byte cryptographic secret | 32-byte cryptographic secret | Runtime | NO |
 | `NODE_ENV` | Server-Only | Auto | `production` | `production` | Runtime | NO |
 
 > [!IMPORTANT]

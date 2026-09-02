@@ -26,8 +26,8 @@ Each scene below gives you four things:
 - **Transitions:** use the same one throughout (a gentle "Dissolve" or "Slide") so it feels calm, not busy.
 
 ### How to get the app footage
-1. Open `https://wonder-journey-os.netlify.app/?guest=1` (guest link — no code needed).
-2. Use your screen recorder (the one in your taskbar) to record short 5–10 sec clips of each page as you click through.
+1. Open the application locally or on your Hostinger domain.
+2. Use your screen recorder to record short 5–10 sec clips of each page as you click through.
 3. Drag those clips onto the matching Canva slides, OR just take screenshots and add arrows/zoom in Canva.
 
 > 💡 Tip: record clips a little longer than you need — it's easier to trim in Canva than to re-record.
@@ -56,9 +56,9 @@ Each scene below gives you four things:
 
 ### Scene A3 — Live Classroom
 - ⏱️ 15 sec
-- 🎥 Show: the Live Classroom — the join screen with the class code box, then the room with the two cameras (Family above Teacher)
+- 🎥 Show: the Live Classroom — entering the session, then the room with the two cameras (Family above Teacher)
 - 💬 On-screen: **🎥 Live Classroom — see Teacher, together**
-- 🎙️ Say: "The Live Classroom is where you meet your teacher face to face. Type in your class code once, and you're in — your family's camera on top, your teacher's below. You'll learn, chat, raise a hand, and explore the lesson right on the same screen."
+- 🎙️ Say: "The Live Classroom is where you meet your teacher face to face. Join your active session, and you're in — your family's camera on top, your teacher's below. You'll learn, chat, raise a hand, and explore the lesson right on the same screen."
 
 ### Scene A4 — Adventure Map & the lesson
 - ⏱️ 14 sec
@@ -132,11 +132,10 @@ Each scene below gives you four things:
 
 ### Scene B5 — Getting a family started
 - ⏱️ 14 sec
-- 🎥 Show: a slide with the two link styles typed out clearly
+- 🎥 Show: a slide with the family sign-in portal
 - 💬 On-screen:
-  - **Invite a family:** `wonder-journey-os.netlify.app/?code=YOURCODE`
-  - **Just exploring:** `wonder-journey-os.netlify.app/?guest=1`
-- 🎙️ Say: "Getting a family started is simple. Send them their magic link with the class code inside — they tap it once and they're set up forever, cameras and all. Or share the guest link so a new family can explore everything first, no code needed."
+  - **Invite a family:** Sign in through the Family Portal
+- 🎙️ Say: "Getting a family started is simple. Invite them to sign in to their family account — they log in and are set up with their customized lessons and live classroom."
 
 ### Scene B6 — Closing
 - ⏱️ 8 sec

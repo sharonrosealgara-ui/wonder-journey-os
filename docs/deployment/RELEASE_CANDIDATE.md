@@ -1,4 +1,4 @@
-﻿# Wonder Journey OS — Release Candidate (RC) Verification & Delivery Package
+# Wonder Journey OS — Release Candidate (RC) Verification & Delivery Package
 
 **Version**: `0.1.0-rc.1`  
 **Stage**: `Stage 12 — Release Hardening, Local Production Verification, and Integration Delivery Gate`  
@@ -109,12 +109,14 @@ When Hostinger hosting is purchased by the project owner:
 2. **Configure Environment Variables in hPanel**:
    - `NEXT_PUBLIC_SUPABASE_URL`: Your Supabase Project URL
    - `NEXT_PUBLIC_SUPABASE_ANON_KEY`: Your Supabase `anon` Public Key
+   - `SUPABASE_SERVICE_ROLE_KEY`: Your Supabase `service_role` Secret Key
    - `NEXT_PUBLIC_SITE_URL`: `https://staging.YOUR-DOMAIN.com`
    - `NEXT_PUBLIC_IS_STAGING`: `true` (Disallows search engine indexing)
-   - `WJ_CLASS_CODE`: Your custom classroom passcode
    - `LIVEKIT_URL`: LiveKit Cloud WebSocket URL
    - `LIVEKIT_API_KEY`: LiveKit API Key
    - `LIVEKIT_API_SECRET`: LiveKit API Secret
+   - `GAME_EVALUATION_SECRET`: Cryptographic secret for server-evaluated games
+   - `NODE_ENV`: `production`
 3. **Configure Supabase Auth Allowlist**:
    - Add `https://staging.YOUR-DOMAIN.com/auth/callback` and `https://staging.YOUR-DOMAIN.com/reset-password` to Supabase Redirect URLs.
 4. **Trigger Deployment**:

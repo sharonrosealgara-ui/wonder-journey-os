@@ -19,3 +19,10 @@ supabase/.temp/
 
 # generated exact-SHA CI evidence
 artifacts/ci-verification-evidence.json
+
+# test and render temp files
+node22.zip
+temp-render-tsconfig.json
+temp-render-test/
+artifacts/scratch/
+supabase/.branches/

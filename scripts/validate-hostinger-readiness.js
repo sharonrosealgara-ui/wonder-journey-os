@@ -1,5 +1,6 @@
-﻿const fs = require("fs");
+const fs = require("fs");
 const path = require("path");
+const { execSync } = require("child_process");
 
 console.log("=========================================================");
 console.log("HOSTINGER DEPLOYMENT READINESS & STAGING PREPARATION GATE");
@@ -24,6 +25,7 @@ try {
   assert(pkg.name === "wonder-journey-os", "Root package.json exists with valid name");
   assert(pkg.scripts && pkg.scripts.build && pkg.scripts.start && pkg.scripts.dev, "package.json contains dev, build, and start scripts");
   assert(pkg.engines && pkg.engines.node, `package.json specifies Node.js engine: ${pkg.engines?.node}`);
+  assert(!pkg.dependencies?.["@netlify/blobs"], "package.json does not depend on legacy @netlify/blobs");
 } catch (e) {
   assert(false, `package.json is missing or invalid JSON: ${e.message}`);
 }
@@ -49,12 +51,13 @@ if (fs.existsSync(".env.example")) {
   const requiredEnvKeys = [
     "NEXT_PUBLIC_SUPABASE_URL",
     "NEXT_PUBLIC_SUPABASE_ANON_KEY",
+    "SUPABASE_SERVICE_ROLE_KEY",
     "NEXT_PUBLIC_SITE_URL",
     "NEXT_PUBLIC_IS_STAGING",
-    "WJ_CLASS_CODE",
     "LIVEKIT_URL",
     "LIVEKIT_API_KEY",
     "LIVEKIT_API_SECRET",
+    "GAME_EVALUATION_SECRET",
     "NODE_ENV"
   ];
   requiredEnvKeys.forEach(k => {
@@ -110,7 +113,20 @@ function checkLinuxPaths(dir) {
 const pathIssues = checkLinuxPaths("src");
 assert(pathIssues === 0, "All TypeScript import paths use standard POSIX forward slashes for Linux compatibility");
 
-// 11. Deployment Runbook Documentation
+// 11. Legacy Runtime Absence Assertions
+let trackedLegacyFiles = [];
+try {
+  const trackedOutput = execSync("git ls-files functions/ netlify.toml netlify/", { encoding: "utf8" });
+  trackedLegacyFiles = trackedOutput.trim().split("\n").filter(Boolean);
+} catch {}
+const legacyFilesAbsent =
+  trackedLegacyFiles.length === 0 &&
+  !fs.existsSync("netlify.toml") &&
+  !fs.existsSync("netlify") &&
+  !fs.existsSync("functions");
+assert(legacyFilesAbsent, "Legacy Cloudflare functions and Netlify files are completely absent and untracked");
+
+// 12. Deployment Runbook Documentation
 const docPath = "docs/deployment/HOSTINGER_DEPLOYMENT.md";
 assert(fs.existsSync(docPath), `${docPath} exists`);
 if (fs.existsSync(docPath)) {

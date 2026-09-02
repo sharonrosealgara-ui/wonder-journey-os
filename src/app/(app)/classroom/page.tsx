@@ -10,7 +10,7 @@ import { familyName, familySlug, getStudent, teacherName, students } from "@/con
 import { getTodaysLesson, lessons as allLessons, type Lesson } from "@/config/lessons";
 import { KEYS, todayISO } from "@/lib/app-state";
 import { getScreenShare, participantRole, useCall } from "@/lib/call-context";
-import { initCloudSync, sendEvent } from "@/lib/cloud-sync";
+import { initCloudSync } from "@/lib/cloud-sync";
 import { readStored, useStored } from "@/lib/storage";
 import { useAuth } from "@/lib/auth-context";
 import {
@@ -114,8 +114,8 @@ export default function ClassroomPage() {
       ...devices,
     });
     setJoining(false);
-    if (result === "wrong_code") {
-      setJoinError("That class code doesn't match — please check it with Teacher Guide. 💙");
+    if (result === "unauthorized") {
+      setJoinError("Your session is unauthorized or your sign-in has expired. Please sign in again. 💙");
       return;
     }
     if (result === "error") {
@@ -123,11 +123,9 @@ export default function ClassroomPage() {
       return;
     }
     initCloudSync();
-    if (result === "connected") sendEvent("class.joined", { who: name, sessionId: sessId });
   }
 
   function endCall() {
-    if (call.status === "connected" && activeSessionId) sendEvent("class.ended", { who: name, sessionId: activeSessionId });
     call.endCall();
     router.push("/family");
   }

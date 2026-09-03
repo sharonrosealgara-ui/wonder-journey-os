@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { Map as MapIcon, Video as VideoIcon, Image as ImageIcon, FileText, Search, Info } from "lucide-react";
 import { AdventureQuiz } from "@/components/adventure/quiz";
 import { FactHunt, MemoryFlip, WordScramble } from "@/components/adventure/mini-games";
 import { MatchingGame } from "@/components/matching-game";
@@ -29,6 +30,7 @@ import { sfx } from "@/lib/sound";
 import { newId, useStored } from "@/lib/storage";
 import { getMediaForLesson } from "@/config/media-registry";
 import { MediaCreditsModal } from "@/components/classroom/media-credits-modal";
+import { HistoricalMapViewer } from "@/components/adventure/historical-map-viewer";
 import {
   recordMultipleChoice,
   recordTrueFalse,
@@ -1197,12 +1199,24 @@ function PremiumMediaMomentSlide({ slide, lesson }: { slide: SlideOf<"mediaMomen
   const lessonMedia = lessonId ? getMediaForLesson(lessonId) : [];
   const activeMedia = lessonMedia[1] || lessonMedia[0];
   const [showCredits, setShowCredits] = useState(false);
+  const [showMapViewer, setShowMapViewer] = useState(false);
 
   const displaySrc = content.url || activeMedia?.storedAssetPath;
+  const isHistoricalMap = activeMedia?.id === "media-l01-secondary" || activeMedia?.classification === "primary_source_scan";
 
   return (
     <div className="mx-auto max-w-4xl text-center">
-      <div className="mb-3 text-6xl">{isVideo ? "🎬" : "🖼️"}</div>
+      <div className="mb-3 flex justify-center">
+        <div className="w-14 h-14 rounded-2xl bg-sand/80 border border-sand-deep flex items-center justify-center text-ocean-deep shadow-sm">
+          {isVideo ? (
+            <VideoIcon className="w-7 h-7" aria-hidden="true" />
+          ) : isHistoricalMap ? (
+            <MapIcon className="w-7 h-7" aria-hidden="true" />
+          ) : (
+            <ImageIcon className="w-7 h-7" aria-hidden="true" />
+          )}
+        </div>
+      </div>
       <h1 className="wj-outline font-display text-4xl sm:text-5xl">{activeMedia?.title || caption}</h1>
       <div className="mt-8 wj-card overflow-hidden p-6 shadow-xl border-2 border-sand-deep">
         {isVideo && embed ? (
@@ -1219,21 +1233,54 @@ function PremiumMediaMomentSlide({ slide, lesson }: { slide: SlideOf<"mediaMomen
             <img
               src={displaySrc}
               alt={activeMedia?.altText || activeMedia?.descriptiveAltText || caption}
-              className="w-full h-auto rounded-2xl object-cover max-h-[55vh] shadow-md transition-transform duration-300 group-hover:scale-[1.01]"
+              className={`w-full h-auto rounded-2xl shadow-md transition-transform duration-300 ${
+                isHistoricalMap
+                  ? "object-contain max-h-[55vh] bg-sand-deep/20"
+                  : "object-cover max-h-[55vh] group-hover:scale-[1.01]"
+              }`}
             />
+
+            {/* Historical Primary Source Context Notice */}
+            {isHistoricalMap && (
+              <div className="mt-3 text-left bg-sand/80 p-3.5 rounded-xl border border-sand-deep/70 text-xs">
+                <div className="flex items-start gap-2.5">
+                  <FileText className="w-4 h-4 text-ocean-deep shrink-0 mt-0.5" aria-hidden="true" />
+                  <div>
+                    <p className="font-bold text-ocean-deep">Historical Primary Source Context (1734)</p>
+                    <p className="text-ink/80 mt-1 leading-relaxed">
+                      Engraved in 1734 by cartographer Pedro Murillo Velarde with Filipino master engravers Nicolás de la Cruz Bagay and Francisco Suárez. The border illustrations, geographic labels, regional details, and historical terminology reflect 18th-century Spanish colonial-era perspectives and differ from modern geography and inclusive cultural understanding.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {activeMedia && (
               <div className="mt-4 flex flex-wrap items-center justify-between gap-2 text-left bg-sand/80 p-3 rounded-xl border border-sand-deep text-xs">
                 <div>
                   <p className="font-bold text-ink">{activeMedia.caption || activeMedia.factualCaption || activeMedia.title}</p>
                   <p className="text-ink-soft text-[11px] mt-0.5">Source: {activeMedia.creator || activeMedia.sourceOrganization || activeMedia.attribution || "Public Domain"}</p>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => setShowCredits(true)}
-                  className="rounded-full bg-ocean px-3 py-1 text-[11px] font-bold text-white shadow-sm hover:bg-ocean-deep transition-colors cursor-pointer shrink-0"
-                >
-                  ℹ️ Provenance &amp; License
-                </button>
+                <div className="flex items-center gap-2 shrink-0">
+                  {isHistoricalMap && (
+                    <button
+                      type="button"
+                      onClick={() => setShowMapViewer(true)}
+                      className="rounded-full bg-mango px-3.5 py-1.5 text-[11px] font-bold text-ocean-deep shadow-sm hover:bg-mango-deep hover:text-white transition-colors cursor-pointer flex items-center gap-1.5"
+                    >
+                      <Search className="w-3.5 h-3.5" aria-hidden="true" />
+                      <span>View and Explore Full Map</span>
+                    </button>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => setShowCredits(true)}
+                    className="rounded-full bg-ocean px-3.5 py-1.5 text-[11px] font-bold text-white shadow-sm hover:bg-ocean-deep transition-colors cursor-pointer flex items-center gap-1.5"
+                  >
+                    <Info className="w-3.5 h-3.5" aria-hidden="true" />
+                    <span>Provenance &amp; License</span>
+                  </button>
+                </div>
               </div>
             )}
           </div>
@@ -1253,6 +1300,15 @@ function PremiumMediaMomentSlide({ slide, lesson }: { slide: SlideOf<"mediaMomen
           onClose={() => setShowCredits(false)}
           mediaList={lessonMedia}
           lessonTitle={lesson?.title || caption}
+        />
+      )}
+
+      {showMapViewer && displaySrc && (
+        <HistoricalMapViewer
+          isOpen={showMapViewer}
+          onClose={() => setShowMapViewer(false)}
+          imageSrc={displaySrc}
+          title={activeMedia?.title || caption}
         />
       )}
     </div>

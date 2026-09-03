@@ -159,4 +159,18 @@ for (const relPath of legacyPaths) {
 }
 
 console.log("PASS: Cloudflare Pages and Netlify legacy runtime files are completely absent.");
-console.log("PASS: All API & LiveKit Security regression tests passed successfully.");
+
+// ─────────────────────────────────────────────────────────────
+// 5. Inquiry Pipeline Real Database Boundary Security Tests
+// ─────────────────────────────────────────────────────────────
+const { runInquirySecurityTests } = require("./test-inquiry-security");
+
+async function main() {
+  await runInquirySecurityTests();
+  console.log("PASS: All API, LiveKit, and Inquiry Pipeline Security regression tests passed successfully.");
+}
+
+main().catch((err) => {
+  console.error("FAIL: API & Inquiry Security Regression failed:", err.message);
+  process.exit(1);
+});

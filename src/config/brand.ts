@@ -10,7 +10,7 @@ export const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
 export const brand = {
-  productName: "Wonder Journey OS",
+  productName: "Wonder Journey",
   worldName: "Discover the Philippines",
   worldSubtitle: "Discover the Philippines: A Family Learning Adventure",
   tagline: "Every lesson is an adventure. Every adventure becomes a memory.",

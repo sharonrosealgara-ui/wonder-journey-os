@@ -229,7 +229,7 @@ The security foundation of Wonder Journey was established through rigorous itera
 - **Future Cloudflare Consideration:**
   Cloudflare technology is not permanently excluded. A future migration to Cloudflare Workers / OpenNext may be considered in subsequent phases, subject to exhaustive runtime validation and owner approval.
 - **Current Operational Boundary:**
-  Hostinger account connection, DNS routing, and production deployments are held pending completion of the local freeze and remote verification gates.
+  Hostinger account connection, DNS routing, and production deployments remain held pending owner production deployment authorization. No external deployment has been executed.
 
 ---
 
@@ -274,14 +274,16 @@ The security foundation of Wonder Journey was established through rigorous itera
 
 ---
 
-## V1.2 Public Landing Page Freeze (CURRENT / BINDING)
+## V1.2 Public Landing Page & Inquiry Integration (CURRENT / BINDING)
 
-- **Feature Branch:** `feat/v1-2-public-landing-page`
-- **Frozen Local Commit:** `46491a144e69e27b2c623967727b523516fe6ec2`
+- **Main Branch Commit:** `46491a144e69e27b2c623967727b523516fe6ec2`
+- **Integrated Product Commit:** `46491a144e69e27b2c623967727b523516fe6ec2`
 - **Parent Commit:** `ad6d378b5ac5d0cf66913c40e38a684dd180601a`
 - **Tree SHA:** `3e66af2d1db49edeed15e3e78b8a79e7aed3599c`
 - **Commit Message:** `feat: add v1.2 public landing page and gated inquiry flow`
-- **Status:** IMPLEMENTED & VERIFIED LOCALLY (Pending remote verification gate; not merged into main).
+- **Status:** IMPLEMENTED & VERIFIED, INTEGRATED (Strict fast-forward integration into `main`; PR #1 merged by containment; not deployed).
+- **Pull Request Containment:** PR #1 merged automatically via commit containment (`state: MERGED`, `mergeCommit.oid: 46491a144e69e27b2c623967727b523516fe6ec2`).
+- **Remote CI Verification:** CI run `33864402534`, job `100995839894` (*Stage 12.1R.10 Quality & 30 Release Gates*) passed all 30 release gates with zero failures. Gate 26 Playwright: 26 passed, 0 failed, 0 flaky, 0 skipped.
 - **Exact 22-File Manifest:**
   1. `.env.example`
   2. `public/media/product-tour/tour-family-space.png`
@@ -317,6 +319,17 @@ The security foundation of Wonder Journey was established through rigorous itera
   - Dual-gate public inquiry flow failing closed when disabled.
   - Historical Map Viewer with "Fit" initial zoom label and Spanish colonial perspective notice.
   - Zero em-dash characters across all public marketing copy.
+- **Operational Boundaries & Current Controls:**
+  - Strict fast-forward integration: zero merge commits, zero synthetic integration commits.
+  - Normal non-force push to origin/main.
+  - Dual-gate inquiry remains fail-closed by default (`enabled = false`).
+  - Migration 0007 integrated into main.
+  - Public student enrollment remains closed.
+  - Public inquiry submission remains closed.
+  - Not deployed: site is not publicly deployed.
+  - Hostinger remains disconnected.
+  - Hosted Supabase remote database remains untouched.
+  - Drive D: remains untouched.
 
 ---
 
@@ -370,7 +383,7 @@ The primary source worktree (`C:/Projects/wonder-journey-os-clean`) intentionall
   - `scratch/` (16 local automation scripts)
 
 > [!CAUTION]
-> Never run `git reset --hard`, `git restore .`, `git clean -fd`, or `git stash` in the primary worktree merely to achieve a clean status. These files represent ongoing curriculum and media fidelity work that must be preserved.
+> Never run `git reset --hard`, `git restore .`, `git clean -fd`, or `git stash` in the primary worktree merely to achieve a clean status. These files represent ongoing curriculum and media fidelity work that must be preserved. Do not claim these files are integrated into main merely because main has advanced.
 
 ---
 
@@ -386,17 +399,15 @@ To maintain uncompromising repository integrity, adhere to these rules:
 
 ---
 
-## Current Next Step: Remote Gate
+## Current Next Step: Master Handoff Documentation Gate
 
 The immediate engineering step following this handoff:
 
-1. **Remote Verification Gate:**
-   - Authorize pushing `feat/v1-2-public-landing-page` at frozen SHA `46491a144e69e27b2c623967727b523516fe6ec2` to remote repository.
-   - Run remote CI/CD automated validation workflows.
-2. **Owner Review & Integration:**
-   - Conduct formal owner visual and functional review.
-   - Upon explicit owner approval, perform fast-forward merge into main.
-   - Update this Master Handoff and create a new integrated milestone checkpoint.
+1. **Master Handoff Documentation Integration:**
+   - Integrate the Wonder Journey Master Handoff documentation onto `main` through a docs-only exact-SHA gate.
+2. **Repository Truth Re-Verification:**
+   - After the handoff itself is integrated, do not begin a new product slice until repository truth is re-verified.
+   - Do not invent the next product feature yet.
 
 ---
 

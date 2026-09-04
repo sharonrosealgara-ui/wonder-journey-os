@@ -229,7 +229,7 @@ The security foundation of Wonder Journey was established through rigorous itera
 - **Future Cloudflare Consideration:**
   Cloudflare technology is not permanently excluded. A future migration to Cloudflare Workers / OpenNext may be considered in subsequent phases, subject to exhaustive runtime validation and owner approval.
 - **Current Operational Boundary:**
-  Hostinger account connection, DNS routing, and production deployments remain held pending owner production deployment authorization. No external deployment has been executed.
+  Hostinger account connection, DNS routing, and production deployments remain held pending owner production deployment authorization. No production deployment was manually initiated or executed, but legacy connected deployment providers (Netlify and Cloudflare Pages GitHub Apps) automatically triggered PR preview activity.
 
 ---
 
@@ -274,9 +274,52 @@ The security foundation of Wonder Journey was established through rigorous itera
 
 ---
 
-## V1.2 Public Landing Page & Inquiry Integration (CURRENT / BINDING)
+## Current Main Branch State (CURRENT / BINDING)
 
-- **Main Branch Commit:** `46491a144e69e27b2c623967727b523516fe6ec2`
+- **Main Branch Commit:** `b429d827b58d8f58995d8895234e5d52cdf93d59`
+- **Tree SHA:** `9458afde2ea25194c238572737eba8b59d5d9f9e`
+- **Direct Parent:** `8ad4c83b65a6b4ceea468eeadc03346d58a72fbb`
+- **Status:** IMPLEMENTED, VERIFIED, & INTEGRATED (Strict fast-forward integration into `main`; PR #3 merged by containment; not deployed).
+- **Latest Integrated Slice:** Lesson 1 Authentic Media Fidelity & Curriculum Registry Reconciliation.
+
+---
+
+## Lesson 1 Authentic Media Fidelity & Curriculum Registry Reconciliation (CURRENT / BINDING)
+
+- **Integrated Product Commit:** `b429d827b58d8f58995d8895234e5d52cdf93d59`
+- **Direct Parent:** `8ad4c83b65a6b4ceea468eeadc03346d58a72fbb`
+- **Tree SHA:** `9458afde2ea25194c238572737eba8b59d5d9f9e`
+- **Commit Message:** `feat(curriculum): reconcile Lesson 1 authentic Murillo Velarde map and media registry`
+- **Status:** IMPLEMENTED & VERIFIED, INTEGRATED (Strict fast-forward integration into `main`; PR #3 merged by containment; not deployed).
+- **Pull Request Containment:** PR #3 merged automatically via commit containment (`state: MERGED`, `mergeCommit.oid: b429d827b58d8f58995d8895234e5d52cdf93d59`).
+- **Remote CI Verification:** CI run `33885650832`, job `101064634640` (*Stage 12.1R.10 Quality & 30 Release Gates*) passed all 30 release gates with zero failures. Gate 26 Playwright: 26 passed, 0 failed, 0 flaky, 0 skipped.
+- **Exact 10-File Manifest:**
+  1. `artifacts/contact-sheet-130-media.html`
+  2. `artifacts/curriculum-media-fidelity-manifest.json`
+  3. `artifacts/media-contact-sheet.html`
+  4. `artifacts/media-contact-sheet.json`
+  5. `artifacts/media-visual-review.json`
+  6. `public/media/curriculum/l01-visual-b.jpg`
+  7. `scripts/build-complete-authentic-registry.js`
+  8. `scripts/canonical-media-specs.js`
+  9. `scripts/verified-commons-image-map.js`
+  10. `src/config/media-registry.ts`
+- **Key Media Reconciliation Deliverables:**
+  - Pedro Murillo Velarde 1734 historical map (Carta Hydrographica y Chorographica de las Yslas Filipinas) reconciled as authentic primary source scan for Lesson 1 (`media-l01-secondary`).
+  - High resolution (1920x1793 px, 1,645,319 bytes) and exact SHA-256 (`e7e4a155c279a826cfc2dbf90ddcf5927f1339d529d36d99cba6185983b16678`).
+  - Institutional archival provenance verified: Biblioteca Nacional de Espana (BNE MR/45/31) / Library of Congress (WDL 10089).
+  - Accurate historical attribution honoring cartographer Pedro Murillo Velarde and Filipino indio engravers Nicolas de la Cruz Bagay and Francisco Suarez (Manila, 1734).
+  - All 130 media items in curriculum registry verified with 0 duplicates and 0 perceptual near-duplicates.
+  - Preserved canonical LF hashes for SVG assets across Windows and Linux environments.
+- **Verification Proofs (Lesson 1 Media Reconciliation):**
+  - Schema and duplicate detection: `node scripts/build-complete-authentic-registry.js` verified 130 items with 0 duplicate references.
+  - Negative validation: Proved fabricated or mismatched URLs are strictly rejected.
+  - Visual review artifacts: Regenerated HTML contact sheets and JSON review manifests confirming asset resolution.
+
+---
+
+## V1.2 Public Landing Page & Inquiry Integration (HISTORICAL CHECKPOINT / INTEGRATED)
+
 - **Integrated Product Commit:** `46491a144e69e27b2c623967727b523516fe6ec2`
 - **Parent Commit:** `ad6d378b5ac5d0cf66913c40e38a684dd180601a`
 - **Tree SHA:** `3e66af2d1db49edeed15e3e78b8a79e7aed3599c`
@@ -363,27 +406,17 @@ All gates executed from a fresh detached worktree at SHA `46491a144e69e27b2c6239
 
 ## Working Tree Preservation Policy
 
-The primary source worktree (`C:/Projects/wonder-journey-os-clean`) intentionally preserves 12 modified files and local scratch tooling that are unrelated to the V1.2 landing page deliverable:
+The primary source worktree (`C:/Projects/wonder-journey-os-clean`) intentionally preserves 2 modified files and local scratch tooling that are unrelated to the integrated V1.2 landing page and Lesson 1 media reconciliation deliverables:
 
-- **Preserved Modified Files (12):**
-  - `public/media/curriculum/l01-visual-b.jpg`
-  - `src/config/media-registry.ts`
-  - `scripts/canonical-media-specs.js`
-  - `scripts/build-complete-authentic-registry.js`
-  - `scripts/verified-commons-image-map.js`
-  - `artifacts/contact-sheet-130-media.html`
-  - `artifacts/curriculum-media-fidelity-manifest.json`
-  - `artifacts/media-contact-sheet.html`
-  - `artifacts/media-contact-sheet.json`
-  - `artifacts/media-visual-review.json`
-  - `src/app/(auth)/layout.tsx`
-  - `src/app/(auth)/login/page.tsx`
+- **Preserved Modified Files (2):**
+  - `src/app/(auth)/layout.tsx` (unrelated family portal visual styling work)
+  - `src/app/(auth)/login/page.tsx` (unrelated family portal login form work)
 - **Untracked Local Tooling & Review Evidence:**
   - `artifacts/landing-page-final-review/` (20 multi-viewport audit files)
   - `scratch/` (16 local automation scripts)
 
 > [!CAUTION]
-> Never run `git reset --hard`, `git restore .`, `git clean -fd`, or `git stash` in the primary worktree merely to achieve a clean status. These files represent ongoing curriculum and media fidelity work that must be preserved. Do not claim these files are integrated into main merely because main has advanced.
+> Never run `git reset --hard`, `git restore .`, `git clean -fd`, or `git stash` in the primary worktree merely to achieve a clean status. These files represent ongoing family portal authentication work that must be preserved. Do not claim these files are integrated into main merely because main has advanced.
 
 ---
 
@@ -466,10 +499,12 @@ This standing policy governs all AI engineering workflows for Wonder Journey:
 The immediate engineering step following this handoff:
 
 1. **Master Handoff Documentation Integration:**
-   - Integrate the Wonder Journey Master Handoff documentation onto `main` through a docs-only exact-SHA gate.
-2. **Repository Truth Re-Verification:**
+   - Integrate the Wonder Journey Master Handoff documentation update onto `main` through a docs-only exact-SHA gate.
+2. **Candidate Next Slice:**
+   - Family Portal Authentication & Login Visual Refinements (`src/app/(auth)/layout.tsx` and `src/app/(auth)/login/page.tsx`).
+3. **Repository Truth Re-Verification:**
    - After the handoff itself is integrated, do not begin a new product slice until repository truth is re-verified.
-   - Do not invent the next product feature yet.
+   - Do not invent new features outside owner approval.
 
 ---
 

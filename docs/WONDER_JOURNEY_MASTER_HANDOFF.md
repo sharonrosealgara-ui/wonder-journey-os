@@ -246,14 +246,16 @@ The security foundation of Wonder Journey was established through rigorous itera
 
 ## Ministry Commitment & Tithing Standard
 
-- **Mission Commitment:**
-  Wonder Journey is dedicated to contributing 10% of eligible platform net margin to verified Christian ministries and local church initiatives in the Philippines.
-- **Corporate Entity Obligation:**
-  This commitment is made at the company level from platform profits. It is never deducted from educator compensation or contractor pay. Personal tithing by educators remains entirely voluntary.
-- **Implementation Controls (PLANNED):**
-  - Activation requires formal consultation and structural definition by a certified Philippine accountant.
-  - Contributions must be calculated against a clear net-margin accounting standard rather than gross revenues.
-  - Automated donation routing or deduction logic must not be deployed prior to formal accountant sign-off.
+- **Permanent Mission Intent:**
+  Wonder Journey intends to allocate 10% of an accountant-defined eligible platform share to verified church/ministry support in the Philippines.
+- **Company-Level Obligation:**
+  This is a company-level commitment. It is not deducted from a teacher's agreed compensation or contractor pay. Teacher personal tithe remains voluntary.
+- **Professional Accounting Requirement (PLANNED):**
+  The exact accounting base, treatment, documentation, recipient verification, tax consequences, and operational implementation require formal determination by a qualified Philippine accountant prior to activation.
+- **Current Preferred Direction:**
+  The eligible platform share may be based on a professionally defined net-margin concept rather than gross revenue, subject to formal accountant confirmation. Therefore, "net margin" is a preferred direction and professional review item, not an already-final accounting definition.
+- **Implementation Constraint:**
+  Do not implement automated donation routing or deduction logic prior to formal accountant sign-off.
 
 ---
 
@@ -262,11 +264,13 @@ The security foundation of Wonder Journey was established through rigorous itera
 - **Notification Pipeline (PLANNED):**
   Canonical Domain Event -> Recipient Resolution -> In-App Notice -> Durable Email Queue -> Verified SMTP/API Provider -> Delivery Confirmation / Retry Loop.
   *Privacy Rule:* Full student assessments or private evaluations must never be transmitted via unencrypted email.
-- **System Health & Incident Response (PLANNED / FUTURE):**
-  - Distinct system status indicators: Operational, Degraded, Maintenance, Outage.
+- **System Health & Incident Center Direction (PLANNED / FUTURE):**
+  - Architecture direction includes operational, degraded, partial-unavailability, outage, maintenance, and investigation states where appropriate.
+  - Incident severity is tracked separately from overall system status rather than conflating the two.
   - Sanitized incident reporting and error logging.
   - Reversible operational adjustments; destructive database mutations require explicit human administrator approval.
   - No autonomous, silent patching of production database records.
+  - System Health and Incident Center capabilities are architectural directions and must not be marked as implemented without explicit repository evidence.
 
 ---
 

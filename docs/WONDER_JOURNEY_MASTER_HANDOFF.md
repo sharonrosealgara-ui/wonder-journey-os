@@ -399,6 +399,68 @@ To maintain uncompromising repository integrity, adhere to these rules:
 
 ---
 
+## Execution Policy: Fast Integration + Bounded Autonomy (CURRENT / BINDING)
+
+This standing policy governs all AI engineering workflows for Wonder Journey:
+
+- **Governing Principle:**
+  One explicit owner approval authorizes the complete safe engineering pipeline for an approved, bounded product or documentation slice. The owner does not require repeated approval prompts between routine engineering gates while every precondition and verification remains green.
+- **Autonomous Execution Pipeline:**
+  Once authorized by owner approval for a clearly defined slice, the engineer or AI assistant executes autonomously:
+  1. Implementation strictly within approved scope.
+  2. Multi-tier local validation (typecheck, lint, test, mojibake, security, build).
+  3. Hunk-level scope audit and selective staging.
+  4. Standard traceable commit creation (no amend, squash, or rebase).
+  5. Local exact-SHA freeze.
+  6. Normal feature branch push.
+  7. PR creation.
+  8. Exact-SHA remote CI release gate execution and verification (all required gates).
+  9. Verification that zero post-gate commits exist.
+  10. Strict fast-forward integration into main (`git merge --ff-only`).
+  11. Normal non-force push of main (`git push origin main`).
+  12. PR containment verification.
+  13. Automatic Master Handoff update to current repository truth.
+  14. Creation of a new milestone checkpoint (never rewriting historical checkpoints).
+  15. Documentation-only validation, commit, push, docs PR, exact-SHA verification, and strict fast-forward integration.
+  16. Worktree teardown and final repository-truth verification.
+- **Fast-Integration Rule:**
+  Strict fast-forward integration (`git merge --ff-only`) and normal push (`git push origin main`) are authorized automatically when all gates pass and topology permits. Never substitute merge commits, squash merges, rebasing, cherry-picking, amending, or force pushes. If strict fast-forward is not possible, STOP.
+- **Hard Autonomy Boundaries (Explicit Owner Approval Required):**
+  Autonomous execution does NOT permit:
+  - Deploying to production or staging environments.
+  - Connecting Hostinger hosting accounts or altering DNS.
+  - Creating or rotating production credentials or API tokens.
+  - Enabling currently disabled public inquiry submissions or altering private inquiry configuration.
+  - Mutating hosted Supabase databases or schema.
+  - Mutating or deleting production child or family records.
+  - Altering authorization models or weakening Row Level Security.
+  - Changing LiveKit trust boundaries.
+  - Purchasing infrastructure, adding paid services, or altering billing.
+  - Publishing publicly, altering pricing, exposing testimonials, or opening enrollment.
+  - Adding automated teacher matching.
+  - Modifying ministry accounting policy.
+  - Making unresolved legal or privacy determinations.
+  - Accessing or modifying Drive D:.
+  - Overwriting or clearing unrelated dirty worktrees.
+  - Broadening the approved slice or initiating a materially new product slice.
+- **Strict Stop Conditions:**
+  Execution must immediately halt with a HOLD status if:
+  - Any automated or manual gate fails or is unexpectedly skipped.
+  - Exact commit or tree SHA cannot be cryptographically proven.
+  - Remote main branch unexpectedly changes or diverges.
+  - Non-fast-forward merge topology is encountered.
+  - Merge conflicts appear.
+  - Unexpected files enter the working tree or commit manifest.
+  - Working tree preservation cannot be verified.
+  - Secret or credential exposure is detected.
+  - Real child or family identity details appear unexpectedly.
+  - Security or privacy behavior becomes ambiguous.
+  - External, destructive, or consequential actions become necessary.
+- **Consolidated Reporting Standard:**
+  Instead of intermediate approval requests, deliver ONE comprehensive final report upon full slice completion, verifying all commits, SHAs, gate IDs, Playwright counts, security audits, push proofs, handoff updates, and worktree preservation proofs.
+
+---
+
 ## Current Next Step: Master Handoff Documentation Gate
 
 The immediate engineering step following this handoff:

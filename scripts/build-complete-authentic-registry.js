@@ -27,14 +27,14 @@ const RAW_MEDIA_SPECS = [
   {
     id: "media-l01-secondary",
     lessonId: "lesson-1-world-map",
-    title: "Historical Map of the Philippine Archipelago",
+    title: "Carta Hydrographica y Chorographica de las Yslas Filipinas (1734)",
     classification: "authoritative_map",
-    commonsFile: "The_Philippine_Islands._A_political,_Geographical,_ethnographical,_social_and_commercial_history_of_the_Philippine_Archipelago_and_its_political_dependencies,_embracing_the_whole_period_of_Spanish_(14592180647).jpg",
-    creator: "John Foreman",
-    organization: "British Library / Internet Archive",
+    commonsFile: "Carta_hydrographica_y_chorographica_de_las_Yslas_Filipinas_-_Biblioteca_Nacional_de_España.jpg",
+    creator: "Pedro Murillo Velarde (cartographer); Nicolás de la Cruz Bagay and Francisco Suárez (engravers)",
+    organization: "Biblioteca Nacional de España (BNE MR/45/31) / Library of Congress (WDL 10089)",
     license: "Public Domain",
     licenseUrl: "https://commons.wikimedia.org/wiki/Public_domain",
-    visibleDepiction: "Engraved cartographic map of the Philippine islands from 1899 with fine coastal navigational soundings, island groupings, and geographical coordinate meridians."
+    visibleDepiction: "Authentic historical 1734 engraved scientific map of the Philippine archipelago by Pedro Murillo Velarde with twelve border vignettes depicting ethnographic peoples, rural scenes, and provincial city plans."
   },
 
   // L02: Archipelago

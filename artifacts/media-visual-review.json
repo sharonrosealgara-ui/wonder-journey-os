@@ -15,14 +15,14 @@
   {
     "id": "media-l01-secondary",
     "lessonId": "lesson-1-world-map",
-    "title": "Historical Map of the Philippine Archipelago",
+    "title": "The Philippines on a 1734 Historical Map",
     "fileName": "l01-visual-b.jpg",
-    "sha256Checksum": "7154f9db0a601bc83ff5b764baeaabbd07be00da507680d0287787671396b5a0",
-    "creator": "John Foreman",
-    "organization": "British Library / Internet Archive",
+    "sha256Checksum": "e7e4a155c279a826cfc2dbf90ddcf5927f1339d529d36d99cba6185983b16678",
+    "creator": "Pedro Murillo Velarde (cartographer); Nicolás de la Cruz Bagay and Francisco Suárez (engravers)",
+    "organization": "Biblioteca Nacional de España (BNE MR/45/31) / Library of Congress (WDL 10089)",
     "license": "Public Domain",
     "licenseUrl": "https://commons.wikimedia.org/wiki/Public_domain",
-    "observedDepiction": "Engraved cartographic map of the Philippine islands from 1899 with fine coastal navigational soundings, island groupings, and geographical coordinate meridians.",
+    "observedDepiction": "Authentic historical 1734 engraved scientific map of the Philippine archipelago by Pedro Murillo Velarde with twelve border vignettes depicting ethnographic peoples, rural scenes, and provincial city plans.",
     "status": "AUTHENTIC_VERIFIED"
   },
   {

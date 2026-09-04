@@ -59,25 +59,25 @@ export const MEDIA_REGISTRY: Record<string, MediaAssetMetadata> = {
   "media-l01-secondary": {
     "id": "media-l01-secondary",
     "lessonId": "lesson-1-world-map",
-    "title": "Historical Map of the Philippine Archipelago",
-    "classification": "authoritative_map",
+    "title": "The Philippines on a 1734 Historical Map",
+    "classification": "primary_source_scan",
     "storedAssetPath": "/media/curriculum/l01-visual-b.jpg",
-    "sourceFileTitle": "File:The_Philippine_Islands._A_political,_Geographical,_ethnographical,_social_and_commercial_history_of_the_Philippine_Archipelago_and_its_political_dependencies,_embracing_the_whole_period_of_Spanish_(14592180647).jpg",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:The_Philippine_Islands._A_political%2C_Geographical%2C_ethnographical%2C_social_and_commercial_history_of_the_Philippine_Archipelago_and_its_political_dependencies%2C_embracing_the_whole_period_of_Spanish_(14592180647).jpg",
-    "creator": "John Foreman",
-    "organization": "British Library / Internet Archive",
+    "sourceFileTitle": "File:Carta_hydrographica_y_chorographica_de_las_Yslas_Filipinas_-_Biblioteca_Nacional_de_España.jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Carta_hydrographica_y_chorographica_de_las_Yslas_Filipinas_-_Biblioteca_Nacional_de_Espa%C3%B1a.jpg",
+    "creator": "Pedro Murillo Velarde (cartographer); Nicolás de la Cruz Bagay and Francisco Suárez (engravers)",
+    "organization": "Biblioteca Nacional de España (BNE MR/45/31) / Library of Congress (WDL 10089)",
     "license": "Public Domain",
     "licenseUrl": "https://commons.wikimedia.org/wiki/Public_domain",
-    "sha256Checksum": "7154f9db0a601bc83ff5b764baeaabbd07be00da507680d0287787671396b5a0",
+    "sha256Checksum": "e7e4a155c279a826cfc2dbf90ddcf5927f1339d529d36d99cba6185983b16678",
     "dimensions": {
-      "width": 1280,
-      "height": 1708
+      "width": 1920,
+      "height": 1793
     },
-    "byteSize": 723250,
+    "byteSize": 1645319,
     "mimeType": "image/jpeg",
     "subjectTags": [
       "lesson-1-world-map",
-      "authoritative_map",
+      "primary_source_scan",
       "philippines",
       "curriculum-authentic"
     ]

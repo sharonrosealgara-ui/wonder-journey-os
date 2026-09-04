@@ -3,7 +3,7 @@ const https = require('https');
 // Verified authentic Wikimedia Commons image filenames for all 130 assets
 const COMMONS_IMAGE_MAP = {
   "media-l01-primary": "Satellite_image_of_Philippines_in_March_2002.jpg",
-  "media-l01-secondary": "The_Philippine_Islands._A_political,_Geographical,_ethnographical,_social_and_commercial_history_of_the_Philippine_Archipelago_and_its_political_dependencies,_embracing_the_whole_period_of_Spanish_(14592180647).jpg",
+  "media-l01-secondary": "Carta_hydrographica_y_chorographica_de_las_Yslas_Filipinas_-_Biblioteca_Nacional_de_España.jpg",
   "media-l02-primary": "Puerto_Princesa_Underground_River.jpg",
   "media-l02-secondary": "El_Nido_Palawan_2.jpg",
   "media-l03-primary": "Flag_of_the_Philippines.svg",

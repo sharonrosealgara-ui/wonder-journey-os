@@ -226,10 +226,19 @@ The security foundation of Wonder Journey was established through rigorous itera
   Hostinger Managed Next.js is the official production deployment target for the current Wonder Journey release.
 - **Superseded Runtimes:**
   Cloudflare Pages and Netlify application runtimes are SUPERSEDED. All legacy edge functions, wrangler configurations, and netlify.toml files have been cleanly decommissioned.
+- **Legacy Deployment Provider Git Integration Status (2026-09-05):**
+  - **Netlify:** The Wonder Journey Git repository has been disconnected from the Netlify project by the owner. The Netlify continuous deployment page now reports `Current repository: Not linked`. The Netlify project itself remains preserved (not deleted). No production deployment was manually initiated through Netlify.
+  - **Cloudflare Pages:** The Wonder Journey Git repository has been disconnected from the Cloudflare Pages project by the owner. The Cloudflare Pages build settings now present `Git repository: Connect` (indicating no active Git link). The Cloudflare Pages project itself remains preserved (not deleted). No production deployment was manually initiated through Cloudflare Pages.
+  - **Discovery Context:** Automatic PR preview and build activity from these legacy deployment providers was discovered during repository integration work. The owner manually disconnected both providers to prevent further automatic build triggers.
+  - **No Reconnection Authorized:** Neither Netlify nor Cloudflare Pages may be reconnected to the Wonder Journey repository without explicit owner authorization.
 - **Future Cloudflare Consideration:**
   Cloudflare technology is not permanently excluded. A future migration to Cloudflare Workers / OpenNext may be considered in subsequent phases, subject to exhaustive runtime validation and owner approval.
 - **Current Operational Boundary:**
-  Hostinger account connection, DNS routing, and production deployments remain held pending owner production deployment authorization. No production deployment was manually initiated or executed, but legacy connected deployment providers (Netlify and Cloudflare Pages GitHub Apps) automatically triggered PR preview activity.
+  Hostinger account connection, DNS routing, and production deployments remain held pending owner production deployment authorization. No production deployment was manually initiated or executed through any provider. Legacy automatic build triggers from Netlify and Cloudflare Pages have been eliminated by owner disconnection (2026-09-05).
+
+> [!WARNING]
+> **OWNER SECURITY ACTION REQUIRED -- LiveKit Credential Rotation:**
+> During owner verification of the legacy Cloudflare Pages project settings, an existing LiveKit credential was observed in the Cloudflare environment variables. Because Cloudflare Pages is a superseded deployment runtime, this credential should be treated as requiring rotation/revocation. The legacy Cloudflare environment also appears to contain other old runtime variables that may no longer be appropriate. This task does not authorize autonomous credential rotation -- the owner must perform or authorize credential rotation directly.
 
 ---
 
@@ -276,11 +285,12 @@ The security foundation of Wonder Journey was established through rigorous itera
 
 ## Current Main Branch State (CURRENT / BINDING)
 
-- **Main Branch Commit:** `b429d827b58d8f58995d8895234e5d52cdf93d59`
-- **Tree SHA:** `9458afde2ea25194c238572737eba8b59d5d9f9e`
-- **Direct Parent:** `8ad4c83b65a6b4ceea468eeadc03346d58a72fbb`
-- **Status:** IMPLEMENTED, VERIFIED, & INTEGRATED (Strict fast-forward integration into `main`; PR #3 merged by containment; not deployed).
-- **Latest Integrated Slice:** Lesson 1 Authentic Media Fidelity & Curriculum Registry Reconciliation.
+- **Main Branch Commit:** `5f79cc93238ce50cb5a914745bd15d6506db96c4`
+- **Tree SHA:** `14848a1baf7a9fe748565ed517631af634e891c4`
+- **Direct Parent:** `b429d827b58d8f58995d8895234e5d52cdf93d59`
+- **Status:** IMPLEMENTED, VERIFIED, & INTEGRATED (Strict fast-forward integration into `main`; not deployed).
+- **Latest Integrated Slice:** Legacy Deployment Provider Git Integration Cleanup (docs-only, 2026-09-05).
+- **Latest Documentation Commit:** `5f79cc93238ce50cb5a914745bd15d6506db96c4` (docs: update Wonder Journey handoff after Lesson 1 media integration).
 
 ---
 

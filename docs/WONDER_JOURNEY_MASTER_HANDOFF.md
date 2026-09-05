@@ -226,10 +226,18 @@ The security foundation of Wonder Journey was established through rigorous itera
   Hostinger Managed Next.js is the official production deployment target for the current Wonder Journey release.
 - **Superseded Runtimes:**
   Cloudflare Pages and Netlify application runtimes are SUPERSEDED. All legacy edge functions, wrangler configurations, and netlify.toml files have been cleanly decommissioned.
+- **Legacy Deployment Provider Git Integration Status (CURRENT / BINDING):**
+  - Netlify and Cloudflare Pages were legacy deployment providers that retained active Git repository connections to the Wonder Journey GitHub repository.
+  - These connections caused automatic PR preview and build activity to be triggered on each push, despite neither provider being the intended production runtime.
+  - On 2026-09-05, the repository owner manually disconnected the Wonder Journey Git repository from both provider projects:
+    - **Netlify** (project: wonder-journey-os): Continuous deployment page now reports "Current repository: Not linked."
+    - **Cloudflare Pages** (project: wonder-journey-os): Build settings now present "Git repository: Connect" (indicating no linked repository).
+  - Both legacy provider projects remain preserved (not deleted). No DNS records were modified. No production deployment was manually initiated through either provider.
+  - Neither provider shall be reconnected without explicit owner authorization.
 - **Future Cloudflare Consideration:**
   Cloudflare technology is not permanently excluded. A future migration to Cloudflare Workers / OpenNext may be considered in subsequent phases, subject to exhaustive runtime validation and owner approval.
 - **Current Operational Boundary:**
-  Hostinger account connection, DNS routing, and production deployments remain held pending owner production deployment authorization. No production deployment was manually initiated or executed, but legacy connected deployment providers (Netlify and Cloudflare Pages GitHub Apps) automatically triggered PR preview activity.
+  Hostinger account connection, DNS routing, and production deployments remain held pending owner production deployment authorization. No production deployment was manually initiated or executed through any provider. Legacy auto-deploy triggers from Netlify and Cloudflare Pages have been disabled (see above).
 
 ---
 
@@ -276,11 +284,12 @@ The security foundation of Wonder Journey was established through rigorous itera
 
 ## Current Main Branch State (CURRENT / BINDING)
 
-- **Main Branch Commit:** `b429d827b58d8f58995d8895234e5d52cdf93d59`
-- **Tree SHA:** `9458afde2ea25194c238572737eba8b59d5d9f9e`
-- **Direct Parent:** `8ad4c83b65a6b4ceea468eeadc03346d58a72fbb`
-- **Status:** IMPLEMENTED, VERIFIED, & INTEGRATED (Strict fast-forward integration into `main`; PR #3 merged by containment; not deployed).
-- **Latest Integrated Slice:** Lesson 1 Authentic Media Fidelity & Curriculum Registry Reconciliation.
+- **Main Branch Commit:** `5f79cc93238ce50cb5a914745bd15d6506db96c4`
+- **Tree SHA:** `14848a1baf7a9fe748565ed517631af634e891c4`
+- **Direct Parent:** `b429d827b58d8f58995d8895234e5d52cdf93d59`
+- **Status:** IMPLEMENTED, VERIFIED, & INTEGRATED (Strict fast-forward integration into `main`; not deployed).
+- **Latest Integrated Slice:** Legacy Deployment Integration Cleanup Documentation (2026-09-05).
+- **Previous Integrated Slice:** Lesson 1 Authentic Media Fidelity & Curriculum Registry Reconciliation.
 
 ---
 
@@ -494,16 +503,31 @@ This standing policy governs all AI engineering workflows for Wonder Journey:
 
 ---
 
-## Current Next Step: Master Handoff Documentation Gate
+## Owner Security Action Required
 
-The immediate engineering step following this handoff:
+> [!CAUTION]
+> **LiveKit Credential Rotation Required:**
+> During owner verification of the legacy Cloudflare Pages project environment on 2026-09-05, an existing LiveKit credential was visually exposed in the Cloudflare project settings. The legacy Cloudflare environment also contains old runtime variables from a superseded deployment runtime. These credentials must not be assumed safe to remain in place.
+>
+> **Required owner actions:**
+> 1. Rotate or revoke the exposed LiveKit credential through the LiveKit dashboard.
+> 2. Review all environment variables remaining in the legacy Cloudflare Pages project and remove or rotate as appropriate.
+> 3. Review any matching credentials in the legacy Netlify project.
+>
+> This cleanup task does NOT authorize autonomous credential rotation. Credential rotation is an explicit owner action.
 
-1. **Master Handoff Documentation Integration:**
-   - Integrate the Wonder Journey Master Handoff documentation update onto `main` through a docs-only exact-SHA gate.
+---
+
+## Current Next Step
+
+The immediate engineering step following this documentation update:
+
+1. **Owner Security Follow-Up:**
+   - Owner must rotate the exposed LiveKit credential and review legacy provider environment variables (see Owner Security Action Required above).
 2. **Candidate Next Slice:**
    - Family Portal Authentication & Login Visual Refinements (`src/app/(auth)/layout.tsx` and `src/app/(auth)/login/page.tsx`).
 3. **Repository Truth Re-Verification:**
-   - After the handoff itself is integrated, do not begin a new product slice until repository truth is re-verified.
+   - After this documentation update is integrated, do not begin a new product slice until repository truth is re-verified.
    - Do not invent new features outside owner approval.
 
 ---

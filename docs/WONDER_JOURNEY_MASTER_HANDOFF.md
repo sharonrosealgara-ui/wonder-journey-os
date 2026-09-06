@@ -291,12 +291,48 @@ The security foundation of Wonder Journey was established through rigorous itera
 
 ## Current Main Branch State (CURRENT / BINDING)
 
-- **Main Branch Commit:** `cb62fcee7b4c69d3a473290dc80069112f679076`
-- **Tree SHA:** `e55498113e43ee325cdc3fd76e0ec73b13269fb9`
-- **Direct Parent:** `5f79cc93238ce50cb5a914745bd15d6506db96c4`
+- **Main Branch Commit:** `7976798febe30daeb3074d2891bb351e39a58402`
+- **Tree SHA:** `b6b554c92537058451b7f8c3c9b96c3ab8384f00`
+- **Direct Parent:** `cfe4e6bdf9894044ad91650bc0f60f5840ca63df`
 - **Status:** IMPLEMENTED, VERIFIED, & INTEGRATED (Strict fast-forward integration into `main`; not deployed).
-- **Latest Integrated Slice:** Legacy Deployment Integration Cleanup Documentation (2026-09-05).
-- **Previous Integrated Slice:** Lesson 1 Authentic Media Fidelity & Curriculum Registry Reconciliation.
+- **Latest Integrated Slice:** Wonder Journey Canonical Media Reconciliation (2026-09-06).
+- **Previous Integrated Slice:** Classroom Lifecycle Correctness Remediation (2026-09-06).
+
+---
+
+## Wonder Journey Canonical Media Reconciliation (CURRENT / BINDING)
+
+- **Integrated Product Commit:** `7976798febe30daeb3074d2891bb351e39a58402`
+- **Direct Parent:** `cfe4e6bdf9894044ad91650bc0f60f5840ca63df`
+- **Tree SHA:** `b6b554c92537058451b7f8c3c9b96c3ab8384f00`
+- **Commit Message:** `fix(media): reconcile L31 and L50 canonical assets and retire legacy manifest`
+- **Status:** IMPLEMENTED & VERIFIED, INTEGRATED (Strict fast-forward integration into `main`; PR #12 merged; not deployed).
+- **Pull Request Containment:** PR #12 merged via fast-forward (`state: MERGED`).
+- **Remote CI Verification:** CI run `34042950981`, job `101512866076` (*Stage 12.1R.10 Quality & 30 Release Gates*) passed all 30 release gates with zero failures in 4m12s.
+- **Exact 16-File Reconciled Manifest:**
+  1. `artifacts/curriculum-media-fidelity-manifest.json` (RETIRED / DELETED)
+  2. `artifacts/media-contact-sheet.html` (REGENERATED)
+  3. `artifacts/media-contact-sheet.json` (REGENERATED)
+  4. `artifacts/media-visual-review.json` (REGENERATED)
+  5. `public/media/curriculum/l31-visual-b.gif` (STALE ASSET REMOVED)
+  6. `public/media/curriculum/l31-visual-b.jpg` (AUTHENTIC MAGELLAN SHRINE JPEG ADDED)
+  7. `public/media/curriculum/l50-visual-a.jpg` (AUTHENTIC JUDGEFLORO WOODEN SPOONS JPEG UPDATED)
+  8. `scripts/acquire-all-130-authentic-media.js` (MARKED DEPRECATED)
+  9. `scripts/audit-all-130-media.js` (NORMALIZED SVG LF & WIRED STRUCTURAL CONSISTENCY)
+  10. `scripts/build-complete-authentic-registry.js` (NORMALIZED SVG LF)
+  11. `scripts/canonical-media-specs.js` (UPDATED L31 AND L50 CANONICAL SPECS)
+  12. `scripts/detect-media-duplicates.js` (NORMALIZED SVG LF)
+  13. `scripts/test-media-structural-consistency.js` (NEW REGRESSION TEST)
+  14. `scripts/validate-real-media-production.js` (NORMALIZED SVG LF)
+  15. `scripts/verified-commons-image-map.js` (UPDATED L50 TO COMMONS FILE 54)
+  16. `src/config/media-registry.ts` (REGENERATED CANONICAL RUNTIME REGISTRY)
+- **Key Media Reconciliation Deliverables:**
+  - **L31 Secondary (`media-l31-secondary`):** Replaced stale Laguna Copperplate GIF with authentic Magellan Shrine photograph (`File:Magellan_Shrine.jpg`, Page ID `21504221`, Creator: `Ipepot`, License: `CC BY-SA 3.0`, SHA-256: `8a0ea7ab64d9b51f8e2c940996f52548fd43adf2492c23e1765bc465c6cd9d3b`).
+  - **L50 Primary (`media-l50-primary`):** Replaced stale recipe book cover JPEG and non-existent Commons filename with authentic Judgefloro wooden spoons photograph from Wikimedia Commons `Category:Wooden spoons in the Philippines` (`File:6301Photos_taken_in_Poblacion,_Baliuag,_Bulacan_54.jpg`, Page ID `94915327`, Creator: `Judgefloro`, License: `CC0 1.0`, SHA-256: `7d7b4675d0c290c967ebdcfc9faa09be6ef5ee9216deb09e8bbf759aa4540957`).
+  - **L12 Primary (`media-l12-primary`):** Unchanged authentic pre-colonial Baybayin Bo vector graphic.
+  - **Legacy Manifest Retirement:** Permanently retired `artifacts/curriculum-media-fidelity-manifest.json` to preserve a single authoritative source of truth (`MEDIA_REGISTRY` in `src/config/media-registry.ts`).
+  - **Structural Consistency Regression Gate:** Added `scripts/test-media-structural-consistency.js` enforcing bidirectional consistency across canonical Commons map, physical disk files, and TypeScript media registry, with negative tests preventing phantom attribution.
+  - **Cross-Platform Determinism:** Normalized SVG buffers to LF line endings across all media scripts, guaranteeing identical cryptographic hash validation between Windows and Linux CI.
 
 ---
 

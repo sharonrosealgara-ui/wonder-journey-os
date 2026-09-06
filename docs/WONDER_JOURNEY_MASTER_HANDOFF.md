@@ -523,17 +523,38 @@ This standing policy governs all AI engineering workflows for Wonder Journey:
 
 ---
 
+## Teacher Classroom Session Lifecycle Management (IMPLEMENTED & VERIFIED)
+
+> [!NOTE]
+> **Candidate #1 Integrated (2026-09-06):**
+> On 2026-09-06, Candidate #1 (Teacher Classroom Session Lifecycle Management) was implemented, verified, and merged into `main` via PR #8 under Fast Integration and Bounded Autonomy:
+> 1. **Teacher Launch:** Authenticated teachers can launch a live classroom session directly from `/classroom` or `/teacher` Quick Actions without developer seed data.
+> 2. **Authoritative Server Governance:** All consequential authority (workspace, teacher identity, room identifier, participant roles, LiveKit tokens/grants) is derived strictly server-side. No client-supplied authority or overrides are accepted.
+> 3. **Canonical Lesson Validation:** The selected lesson is validated against canonical curriculum data via `getLesson()`; invalid lesson IDs are rejected.
+> 4. **Collision Rule & Re-entry:** Existing active sessions are cleanly resolved and re-entered rather than creating duplicate active session rows.
+> 5. **Family Waiting State:** When no session is active, students and families see a truthful waiting room notice ("Teacher Sharon has not opened class yet"), with periodic polling automatically connecting once the session becomes active.
+> 6. **Conclude Class Flow:** Authorized teachers have an explicit "🏁 Conclude Class" button with confirmation modal that transitions the session status to canonical `'completed'` and records `ended_at`.
+> 7. **Leave vs. Conclude Distinction:** Navigating away or clicking "📞 Leave Stage" disconnects the teacher without concluding the canonical class for other participants. Concluding class requires an explicit, confirmed action.
+> 8. **Session Conclusion Synchronization:** Remote participants transition cleanly when the session concludes via Supabase Realtime `postgres_changes` and fallback polling.
+> 9. **Role-Aware Post-Class Routing:** Teachers exit to `/teacher`; students and families exit to `/family`.
+> 10. **Zero SQL / Zero Migration Boundary:** Utilized existing canonical schema from migration `0005_classroom_sessions.sql`. 0 new migrations introduced.
+> 11. **Remote CI Proof:** All 30 release gates passed green in CI run 34010063942 (including two-context Playwright E2E).
+
+---
+
 ## Current Next Step
 
 The immediate engineering step following this documentation update:
 
-1. **Security Remediation Integration:**
-   - Integrate the LiveKit credential remediation documentation and checkpoint onto `main` via strict fast-forward integration under Fast Integration and Bounded Autonomy.
-2. **Candidate Next Slice:**
+1. **Integrated Baseline Verification:**
+   - Candidate #1 (Teacher Classroom Session Lifecycle Management) is fully integrated into `main`.
+2. **Next Candidate Product Slices (Subject to Owner Selection/Approval):**
+   - Candidate #2: Teacher Studio / Real Student Progress Bridge (`/teacher` live student progress tracking, actual completions reflection, student milestones).
+   - Candidate #3: Primary-Source Historical Context Scoping (authentic primary-source citations & historical context metadata for curriculum lessons).
    - Family Portal Authentication & Login Visual Refinements (`src/app/(auth)/layout.tsx` and `src/app/(auth)/login/page.tsx`).
 3. **Repository Truth Re-Verification:**
-   - After this documentation update is integrated, do not begin a new product slice until repository truth is re-verified.
-   - Do not invent new features outside owner approval.
+   - Always verify `main = origin/main` before mutation.
+   - Do not invent new features outside explicit owner approval.
 
 ---
 

@@ -226,7 +226,7 @@ The security foundation of Wonder Journey was established through rigorous itera
   Hostinger Managed Next.js is the official production deployment target for the current Wonder Journey release.
 - **Superseded Runtimes:**
   Cloudflare Pages and Netlify application runtimes are SUPERSEDED. All legacy edge functions, wrangler configurations, and netlify.toml files have been cleanly decommissioned.
-- **Legacy Deployment Provider Git Integration Status (CURRENT / BINDING):**
+- **Legacy Deployment Provider Git Integration & Security Status (CURRENT / BINDING):**
   - Netlify and Cloudflare Pages were legacy deployment providers that retained active Git repository connections to the Wonder Journey GitHub repository.
   - These connections caused automatic PR preview and build activity to be triggered on each push, despite neither provider being the intended production runtime.
   - On 2026-09-05, the repository owner manually disconnected the Wonder Journey Git repository from both provider projects:
@@ -234,10 +234,17 @@ The security foundation of Wonder Journey was established through rigorous itera
     - **Cloudflare Pages** (project: wonder-journey-os): Build settings now present "Git repository: Connect" (indicating no linked repository).
   - Both legacy provider projects remain preserved (not deleted). No DNS records were modified. No production deployment was manually initiated through either provider.
   - Neither provider shall be reconnected without explicit owner authorization.
+  - On 2026-09-06, following discovery of exposed LiveKit variables in legacy settings, the repository owner completed provider security remediation in authenticated browser sessions (OWNER-REPORTED COMPLETED):
+    - **LiveKit Cloud:** Exposed Wonder Journey LiveKit API credential was treated as compromised and owner-revoked/deleted. No replacement key/secret was created (revoke-only outcome) because no active deployed runtime currently requires a long-lived credential.
+    - **Legacy Cloudflare Pages:** Obsolete `LIVEKIT_API_KEY`, `LIVEKIT_API_SECRET`, `LIVEKIT_URL`, and obsolete `CLASSROOM_CODE` were owner-removed from environment settings.
+    - **Legacy Netlify:** Residual Wonder Journey LiveKit environment variables were owner-checked and cleaned where present.
+    - **Hosted Supabase:** Untouched.
+    - **No Secret Material:** No secret values are requested or recorded.
 - **Future Cloudflare Consideration:**
   Cloudflare technology is not permanently excluded. A future migration to Cloudflare Workers / OpenNext may be considered in subsequent phases, subject to exhaustive runtime validation and owner approval.
 - **Current Operational Boundary:**
-  Hostinger account connection, DNS routing, and production deployments remain held pending owner production deployment authorization. No production deployment was manually initiated or executed through any provider. Legacy auto-deploy triggers from Netlify and Cloudflare Pages have been disabled (see above).
+  Hostinger account connection, DNS routing, and production deployments remain held pending owner production deployment authorization. Hostinger remains disconnected with no runtime deployed. No production deployment was manually initiated or executed through any provider. Legacy auto-deploy triggers from Netlify and Cloudflare Pages remain disabled.
+
 
 ---
 
@@ -284,9 +291,9 @@ The security foundation of Wonder Journey was established through rigorous itera
 
 ## Current Main Branch State (CURRENT / BINDING)
 
-- **Main Branch Commit:** `5f79cc93238ce50cb5a914745bd15d6506db96c4`
-- **Tree SHA:** `14848a1baf7a9fe748565ed517631af634e891c4`
-- **Direct Parent:** `b429d827b58d8f58995d8895234e5d52cdf93d59`
+- **Main Branch Commit:** `cb62fcee7b4c69d3a473290dc80069112f679076`
+- **Tree SHA:** `e55498113e43ee325cdc3fd76e0ec73b13269fb9`
+- **Direct Parent:** `5f79cc93238ce50cb5a914745bd15d6506db96c4`
 - **Status:** IMPLEMENTED, VERIFIED, & INTEGRATED (Strict fast-forward integration into `main`; not deployed).
 - **Latest Integrated Slice:** Legacy Deployment Integration Cleanup Documentation (2026-09-05).
 - **Previous Integrated Slice:** Lesson 1 Authentic Media Fidelity & Curriculum Registry Reconciliation.
@@ -503,18 +510,16 @@ This standing policy governs all AI engineering workflows for Wonder Journey:
 
 ---
 
-## Owner Security Action Required
+## Owner Security Remediation Completed (CURRENT / BINDING)
 
-> [!CAUTION]
-> **LiveKit Credential Rotation Required:**
-> During owner verification of the legacy Cloudflare Pages project environment on 2026-09-05, an existing LiveKit credential was visually exposed in the Cloudflare project settings. The legacy Cloudflare environment also contains old runtime variables from a superseded deployment runtime. These credentials must not be assumed safe to remain in place.
->
-> **Required owner actions:**
-> 1. Rotate or revoke the exposed LiveKit credential through the LiveKit dashboard.
-> 2. Review all environment variables remaining in the legacy Cloudflare Pages project and remove or rotate as appropriate.
-> 3. Review any matching credentials in the legacy Netlify project.
->
-> This cleanup task does NOT authorize autonomous credential rotation. Credential rotation is an explicit owner action.
+> [!NOTE]
+> **Owner-Reported External Provider Remediation Completed (2026-09-06):**
+> On 2026-09-06, the repository owner completed external provider remediation manually in authenticated browser sessions:
+> 1. **LiveKit Cloud:** The exposed Wonder Journey LiveKit API credential was treated as compromised and owner-revoked/deleted via the LiveKit Cloud dashboard. A revoke-only outcome was used; no replacement API key/secret was created because no active deployed runtime currently requires a long-lived credential.
+> 2. **Legacy Cloudflare Pages Project:** Obsolete `LIVEKIT_API_KEY`, `LIVEKIT_API_SECRET`, `LIVEKIT_URL`, and obsolete `CLASSROOM_CODE` were owner-removed from project environment settings. Git integration remains disconnected, project preserved, no deployment, no DNS mutation.
+> 3. **Legacy Netlify Site:** GitHub linkage remains disconnected ("Current repository: Not linked"). Residual LiveKit environment variables were checked and obsolete variables removed where present. Site preserved, no deployment, no repository reconnection.
+> 4. **Hostinger & Hosted Supabase:** Hostinger remains disconnected (no runtime deployed); hosted Supabase remains untouched (zero mutations, zero SQL executions, zero schema modifications).
+> 5. **Evidence Rule:** In accordance with project policy, this cleanup is recorded as OWNER-REPORTED COMPLETED without requesting, exposing, or recording any secret values.
 
 ---
 
@@ -522,8 +527,8 @@ This standing policy governs all AI engineering workflows for Wonder Journey:
 
 The immediate engineering step following this documentation update:
 
-1. **Owner Security Follow-Up:**
-   - Owner must rotate the exposed LiveKit credential and review legacy provider environment variables (see Owner Security Action Required above).
+1. **Security Remediation Integration:**
+   - Integrate the LiveKit credential remediation documentation and checkpoint onto `main` via strict fast-forward integration under Fast Integration and Bounded Autonomy.
 2. **Candidate Next Slice:**
    - Family Portal Authentication & Login Visual Refinements (`src/app/(auth)/layout.tsx` and `src/app/(auth)/login/page.tsx`).
 3. **Repository Truth Re-Verification:**

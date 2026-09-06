@@ -133,7 +133,7 @@ const CANONICAL_SPECS = [
 
   // L31: Lapu-Lapu
   { id: "media-l31-primary", lessonId: "lesson-31-lapu-lapu", classification: "photograph", commonsFile: "Lapu-Lapu_Shrine_Statue.jpg", title: "Bronze Statue of Datu Lapu-Lapu on Mactan Island", visibleDepiction: "20-meter bronze statue of Mactan chieftain Lapu-Lapu holding a kampilan sword and shield at Mactan Shrine." },
-  { id: "media-l31-secondary", lessonId: "lesson-31-lapu-lapu", classification: "photograph", commonsFile: "Magellan_shrine_in_Punta_Enga%C3%B1o,_Lapu-Lapu_City.jpg", title: "Magellan Shrine Memorial in Punta Engaño Mactan", visibleDepiction: "Historic stone obelisk monument marking the 1521 Battle of Mactan in Punta Engaño, Cebu." },
+  { id: "media-l31-secondary", lessonId: "lesson-31-lapu-lapu", classification: "photograph", commonsFile: "Magellan_Shrine.jpg", title: "Magellan Shrine Memorial in Punta Engaño Mactan", visibleDepiction: "Historic stone obelisk monument marking the 1521 Battle of Mactan in Punta Engaño, Cebu." },
 
   // L32: Folk Songs
   { id: "media-l32-primary", lessonId: "lesson-32-folk-songs", classification: "photograph", commonsFile: "Vegetable_farm_in_Benguet.JPG", title: "Lush Bahay Kubo Vegetable Garden Landscape", visibleDepiction: "Terraced vegetable garden plot in the highlands cultivating squash, beans, and produce celebrated in 'Bahay Kubo'." },
@@ -208,7 +208,7 @@ const CANONICAL_SPECS = [
   { id: "media-l49-secondary", lessonId: "lesson-49-kakanin", classification: "photograph", commonsFile: "Puto_Bumbong_with_grated_coconut.jpg", title: "Steamed Puto Bumbong with Grated Coconut and Muscovado", visibleDepiction: "Purple glutinous rice tubes steamed inside bamboo cylinders, served warm with freshly grated coconut and muscovado sugar." },
 
   // L50: Grandma's Recipe Box
-  { id: "media-l50-primary", lessonId: "lesson-50-grandmas-recipe-box", classification: "photograph", commonsFile: "Vintage_wooden_cooking_ladles_and_spoons.jpg", title: "Heirloom Hand-Carved Wooden Kitchen Utensils", visibleDepiction: "Handcrafted wooden ladles (sandok) and heirloom turners hanging in a traditional kitchen." },
+  { id: "media-l50-primary", lessonId: "lesson-50-grandmas-recipe-box", classification: "photograph", commonsFile: "6301Photos_taken_in_Poblacion,_Baliuag,_Bulacan_54.jpg", title: "Handcrafted Wooden Spoons and Kitchen Utensils", visibleDepiction: "Traditional handcrafted wooden spoons and kitchen utensils laid out in Baliuag, Bulacan." },
   { id: "media-l50-secondary", lessonId: "lesson-50-grandmas-recipe-box", classification: "photograph", commonsFile: "Handwritten_heirloom_recipe_notebook.jpg", title: "Vintage Kitchen Spoons and Measuring Implements", visibleDepiction: "Vintage culinary measuring implements and traditional recipe preparation tools." },
 
   // L51: Family Heritage Wall

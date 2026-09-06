@@ -100,7 +100,7 @@ const COMMONS_IMAGE_MAP = {
   "media-l48-secondary": "Mango_float,_a_Filipino_icebox_cake_version_of_Crema_de_Fruta_01.jpg",
   "media-l49-primary": "BIBINGKA_rice_cakes.jpg",
   "media-l49-secondary": "Puto_Bumbong_1.jpg",
-  "media-l50-primary": "Wooden_spoons_collection.jpg",
+  "media-l50-primary": "6301Photos_taken_in_Poblacion,_Baliuag,_Bulacan_54.jpg",
   "media-l50-secondary": "Old_recipe_book.jpg",
   "media-l51-primary": "Filipino_family_dining.jpg",
   "media-l51-secondary": "Family_gathering_Philippines.jpg",

@@ -1,3 +1,7 @@
+// @deprecated — Superseded in Stage 12.1R.8 by scripts/build-complete-authentic-registry.js.
+// artifacts/curriculum-media-fidelity-manifest.json was formally retired in Stage 12.1R.11.
+// Do NOT execute this script in release or production pipelines.
+
 const fs = require("fs");
 const path = require("path");
 const https = require("https");

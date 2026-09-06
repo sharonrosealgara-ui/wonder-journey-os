@@ -61,7 +61,10 @@ mediaRegistry.forEach((m, idx) => {
   if (!fs.existsSync(p)) {
     defects.push(`Record ${num} (${m.id}): File missing on disk ${storedPath}`);
   } else {
-    const buf = fs.readFileSync(p);
+    let buf = fs.readFileSync(p);
+    if (storedPath.endsWith('.svg')) {
+      buf = Buffer.from(buf.toString('utf8').replace(/\r\n/g, '\n'), 'utf8');
+    }
     const hash = crypto.createHash('sha256').update(buf).digest('hex');
     if (hash !== checksum) {
       defects.push(`Record ${num} (${m.id}): SHA-256 mismatch (registry: ${checksum}, actual: ${hash})`);
@@ -108,5 +111,7 @@ if (defects.length > 0) {
   process.exit(1);
 } else {
   console.log('\n✓ PASS: All 130 media assets verified authentic, unique, and strictly licensed.\n');
+  // Enforce structural mapping -> disk -> registry consistency and phantom attribution prevention
+  require('./test-media-structural-consistency');
   process.exit(0);
 }

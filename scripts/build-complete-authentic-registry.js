@@ -484,7 +484,10 @@ async function buildRegistry() {
     const localFileName = matchedFile;
     const localPath = path.join(__dirname, '../public/media/curriculum', localFileName);
     
-    const buf = fs.readFileSync(localPath);
+    let buf = fs.readFileSync(localPath);
+    if (localFileName.endsWith('.svg')) {
+      buf = Buffer.from(buf.toString('utf8').replace(/\r\n/g, '\n'), 'utf8');
+    }
     const byteSize = buf.length;
     const sha256 = crypto.createHash('sha256').update(buf).digest('hex');
     

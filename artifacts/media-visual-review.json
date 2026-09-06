@@ -796,8 +796,8 @@
     "id": "media-l31-secondary",
     "lessonId": "lesson-31-lapu-lapu",
     "title": "Magellan Shrine Memorial in Punta Engaño Mactan",
-    "fileName": "l31-visual-b.gif",
-    "sha256Checksum": "3180eff75dbca492b632d2ec2e1ca40f0bf4c5b1c9b81df95927f3ffa4eb9dc9",
+    "fileName": "l31-visual-b.jpg",
+    "sha256Checksum": "8a0ea7ab64d9b51f8e2c940996f52548fd43adf2492c23e1765bc465c6cd9d3b",
     "creator": "Ipepot",
     "organization": "Wikimedia Commons",
     "license": "CC BY-SA 3.0",
@@ -1276,14 +1276,14 @@
   {
     "id": "media-l50-primary",
     "lessonId": "lesson-50-grandmas-recipe-box",
-    "title": "Heirloom Hand-Carved Wooden Kitchen Utensils",
+    "title": "Handcrafted Wooden Spoons and Kitchen Utensils",
     "fileName": "l50-visual-a.jpg",
-    "sha256Checksum": "20c9fd1653404fd30a4c2c81157c1248aaae460f2bc2f723b2f0137b57a38047",
+    "sha256Checksum": "7d7b4675d0c290c967ebdcfc9faa09be6ef5ee9216deb09e8bbf759aa4540957",
     "creator": "Judgefloro",
     "organization": "Wikimedia Commons",
     "license": "CC0 1.0",
     "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
-    "observedDepiction": "Handcrafted wooden ladles (sandok) and heirloom turners hanging in a traditional kitchen.",
+    "observedDepiction": "Traditional handcrafted wooden spoons and kitchen utensils laid out in Baliuag, Bulacan.",
     "status": "AUTHENTIC_VERIFIED"
   },
   {

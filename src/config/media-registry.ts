@@ -1621,20 +1621,20 @@ export const MEDIA_REGISTRY: Record<string, MediaAssetMetadata> = {
     "lessonId": "lesson-31-lapu-lapu",
     "title": "Magellan Shrine Memorial in Punta Engaño Mactan",
     "classification": "photograph",
-    "storedAssetPath": "/media/curriculum/l31-visual-b.gif",
+    "storedAssetPath": "/media/curriculum/l31-visual-b.jpg",
     "sourceFileTitle": "File:Magellan_Shrine.jpg",
     "sourceUrl": "https://commons.wikimedia.org/wiki/File:Magellan_Shrine.jpg",
     "creator": "Ipepot",
     "organization": "Wikimedia Commons",
     "license": "CC BY-SA 3.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
-    "sha256Checksum": "3180eff75dbca492b632d2ec2e1ca40f0bf4c5b1c9b81df95927f3ffa4eb9dc9",
+    "sha256Checksum": "8a0ea7ab64d9b51f8e2c940996f52548fd43adf2492c23e1765bc465c6cd9d3b",
     "dimensions": {
-      "width": 600,
-      "height": 355
+      "width": 2944,
+      "height": 2534
     },
-    "byteSize": 186037,
-    "mimeType": "image/gif",
+    "byteSize": 4334977,
+    "mimeType": "image/jpeg",
     "subjectTags": [
       "lesson-31-lapu-lapu",
       "photograph",
@@ -2581,21 +2581,21 @@ export const MEDIA_REGISTRY: Record<string, MediaAssetMetadata> = {
   "media-l50-primary": {
     "id": "media-l50-primary",
     "lessonId": "lesson-50-grandmas-recipe-box",
-    "title": "Heirloom Hand-Carved Wooden Kitchen Utensils",
+    "title": "Handcrafted Wooden Spoons and Kitchen Utensils",
     "classification": "photograph",
     "storedAssetPath": "/media/curriculum/l50-visual-a.jpg",
-    "sourceFileTitle": "File:Wooden_spoons_collection.jpg",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Wooden_spoons_collection.jpg",
+    "sourceFileTitle": "File:6301Photos_taken_in_Poblacion,_Baliuag,_Bulacan_54.jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:6301Photos_taken_in_Poblacion%2C_Baliuag%2C_Bulacan_54.jpg",
     "creator": "Judgefloro",
     "organization": "Wikimedia Commons",
     "license": "CC0 1.0",
     "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
-    "sha256Checksum": "20c9fd1653404fd30a4c2c81157c1248aaae460f2bc2f723b2f0137b57a38047",
+    "sha256Checksum": "7d7b4675d0c290c967ebdcfc9faa09be6ef5ee9216deb09e8bbf759aa4540957",
     "dimensions": {
-      "width": 500,
-      "height": 694
+      "width": 4608,
+      "height": 3456
     },
-    "byteSize": 42388,
+    "byteSize": 6763754,
     "mimeType": "image/jpeg",
     "subjectTags": [
       "lesson-50-grandmas-recipe-box",

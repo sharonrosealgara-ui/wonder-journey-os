@@ -39,7 +39,10 @@ mediaItems.forEach((m) => {
     duplicates.push(`Missing file on disk: ${p}`);
     return;
   }
-  const buf = fs.readFileSync(p);
+  let buf = fs.readFileSync(p);
+  if (p.endsWith('.svg')) {
+    buf = Buffer.from(buf.toString('utf8').replace(/\r\n/g, '\n'), 'utf8');
+  }
   const hash = crypto.createHash('sha256').update(buf).digest('hex');
 
   // Exact SHA-256 duplicate check

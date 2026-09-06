@@ -143,7 +143,10 @@ function validateRegistry(registry) {
           uniqueLocalPaths.add(localDiskPath);
         }
 
-        const fileBytes = fs.readFileSync(localDiskPath);
+        let fileBytes = fs.readFileSync(localDiskPath);
+        if (localDiskPath.endsWith('.svg')) {
+          fileBytes = Buffer.from(fileBytes.toString("utf8").replace(/\r\n/g, "\n"), "utf8");
+        }
         if (fileBytes.length < 100) {
           errors.push(`[${id}] File size too small (${fileBytes.length} bytes): ${localDiskPath}`);
         }

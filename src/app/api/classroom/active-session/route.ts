@@ -20,7 +20,7 @@ export async function GET() {
     // 2. Resolve real workspace UUID from workspace_members
     const { data: membership, error: memberError } = await supabase
       .from("workspace_members")
-      .select("workspace_id")
+      .select("workspace_id, role")
       .eq("user_id", user.id)
       .eq("status", "active")
       .limit(1)
@@ -59,14 +59,50 @@ export async function GET() {
     }
 
     // 4. Verify the user is an authorized participant
-    const { data: participant, error: partError } = await supabase
+    const { data: initialParticipant, error: partError } = await supabase
       .from("classroom_participants")
       .select("id, role, permission_level")
       .eq("session_id", session.id)
       .eq("user_id", user.id)
-      .single();
+      .maybeSingle();
 
-    if (partError || !participant) {
+    let participant = initialParticipant;
+
+    if (!participant) {
+      // User is an authorized active workspace member; register participant record for this session
+      const userRole = ["teacher", "owner", "admin"].includes(membership.role)
+        ? "teacher"
+        : "family";
+      const initialPermission = userRole === "teacher" ? "full_interactive" : "view_only";
+
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("display_name")
+        .eq("id", user.id)
+        .single();
+
+      const displayName = profile?.display_name || (userRole === "teacher" ? "Teacher" : "Family");
+
+      const { data: newParticipant, error: insertErr } = await supabase
+        .from("classroom_participants")
+        .insert({
+          session_id: session.id,
+          workspace_id: workspaceId,
+          user_id: user.id,
+          display_name: displayName,
+          role: userRole,
+          permission_level: initialPermission,
+          is_online: true,
+        })
+        .select("id, role, permission_level")
+        .single();
+
+      if (!insertErr && newParticipant) {
+        participant = newParticipant;
+      }
+    }
+
+    if (!participant) {
       return NextResponse.json(
         { error: "Forbidden: user is not an authorized participant in this session" },
         { status: 403 }

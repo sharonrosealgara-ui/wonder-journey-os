@@ -26,6 +26,7 @@ import { ClassroomGames } from "@/components/classroom/classroom-games";
 import { MediaCreditsModal } from "@/components/classroom/media-credits-modal";
 import { getMediaForLesson, FactualMedia } from "@/config/media-registry";
 import { createClient as createBrowserSupabaseClient } from "@/lib/supabase/client";
+import { startClassroomSession, concludeClassroomSession } from "./actions";
 
 // 🎥 LIVE ADVENTURE CLASSROOM — STAGE 12.1
 // Full 16:9 wide classroom with synchronized teacher-controlled student interaction,
@@ -66,9 +67,11 @@ export default function ClassroomPage() {
   } | null>(null);
 
   useEffect(() => {
+    let isMounted = true;
     async function loadActiveSession() {
       try {
         const res = await fetch("/api/classroom/active-session");
+        if (!isMounted) return;
         if (res.ok) {
           const data = await res.json();
           if (data.sessionId) {
@@ -76,14 +79,59 @@ export default function ClassroomPage() {
             setSessionInfo(data);
             const l = allLessons.find((les) => les.id === data.lessonId);
             if (l) setLesson(l);
+            return;
           }
         }
+        setActiveSessionId(null);
+        setSessionInfo(null);
       } catch {
         // ignore
       }
     }
     loadActiveSession();
+    const interval = setInterval(loadActiveSession, 5000);
+    return () => {
+      isMounted = false;
+      clearInterval(interval);
+    };
   }, []);
+
+  async function handleStartSession(
+    lessonId: string,
+    devices: { camId: string; micId: string; camOn: boolean; micOn: boolean }
+  ) {
+    setJoinError(null);
+    setJoining(true);
+    try {
+      const res = await startClassroomSession(lessonId);
+      if (!res.success) {
+        setJoining(false);
+        setJoinError(res.error || "Failed to start classroom session.");
+        return;
+      }
+      setActiveSessionId(res.sessionId);
+      const l = allLessons.find((les) => les.id === res.lessonId);
+      if (l) setLesson(l);
+
+      const result = await call.join({
+        sessionId: res.sessionId,
+        ...devices,
+      });
+      setJoining(false);
+      if (result === "unauthorized") {
+        setJoinError("Your session is unauthorized or your sign-in has expired. Please sign in again. 💙");
+        return;
+      }
+      if (result === "error") {
+        setJoinError("We couldn't reach your camera or classroom session. Please check permissions and try again.");
+        return;
+      }
+      initCloudSync();
+    } catch (err: any) {
+      setJoining(false);
+      setJoinError(err?.message || "Failed to launch classroom session.");
+    }
+  }
 
   async function join(devices: { camId: string; micId: string; camOn: boolean; micOn: boolean }) {
     setJoinError(null);
@@ -103,6 +151,13 @@ export default function ClassroomPage() {
     }
 
     if (!sessId) {
+      // If user is teacher, auto-launch today's lesson instead of failing
+      const isTeacherRole = role === "teacher";
+      if (isTeacherRole) {
+        await handleStartSession(lesson?.id || allLessons[0]?.id || "lesson-1-world-map", devices);
+        return;
+      }
+
       setJoining(false);
       setJoinError("No active classroom session found for your workspace. 💙");
       return;
@@ -126,7 +181,8 @@ export default function ClassroomPage() {
 
   function endCall() {
     call.endCall();
-    router.push("/family");
+    const isTeacherRole = role === "teacher";
+    router.push(isTeacherRole ? "/teacher" : "/family");
   }
 
   if (call.status === "connected" && call.room) {
@@ -156,9 +212,12 @@ export default function ClassroomPage() {
       name={name}
       setName={setName}
       lesson={lesson}
+      setLesson={setLesson}
+      activeSessionId={activeSessionId}
       joining={joining || call.status === "connecting"}
       joinError={joinError}
       onJoin={join}
+      onStartSession={handleStartSession}
       onEnterSolo={() => call.enterSolo(name)}
       role={role ?? "family"}
     />
@@ -170,24 +229,43 @@ function Lobby({
   name,
   setName,
   lesson,
+  setLesson,
+  activeSessionId,
   joining,
   joinError,
   onJoin,
+  onStartSession,
   onEnterSolo,
   role,
 }: {
   name: string;
   setName: (n: string) => void;
   lesson: Lesson | null;
+  setLesson: (l: Lesson | null) => void;
+  activeSessionId: string | null;
   joining: boolean;
   joinError: string | null;
   onJoin: (d: { camId: string; micId: string; camOn: boolean; micOn: boolean }) => void;
+  onStartSession: (
+    lessonId: string,
+    d: { camId: string; micId: string; camOn: boolean; micOn: boolean }
+  ) => Promise<void>;
   onEnterSolo?: () => void;
   role: string;
 }) {
   const cam = useLocalCamera();
   const [level, setLevel] = useState(0);
   const [showMediaModal, setShowMediaModal] = useState(false);
+  const isTeacherRole = role === "teacher" || role === "owner" || role === "admin";
+  const [selectedLessonId, setSelectedLessonId] = useState(
+    lesson?.id || allLessons[0]?.id || "lesson-1-world-map"
+  );
+
+  useEffect(() => {
+    if (lesson?.id) {
+      setSelectedLessonId(lesson.id);
+    }
+  }, [lesson?.id]);
 
   const mediaList = useMemo(() => {
     if (!lesson) return [];
@@ -227,7 +305,7 @@ function Lobby({
         <div className="mb-2 text-4xl">🎥🌴</div>
         <h1 className="wj-outline font-display text-3xl sm:text-4xl">Live Adventure Classroom</h1>
         <p className="font-hand mt-1 text-lg text-ink-soft">
-          Mabuhay, {role === "teacher" ? teacherName : familyName}! Ready to learn together? 💙
+          Mabuhay, {isTeacherRole ? teacherName : familyName}! Ready to learn together? 💙
         </p>
         <div className="mt-2 flex justify-center">
           <button
@@ -317,24 +395,94 @@ function Lobby({
               ))}
             </select>
           </div>
-          <div className="rounded-2xl bg-sand p-3 text-sm text-ink-soft">
-            <p className="font-bold text-ink">Today&apos;s Adventure</p>
-            <p className="font-hand text-base text-ocean-deep">
-              {lesson ? `${lesson.emoji} ${lesson.title}` : "Loading..."}
-            </p>
-          </div>
+
+          {/* Lesson Info / Selector */}
+          {isTeacherRole && !activeSessionId ? (
+            <div>
+              <label className="text-sm font-bold text-ink-soft">Select Adventure Lesson to Launch</label>
+              <select
+                className="wj-input mt-1"
+                value={selectedLessonId}
+                onChange={(e) => {
+                  setSelectedLessonId(e.target.value);
+                  const found = allLessons.find((l) => l.id === e.target.value);
+                  if (found) setLesson(found);
+                }}
+              >
+                {allLessons.map((l) => (
+                  <option key={l.id} value={l.id}>
+                    {l.emoji} {l.title}
+                  </option>
+                ))}
+              </select>
+            </div>
+          ) : (
+            <div className="rounded-2xl bg-sand p-3 text-sm text-ink-soft">
+              <p className="font-bold text-ink">
+                {activeSessionId ? "🟢 Active Adventure Session" : "Today&apos;s Adventure"}
+              </p>
+              <p className="font-hand text-base text-ocean-deep">
+                {lesson ? `${lesson.emoji} ${lesson.title}` : "Loading..."}
+              </p>
+            </div>
+          )}
+
+          {/* Family Waiting Room State */}
+          {!isTeacherRole && !activeSessionId && (
+            <div className="rounded-2xl bg-ocean/10 border border-ocean/20 p-4 text-center space-y-1">
+              <div className="text-2xl animate-pulse">⏳</div>
+              <p className="font-bold text-ocean-deep text-sm">Teacher Sharon has not opened class yet</p>
+              <p className="text-xs text-ink-soft">
+                Classroom will connect automatically once your teacher launches today&apos;s adventure. Waiting here... 💙
+              </p>
+            </div>
+          )}
+
           {joinError && (
             <p className="rounded-2xl bg-hibiscus/10 p-3 text-sm font-bold text-hibiscus-deep">
               {joinError}
             </p>
           )}
-          <button
-            className="wj-btn w-full text-lg shadow-lg"
-            onClick={() => onJoin({ camId: cam.camId, micId: cam.micId, camOn: cam.camOn, micOn: cam.micOn })}
-            disabled={joining}
-          >
-            {joining ? "Connecting… 🌐" : "🚀 Enter Classroom"}
-          </button>
+
+          {/* Consequential Launch / Enter Action */}
+          {isTeacherRole && !activeSessionId ? (
+            <button
+              className="wj-btn w-full text-lg shadow-lg"
+              onClick={() =>
+                onStartSession(selectedLessonId, {
+                  camId: cam.camId,
+                  micId: cam.micId,
+                  camOn: cam.camOn,
+                  micOn: cam.micOn,
+                })
+              }
+              disabled={joining}
+            >
+              {joining ? "Launching… 🌐" : "🚀 Launch & Enter Classroom"}
+            </button>
+          ) : !isTeacherRole && !activeSessionId ? (
+            <button
+              className="wj-btn w-full text-lg shadow-lg opacity-60 cursor-not-allowed"
+              disabled={true}
+            >
+              ⏳ Waiting for Teacher (Enter Classroom)
+            </button>
+          ) : (
+            <button
+              className="wj-btn w-full text-lg shadow-lg"
+              onClick={() =>
+                onJoin({
+                  camId: cam.camId,
+                  micId: cam.micId,
+                  camOn: cam.camOn,
+                  micOn: cam.micOn,
+                })
+              }
+              disabled={joining}
+            >
+              {joining ? "Connecting… 🌐" : "🚀 Enter Classroom"}
+            </button>
+          )}
           <button
             id="solo-classroom-btn"
             type="button"
@@ -404,6 +552,72 @@ function ConnectedRoom({
   // Synchronized Interaction Data
   const [remoteStrokes, setRemoteStrokes] = useState<SynchronizedStroke[]>([]);
   const [remotePointers, setRemotePointers] = useState<Record<string, RemotePointer>>({});
+
+  // Conclude Session State
+  const [showConcludeConfirm, setShowConcludeConfirm] = useState(false);
+  const [isConcluding, setIsConcluding] = useState(false);
+  const [concludeError, setConcludeError] = useState<string | null>(null);
+
+  async function handleConcludeSession() {
+    setIsConcluding(true);
+    setConcludeError(null);
+    try {
+      const res = await concludeClassroomSession(sessionId);
+      if (!res.success) {
+        setConcludeError(res.error || "Failed to conclude session.");
+        setIsConcluding(false);
+        return;
+      }
+      setShowConcludeConfirm(false);
+      onLeave();
+    } catch (err: any) {
+      setConcludeError(err?.message || "An error occurred while concluding the session.");
+      setIsConcluding(false);
+    }
+  }
+
+  // Authoritative Session Status Listener (Realtime + fallback polling)
+  useEffect(() => {
+    if (!sessionId) return;
+    const channel = supabase
+      .channel(`session-status-${sessionId}`)
+      .on(
+        "postgres_changes",
+        {
+          event: "UPDATE",
+          schema: "public",
+          table: "classroom_sessions",
+          filter: `id=eq.${sessionId}`,
+        },
+        (payload) => {
+          const newStatus = (payload.new as { status?: string })?.status;
+          if (newStatus === "completed" || newStatus === "discarded") {
+            onLeave();
+          }
+        }
+      )
+      .subscribe();
+
+    const interval = setInterval(async () => {
+      try {
+        const { data } = await supabase
+          .from("classroom_sessions")
+          .select("status")
+          .eq("id", sessionId)
+          .single();
+        if (data && (data.status === "completed" || data.status === "discarded")) {
+          onLeave();
+        }
+      } catch {
+        // ignore
+      }
+    }, 5000);
+
+    return () => {
+      clearInterval(interval);
+      void supabase.removeChannel(channel);
+    };
+  }, [sessionId, supabase, onLeave]);
 
   // ── Authoritative PostgreSQL Reconnection State Loading ──
   useEffect(() => {
@@ -938,13 +1152,26 @@ function ConnectedRoom({
             👥 Video ({everyone.length})
           </button>
 
-          {/* End Call */}
+          {/* Conclude Class Button (Teacher Only) */}
+          {isTeacher && (
+            <button
+              type="button"
+              data-testid="conclude-class-btn"
+              onClick={() => setShowConcludeConfirm(true)}
+              className="rounded-full bg-sand-deep border border-sand-deep px-3.5 py-1.5 font-display text-xs font-bold text-ink hover:bg-sand transition-all cursor-pointer"
+            >
+              🏁 Conclude Class
+            </button>
+          )}
+
+          {/* End Call / Leave Stage */}
           <button
             type="button"
+            data-testid="leave-stage-btn"
             onClick={onLeave}
             className="rounded-full bg-hibiscus px-4 py-1.5 font-display text-xs font-bold text-white shadow hover:brightness-95 transition-all cursor-pointer"
           >
-            📞 Leave
+            {isTeacher ? "📞 Leave Stage" : "📞 Leave"}
           </button>
         </div>
       </header>
@@ -1275,6 +1502,42 @@ function ConnectedRoom({
         mediaList={stageMediaList}
         lessonTitle={stageLesson?.title || "Lesson Media"}
       />
+
+      {/* ── 6. Conclude Class Confirmation Modal ───────────────────── */}
+      {showConcludeConfirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink/60 backdrop-blur-sm p-4">
+          <div className="wj-card max-w-md w-full p-6 shadow-2xl space-y-4 border-2 border-sand-deep bg-white">
+            <h3 className="font-display text-xl font-bold text-ink">🏁 Conclude Class for Everyone?</h3>
+            <p className="text-sm text-ink-soft">
+              This will officially finish the live adventure session for this workspace and record it as completed in the database. All participants will exit to their dashboard.
+            </p>
+            {concludeError && (
+              <div className="p-3 rounded-xl bg-hibiscus/10 text-xs font-bold text-hibiscus-deep">
+                {concludeError}
+              </div>
+            )}
+            <div className="flex justify-end gap-3 pt-2">
+              <button
+                type="button"
+                className="wj-btn wj-btn-ghost text-sm cursor-pointer"
+                disabled={isConcluding}
+                onClick={() => setShowConcludeConfirm(false)}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                data-testid="confirm-conclude-class-btn"
+                className="wj-btn bg-hibiscus text-white hover:brightness-95 text-sm font-bold cursor-pointer"
+                disabled={isConcluding}
+                onClick={handleConcludeSession}
+              >
+                {isConcluding ? "Concluding... ⏳" : "Yes, Conclude Class"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

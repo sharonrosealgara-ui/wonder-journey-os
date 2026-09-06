@@ -540,6 +540,18 @@ This standing policy governs all AI engineering workflows for Wonder Journey:
 > 10. **Zero SQL / Zero Migration Boundary:** Utilized existing canonical schema from migration `0005_classroom_sessions.sql`. 0 new migrations introduced.
 > 11. **Remote CI Proof:** All 30 release gates passed green in CI run 34010063942 (including two-context Playwright E2E).
 
+> ### Checkpoint 2026-09-06.13 — Classroom Lifecycle Correctness Remediation Integrated
+> **Commit / PR:** `4265f2ea70da8ca6f9a9ba46d84f85e493393b6e` | PR #10 (Merged into `main` via strict fast-forward)  
+> **Milestone Document:** `docs/checkpoints/2026-09-06-classroom-lifecycle-correctness-remediation-integrated.md`  
+> On 2026-09-06, two proven architectural and correctness defects were remediated and integrated under Fast Integration and Bounded Autonomy:
+> 1. **At Most One Active Session Per Workspace:** Added Migration `0008_classroom_correctness_invariants.sql` creating partial unique index `idx_classroom_sessions_one_active_per_workspace` on `classroom_sessions (workspace_id) WHERE status = 'active'`.
+> 2. **Active Session Concurrency Loser Re-Entry:** Handled PostgreSQL `23505` uniqueness violation in `startClassroomSession` to safely resolve and re-enter the winning active session instead of erroring or creating conflicting sessions.
+> 3. **Read-Only GET active-session:** Removed participant insertion from `GET /api/classroom/active-session`. Polling every 5 seconds is strictly idempotent and mutation-free with zero attendance side-effects.
+> 4. **Truthful Explicit Join Boundary:** Moved participant creation to `POST /api/livekit-token` (triggered when the user explicitly clicks "Enter Classroom"). `joined_at` is stamped truthfully on first entry and preserved across refreshes/re-entries.
+> 5. **Participant Uniqueness Per Session:** Enforced atomic participant uniqueness via Migration 0008 index `idx_classroom_participants_session_user` on `classroom_participants (session_id, user_id) WHERE user_id IS NOT NULL`, with concurrent join race handling in `POST /api/livekit-token`.
+> 6. **Zero Historical Rewrite:** Historical session and participant rows were untouched. Local database only; hosted Supabase was not mutated.
+> 7. **Remote CI Proof:** All 30 release gates passed green in CI run 34011728405 in 4m5s.
+
 ---
 
 ## Current Next Step

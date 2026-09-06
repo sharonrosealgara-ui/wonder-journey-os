@@ -53,7 +53,7 @@ export async function POST(req: Request) {
     // 5. Resolve real workspace UUID from workspace_members
     const { data: membership, error: memberError } = await supabase
       .from("workspace_members")
-      .select("workspace_id")
+      .select("workspace_id, role")
       .eq("user_id", user.id)
       .eq("status", "active")
       .limit(1)
@@ -84,15 +84,69 @@ export async function POST(req: Request) {
       );
     }
 
-    // 7. Require matching classroom_participants row
-    const { data: participantData, error: participantError } = await supabase
+    // 7. Resolve or establish matching classroom_participants row at explicit join boundary
+    const { data: existingParticipant } = await supabase
       .from("classroom_participants")
       .select("id, session_id, user_id, role, permission_level")
       .eq("session_id", sessionData.id)
       .eq("user_id", user.id)
-      .single();
+      .maybeSingle();
 
-    if (participantError || !participantData) {
+    let participantData = existingParticipant;
+
+    if (!participantData) {
+      // User is an authorized active workspace member explicitly entering the classroom;
+      // Establish canonical participant row stamped with joined_at = now()
+      const userRole = ["teacher", "owner", "admin"].includes(membership.role)
+        ? "teacher"
+        : "family";
+      const initialPermission = userRole === "teacher" ? "full_interactive" : "view_only";
+
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("display_name")
+        .eq("id", user.id)
+        .single();
+
+      const displayName = profile?.display_name || (userRole === "teacher" ? "Teacher" : "Family");
+
+      const { data: newParticipant, error: insertErr } = await supabase
+        .from("classroom_participants")
+        .insert({
+          session_id: sessionData.id,
+          workspace_id: workspaceId,
+          user_id: user.id,
+          display_name: displayName,
+          role: userRole,
+          permission_level: initialPermission,
+          is_online: true,
+        })
+        .select("id, session_id, user_id, role, permission_level")
+        .single();
+
+      if (insertErr) {
+        // Concurrency race: If another concurrent join from this user won the insert
+        const isConflict =
+          insertErr.code === "23505" ||
+          insertErr.message?.includes("idx_classroom_participants_session_user") ||
+          insertErr.message?.includes("duplicate key");
+
+        if (isConflict) {
+          const { data: racedParticipant } = await supabase
+            .from("classroom_participants")
+            .select("id, session_id, user_id, role, permission_level")
+            .eq("session_id", sessionData.id)
+            .eq("user_id", user.id)
+            .maybeSingle();
+
+          participantData = racedParticipant;
+        }
+      } else {
+        participantData = newParticipant;
+      }
+    }
+
+    if (!participantData) {
       return NextResponse.json(
         { error: "Forbidden: user is not an authorized participant in this classroom session" },
         { status: 403 }

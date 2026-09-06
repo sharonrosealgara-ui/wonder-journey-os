@@ -58,64 +58,27 @@ export async function GET() {
       );
     }
 
-    // 4. Verify the user is an authorized participant
-    const { data: initialParticipant, error: partError } = await supabase
+    // 4. Optionally query existing participant state if already registered (READ-ONLY)
+    const { data: existingParticipant } = await supabase
       .from("classroom_participants")
       .select("id, role, permission_level")
       .eq("session_id", session.id)
       .eq("user_id", user.id)
       .maybeSingle();
 
-    let participant = initialParticipant;
-
-    if (!participant) {
-      // User is an authorized active workspace member; register participant record for this session
-      const userRole = ["teacher", "owner", "admin"].includes(membership.role)
-        ? "teacher"
-        : "family";
-      const initialPermission = userRole === "teacher" ? "full_interactive" : "view_only";
-
-      const { data: profile } = await supabase
-        .from("profiles")
-        .select("display_name")
-        .eq("id", user.id)
-        .single();
-
-      const displayName = profile?.display_name || (userRole === "teacher" ? "Teacher" : "Family");
-
-      const { data: newParticipant, error: insertErr } = await supabase
-        .from("classroom_participants")
-        .insert({
-          session_id: session.id,
-          workspace_id: workspaceId,
-          user_id: user.id,
-          display_name: displayName,
-          role: userRole,
-          permission_level: initialPermission,
-          is_online: true,
-        })
-        .select("id, role, permission_level")
-        .single();
-
-      if (!insertErr && newParticipant) {
-        participant = newParticipant;
-      }
-    }
-
-    if (!participant) {
-      return NextResponse.json(
-        { error: "Forbidden: user is not an authorized participant in this session" },
-        { status: 403 }
-      );
-    }
+    const userRole = ["teacher", "owner", "admin"].includes(membership.role)
+      ? "teacher"
+      : "family";
+    const defaultPermission = userRole === "teacher" ? "full_interactive" : "view_only";
 
     return NextResponse.json({
       sessionId: session.id,
       lessonId: session.lesson_id,
       slideIndex: session.slide_index,
       roomName: session.room_name,
-      role: participant.role,
-      permissionLevel: participant.permission_level,
+      role: existingParticipant?.role || userRole,
+      permissionLevel: existingParticipant?.permission_level || defaultPermission,
+      isParticipant: !!existingParticipant,
     });
   } catch (error) {
     const msg = error instanceof Error ? error.message : "Internal Server Error";

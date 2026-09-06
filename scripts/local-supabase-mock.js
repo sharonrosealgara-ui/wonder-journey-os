@@ -216,6 +216,33 @@ function createLocalSupabaseMockServer(port = 54321) {
 
       // 6. Classroom Participants REST Query & Update
       if (url.pathname.includes("/rest/v1/classroom_participants")) {
+        if (req.method === "POST") {
+          try {
+            const parsed = JSON.parse(body || "{}");
+            const isTeacher = parsed.user_id === users["teacher@wonderjourney.app"].id;
+            const newRow = {
+              id: parsed.id || `part-${parsed.session_id}-${parsed.user_id}`,
+              session_id: parsed.session_id,
+              workspace_id: parsed.workspace_id || defaultWorkspaceId,
+              user_id: parsed.user_id,
+              role: parsed.role || (isTeacher ? "teacher" : "family"),
+              permission_level: parsed.permission_level || (isTeacher ? "full_interactive" : familyPermission),
+              is_online: true,
+              joined_at: new Date().toISOString()
+            };
+            res.writeHead(201, {
+              "Content-Type": "application/json",
+              "Content-Range": "0-0/1"
+            });
+            res.end(JSON.stringify(req.headers["accept"]?.includes("vnd.pgrst.object+json") ? newRow : [newRow]));
+            return;
+          } catch (e) {
+            res.writeHead(400);
+            res.end();
+            return;
+          }
+        }
+
         if (req.method === "PATCH") {
           try {
             const parsed = JSON.parse(body || "{}");

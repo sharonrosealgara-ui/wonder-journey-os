@@ -143,6 +143,63 @@ export async function startClassroomSession(lessonId?: string): Promise<StartSes
     .single();
 
   if (sessErr || !newSession) {
+    const isUniquenessViolation =
+      sessErr?.code === "23505" ||
+      sessErr?.message?.includes("idx_classroom_sessions_one_active_per_workspace") ||
+      sessErr?.message?.includes("duplicate key");
+
+    if (isUniquenessViolation) {
+      // Concurrency race: another request created an active session for this workspace first
+      const { data: winningSession } = await supabase
+        .from("classroom_sessions")
+        .select("id, room_name, lesson_id, status")
+        .eq("workspace_id", workspaceId)
+        .eq("status", "active")
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .maybeSingle();
+
+      if (winningSession) {
+        // Ensure teacher has a valid participant record for this winning session
+        const { data: teacherPart } = await supabase
+          .from("classroom_participants")
+          .select("id, role, permission_level")
+          .eq("session_id", winningSession.id)
+          .eq("user_id", user.id)
+          .maybeSingle();
+
+        if (!teacherPart) {
+          const { data: profile } = await supabase
+            .from("profiles")
+            .select("display_name")
+            .eq("id", user.id)
+            .single();
+
+          const { error: partErr } = await supabase.from("classroom_participants").insert({
+            session_id: winningSession.id,
+            workspace_id: workspaceId,
+            user_id: user.id,
+            display_name: profile?.display_name || "Teacher",
+            role: "teacher",
+            permission_level: "full_interactive",
+            is_online: true,
+          });
+
+          if (partErr && partErr.code !== "23505") {
+            return { success: false, error: "Failed to initialize teacher participant record." };
+          }
+        }
+
+        return {
+          success: true,
+          sessionId: winningSession.id,
+          lessonId: winningSession.lesson_id,
+          roomName: winningSession.room_name,
+          reentered: true,
+        };
+      }
+    }
+
     return { success: false, error: sessErr?.message || "Failed to create classroom session." };
   }
 
@@ -163,8 +220,8 @@ export async function startClassroomSession(lessonId?: string): Promise<StartSes
     is_online: true,
   });
 
-  if (partErr) {
-    // If participant insertion fails, clean up session to prevent orphaned state
+  if (partErr && partErr.code !== "23505") {
+    // If participant insertion fails (other than harmless duplicate), clean up session to prevent orphaned state
     await supabase.from("classroom_sessions").delete().eq("id", newSession.id);
     return { success: false, error: "Failed to initialize teacher participant record." };
   }

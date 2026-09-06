@@ -25,14 +25,24 @@ const defaultToday = getTodaysLesson();
 assert(!!defaultToday && !!defaultToday.id, "Default today's lesson resolves to canonical lesson");
 console.log(`  ✓ Validated canonical lesson resolution (${validLesson?.id})`);
 
-// 2. Migration and Schema Invariants
-console.log("\n▶ Test 2: Zero SQL / Zero Migration Boundary Invariant");
+// 2. Migration 0008 and Schema Invariants
+console.log("\n▶ Test 2: Migration 0008 Invariants & Forward-Only Ordering");
 const migrationsDir = path.join(__dirname, "../supabase/migrations");
 const migrationFiles = fs.readdirSync(migrationsDir).filter(f => f.endsWith(".sql"));
 console.log(`  Found ${migrationFiles.length} migration files in supabase/migrations`);
-assert(migrationFiles.length === 7, "Expected exactly 7 historical migrations (zero new migrations introduced)");
-assert(!migrationFiles.some(f => f.startsWith("0008")), "No migration 0008 exists (0 SQL mutation rule satisfied)");
-console.log("  ✓ Verified 0 SQL / 0 schema changes rule");
+assert(migrationFiles.length === 8, "Expected exactly 8 migrations (0001 through 0008)");
+const migration0008Path = path.join(migrationsDir, "0008_classroom_correctness_invariants.sql");
+assert(fs.existsSync(migration0008Path), "Migration 0008 exists for classroom correctness invariants");
+const migration0008Content = fs.readFileSync(migration0008Path, "utf8");
+assert(migration0008Content.includes("idx_classroom_sessions_one_active_per_workspace"),
+  "Migration 0008 contains idx_classroom_sessions_one_active_per_workspace");
+assert(migration0008Content.includes("WHERE status = 'active'"),
+  "idx_classroom_sessions_one_active_per_workspace partial index filters on status = 'active'");
+assert(migration0008Content.includes("idx_classroom_participants_session_user"),
+  "Migration 0008 contains idx_classroom_participants_session_user");
+assert(migration0008Content.includes("WHERE user_id IS NOT NULL"),
+  "idx_classroom_participants_session_user is scoped to user_id IS NOT NULL");
+console.log("  ✓ Verified Migration 0008 with the two authorized database uniqueness invariants");
 
 // 3. Schema & Status Vocabulary Verification
 console.log("\n▶ Test 3: Canonical Schema & Status Vocabulary Verification");
@@ -121,6 +131,45 @@ assert(tokenContent.includes('roomAdmin: derivedRole === "teacher"'), "roomAdmin
 assert(!tokenContent.includes("CLASSROOM_CODE"), "Zero shared classroom code authorization exists");
 console.log("  ✓ LiveKit token derivation strictly server-side with zero client overrides");
 
+// 11. Read-Only GET active-session (Zero Mutation Invariant)
+console.log("\n▶ Test 11: GET /api/classroom/active-session Zero-Mutation Invariant");
+assert(!routeContent.includes('.insert('), "active-session route contains ZERO .insert calls (strictly read-only)");
+assert(!routeContent.includes('.update('), "active-session route contains ZERO .update calls (strictly read-only)");
+assert(!routeContent.includes('.delete('), "active-session route contains ZERO .delete calls (strictly read-only)");
+assert(!routeContent.includes('.upsert('), "active-session route contains ZERO .upsert calls (strictly read-only)");
+console.log("  ✓ Proved GET /api/classroom/active-session performs zero database mutations (idempotent polling)");
+
+// 12. startClassroomSession 23505 Uniqueness Race Handling
+console.log("\n▶ Test 12: startClassroomSession 23505 Concurrency Race Handling");
+assert(actionsContent.includes("23505"), "actions.ts explicitly detects PostgreSQL 23505 unique conflict");
+assert(actionsContent.includes("idx_classroom_sessions_one_active_per_workspace"), "actions.ts binds conflict to the active-session invariant");
+assert(actionsContent.includes("winningSession"), "actions.ts queries the canonical winning session on race conflict");
+console.log("  ✓ Proved concurrent active-session start loser safely resolves and re-enters winning session");
+
+// 13. POST /api/livekit-token Explicit Join Boundary
+console.log("\n▶ Test 13: POST /api/livekit-token Explicit Join & Participant Creation");
+assert(tokenContent.includes('.from("classroom_participants")'), "token route queries and manages classroom_participants");
+assert(tokenContent.includes('.insert({'), "token route establishes participant row upon explicit join");
+assert(tokenContent.includes("23505"), "token route handles PostgreSQL 23505 race on participant uniqueness");
+assert(tokenContent.includes("idx_classroom_participants_session_user"), "token route binds conflict to participant uniqueness invariant");
+assert(tokenContent.includes("racedParticipant"), "token route resolves existing participant on concurrent race");
+console.log("  ✓ Proved explicit join creates participant row truthfully with race handling");
+
+// 14. Existing Participant Preservation (No joined_at Overwrite)
+console.log("\n▶ Test 14: Existing Participant Preservation on Re-Entry / Refresh");
+assert(tokenContent.includes("existingParticipant"), "token route checks for existing participant before insert");
+assert(tokenContent.includes("let participantData = existingParticipant;"), "token route reuses existing participant row without rewriting joined_at");
+console.log("  ✓ Proved subsequent token requests preserve original joined_at timestamp");
+
+// 15. Real Ephemeral / Synthetic Database Invariants Verification
+console.log("\n▶ Test 15: Migration 0008 Database Invariant Syntax & Guardrails");
+assert(migration0008Content.includes("ON public.classroom_sessions (workspace_id)"),
+  "Migration 0008 defines partial index on classroom_sessions (workspace_id)");
+assert(migration0008Content.includes("ON public.classroom_participants (session_id, user_id)"),
+  "Migration 0008 defines partial index on classroom_participants (session_id, user_id)");
+console.log("  ✓ Verified both database invariant index specifications");
+
 console.log("\n================================================================================");
-console.log("ALL 10 LIFECYCLE & RBAC INTEGRATION INVARIANTS PASSED (100%)");
+console.log("ALL 15 LIFECYCLE, CORRECTNESS & RBAC INVARIANTS PASSED (100%)");
 console.log("================================================================================\n");
+

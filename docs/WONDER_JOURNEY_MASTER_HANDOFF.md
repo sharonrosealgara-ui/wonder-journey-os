@@ -588,6 +588,30 @@ This standing policy governs all AI engineering workflows for Wonder Journey:
 > 6. **Zero Historical Rewrite:** Historical session and participant rows were untouched. Local database only; hosted Supabase was not mutated.
 > 7. **Remote CI Proof:** All 30 release gates passed green in CI run 34011728405 in 4m5s.
 
+> ### Checkpoint 2026-09-06.14 — Canonical Media Reconciliation Integrated
+> **Commit / PR:** `797679811c55390c27265e480efeee69f1b69e1b` | PR #12 (Merged into `main` via strict fast-forward)  
+> **Milestone Document:** `docs/checkpoints/2026-09-06-canonical-media-reconciliation-integrated.md`  
+> On 2026-09-06, canonical media truth reconciliation remediation was integrated under Fast Integration and Bounded Autonomy:
+> 1. **L31 Secondary (`media-l31-secondary`):** Replaced stale Laguna Copperplate GIF with authentic high-resolution photograph of the historic Magellan Shrine obelisk in Punta Engaño, Mactan (`File:Magellan_Shrine.jpg` by Ipepot, CC BY-SA 3.0).
+> 2. **L50 Primary (`media-l50-primary`):** Replaced stale recipe book JPEG with authentic photograph of handcrafted wooden spoons from Baliuag, Bulacan (`File:6301Photos_taken_in_Poblacion,_Baliuag,_Bulacan_54.jpg` by Judgefloro, CC0/Public Domain).
+> 3. **Canonical Registry & Review Regeneration:** Regenerated `src/config/media-registry.ts`, `artifacts/media-visual-review.json`, `artifacts/media-contact-sheet.json`, and `artifacts/media-contact-sheet.html`.
+> 4. **Obsolete Manifest Retired:** Formally deleted legacy `artifacts/curriculum-media-fidelity-manifest.json`.
+> 5. **Structural Consistency Regression:** Added `scripts/test-media-structural-consistency.js` wired into Gate 21 to permanently prevent future phantom attribution.
+> 6. **Remote CI Proof:** All 30 release gates passed green in CI run 34042950981 in 4m12s.
+
+> ### Checkpoint 2026-09-07.15 — Primary-Source Historical Context Scoping Integrated
+> **Commit / PR:** `efe8c823075d9e9c9337ffea7e3f74aa3933c04f` | PR #14 (Merged into `main` via strict fast-forward)  
+> **Milestone Document:** `docs/checkpoints/2026-09-07-primary-source-historical-context-scoping-integrated.md`  
+> On 2026-09-07, Primary-Source Historical Context Scoping was implemented, verified, and integrated under Fast Integration and Bounded Autonomy:
+> 1. **Classification Is Not Identity:** Fixed defect in `src/components/adventure/slide-views.tsx` where general classification `primary_source_scan` was conflated with the 1734 Murillo Velarde map identity.
+> 2. **Strict Identity Scoping:** 1734 Map context notice, Murillo Velarde attribution, and `HistoricalMapViewer` interactive modal are strictly scoped to `media-l01-secondary`.
+> 3. **Truthful Generic Primary Sources:** Genuine non-map primary sources (e.g. `media-l11-primary`, Narra botanical illustration from *Flora de Filipinas*) display generic "Historical Primary Source" notice with verified archival metadata.
+> 4. **Zero Regression:** Verified L12 (`original_diagram`), L31 (`photograph`), and L50 (`photograph`) exhibit zero map context or map viewer leakage.
+> 5. **10-Point Regression Suite:** Added `tests/primary-source-historical-context.test.ts` to `npm test`.
+> 6. **Visual QA:** Captured 8 desktop and mobile Playwright screenshots verifying UI presentation across viewports.
+> 7. **Database Invariant:** Migration count strictly preserved at 8 (0 SQL migrations).
+> 8. **Remote CI Proof:** All 30 release gates passed green in CI run 34048000922 in 4m24s.
+
 ---
 
 ## Current Next Step
@@ -596,9 +620,10 @@ The immediate engineering step following this documentation update:
 
 1. **Integrated Baseline Verification:**
    - Candidate #1 (Teacher Classroom Session Lifecycle Management) is fully integrated into `main`.
+   - Canonical Media Reconciliation (L31 & L50 authentic asset reconciliation) is fully integrated into `main`.
+   - Primary-Source Historical Context Scoping (`slide-views.tsx` identity scoping & regression suite) is fully integrated into `main`.
 2. **Next Candidate Product Slices (Subject to Owner Selection/Approval):**
    - Candidate #2: Teacher Studio / Real Student Progress Bridge (`/teacher` live student progress tracking, actual completions reflection, student milestones).
-   - Candidate #3: Primary-Source Historical Context Scoping (authentic primary-source citations & historical context metadata for curriculum lessons).
    - Family Portal Authentication & Login Visual Refinements (`src/app/(auth)/layout.tsx` and `src/app/(auth)/login/page.tsx`).
 3. **Repository Truth Re-Verification:**
    - Always verify `main = origin/main` before mutation.

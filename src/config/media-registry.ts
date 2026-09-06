@@ -3467,7 +3467,14 @@ export function getMedia(idOrLessonId: string): FactualMedia | undefined {
 }
 
 export function getMediaForLesson(lessonId: string): FactualMedia[] {
-  const items = Object.values(MEDIA_REGISTRY).filter((m) => m.lessonId === lessonId);
+  let items = Object.values(MEDIA_REGISTRY).filter((m) => m.lessonId === lessonId);
+  if (items.length === 0) {
+    const prefixMatch = lessonId.match(/^lesson-(\d+)-/);
+    if (prefixMatch) {
+      const prefix = `lesson-${prefixMatch[1]}-`;
+      items = Object.values(MEDIA_REGISTRY).filter((m) => m.lessonId.startsWith(prefix));
+    }
+  }
   return items.map((item) => ({
     id: item.id,
     title: item.title,

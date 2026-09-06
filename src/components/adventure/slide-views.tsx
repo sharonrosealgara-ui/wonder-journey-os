@@ -1197,12 +1197,16 @@ function PremiumMediaMomentSlide({ slide, lesson }: { slide: SlideOf<"mediaMomen
   const caption = content.caption || content.description || "Media Moment";
   const lessonId = lesson?.id || slide.id.split(":")[0];
   const lessonMedia = lessonId ? getMediaForLesson(lessonId) : [];
-  const activeMedia = lessonMedia[1] || lessonMedia[0];
+  const mmIndex = lesson?.premiumContent?.mediaMoments
+    ? lesson.premiumContent.mediaMoments.indexOf(content)
+    : -1;
+  const activeMedia = (mmIndex >= 0 && lessonMedia[mmIndex]) ? lessonMedia[mmIndex] : (lessonMedia[1] || lessonMedia[0]);
   const [showCredits, setShowCredits] = useState(false);
   const [showMapViewer, setShowMapViewer] = useState(false);
 
   const displaySrc = content.url || activeMedia?.storedAssetPath;
-  const isHistoricalMap = activeMedia?.id === "media-l01-secondary" || activeMedia?.classification === "primary_source_scan";
+  const isMurilloVelardeMap = activeMedia?.id === "media-l01-secondary";
+  const isPrimarySource = activeMedia?.classification === "primary_source_scan";
 
   return (
     <div className="mx-auto max-w-4xl text-center">
@@ -1210,8 +1214,10 @@ function PremiumMediaMomentSlide({ slide, lesson }: { slide: SlideOf<"mediaMomen
         <div className="w-14 h-14 rounded-2xl bg-sand/80 border border-sand-deep flex items-center justify-center text-ocean-deep shadow-sm">
           {isVideo ? (
             <VideoIcon className="w-7 h-7" aria-hidden="true" />
-          ) : isHistoricalMap ? (
+          ) : isMurilloVelardeMap ? (
             <MapIcon className="w-7 h-7" aria-hidden="true" />
+          ) : isPrimarySource ? (
+            <FileText className="w-7 h-7" aria-hidden="true" />
           ) : (
             <ImageIcon className="w-7 h-7" aria-hidden="true" />
           )}
@@ -1229,19 +1235,20 @@ function PremiumMediaMomentSlide({ slide, lesson }: { slide: SlideOf<"mediaMomen
           />
         ) : displaySrc ? (
           <div className="relative group overflow-hidden rounded-2xl">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={displaySrc}
               alt={activeMedia?.altText || activeMedia?.descriptiveAltText || caption}
               className={`w-full h-auto rounded-2xl shadow-md transition-transform duration-300 ${
-                isHistoricalMap
+                isMurilloVelardeMap
                   ? "object-contain max-h-[55vh] bg-sand-deep/20"
+                  : isPrimarySource
+                  ? "object-contain max-h-[55vh] bg-sand-deep/10"
                   : "object-cover max-h-[55vh] group-hover:scale-[1.01]"
               }`}
             />
 
-            {/* Historical Primary Source Context Notice */}
-            {isHistoricalMap && (
+            {/* Historical Primary Source Context Notice (1734 Murillo Velarde Map) */}
+            {isMurilloVelardeMap && (
               <div className="mt-3 text-left bg-sand/80 p-3.5 rounded-xl border border-sand-deep/70 text-xs">
                 <div className="flex items-start gap-2.5">
                   <FileText className="w-4 h-4 text-ocean-deep shrink-0 mt-0.5" aria-hidden="true" />
@@ -1255,6 +1262,29 @@ function PremiumMediaMomentSlide({ slide, lesson }: { slide: SlideOf<"mediaMomen
               </div>
             )}
 
+            {/* Non-Map Historical Primary Source Context Notice */}
+            {!isMurilloVelardeMap && isPrimarySource && (
+              <div className="mt-3 text-left bg-sand/80 p-3.5 rounded-xl border border-sand-deep/70 text-xs">
+                <div className="flex items-start gap-2.5">
+                  <FileText className="w-4 h-4 text-ocean-deep shrink-0 mt-0.5" aria-hidden="true" />
+                  <div>
+                    <p className="font-bold text-ocean-deep">Historical Primary Source</p>
+                    <p className="text-ink/80 mt-1 leading-relaxed">
+                      {activeMedia?.description ? (
+                        activeMedia.description
+                      ) : (
+                        <>
+                          Archival document scan: {activeMedia?.title || caption}
+                          {activeMedia?.creator ? ` • Creator: ${activeMedia.creator}` : ""}
+                          {activeMedia?.organization ? ` • Archive / Collection: ${activeMedia.organization}` : ""}
+                        </>
+                      )}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {activeMedia && (
               <div className="mt-4 flex flex-wrap items-center justify-between gap-2 text-left bg-sand/80 p-3 rounded-xl border border-sand-deep text-xs">
                 <div>
@@ -1262,7 +1292,7 @@ function PremiumMediaMomentSlide({ slide, lesson }: { slide: SlideOf<"mediaMomen
                   <p className="text-ink-soft text-[11px] mt-0.5">Source: {activeMedia.creator || activeMedia.sourceOrganization || activeMedia.attribution || "Public Domain"}</p>
                 </div>
                 <div className="flex items-center gap-2 shrink-0">
-                  {isHistoricalMap && (
+                  {isMurilloVelardeMap && (
                     <button
                       type="button"
                       onClick={() => setShowMapViewer(true)}
@@ -1303,7 +1333,7 @@ function PremiumMediaMomentSlide({ slide, lesson }: { slide: SlideOf<"mediaMomen
         />
       )}
 
-      {showMapViewer && displaySrc && (
+      {showMapViewer && displaySrc && isMurilloVelardeMap && (
         <HistoricalMapViewer
           isOpen={showMapViewer}
           onClose={() => setShowMapViewer(false)}

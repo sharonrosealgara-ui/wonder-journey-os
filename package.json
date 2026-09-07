@@ -9,7 +9,7 @@
     "validate:release": "node scripts/validate-release-candidate.js",
     "validate:release:ephemeral": "node scripts/validate-release-ephemeral.js",
     "lint": "eslint src/",
-    "test": "npx tsx src/__tests__/curriculum.test.ts && npx tsx tests/primary-source-historical-context.test.ts",
+    "test": "npx tsx src/__tests__/curriculum.test.ts && npx tsx tests/primary-source-historical-context.test.ts && npx tsx tests/premium-4k-landing-experience.test.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -22,7 +22,8 @@
     "next": "15.5.20",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "server-only": "^0.0.1"
+    "server-only": "^0.0.1",
+    "three": "^0.185.1"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
@@ -31,6 +32,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/three": "^0.185.4",
     "eslint": "^10.9.0",
     "tailwindcss": "^4",
     "tsx": "^4.23.13",

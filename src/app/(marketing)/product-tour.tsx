@@ -3,12 +3,7 @@
 import React, { useState, useRef } from "react";
 import Image from "next/image";
 import {
-  Compass,
-  Video,
-  Home,
-  Award,
   Layers,
-  ExternalLink
 } from "lucide-react";
 
 interface TourView {
@@ -35,8 +30,8 @@ const TOUR_VIEWS: TourView[] = [
     highlights: [
       "Guided slide progression with island scenery",
       "Interactive questions and cultural stories",
-      "Kid-friendly reading typography"
-    ]
+      "Kid-friendly reading typography",
+    ],
   },
   {
     id: "classroom",
@@ -50,8 +45,8 @@ const TOUR_VIEWS: TourView[] = [
     highlights: [
       "Dedicated camera and audio stage",
       "Direct teacher guidance and community sharing",
-      "Integrated curriculum media moments"
-    ]
+      "Integrated curriculum media moments",
+    ],
   },
   {
     id: "family-space",
@@ -65,8 +60,8 @@ const TOUR_VIEWS: TourView[] = [
     highlights: [
       "Shared family workspace greeting",
       "Quick access to today's adventure",
-      "Overview of exploration progress and stamps"
-    ]
+      "Overview of exploration progress and stamps",
+    ],
   },
   {
     id: "progress",
@@ -80,8 +75,8 @@ const TOUR_VIEWS: TourView[] = [
     highlights: [
       "Provincial passport stamps and milestones",
       "Cultural learning reflections and memories",
-      "Encouraging, mastery-based recognition"
-    ]
+      "Encouraging, mastery-based recognition",
+    ],
   },
   {
     id: "teacher",
@@ -95,9 +90,9 @@ const TOUR_VIEWS: TourView[] = [
     highlights: [
       "Curriculum overview across 65 lessons",
       "Learner profiles and achievement issuance",
-      "Studio tools for lesson preparation"
-    ]
-  }
+      "Studio tools for lesson preparation",
+    ],
+  },
 ];
 
 export default function ProductTour() {
@@ -133,39 +128,41 @@ export default function ProductTour() {
     <section
       id="tour"
       aria-labelledby="product-tour-heading"
-      className="py-16 md:py-24 bg-gradient-to-b from-paper via-sand/20 to-paper border-b border-sand-deep/40 relative overflow-hidden"
+      className="py-14 sm:py-20 md:py-28 bg-gradient-to-b from-paper via-sand/25 to-paper border-b border-sand-deep/50 relative overflow-hidden"
     >
-      <div className="max-w-6xl 2xl:max-w-[1440px] 3xl:max-w-[1680px] mx-auto px-4 sm:px-6 2xl:px-8 relative z-10">
+      <div className="max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1920px] 4k:max-w-[2400px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12 4k:px-16 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl 2xl:max-w-4xl mx-auto mb-10 2xl:mb-14">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-ocean/15 border border-ocean/30 text-ocean-deep text-xs font-bold uppercase tracking-wider mb-3">
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-ocean/15 border border-ocean/30 text-ocean-deep text-xs font-bold uppercase tracking-wider mb-3">
             <Layers className="w-3.5 h-3.5 text-ocean-deep" aria-hidden="true" />
             <span>Platform Tour</span>
           </div>
           <h2
             id="product-tour-heading"
-            className="font-display text-2xl sm:text-3xl lg:text-4xl 2xl:text-5xl text-ocean-deep font-bold leading-tight"
+            className="font-display text-2xl sm:text-4xl lg:text-5xl 2xl:text-6xl 4k:text-7xl text-ocean-deep font-bold leading-tight"
           >
             See Wonder Journey in Action
           </h2>
-          <p className="text-sm sm:text-base 2xl:text-lg text-ink/80 mt-2 leading-relaxed font-medium">
+          <p className="text-sm sm:text-base 2xl:text-lg 4k:text-xl text-ink/80 mt-2.5 leading-relaxed font-medium">
             Explore the real Wonder Journey learning experience through representative platform views.
           </p>
         </div>
 
         {/* Keyboard-Accessible Segmented Tabs */}
-        <div className="flex justify-center mb-8">
+        <div className="flex justify-center mb-8 sm:mb-10">
           <div
             role="tablist"
             aria-label="Wonder Journey application views"
-            className="flex flex-wrap justify-center gap-1.5 sm:gap-2 p-1.5 bg-sand/60 border border-sand-deep/80 rounded-2xl shadow-sm max-w-full overflow-x-auto"
+            className="flex flex-wrap justify-center gap-2 p-2 bg-sand/60 border border-sand-deep/80 rounded-2xl shadow-xs max-w-full overflow-x-auto"
           >
             {TOUR_VIEWS.map((view, index) => {
               const isSelected = activeTab === view.id;
               return (
                 <button
                   key={view.id}
-                  ref={(el) => { tabRefs.current[view.id] = el; }}
+                  ref={(el) => {
+                    tabRefs.current[view.id] = el;
+                  }}
                   role="tab"
                   id={`tab-${view.id}`}
                   aria-selected={isSelected}
@@ -173,9 +170,9 @@ export default function ProductTour() {
                   tabIndex={isSelected ? 0 : -1}
                   onClick={() => setActiveTab(view.id)}
                   onKeyDown={(e) => handleKeyDown(e, index)}
-                  className={`relative px-3 sm:px-4 py-2 rounded-xl font-display text-xs sm:text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean-deep focus-visible:ring-offset-2 ${
+                  className={`relative px-4 sm:px-5 py-2.5 rounded-xl font-display text-xs sm:text-sm 2xl:text-base font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean-deep focus-visible:ring-offset-2 cursor-pointer ${
                     isSelected
-                      ? "bg-ocean-deep text-white shadow-md transform -translate-y-0.5"
+                      ? "bg-ocean-deep text-white shadow-md transform -translate-y-0.5 font-bold"
                       : "text-ink hover:text-ocean-deep hover:bg-white/80 bg-transparent"
                   }`}
                 >
@@ -191,7 +188,7 @@ export default function ProductTour() {
           role="tabpanel"
           id={`panel-${activeView.id}`}
           aria-labelledby={`tab-${activeView.id}`}
-          className="relative max-w-5xl 2xl:max-w-[1360px] 3xl:max-w-[1560px] mx-auto"
+          className="relative max-w-5xl 2xl:max-w-[1400px] 3xl:max-w-[1600px] 4k:max-w-[1900px] mx-auto"
         >
           {/* Layered Underlay Card for Depth */}
           <div
@@ -200,19 +197,19 @@ export default function ProductTour() {
           />
 
           {/* Primary View Card */}
-          <div className="wj-card overflow-hidden border-2 border-sand-deep/90 bg-white shadow-xl rounded-3xl p-4 sm:p-6 lg:p-8">
+          <div className="wj-card overflow-hidden border-2 border-sand-deep/90 bg-white shadow-xl rounded-3xl p-5 sm:p-8 lg:p-10">
             {/* View Header with True Product Indicator */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 mb-4 border-b border-sand-deep/50">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 mb-5 border-b border-sand-deep/50">
               <div>
-                <span className="text-[11px] font-bold uppercase tracking-wider text-mango-deep">
+                <span className="text-[11px] 2xl:text-xs font-bold uppercase tracking-wider text-mango-deep">
                   {activeView.category}
                 </span>
-                <h3 className="font-display text-lg sm:text-xl text-ocean-deep font-bold mt-0.5">
+                <h3 className="font-display text-lg sm:text-xl 2xl:text-2xl text-ocean-deep font-bold mt-0.5">
                   {activeView.caption}
                 </h3>
               </div>
               <div className="flex items-center gap-2 self-start sm:self-auto">
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-sand/80 border border-sand-deep/80 text-ink/70 text-[11px] font-medium">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sand/80 border border-sand-deep/80 text-ink/70 text-xs font-medium">
                   <span>Demo data</span>
                 </span>
               </div>
@@ -222,13 +219,13 @@ export default function ProductTour() {
             <div
               className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden bg-sand/20 border border-sand-deep/60 shadow-inner group"
               style={{
-                perspective: "1200px"
+                perspective: "1200px",
               }}
             >
               <div
                 className="w-full h-full relative transition-transform duration-500 ease-out motion-reduce:transform-none group-hover:scale-[1.008]"
                 style={{
-                  transform: "rotateX(1deg) rotateY(-0.5deg)"
+                  transform: "rotateX(1deg) rotateY(-0.5deg)",
                 }}
               >
                 <Image
@@ -236,27 +233,27 @@ export default function ProductTour() {
                   alt={`${activeView.caption}: Representative Wonder Journey interface screenshot`}
                   fill
                   priority={activeView.id === "adventure"}
-                  sizes="(max-width: 1024px) 100vw, 980px"
+                  sizes="(max-width: 1024px) 100vw, (max-width: 1920px) 75vw, 1500px"
                   className="object-contain"
                 />
               </div>
             </div>
 
             {/* View Explanation and Feature Highlights */}
-            <div className="mt-6 grid md:grid-cols-12 gap-6 items-start pt-2">
+            <div className="mt-8 grid md:grid-cols-12 gap-6 2xl:gap-10 items-start pt-2">
               <div className="md:col-span-7">
-                <p className="text-sm sm:text-base text-ink leading-relaxed font-medium">
+                <p className="text-sm sm:text-base 2xl:text-lg text-ink leading-relaxed font-medium">
                   {activeView.description}
                 </p>
               </div>
-              <div className="md:col-span-5 bg-sand/40 p-4 rounded-2xl border border-sand-deep/60">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-ocean-deep mb-2">
+              <div className="md:col-span-5 bg-sand/40 p-5 rounded-2xl border border-sand-deep/60">
+                <h4 className="text-xs 2xl:text-sm font-bold uppercase tracking-wider text-ocean-deep mb-2.5">
                   Key Experience Elements
                 </h4>
-                <ul className="space-y-1.5 text-xs text-ink/85">
+                <ul className="space-y-2 text-xs sm:text-sm text-ink/85 font-medium">
                   {activeView.highlights.map((h, i) => (
-                    <li key={i} className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-ocean-deep shrink-0" aria-hidden="true" />
+                    <li key={i} className="flex items-center gap-2.5">
+                      <span className="w-2 h-2 rounded-full bg-ocean-deep shrink-0" aria-hidden="true" />
                       <span>{h}</span>
                     </li>
                   ))}

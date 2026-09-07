@@ -8,41 +8,47 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
 
   return (
     <div className="min-h-screen flex flex-col bg-paper text-ink overflow-x-hidden">
-      {/* ── HEADER ── */}
-      <header className="sticky top-0 z-40 bg-paper/95 backdrop-blur border-b border-sand-deep/60">
-        <div className="max-w-6xl 2xl:max-w-[1440px] 3xl:max-w-[1680px] mx-auto px-4 sm:px-6 2xl:px-8 h-16 2xl:h-20 flex items-center justify-between">
+      {/* ── HEADER: 4K FLUID ART-DIRECTED BAR ── */}
+      <header className="sticky top-0 z-40 bg-paper/95 backdrop-blur-md border-b border-sand-deep/70 shadow-xs">
+        <div className="max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1920px] 4k:max-w-[2400px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12 4k:px-16 h-16 sm:h-20 2xl:h-22 4k:h-26 flex items-center justify-between">
           <Link
             href="/"
-            className="flex items-center gap-2 font-display text-xl text-ocean-deep font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean-deep focus-visible:ring-offset-2 rounded-lg"
+            className="flex items-center gap-2.5 font-display text-xl sm:text-2xl 2xl:text-3xl 4k:text-4xl text-ocean-deep font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean-deep focus-visible:ring-offset-2 rounded-lg"
           >
-            <Compass className="w-6 h-6 text-ocean-deep" aria-hidden="true" />
-            <span>Wonder Journey</span>
+            <Compass className="w-6 h-6 sm:w-7 sm:h-7 2xl:w-8 2xl:h-8 text-ocean-deep" aria-hidden="true" />
+            <span className="tracking-tight">Wonder Journey</span>
           </Link>
 
-          <nav className="hidden lg:flex items-center gap-6 font-display text-sm font-semibold">
+          <nav className="hidden lg:flex items-center gap-6 2xl:gap-8 4k:gap-10 font-display text-sm 2xl:text-base 4k:text-lg font-semibold">
             <Link
-              href="#experience"
+              href="#journey"
               className="text-ink hover:text-ocean-deep transition-colors px-1 py-1 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean-deep"
             >
-              Experience
+              Archipelago Journey
             </Link>
             <Link
-              href="#gallery"
+              href="#tour"
               className="text-ink hover:text-ocean-deep transition-colors px-1 py-1 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean-deep"
             >
-              Curriculum Imagery
+              Product Tour
             </Link>
             <Link
               href="#focus"
               className="text-ink hover:text-ocean-deep transition-colors px-1 py-1 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean-deep"
             >
-              Learning Focus
+              Curriculum Pillars
             </Link>
             <Link
-              href="#family-space"
+              href="#experience"
               className="text-ink hover:text-ocean-deep transition-colors px-1 py-1 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean-deep"
             >
-              Family Space
+              Learning Studio
+            </Link>
+            <Link
+              href="#gallery"
+              className="text-ink hover:text-ocean-deep transition-colors px-1 py-1 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean-deep"
+            >
+              Authentic Media
             </Link>
             <Link
               href="#faith"
@@ -58,26 +64,26 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
             </Link>
           </nav>
 
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-2.5 sm:gap-4">
             <Link
               href="#inquiry"
-              className="text-xs sm:text-sm text-ink hover:text-ocean-deep transition-colors font-semibold hidden sm:inline-block px-2 py-1 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean-deep"
+              className="text-xs sm:text-sm 2xl:text-base text-ink/80 hover:text-ocean-deep transition-colors font-semibold hidden sm:inline-block px-2 py-1 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean-deep"
             >
               Inquiry Info
             </Link>
             <Link
               href="/login"
-              className="sm:hidden text-xs font-bold text-ocean-deep hover:text-ocean transition-colors px-2.5 py-1.5 rounded-lg border border-sand-deep/80 bg-white shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean-deep"
+              className="sm:hidden text-xs font-bold text-ocean-deep hover:text-ocean transition-colors px-3 py-1.5 rounded-lg border border-sand-deep/80 bg-white shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean-deep"
             >
               Login
             </Link>
             <div className="hidden sm:flex items-center">
               <Link
                 href="/login"
-                className="wj-btn text-xs sm:text-sm px-3.5 sm:px-4 py-2 flex items-center gap-1.5 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean-deep focus-visible:ring-offset-2"
+                className="wj-btn text-xs sm:text-sm 2xl:text-base 4k:text-lg px-4 sm:px-5 2xl:px-6 py-2 sm:py-2.5 4k:py-3 flex items-center gap-2 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean-deep focus-visible:ring-offset-2"
               >
-                <LogIn className="w-4 h-4" aria-hidden="true" />
-                <span>{formEnabled ? 'Login' : 'Existing Family Login'}</span>
+                <LogIn className="w-4 h-4 2xl:w-5 2xl:h-5" aria-hidden="true" />
+                <span>{formEnabled ? "Login" : "Existing Family Login"}</span>
               </Link>
             </div>
 
@@ -92,23 +98,23 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
         {children}
       </main>
 
-      {/* ── FOOTER ── */}
-      <footer className="bg-ocean-deep text-white py-12 2xl:py-16 border-t border-ocean-deep/80">
-        <div className="max-w-6xl 2xl:max-w-[1440px] 3xl:max-w-[1680px] mx-auto px-4 sm:px-6 2xl:px-8 flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
+      {/* ── FOOTER: 4K FLUID DIGNIFIED FOOTER ── */}
+      <footer className="bg-ocean-deep text-white py-14 sm:py-18 2xl:py-24 4k:py-28 border-t border-ocean-deep/80 relative">
+        <div className="max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1920px] 4k:max-w-[2400px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12 4k:px-16 flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
           <div>
-            <div className="flex items-center justify-center md:justify-start gap-2 font-display text-xl text-white font-bold">
-              <Compass className="w-6 h-6 text-mango" aria-hidden="true" />
+            <div className="flex items-center gap-2.5 font-display text-xl sm:text-2xl 2xl:text-3xl text-white font-bold">
+              <Compass className="w-6 h-6 2xl:w-8 2xl:h-8 text-mango" aria-hidden="true" />
               <span>Wonder Journey</span>
             </div>
-            <p className="text-xs text-white/85 mt-2 max-w-md leading-relaxed font-medium">
-              Wonder Journey is a Christ-centered learning community helping children grow in language, culture, character, knowledge, and faith.
+            <p className="text-xs sm:text-sm 2xl:text-base 4k:text-lg text-white/85 mt-2.5 max-w-lg 4k:max-w-xl leading-relaxed font-medium">
+              A Christ-centered learning community helping children grow in language, culture, character, knowledge, and faith across the 7,641 islands of the Philippines.
             </p>
           </div>
-          <div className="text-xs text-white/75 md:text-right space-y-1">
+          <div className="text-xs sm:text-sm 2xl:text-base text-white/75 md:text-right space-y-1.5 font-medium">
             <p>&copy; {new Date().getFullYear()} Wonder Journey. All rights reserved.</p>
-            <p>Founder-Led Family Learning Community</p>
-            <p className="text-[11px] text-white/60 pt-1">
-              Informational website. Public enrollment is currently closed.
+            <p className="text-mango/90 font-semibold">Founder-Led Family Learning Community</p>
+            <p className="text-[11px] sm:text-xs text-white/60 pt-1">
+              Informational website for founding families. Public enrollment is currently closed.
             </p>
           </div>
         </div>

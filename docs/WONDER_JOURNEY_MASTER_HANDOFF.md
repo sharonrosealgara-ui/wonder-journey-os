@@ -612,6 +612,22 @@ This standing policy governs all AI engineering workflows for Wonder Journey:
 > 7. **Database Invariant:** Migration count strictly preserved at 8 (0 SQL migrations).
 > 8. **Remote CI Proof:** All 30 release gates passed green in CI run 34048000922 in 4m24s.
 
+> ### Checkpoint 2026-09-07.16 — Premium 4K Landing Experience Integrated
+> **Commit / PR:** `81f7656659c2cd34e7157c70bea35af54b9e2567` | PR #16 (Merged into `main` via strict fast-forward)  
+> **Milestone Document:** `docs/checkpoints/2026-09-07-premium-4k-landing-experience-integrated.md`  
+> On 2026-09-07, the Premium 4K Landing Experience was implemented, verified, and integrated under Fast Integration and Bounded Autonomy, rigorously executing the Anti-AI-Generated Design Standard:
+> 1. **Anti-AI Art Direction:** Completely eliminated generic SaaS tropes (no purple/blue gradients, no glowing blobs, no floating chrome spheres, no repetitive 3-card grids). Built handcrafted, asymmetrical editorial sections rooted in Filipino learning, culture, family, and Christian faith foundations.
+> 2. **Signature 3D Experience (`HeroSignatureScene`):** Built a Three.js procedural scene featuring the burnished brass Navigational Astrolabe inclined at 14°N Manila latitude, an open field journal with aged parchment pages, 5-petal Sampaguita blossoms (*Jasminum sambac*), and archipelago constellation stars.
+> 3. **Progressive Enhancement & Fallback:** Provided a handcrafted SVG vector fallback (`HeroStaticFallback`) for instant SSR/no-WebGL rendering, wrapped in `Hero3DWrapper` via dynamic client loading (`ssr: false`), keeping initial route size at 19.4 kB.
+> 4. **4K Ultra-Wide Responsiveness:** Full responsive scaling up to `4k:max-w-[2400px]` with fluid typography (`clamp(...)` and `4k:text-9xl`), eliminating awkward dead margins on 3840x2160 displays.
+> 5. **4K Performance Protections:** Capped DPR at 1.5 max (`Math.min(window.devicePixelRatio || 1, 1.5)`) to protect 4K GPUs; `IntersectionObserver` halts render loop off-screen; full resource disposal on unmount.
+> 6. **Reduced Motion Accessibility:** First-class `prefers-reduced-motion` renders a single static frame and permanently disables animation loops and cursor parallax.
+> 7. **Narrative Bands & Authentic Salon:** Integrated 7,641-island narrative band (`archipelago-journey-band.tsx`) and primary sources gallery (`primary-sources-gallery.tsx`) featuring the 1734 Murillo Velarde map, Blanco's *Flora de Filipinas*, and El Nido karst geology.
+> 8. **Automated Regression Suite:** Integrated 25-point automated regression test suite (`tests/premium-4k-landing-experience.test.ts`) into `npm test`.
+> 9. **Visual QA:** Verified 8 viewports (3840x2160, 2560x1440, 1920x1080, 1440x900, 1024x768, 768x1024, 430x932, 390x844) plus reduced motion with zero horizontal overflow.
+> 10. **Database Invariant:** Migration count strictly preserved at 8 (0 SQL migrations).
+> 11. **Remote CI Proof:** All 30 release gates passed green in CI run 34073198763 in 4m28s.
+
 ---
 
 ## Current Next Step
@@ -622,6 +638,7 @@ The immediate engineering step following this documentation update:
    - Candidate #1 (Teacher Classroom Session Lifecycle Management) is fully integrated into `main`.
    - Canonical Media Reconciliation (L31 & L50 authentic asset reconciliation) is fully integrated into `main`.
    - Primary-Source Historical Context Scoping (`slide-views.tsx` identity scoping & regression suite) is fully integrated into `main`.
+   - Premium 4K Landing Experience (Signature 3D Astrolabe, Archipelago narrative, Anti-AI art direction, 4K fluid layout) is fully integrated into `main`.
 2. **Next Candidate Product Slices (Subject to Owner Selection/Approval):**
    - Candidate #2: Teacher Studio / Real Student Progress Bridge (`/teacher` live student progress tracking, actual completions reflection, student milestones).
    - Family Portal Authentication & Login Visual Refinements (`src/app/(auth)/layout.tsx` and `src/app/(auth)/login/page.tsx`).

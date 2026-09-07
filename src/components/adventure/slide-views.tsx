@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
-import { Map as MapIcon, Video as VideoIcon, Image as ImageIcon, FileText, Search, Info } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Map as MapIcon, Video as VideoIcon, Image as ImageIcon, FileText, Search, Info, Sparkles, BookOpen } from "lucide-react";
 import { AdventureQuiz } from "@/components/adventure/quiz";
 import { FactHunt, MemoryFlip, WordScramble } from "@/components/adventure/mini-games";
 import { MatchingGame } from "@/components/matching-game";
@@ -1115,6 +1115,22 @@ function PremiumDiscoveriesSlide({ slide }: { slide: SlideOf<"discoveries"> }) {
   );
 }
 
+export function getCoreIdea(text: string): string {
+  if (!text) return "";
+  const rawSentences = text.split(/(?<=[.!?])\s+(?=[A-Z0-9"“'‘])/);
+  if (!rawSentences || rawSentences.length === 0) {
+    return text.length > 200 ? text.slice(0, 197) + "..." : text;
+  }
+  let lead = rawSentences[0].trim();
+  if (lead.length < 100 && rawSentences.length > 1) {
+    const combined = `${lead} ${rawSentences[1].trim()}`;
+    if (combined.length <= 220) {
+      lead = combined;
+    }
+  }
+  return lead;
+}
+
 function PremiumRichExplanationSlide({ slide, lesson }: { slide: SlideOf<"richExplanation">; lesson: Lesson }) {
   const content = slide.content || { body: "" };
   const lessonMedia = getMediaForLesson(lesson.id);
@@ -1124,6 +1140,20 @@ function PremiumRichExplanationSlide({ slide, lesson }: { slide: SlideOf<"richEx
   const text = content.body;
   const heading = content.heading || "Explanation";
   const [showCredits, setShowCredits] = useState(false);
+  const [isCuriousOpen, setIsCuriousOpen] = useState(false);
+
+  useEffect(() => {
+    if (!isCuriousOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsCuriousOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isCuriousOpen]);
+
+  const coreIdea = getCoreIdea(text);
 
   return (
     <div className="mx-auto w-full max-w-5xl">
@@ -1133,9 +1163,50 @@ function PremiumRichExplanationSlide({ slide, lesson }: { slide: SlideOf<"richEx
       </div>
       <div className="mt-6 grid items-start gap-6 lg:grid-cols-5">
         <div className={`rounded-3xl p-6 shadow-lg sm:p-8 lg:col-span-3 ${t.card}`}>
-          <p className="wj-read">
-            <Highlight text={text} accent={t.accent} />
-          </p>
+          {/* Foregrounded Core Idea */}
+          <div className="flex items-start gap-3">
+            <span className="shrink-0 text-2xl" aria-hidden="true">✨</span>
+            <div className="flex-1">
+              <p className="wj-read font-display text-xl sm:text-2xl leading-relaxed text-ink font-medium">
+                <Highlight text={coreIdea} accent={t.accent} />
+              </p>
+            </div>
+          </div>
+
+          {/* Curious Corner Progressive Disclosure Layer */}
+          <div className="mt-6 pt-5 border-t-2 border-sand-deep/60">
+            <button
+              type="button"
+              id={`curious-corner-toggle-${lesson.id}`}
+              aria-expanded={isCuriousOpen}
+              aria-controls={`curious-corner-panel-${lesson.id}`}
+              onClick={() => setIsCuriousOpen(!isCuriousOpen)}
+              className="inline-flex items-center gap-2 rounded-2xl bg-white/90 px-4 py-2.5 text-sm font-bold text-ocean shadow-sm hover:bg-white hover:text-ocean-deep border border-ocean/20 transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-ocean"
+            >
+              <BookOpen className="w-4 h-4 text-ocean" aria-hidden="true" />
+              <span>{isCuriousOpen ? "Close Curious Corner" : "Curious Corner: Explore Deeper"}</span>
+              <span className="text-xs bg-ocean/10 text-ocean-deep px-2 py-0.5 rounded-full font-semibold">
+                {isCuriousOpen ? "▲ Hide" : "▼ Read Full Story & Archive Details"}
+              </span>
+            </button>
+
+            {isCuriousOpen && (
+              <div
+                id={`curious-corner-panel-${lesson.id}`}
+                role="region"
+                aria-labelledby={`curious-corner-toggle-${lesson.id}`}
+                className="mt-4 rounded-2xl bg-white/95 p-5 sm:p-6 shadow-inner border border-sand-deep text-ink wj-pop-in space-y-3"
+              >
+                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-ink-soft">
+                  <Sparkles className="w-3.5 h-3.5 text-sun" aria-hidden="true" />
+                  <span>Archival Detail & Deep History</span>
+                </div>
+                <div className="wj-read text-base sm:text-lg leading-relaxed text-ink/90">
+                  <Highlight text={text} accent={t.accent} />
+                </div>
+              </div>
+            )}
+          </div>
         </div>
         <div className={`hidden items-center justify-center rounded-3xl p-6 lg:col-span-2 lg:flex ${t.panel}`}>
           <div className="flex flex-col items-center">
@@ -1430,7 +1501,7 @@ function PremiumCheckUnderstandingSlide({ slide }: { slide: SlideOf<"checkUnders
   return (
     <div className="mx-auto max-w-3xl text-center">
       <div className="mb-3 text-6xl">💡</div>
-      <h1 className="wj-outline font-display text-4xl sm:text-5xl">Check Your Thinking</h1>
+      <h1 className="wj-outline font-display text-4xl sm:text-5xl">What Did You Notice?</h1>
       <div className="mt-8 space-y-4">
         {content.map((item, i) => {
           const open = revealed.includes(i);
@@ -1445,14 +1516,14 @@ function PremiumCheckUnderstandingSlide({ slide }: { slide: SlideOf<"checkUnders
               {detailText && (
                 open ? (
                   <div className="mt-3 pt-3 border-t-2 border-sand-deep wj-pop-in">
-                    <p className="font-hand text-xl text-ocean-deep">Fact: {detailText}</p>
+                    <p className="font-hand text-xl text-ocean-deep">Discovery clue: {detailText}</p>
                   </div>
                 ) : (
                   <button
                     onClick={() => setRevealed((r) => [...r, i])}
                     className="mt-3 text-sm text-ocean-deep font-semibold hover:underline cursor-pointer"
                   >
-                    Tap to check the fact 💡
+                    Discover the clue 🔍
                   </button>
                 )
               )}
@@ -1460,7 +1531,7 @@ function PremiumCheckUnderstandingSlide({ slide }: { slide: SlideOf<"checkUnders
           );
         })}
       </div>
-      <MascotBubble slide={slide} line="Thinking like a true explorer means asking great questions!" />
+      <MascotBubble slide={slide} line="Every observation is a clue on our journey! What did you notice?" />
     </div>
   );
 }
@@ -1554,8 +1625,8 @@ function PremiumAssessmentSlide({
 
   return (
     <div className="mx-auto max-w-3xl text-center">
-      <div className="mb-3 text-6xl">📝</div>
-      <h1 className="wj-outline font-display text-4xl sm:text-5xl">Adventure Assessment</h1>
+      <div className="mb-3 text-6xl">🧭</div>
+      <h1 className="wj-outline font-display text-4xl sm:text-5xl">Discovery Quest</h1>
       <div className="mt-8 space-y-6 text-left">
         {questions.map((q, i) => {
           const isSubmitted = !!submittedAnswers[i];
@@ -1746,12 +1817,12 @@ function PremiumAssessmentSlide({
                         : "bg-sand text-ink-soft cursor-not-allowed"
                     }`}
                   >
-                    Record Response ✨
+                    Record My Discovery ✨
                   </button>
                 ) : (
                   <div className="flex items-center gap-2 text-xs font-semibold text-ocean-deep bg-white/80 px-3 py-1.5 rounded-lg border border-ocean/20 wj-pop-in">
                     <span>🌟</span>
-                    <span>Response recorded — explain your reasoning with your family!</span>
+                    <span>Great thinking! Share your discovery with your family.</span>
                   </div>
                 )}
               </div>
@@ -1759,7 +1830,7 @@ function PremiumAssessmentSlide({
           );
         })}
       </div>
-      <MascotBubble slide={slide} line="Show us what you learned today!" />
+      <MascotBubble slide={slide} line="Every question is a discovery step on your journey!" />
     </div>
   );
 }

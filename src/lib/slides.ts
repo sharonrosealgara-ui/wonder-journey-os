@@ -1,4 +1,4 @@
-﻿// ─────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
 // ADVENTURE THEATER SLIDE ENGINE
 // Turns any Lesson config object into a full theater episode:
 // Welcome → Blessings → Prayer → Mission → Story → Learning →
@@ -149,7 +149,7 @@ export function buildMission(lesson: Lesson): string[] {
   items.push(`Explore: ${lesson.subtitle}`);
   if (lesson.recipeId) items.push("Cook something delicious together");
   if (lesson.phrases?.length) items.push("Play the matching game");
-  items.push("Pass the adventure quiz");
+  items.push("Complete the adventure quest");
   if (lesson.destinationId) items.push("Earn a new passport stamp");
   return items;
 }
@@ -182,35 +182,42 @@ export function buildSlides(lesson: Lesson): Slide[] {
   const isPremium = !!lesson.premiumContent?.richExplanation || !!lesson.premiumContent?.adventureHook;
 
   if (isPremium) {
-    // Premium Flow
+    // 1. Hook & Opening Curiosity
     if (lesson.premiumContent?.adventureHook) push("hook", "Adventure Hook", "🎣", undefined, lesson.premiumContent.adventureHook);
-    if (lesson.premiumContent?.essentialQuestion) push("essentialQuestion", "Essential Question", "❓", undefined, lesson.premiumContent.essentialQuestion);
 
-    // Core Learning
-    if (lesson.premiumContent?.richExplanation) {
-      lesson.premiumContent.richExplanation.forEach((re) => push("richExplanation", re.heading || "Explanation", re.emoji || "📖", undefined, re));
-    }
-    if (lesson.premiumContent?.discoveries) push("discoveries", "Discoveries", "🔍", undefined, lesson.premiumContent.discoveries);
-    if (lesson.premiumContent?.keyFacts) push("keyFacts", "Key Facts", "💡", undefined, lesson.premiumContent.keyFacts);
-    if (lesson.premiumContent?.vocabulary && lesson.premiumContent.vocabulary.length > 0) push("vocab", "Words for the Adventure", "💬");
+    // 2. Visual & Interactive Discovery First (JOY → CURIOSITY)
+    // Children encounter authentic media moments, quick discoveries, and interactive vocabulary before dense text
     if (lesson.premiumContent?.mediaMoments) {
       lesson.premiumContent.mediaMoments.forEach((mm) => push("mediaMoment", mm.requiredType === "video" ? "Video Moment" : "Media Moment", mm.requiredType === "video" ? "🎬" : "📸", undefined, mm));
     }
+    if (lesson.premiumContent?.discoveries) push("discoveries", "Discoveries", "🔍", undefined, lesson.premiumContent.discoveries);
+    if (lesson.premiumContent?.vocabulary && lesson.premiumContent.vocabulary.length > 0) push("vocab", "Words for the Adventure", "💬");
 
-    // Engagement
-    if (lesson.premiumContent?.guidedDiscussion) push("guidedDiscussion", "Guided Discussion", "🗣️", undefined, lesson.premiumContent.guidedDiscussion);
-    if (lesson.premiumContent?.ageDifferentiation) push("ageChallenge", "Age Challenge", "⭐", undefined, lesson.premiumContent.ageDifferentiation);
-    if (lesson.premiumContent?.handsOnTask) push("handsOnMission", "Hands-On Mission", "🛠️", undefined, lesson.premiumContent.handsOnTask);
+    // 3. Wonder Question & Core Ideas (DISCOVERY)
+    if (lesson.premiumContent?.essentialQuestion) push("essentialQuestion", "Essential Question", "❓", undefined, lesson.premiumContent.essentialQuestion);
+
+    // 4. Core Explanations (Foregrounds core idea with Curious Corner for deep provenance)
+    if (lesson.premiumContent?.richExplanation) {
+      lesson.premiumContent.richExplanation.forEach((re) => push("richExplanation", re.heading || "Explanation", re.emoji || "📖", undefined, re));
+    }
+    if (lesson.premiumContent?.keyFacts) push("keyFacts", "Key Facts", "💡", undefined, lesson.premiumContent.keyFacts);
+
+    // 5. Practice & Hands-On Engagement (PRACTICE)
     if (lesson.premiumContent?.game) push("game", lesson.premiumContent.game.title || "Game", "🎮", undefined, lesson.premiumContent.game);
+    if (lesson.premiumContent?.handsOnTask) push("handsOnMission", "Hands-On Mission", "🛠️", undefined, lesson.premiumContent.handsOnTask);
+    if (lesson.premiumContent?.ageDifferentiation) push("ageChallenge", "Age Challenge", "⭐", undefined, lesson.premiumContent.ageDifferentiation);
+    if (lesson.premiumContent?.guidedDiscussion) push("guidedDiscussion", "Guided Discussion", "🗣️", undefined, lesson.premiumContent.guidedDiscussion);
 
-    // Assessment & Reflection
+    // 6. Discovery Quest (Reframing Assessment with curiosity)
     if (lesson.premiumContent?.misconceptions && lesson.premiumContent.misconceptions.length > 0) {
-      push("checkUnderstanding", "Check Your Thinking", "💡", undefined, lesson.premiumContent.misconceptions);
+      push("checkUnderstanding", "What Did You Notice?", "💡", undefined, lesson.premiumContent.misconceptions);
     } else if (lesson.premiumContent?.knowledgeCheck && lesson.premiumContent.knowledgeCheck.length > 0) {
-      push("checkUnderstanding", "Check for Understanding", "💡", undefined, lesson.premiumContent.knowledgeCheck);
+      push("checkUnderstanding", "What Did You Notice?", "💡", undefined, lesson.premiumContent.knowledgeCheck);
     }
 
-    if (lesson.premiumContent?.premiumAssessment) push("premiumAssessment", "Assessment", "🧠", undefined, lesson.premiumContent.premiumAssessment);
+    if (lesson.premiumContent?.premiumAssessment) push("premiumAssessment", "Discovery Quest", "🧠", undefined, lesson.premiumContent.premiumAssessment);
+
+    // 7. Reflection, Family Challenge & Celebration (CELEBRATION)
     if (lesson.premiumContent?.learnerReflection) push("reflection", "Reflection", "💭", undefined, lesson.premiumContent.learnerReflection);
     if (lesson.familyChallenge) push("challenge", "Family Challenge", "🏆", undefined, lesson.familyChallenge);
   } else {

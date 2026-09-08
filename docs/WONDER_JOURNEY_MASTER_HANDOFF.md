@@ -640,6 +640,29 @@ This standing policy governs all AI engineering workflows for Wonder Journey:
 > 6. **Automated Test Suite:** Added 6-point automated verification suite (`tests/joyful-learning-shared-engine.test.ts`) integrated into `npm test` verifying all 65 lessons (1,636 slides), 195 precedence points, and 323 progressive disclosure cards.
 > 7. **Database Invariant:** Database migration count strictly preserved at 8 in `supabase/migrations/` (0 SQL modifications).
 
+### Checkpoint (2026-09-08): Wonder Journey Unified Website Phase 1 Architecture & Middleware Hardening Integrated
+
+> [!NOTE]
+> **Milestone Reference:** `docs/checkpoints/2026-09-08-unified-website-phase-1-integrated.md`
+>
+> **Core Decisions & Shipped Implementations:**
+> 1. **One Complete Website:** Reconciled Wonder Journey as one unified website where the homepage is the primary landing, portfolio, and conversion page, supported by deeper public informational and educational routes.
+> 2. **Critical Middleware Amendment (`src/middleware.ts`):**
+>    - Root `"/"` is strictly evaluated via exact equality (`pathname === '/'`), completely preventing prefix bleed into private routes.
+>    - Safe segment-prefix matching (`PUBLIC_PREFIXES.some(prefix => pathname === prefix || pathname.startsWith(prefix + '/'))`) strictly prevents `/about-old` or similar routes from matching public boundaries.
+>    - All private routes (`/family`, `/classroom`, `/passport`, `/cooking`, `/teacher`, `/celebrations`, `/awards`, `/journal`, `/languages`, `/lessons`) remain 100% auth-protected.
+> 3. **Phase 1 Reconciled/Created Routes:**
+>    - `/experience` (`src/app/(marketing)/experience/page.tsx`): 3-Pillar Experience Cadence, Platform Tour, and 50-minute weekly session rhythm.
+>    - `/learning` (`src/app/(marketing)/learning/page.tsx`): Archipelago Journey Band, 4 Learning Focus Tabs, 65 living lessons curriculum overview, archival credibility context.
+>    - `/gallery` (`src/app/(marketing)/gallery/page.tsx`): 4 Real Learning Outcomes (culinary, sketchbooks, audio postcards, passport) with strict child privacy & safeguarding invariants.
+>    - `/about` (`src/app/(marketing)/about/page.tsx`): Truthful founder narrative (Sharon Rose Algara, Negros Occidental) and complete Faith Transparency statement.
+>    - `/safety` (`src/app/(marketing)/safety/page.tsx`): Child Safeguarding & Family Privacy commitments (zero minor broadcasting, authenticated family workspace, ad-free environment).
+>    - `/inquiry` (`src/app/(marketing)/inquiry/page.tsx`): Family admissions rhythm and direct inquiry form.
+>    - `/primary-sources` (`src/app/(marketing)/primary-sources/page.tsx`): Father Manuel Blanco's *Flora de Filipinas* botanical scans and cartographic artifacts with institutional provenance.
+> 4. **Unified Experience-First Navigation:** Header and mobile nav updated to: `Home`, `Experience`, `Learning`, `Gallery`, `About`, `Safety`, `Inquiry`, and `Existing Family Login`. Primary Sources linked from `/learning` and footer.
+> 5. **Regression & Live HTTP Testing:** Added 100 automated middleware regression tests (`tests/unified-website-phase-1-middleware.test.ts`) integrated into `npm test`. Verified 100% HTTP 200 on public routes and HTTP 307 redirects to `/login` on private routes.
+> 6. **Database Invariant:** Migration count strictly 8 in `supabase/migrations/` (0 SQL modifications).
+
 ---
 
 ## Current Next Step
@@ -652,15 +675,16 @@ The immediate engineering step following this documentation update:
    - Primary-Source Historical Context Scoping (`slide-views.tsx` identity scoping & regression suite) is fully integrated into `main`.
    - Premium 4K Landing Experience (Signature 3D Astrolabe, Archipelago narrative, Anti-AI art direction, 4K fluid layout) is fully integrated into `main`.
    - Joyful Learning Shared Engine Slice 1 (Visual-first slide ordering, Progressive Disclosure, Curious Corner, Zero Punitive States) is fully integrated into `main`.
+   - Wonder Journey Unified Website Phase 1 (Exact root middleware, 7 public routes, 100 regression tests) is fully integrated into `main`.
 2. **Current Active Priority (OWNER-APPROVED):**
-   - **Wonder Journey Landing Page Portfolio Readiness + Authentic Experience Pass:**
-     - Finalizing portfolio-grade visual presentation, art-directed editorial flow, and audit-ready inspection fidelity across desktop, tablet, and mobile viewports.
-     - Above-the-fold 3D astrolabe and static fallback perfection, archipelago narrative verification, and authentic primary sources gallery presentation.
-     - Strict adherence to the Anti-AI-Generated Design Standard and core faith/family foundations.
+   - **Wonder Journey Unified Website Phase 2 (Safe Content Relocation & Narrative Flow):**
+     - Shift in-depth curriculum / documentation blocks from homepage to `/learning` and `/experience`.
+     - Prepare homepage for experience-first narrative flow.
+     - Maintain strict child safeguarding and privacy invariants.
 3. **Explicitly Held Candidate Slices (DO NOT BEGIN):**
+   - **Major Experience-First Visual Redesign (Phase 3):** HELD per owner decision.
    - **Joyful Learning Program (Slice 2):** HELD per owner decision.
    - **Teacher Studio / Real Student Progress Bridge (`/teacher`):** HELD per owner decision.
-   - **Family Portal Authentication & Login Visual Polish:** HELD per owner decision.
 4. **Repository Truth Re-Verification:**
    - Always verify `main = origin/main` before mutation.
    - Do not invent new features outside explicit owner approval.

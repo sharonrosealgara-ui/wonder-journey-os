@@ -94,7 +94,7 @@ export default function MobileNav({ formEnabled }: MobileNavProps) {
   }
 
   return (
-    <div className="lg:hidden">
+    <div className="xl:hidden">
       {/* Toggle Button */}
       <button
         ref={toggleButtonRef}
@@ -150,56 +150,56 @@ export default function MobileNav({ formEnabled }: MobileNavProps) {
               </div>
 
               {/* Navigation Links */}
-              <nav className="mt-6 flex flex-col space-y-3 font-display text-base font-bold">
+              <nav className="mt-6 flex flex-col space-y-2 font-display text-base font-bold">
                 <Link
                   ref={firstLinkRef}
-                  href="#experience"
+                  href="/"
                   onClick={closeMenu}
-                  className="px-3 py-2.5 rounded-xl text-ink hover:text-ocean-deep hover:bg-sand/40 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean-deep"
+                  className="px-3 py-2 rounded-xl text-ink hover:text-ocean-deep hover:bg-sand/40 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean-deep"
+                >
+                  Home
+                </Link>
+                <Link
+                  href="/experience"
+                  onClick={closeMenu}
+                  className="px-3 py-2 rounded-xl text-ink hover:text-ocean-deep hover:bg-sand/40 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean-deep"
                 >
                   Experience
                 </Link>
                 <Link
-                  href="#gallery"
+                  href="/learning"
                   onClick={closeMenu}
-                  className="px-3 py-2.5 rounded-xl text-ink hover:text-ocean-deep hover:bg-sand/40 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean-deep"
+                  className="px-3 py-2 rounded-xl text-ink hover:text-ocean-deep hover:bg-sand/40 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean-deep"
                 >
-                  Curriculum Imagery
+                  Learning
                 </Link>
                 <Link
-                  href="#focus"
+                  href="/gallery"
                   onClick={closeMenu}
-                  className="px-3 py-2.5 rounded-xl text-ink hover:text-ocean-deep hover:bg-sand/40 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean-deep"
+                  className="px-3 py-2 rounded-xl text-ink hover:text-ocean-deep hover:bg-sand/40 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean-deep"
                 >
-                  Learning Focus
+                  Gallery
                 </Link>
                 <Link
-                  href="#family-space"
+                  href="/about"
                   onClick={closeMenu}
-                  className="px-3 py-2.5 rounded-xl text-ink hover:text-ocean-deep hover:bg-sand/40 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean-deep"
+                  className="px-3 py-2 rounded-xl text-ink hover:text-ocean-deep hover:bg-sand/40 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean-deep"
                 >
-                  Family Space
+                  About
                 </Link>
                 <Link
-                  href="#faith"
+                  href="/safety"
                   onClick={closeMenu}
-                  className="px-3 py-2.5 rounded-xl text-ink hover:text-ocean-deep hover:bg-sand/40 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean-deep"
+                  className="px-3 py-2 rounded-xl text-ink hover:text-ocean-deep hover:bg-sand/40 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean-deep"
                 >
-                  Faith
+                  Safety
                 </Link>
                 <Link
-                  href="#founder"
+                  href="/inquiry"
                   onClick={closeMenu}
-                  className="px-3 py-2.5 rounded-xl text-ink hover:text-ocean-deep hover:bg-sand/40 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean-deep"
+                  className="px-3 py-2 rounded-xl text-ink hover:text-ocean-deep hover:bg-sand/40 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean-deep"
                 >
-                  Founder
-                </Link>
-                <Link
-                  href="#inquiry"
-                  onClick={closeMenu}
-                  className="px-3 py-2.5 rounded-xl text-ink hover:text-ocean-deep hover:bg-sand/40 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean-deep"
-                >
-                  Inquiry Info
+                  Inquiry
                 </Link>
               </nav>
             </div>

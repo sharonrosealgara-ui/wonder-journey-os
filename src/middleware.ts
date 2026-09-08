@@ -34,15 +34,28 @@ export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
 
   // Public paths — accessible without authentication
+  // Rule 1: Root "/" is handled strictly via exact match: pathname === '/'
+  // Rule 2: Public route prefixes match either exact route or route + '/' (prevents /about-old from matching /about)
+  const PUBLIC_PREFIXES = [
+    '/experience',
+    '/learning',
+    '/gallery',
+    '/about',
+    '/safety',
+    '/inquiry',
+    '/primary-sources',
+    '/login',
+    '/forgot-password',
+    '/reset-password',
+    '/auth',
+    '/api',
+  ]
+
   const isPublicPath =
     pathname === '/' ||
-    pathname.startsWith('/login') ||
-    pathname.startsWith('/forgot-password') ||
-    pathname.startsWith('/reset-password') ||
-    pathname.startsWith('/auth') ||
-    pathname.startsWith('/api') ||
+    PUBLIC_PREFIXES.some((prefix) => pathname === prefix || pathname.startsWith(prefix + '/')) ||
     pathname.startsWith('/_next') ||
-    pathname.match(/\.(.*)$/)
+    Boolean(pathname.match(/\.(.*)$/))
 
   if (isPublicPath) {
     // If logged in and visiting /login, redirect to their role-based home

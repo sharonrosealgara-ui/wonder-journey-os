@@ -39,7 +39,7 @@ const ARCHIVAL_ASSETS: ArchivalAsset[] = [
     dateOrPeriod: "1877–1883 (Gran Edición, Manila)",
     provenance: "Flora de Filipinas / Real Jardín Botánico",
     sourceUrl: "https://commons.wikimedia.org/wiki/File:Pterocarpus_indicus_Blanco2.308-cropped.jpg",
-    imageSrc: "/media/curriculum/l11-visual-a.jpg",
+    imageSrc: "/media/curriculum/l11-visual-a.png",
     imageAlt: "Narra Tree Botanical Illustration from Flora de Filipinas",
     aspectRatio: "aspect-[3/4]",
     culturalImportance:

@@ -19,54 +19,54 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
             <span className="tracking-tight">Wonder Journey</span>
           </Link>
 
-          <nav className="hidden lg:flex items-center gap-6 2xl:gap-8 4k:gap-10 font-display text-sm 2xl:text-base 4k:text-lg font-semibold">
+          <nav className="hidden xl:flex items-center gap-6 2xl:gap-8 4k:gap-10 font-display text-sm 2xl:text-base 4k:text-lg font-semibold">
             <Link
-              href="#journey"
+              href="/"
               className="text-ink hover:text-ocean-deep transition-colors px-1 py-1 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean-deep"
             >
-              Archipelago Journey
+              Home
             </Link>
             <Link
-              href="#tour"
+              href="/experience"
               className="text-ink hover:text-ocean-deep transition-colors px-1 py-1 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean-deep"
             >
-              Product Tour
+              Experience
             </Link>
             <Link
-              href="#focus"
+              href="/learning"
               className="text-ink hover:text-ocean-deep transition-colors px-1 py-1 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean-deep"
             >
-              Curriculum Pillars
+              Learning
             </Link>
             <Link
-              href="#experience"
+              href="/gallery"
               className="text-ink hover:text-ocean-deep transition-colors px-1 py-1 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean-deep"
             >
-              Learning Studio
+              Gallery
             </Link>
             <Link
-              href="#gallery"
+              href="/about"
               className="text-ink hover:text-ocean-deep transition-colors px-1 py-1 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean-deep"
             >
-              Authentic Media
+              About
             </Link>
             <Link
-              href="#faith"
+              href="/safety"
               className="text-ink hover:text-ocean-deep transition-colors px-1 py-1 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean-deep"
             >
-              Faith
+              Safety
             </Link>
             <Link
-              href="#founder"
+              href="/inquiry"
               className="text-ink hover:text-ocean-deep transition-colors px-1 py-1 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean-deep"
             >
-              Founder
+              Inquiry
             </Link>
           </nav>
 
           <div className="flex items-center gap-2.5 sm:gap-4">
             <Link
-              href="#inquiry"
+              href="/inquiry"
               className="text-xs sm:text-sm 2xl:text-base text-ink/80 hover:text-ocean-deep transition-colors font-semibold hidden sm:inline-block px-2 py-1 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean-deep"
             >
               Inquiry Info
@@ -80,7 +80,7 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
             <div className="hidden sm:flex items-center">
               <Link
                 href="/login"
-                className="wj-btn text-xs sm:text-sm 2xl:text-base 4k:text-lg px-4 sm:px-5 2xl:px-6 py-2 sm:py-2.5 4k:py-3 flex items-center gap-2 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean-deep focus-visible:ring-offset-2"
+                className="wj-btn whitespace-nowrap text-xs sm:text-sm 2xl:text-base 4k:text-lg px-4 sm:px-5 2xl:px-6 py-2 sm:py-2.5 4k:py-3 flex items-center gap-2 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean-deep focus-visible:ring-offset-2"
               >
                 <LogIn className="w-4 h-4 2xl:w-5 2xl:h-5" aria-hidden="true" />
                 <span>{formEnabled ? "Login" : "Existing Family Login"}</span>
@@ -109,6 +109,17 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
             <p className="text-xs sm:text-sm 2xl:text-base 4k:text-lg text-white/85 mt-2.5 max-w-lg 4k:max-w-xl leading-relaxed font-medium">
               A Christ-centered learning community helping children grow in language, culture, character, knowledge, and faith across the 7,641 islands of the Philippines.
             </p>
+            <nav className="flex flex-wrap items-center gap-x-5 gap-y-2 mt-4 text-xs sm:text-sm text-white/70 font-semibold">
+              <Link href="/" className="hover:text-white transition-colors">Home</Link>
+              <Link href="/experience" className="hover:text-white transition-colors">Experience</Link>
+              <Link href="/learning" className="hover:text-white transition-colors">Learning</Link>
+              <Link href="/gallery" className="hover:text-white transition-colors">Gallery</Link>
+              <Link href="/about" className="hover:text-white transition-colors">About</Link>
+              <Link href="/safety" className="hover:text-white transition-colors">Safety</Link>
+              <Link href="/inquiry" className="hover:text-white transition-colors">Inquiry</Link>
+              <Link href="/primary-sources" className="hover:text-mango transition-colors">Primary Sources</Link>
+              <Link href="/login" className="hover:text-white transition-colors">Family Login</Link>
+            </nav>
           </div>
           <div className="text-xs sm:text-sm 2xl:text-base text-white/75 md:text-right space-y-1.5 font-medium">
             <p>&copy; {new Date().getFullYear()} Wonder Journey. All rights reserved.</p>

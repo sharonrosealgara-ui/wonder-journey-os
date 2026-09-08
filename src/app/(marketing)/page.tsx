@@ -25,6 +25,9 @@ import ProductTour from "./product-tour";
 import ArchipelagoJourneyBand from "./archipelago-journey-band";
 import PrimarySourcesGallery from "./primary-sources-gallery";
 import Hero3DWrapper from "./hero-3d-wrapper";
+import CelebrationsShowcase from "./celebrations-showcase";
+import RealClassroomExperience from "./real-classroom-experience";
+import ParentReflection from "./parent-reflection";
 
 export default function LandingPage() {
   const formEnabled = isInquiryFormEnabled();
@@ -335,7 +338,16 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── 7. PRIVATE FAMILY LEARNING SPACE FEATURES ── */}
+      {/* ── 7. REAL CLASSROOM EXPERIENCE: FOCUSED SMALL-GROUP LEARNING ── */}
+      <RealClassroomExperience />
+
+      {/* ── 8. CELEBRATIONS & LEARNER MEMORIES: HANDCRAFTED KEEPSAKES & AUDIO POSTCARD PREVIEW ── */}
+      <CelebrationsShowcase />
+
+      {/* ── 9. PARENT REFLECTION: EDITORIAL INTEGRITY & PRIVACY PROTOCOL ── */}
+      <ParentReflection />
+
+      {/* ── 10. PRIVATE FAMILY LEARNING SPACE FEATURES ── */}
       <section id="family-space" className="py-14 sm:py-20 md:py-28 bg-sand/30 border-b border-sand-deep/50">
         <div className="max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1920px] 4k:max-w-[2400px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12 4k:px-16">
           <div className="text-center max-w-3xl 2xl:max-w-4xl mx-auto mb-12 sm:mb-16">
@@ -414,7 +426,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── 8. FAITH TRANSPARENCY: QUIET SANCTUARY SPREAD ── */}
+      {/* ── 11. FAITH TRANSPARENCY: QUIET SANCTUARY SPREAD ── */}
       <section id="faith" className="py-14 sm:py-20 md:py-28 bg-paper border-b border-sand-deep/50">
         <div className="max-w-4xl 2xl:max-w-5xl 4k:max-w-6xl mx-auto px-4 sm:px-6 2xl:px-8">
           <div className="wj-card p-6 sm:p-10 md:p-14 border-2 border-sand-deep/80 bg-white rounded-3xl shadow-sm">
@@ -440,7 +452,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── 9. FOUNDER SECTION: SHARON ROSE ALGARA ── */}
+      {/* ── 12. FOUNDER SECTION: SHARON ROSE ALGARA ── */}
       <section id="founder" className="py-14 sm:py-20 md:py-28 bg-white border-b border-sand-deep/50">
         <div className="max-w-4xl 2xl:max-w-5xl 4k:max-w-6xl mx-auto px-4 sm:px-6 2xl:px-8">
           <div className="grid md:grid-cols-[1fr_2.2fr] gap-8 sm:gap-10 items-start">
@@ -474,7 +486,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── 10. INQUIRY INFORMATION: RESTRAINED PORTAL GATE ── */}
+      {/* ── 13. INQUIRY INFORMATION: RESTRAINED PORTAL GATE ── */}
       <section id="inquiry" className="py-14 sm:py-20 md:py-28 bg-paper">
         <div className="max-w-2xl 2xl:max-w-3xl 4k:max-w-4xl mx-auto px-4 sm:px-6 2xl:px-8">
           <div className="wj-card p-6 sm:p-10 border-2 border-sand-deep/80 bg-white rounded-3xl shadow-sm text-center">

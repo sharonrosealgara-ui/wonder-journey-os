@@ -9,7 +9,7 @@
     "validate:release": "node scripts/validate-release-candidate.js",
     "validate:release:ephemeral": "node scripts/validate-release-ephemeral.js",
     "lint": "eslint src/",
-    "test": "npx tsx src/__tests__/curriculum.test.ts && npx tsx tests/primary-source-historical-context.test.ts && npx tsx tests/premium-4k-landing-experience.test.ts && npx tsx tests/joyful-learning-shared-engine.test.ts",
+    "test": "npx tsx src/__tests__/curriculum.test.ts && npx tsx tests/primary-source-historical-context.test.ts && npx tsx tests/premium-4k-landing-experience.test.ts && npx tsx tests/joyful-learning-shared-engine.test.ts && npx tsx tests/unified-website-phase-1-middleware.test.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

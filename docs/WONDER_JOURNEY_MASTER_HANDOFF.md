@@ -628,6 +628,18 @@ This standing policy governs all AI engineering workflows for Wonder Journey:
 > 10. **Database Invariant:** Migration count strictly preserved at 8 (0 SQL migrations).
 > 11. **Remote CI Proof:** All 30 release gates passed green in CI run 34073198763 in 4m28s.
 
+> ### Checkpoint 2026-09-07.17 — Joyful Learning Shared Engine Integrated (Slice 1)
+> **Commit / PR:** `b234332f03c1feb6619f5615e6c30cf75c8365b8` | PR #17 (Merged into `main` via strict fast-forward)
+> **Milestone Document:** `docs/checkpoints/2026-09-07-joyful-learning-shared-engine-integrated.md`
+> On 2026-09-07, Slice 1: Shared Slide Engine + Progressive Disclosure of the owner-approved Joyful Learning Program was implemented, verified, and integrated under Fast Integration and Bounded Autonomy:
+> 1. **Pedagogical Flow Reordering (`src/lib/slides.ts`):** Reordered the slide generation pipeline across all 65 curriculum lessons so that visual and interactive discovery (authentic media moments, quick discoveries, vocabulary) precedes dense conceptual explanations (`JOY → CURIOSITY → DISCOVERY → PRACTICE → OPTIONAL DEEPER EXPLORATION → CELEBRATION`).
+> 2. **Progressive Disclosure (`src/components/adventure/slide-views.tsx`):** Implemented `getCoreIdea(text)` to extract and foreground a punchy 1–2 sentence lead idea (~180 chars) on rich explanation cards without overwhelming young learners.
+> 3. **Curious Corner Drawer:** Built an accessible `Curious Corner: Explore Deeper` drawer toggle directly below the foregrounded core idea with full keyboard (`Escape`) and ARIA accessibility, retaining 100% of body text, Latin binomials, historical dates, and archival citations.
+> 4. **Zero-Punitive Assessment Reframing:** Reframed assessment interactions from formal testing to curiosity-oriented discovery: `checkUnderstanding` transformed to "What Did You Notice?" (`💡`), and `premiumAssessment` transformed to "Discovery Quest" (`🧭`), eliminating all punitive terms across all 65 lessons.
+> 5. **Primary Source Integrity Preserved:** Strict identity scoping for the 1734 Murillo Velarde map (`media-l01-secondary`) and non-map archival scans (`media-l11-primary`) remains fully intact with media provenance modals preserved.
+> 6. **Automated Test Suite:** Added 6-point automated verification suite (`tests/joyful-learning-shared-engine.test.ts`) integrated into `npm test` verifying all 65 lessons (1,636 slides), 195 precedence points, and 323 progressive disclosure cards.
+> 7. **Database Invariant:** Database migration count strictly preserved at 8 in `supabase/migrations/` (0 SQL modifications).
+
 ---
 
 ## Current Next Step
@@ -639,10 +651,17 @@ The immediate engineering step following this documentation update:
    - Canonical Media Reconciliation (L31 & L50 authentic asset reconciliation) is fully integrated into `main`.
    - Primary-Source Historical Context Scoping (`slide-views.tsx` identity scoping & regression suite) is fully integrated into `main`.
    - Premium 4K Landing Experience (Signature 3D Astrolabe, Archipelago narrative, Anti-AI art direction, 4K fluid layout) is fully integrated into `main`.
-2. **Next Candidate Product Slices (Subject to Owner Selection/Approval):**
-   - Candidate #2: Teacher Studio / Real Student Progress Bridge (`/teacher` live student progress tracking, actual completions reflection, student milestones).
-   - Family Portal Authentication & Login Visual Refinements (`src/app/(auth)/layout.tsx` and `src/app/(auth)/login/page.tsx`).
-3. **Repository Truth Re-Verification:**
+   - Joyful Learning Shared Engine Slice 1 (Visual-first slide ordering, Progressive Disclosure, Curious Corner, Zero Punitive States) is fully integrated into `main`.
+2. **Current Active Priority (OWNER-APPROVED):**
+   - **Wonder Journey Landing Page Portfolio Readiness + Authentic Experience Pass:**
+     - Finalizing portfolio-grade visual presentation, art-directed editorial flow, and audit-ready inspection fidelity across desktop, tablet, and mobile viewports.
+     - Above-the-fold 3D astrolabe and static fallback perfection, archipelago narrative verification, and authentic primary sources gallery presentation.
+     - Strict adherence to the Anti-AI-Generated Design Standard and core faith/family foundations.
+3. **Explicitly Held Candidate Slices (DO NOT BEGIN):**
+   - **Joyful Learning Program (Slice 2):** HELD per owner decision.
+   - **Teacher Studio / Real Student Progress Bridge (`/teacher`):** HELD per owner decision.
+   - **Family Portal Authentication & Login Visual Polish:** HELD per owner decision.
+4. **Repository Truth Re-Verification:**
    - Always verify `main = origin/main` before mutation.
    - Do not invent new features outside explicit owner approval.
 

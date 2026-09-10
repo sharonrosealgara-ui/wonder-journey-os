@@ -665,6 +665,48 @@ This standing policy governs all AI engineering workflows for Wonder Journey:
 
 ---
 
+### Checkpoint (2026-09-11): Wonder Journey Unified Website Phase 2 & WJ-V1.1 Visual Foundation Integrated
+
+> [!NOTE]
+> **Milestone Reference:** `docs/checkpoints/2026-09-11-unified-website-phase-2-and-visual-foundation-integrated.md`
+>
+> **Core Decisions & Shipped Implementations:**
+> 1. **Experience-First Homepage Composition (10 Locked Narrative Sections):**
+>    - 1. Cinematic Hero (Signature 3D astrolabe, field journal, sampaguita, 4K fluid clamp typography, direct CTAs to `/experience`, `/learning`, `/login`).
+>    - 2. What Wonder Journey Feels Like (warm illustrated storytelling).
+>    - 3. Real Live Classroom Experience (Teacher Sharon anchor, prominent `LearnerPrivacyShield` notice).
+>    - 4. Adventure Passport Showcase (tactile spread with canonical badges and deep learning link).
+>    - 5. Interactive Storybook Learning (discovery quest and adventure theater showcase).
+>    - 6. After-Class Gallery Teaser (4 categories with recipe integrity disclosure).
+>    - 7. Celebrations & Birthday Keepsakes (browser-only audio demo, 0 upload logic).
+>    - 8. Teacher Sharon Preview (gentle faith foundation, links to `/about` and `/safety`).
+>    - 9. Parent Reflection (strict editorial privacy gate with `ParentAuthorizationNotice`).
+>    - 10. Inquiry & Existing Family Login Gate.
+> 2. **Safe Content Relocation:**
+>    - Moved dense curriculum exploration (`ArchipelagoJourneyBand`, `LearningFocusTabs`, 65-lesson matrix) to `/learning`.
+>    - Moved dense platform tour (`ProductTour`, 50-minute rhythm) to `/experience`.
+>    - Moved archival gallery (`PrimarySourcesGallery`) to `/primary-sources`.
+>    - Moved authentic keepsakes to `/gallery`.
+> 3. **WJ-V1.1 Premium 4K Visual Foundation (`src/components/visual/`):**
+>    - Established design tokens (`filipino-green`, `coral`, `brass`, `wood`, `parchment`, `ink-deep`, `font-botanical`, `font-archival`).
+>    - `EditorialContainer` primitive with 5 layout variants, 4K fluid padding (`4k:px-24`), and reading measure limiter (65ch).
+>    - `JournalSurface` primitive for watercolor paper, aged parchment, and field notebook ruling.
+>    - `PolaroidFrame`, `ArchivalMatteFrame`, `WashiTapeStrip`, and `PostmarkStamp` primitives.
+>    - `MaritimeRoute` primitive with nautical rhumb lines, waypoints, and `prefers-reduced-motion` compliance.
+>    - `ProvenanceTag`, `LearnerPrivacyShield`, and `ParentAuthorizationNotice` disclosure primitives.
+>    - `usePrefersReducedMotion` hook and `ReducedMotionSafe` component.
+>    - `SceneBackdrop` and `FluidMeasure` 4K scene helpers.
+>    - Unified barrel export in `src/components/visual/index.ts`.
+> 4. **Automated Verification & Remote CI:**
+>    - 100 Phase 1 tests passed.
+>    - 39 Phase 2 homepage composition tests passed.
+>    - 51 Premium 4K visual foundation tests passed.
+>    - Remote CI run ID `34523539600` passed all 30 release candidate gates green in 4m27s.
+>    - PR #20 fast-forward merged into `main`.
+> 5. **Database Invariant:** Database migrations strictly preserved at 8 in `supabase/migrations/` (0 SQL modifications).
+
+---
+
 ## Current Next Step
 
 The immediate engineering step following this documentation update:
@@ -676,15 +718,14 @@ The immediate engineering step following this documentation update:
    - Premium 4K Landing Experience (Signature 3D Astrolabe, Archipelago narrative, Anti-AI art direction, 4K fluid layout) is fully integrated into `main`.
    - Joyful Learning Shared Engine Slice 1 (Visual-first slide ordering, Progressive Disclosure, Curious Corner, Zero Punitive States) is fully integrated into `main`.
    - Wonder Journey Unified Website Phase 1 (Exact root middleware, 7 public routes, 100 regression tests) is fully integrated into `main`.
+   - Wonder Journey Unified Website Phase 2 & WJ-V1.1 Visual Foundation (10-section homepage, content relocation, reusable primitives, 90 regression tests) is fully integrated into `main`.
 2. **Current Active Priority (OWNER-APPROVED):**
-   - **Wonder Journey Unified Website Phase 2 (Safe Content Relocation & Narrative Flow):**
-     - Shift in-depth curriculum / documentation blocks from homepage to `/learning` and `/experience`.
-     - Prepare homepage for experience-first narrative flow.
-     - Maintain strict child safeguarding and privacy invariants.
+   - **WJ-V1.2 Home/Hero Implementation:**
+     - Leverage the newly integrated WJ-V1.1 visual foundation primitives to elevate the homepage and hero experience natively for 4K.
 3. **Explicitly Held Candidate Slices (DO NOT BEGIN):**
-   - **Major Experience-First Visual Redesign (Phase 3):** HELD per owner decision.
    - **Joyful Learning Program (Slice 2):** HELD per owner decision.
    - **Teacher Studio / Real Student Progress Bridge (`/teacher`):** HELD per owner decision.
+   - **Any consent-gated media exposure or real minor publication:** HELD.
 4. **Repository Truth Re-Verification:**
    - Always verify `main = origin/main` before mutation.
    - Do not invent new features outside explicit owner approval.

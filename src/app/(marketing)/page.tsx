@@ -10,6 +10,12 @@ import {
 } from "lucide-react";
 import { isInquiryFormEnabled } from "@/lib/inquiry-config";
 import { FounderBadgeIcon } from "@/components/ui/dimensional-icons";
+import {
+  EditorialContainer,
+  JournalSurface,
+  WashiTapeStrip,
+  FluidMeasure,
+} from "@/components/visual";
 import Hero3DWrapper from "./hero-3d-wrapper";
 import WhatWonderJourneyFeelsLike from "./what-it-feels-like";
 import LiveClassroomExperience from "./live-classroom-experience";
@@ -183,44 +189,56 @@ export default function LandingPage() {
       <ParentReflection />
 
       {/* ── 10. INQUIRY + EXISTING FAMILY LOGIN: RESTRAINED PORTAL GATE ── */}
-      <section id="inquiry" className="py-16 sm:py-24 md:py-32 bg-paper">
-        <div className="max-w-2xl 2xl:max-w-3xl 4k:max-w-4xl mx-auto px-4 sm:px-6 2xl:px-8">
-          <div className="wj-card p-6 sm:p-10 md:p-12 border-2 border-sand-deep/80 bg-white rounded-3xl shadow-sm text-center">
+      <EditorialContainer
+        id="inquiry"
+        as="section"
+        sceneWidth="4k"
+        className="py-16 sm:py-24 md:py-32 bg-paper relative overflow-hidden"
+      >
+        <div className="max-w-2xl 2xl:max-w-3xl 3xl:max-w-4xl 4k:max-w-5xl mx-auto">
+          <JournalSurface
+            variant="pressed-cream"
+            shadow="archival"
+            className="p-6 sm:p-10 md:p-12 2xl:p-14 border-2 border-sand-deep/80 rounded-3xl text-center relative overflow-hidden"
+          >
+            <WashiTapeStrip color="mango" position="top-center" />
             
-            <div className="w-12 h-12 rounded-2xl bg-mango/20 text-ocean-deep flex items-center justify-center mx-auto mb-4">
-              <Compass className="w-6 h-6 text-ocean-deep" aria-hidden="true" />
+            <div className="w-12 h-12 2xl:w-14 2xl:h-14 rounded-2xl bg-mango/20 text-ocean-deep flex items-center justify-center mx-auto mb-4 shadow-2xs">
+              <Compass className="w-6 h-6 2xl:w-7 2xl:h-7 text-ocean-deep" aria-hidden="true" />
             </div>
 
-            <h2 className="font-display text-2xl sm:text-3xl 2xl:text-4xl text-ocean-deep font-bold">
+            <h2 className="font-display text-2xl sm:text-3xl 2xl:text-4xl 4k:text-5xl text-ocean-deep font-bold">
               {formEnabled ? "Family Inquiry" : "Inquiry & Family Portal"}
             </h2>
 
-            <div className="mt-4 inline-block px-4 py-1.5 rounded-full bg-sand/60 border border-sand-deep/80 text-xs sm:text-sm font-bold text-ocean-deep">
+            <div className="mt-4 inline-block px-4 py-1.5 rounded-full bg-sand/60 border border-sand-deep/80 text-xs sm:text-sm 2xl:text-base font-bold text-ocean-deep">
               Public enrollment and inquiry submissions are currently closed for V1.
             </div>
 
-            <p className="text-xs sm:text-sm 2xl:text-base text-ink/80 leading-relaxed max-w-md mx-auto font-medium mt-4">
-              Wonder Journey serves an intimate number of families to maintain authentic relationship. Existing enrolled families may access their space anytime via the family portal.
-            </p>
+            <FluidMeasure align="center" className="mt-4">
+              <p className="text-xs sm:text-sm 2xl:text-base text-ink/80 leading-relaxed font-medium">
+                Wonder Journey serves an intimate number of families to maintain authentic relationship. Existing enrolled families may access their space anytime via the family portal.
+              </p>
+            </FluidMeasure>
 
             <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3.5">
               <Link
                 href="/login"
-                className="wj-btn text-sm sm:text-base px-7 py-3 inline-block shadow-sm"
+                className="wj-btn text-sm sm:text-base 2xl:text-lg px-7 py-3 inline-block shadow-sm"
               >
                 Existing Family Login
               </Link>
               <Link
                 href="/inquiry"
-                className="wj-btn wj-btn-ghost text-sm sm:text-base px-6 py-3 border border-sand-deep/80 bg-paper"
+                className="wj-btn wj-btn-ghost text-sm sm:text-base 2xl:text-lg px-6 py-3 border border-sand-deep/80 bg-paper"
               >
                 Inquiry Information &rarr;
               </Link>
             </div>
 
-          </div>
+          </JournalSurface>
         </div>
-      </section>
+      </EditorialContainer>
 
     </div>
   );

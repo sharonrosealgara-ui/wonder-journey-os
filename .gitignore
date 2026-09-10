@@ -25,4 +25,6 @@ node22.zip
 temp-render-tsconfig.json
 temp-render-test/
 artifacts/scratch/
+artifacts/owner-source-media/
+artifacts/screenshots/*.zip
 supabase/.branches/

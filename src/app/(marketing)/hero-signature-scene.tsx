@@ -75,19 +75,19 @@ export default function HeroSignatureScene() {
     renderer.domElement.style.display = "block";
     container.appendChild(renderer.domElement);
 
-    // 2. Lighting (Warm tropical morning light + soft ocean-sky fill)
-    const ambientLight = new THREE.AmbientLight(0xc9dff2, 1.1);
+    // 2. Lighting (Warm tropical morning light + rich golden key + soft ocean fill)
+    const ambientLight = new THREE.AmbientLight(0xd4e7f8, 1.25);
     scene.add(ambientLight);
 
-    const sunLight = new THREE.DirectionalLight(0xfff8e7, 2.5);
-    sunLight.position.set(5, 7, 6);
+    const sunLight = new THREE.DirectionalLight(0xfff5db, 3.2);
+    sunLight.position.set(5.5, 7.5, 6.5);
     scene.add(sunLight);
 
-    const warmBounceLight = new THREE.DirectionalLight(0xffd23f, 1.4);
+    const warmBounceLight = new THREE.DirectionalLight(0xffd54f, 1.6);
     warmBounceLight.position.set(-5, -4, 4);
     scene.add(warmBounceLight);
 
-    const rimLight = new THREE.DirectionalLight(0x2fb8ad, 1.0);
+    const rimLight = new THREE.DirectionalLight(0x38bdf8, 1.2);
     rimLight.position.set(0, 5, -4);
     scene.add(rimLight);
 
@@ -100,23 +100,23 @@ export default function HeroSignatureScene() {
     astrolabeGroup.position.set(0.2, 0.2, 0);
     masterGroup.add(astrolabeGroup);
 
-    // Burnished Brass Material
+    // Rich Burnished Brass Material (Higher specular reflection and warm golden sheen)
     const brassMaterial = new THREE.MeshStandardMaterial({
       color: 0xd4af37,
-      metalness: 0.85,
-      roughness: 0.25,
+      metalness: 0.94,
+      roughness: 0.16,
     });
 
     const darkBrassMaterial = new THREE.MeshStandardMaterial({
-      color: 0x997316,
-      metalness: 0.9,
-      roughness: 0.35,
+      color: 0x8c6614,
+      metalness: 0.90,
+      roughness: 0.28,
     });
 
     const ivoryMaterial = new THREE.MeshStandardMaterial({
-      color: 0xfffdf6,
-      roughness: 0.6,
-      metalness: 0.05,
+      color: 0xfffcf2,
+      roughness: 0.72,
+      metalness: 0.04,
     });
 
     const sunsetCoralMaterial = new THREE.MeshStandardMaterial({
@@ -152,7 +152,12 @@ export default function HeroSignatureScene() {
     latRing2.rotation.y = THREE.MathUtils.degToRad(28);
     astrolabeGroup.add(latRing2);
 
-    // Dial Face Plate
+    // Inner Astrological Concentric Ring
+    const innerRingGeo = new THREE.TorusGeometry(0.95, 0.025, 12, 48);
+    const innerRing = new THREE.Mesh(innerRingGeo, brassMaterial);
+    astrolabeGroup.add(innerRing);
+
+    // Dial Face Plate (Warm ivory parchment)
     const dialPlateGeo = new THREE.CylinderGeometry(2.0, 2.0, 0.06, 64);
     dialPlateGeo.rotateX(Math.PI / 2);
     const dialPlate = new THREE.Mesh(dialPlateGeo, ivoryMaterial);
@@ -251,10 +256,11 @@ export default function HeroSignatureScene() {
     bookGroup.rotation.set(0.35, 0.45, -0.22);
     masterGroup.add(bookGroup);
 
+    // Rich antique cognac leather
     const leatherMaterial = new THREE.MeshStandardMaterial({
-      color: 0x4a2c1b,
-      roughness: 0.75,
-      metalness: 0.1,
+      color: 0x542c18,
+      roughness: 0.55,
+      metalness: 0.12,
     });
 
     const pageMaterial = new THREE.MeshStandardMaterial({
@@ -267,6 +273,20 @@ export default function HeroSignatureScene() {
     const coverGeo = new THREE.BoxGeometry(2.0, 1.4, 0.08);
     const coverMesh = new THREE.Mesh(coverGeo, leatherMaterial);
     bookGroup.add(coverMesh);
+
+    // Antique Brass Corner Protectors on Book
+    const cornerGeo = new THREE.BoxGeometry(0.24, 0.24, 0.09);
+    const corners = [
+      [-0.88, 0.58, 0],
+      [0.88, 0.58, 0],
+      [-0.88, -0.58, 0],
+      [0.88, -0.58, 0],
+    ];
+    corners.forEach(([cx, cy, cz]) => {
+      const cornerMesh = new THREE.Mesh(cornerGeo, brassMaterial);
+      cornerMesh.position.set(cx, cy, cz);
+      bookGroup.add(cornerMesh);
+    });
 
     // Pages Block
     const pagesGeo = new THREE.BoxGeometry(1.88, 1.32, 0.22);

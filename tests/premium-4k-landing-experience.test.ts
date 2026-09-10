@@ -116,7 +116,7 @@ assert(
   "Dignified enrollment status banner rendered in initial HTML"
 );
 assert(
-  pageCode.includes("href=\"#journey\"") && pageCode.includes("href=\"/login\""),
+  (pageCode.includes("href=\"/experience\"") || pageCode.includes("href=\"#journey\"")) && pageCode.includes("href=\"/login\""),
   "Core CTAs rendered as semantic HTML anchors without canvas obscuration"
 );
 

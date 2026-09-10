@@ -98,18 +98,18 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
         {children}
       </main>
 
-      {/* ── FOOTER: 4K FLUID DIGNIFIED FOOTER ── */}
-      <footer className="bg-ocean-deep text-white py-14 sm:py-18 2xl:py-24 4k:py-28 border-t border-ocean-deep/80 relative">
-        <div className="max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1920px] 4k:max-w-[2400px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12 4k:px-16 flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+      {/* ── FOOTER: QUIET END-OF-JOURNEY SIGNATURE ── */}
+      <footer className="bg-ocean-deep text-white py-8 sm:py-10 2xl:py-14 border-t border-ocean-deep/80 relative">
+        <div className="max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1920px] 4k:max-w-[2400px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12 4k:px-16 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 sm:gap-8">
           <div>
-            <div className="flex items-center gap-2.5 font-display text-xl sm:text-2xl 2xl:text-3xl text-white font-bold">
-              <Compass className="w-6 h-6 2xl:w-8 2xl:h-8 text-mango" aria-hidden="true" />
+            <div className="flex items-center gap-2 font-display text-lg sm:text-xl 2xl:text-2xl text-white font-bold">
+              <Compass className="w-5 h-5 2xl:w-6 2xl:h-6 text-mango" aria-hidden="true" />
               <span>Wonder Journey</span>
             </div>
-            <p className="text-xs sm:text-sm 2xl:text-base 4k:text-lg text-white/85 mt-2.5 max-w-lg 4k:max-w-xl leading-relaxed font-medium">
-              A Christ-centered learning community helping children grow in language, culture, character, knowledge, and faith across the 7,641 islands of the Philippines.
+            <p className="text-xs sm:text-sm text-white/80 mt-1 max-w-md font-medium">
+              A living family learning community rooted in culture, character, and faith.
             </p>
-            <nav className="flex flex-wrap items-center gap-x-5 gap-y-2 mt-4 text-xs sm:text-sm text-white/70 font-semibold">
+            <nav className="flex flex-wrap items-center gap-x-4 gap-y-1.5 mt-3 text-xs text-white/70 font-semibold">
               <Link href="/" className="hover:text-white transition-colors">Home</Link>
               <Link href="/experience" className="hover:text-white transition-colors">Experience</Link>
               <Link href="/learning" className="hover:text-white transition-colors">Learning</Link>
@@ -121,10 +121,10 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
               <Link href="/login" className="hover:text-white transition-colors">Family Login</Link>
             </nav>
           </div>
-          <div className="text-xs sm:text-sm 2xl:text-base text-white/75 md:text-right space-y-1.5 font-medium">
+          <div className="text-xs text-white/70 md:text-right space-y-1 font-medium">
             <p>&copy; {new Date().getFullYear()} Wonder Journey. All rights reserved.</p>
-            <p className="text-mango/90 font-semibold">Founder-Led Family Learning Community</p>
-            <p className="text-[11px] sm:text-xs text-white/60 pt-1">
+            <p className="text-mango/90 font-semibold text-[11px] sm:text-xs">Founder-Led Family Learning Community</p>
+            <p className="text-[10px] sm:text-[11px] text-white/50">
               Informational website for founding families. Public enrollment is currently closed.
             </p>
           </div>

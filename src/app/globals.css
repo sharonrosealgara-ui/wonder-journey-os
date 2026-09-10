@@ -33,6 +33,31 @@
   --color-palm: #4dbd85;
   --color-palm-deep: #2e9563;
 
+  /* deep Filipino forest green */
+  --color-filipino-green: #1b4332;
+  --color-filipino-green-deep: #0f281e;
+  --color-filipino-green-light: #2d6a4f;
+
+  /* coral accents */
+  --color-coral: #ff6f59;
+  --color-coral-deep: #e2503d;
+  --color-coral-light: #ffa192;
+
+  /* burnished brass (astrolabe, celestial compass) */
+  --color-brass: #c59b27;
+  --color-brass-deep: #8c6b1b;
+  --color-brass-light: #e6be58;
+
+  /* natural wood (field desk, binding wood) */
+  --color-wood: #8a5a36;
+  --color-wood-deep: #54361e;
+  --color-wood-light: #c49a6c;
+
+  /* aged parchment & historical leaves */
+  --color-parchment: #f7f1e1;
+  --color-parchment-aged: #eee3cb;
+  --color-parchment-border: #dfcfb0;
+
   /* hibiscus pink */
   --color-hibiscus: #ec5d87;
   --color-hibiscus-deep: #cf3e6b;
@@ -44,10 +69,13 @@
   /* navy ink — all text, like the reference headings */
   --color-ink: #274472;
   --color-ink-soft: #5d76a3;
+  --color-ink-deep: #14243b;
 
   --font-display: "Lilita One", "Baloo 2", "Segoe UI", sans-serif;
   --font-body: "Quicksand", "Nunito", "Segoe UI", sans-serif;
   --font-hand: "Patrick Hand", "Comic Sans MS", "Segoe Print", cursive;
+  --font-botanical: "Georgia", "Baskerville", "Times New Roman", serif;
+  --font-archival: "Courier New", "Consolas", monospace;
 
   /* tactile "Family OS" additions — premium warm layer (kept alongside
      the navy-ink identity, never replacing it) */
@@ -64,6 +92,9 @@
     0 1px 2px rgba(44, 27, 24, 0.08),
     0 4px 10px rgba(44, 27, 24, 0.1),
     0 12px 28px rgba(44, 27, 24, 0.12);
+  --shadow-archival:
+    0 2px 4px rgba(44, 27, 24, 0.06),
+    0 8px 24px rgba(44, 27, 24, 0.12);
 
   --breakpoint-3xl: 120rem;
   --breakpoint-4k: 160rem;
@@ -123,6 +154,15 @@ h1, h2, h3, .font-display {
 
 .font-hand {
   font-family: var(--font-hand);
+}
+
+.font-botanical {
+  font-family: var(--font-botanical);
+  font-style: italic;
+}
+
+.font-archival {
+  font-family: var(--font-archival);
 }
 
 /* Big navy heading with thick white outline — the reference's signature look.
@@ -360,6 +400,113 @@ a.wj-chip:active {
   position: absolute;
   border-top: 3px dotted rgba(39, 68, 114, 0.35);
   border-radius: 100%;
+}
+
+/* ── Storybook Travel Journal Primitives ───────────────────── */
+.wj-polaroid {
+  background: #ffffff;
+  padding: 0.75rem 0.75rem 1.6rem 0.75rem;
+  box-shadow: 0 4px 16px rgba(39, 68, 114, 0.12), 0 1px 4px rgba(44, 27, 24, 0.08);
+  border: 1px solid rgba(39, 68, 114, 0.08);
+  border-radius: 0.35rem;
+  transition: transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 220ms ease;
+}
+.wj-polaroid:hover {
+  transform: translateY(-4px) rotate(0deg) scale(1.015);
+  box-shadow: 0 12px 28px rgba(39, 68, 114, 0.18), 0 4px 10px rgba(44, 27, 24, 0.1);
+}
+
+.wj-recipe-card {
+  background-color: #fffdf7;
+  background-image: repeating-linear-gradient(transparent, transparent 1.65rem, rgba(39, 68, 114, 0.06) 1.65rem, rgba(39, 68, 114, 0.06) 1.72rem);
+  border: 1px solid rgba(39, 68, 114, 0.14);
+  box-shadow: 0 4px 16px rgba(44, 27, 24, 0.08);
+  border-radius: 0.6rem;
+}
+
+.wj-postmark {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed rgba(39, 68, 114, 0.38);
+  border-radius: 50%;
+  color: var(--color-ink-soft);
+  font-family: var(--font-hand);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.wj-journey-trail {
+  stroke-dasharray: 8 8;
+  stroke: var(--color-mango-deep);
+}
+
+/* ── Premium Editorial & Botanical Hierarchy ──────────────── */
+.wj-botanical-label {
+  font-family: var(--font-botanical);
+  font-style: italic;
+  letter-spacing: 0.03em;
+  color: var(--color-filipino-green-deep);
+}
+
+.wj-archival-label {
+  font-family: var(--font-archival);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.725rem;
+  color: var(--color-ink-soft);
+}
+
+.wj-journal-hand {
+  font-family: var(--font-hand);
+  letter-spacing: 0.02em;
+}
+
+.wj-deck-lead {
+  font-size: clamp(1.125rem, 1rem + 0.8vw, 1.75rem);
+  line-height: 1.55;
+}
+
+.wj-measure-prose {
+  max-width: 65ch;
+}
+
+/* ── Archival Museum Matte Frame ─────────────────────────── */
+.wj-archival-matte {
+  background: var(--color-sand);
+  border: 1px solid var(--color-parchment-border);
+  box-shadow: var(--shadow-archival);
+  position: relative;
+}
+.wj-archival-matte::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border: 1px solid rgba(197, 155, 39, 0.4); /* burnished brass line */
+  pointer-events: none;
+}
+
+/* ── Stitched Seam & Deckle Edges ────────────────────────── */
+.wj-stitched-seam {
+  position: relative;
+}
+.wj-stitched-seam::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  border-left: 2px dashed rgba(140, 107, 27, 0.45); /* brass thread */
+  pointer-events: none;
+}
+
+.wj-deckle-edge {
+  box-shadow: 
+    0 1px 3px rgba(44, 27, 24, 0.06),
+    inset 0 0 16px rgba(223, 207, 176, 0.35);
+  border: 1px solid var(--color-parchment-border);
 }
 
 /* ── Birthday confetti + balloons ─────────────────────────── */

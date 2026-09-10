@@ -704,6 +704,21 @@ This standing policy governs all AI engineering workflows for Wonder Journey:
 >    - Remote CI run ID `34523539600` passed all 30 release candidate gates green in 4m27s.
 >    - PR #20 fast-forward merged into `main`.
 > 5. **Database Invariant:** Database migrations strictly preserved at 8 in `supabase/migrations/` (0 SQL modifications).
+>
+> ### Milestone: WJ-V1.2 Homepage Editorial Integration (Integrated September 11, 2026)
+>
+> - **Commit SHA:** `5dfb63c`
+> - **Pull Request:** #21 (Merged)
+> - **CI Run ID:** `34531042501` (Passed all 30 release candidate gates in 4m18s)
+> - **Key Deliverables:**
+>   - Replaced repeated `.wj-card` SaaS presentation across all sections below hero with cohesive travel-journal compositions.
+>   - Section 2 ("What Wonder Journey Feels Like") transformed into multi-stage field notebook with stitched seam, ruling, maritime route, and Palawan polaroid.
+>   - Section 4 ("Adventure Passport") center-seam collision resolved; side-by-side open passport logbook spread with authentic binding gutter and canonical stamps.
+>   - Section 6 ("After-Class Gallery") elevated into physical keepsakes scrapbook (ruled recipe card, Charlotte Mason archival matte flora study, voice postcard preview, certified expedition seal).
+>   - Expanded native 4K canvas utilization (`EditorialContainer` `sceneWidth="4k"`) while bounding reading prose to `max-w-[65ch]` (`FluidMeasure`).
+>   - Hero signature scene, 3D astrolabe, field journal, sampaguita, and SVG fallback preserved without modification.
+>   - All child safeguarding disclosures, browser-only celebrations audio, and private parent reflection gate strictly preserved.
+>   - Automated test suite 100% green (190/190 tests passed). All 185 static pages compiled in production build.
 
 ---
 
@@ -719,9 +734,10 @@ The immediate engineering step following this documentation update:
    - Joyful Learning Shared Engine Slice 1 (Visual-first slide ordering, Progressive Disclosure, Curious Corner, Zero Punitive States) is fully integrated into `main`.
    - Wonder Journey Unified Website Phase 1 (Exact root middleware, 7 public routes, 100 regression tests) is fully integrated into `main`.
    - Wonder Journey Unified Website Phase 2 & WJ-V1.1 Visual Foundation (10-section homepage, content relocation, reusable primitives, 90 regression tests) is fully integrated into `main`.
+   - WJ-V1.2 Homepage Editorial Integration (SaaS rhythm eliminated, 4K composition elevated, passport collision resolved, scrapbook keepsakes integrated, PR #21 merged) is fully integrated into `main`.
 2. **Current Active Priority (OWNER-APPROVED):**
-   - **WJ-V1.2 Home/Hero Implementation:**
-     - Leverage the newly integrated WJ-V1.1 visual foundation primitives to elevate the homepage and hero experience natively for 4K.
+   - **Post-Integration Verification & Public Brand Continuity:**
+     - Maintain the verified cohesive editorial travel-journal visual direction across secondary public routes (`/experience`, `/learning`, `/gallery`, `/about`, `/safety`, `/inquiry`).
 3. **Explicitly Held Candidate Slices (DO NOT BEGIN):**
    - **Joyful Learning Program (Slice 2):** HELD per owner decision.
    - **Teacher Studio / Real Student Progress Bridge (`/teacher`):** HELD per owner decision.
